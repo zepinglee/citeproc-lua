@@ -20,7 +20,7 @@ These packages are available in the latest version of TeX Live. To correctly loa
 
 ## Usage
 
-A simple example is in the [`example/'](https://github.com/zepinglee/citeproc-lua/tree/main/example) directory.
+A simple example is in the [`example/`](https://github.com/zepinglee/citeproc-lua/tree/main/example) directory.
 
 ### Create an engine instance
 ```lua

@@ -3,6 +3,7 @@
 --]]
 
 local dom = require("luaxml-domobject")
+local inspect = require("inspect")
 
 local util = require("citeproc.util")
 
@@ -271,7 +272,7 @@ function Node.Element:format (str, context)
     local value = context[attribute]
     if value then
       local key = string.format("@%s/%s", attribute, value)
-      local formatter = context.engine.formatter[key]
+      local formatter = self:get_engine().formatter[key]
       if formatter then
         if type(formatter) == "string" then
           str = string.gsub(formatter, "%%%%STRING%%%%", str)
@@ -565,12 +566,14 @@ Node.term = Node.Element:new()
 
 function Node.term:render (context, is_plural)
   self:debug_info(context)
+  context = self:process_context(context)
+
   local output = {
     single = self:get_text(),
   }
   for _, child in ipairs(self:get_children()) do
     if child:is_element() then
-      output[child:get_element_name()] = context.engine.formatter.text_escape(child:get_text())
+      output[child:get_element_name()] = self:get_engine().formatter.text_escape(child:get_text())
     end
   end
   local res = output.single
@@ -579,7 +582,7 @@ function Node.term:render (context, is_plural)
       res = output.multiple
     end
   end
-  res = context.engine.formatter.text_escape(res)
+  res = self:get_engine().formatter.text_escape(res)
   return res
 end
 
@@ -693,7 +696,7 @@ function Node.text:render (item, context)
   local value = self:get_attribute("value")
   if value then
     res = value
-    res = context.engine.formatter.text_escape(res)
+    res = self:get_engine().formatter.text_escape(res)
   end
 
   if res and context["quotes"] then
@@ -1168,7 +1171,7 @@ function Node.name:render (names, context)
 
     for _, child in ipairs(self:get_children()) do
       if child:is_element() and child:get_element_name() == "name-part" then
-        family, given = child:format_parts(family, given)
+        family, given = child:format_parts(family, given, context)
       end
     end
 
@@ -1201,9 +1204,19 @@ function Node.name:render (names, context)
     local et_al = context.et_al
     ret = self:join(output, context)
     if et_al ~= "" then
-      if (delimiter_precedes_et_al == 'always' or
-        (delimiter_precedes_et_al == 'contextual' and
-        #(output) > 1)) then
+      local use_delimeter = false
+      if delimiter_precedes_et_al == "always" then
+        use_delimeter = true
+      elseif delimiter_precedes_et_al == "contextual" and #output > 1 then
+        use_delimeter = true
+      elseif delimiter_precedes_et_al == "after-inverted-name" then
+        if name_as_sort_order == "all" then
+          use_delimeter = true
+        elseif name_as_sort_order == "first" and #output == 1 then
+          use_delimeter = true
+        end
+      end
+      if use_delimeter then
         ret = ret .. delimiter .. et_al
       else
         ret = ret .. " " .. et_al
@@ -1220,7 +1233,7 @@ function Node.name:render (names, context)
     if context["and"] == "text" then
       and_term = self:get_term("and"):render(context)
     elseif context["and"] == "symbol" then
-      and_term = context.engine.formatter.text_escape("&")
+      and_term = self:get_engine().formatter.text_escape("&")
     end
     ret = ret .. and_term .. " " .. output[#output]
   else
@@ -1237,8 +1250,8 @@ end
 
 Node["name-part"] = Node.Element:new()
 
-Node["name-part"].format_parts = function (self, family, given)
-  local context = self:process_context()
+Node["name-part"].format_parts = function (self, family, given, context)
+  local context = self:process_context(context)
   local name = context["name"]
   local has_formatting_attributes = false
   for key, value in pairs(self._attr) do

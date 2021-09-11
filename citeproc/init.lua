@@ -65,16 +65,13 @@ function CiteProc:makeCitationCluster(citation_items)
     table.insert(items, item)
     table.insert(self.registry.reflist, item)
   end
-  return self.style:render_citation(items, {engine = self})
+  return self.style:render_citation(items, {})
 end
 
 function CiteProc:makeBibliography()
   local output = {}
   for _, item in ipairs(self.registry.reflist) do
-    local res = self.style:render_biblography(item, {item=item, engine=self})
-    -- if res then
-    --   res = "<div class=\"csl-entry\">" .. res .. "</div>"
-    -- end
+    local res = self.style:render_biblography(item, {item=item})
     table.insert(output, res)
   end
   local params = {}

@@ -39,7 +39,7 @@ local function listdir(path, prefix)
 end
 
 
-local function run_test(fixture)
+local function run_test(fixture, protected)
   local bib = {}
   for i, item in ipairs(fixture.input) do
     if item.id == nil then
@@ -123,7 +123,13 @@ local function run_test(fixture)
     end
   end
 
-  local status, result = pcall(test_func)
+  local status, result
+  if protected then
+    status, result = pcall(test_func)
+  else
+    result = test_func()
+    status = result ~= nil
+  end
 
   if not status then
     result = "ERROR: " .. result
@@ -198,7 +204,7 @@ local function main ()
     local path = test_dir .. "/" .. file .. ".txt"
     local fixture = parse_fixture(path)
 
-    local result = run_test(fixture)
+    local result = run_test(fixture, #files > 1)
 
     if #files == 1 then
       print("EXPECTED: " .. fixture.result)
