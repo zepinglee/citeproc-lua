@@ -1,0 +1,47 @@
+[
+    {
+        "author": [
+            {
+                "family": "D'Arcus",
+                "given": "Bruce"
+            }
+        ],
+        "id": "ITEM-1",
+        "issued": {
+            "date-parts": [
+                [
+                    2005,
+                    11,
+                    22
+                ]
+            ]
+        },
+        "note": "The apostrophe in Bruce's name appears in proper typeset form.",
+        "publisher": "Routledge",
+        "title": "Boundaries of Dissent: Protest and State Power in the Media Age",
+        "type": "book"
+    },
+    {
+        "author": [
+            {
+                "family": "Bennett",
+                "given": "Frank G.",
+                "suffix": "Jr."
+            }
+        ],
+        "container-title": "Pac. Rim L. & Pol'y J.",
+        "id": "ITEM-2",
+        "issued": {
+            "date-parts": [
+                [
+                    2009,
+                    8
+                ]
+            ]
+        },
+        "page": "463-509",
+        "title": "Getting Property Right: \"Informal\" Mortgages in the Japanese Courts",
+        "type": "article-journal",
+        "volume": "18"
+    }
+]

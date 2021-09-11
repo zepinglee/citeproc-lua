@@ -1,0 +1,10 @@
+return {
+  _all = {
+    ["lua"] = "texlua",
+  },
+  default = {
+    ["ROOT"] = {"test"},
+    ["pattern"] = {"%.lua$"},
+    ["exclude-pattern"] = {"citeproc-"},
+  }
+}

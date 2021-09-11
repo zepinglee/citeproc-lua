@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.txt": "xml"
+    },
+    "Lua.diagnostics.globals": [
+        "kpse",
+        "utilities",
+        "describe",
+        "it"
+    ]
+}

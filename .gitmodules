@@ -1,0 +1,6 @@
+[submodule "test/test-suite"]
+	path = test/test-suite
+	url = https://github.com/citation-style-language/test-suite.git
+[submodule "test/locales"]
+	path = test/locales
+	url = https://github.com/citation-style-language/locales.git
