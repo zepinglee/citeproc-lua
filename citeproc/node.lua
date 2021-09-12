@@ -45,9 +45,12 @@ Node.Element.option_type = {
 }
 
 Node.Element.inheritable_options = {
-  ["engine"] = true,
   -- Debug
   ["level"] = true,
+  -- Engine
+  ["engine"] = true,
+  -- Layout
+  ["mode"] = true,
   -- Text
   ["item"] = true,
   -- Text
@@ -403,11 +406,11 @@ function Node.style:render_citation (items, context)
   return citation:render(items, context)
 end
 
-function Node.style:render_biblography (item, context)
+function Node.style:render_biblography (items, context)
   self:debug_info(context)
   context = self:process_context(context)
   local bibliography = self:get_child("bibliography")
-  return bibliography:render(item, context)
+  return bibliography:render(items, context)
 end
 
 function Node.style:get_locales (lang)
@@ -599,55 +602,70 @@ Node.citation = Node.Element:new()
 function Node.citation:render (items, context)
   self:debug_info(context)
   context = self:process_context(context)
+  context.mode = "citation"
+
   local sort = self:get_child("sort")
-  local layout = self:get_child("layout")
-  -- util.debug(inspect(items))
   if sort then
     sort:sort(items, context)
   end
-  -- util.debug(inspect(items))
-  return layout:render_citation(items, context)
+
+  local layout = self:get_child("layout")
+  return layout:render(items, context)
 end
 
 
 Node.bibliography = Node.Element:new()
 
-function Node.bibliography:render (item, context)
+function Node.bibliography:render (items, context)
   self:debug_info(context)
   context = self:process_context(context)
-  local layout = self:get_child("layout")
-  local res =  layout:render(item, context)
-  if res then
-    -- pass rendered bibitem and item to output format bibitem renderer
-    res = context.engine.formatter.print_bibitem(res, item)
+  context.mode = "bibliography"
+
+  local sort = self:get_child("sort")
+  if sort then
+    sort:sort(items, context)
   end
-  return res
+
+  local layout = self:get_child("layout")
+  return layout:render(items, context)
 end
 
 
 Node.layout = Node.Element:new()
 
-function Node.layout:render_citation (items, context)
+function Node.layout:render(items, context)
   self:debug_info(context)
+
+  -- When used within cs:citation, the delimiter attribute may be used to specify a delimiter for cites within a citation.
+  -- Thus the processing of context is put after render_children().
+  if context.mode ~= "citation" then
+    context = self:process_context(context)
+  end
+
   local output = {}
   for _, item in pairs(items) do
     context.item = item
     local res = self:render_children(item, context)
     if res then
+      if context.mode == "bibliography" then
+        res = self:get_engine().formatter.print_bibitem(res)
+      end
       table.insert(output, res)
     end
   end
   if next(output) == nil then
     return "[CSL STYLE ERROR: reference with no printed form.]"
   end
-  -- When used within cs:citation, the delimiter attribute may be used to specify a delimiter for cites within a citation.
-  -- Thus the processing of context is put after render_children().
-  context = self:process_context(context)
 
-  local res = self:join(output, context)
-  res = self:wrap(res, context)
-  res = self:format(res, context)
-  return res
+  if context.mode == "citation" then
+    context = self:process_context(context)
+    local res = self:join(output, context)
+    res = self:wrap(res, context)
+    res = self:format(res, context)
+    return res
+  else
+    return output
+  end
 end
 
 
@@ -1107,6 +1125,8 @@ function Node.names:render (item, context)
   table.insert(context.rendered_quoted_text, false)
 
   if ret then
+    ret = self:format(ret, context)
+    ret = self:wrap(ret, context)
     return ret
   else
     local substitute = self:get_child("substitute")

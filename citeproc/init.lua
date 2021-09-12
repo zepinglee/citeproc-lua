@@ -69,13 +69,9 @@ function CiteProc:makeCitationCluster(citation_items)
 end
 
 function CiteProc:makeBibliography()
-  local output = {}
-  for _, item in ipairs(self.registry.reflist) do
-    local res = self.style:render_biblography(item, {item=item})
-    table.insert(output, res)
-  end
+  local res = self.style:render_biblography(self.registry.reflist, {})
   local params = {}
-  return params, output
+  return params, res
 end
 
 function CiteProc:retrieve_item(id)
