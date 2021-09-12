@@ -71,6 +71,9 @@ Node.Element.inheritable_options = {
   ["initialize-with"] = true,
   ["name-as-sort-order"] = true,
   ["sort-separator"] = true,
+  ["name-form"] = true,
+  ["name-delimiter"] = true,
+  ["names-delimiter"] = true,
   et_al = true,
   ["variable"] = true,
   -- Group
@@ -227,6 +230,19 @@ function Node.Element:process_context(context)
     for key, value in pairs(context) do
       if self.inheritable_options[key] then
         state[key] = value
+      end
+    end
+    if self:get_element_name() == "name" then
+      if context["name-form"] then
+        state["form"] = context["name-form"]
+      end
+      if context["name-delimiter"] then
+        state["delimiter"] = context["name-delimiter"]
+      end
+    end
+    if self:get_element_name() == "names" then
+      if context["names-delimiter"] then
+        state["delimiter"] = context["names-delimiter"]
       end
     end
     if state.level then
