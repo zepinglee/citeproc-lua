@@ -27,8 +27,8 @@ formats.html = {
   ["@vertical-align/sup"] = "<sup>%%STRING%%</sup>",
   ["@vertical-align/sub"] = "<sub>%%STRING%%</sub>",
   ["@vertical-align/baseline"] = "<span style=\"baseline\">%%STRING%%</span>",
-  ["@bibliography/entry"] = function(res, item)
-      return "<div class=\"csl-entry\">" .. res .. "</div>"
+  ["@bibliography/entry"] = function (res, item)
+    return "<div class=\"csl-entry\">" .. res .. "</div>"
   end
 }
 
@@ -58,8 +58,8 @@ formats.latex = {
   ["@vertical-align/sup"] = "\\textsuperscript{%%STRING%%}",
   ["@vertical-align/sub"] = "\\textsubscript{%%STRING%%}",
   ["@vertical-align/baseline"] = false,
-  ["@bibliography/entry"] = function(res, item)
-      return "\\bibitem[".. item.id .. "]{} " .. res
+  ["@bibliography/entry"] = function (res, item)
+    return "\\bibitem[".. item.id .. "]{} " .. res
   end
 }
 

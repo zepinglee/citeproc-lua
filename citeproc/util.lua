@@ -4,7 +4,7 @@
 
 local util = {}
 
-function util.to_ordinal(n)
+function util.to_ordinal (n)
   local last_digit = n % 10
   if last_digit == 1 and n ~= 11
     then return tostring(n) .. "st"
@@ -37,7 +37,7 @@ util.debug = function (message)
   io.stderr:write("Debug: " .. tostring(message) .. "\n")
 end
 
-function util.split(str, pat)
+function util.split (str, pat)
   if pat == nil then
     pat = "%s+"
   end
@@ -59,7 +59,7 @@ function util.split(str, pat)
    return t
 end
 
-function util.slice(t, start, stop)
+function util.slice (t, start, stop)
   start = start or 1
   stop = stop or #t
   if start < 0 then
@@ -77,7 +77,7 @@ function util.slice(t, start, stop)
   return new
 end
 
-function util.concat(list, sep)
+function util.concat (list, sep)
   local res = nil
   for _, s in ipairs(list) do
     if s and s~= "" then
@@ -91,7 +91,7 @@ function util.concat(list, sep)
   return res
 end
 
-function util.rstrip(str)
+function util.rstrip (str)
   if not str then
     return nil
   end
@@ -99,16 +99,16 @@ function util.rstrip(str)
   return res
 end
 
-function util.startswith(str, prefix)
+function util.startswith (str, prefix)
   return string.sub(str, 1, #prefix) == prefix
 end
 
-function util.endswith(str, suffix)
+function util.endswith (str, suffix)
   -- print(string.sub(str, -#suffix))
   return string.sub(str, -#suffix) == suffix
 end
 
-function util.initialize(given, mark)
+function util.initialize (given, mark)
   local parts = util.split(given)
   local output = {}
   for _, part in ipairs(parts) do
@@ -289,21 +289,21 @@ util.unicode = {
 
 -- Text-case
 
-function util.is_lower(str)
+function util.is_lower (str)
   return string.match(str, "%u") == nil
 end
 
-function util.is_upper(str)
+function util.is_upper (str)
   return string.match(str, "%l") == nil
 end
 
-function util.capitalize(str)
+function util.capitalize (str)
   str = string.lower(str)
   local res = string.gsub(str, "%w", string.upper, 1)
   return res
 end
 
-function util.capitalize_first(str)
+function util.capitalize_first (str)
   local output = {}
   for i, word in ipairs(util.split(str)) do
     if i == 1 and util.is_lower(word) then
@@ -314,7 +314,7 @@ function util.capitalize_first(str)
   return table.concat(output, " ")
 end
 
-function util.capitalize_all(str)
+function util.capitalize_all (str)
   local output = {}
   for _, word in ipairs(util.split(str)) do
     if util.is_lower(word) then
@@ -325,7 +325,7 @@ function util.capitalize_all(str)
   return table.concat(output, " ")
 end
 
-function util.sentence(str)
+function util.sentence (str)
   if util.is_upper(str) then
     return util.capitalize(str)
   else
@@ -370,7 +370,7 @@ util.stop_words = {
   ["yet"] = true,
 }
 
-function util.title(str)
+function util.title (str)
   local output = {}
   local previous = ":"
   for i, word in ipairs(util.split(str)) do
@@ -387,7 +387,7 @@ function util.title(str)
   return res
 end
 
-function util.all(t)
+function util.all (t)
   for _, item in ipairs(t) do
     if not item then
       return false
@@ -396,7 +396,7 @@ function util.all(t)
   return true
 end
 
-function util.any(t)
+function util.any (t)
   for _, item in ipairs(t) do
     if item then
       return true
@@ -444,7 +444,7 @@ util.romanesque_chars = {
   0x021b,
 }
 
-function util.in_list(value, list)
+function util.in_list (value, list)
   for _, v in ipairs(list) do
     if value == v then
       return true
@@ -453,7 +453,7 @@ function util.in_list(value, list)
   return false
 end
 
-function util.in_ranges(value, ranges)
+function util.in_ranges (value, ranges)
   for _, range in ipairs(ranges) do
     if value >= range[1] and value <= range[2] then
       return true
@@ -462,7 +462,7 @@ function util.in_ranges(value, ranges)
   return false
 end
 
-function util.is_romanesque(s)
+function util.is_romanesque (s)
   -- has romanesque char but not necessarily pure romanesque
   if not s then
     return false

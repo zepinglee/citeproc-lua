@@ -11,7 +11,7 @@ local util = require("citeproc.util")
 
 local CiteProc = {}
 
-function CiteProc:new(sys, style)
+function CiteProc:new (sys, style)
   if sys == nil then
     error("\"citeprocSys\" required")
   end
@@ -45,20 +45,20 @@ function CiteProc:new(sys, style)
   return o
 end
 
-function CiteProc:updateItems(ids)
+function CiteProc:updateItems (ids)
   for _, id in ipairs(ids) do
     local item = self:retrieve_item(id)
     table.insert(self.registry.reflist, item)
   end
 end
 
-function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
+function CiteProc:processCitationCluster (citation, citationsPre, citationsPost)
   local output = {}
   local params = {}
   return {params, output}
 end
 
-function CiteProc:makeCitationCluster(citation_items)
+function CiteProc:makeCitationCluster (citation_items)
   local items = {}
   for _, cite_item in ipairs(citation_items) do
     local item = self:retrieve_item(cite_item.id)
@@ -68,13 +68,13 @@ function CiteProc:makeCitationCluster(citation_items)
   return self.style:render_citation(items, {})
 end
 
-function CiteProc:makeBibliography()
+function CiteProc:makeBibliography ()
   local res = self.style:render_biblography(self.registry.reflist, {})
   local params = {}
   return params, res
 end
 
-function CiteProc:retrieve_item(id)
+function CiteProc:retrieve_item (id)
   local item = {}
   local item_raw = self.sys:retrieveItem(id)
   if not item_raw then

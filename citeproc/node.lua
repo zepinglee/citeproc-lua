@@ -12,7 +12,7 @@ local Node = {}
 
 Node.Element = {}
 
-function Node.Element:new()
+function Node.Element:new ()
   local o = {}
   setmetatable(o, self)
   self.__index = self
@@ -88,7 +88,7 @@ function Node.Element:render (item, context)
   return self:render_children(item, context)
 end
 
-function Node.Element:render_children(item, context)
+function Node.Element:render_children (item, context)
   local output = {}
   for i, child in ipairs(self:get_children()) do
     if child:is_element() then
@@ -104,7 +104,7 @@ function Node.Element:render_children(item, context)
   return self:concat(output, context)
 end
 
-function Node.Element:make_base_class(node)
+function Node.Element:make_base_class (node)
   if node:is_element() then
     local org_meta_table = getmetatable(node)
     local element_name = node:get_element_name()
@@ -130,7 +130,7 @@ function Node.Element:make_base_class(node)
   end
 end
 
-function Node.Element:debug_info(context, debug)
+function Node.Element:debug_info (context, debug)
   -- debug = true
   if debug then
     local text = ""
@@ -151,7 +151,7 @@ function Node.Element:debug_info(context, debug)
   end
 end
 
-function Node.Element:get_child(type)
+function Node.Element:get_child (type)
   for _, child in ipairs(self:get_children()) do
     if child:get_element_name() == type then
       return child
@@ -160,7 +160,7 @@ function Node.Element:get_child(type)
   return nil
 end
 
-function Node.Element:get_style()
+function Node.Element:get_style ()
   -- TODO: get style from date in locale file
   local style = self:get_path("style")[1]
   if not style then
@@ -170,7 +170,7 @@ function Node.Element:get_style()
   return style
 end
 
-function Node.Element:get_engine()
+function Node.Element:get_engine ()
   return self:get_style().engine
 end
 
@@ -215,11 +215,11 @@ function Node.Element:get_macro (name)
   return macro
 end
 
-function Node.Element:set_default_options(options)
+function Node.Element:set_default_options (options)
   self.default_options = options
 end
 
-function Node.Element:process_context(context)
+function Node.Element:process_context (context)
   local state = {}
   if self.default_options then
     for key, value in pairs(self.default_options) do
@@ -564,7 +564,7 @@ Node.uri = Node.Element:new()
 
 Node.locale = Node.Element:new()
 
-function Node.locale:get_option(key)
+function Node.locale:get_option (key)
   local query = string.format("style-options[%s]", key)
   local option = self:query_selector(query)[1]
   if option then
@@ -648,7 +648,7 @@ end
 
 Node.layout = Node.Element:new()
 
-function Node.layout:render(items, context)
+function Node.layout:render (items, context)
   self:debug_info(context)
 
   -- When used within cs:citation, the delimiter attribute may be used to specify a delimiter for cites within a citation.
@@ -1261,7 +1261,7 @@ function Node.name:render (names, context)
   return ret
 end
 
-function Node.name:_check_delimiter(delimiter_attribute, index, inverted)
+function Node.name:_check_delimiter (delimiter_attribute, index, inverted)
   -- `delimiter-precedes-et-al` and `delimiter-precedes-last`
   if delimiter_attribute == "always" then
     return true
@@ -1283,7 +1283,7 @@ function Node.name:_check_delimiter(delimiter_attribute, index, inverted)
   return false
 end
 
-function Node.name:render_single_name(name, index, context)
+function Node.name:render_single_name (name, index, context)
   local form = context["form"]
   local initialize = context["initialize"]
   local initialize_with = context["initialize-with"]
@@ -1463,7 +1463,7 @@ end
 
 Node.choose = Node.Element:new()
 
-function Node.choose:render(item, context)
+function Node.choose:render (item, context)
   self:debug_info(context)
   context = self:process_context(context)
   for i, child in ipairs(self:get_children()) do
