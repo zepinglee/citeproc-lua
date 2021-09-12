@@ -648,7 +648,7 @@ function Node.layout:render(items, context)
     local res = self:render_children(item, context)
     if res then
       if context.mode == "bibliography" then
-        res = self:get_engine().formatter.print_bibitem(res)
+        res = self:get_engine().formatter["@bibliography/entry"](res)
       end
       table.insert(output, res)
     end
@@ -1178,71 +1178,89 @@ function Node.name:render (names, context)
   local et_al_truncate = false
   if et_al_min > 0 and #names >= et_al_min and et_al_use_first > 0 then
     et_al_truncate = true
-    names = util.slice(names, 1, et_al_use_first)
   end
 
   if form == "count" then
-    return #names
+    if et_al_truncate then
+      return et_al_use_first
+    else
+      return #names
+    end
   end
 
-  local output = {}
+  local output = ""
+
+  local num_names_left = #names
+  local res = nil
+  local inverted = false
+
   for i, name in ipairs(names) do
-    local res = self:render_single_name(name, i, context)
-    table.insert(output, res)
-  end
+    if num_names_left <= 0 then
+      break
+    end
+    local use_delimeter = true
+    if et_al_truncate and i > et_al_use_first then
+      num_names_left = 0
+      use_delimeter = self:_check_delimiter(delimiter_precedes_et_al, i, inverted)
+      res = context.et_al
+    else
+      if num_names_left == 1 and context["and"] then
+        use_delimeter = self:_check_delimiter(delimiter_precedes_last, i, inverted)
+      end
+      res, inverted = self:render_single_name(name, i, context)
+    end
 
-  local ret = nil
-
-  if et_al_truncate then
-    local et_al = context.et_al
-    ret = self:join(output, context)
-    if et_al ~= "" then
-      local use_delimeter = false
-      if delimiter_precedes_et_al == "always" then
-        use_delimeter = true
-      elseif delimiter_precedes_et_al == "contextual" and #output > 1 then
-        use_delimeter = true
-      elseif delimiter_precedes_et_al == "after-inverted-name" then
-        if name_as_sort_order == "all" then
-          use_delimeter = true
-        elseif name_as_sort_order == "first" and #output == 1 then
-          use_delimeter = true
+    if res and res ~= "" then
+      if i > 1 then
+        if use_delimeter then
+          output = self:concat(output, delimiter, context)
+        else
+          output = output .. " "
+        end
+        if num_names_left == 1 and context["and"] then
+          local and_term = ""
+          if context["and"] == "text" then
+            and_term = self:get_term("and"):render(context)
+          elseif context["and"] == "symbol" then
+            and_term = self:get_engine().formatter.text_escape("&")
+          end
+          output = output .. and_term .. " "
         end
       end
-      if use_delimeter then
-        ret = ret .. delimiter .. et_al
-      else
-        ret = ret .. " " .. et_al
-      end
+
+      output = output .. res
     end
-  elseif #output > 1 then
-    if context["and"] then
-      ret = self:join(util.slice(output, 1, -2), context)
-      if delimiter_precedes_last == "always" or (#output > 2 and delimiter_precedes_last == "contextual") then
-        ret = ret .. delimiter
-      else
-        ret = ret .. " "
-      end
-      local and_term = ""
-      if context["and"] == "text" then
-        and_term = self:get_term("and"):render(context)
-      elseif context["and"] == "symbol" then
-        and_term = self:get_engine().formatter.text_escape("&")
-      end
-      ret = ret .. and_term .. " " .. output[#output]
-    else
-      -- `and` atteribute is not set
-      ret = self:join(output, context)
-    end
-  else
-    ret = output[1]
+
+    num_names_left = num_names_left -1
   end
 
-  ret = string.gsub(ret, "(%a)'(%a)", "%1" .. util.unicode["apostrophe"] .. "%2")
+  local ret = string.gsub(output, "(%a)'(%a)", "%1" .. util.unicode["apostrophe"] .. "%2")
 
   ret = self:wrap(ret, context)
   ret = self:format(ret, context)
   return ret
+end
+
+function Node.name:_check_delimiter(delimiter_attribute, index, inverted)
+  -- `delimiter-precedes-et-al` and `delimiter-precedes-last`
+  if delimiter_attribute == "always" then
+    return true
+  elseif delimiter_attribute == "never" then
+    return false
+  elseif delimiter_attribute == "contextual" then
+    if index > 2 then
+      return true
+    else
+      return false
+    end
+  elseif delimiter_attribute == "after-inverted-name" then
+    if inverted then
+      return true
+    else
+      return false
+    end
+  end
+  return false
 end
 
 function Node.name:render_single_name(name, index, context)
@@ -1251,9 +1269,18 @@ function Node.name:render_single_name(name, index, context)
   local initialize_with = context["initialize-with"]
   local name_as_sort_order = context["name-as-sort-order"]
   local sort_separator = context["sort-separator"]
-  local given = name["given"] or ""
+
   local family = name["family"] or ""
+  local given = name["given"] or ""
   local suffix = name["suffix"] or ""
+
+  if family == "" and given == "" then
+    if name["literal"] then
+      return name["literal"]
+    else
+      error("Name not avaliable")
+    end
+  end
 
   if initialize and initialize_with then
     given = util.initialize(given, initialize_with)
@@ -1266,14 +1293,17 @@ function Node.name:render_single_name(name, index, context)
   end
 
   local res = nil
+  local inverted = false
   if form == "long" then
     local order
     local suffix_separator = sort_separator
     if not util.is_romanesque(name["family"]) then
       order = {family, given}
+      inverted = true
       sort_separator = ""
     elseif name_as_sort_order == 'all' or (name_as_sort_order == 'first' and index == 1) then
       order = {family, given}
+      inverted = true
     else
       order = {given, family}
       sort_separator = " "
@@ -1290,7 +1320,7 @@ function Node.name:render_single_name(name, index, context)
   else
     error(string.format('Invalid attribute form="%s" of "name".', form))
   end
-  return res
+  return res, inverted
 end
 
 
