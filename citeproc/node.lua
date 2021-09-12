@@ -98,7 +98,7 @@ function Node.Element:render_children(item, context)
       end
     end
   end
-  return self:join(output, context)
+  return self:concat(output, context)
 end
 
 function Node.Element:make_base_class(node)
@@ -296,11 +296,12 @@ function Node.Element:wrap (str, context)
   local prefix = context['prefix'] or ""
   local suffix = context['suffix'] or ""
   local res = prefix .. str
-  res = self:concat(res, suffix, context)
+  res = self:_concat(res, suffix, context)
   return res
 end
 
-function Node.Element:concat (str1, str2, context)
+function Node.Element:_concat (str1, str2, context)
+  -- a helper function that concatenates two strings with `punctuation-in-quote`
   if not str1 then
     return nil
   end
@@ -313,7 +314,7 @@ function Node.Element:concat (str1, str2, context)
     if prefix == "," or prefix == "." then
       if self:get_locale_option("punctuation-in-quote") then
         local close_quote = self:get_term("close-quote"):render(context)
-        if  util.endswith(str1, close_quote) then
+        if util.endswith(str1, close_quote) then
           res = string.sub(str1, 1, #str1 - #close_quote)
           res = res .. string.sub(str2, 1, 1)
           res = res .. close_quote
@@ -325,27 +326,25 @@ function Node.Element:concat (str1, str2, context)
   return res
 end
 
--- Delimiters
-function Node.Element:join (strings, context)
-  assert(type(strings) == "table")
-  local delimiter = context["delimiter"] or ""
-  -- return util.join_non_empty(strings, delimiter)
-  -- TODO: replace every join(outputs) to join(res, child:render())
+function Node.Element:_concat_list (strings, delimiter, context)
   local res = nil
-  for _, string in ipairs(strings) do
-
-    if string and string ~= "" then
+  for _, s in ipairs(strings) do
+    if s and s ~= "" then
       if res then
-        if delimiter and delimiter ~= "" then
-          res = self:concat(res, delimiter, context)
-        end
-        res = res .. string
+        res = self:_concat(res, delimiter, context)
+        res = self:_concat(res, s, context)
       else
-        res = string
+        res = s
       end
     end
   end
   return res
+end
+
+-- Delimiters
+function Node.Element:concat (strings, context)
+  local delimiter = context["delimiter"] or ""
+  return self:_concat_list(strings, delimiter, context)
 end
 
 -- Quotes
@@ -659,7 +658,7 @@ function Node.layout:render(items, context)
 
   if context.mode == "citation" then
     context = self:process_context(context)
-    local res = self:join(output, context)
+    local res = self:concat(output, context)
     res = self:wrap(res, context)
     res = self:format(res, context)
     return res
@@ -818,7 +817,7 @@ function Node.date:_render_single_date (date, context)
       table.insert(output, child:render(date, context))
     end
   end
-  return self:join(output, context)
+  return self:concat(output, context)
 end
 
 function Node.date:_render_date_range (date, context)
@@ -897,13 +896,13 @@ function Node.date:_render_date_range (date, context)
   -- util.debug(inspect(range_end))
   -- util.debug(inspect(same_suffix))
 
-  local prefix_output = self:join(same_prefix, context) or ""
-  local range_begin_output = self:join(range_begin, context) or ""
-  local range_end_output = self:join(range_end, context) or ""
-  local suffix_output = self:join(same_suffix, context)
+  local prefix_output = self:concat(same_prefix, context) or ""
+  local range_begin_output = self:concat(range_begin, context) or ""
+  local range_end_output = self:concat(range_end, context) or ""
+  local suffix_output = self:concat(same_suffix, context)
   local range_output = range_begin_output .. range_delimiter .. range_end_output
 
-  local res = self:join({prefix_output, range_output, suffix_output}, context)
+  local res = self:concat({prefix_output, range_output, suffix_output}, context)
 
   return res
 end
@@ -1119,7 +1118,7 @@ function Node.names:render (item, context)
   if num_names > 0 then
     ret = num_names
   else
-    ret = self:join(output, context)
+    ret = self:concat(output, context)
   end
 
   table.insert(context.rendered_quoted_text, false)
@@ -1170,15 +1169,13 @@ function Node.name:render (names, context)
   local et_al_use_first = context["et-al-use-first"]
   local et_al_subsequent_min = context["et-al-subsequent-min"]
   local et_al_subsequent_use_first = context["et-al-subsequent-use-first "]
-  local opt_et_al_use_last = context["et-al-use-last"]
+  local et_al_use_last = context["et-al-use-last"]
 
   local form = context["form"]
   local name_as_sort_order = context["name-as-sort-order"]
 
-  local et_al_truncate = false
-  if et_al_min > 0 and #names >= et_al_min and et_al_use_first > 0 then
-    et_al_truncate = true
-  end
+  local et_al_truncate = et_al_min > 0 and et_al_use_first > 0 and #names >= et_al_min
+  local et_al_last = et_al_use_last and et_al_use_first <= et_al_min - 2
 
   if form == "count" then
     if et_al_truncate then
@@ -1190,34 +1187,39 @@ function Node.name:render (names, context)
 
   local output = ""
 
-  local num_names_left = #names
   local res = nil
   local inverted = false
 
   for i, name in ipairs(names) do
-    if num_names_left <= 0 then
-      break
-    end
     local use_delimeter = true
     if et_al_truncate and i > et_al_use_first then
-      num_names_left = 0
-      use_delimeter = self:_check_delimiter(delimiter_precedes_et_al, i, inverted)
-      res = context.et_al
-    else
-      if num_names_left == 1 and context["and"] then
-        use_delimeter = self:_check_delimiter(delimiter_precedes_last, i, inverted)
-      end
-      res, inverted = self:render_single_name(name, i, context)
-    end
-
-    if res and res ~= "" then
-      if i > 1 then
-        if use_delimeter then
-          output = self:concat(output, delimiter, context)
-        else
-          output = output .. " "
+      if et_al_last then
+        if i == #names then
+          output = self:_concat(output, delimiter, context)
+          output = output .. util.unicode["horizontal ellipsis"]
+          if delimiter_precedes_last == "never" then
+            output = output .. " "
+          else
+            output = self:_concat(output, delimiter, context)
+          end
+          res = self:render_single_name(name, i, context)
+          output = output .. res
         end
-        if num_names_left == 1 and context["and"] then
+      else
+        if not self:_check_delimiter(delimiter_precedes_et_al, i, inverted) then
+          delimiter = " "
+        end
+        output = self:_concat_list({res, context.et_al}, delimiter, context)
+        break
+      end
+    else
+      if i > 1 then
+        if i == #names and context["and"] then
+          if self:_check_delimiter(delimiter_precedes_last, i, inverted) then
+            output = self:_concat(output, delimiter, context)
+          else
+            output = output .. " "
+          end
           local and_term = ""
           if context["and"] == "text" then
             and_term = self:get_term("and"):render(context)
@@ -1225,13 +1227,15 @@ function Node.name:render (names, context)
             and_term = self:get_engine().formatter.text_escape("&")
           end
           output = output .. and_term .. " "
+        else
+          output = self:_concat(output, delimiter, context)
         end
       end
-
-      output = output .. res
+      res, inverted = self:render_single_name(name, i, context)
+      if res and res ~= "" then
+        output = output .. res
+      end
     end
-
-    num_names_left = num_names_left -1
   end
 
   local ret = string.gsub(output, "(%a)'(%a)", "%1" .. util.unicode["apostrophe"] .. "%2")
@@ -1313,8 +1317,8 @@ function Node.name:render_single_name(name, index, context)
         suffix_separator = " "
       end
     end
-    res = util.join_non_empty(order, sort_separator)
-    res = util.join_non_empty({res, suffix}, suffix_separator)
+    res = self:_concat_list(order, sort_separator, context)
+    res = self:_concat_list({res, suffix}, suffix_separator, context)
   elseif form == "short" then
     res = family
   else
@@ -1535,6 +1539,7 @@ end
 Node.sort = Node.Element:new()
 
 function Node.sort:sort (items, context)
+  self:debug_info(context)
   local key_dict = {}
   for _, item in ipairs(items) do
     key_dict[item.id] = {}

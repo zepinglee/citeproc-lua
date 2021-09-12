@@ -77,17 +77,18 @@ function util.slice(t, start, stop)
   return new
 end
 
-function util.join_non_empty(t, sep)
-  local t_non_empty = {}
-  for _, item in ipairs(t) do
-    if item and item ~= "" then
-      table.insert(t_non_empty, item)
+function util.concat(list, sep)
+  local res = nil
+  for _, s in ipairs(list) do
+    if s and s~= "" then
+      if res then
+        res = res .. sep .. s
+      else
+        res = s
+      end
     end
   end
-  if next(t_non_empty) == nil then
-    return nil
-  end
-  return table.concat(t_non_empty, sep)
+  return res
 end
 
 function util.rstrip(str)
@@ -282,6 +283,7 @@ util.unicode = {
   ["apostrophe"] = "\u{2019}",
   ["left double quotation mark"] = "\u{201C}",
   ["right double quotation mark"] = "\u{201D}",
+  ["horizontal ellipsis"] = "\u{2026}"
 }
 
 
