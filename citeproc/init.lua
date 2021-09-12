@@ -72,9 +72,9 @@ function CiteProc:makeBibliography()
   local output = {}
   for _, item in ipairs(self.registry.reflist) do
     local res = self.style:render_biblography(item, {item=item, engine=self})
-    if res then
-      res = "<div class=\"csl-entry\">" .. res .. "</div>"
-    end
+    -- if res then
+    --   res = "<div class=\"csl-entry\">" .. res .. "</div>"
+    -- end
     table.insert(output, res)
   end
   local params = {}
