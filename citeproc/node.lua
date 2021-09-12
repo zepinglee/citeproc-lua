@@ -1075,6 +1075,7 @@ function Node.names:render (item, context)
   local label = self:get_child("label")
 
   local output = {}
+  local num_names = 0
   for _, role in ipairs(util.split(context["variable"])) do
     local names = item[role]
 
@@ -1082,22 +1083,31 @@ function Node.names:render (item, context)
 
     if names then
       local res = name:render(names, context)
-      if res and label then
-        local label_result = label:render(item, context)
-        if label_result then
-          res = res .. label_result
+      if res then
+        if type(res) == "number" then  -- name[form="count"]
+          num_names = num_names + res
+        elseif label then
+          local label_result = label:render(item, context)
+          if label_result then
+            res = res .. label_result
+          end
         end
       end
       table.insert(output, res)
     end
   end
 
-  local res = self:join(output, context)
+  local ret = nil
+  if num_names > 0 then
+    ret = num_names
+  else
+    ret = self:join(output, context)
+  end
 
   table.insert(context.rendered_quoted_text, false)
 
-  if res then
-    return res
+  if ret then
+    return ret
   else
     local substitute = self:get_child("substitute")
     if substitute then
@@ -1144,12 +1154,8 @@ function Node.name:render (names, context)
   local opt_et_al_use_last = context["et-al-use-last"]
 
   local form = context["form"]
-  local initialize = context["initialize"]
-  local initialize_with = context["initialize-with"]
   local name_as_sort_order = context["name-as-sort-order"]
-  local sort_separator = context["sort-separator"]
 
-  local output = {}
   local et_al_truncate = false
   if et_al_min > 0 and #names >= et_al_min and et_al_use_first > 0 then
     et_al_truncate = true
@@ -1157,49 +1163,12 @@ function Node.name:render (names, context)
   end
 
   if form == "count" then
-    return tostring(#names)
+    return #names
   end
 
+  local output = {}
   for i, name in ipairs(names) do
-    local given = name["given"] or ""
-    local family = name["family"] or ""
-    local suffix = name["suffix"] or ""
-
-    if initialize and initialize_with then
-      given = util.initialize(given, initialize_with)
-    end
-
-    for _, child in ipairs(self:get_children()) do
-      if child:is_element() and child:get_element_name() == "name-part" then
-        family, given = child:format_parts(family, given, context)
-      end
-    end
-
-    local res
-    if form == "long" then
-      local order
-      local suffix_separator = sort_separator
-      if not util.is_romanesque(name["family"]) then
-        order = {family, given}
-        sort_separator = ""
-      elseif name_as_sort_order == 'all' or (name_as_sort_order == 'first' and i == 1) then
-        order = {family, given}
-      else
-        order = {given, family}
-        sort_separator = " "
-        if name["comma-suffix"] then
-          suffix_separator = ", "
-        else
-          suffix_separator = " "
-        end
-      end
-      res = util.join_non_empty(order, sort_separator)
-      res = util.join_non_empty({res, suffix}, suffix_separator)
-    elseif form == "short" then
-      res = family
-    else
-      error("Invalid \"form\" attribute of \"name\".")
-    end
+    local res = self:render_single_name(name, i, context)
     table.insert(output, res)
   end
 
@@ -1250,6 +1219,54 @@ function Node.name:render (names, context)
   ret = self:wrap(ret, context)
   ret = self:format(ret, context)
   return ret
+end
+
+function Node.name:render_single_name(name, index, context)
+  local form = context["form"]
+  local initialize = context["initialize"]
+  local initialize_with = context["initialize-with"]
+  local name_as_sort_order = context["name-as-sort-order"]
+  local sort_separator = context["sort-separator"]
+  local given = name["given"] or ""
+  local family = name["family"] or ""
+  local suffix = name["suffix"] or ""
+
+  if initialize and initialize_with then
+    given = util.initialize(given, initialize_with)
+  end
+
+  for _, child in ipairs(self:get_children()) do
+    if child:is_element() and child:get_element_name() == "name-part" then
+      family, given = child:format_parts(family, given, context)
+    end
+  end
+
+  local res = nil
+  if form == "long" then
+    local order
+    local suffix_separator = sort_separator
+    if not util.is_romanesque(name["family"]) then
+      order = {family, given}
+      sort_separator = ""
+    elseif name_as_sort_order == 'all' or (name_as_sort_order == 'first' and index == 1) then
+      order = {family, given}
+    else
+      order = {given, family}
+      sort_separator = " "
+      if name["comma-suffix"] then
+        suffix_separator = ", "
+      else
+        suffix_separator = " "
+      end
+    end
+    res = util.join_non_empty(order, sort_separator)
+    res = util.join_non_empty({res, suffix}, suffix_separator)
+  elseif form == "short" then
+    res = family
+  else
+    error(string.format('Invalid attribute form="%s" of "name".', form))
+  end
+  return res
 end
 
 
