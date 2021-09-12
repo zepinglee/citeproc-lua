@@ -613,7 +613,12 @@ function Node.bibliography:render (item, context)
   self:debug_info(context)
   context = self:process_context(context)
   local layout = self:get_child("layout")
-  return layout:render(item, context)
+  local res =  layout:render(item, context)
+  if res then
+    -- pass rendered bibitem and item to output format bibitem renderer
+    res = context.engine.formatter.print_bibitem(res, item)
+  end
+  return res
 end
 
 
