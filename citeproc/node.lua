@@ -1142,7 +1142,6 @@ end
 Node.name = Node.Element:new()
 
 Node.name:set_default_options({
-  ["and"] = "text",
   ["delimiter"] = ", ",
   ["delimiter-precedes-et-al"] = "contextual",
   ["delimiter-precedes-last"] = "contextual",
@@ -1217,19 +1216,24 @@ function Node.name:render (names, context)
       end
     end
   elseif #output > 1 then
-    ret = self:join(util.slice(output, 1, -2), context)
-    if delimiter_precedes_last == "always" or (#output > 2 and delimiter_precedes_last == "contextual") then
-      ret = ret .. delimiter
+    if context["and"] then
+      ret = self:join(util.slice(output, 1, -2), context)
+      if delimiter_precedes_last == "always" or (#output > 2 and delimiter_precedes_last == "contextual") then
+        ret = ret .. delimiter
+      else
+        ret = ret .. " "
+      end
+      local and_term = ""
+      if context["and"] == "text" then
+        and_term = self:get_term("and"):render(context)
+      elseif context["and"] == "symbol" then
+        and_term = self:get_engine().formatter.text_escape("&")
+      end
+      ret = ret .. and_term .. " " .. output[#output]
     else
-      ret = ret .. " "
+      -- `and` atteribute is not set
+      ret = self:join(output, context)
     end
-    local and_term = ""
-    if context["and"] == "text" then
-      and_term = self:get_term("and"):render(context)
-    elseif context["and"] == "symbol" then
-      and_term = self:get_engine().formatter.text_escape("&")
-    end
-    ret = ret .. and_term .. " " .. output[#output]
   else
     ret = output[1]
   end
@@ -1295,32 +1299,15 @@ Node["name-part"] = Node.Element:new()
 Node["name-part"].format_parts = function (self, family, given, context)
   local context = self:process_context(context)
   local name = context["name"]
-  local has_formatting_attributes = false
-  for key, value in pairs(self._attr) do
-    if key ~= "name" then
-      has_formatting_attributes = true
-      break
-    end
-  end
-  if not has_formatting_attributes then
-    util.warning("Invalid attribute of \"date-part\"")
-  end
+
   if name == "family" then
-    if not has_formatting_attributes then
-      family = ""
-    else
-      family = self:case(family, context)
-      family = self:wrap(family, context)
-      family = self:format(family, context)
-    end
+    family = self:case(family, context)
+    family = self:wrap(family, context)
+    family = self:format(family, context)
   elseif name == "given" then
-    if not has_formatting_attributes then
-      given = ""
-    else
-      given = self:case(given, context)
-      given = self:format(given, context)
-      given = self:wrap(given, context)
-    end
+    given = self:case(given, context)
+    given = self:format(given, context)
+    given = self:wrap(given, context)
   end
   return family, given
 end
