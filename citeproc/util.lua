@@ -403,5 +403,84 @@ function util.any(t)
   return false
 end
 
+-- ROMANESQUE_REGEXP = "-0-9a-zA-Z\u0e01-\u0e5b\u00c0-\u017f\u0370-\u03ff\u0400-\u052f\u0590-\u05d4\u05d6-\u05ff\u1f00-\u1fff\u0600-\u06ff\u200c\u200d\u200e\u0218\u0219\u021a\u021b\u202a-\u202e"
+
+util.romanesque_ranges = {
+  {0x0E01, 0x0E5B},
+  {0x00C0, 0x017F},
+  {0x0370, 0x03FF},
+  {0x0400, 0x052F},
+  {0x0590, 0x05D4},
+  {0x05D6, 0x05FF},
+  {0x1F00, 0x1FFF},
+  {0x0600, 0x06FF},
+  {0x202A, 0x202E},
+}
+
+util.CJK_ranges = {
+  {0x4E00, 0x9FFF},  -- CJK Unified Ideographs
+  {0x3400, 0x4DBF},  -- CJK Unified Ideographs Extension A
+  {0x3040, 0x309F},  -- Hiragana
+  {0x30A0, 0x30FF},  -- Katakana
+  {0xF900, 0xFAFF},  -- CJK Compatibility Ideographs
+  {0x20000, 0x2A6DF},  -- CJK Unified Ideographs Extension B
+  {0x2A700, 0x2B73F},  -- CJK Unified Ideographs Extension C
+  {0x2B740, 0x2B81F},  -- CJK Unified Ideographs Extension D
+  {0x2B820, 0x2CEAF},  -- CJK Unified Ideographs Extension E
+  {0x2CEB0, 0x2EBEF},  -- CJK Unified Ideographs Extension F
+  {0x30000, 0x3134F},  -- CJK Unified Ideographs Extension G
+  {0x2F800, 0x2FA1F},  -- CJK Compatibility Ideographs Supplement
+}
+
+util.romanesque_chars = {
+  0x200c,
+  0x200d,
+  0x200e,
+  0x0218,
+  0x0219,
+  0x021a,
+  0x021b,
+}
+
+function util.in_list(value, list)
+  for _, v in ipairs(list) do
+    if value == v then
+      return true
+    end
+  end
+  return false
+end
+
+function util.in_ranges(value, ranges)
+  for _, range in ipairs(ranges) do
+    if value >= range[1] and value <= range[2] then
+      return true
+    end
+  end
+  return false
+end
+
+function util.is_romanesque(s)
+  -- has romanesque char but not necessarily pure romanesque
+  if not s then
+    return false
+  end
+  local res = false
+  if string.match(s, "%a") then
+    res = true
+  else
+    for _, codepoint in utf8.codes(s) do
+      local char_is_romanesque = string.match(utf8.char(codepoint), "[-%w]") or
+        util.in_list(codepoint, util.romanesque_chars) or
+        util.in_ranges(codepoint, util.romanesque_ranges)
+      if char_is_romanesque then
+        res = true
+        break
+      end
+    end
+  end
+  return res
+end
+
 
 return util

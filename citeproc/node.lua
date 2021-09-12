@@ -1175,21 +1175,26 @@ function Node.name:render (names, context)
       end
     end
 
-    local order = {given, family, suffix}
     local res
     if form == "long" then
-      if (name_as_sort_order == 'all' or (name_as_sort_order == 'first' and i == 1)) then
-        order = {family, given, suffix}
-        res = util.join_non_empty(order, sort_separator)
+      local order
+      local suffix_separator = sort_separator
+      if not util.is_romanesque(name["family"]) then
+        order = {family, given}
+        sort_separator = ""
+      elseif name_as_sort_order == 'all' or (name_as_sort_order == 'first' and i == 1) then
+        order = {family, given}
       else
         order = {given, family}
-        res = util.join_non_empty(order, " ")
+        sort_separator = " "
         if name["comma-suffix"] then
-          res = util.join_non_empty({res, suffix}, ", ")
+          suffix_separator = ", "
         else
-          res = util.join_non_empty({res, suffix}, " ")
+          suffix_separator = " "
         end
       end
+      res = util.join_non_empty(order, sort_separator)
+      res = util.join_non_empty({res, suffix}, suffix_separator)
     elseif form == "short" then
       res = family
     else
