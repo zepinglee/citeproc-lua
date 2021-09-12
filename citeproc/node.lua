@@ -3,6 +3,7 @@
 --]]
 
 local dom = require("luaxml-domobject")
+local unicode = require("unicode")  -- slnuniode from LuaTeX
 local inspect = require("inspect")
 
 local util = require("citeproc.util")
@@ -49,8 +50,9 @@ Node.Element.inheritable_options = {
   ["level"] = true,
   -- Engine
   ["engine"] = true,
-  -- Layout
-  ["mode"] = true,
+  -- Syle
+  ["initialize-with-hyphen"] = true,
+  ["page-range-format"] = true,
   -- Text
   ["item"] = true,
   -- Text
@@ -392,7 +394,7 @@ function Node.Element:case (str, context)
   elseif text_case == "lowercase" then
     return string.lower(str)
   elseif text_case == "uppercase" then
-    return string.upper(str)
+    return unicode.utf8.upper(str)
   elseif text_case == "capitalize-first" then
     return util.capitalize_first(str)
   elseif text_case == "capitalize-all" then
@@ -410,6 +412,8 @@ end
 Node.style = Node.Element:new()
 
 Node.style:set_default_options({
+  ["initialize-with-hyphen"] = true,
+  ["inpage-range-format "] = nil,
   rendered_quoted_text = {},
   variable_attempt = {},
 })
@@ -617,7 +621,6 @@ Node.citation = Node.Element:new()
 function Node.citation:render (items, context)
   self:debug_info(context)
   context = self:process_context(context)
-  context.mode = "citation"
 
   local sort = self:get_child("sort")
   if sort then
@@ -634,7 +637,6 @@ Node.bibliography = Node.Element:new()
 function Node.bibliography:render (items, context)
   self:debug_info(context)
   context = self:process_context(context)
-  context.mode = "bibliography"
 
   local sort = self:get_child("sort")
   if sort then
@@ -651,9 +653,11 @@ Node.layout = Node.Element:new()
 function Node.layout:render (items, context)
   self:debug_info(context)
 
+  local mode = self:get_parent():get_element_name()
+
   -- When used within cs:citation, the delimiter attribute may be used to specify a delimiter for cites within a citation.
   -- Thus the processing of context is put after render_children().
-  if context.mode ~= "citation" then
+  if mode ~= "citation" then
     context = self:process_context(context)
   end
 
@@ -662,7 +666,7 @@ function Node.layout:render (items, context)
     context.item = item
     local res = self:render_children(item, context)
     if res then
-      if context.mode == "bibliography" then
+      if mode == "bibliography" then
         res = self:get_engine().formatter["@bibliography/entry"](res)
       end
       table.insert(output, res)
@@ -672,7 +676,7 @@ function Node.layout:render (items, context)
     return "[CSL STYLE ERROR: reference with no printed form.]"
   end
 
-  if context.mode == "citation" then
+  if mode == "citation" then
     context = self:process_context(context)
     local res = self:concat(output, context)
     res = self:wrap(res, context)
@@ -1303,7 +1307,7 @@ function Node.name:render_single_name (name, index, context)
   end
 
   if initialize and initialize_with then
-    given = util.initialize(given, initialize_with)
+    given = self:initialize(given, initialize_with, context)
   end
 
   for _, child in ipairs(self:get_children()) do
@@ -1341,6 +1345,29 @@ function Node.name:render_single_name (name, index, context)
     error(string.format('Invalid attribute form="%s" of "name".', form))
   end
   return res, inverted
+end
+
+function Node.name:initialize (given, mark, context)
+  if not context["initialize-with-hyphen"] then
+    given = string.gsub(given, "-", " ")
+  end
+  given = string.gsub(given, "%.", " ")
+  local res = ""
+  for _, word in ipairs(util.split(given)) do
+    local parts = {}
+    for _, part in ipairs(util.split(word, "-")) do
+      local first_letter = utf8.char(utf8.codepoint(part))
+      if util.is_upper(first_letter) then
+        table.insert(parts, first_letter)
+      end
+    end
+    local word = util.concat(parts, util.rstrip(mark) .. "-")
+    if word then
+      res = res .. word .. mark
+    end
+  end
+  res = util.rstrip(res)
+  return res
 end
 
 

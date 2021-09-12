@@ -11,6 +11,7 @@ Some the interfaces and code design are borrowed from [Juris-M/citeproc-js](http
 The `citeproc-lua` is written with Lua 5.3 but it has not been tested with other versions.
 It is built upon the following packages.
 
+- `slnunicode` (Part of LuaTeX)
 - [michal-h21/LuaXML](https://github.com/michal-h21/LuaXML) ([CTAN](https://ctan.org/pkg/luaxml))
 - [michal-h21/lua-uca](https://github.com/michal-h21/lua-uca) ([CTAN](https://ctan.org/pkg/lua-uca)) (to be used)
 

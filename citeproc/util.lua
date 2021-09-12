@@ -2,6 +2,10 @@
   Copyright (C) 2021 Zeping Lee
 --]]
 
+-- load `slnunicode` from LuaTeX
+local unicode = require("unicode")
+
+
 local util = {}
 
 function util.to_ordinal (n)
@@ -78,6 +82,7 @@ function util.slice (t, start, stop)
 end
 
 function util.concat (list, sep)
+  -- This helper function omits empty strings in list, which is different from table.concat
   local res = nil
   for _, s in ipairs(list) do
     if s and s~= "" then
@@ -91,12 +96,24 @@ function util.concat (list, sep)
   return res
 end
 
+function util.lstrip (str)
+  if not str then
+    return nil
+  end
+  local res = string.gsub(str, "^%s+", "")
+  return res
+end
+
 function util.rstrip (str)
   if not str then
     return nil
   end
-  local res = string.gsub(str, "%s*$", "")
+  local res = string.gsub(str, "%s+$", "")
   return res
+end
+
+function util.strip (str)
+  return util.lstrip(util.rstrip(str))
 end
 
 function util.startswith (str, prefix)
@@ -106,17 +123,6 @@ end
 function util.endswith (str, suffix)
   -- print(string.sub(str, -#suffix))
   return string.sub(str, -#suffix) == suffix
-end
-
-function util.initialize (given, mark)
-  local parts = util.split(given)
-  local output = {}
-  for _, part in ipairs(parts) do
-    local first_letter = string.sub(part, 1, 1)
-    table.insert(output, first_letter .. mark)
-  end
-  output = table.concat(output)
-  return table.concat(util.split(output), ' ')
 end
 
 function util.is_numeric (str)
@@ -290,16 +296,16 @@ util.unicode = {
 -- Text-case
 
 function util.is_lower (str)
-  return string.match(str, "%u") == nil
+  return unicode.utf8.lower(str) == str
 end
 
 function util.is_upper (str)
-  return string.match(str, "%l") == nil
+  return unicode.utf8.upper(str) == str
 end
 
 function util.capitalize (str)
   str = string.lower(str)
-  local res = string.gsub(str, "%w", string.upper, 1)
+  local res = string.gsub(str, "%w", unicode.utf8.upper, 1)
   return res
 end
 
