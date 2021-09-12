@@ -31,15 +31,15 @@ formats.html = {
 
 formats.latex = {
   ["text_escape"] = function (text)
-    text = text.gsub("\\", "\\textbackslash")
-    text = text.gsub("#", "\\#")
-    text = text.gsub("$", "\\$")
-    text = text.gsub("%", "\\%")
-    text = text.gsub("&", "\\&")
-    text = text.gsub("{", "\\{")
-    text = text.gsub("}", "\\}")
-    text = text.gsub("_", "\\_")
-    text = text.gsub("%s%s", "~")
+    text = text:gsub("\\", "\\textbackslash")
+    text = text:gsub("#", "\\#")
+    text = text:gsub("$", "\\$")
+    text = text:gsub("%%", "\\%")
+    text = text:gsub("&", "\\&")
+    text = text:gsub("{", "\\{")
+    text = text:gsub("}", "\\}")
+    text = text:gsub("_", "\\_")
+    text = text:gsub("%s%s", "~")
     return text
   end,
   ["@font-style/normal"] = "{\\normalshape %%STRING%%}",
