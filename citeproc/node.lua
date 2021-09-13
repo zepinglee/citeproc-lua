@@ -1211,7 +1211,6 @@ function Node.name:render (names, context)
   local inverted = false
 
   for i, name in ipairs(names) do
-    local use_delimeter = true
     if et_al_truncate and i > et_al_use_first then
       if et_al_last then
         if i == #names then
@@ -1229,7 +1228,7 @@ function Node.name:render (names, context)
         if not self:_check_delimiter(delimiter_precedes_et_al, i, inverted) then
           delimiter = " "
         end
-        output = self:_concat_list({res, context.et_al}, delimiter, context)
+        output = self:_concat_list({output, context.et_al}, delimiter, context)
         break
       end
     else
