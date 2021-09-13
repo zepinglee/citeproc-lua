@@ -121,7 +121,6 @@ function util.startswith (str, prefix)
 end
 
 function util.endswith (str, suffix)
-  -- print(string.sub(str, -#suffix))
   return string.sub(str, -#suffix) == suffix
 end
 

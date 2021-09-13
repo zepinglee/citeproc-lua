@@ -6,7 +6,8 @@ local dom = require("luaxml-domobject")
 local lfs = require("lfs")
 local inspect = require("inspect")
 
-local CiteProc = require("citeproc")
+-- local CiteProc = require(kpse.lookup("cbustediteproc.lua", {path = "./citeproc/"}))
+local CiteProc = require("citeproc.citeproc")
 
 
 local function read_file(path)
@@ -148,7 +149,6 @@ local function parse_fixture(path)
   local section = nil
   local contents = nil
   for line in file:lines() do
-    -- print(inspect(line), section)
     local start = string.match(line, ">>=+%s*([%w-]+)%s*=+")
     if start then
       section = start
