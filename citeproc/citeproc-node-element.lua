@@ -274,7 +274,7 @@ function Element:format (str, context)
         if type(formatter) == "string" then
           str = string.gsub(formatter, "%%%%STRING%%%%", str)
         elseif type(formatter) == "function" then
-          str = formatter(str)
+          str = formatter(str, context.item)
         end
       end
     end
