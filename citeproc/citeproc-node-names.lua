@@ -148,11 +148,14 @@ function Name:render_single_name (name, index, context)
   local ndp = name["non-dropping-particle"] or ""
   local suffix = name["suffix"] or ""
 
-  if family == "" and given == "" then
-    if name["literal"] then
-      local res = name["literal"]
-      res, _ = self:format_name_parts(res, nil, context)
-      return res
+  if family == "" then
+    family = name["literal"]
+    if not family then
+      family = given
+    end
+    if family then
+      family, _ = self:format_name_parts(family, nil, context)
+      return family
     else
       error("Name not avaliable")
     end
