@@ -47,7 +47,7 @@ function Text:render (item, context)
   local value = self:get_attribute("value")
   if value then
     res = value
-    res = self:get_engine().formatter.text_escape(res)
+    res = self:escape(res)
   end
 
   if res and context["quotes"] then

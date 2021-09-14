@@ -12,7 +12,7 @@ function Term:render (context, is_plural)
   }
   for _, child in ipairs(self:get_children()) do
     if child:is_element() then
-      output[child:get_element_name()] = self:get_engine().formatter.text_escape(child:get_text())
+      output[child:get_element_name()] = self:escape(child:get_text())
     end
   end
   local res = output.single
@@ -21,7 +21,7 @@ function Term:render (context, is_plural)
       res = output.multiple
     end
   end
-  res = self:get_engine().formatter.text_escape(res)
+  res = self:escape(res)
   return res
 end
 

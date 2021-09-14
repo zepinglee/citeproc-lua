@@ -89,7 +89,7 @@ function Name:render (names, context)
           if context["and"] == "text" then
             and_term = self:get_term("and"):render(context)
           elseif context["and"] == "symbol" then
-            and_term = self:get_engine().formatter.text_escape("&")
+            and_term = self:escape("&")
           end
           output = output .. and_term .. " "
         else
@@ -103,7 +103,8 @@ function Name:render (names, context)
     end
   end
 
-  local ret = string.gsub(output, "(%a)'(%a)", "%1" .. util.unicode["apostrophe"] .. "%2")
+  -- TODO: make unicode-compatible
+  local ret = string.gsub(output, "(%a)'", "%1" .. util.unicode["apostrophe"])
 
   ret = self:wrap(ret, context)
   ret = self:format(ret, context)

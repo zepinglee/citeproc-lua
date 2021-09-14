@@ -259,6 +259,10 @@ Element.get_locale_option = function (self, key)
 end
 
 -- Formatting
+function Element:escape (str, context)
+  return self:get_engine().formatter.text_escape(str)
+end
+
 function Element:format (str, context)
   if not str then
     return nil
