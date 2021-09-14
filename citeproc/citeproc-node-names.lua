@@ -103,10 +103,7 @@ function Name:render (names, context)
     end
   end
 
-  -- TODO: make unicode-compatible
-  local ret = string.gsub(output, "(%a)'", "%1" .. util.unicode["apostrophe"])
-
-  ret = self:wrap(ret, context)
+  local ret = self:wrap(output, context)
   ret = self:format(ret, context)
   return ret
 end
@@ -143,18 +140,28 @@ function Name:render_single_name (name, index, context)
   local demote_non_dropping_particle = context["demote-non-dropping-particle"]
   local name_sorting = context.name_sorting
 
-  local family = name["family"] or ""
-  local given = name["given"] or ""
-  local dp = name["dropping-particle"] or ""
-  local ndp = name["non-dropping-particle"] or ""
-  local suffix = name["suffix"] or ""
+  -- TODO: make it a module
+  local function _strip_quotes(str)
+    if str then
+      str = string.gsub(str, '"', "")
+      str = string.gsub(str, "'", util.unicode["apostrophe"])
+    end
+    return str
+  end
+
+  local family = _strip_quotes(name["family"]) or ""
+  local given = _strip_quotes(name["given"]) or ""
+  local dp = _strip_quotes(name["dropping-particle"]) or ""
+  local ndp = _strip_quotes(name["non-dropping-particle"]) or ""
+  local suffix = _strip_quotes(name["suffix"]) or ""
+  local literal = _strip_quotes(name["literal"]) or ""
 
   if family == "" then
-    family = name["literal"]
-    if not family then
+    family = literal
+    if family == "" then
       family = given
     end
-    if family then
+    if family ~= "" then
       family, _ = self:format_name_parts(family, nil, context)
       return family
     else
