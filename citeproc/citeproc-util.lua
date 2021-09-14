@@ -312,7 +312,7 @@ function util.is_upper (str)
 end
 
 function util.capitalize (str)
-  str = string.lower(str)
+  str = unicode.utf8.lower(str)
   local res = string.gsub(str, "%w", unicode.utf8.upper, 1)
   return res
 end
@@ -388,7 +388,7 @@ function util.title (str)
   local output = {}
   local previous = ":"
   for i, word in ipairs(util.split(str)) do
-    local lower = string.lower(word)
+    local lower = unicode.utf8.lower(word)
     if previous ~= ":" and util.stop_words[string.match(lower, "%w+")] then
       table.insert(output, lower)
     elseif util.is_lower(word) or util.is_upper(word) then

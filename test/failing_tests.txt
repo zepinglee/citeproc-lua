@@ -266,7 +266,6 @@ name_EtAlWithCombined
 name_HebrewAnd
 name_InTextMarkupInitialize
 name_InTextMarkupNormalizeInitials
-name_InstitutionDecoration
 name_LabelFormatBug
 name_LongAbbreviation
 name_OnlyGivenname

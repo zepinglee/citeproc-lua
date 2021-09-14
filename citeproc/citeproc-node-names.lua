@@ -148,7 +148,9 @@ function Name:render_single_name (name, index, context)
 
   if family == "" and given == "" then
     if name["literal"] then
-      return name["literal"]
+      local res = name["literal"]
+      res, _ = self:format_name_parts(res, nil, context)
+      return res
     else
       error("Name not avaliable")
     end
@@ -309,11 +311,11 @@ NamePart.format_parts = function (self, family, given, context)
   context = self:process_context(context)
   local name = context["name"]
 
-  if name == "family" then
+  if name == "family" and family then
     family = self:case(family, context)
     family = self:wrap(family, context)
     family = self:format(family, context)
-  elseif name == "given" then
+  elseif name == "given" and given then
     given = self:case(given, context)
     given = self:format(given, context)
     given = self:wrap(given, context)
@@ -329,6 +331,7 @@ EtAl:set_default_options({
 })
 
 EtAl.render = function (self, item, context)
+  self:debug_info(context)
   context = self:process_context(context)
   local res = self:get_term(context["term"]):render(context)
   res = self:format(res, context)

@@ -371,7 +371,7 @@ function Element:case (str, context)
   if not text_case then
     return str
   elseif text_case == "lowercase" then
-    return string.lower(str)
+    return unicode.utf8.lower(str)
   elseif text_case == "uppercase" then
     return unicode.utf8.upper(str)
   elseif text_case == "capitalize-first" then
