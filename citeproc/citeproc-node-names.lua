@@ -1,3 +1,5 @@
+local unicode = require("unicode")
+
 local Element = require("citeproc.citeproc-node-element")
 local util = require("citeproc.citeproc-util")
 
@@ -273,7 +275,26 @@ function Name:initialize (given, terminator, context)
       name_list[i] = name .. terminator
     else
       if initialize then
-        name_list[i] = first_letter .. terminator
+        if util.is_upper(name) then
+          name = first_letter
+        else
+          -- Long abbreviation: "TSerendorjiin" -> "Ts."
+          local abbreviation = ""
+          for _, c in utf8.codes(name) do
+            local char = utf8.char(c)
+            local lower = unicode.utf8.lower(char)
+            if lower == char then
+              break
+            end
+            if abbreviation == "" then
+              abbreviation = char
+            else
+              abbreviation = abbreviation .. lower
+            end
+          end
+          name = abbreviation
+        end
+        name_list[i] = name .. terminator
       else
         name_list[i] = name .. " "
       end
