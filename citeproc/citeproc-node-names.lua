@@ -154,7 +154,7 @@ function Name:render_single_name (name, index, context)
     end
   end
 
-  if initialize and initialize_with then
+  if initialize_with then
     given = self:initialize(given, initialize_with, context)
   end
 
@@ -178,10 +178,10 @@ function Name:render_single_name (name, index, context)
     elseif name_as_sort_order == "all" or (name_as_sort_order == "first" and index == 1) then
 
       -- "Alan al-One"
-      local hyphen_splits = util.split(family, "%-", 1)
-      if #hyphen_splits > 1 then
+      local hyphen_parts = util.split(family, "%-", 1)
+      if #hyphen_parts > 1 then
         local particle
-        particle, family = table.unpack(hyphen_splits)
+        particle, family = table.unpack(hyphen_parts)
         particle = particle .. "-"
         ndp = self._concat(ndp, particle)
       end
@@ -219,30 +219,79 @@ function Name:render_single_name (name, index, context)
   return res, inverted
 end
 
-function Name:initialize (given, mark, context)
-  if not context["initialize-with-hyphen"] then
+function Name:initialize (given, terminator, context)
+  if not given or given == "" then
+    return ""
+  end
+
+  local initialize = context["initialize"]
+  if context["initialize-with-hyphen"] == false then
     given = string.gsub(given, "-", " ")
   end
-  given = string.gsub(given, "%.", " ")
-  given = util.strip(given)
-  local res = ""
-  for _, word in ipairs(util.split(given)) do
-    local parts = {}
-    for _, part in ipairs(util.split(word, "%-")) do
-      if part ~= "" then
-        local first_letter = utf8.char(utf8.codepoint(part))
-        if util.is_upper(first_letter) then
-          table.insert(parts, first_letter)
-        end
+
+  -- Split the given name to name_list (e.g., {"John", "M." "E"})
+  -- Compound names are splitted too but are marked in punc_list.
+  local name_list = {}
+  local punct_list = {}
+  local last_position = 1
+  for name, pos in string.gmatch(given, "([^-.%s]+[-.%s]+)()") do
+    table.insert(name_list, string.match(name, "^[^-%s]+"))
+    if string.match(name, "%-") then
+      table.insert(punct_list, "-")
+    else
+      table.insert(punct_list, "")
+    end
+    last_position = pos
+  end
+  if last_position <= #given then
+    table.insert(name_list, util.strip(string.sub(given, last_position)))
+    table.insert(punct_list, "")
+  end
+
+  for i, name in ipairs(name_list) do
+    local is_particle = false
+    local is_abbreviation = false
+
+    local first_letter = utf8.char(utf8.codepoint(name))
+    if util.is_lower(first_letter) then
+        is_particle = true
+    elseif #name == 1 then
+      is_abbreviation = true
+    else
+      local abbreviation = string.match(name, "^([^.]+)%.$")
+      if abbreviation then
+        is_abbreviation = true
+        name = abbreviation
       end
     end
-    word = util.concat(parts, util.rstrip(mark) .. "-")
-    if word ~= "" then
-      res = res .. word .. mark
+
+    if is_particle then
+      name_list[i] = name .. " "
+    elseif is_abbreviation then
+      name_list[i] = name .. terminator
+    else
+      if initialize then
+        name_list[i] = first_letter .. terminator
+      else
+        name_list[i] = name .. " "
+      end
+    end
+
+    -- Handle the compound names
+    if i > 1 and punct_list[i-1] == "-" then
+      if is_particle then  -- special case "Guo-ping"
+        name_list[i] = ""
+      else
+        name_list[i-1] = util.rstrip(name_list[i-1])
+        name_list[i] = "-" .. name_list[i]
+      end
     end
   end
-  res = util.rstrip(res)
+
+  local res = util.concat(name_list, "")
+  res = util.strip(res)
   return res
+
 end
 
 function Name:format_name_parts (family, given, context)
@@ -257,7 +306,7 @@ end
 local NamePart = Element:new()
 
 NamePart.format_parts = function (self, family, given, context)
-  local context = self:process_context(context)
+  context = self:process_context(context)
   local name = context["name"]
 
   if name == "family" then
