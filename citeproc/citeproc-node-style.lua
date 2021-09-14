@@ -44,7 +44,7 @@ end
 
 function Style:get_locale_list (lang)
   assert(lang ~= nil)
-  local language = util.split(lang, '-')[1]
+  local language = util.split(lang, '%-')[1]
   local primary_dialect = util.primary_dialects[language]
   if not primary_dialect then
     util.warning(string.format("Failed to find primary dialect of \"%s\"", language))

@@ -41,26 +41,34 @@ util.debug = function (message)
   io.stderr:write("Debug: " .. tostring(message) .. "\n")
 end
 
-function util.split (str, pat)
-  if pat == nil then
-    pat = "%s+"
+-- Similar to re.split() in Python
+function util.split(str, sep, maxsplit)
+  sep = sep or "%s+"
+  if sep == "" then
+    error("Empty separator")
   end
-   local t = {}  -- NOTE: use {n = 0} in Lua-5.0
-   local fpat = "(.-)" .. pat
-   local last_end = 1
-   local s, e, cap = str:find(fpat, 1)
-   while s do
-    if s ~= 1 or cap ~= "" then
-     table.insert(t, cap)
+  if string.find(str, sep) == nil then
+    return { str }
+  end
+
+  if maxsplit == nil or maxsplit < 0 then
+    maxsplit = -1    -- No limit
+  end
+  local result = {}
+  local pattern = "(.-)" .. sep .. "()"
+  local num_splits = 0
+  local lastPos = 1
+  for part, pos in string.gmatch(str, pattern) do
+    if num_splits == maxsplit then
+      break
     end
-    last_end = e+1
-    s, e, cap = str:find(fpat, last_end)
-   end
-   if last_end <= #str then
-    cap = str:sub(last_end)
-    table.insert(t, cap)
-   end
-   return t
+    num_splits = num_splits + 1
+    result[num_splits] = part
+    lastPos = pos
+  end
+  -- Handle the last field
+  result[num_splits + 1] = string.sub(str, lastPos)
+  return result
 end
 
 function util.slice (t, start, stop)

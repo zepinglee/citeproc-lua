@@ -175,7 +175,17 @@ function Name:render_single_name (name, index, context)
       order = {family, given}
       inverted = true
       sort_separator = ""
-    elseif name_as_sort_order == 'all' or (name_as_sort_order == 'first' and index == 1) then
+    elseif name_as_sort_order == "all" or (name_as_sort_order == "first" and index == 1) then
+
+      -- "Alan al-One"
+      local hyphen_splits = util.split(family, "%-", 1)
+      if #hyphen_splits > 1 then
+        local particle
+        particle, family = table.unpack(hyphen_splits)
+        particle = particle .. "-"
+        ndp = self._concat(ndp, particle)
+      end
+
       if demote_ndp then
         given = util.concat({given, dp, ndp}, " ")
       else
@@ -214,17 +224,20 @@ function Name:initialize (given, mark, context)
     given = string.gsub(given, "-", " ")
   end
   given = string.gsub(given, "%.", " ")
+  given = util.strip(given)
   local res = ""
   for _, word in ipairs(util.split(given)) do
     local parts = {}
-    for _, part in ipairs(util.split(word, "-")) do
-      local first_letter = utf8.char(utf8.codepoint(part))
-      if util.is_upper(first_letter) then
-        table.insert(parts, first_letter)
+    for _, part in ipairs(util.split(word, "%-")) do
+      if part ~= "" then
+        local first_letter = utf8.char(utf8.codepoint(part))
+        if util.is_upper(first_letter) then
+          table.insert(parts, first_letter)
+        end
       end
     end
-    local word = util.concat(parts, util.rstrip(mark) .. "-")
-    if word then
+    word = util.concat(parts, util.rstrip(mark) .. "-")
+    if word ~= "" then
       res = res .. word .. mark
     end
   end

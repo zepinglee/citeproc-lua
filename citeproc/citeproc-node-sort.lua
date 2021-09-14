@@ -59,6 +59,8 @@ local Key = Element:new()
 
 function Key:render (item, context)
   context = self:process_context(context)
+  context["name-as-sort-order"] = "all"
+  context.name_sorting = true
   local variable = self:get_attribute("variable")
   if variable then
     local variable_type = util.variable_types[variable]
@@ -83,11 +85,10 @@ function Key:_render_name (item, context)
   if not self.names then
     self.names = self:create_element("names", {}, self)
     Names:set_base_class(self.names)
+    self.names:set_attribute("form", "long")
   end
-  context["form"] = "long"
-  context["name-as-sort-order"] = "all"
-  context.name_sorting = true
-  return self.names:render(item, context)
+  local res = self.names:render(item, context)
+  return res
 end
 
 function Key:_render_date (item, context)

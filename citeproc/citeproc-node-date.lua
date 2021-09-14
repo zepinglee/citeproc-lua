@@ -176,7 +176,7 @@ end
 function Date:_get_show_parts (context)
   local show_parts = {}
   local date_parts = context["date-parts"] or "year-month-day"
-  for _, date_part in ipairs(util.split(date_parts, "-")) do
+  for _, date_part in ipairs(util.split(date_parts, "%-")) do
     show_parts[date_part] = true
   end
   return show_parts
