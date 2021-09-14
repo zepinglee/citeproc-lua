@@ -39,15 +39,15 @@ Element.option_type = {
 
 Element.inheritable_options = {
   -- Debug
-  ["level"] = true,
+  level = true,
   -- Engine
-  ["engine"] = true,
+  engine = true,
   -- Syle
   ["initialize-with-hyphen"] = true,
   ["page-range-format"] = true,
   ["demote-non-dropping-particle"] = true,
   -- Text
-  ["item"] = true,
+  item = true,
   -- Text
   rendered_quoted_text = true,
   -- Date
@@ -69,14 +69,16 @@ Element.inheritable_options = {
   ["name-form"] = true,
   ["name-delimiter"] = true,
   ["names-delimiter"] = true,
+  name_element = true,
   et_al = true,
-  ["variable"] = true,
+  label = true,
+  variable = true,
   -- Group
-  ["variable_attempt"] = true,
+  variable_attempt = true,
   -- Choose
-  ["position"] = true,
+  position = true,
   -- Sorting
-  ["name_sorting"] = true,
+  name_sorting = true,
 }
 
 function Element:render (item, context)

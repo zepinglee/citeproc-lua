@@ -72,7 +72,7 @@ function Name:render (names, context)
         if not self:_check_delimiter(delimiter_precedes_et_al, i, inverted) then
           delimiter = " "
         end
-        output = self:_concat_list({output, context.et_al}, delimiter, context)
+        output = self:_concat_list({output, context.et_al:render(context)}, delimiter, context)
         break
       end
     else
@@ -330,7 +330,7 @@ EtAl:set_default_options({
   term = "et-al",
 })
 
-EtAl.render = function (self, item, context)
+EtAl.render = function (self, context)
   self:debug_info(context)
   context = self:process_context(context)
   local res = self:get_term(context["term"]):render(context)
@@ -361,20 +361,32 @@ function Names:render (item, context)
   self:debug_info(context)
   context = self:process_context(context)
 
-  local et_al = self:get_child("et-al")
-  if et_al == nil then
-    et_al = self:create_element("et-al", {}, self)
-    EtAl:set_base_class(et_al)
-  end
-  context.et_al = et_al:render(item, context)
-
   local name = self:get_child("name")
-  if name == nil then
+  if not name then
+    name = context.name_element
+  end
+  if not name then
     name = self:create_element("name", {}, self)
     Name:set_base_class(name)
   end
+  context.name_element = name
+
+  local et_al = self:get_child("et-al")
+  if not et_al then
+    et_al = context.et_al
+  end
+  if not et_al then
+    et_al = self:create_element("et-al", {}, self)
+    EtAl:set_base_class(et_al)
+  end
+  context.et_al = et_al
 
   local label = self:get_child("label")
+  if label then
+    context.label = label
+  else
+    label = context.label
+  end
 
   local output = {}
   local num_names = 0
