@@ -137,8 +137,13 @@ function Name:render_single_name (name, index, context)
   local name_as_sort_order = context["name-as-sort-order"]
   local sort_separator = context["sort-separator"]
 
+  local demote_non_dropping_particle = context["demote-non-dropping-particle"]
+  local name_sorting = context.name_sorting
+
   local family = name["family"] or ""
   local given = name["given"] or ""
+  local dp = name["dropping-particle"] or ""
+  local ndp = name["non-dropping-particle"] or ""
   local suffix = name["suffix"] or ""
 
   if family == "" and given == "" then
@@ -153,10 +158,12 @@ function Name:render_single_name (name, index, context)
     given = self:initialize(given, initialize_with, context)
   end
 
-  for _, child in ipairs(self:get_children()) do
-    if child:is_element() and child:get_element_name() == "name-part" then
-      family, given = child:format_parts(family, given, context)
-    end
+  local demote_ndp = false  -- only active when form == "long"
+  if demote_non_dropping_particle == "display-and-sort" or
+  demote_non_dropping_particle == "sort-only" and name_sorting then
+    demote_ndp = true
+  else  -- demote_non_dropping_particle == "never"
+    demote_ndp = false
   end
 
   local res = nil
@@ -169,9 +176,19 @@ function Name:render_single_name (name, index, context)
       inverted = true
       sort_separator = ""
     elseif name_as_sort_order == 'all' or (name_as_sort_order == 'first' and index == 1) then
+      if demote_ndp then
+        given = util.concat({given, dp, ndp}, " ")
+      else
+        family = util.concat({ndp, family}, " ")
+        given = util.concat({given, dp}, " ")
+      end
+      family, given = self:format_name_parts(family, given, context)
       order = {family, given}
       inverted = true
     else
+      given = util.concat({given, dp}, " ")
+      family = util.concat({ndp, family}, " ")
+      family, given = self:format_name_parts(family, given, context)
       order = {given, family}
       sort_separator = " "
       if name["comma-suffix"] then
@@ -183,6 +200,8 @@ function Name:render_single_name (name, index, context)
     res = self:_concat_list(order, sort_separator, context)
     res = self:_concat_list({res, suffix}, suffix_separator, context)
   elseif form == "short" then
+    family = util.concat({ndp, family}, " ")
+    family, _ = self:format_name_parts(family, _, context)
     res = family
   else
     error(string.format('Invalid attribute form="%s" of "name".', form))
@@ -213,6 +232,14 @@ function Name:initialize (given, mark, context)
   return res
 end
 
+function Name:format_name_parts (family, given, context)
+  for _, child in ipairs(self:get_children()) do
+    if child:is_element() and child:get_element_name() == "name-part" then
+      family, given = child:format_parts(family, given, context)
+    end
+  end
+  return family, given
+end
 
 local NamePart = Element:new()
 

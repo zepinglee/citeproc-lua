@@ -8,7 +8,8 @@ local Style = Element:new()
 
 Style:set_default_options({
   ["initialize-with-hyphen"] = true,
-  ["inpage-range-format "] = nil,
+  ["page-range-format"] = nil,
+  ["demote-non-dropping-particle"] = "display-and-sort",
   rendered_quoted_text = {},
   variable_attempt = {},
 })

@@ -45,6 +45,7 @@ Element.inheritable_options = {
   -- Syle
   ["initialize-with-hyphen"] = true,
   ["page-range-format"] = true,
+  ["demote-non-dropping-particle"] = true,
   -- Text
   ["item"] = true,
   -- Text
@@ -74,6 +75,8 @@ Element.inheritable_options = {
   ["variable_attempt"] = true,
   -- Choose
   ["position"] = true,
+  -- Sorting
+  ["name_sorting"] = true,
 }
 
 function Element:render (item, context)

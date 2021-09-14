@@ -19,7 +19,6 @@ function Sort:sort (items, context)
     for _, item in ipairs(items) do
       context.item = item
       local value = key:render(item, context)
-      -- util.debug(value)
       if value == nil then
         value = false
       end
@@ -87,6 +86,7 @@ function Key:_render_name (item, context)
   end
   context["form"] = "long"
   context["name-as-sort-order"] = "all"
+  context.name_sorting = true
   return self.names:render(item, context)
 end
 

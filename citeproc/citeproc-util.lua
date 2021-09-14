@@ -83,13 +83,14 @@ end
 
 function util.concat (list, sep)
   -- This helper function omits empty strings in list, which is different from table.concat
-  local res = nil
+  -- This function always returns a string, even empty.
+  local res = ""
   for _, s in ipairs(list) do
     if s and s~= "" then
-      if res then
-        res = res .. sep .. s
-      else
+      if res == "" then
         res = s
+      else
+        res = res .. sep .. s
       end
     end
   end

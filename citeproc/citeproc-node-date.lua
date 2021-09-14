@@ -162,11 +162,6 @@ function Date:_render_date_range (date, context)
     end
   end
 
-  -- util.debug(inspect(same_prefix))
-  -- util.debug(inspect(range_begin))
-  -- util.debug(inspect(range_end))
-  -- util.debug(inspect(same_suffix))
-
   local prefix_output = self:concat(same_prefix, context) or ""
   local range_begin_output = self:concat(range_begin, context) or ""
   local range_end_output = self:concat(range_end, context) or ""
@@ -191,7 +186,7 @@ end
 local DatePart = Element:new()
 
 DatePart.render = function (self, date, context, last_range_begin, range_end)
-  -- util.debug(self:get_info())
+  self:debug_info(context)
   context = self:process_context(context)
   local name = context["name"]
   local range_delimiter = context["range-delimiter"] or false
