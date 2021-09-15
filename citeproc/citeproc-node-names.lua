@@ -209,22 +209,21 @@ function Name:render_single_name (name, index, context)
         given = util.concat({given, dp}, " ")
       end
       family, given = self:format_name_parts(family, given, context)
-      order = {family, given}
+      order = {family, given, suffix}
       inverted = true
     else
-      given = util.concat({given, dp}, " ")
-      family = util.concat({ndp, family}, " ")
-      family, given = self:format_name_parts(family, given, context)
-      order = {given, family}
-      sort_separator = " "
+      family = util.concat({dp, ndp, family}, " ")
       if name["comma-suffix"] then
         suffix_separator = ", "
       else
         suffix_separator = " "
       end
+      family = self:_concat_list({family, suffix}, suffix_separator, context)
+      family, given = self:format_name_parts(family, given, context)
+      order = {given, family}
+      sort_separator = " "
     end
     res = self:_concat_list(order, sort_separator, context)
-    res = self:_concat_list({res, suffix}, suffix_separator, context)
   elseif form == "short" then
     family = util.concat({ndp, family}, " ")
     family, _ = self:format_name_parts(family, _, context)
