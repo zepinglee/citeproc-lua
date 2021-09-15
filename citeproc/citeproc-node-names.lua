@@ -282,6 +282,9 @@ function Name:initialize (given, terminator, context)
 
     if is_particle then
       name_list[i] = name .. " "
+      if i > 1 and not string.match(name_list[i-1], "%s$") then
+        name_list[i-1] = name_list[i-1] .. " "
+      end
     elseif is_abbreviation then
       name_list[i] = name .. terminator
     else

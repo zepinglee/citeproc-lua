@@ -245,9 +245,17 @@ local function main ()
     print(string.format("Passed: %d/%d", num_passed_tests, #files))
   end
 
+  local previous_prefix = nil
   if not arg[1] then
     local file = io.open("test/failing_tests.txt", "w")
       for _, test in ipairs(failing_tests) do
+        local prefix = string.match(test, "^[^_]+")
+        if prefix ~= previous_prefix then
+          if previous_prefix then
+            file:write("\n")
+          end
+          previous_prefix = prefix
+        end
         file:write(test, "\n")
       end
     file:close()
