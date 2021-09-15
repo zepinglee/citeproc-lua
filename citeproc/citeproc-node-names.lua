@@ -375,6 +375,12 @@ local Substitute = Element:new()
 
 function Substitute:render (item, context)
   self:debug_info(context)
+
+  if context.suppressed_variables then
+    -- true in layout, not in sort
+    context.suppress_subsequent_variables = true
+  end
+
   for i, child in ipairs(self:get_children()) do
     if child:is_element() then
       local result = child:render(item, context)
@@ -423,7 +429,7 @@ function Names:render (item, context)
   local output = {}
   local num_names = 0
   for _, role in ipairs(util.split(context["variable"])) do
-    local names = item[role]
+    local names = self:get_variable(item, role, context)
 
     table.insert(context.variable_attempt, names ~= nil)
 

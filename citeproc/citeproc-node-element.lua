@@ -73,6 +73,9 @@ Element.inheritable_options = {
   et_al = true,
   label = true,
   variable = true,
+  -- substitute
+  suppressed_variables = true,
+  suppress_subsequent_variables = true,
   -- Group
   variable_attempt = true,
   -- Choose
@@ -156,6 +159,21 @@ function Element:get_engine ()
   assert(engine ~= nil)
   return engine
 end
+
+function Element:get_variable (item, name, context)
+  if context.suppressed_variables and context.suppressed_variables[name] then
+    return nil
+  else
+    local res = item[name]
+    if res and res ~= "" then
+      if context.suppress_subsequent_variables then
+        context.suppressed_variables[name] = true
+      end
+    end
+    return res
+  end
+end
+
 
 function Element:get_term (name, form, lang)
   local term = nil

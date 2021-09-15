@@ -16,7 +16,7 @@ function Text:render (item, context)
     if form == "short" then
       variable_name = variable_name .. "-" .. form
     end
-    res = item[variable_name]
+    res = self:get_variable(item, variable_name, context)
     if res then
       res = tostring(res)
       if variable_name == "page" then

@@ -31,6 +31,7 @@ end
 function Label:_is_plural (item, context)
   local variable_name = context["variable"]
   local variable_type = util.variable_types[variable_name]
+  -- Don't use self:get_variable here
   local value = item[variable_name]
   local res =false
   if variable_type == "name" then

@@ -16,7 +16,11 @@ function Layout:render (items, context)
 
   local output = {}
   for _, item in pairs(items) do
+
     context.item = item
+    context.suppressed_variables = {}
+    context.suppress_subsequent_variables = false
+
     local res = self:render_children(item, context)
     if res then
       if mode == "bibliography" then

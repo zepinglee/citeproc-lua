@@ -92,7 +92,7 @@ function Key:_render_name (item, context)
 end
 
 function Key:_render_date (item, context)
-  local variable = item[context["variable"]]
+  local variable = self:get_variable(item, context["variable"], context)
   if not variable then
     return nil
   end

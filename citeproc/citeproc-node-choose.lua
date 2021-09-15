@@ -29,7 +29,7 @@ If.render = function (self, item, context)
   local variable_names = context["is-numeric"]
   if variable_names then
     for _, variable_name in ipairs(util.split(variable_names)) do
-      local variable = item[variable_name]
+      local variable = self:get_variable(item, variable_name, context)
       table.insert(results, util.is_numeric(variable))
     end
   end
@@ -37,7 +37,7 @@ If.render = function (self, item, context)
   variable_names = context["is-uncertain-date"]
   if variable_names then
     for _, variable_name in ipairs(util.split(variable_names)) do
-      local variable = item[variable_name]
+      local variable = self:get_variable(item, variable_name, context)
       table.insert(results, util.is_uncertain_date(variable))
     end
   end
@@ -58,7 +58,7 @@ If.render = function (self, item, context)
   variable_names = context["variable"]
   if variable_names then
     for _, variable_name in ipairs(util.split(variable_names)) do
-      local variable = item[variable_name]
+      local variable = self:get_variable(item, variable_name, context)
       local res = (variable ~= nil and variable ~= "")
       table.insert(results, res)
     end

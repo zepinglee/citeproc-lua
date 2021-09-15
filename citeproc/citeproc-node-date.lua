@@ -9,7 +9,7 @@ function Date:render (item, context)
   context = self:process_context(context)
   local variable_name = context["variable"]
 
-  local date = item[variable_name]
+  local date = self:get_variable(item, variable_name, context)
   if not date then
     return nil
   end
