@@ -261,7 +261,7 @@ describe("String split", function ()
   end)
 
   -- describe("initialize-with-hyphen = false", function()
-  --   context["initialize-with-hyphen"] = false
+  --   context.options["initialize-with-hyphen"] = false
   --   context.initialize = true
   --   it("initialize", function()
   --     assert.equal("J.L.", name:initialize("Jean-Luc", ".", context))

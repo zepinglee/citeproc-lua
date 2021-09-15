@@ -6,7 +6,7 @@ local util = require("citeproc.citeproc-util")
 
 local Name = Element:new()
 
-Name:set_default_options({
+Name.default_options = {
   ["delimiter"] = ", ",
   ["delimiter-precedes-et-al"] = "contextual",
   ["delimiter-precedes-last"] = "contextual",
@@ -22,23 +22,24 @@ Name:set_default_options({
   ["sort-separator"] = ", ",
   ["prefix"] = "",
   ["suffix"] = "",
-})
+}
 
 function Name:render (names, context)
   self:debug_info(context)
   context = self:process_context(context)
-  local and_ = context["and"]
-  local delimiter = context["delimiter"]
-  local delimiter_precedes_et_al = context["delimiter-precedes-et-al"]
-  local delimiter_precedes_last = context["delimiter-precedes-last"]
-  local et_al_min = context["et-al-min"]
-  local et_al_use_first = context["et-al-use-first"]
-  local et_al_subsequent_min = context["et-al-subsequent-min"]
-  local et_al_subsequent_use_first = context["et-al-subsequent-use-first "]
-  local et_al_use_last = context["et-al-use-last"]
 
-  local form = context["form"]
-  local name_as_sort_order = context["name-as-sort-order"]
+  local and_ = context.options["and"]
+  local delimiter = context.options["delimiter"]
+  local delimiter_precedes_et_al = context.options["delimiter-precedes-et-al"]
+  local delimiter_precedes_last = context.options["delimiter-precedes-last"]
+  local et_al_min = context.options["et-al-min"]
+  local et_al_use_first = context.options["et-al-use-first"]
+  local et_al_subsequent_min = context.options["et-al-subsequent-min"]
+  local et_al_subsequent_use_first = context.options["et-al-subsequent-use-first "]
+  local et_al_use_last = context.options["et-al-use-last"]
+
+  local form = context.options["form"]
+  local name_as_sort_order = context.options["name-as-sort-order"]
 
   local et_al_truncate = et_al_min > 0 and et_al_use_first > 0 and #names >= et_al_min
   local et_al_last = et_al_use_last and et_al_use_first <= et_al_min - 2
@@ -79,16 +80,16 @@ function Name:render (names, context)
       end
     else
       if i > 1 then
-        if i == #names and context["and"] then
+        if i == #names and context.options["and"] then
           if self:_check_delimiter(delimiter_precedes_last, i, inverted) then
             output = self:_concat(output, delimiter, context)
           else
             output = output .. " "
           end
           local and_term = ""
-          if context["and"] == "text" then
+          if context.options["and"] == "text" then
             and_term = self:get_term("and"):render(context)
-          elseif context["and"] == "symbol" then
+          elseif context.options["and"] == "symbol" then
             and_term = self:escape("&")
           end
           output = output .. and_term .. " "
@@ -131,13 +132,13 @@ function Name:_check_delimiter (delimiter_attribute, index, inverted)
 end
 
 function Name:render_single_name (name, index, context)
-  local form = context["form"]
-  local initialize = context["initialize"]
-  local initialize_with = context["initialize-with"]
-  local name_as_sort_order = context["name-as-sort-order"]
-  local sort_separator = context["sort-separator"]
+  local form = context.options["form"]
+  local initialize = context.options["initialize"]
+  local initialize_with = context.options["initialize-with"]
+  local name_as_sort_order = context.options["name-as-sort-order"]
+  local sort_separator = context.options["sort-separator"]
 
-  local demote_non_dropping_particle = context["demote-non-dropping-particle"]
+  local demote_non_dropping_particle = context.options["demote-non-dropping-particle"]
   local name_sorting = context.name_sorting
 
   -- TODO: make it a module
@@ -239,8 +240,8 @@ function Name:initialize (given, terminator, context)
     return ""
   end
 
-  local initialize = context["initialize"]
-  if context["initialize-with-hyphen"] == false then
+  local initialize = context.options["initialize"]
+  if context.options["initialize-with-hyphen"] == false then
     given = string.gsub(given, "-", " ")
   end
 
@@ -341,7 +342,7 @@ local NamePart = Element:new()
 
 NamePart.format_parts = function (self, family, given, context)
   context = self:process_context(context)
-  local name = context["name"]
+  local name = context.options["name"]
 
   if name == "family" and family then
     family = self:case(family, context)
@@ -358,14 +359,14 @@ end
 
 local EtAl = Element:new()
 
-EtAl:set_default_options({
+EtAl.default_options = {
   term = "et-al",
-})
+}
 
 EtAl.render = function (self, context)
   self:debug_info(context)
   context = self:process_context(context)
-  local res = self:get_term(context["term"]):render(context)
+  local res = self:get_term(context.options["term"]):render(context)
   res = self:format(res, context)
   return res
 end
@@ -428,7 +429,7 @@ function Names:render (item, context)
 
   local output = {}
   local num_names = 0
-  for _, role in ipairs(util.split(context["variable"])) do
+  for _, role in ipairs(util.split(context.options["variable"])) do
     local names = self:get_variable(item, role, context)
 
     table.insert(context.variable_attempt, names ~= nil)

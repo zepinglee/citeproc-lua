@@ -7,6 +7,10 @@ local Sort = Element:new()
 
 function Sort:sort (items, context)
   self:debug_info(context)
+
+  context.rendered_quoted_text = {}
+  context.variable_attempt = {}
+
   local key_dict = {}
   for _, item in ipairs(items) do
     key_dict[item.id] = {}
@@ -59,7 +63,7 @@ local Key = Element:new()
 
 function Key:render (item, context)
   context = self:process_context(context)
-  context["name-as-sort-order"] = "all"
+  context.options["name-as-sort-order"] = "all"
   context.name_sorting = true
   local variable = self:get_attribute("variable")
   if variable then
@@ -92,7 +96,7 @@ function Key:_render_name (item, context)
 end
 
 function Key:_render_date (item, context)
-  local variable = self:get_variable(item, context["variable"], context)
+  local variable = self:get_variable(item, context.options["variable"], context)
   if not variable then
     return nil
   end

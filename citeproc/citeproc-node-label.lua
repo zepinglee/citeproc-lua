@@ -8,9 +8,9 @@ function Label:render (item, context)
   self:debug_info(context)
   context = self:process_context(context)
 
-  local variable_name = context["variable"]
-  local form = context["form"]
-  local plural = context["plural"] or "contextual"
+  local variable_name = context.options["variable"]
+  local form = context.options["form"]
+  local plural = context.options["plural"] or "contextual"
 
   local term = self:get_term(variable_name, form)
   local res = nil
@@ -29,7 +29,7 @@ function Label:render (item, context)
 end
 
 function Label:_is_plural (item, context)
-  local variable_name = context["variable"]
+  local variable_name = context.options["variable"]
   local variable_type = util.variable_types[variable_name]
   -- Don't use self:get_variable here
   local value = item[variable_name]

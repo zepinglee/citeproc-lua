@@ -26,7 +26,7 @@ If.render = function (self, item, context)
   context = self:process_context(context)
   local results = {}
 
-  local variable_names = context["is-numeric"]
+  local variable_names = context.options["is-numeric"]
   if variable_names then
     for _, variable_name in ipairs(util.split(variable_names)) do
       local variable = self:get_variable(item, variable_name, context)
@@ -34,7 +34,7 @@ If.render = function (self, item, context)
     end
   end
 
-  variable_names = context["is-uncertain-date"]
+  variable_names = context.options["is-uncertain-date"]
   if variable_names then
     for _, variable_name in ipairs(util.split(variable_names)) do
       local variable = self:get_variable(item, variable_name, context)
@@ -42,20 +42,20 @@ If.render = function (self, item, context)
     end
   end
 
-  local position = context["position"]
+  local position = context.options["position"]
   if position then
     -- TODO:
     table.insert(results, position == "first")
   end
 
-  local type_names = context["type"]
+  local type_names = context.options["type"]
   if type_names then
     for _, type_name in ipairs(util.split(type_names)) do
       table.insert(results, item["type"] == type_name)
     end
   end
 
-  variable_names = context["variable"]
+  variable_names = context.options["variable"]
   if variable_names then
     for _, variable_name in ipairs(util.split(variable_names)) do
       local variable = self:get_variable(item, variable_name, context)
@@ -64,7 +64,7 @@ If.render = function (self, item, context)
     end
   end
 
-  local match = context["match"] or "all"
+  local match = context.options["match"] or "all"
   local status = false
   if match == "any" then
     status = util.any(results)

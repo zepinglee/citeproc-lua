@@ -6,8 +6,8 @@ local Number = Element:new()
 
 function Number:render (item, context)
   context = self:process_context(context)
-  local form = context["form"] or "numeric"
-  local variable = self:get_variable(item, context["variable"], context)
+  local form = context.options["form"] or "numeric"
+  local variable = self:get_variable(item, context.options["variable"], context)
 
   table.insert(context.variable_attempt, variable ~= nil)
   table.insert(context.rendered_quoted_text, false)

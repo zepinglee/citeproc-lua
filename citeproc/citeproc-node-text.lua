@@ -50,7 +50,7 @@ function Text:render (item, context)
     res = self:escape(res)
   end
 
-  if res and context["quotes"] then
+  if res and context.options["quotes"] then
     table.insert(context.rendered_quoted_text, true)
   else
     table.insert(context.rendered_quoted_text, false)

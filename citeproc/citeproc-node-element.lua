@@ -3,7 +3,9 @@ local unicode = require("unicode")
 local util = require("citeproc.citeproc-util")
 
 
-local Element = {}
+local Element = {
+  default_options = {},
+}
 
 function Element:new ()
   local o = {}
@@ -38,22 +40,13 @@ Element.option_type = {
 }
 
 Element.inheritable_options = {
-  -- Debug
-  level = true,
-  -- Engine
-  engine = true,
-  -- Syle
+  -- Style
   ["initialize-with-hyphen"] = true,
   ["page-range-format"] = true,
   ["demote-non-dropping-particle"] = true,
-  -- Text
-  item = true,
-  -- Text
-  rendered_quoted_text = true,
   -- Date
   ["date-parts"] = true,
-  is_locale_date = true,
-  date_part_attributes = true,
+  ["variable"] = true,
   -- Names
   ["and"] = true,
   ["delimiter-precedes-et-al"] = true,
@@ -69,19 +62,6 @@ Element.inheritable_options = {
   ["name-form"] = true,
   ["name-delimiter"] = true,
   ["names-delimiter"] = true,
-  name_element = true,
-  et_al = true,
-  label = true,
-  variable = true,
-  -- substitute
-  suppressed_variables = true,
-  suppress_subsequent_variables = true,
-  -- Group
-  variable_attempt = true,
-  -- Choose
-  position = true,
-  -- Sorting
-  name_sorting = true,
 }
 
 function Element:render (item, context)
@@ -160,6 +140,75 @@ function Element:get_engine ()
   return engine
 end
 
+function Element:process_context (context)
+  local state = {
+    options = {}
+  }
+  for key, value in pairs(self.default_options) do
+    state.options[key] = value
+  end
+  if context then
+    local element_name = self:get_element_name()
+    for key, value in pairs(context) do
+      if key == "options" then
+        for k, v in pairs(context.options) do
+          if self.inheritable_options[k] then
+            state.options[k] = v
+            if element_name == "name" then
+              if k == "name-form" then
+                state.options["form"] = v
+              end
+              if k == "name-delimiter" then
+                state.options["delimiter"] = v
+              end
+            elseif element_name == "names" then
+              if k == "names-delimiter" then
+                state.options["delimiter"] = v
+              end
+            end
+          end
+        end
+      else
+        state[key] = value
+      end
+    end
+    if state.level then
+      state.level = state.level + 1
+    else
+      state.level = 0
+    end
+  end
+  if self._attr then
+    for key, value in pairs(self._attr) do
+      if self.option_type[key] == "integer" then
+        value = tonumber(value)
+      elseif self.option_type[key] == "boolean" then
+        value = (value == "true")
+      end
+      state.options[key] = value
+    end
+  end
+  return state
+end
+
+function Element:get_option (key, context)
+  if not context or not context.options then
+    error("option not found")
+  end
+  return context.options[key]
+end
+
+function Element:get_locale_option (key)
+  local locales = self:get_style():get_locales()
+  for i, locale in ipairs(locales) do
+    local option = locale:get_option(key)
+    if option then
+      return option
+    end
+  end
+  return nil
+end
+
 function Element:get_variable (item, name, context)
   if context.suppressed_variables and context.suppressed_variables[name] then
     return nil
@@ -174,6 +223,14 @@ function Element:get_variable (item, name, context)
   end
 end
 
+function Element:get_macro (name)
+  local query = string.format("macro[name=\"%s\"]", name)
+  local macro = self:root_node():query_selector(query)[1]
+  if not macro then
+    error(string.format("Failed to find %s.", query))
+  end
+  return macro
+end
 
 function Element:get_term (name, form, lang)
   local term = nil
@@ -207,75 +264,6 @@ function Element:get_term (name, form, lang)
   return term
 end
 
-function Element:get_macro (name)
-  local query = string.format("macro[name=\"%s\"]", name)
-  local macro = self:root_node():query_selector(query)[1]
-  if not macro then
-    error(string.format("Failed to find %s.", query))
-  end
-  return macro
-end
-
-function Element:set_default_options (options)
-  self.default_options = options
-end
-
-function Element:process_context (context)
-  local state = {}
-  if self.default_options then
-    for key, value in pairs(self.default_options) do
-      state[key] = value
-    end
-  end
-  if context then
-    for key, value in pairs(context) do
-      if self.inheritable_options[key] then
-        state[key] = value
-      end
-    end
-    if self:get_element_name() == "name" then
-      if context["name-form"] then
-        state["form"] = context["name-form"]
-      end
-      if context["name-delimiter"] then
-        state["delimiter"] = context["name-delimiter"]
-      end
-    end
-    if self:get_element_name() == "names" then
-      if context["names-delimiter"] then
-        state["delimiter"] = context["names-delimiter"]
-      end
-    end
-    if state.level then
-      state.level = state.level + 1
-    else
-      state.level = 0
-    end
-  end
-  if self._attr then
-    for key, value in pairs(self._attr) do
-      if self.option_type[key] == "integer" then
-        value = tonumber(value)
-      elseif self.option_type[key] == "boolean" then
-        value = (value == "true")
-      end
-      state[key] = value
-    end
-  end
-  return state
-end
-
-Element.get_locale_option = function (self, key)
-  local locales = self:get_style():get_locales()
-  for i, locale in ipairs(locales) do
-    local option = locale:get_option(key)
-    if option then
-      return option
-    end
-  end
-  return nil
-end
-
 -- Formatting
 function Element:escape (str, context)
   return self:get_engine().formatter.text_escape(str)
@@ -293,7 +281,7 @@ function Element:format (str, context)
     "vertical-align",
   }
   for _, attribute in ipairs(attributes) do
-    local value = context[attribute]
+    local value = context.options[attribute]
     if value then
       local key = string.format("@%s/%s", attribute, value)
       local formatter = self:get_engine().formatter[key]
@@ -314,8 +302,8 @@ function Element:wrap (str, context)
   if not str then
     return nil
   end
-  local prefix = context['prefix'] or ""
-  local suffix = context['suffix'] or ""
+  local prefix = context.options["prefix"] or ""
+  local suffix = context.options["suffix"] or ""
   local res = prefix .. str
   res = self:_concat(res, suffix, context)
   return res
@@ -364,13 +352,13 @@ end
 
 -- Delimiters
 function Element:concat (strings, context)
-  local delimiter = context["delimiter"] or ""
+  local delimiter = context.options["delimiter"] or ""
   return self:_concat_list(strings, delimiter, context)
 end
 
 -- Quotes
 function Element:quote (str, context)
-  local quotes = context["quotes"] or false
+  local quotes = context.options["quotes"] or false
   if quotes then
     local open_quote = self:get_term("open-quote"):render(context)
     local close_quote = self:get_term("close-quote"):render(context)
@@ -384,7 +372,7 @@ function Element:case (str, context)
   if not str then
     return nil
   end
-  local text_case = context["text-case"]
+  local text_case = context.options["text-case"]
   local language = context.item["language"]
   if not language then
     language = self:get_style():get_attribute("default-locale") or "en-US"

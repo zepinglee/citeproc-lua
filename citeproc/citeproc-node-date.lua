@@ -7,7 +7,7 @@ local Date = Element:new()
 function Date:render (item, context)
   self:debug_info(context)
   context = self:process_context(context)
-  local variable_name = context["variable"]
+  local variable_name = context.options["variable"]
 
   local date = self:get_variable(item, variable_name, context)
   if not date then
@@ -15,7 +15,7 @@ function Date:render (item, context)
   end
 
   local res = nil
-  local form = context["form"]
+  local form = context.options["form"]
   if form and not context.is_locale_date then
     context.is_locale_date = true
     for _, date_part in ipairs(self:query_selector("date-part")) do
@@ -143,7 +143,7 @@ function Date:_render_date_range (date, context)
   local same_suffix = {}
 
   local no_suffix_context = self:process_context(context)
-  no_suffix_context["suffix"] = nil
+  no_suffix_context.options["suffix"] = nil
 
   for i, date_part in ipairs(date_parts) do
     local res = nil
@@ -175,7 +175,7 @@ end
 
 function Date:_get_show_parts (context)
   local show_parts = {}
-  local date_parts = context["date-parts"] or "year-month-day"
+  local date_parts = context.options["date-parts"] or "year-month-day"
   for _, date_part in ipairs(util.split(date_parts, "%-")) do
     show_parts[date_part] = true
   end
@@ -188,8 +188,8 @@ local DatePart = Element:new()
 DatePart.render = function (self, date, context, last_range_begin, range_end)
   self:debug_info(context)
   context = self:process_context(context)
-  local name = context["name"]
-  local range_delimiter = context["range-delimiter"] or false
+  local name = context.options["name"]
+  local range_delimiter = context.options["range-delimiter"] or false
 
   -- The attributes set on cs:date-part elements of a cs:date with form
   -- attribute override those specified for the localized date formats
@@ -197,13 +197,13 @@ DatePart.render = function (self, date, context, last_range_begin, range_end)
     local context_attributes = context.date_part_attributes[name]
     if context_attributes then
       for attr, value in pairs(context_attributes) do
-        context[attr] = value
+        context.options[attr] = value
       end
     end
   end
 
   if last_range_begin then
-    context["suffix"] = ""
+    context.options["suffix"] = ""
   end
 
   local date_parts_index = 1
@@ -222,10 +222,10 @@ DatePart.render = function (self, date, context, last_range_begin, range_end)
     if day == 0 then
       return nil
     end
-    local form = context["form"] or "numeric"
+    local form = context.options["form"] or "numeric"
 
     if form == "ordinal" then
-      local option = self:get_locale_option('limit-day-ordinals-to-day-1')
+      local option = self:get_locale_option("limit-day-ordinals-to-day-1")
       if option and option ~= "false" and day > 1 then
         form = "numeric"
       end
@@ -239,8 +239,8 @@ DatePart.render = function (self, date, context, last_range_begin, range_end)
     end
 
   elseif name == "month" then
-    local form = context["form"] or "long"
-    local strip_periods = context["strip-periods"] or false
+    local form = context.options["form"] or "long"
+    local strip_periods = context.options["strip-periods"] or false
 
     local month = date["date-parts"][date_parts_index][2]
     if month then
@@ -290,7 +290,7 @@ DatePart.render = function (self, date, context, last_range_begin, range_end)
       if year == 0 then
         return nil
       end
-      local form = context["form"] or "long"
+      local form = context.options["form"] or "long"
       if form == "long" then
         year = tonumber(year)
         if year < 0 then

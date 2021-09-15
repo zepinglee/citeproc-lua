@@ -18,6 +18,8 @@ function Layout:render (items, context)
   for _, item in pairs(items) do
 
     context.item = item
+    context.rendered_quoted_text = {}
+    context.variable_attempt = {}
     context.suppressed_variables = {}
     context.suppress_subsequent_variables = false
 
