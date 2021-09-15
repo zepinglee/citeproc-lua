@@ -400,6 +400,24 @@ function Names:render (item, context)
   self:debug_info(context)
   context = self:process_context(context)
 
+  local names_delimiter = context.options["names-delimiter"]
+  if names_delimiter then
+    context.options["delimiter"] = names_delimiter
+  end
+
+  -- Inherit attributes of parent `names` element
+  local names = context.names_element
+  if names then
+    for key, value in pairs(names._attr) do
+      context.options[key] = value
+    end
+    for key, value in pairs(self._attr) do
+      context.options[key] = value
+    end
+  else
+    context.names_element = self
+  end
+
   local name = self:get_child("name")
   if not name then
     name = context.name_element
