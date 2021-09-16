@@ -12,17 +12,18 @@ function Number:render (item, context)
   table.insert(context.variable_attempt, variable ~= nil)
   table.insert(context.rendered_quoted_text, false)
 
-  local text = ""
+  local res = nil
   if form == "numeric" then
-    text = tostring(variable)
+    res = tostring(variable)
   elseif form == "ordinal" then
-    text = util.to_ordinal(variable)
+    res = util.to_ordinal(variable)
   elseif form == "long-ordinal" then
-    text = tostring(variable)
+    res = tostring(variable)
   elseif form == "roman" then
-    text = tostring(variable)
+    res = tostring(variable)
   end
-  return text
+  res = self:wrap(res, context)
+  return res
 end
 
 

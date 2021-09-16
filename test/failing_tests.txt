@@ -290,7 +290,6 @@ name_SubstitutePartialEach
 name_TwoRolesSameRenderingSeparateRoleLabels
 name_WithNonBreakingSpace
 
-number_FailingDelimiters
 number_LimitOrdinalsToDayOne
 number_NewOrdinalsEdition
 number_NewOrdinalsWithGenderChange
