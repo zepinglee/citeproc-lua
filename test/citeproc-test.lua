@@ -207,8 +207,8 @@ local function main ()
     local result = run_test(fixture, #files > 1)
 
     if #files == 1 then
-      print("RESULT  : " .. inspect(result))
-      print("EXPECTED: " .. inspect(fixture.result))
+      print("RESULT  : ", inspect(result))
+      print("EXPECTED: ", inspect(fixture.result))
       if result == fixture.result then
         print("Passed")
       else

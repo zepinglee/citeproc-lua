@@ -26,6 +26,10 @@ function Style:render_biblography (items, context)
   return bibliography:render(items, context)
 end
 
+function Style:get_version ()
+  return self:get_attribute("version")
+end
+
 function Style:get_locales (lang)
   lang = lang or self:get_attribute("default-locale") or "en-US"
 

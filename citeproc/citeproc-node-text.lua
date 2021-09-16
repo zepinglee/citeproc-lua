@@ -70,11 +70,10 @@ function Text:_format_page (page, context)
   local page_range_delimiter = self:get_term("page-range-delimiter"):render(context) or util.unicode["en dash"]
   local page_range_format = context.options["page-range-format"]
   if page_range_format == "chicago" then
-    local csl_version = self:get_style().version
-    if csl_version and csl_version <= "1.0.1" then
-      page_range_format = "chicago-15"
-    else
+    if self:get_style():get_version() >= "1.1" then
       page_range_format = "chicago-16"
+    else
+      page_range_format = "chicago-15"
     end
   end
 
@@ -120,41 +119,57 @@ function Text:_format_range (str, format, range_delimiter)
     return start .. delimiter .. stop
   end
 
-  -- Expand  "1234–56" -> "1234–1256"
-  if #start_num > #stop_num then
-    stop_num = string.sub(start_num, 1, #start_num - #stop_num) .. stop_num
-  end
-
   if format == "chicago-16" then
-    stop = self:_format_chicago_16(start_num, stop_num)
+    stop = self:_format_range_chicago_16(start_num, stop_num)
   elseif format == "chicago-15" then
-    stop = self:_format_chicago_15(start_num, stop_num)
+    stop = self:_format_range_chicago_15(start_num, stop_num)
   elseif format == "expanded" then
-    stop = stop_prefix .. stop_num
+    stop = stop_prefix .. self:_format_range_expanded(start_num, stop_num)
   elseif format == "minimal" then
-    stop = self:_minimize_range(start_num, stop_num)
+    stop = self:_format_range_minimal(start_num, stop_num)
   elseif format == "minimal-two" then
-    stop = self:_minimize_range(start_num, stop_num, 2)
+    stop = self:_format_range_minimal(start_num, stop_num, 2)
   end
 
   return start .. range_delimiter .. stop
 end
 
-function Text:_format_chicago_16(start, stop)
-end
-
-function Text:_format_chicago_15(start, stop)
-  start, stop = tonumber(start), tonumber(stop)
-  if start > 100 and start % 100 ~= 0 and start // 100 == stop // 100 then
-    stop = stop % 100
-  elseif start >= 10000 then
-    -- Assuming stop < 20000
-    stop = stop % 1000
+function Text:_format_range_chicago_16(start, stop)
+  if #start < 3 or string.sub(start, -2) == "00" then
+    return self:_format_range_expanded(start, stop)
+  elseif string.sub(start, -2, -2) == "0" then
+    return self:_format_range_minimal(start, stop)
+  else
+    return self:_format_range_minimal(start, stop, 2)
   end
-  return tostring(stop)
+  return stop
 end
 
-function Text:_minimize_range(start, stop, threshold)
+function Text:_format_range_chicago_15(start, stop)
+  if #start < 3 or string.sub(start, -2) == "00" then
+    return self:_format_range_expanded(start, stop)
+  else
+    local changed_digits = self:_format_range_minimal(start, stop)
+    if string.sub(start, -2, -2) == "0" then
+      return changed_digits
+    elseif #start == 4 and #changed_digits == 3 then
+      return self:_format_range_expanded(start, stop)
+    else
+      return self:_format_range_minimal(start, stop, 2)
+    end
+  end
+  return stop
+end
+
+function Text:_format_range_expanded(start, stop)
+  -- Expand  "1234–56" -> "1234–1256"
+  if #start <= #stop then
+    return stop
+  end
+  return string.sub(start, 1, #start - #stop) .. stop
+end
+
+function Text:_format_range_minimal(start, stop, threshold)
   threshold = threshold or 1
   if #start < #stop then
     return stop
