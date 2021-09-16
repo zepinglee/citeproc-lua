@@ -14,9 +14,11 @@ function Text:render (item, context)
   if variable_name then
     local form = self:get_attribute("form")
     if form == "short" then
-      variable_name = variable_name .. "-" .. form
+      res = self:get_variable(item, variable_name  .. "-" .. form, context)
     end
-    res = self:get_variable(item, variable_name, context)
+    if not res then
+      res = self:get_variable(item, variable_name, context)
+    end
     if res then
       res = tostring(res)
       if variable_name == "page" then

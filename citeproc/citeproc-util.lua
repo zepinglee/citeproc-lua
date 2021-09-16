@@ -9,6 +9,7 @@ local unicode = require("unicode")
 local util = {}
 
 function util.to_ordinal (n)
+  assert(type(n) == "number")
   local last_digit = n % 10
   if last_digit == 1 and n ~= 11
     then return tostring(n) .. "st"
