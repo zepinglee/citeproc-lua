@@ -90,15 +90,7 @@ function Text:_format_page (page, context)
 
   res = ""
   for i, part in ipairs(page_parts) do
-    local start, stop = string.match(part, "(%w+)%s*%-*%s*(%S*)")
-    res = res .. start
-    if stop and stop ~= "" then
-      res = res .. page_range_delimiter
-      if string.match(start, "%d+") and string.match(stop, "%d+") then
-        start, stop = self:_format_range(start, stop, page_range_format)
-      end
-      res = res .. stop
-    end
+    res = res .. self:_format_range(part, page_range_format, page_range_delimiter)
     local punct = punct_list[i]
     if punct then
       if punct == "&" then
@@ -112,39 +104,69 @@ function Text:_format_page (page, context)
   return res
 end
 
-function Text:_format_range (start, stop, format)
-  if #start > #stop then
-    stop = string.sub(start, 1, #start - #stop) .. stop
+function Text:_format_range (str, format, range_delimiter)
+  local start, delimiter, stop = string.match(str, "(%w+)%s*(%-*)%s*(%S*)")
+  if not stop or stop == "" then
+    return str
   end
+
+  local start_prefix, start_num  = string.match(start, "(.-)(%d*)$")
+  local stop_prefix, stop_num = string.match(stop, "(.-)(%d*)$")
+
+  -- print(start, stop, start_num, stop_num)
+  if start_prefix ~= "" and stop_prefix == "" then
+    -- Not valid range: "n11564-1568" -> "n11564-1568"
+    return start .. delimiter .. stop
+  end
+
+  if start_prefix ~= stop_prefix then
+    -- "A112-B23"
+    return start .. range_delimiter .. stop
+  end
+
+  -- Expand  "1234–56" -> "1234–1256"
+  if #start_num > #stop_num then
+    stop_num = string.sub(start_num, 1, #start_num - #stop_num) .. stop_num
+  end
+
   if format == "chicago-16" then
+    stop = self:_format_chicago_16(start_num, stop_num)
   elseif format == "chicago-15" then
-    start, stop = tonumber(start), tonumber(stop)
-    if start > 100 and start % 100 ~= 0 and start // 100 == stop // 100 then
-      stop = stop % 100
-    elseif start >= 10000 then
-      stop = stop % 1000
-    end
-    start, stop = tostring(start), tostring(stop)
+    stop = self:_format_chicago_15(start_num, stop_num)
   elseif format == "minimal" then
-    if #start >= #stop then
-      for i in 1, #stop do
-        if stop[i] ~= start[i + #start - #stop] then
-          stop = string.sub(stop, i)
-          break
-        end
-      end
-    end
+    stop = self:_minimize_range(start_num, stop_num)
   elseif format == "minimal-two" then
-    if #start >= #stop then
-      for i in 1, #stop - 2 do
-        if stop[i] ~= start[i + #start - #stop] then
-          stop = string.sub(stop, i)
-          break
-        end
+    stop = self:_minimize_range(start_num, stop_num, 2)
+  end
+
+  return start .. range_delimiter .. stop
+end
+
+function Text:_format_chicago_16(start, stop)
+end
+
+function Text:_format_chicago_15(start, stop)
+  start, stop = tonumber(start), tonumber(stop)
+  if start > 100 and start % 100 ~= 0 and start // 100 == stop // 100 then
+    stop = stop % 100
+  elseif start >= 10000 then
+    -- Assuming stop < 20000
+    stop = stop % 1000
+  end
+  return tostring(stop)
+end
+
+function Text:_minimize_range(start, stop, threshold)
+  threshold = threshold or 1
+  if #start >= #stop then
+    for i in 1, #stop - threshold do
+      if stop[i] ~= start[i + #start - #stop] then
+        return string.sub(stop, i)
       end
     end
+    return string.sub(stop, -threshold)
   end
-  return start, stop
+  return stop
 end
 
 return Text
