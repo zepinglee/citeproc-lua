@@ -38,6 +38,7 @@ function CiteProc:new (sys, style)
   o.csl:root_node().engine = o
   o.style = o.csl:get_path("style")[1]
   o.csl:root_node().style = o.style
+  o.style.version = o.style:get_attribute("version")
 
   o.formatter = formats.html
 

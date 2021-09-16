@@ -20,8 +20,7 @@ function Text:render (item, context)
     if res then
       res = tostring(res)
       if variable_name == "page" then
-        local page_range_delimiter = self:get_term("page-range-delimiter"):render(context) or util.unicode["en dash"]
-        res = string.gsub(res, "-", page_range_delimiter, 1)
+        res = self:_format_page(res, context)
       end
     end
 
@@ -64,5 +63,89 @@ function Text:render (item, context)
   return res
 end
 
+
+function Text:_format_page (page, context)
+  local res = nil
+
+  local page_range_delimiter = self:get_term("page-range-delimiter"):render(context) or util.unicode["en dash"]
+  local page_range_format = context.options["page-range-format"]
+  if page_range_format == "chicago" then
+    local csl_version = self:get_style().version
+    if csl_version and csl_version <= "1.0.1" then
+      page_range_format = "chicago-15"
+    else
+      page_range_format = "chicago-16"
+    end
+  end
+
+  local last_position = 1
+  local page_parts = {}
+  local punct_list = {}
+  for part, punct, pos in string.gmatch(page, "(.-)%s*([,&])%s*()") do
+    table.insert(page_parts, part)
+    table.insert(punct_list, punct)
+    last_position = pos
+  end
+  table.insert(page_parts, string.sub(page, last_position))
+
+  res = ""
+  for i, part in ipairs(page_parts) do
+    local start, stop = string.match(part, "(%w+)%s*%-*%s*(%S*)")
+    res = res .. start
+    if stop and stop ~= "" then
+      res = res .. page_range_delimiter
+      if string.match(start, "%d+") and string.match(stop, "%d+") then
+        start, stop = self:_format_range(start, stop, page_range_format)
+      end
+      res = res .. stop
+    end
+    local punct = punct_list[i]
+    if punct then
+      if punct == "&" then
+        res = res .. " " .. punct .. " "
+      else
+        res = res .. punct .. " "
+      end
+    end
+  end
+  res = self:escape(res)
+  return res
+end
+
+function Text:_format_range (start, stop, format)
+  if format == "chicago-16" then
+  elseif format == "chicago-15" then
+    start, stop = tonumber(start), tonumber(stop)
+    if start > 100 and start % 100 ~= 0 and start // 100 == stop // 100 then
+      stop = stop % 100
+    elseif start >= 10000 then
+      stop = stop % 1000
+    end
+    start, stop = tostring(start), tostring(stop)
+  elseif format == "expanded" then
+    if #start > #stop then
+      stop = string.sub(start, 1, #start - #stop) .. stop
+    end
+  elseif format == "minimal" then
+    if #start >= #stop then
+      for i in 1, #stop do
+        if stop[i] ~= start[i + #start - #stop] then
+          stop = string.sub(stop, i)
+          break
+        end
+      end
+    end
+  elseif format == "minimal-two" then
+    if #start >= #stop then
+      for i in 1, #stop - 2 do
+        if stop[i] ~= start[i + #start - #stop] then
+          stop = string.sub(stop, i)
+          break
+        end
+      end
+    end
+  end
+  return start, stop
+end
 
 return Text

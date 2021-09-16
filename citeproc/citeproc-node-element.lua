@@ -192,9 +192,7 @@ function Element:process_context (context)
 end
 
 function Element:get_option (key, context)
-  if not context or not context.options then
-    error("option not found")
-  end
+  assert(context ~= nil)
   return context.options[key]
 end
 

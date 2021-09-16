@@ -22,7 +22,6 @@ bugreports_CitationSortsWithEtAl
 bugreports_CollapseFailure
 bugreports_ContainerTitleShort
 bugreports_ContentPunctuationDuplicate1
-bugreports_ContextualPluralWithMainItemFields
 bugreports_CreepingAddNames
 bugreports_DelimiterOnLayout
 bugreports_DelimitersOnLocator
@@ -293,7 +292,6 @@ name_WithNonBreakingSpace
 
 number_FailingDelimiters
 number_LimitOrdinalsToDayOne
-number_MixedPageRange
 number_NewOrdinalsEdition
 number_NewOrdinalsWithGenderChange
 number_OrdinalSpacing
@@ -309,7 +307,6 @@ page_ChicagoWeird
 page_Expand
 page_ExpandWeirdComposite
 page_Minimal
-page_WithLocaleAndWeirdDelimiter
 
 plural_LabelForced
 plural_NameLabelAlways
