@@ -302,11 +302,11 @@ number_SeparateOrdinalNamespaces
 number_SimpleNumberOrdinalLong
 number_SimpleNumberRoman
 
-page_Chicago
 page_ChicagoWeird
 page_Expand
 page_ExpandWeirdComposite
 page_Minimal
+page_NoOption
 
 plural_LabelForced
 plural_NameLabelAlways

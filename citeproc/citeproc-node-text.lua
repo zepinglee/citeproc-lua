@@ -113,6 +113,9 @@ function Text:_format_page (page, context)
 end
 
 function Text:_format_range (start, stop, format)
+  if #start > #stop then
+    stop = string.sub(start, 1, #start - #stop) .. stop
+  end
   if format == "chicago-16" then
   elseif format == "chicago-15" then
     start, stop = tonumber(start), tonumber(stop)
@@ -122,10 +125,6 @@ function Text:_format_range (start, stop, format)
       stop = stop % 1000
     end
     start, stop = tostring(start), tostring(stop)
-  elseif format == "expanded" then
-    if #start > #stop then
-      stop = string.sub(start, 1, #start - #stop) .. stop
-    end
   elseif format == "minimal" then
     if #start >= #stop then
       for i in 1, #stop do
