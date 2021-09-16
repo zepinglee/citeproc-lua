@@ -302,8 +302,6 @@ number_SeparateOrdinalNamespaces
 number_SimpleNumberOrdinalLong
 number_SimpleNumberRoman
 
-page_NoOption
-
 plural_LabelForced
 plural_NameLabelAlways
 plural_NameLabelContextualPlural

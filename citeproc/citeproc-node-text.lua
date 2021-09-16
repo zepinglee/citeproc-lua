@@ -129,12 +129,12 @@ function Text:_format_range (str, format, range_delimiter)
     stop = self:_format_chicago_16(start_num, stop_num)
   elseif format == "chicago-15" then
     stop = self:_format_chicago_15(start_num, stop_num)
+  elseif format == "expanded" then
+    stop = stop_prefix .. stop_num
   elseif format == "minimal" then
     stop = self:_minimize_range(start_num, stop_num)
   elseif format == "minimal-two" then
     stop = self:_minimize_range(start_num, stop_num, 2)
-  else  -- format == "expanded"
-    stop = stop_prefix .. stop_num
   end
 
   return start .. range_delimiter .. stop
