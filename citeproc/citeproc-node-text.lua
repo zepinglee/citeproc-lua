@@ -113,15 +113,11 @@ function Text:_format_range (str, format, range_delimiter)
   local start_prefix, start_num  = string.match(start, "(.-)(%d*)$")
   local stop_prefix, stop_num = string.match(stop, "(.-)(%d*)$")
 
-  -- print(start, stop, start_num, stop_num)
-  if start_prefix ~= "" and stop_prefix == "" then
-    -- Not valid range: "n11564-1568" -> "n11564-1568"
-    return start .. delimiter .. stop
-  end
-
   if start_prefix ~= stop_prefix then
-    -- "A112-B23"
-    return start .. range_delimiter .. stop
+    -- Not valid range: "n11564-1568" -> "n11564-1568"
+    -- 110-N6
+    -- N110-P5
+    return start .. delimiter .. stop
   end
 
   -- Expand  "1234–56" -> "1234–1256"
@@ -137,6 +133,8 @@ function Text:_format_range (str, format, range_delimiter)
     stop = self:_minimize_range(start_num, stop_num)
   elseif format == "minimal-two" then
     stop = self:_minimize_range(start_num, stop_num, 2)
+  else  -- format == "expanded"
+    stop = stop_prefix .. stop_num
   end
 
   return start .. range_delimiter .. stop
