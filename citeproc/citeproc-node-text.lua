@@ -156,15 +156,17 @@ end
 
 function Text:_minimize_range(start, stop, threshold)
   threshold = threshold or 1
-  if #start >= #stop then
-    for i in 1, #stop - threshold do
-      if stop[i] ~= start[i + #start - #stop] then
-        return string.sub(stop, i)
-      end
-    end
-    return string.sub(stop, -threshold)
+  if #start < #stop then
+    return stop
   end
-  return stop
+  local offset = #start - #stop
+  for i = 1, #stop - threshold do
+    local j = i + offset
+    if string.sub(stop, i, i) ~= string.sub(start, j, j) then
+      return string.sub(stop, i)
+    end
+  end
+  return string.sub(stop, -threshold)
 end
 
 return Text

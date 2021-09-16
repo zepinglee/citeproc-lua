@@ -302,7 +302,6 @@ number_SeparateOrdinalNamespaces
 number_SimpleNumberOrdinalLong
 number_SimpleNumberRoman
 
-page_Minimal
 page_NoOption
 
 plural_LabelForced
