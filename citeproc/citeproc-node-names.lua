@@ -460,7 +460,7 @@ function Names:render (item, context)
         if type(res) == "number" then  -- name[form="count"]
           num_names = num_names + res
         elseif label then
-          local label_result = label:render(item, context)
+          local label_result = label:render(role, context)
           if label_result then
             res = res .. label_result
           end

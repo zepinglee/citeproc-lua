@@ -8,14 +8,26 @@ function Label:render (item, context)
   self:debug_info(context)
   context = self:process_context(context)
 
-  local variable_name = context.options["variable"]
+  local variable_name
+  if context.names_element then
+    -- The `variable` attribute of names may hold multiple roles.
+    -- Each of them may call `Label:render()` to render the term.
+    -- When used in `names` element, the role name is the first argument
+    -- and the item is accessed via `context.item`.
+    -- Bad design
+    -- TODO: Redesign the arguments of render()
+    variable_name = item
+  else
+    variable_name = context.options["variable"]
+  end
+
   local form = context.options["form"]
   local plural = context.options["plural"] or "contextual"
 
   local term = self:get_term(variable_name, form)
   local res = nil
   if term then
-    if plural == "contextual" and self:_is_plural(item, context) or plural == "always" then
+    if plural == "contextual" and self:_is_plural(variable_name, context) or plural == "always" then
       res = term:render(context, true)
     else
       res = term:render(context, false)
@@ -28,11 +40,10 @@ function Label:render (item, context)
   return res
 end
 
-function Label:_is_plural (item, context)
-  local variable_name = context.options["variable"]
+function Label:_is_plural (variable_name, context)
   local variable_type = util.variable_types[variable_name]
   -- Don't use self:get_variable here
-  local value = item[variable_name]
+  local value = context.item[variable_name]
   local res = false
   if variable_type == "name" then
     -- Label inside `names`
