@@ -33,14 +33,23 @@ function Label:_is_plural (item, context)
   local variable_type = util.variable_types[variable_name]
   -- Don't use self:get_variable here
   local value = item[variable_name]
-  local res =false
+  local res = false
   if variable_type == "name" then
+    -- Label inside `names`
     res = #value > 1
+
   elseif variable_type == "number" then
     if util.startswith(variable_name, "number-of-") then
       res = tonumber(value) > 1
+    elseif #util.split(tostring(value), "%s*[,&-]%s*") <= 1 then
+      -- check if contains multiple numbers
+      -- "i–ix": true
+      -- res = string.match(tostring(value), "%d+%D+%d+") ~= nil
+      res = false
+    elseif string.match(value, "\\%-") then
+      res = false
     else
-      res = string.match(tostring(value), "%d+%D+%d+") ~= nil
+      res = true
     end
   else
     util.warning("Invalid attribute \"variable\".")

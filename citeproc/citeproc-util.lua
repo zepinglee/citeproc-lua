@@ -164,6 +164,7 @@ end
 
 util.variable_types = {}
 
+-- schema/schemas/styles/csl-variables.rnc
 util.variables = {}
 
 -- Date variables
