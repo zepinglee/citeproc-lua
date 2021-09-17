@@ -500,6 +500,33 @@ function util.is_romanesque (s)
   return res
 end
 
+function util.convert_roman (number)
+  assert(type(number) == "number")
+  local output = {}
+  for _, tuple in ipairs(util.roman_numerals) do
+    local letter, value = table.unpack(tuple)
+    table.insert(output, string.rep(letter, number // value))
+    number = number % value
+  end
+  return table.concat(output, "")
+end
+
+util.roman_numerals = {
+  {"m",  1000},
+  {"cm", 900},
+  {"d",  500},
+  {"cd", 400},
+  {"c",  100},
+  {"xc", 90},
+  {"l",  50},
+  {"xl", 40},
+  {"x",  10},
+  {"ix", 9},
+  {"v",  5},
+  {"iv", 4},
+  {"i",  1},
+};
+
 util.superscripts = {
   ["\u{00AA}"] = "\u{0061}",
   ["\u{00B2}"] = "\u{0032}",

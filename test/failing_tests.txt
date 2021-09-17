@@ -288,7 +288,6 @@ number_LimitOrdinalsToDayOne
 number_NewOrdinalsEdition
 number_OrdinalSpacing
 number_PlainHyphenOrEnDashAlwaysPlural
-number_SimpleNumberRoman
 
 plural_LabelForced
 plural_NameLabelAlways

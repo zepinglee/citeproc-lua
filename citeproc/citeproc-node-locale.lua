@@ -23,13 +23,9 @@ function Locale:get_term (name, form, number, gender)
   local match_last_two
   local match_whole
   if number then
-    number = tostring(number)
-    match_last = string.format("%s-%02s", name, string.sub(number, -1))
-    if #number > 2 then
-      match_last_two = string.format("%s-%02s", name, string.sub(number, -2))
-    else
-      match_last_two = string.format("%s-%02s", name, number)
-    end
+    assert(type(number) == "number")
+    match_last = string.format("%s-%02d", name, number % 10)
+    match_last_two = string.format("%s-%02d", name, number % 100)
     match_whole = string.format("%s-%02s", name, number)
   end
 
@@ -44,7 +40,7 @@ function Locale:get_term (name, form, number, gender)
         match_name = match_whole
       elseif term_match == "last-two-digits" then
         match_name = match_last_two
-      elseif #number == 1 then
+      elseif number < 10 then
         -- "13" can match only "ordinal-13" not "ordinal-03"
         -- It is sliced to "3" in a later checking pass.
         match_name = match_last_two
@@ -77,8 +73,8 @@ function Locale:get_term (name, form, number, gender)
     return self:get_term(name, "long")
   end
 
-  if number and #number > 1 then
-    return self:get_term(name, nil, string.sub(number, -1), gender)
+  if number and number > 10 then
+    return self:get_term(name, nil, number % 10, gender)
   end
 
   if gender then
