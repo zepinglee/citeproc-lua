@@ -44,6 +44,9 @@ end
 
 -- Similar to re.split() in Python
 function util.split(str, sep, maxsplit)
+  if not str then
+    error("Invalid string.")
+  end
   sep = sep or "%s+"
   if sep == "" then
     error("Empty separator")

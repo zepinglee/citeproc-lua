@@ -98,7 +98,6 @@ collapse_YearSuffixImplicitCollapseNoYearSuffixDelimiter
 condition_LocatorIsFalse
 condition_SingletonIfMatchNone
 
-date_AccessedCrash
 date_EmptyStrings
 date_LopsidedDataYearSuffixCollapse
 date_RangeDelimiter
@@ -285,7 +284,6 @@ name_TwoRolesSameRenderingSeparateRoleLabels
 name_WithNonBreakingSpace
 
 number_LimitOrdinalsToDayOne
-number_NewOrdinalsEdition
 number_OrdinalSpacing
 number_PlainHyphenOrEnDashAlwaysPlural
 

@@ -46,7 +46,6 @@ Element.inheritable_options = {
   ["demote-non-dropping-particle"] = true,
   -- Date
   ["date-parts"] = true,
-  ["variable"] = true,
   -- Names
   ["and"] = true,
   ["delimiter-precedes-et-al"] = true,

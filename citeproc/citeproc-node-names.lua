@@ -418,7 +418,9 @@ function Names:render (item, context)
     end
   else
     context.names_element = self
+    context.variable = context.options["variable"]
   end
+  local variable_names = context.options["variable"] or context.variable
 
   local name = self:get_child("name")
   if not name then
@@ -449,7 +451,7 @@ function Names:render (item, context)
 
   local output = {}
   local num_names = 0
-  for _, role in ipairs(util.split(context.options["variable"])) do
+  for _, role in ipairs(util.split(variable_names)) do
     local names = self:get_variable(item, role, context)
 
     table.insert(context.variable_attempt, names ~= nil)

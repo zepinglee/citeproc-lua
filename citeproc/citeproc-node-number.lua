@@ -10,7 +10,7 @@ function Number:render (item, context)
   local variable = context.options["variable"]
   local content = self:get_variable(item, variable, context)
 
-  table.insert(context.variable_attempt, variable ~= nil)
+  table.insert(context.variable_attempt, content ~= nil)
   table.insert(context.rendered_quoted_text, false)
 
   if not content then

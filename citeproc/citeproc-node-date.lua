@@ -9,6 +9,15 @@ function Date:render (item, context)
   context = self:process_context(context)
   local variable_name = context.options["variable"]
 
+  local is_locale_date
+  if variable_name then
+    context.variable = variable_name
+    is_locale_date = false
+  else
+    variable_name = context.variable
+    is_locale_date = true
+  end
+
   local date = self:get_variable(item, variable_name, context)
   if not date then
     return nil
@@ -16,8 +25,7 @@ function Date:render (item, context)
 
   local res = nil
   local form = context.options["form"]
-  if form and not context.is_locale_date then
-    context.is_locale_date = true
+  if form and not is_locale_date then
     for _, date_part in ipairs(self:query_selector("date-part")) do
       local name = date_part:get_attribute("name")
       if not context.date_part_attributes then
