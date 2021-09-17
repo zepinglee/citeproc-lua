@@ -28,7 +28,6 @@ Element.option_type = {
   ["punctuation-in-quote"] = "boolean",
   ["et-al-use-last"] = "boolean",
   ["initialize"] = "boolean",
-  ["plural"] = "boolean",
   ["initialize-with-hyphen"] = "boolean",
   ["disambiguate-add-names"] = "boolean",
   ["disambiguate-add-givenname"] = "boolean",
@@ -332,6 +331,20 @@ function Element:quote (str, context)
     local open_quote = self:get_term("open-quote"):render(context)
     local close_quote = self:get_term("close-quote"):render(context)
     str = open_quote .. str .. close_quote
+  end
+  return str
+end
+
+-- Quotes
+function Element:strip_periods (str, context)
+  if not str then
+    return nil
+  end
+  local strip_periods = context.options["strip-periods"]
+  if strip_periods then
+    if string.sub(str, -1) == "." then
+      str = string.sub(str, 1, -2)
+    end
   end
   return str
 end

@@ -57,6 +57,7 @@ function Text:render (item, context)
     table.insert(context.rendered_quoted_text, false)
   end
 
+  res = self:strip_periods(res, context)
   res = self:case(res, context)
   res = self:format(res, context)
   res = self:quote(res, context)

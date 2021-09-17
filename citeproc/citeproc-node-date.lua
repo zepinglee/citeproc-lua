@@ -248,7 +248,6 @@ DatePart.render = function (self, date, context, last_range_begin, range_end)
 
   elseif name == "month" then
     local form = context.options["form"] or "long"
-    local strip_periods = context.options["strip-periods"] or false
 
     local month = date["date-parts"][date_parts_index][2]
     if month then
@@ -289,6 +288,7 @@ DatePart.render = function (self, date, context, last_range_begin, range_end)
     elseif form == "numeric-leading-zeros" then
       res = string.format("%02d", month)
     end
+    res = self:strip_periods(res, context)
 
   elseif name == "year" then
     local year = date["date-parts"][date_parts_index][1]
