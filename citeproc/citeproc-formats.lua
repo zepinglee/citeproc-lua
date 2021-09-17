@@ -2,7 +2,8 @@
   Copyright (C) 2021 Zeping Lee
 --]]
 
--- Fomatting
+local util = require("citeproc.citeproc-util")
+
 
 local formats = {}
 
@@ -12,6 +13,9 @@ formats.html = {
     text = string.gsub(text, "<", "&#60;")
     text = string.gsub(text, ">", "&#62;")
     text = string.gsub(text, "%s%s", "\u{00A0}")
+    for char, sub in pairs(util.superscripts) do
+      text = string.gsub(text, char, "<sup>" .. sub .. "</sup>")
+    end
     return text
   end,
   ["@font-style/italic"] = "<i>%%STRING%%</i>",
@@ -43,6 +47,9 @@ formats.latex = {
     text = text:gsub("}", "\\}")
     text = text:gsub("_", "\\_")
     text = text:gsub("%s%s", "~")
+    for char, sub in pairs(util.superscripts) do
+      text = string.gsub(text, char, "\\textsuperscript{" .. sub "}")
+    end
     return text
   end,
   ["@font-style/normal"] = "{\\normalshape %%STRING%%}",

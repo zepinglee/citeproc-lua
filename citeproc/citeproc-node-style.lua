@@ -46,68 +46,65 @@ end
 
 function Style:get_locale_list (lang)
   assert(lang ~= nil)
-  local language = util.split(lang, "%-")[1]
+  local language = string.sub(lang, 1, 2)
   local primary_dialect = util.primary_dialects[language]
   if not primary_dialect then
     util.warning(string.format("Failed to find primary dialect of \"%s\"", language))
   end
   local locale_list = {}
-  -- In-style cs:locale elements
-  -- xml:lang set to chosen dialect, “de-AT”
+
+  -- 1. In-style cs:locale elements
+  --    i. `xml:lang` set to chosen dialect, “de-AT”
   if lang == language then
     lang = primary_dialect
   end
-  -- LuaXML v0.1o does not support colons in attribute selectors
-  -- local query = string.format("locale[xml:lang=\"%s\"]", lang)
-  -- local locale = self:query_selector(query)[1]
-  if lang then
-    for _, locale in ipairs(self:query_selector("locale")) do
-      if locale:get_attribute("xml:lang") == lang then
-        table.insert(locale_list, locale)
-        break
-      end
-    end
-  end
-  -- xml:lang set to matching language, “de” (German)
+  table.insert(locale_list, self:get_in_style_locale(lang))
+
+  --    ii. `xml:lang` set to matching language, “de” (German)
   if language and language ~= lang then
-    -- query = string.format("locale[xml:lang=\"%s\"]", language)
-    -- locale = self:query_selector(query)[1]
-    for _, locale in ipairs(self:query_selector("locale")) do
-      if locale:get_attribute("xml:lang") == language then
-        table.insert(locale_list, locale)
-      end
-    end
+    table.insert(locale_list, self:get_in_style_locale(language))
   end
-  -- xml:lang not set
-  for _, locale in ipairs(self:query_selector("locale")) do
-    if locale:get_attribute("xml:lang") == nil then
-      table.insert(locale_list, locale)
-      break
-    end
-  end
-  -- Locale files
-  -- xml:lang set to chosen dialect, “de-AT”
+
+  --    iii. `xml:lang` not set
+  table.insert(locale_list, self:get_in_style_locale(nil))
+
+  -- 2. Locale files
+  --    iv. `xml:lang` set to chosen dialect, “de-AT”
   if lang then
-    local locale = self:get_engine():get_system_locale(lang)
-    if locale then
-      table.insert(locale_list, locale)
-    end
+    table.insert(locale_list, self:get_engine():get_system_locale(lang))
   end
-  -- xml:lang set to matching primary dialect, “de-DE” (Standard German) (only applicable when the chosen locale is a secondary dialect)
+
+  --    v. `xml:lang` set to matching primary dialect, “de-DE” (Standard German)
+  --       (only applicable when the chosen locale is a secondary dialect)
   if primary_dialect and primary_dialect ~= lang then
-    local locale = self:get_engine():get_system_locale(primary_dialect)
-    if locale then
-      table.insert(locale_list, locale)
-    end
+    table.insert(locale_list, self:get_engine():get_system_locale(primary_dialect))
   end
-  -- xml:lang set to “en-US” (American English)
+
+  --    vi. `xml:lang` set to “en-US” (American English)
   if lang ~= "en-US" and primary_dialect ~= "en-US" then
-    local locale = self:get_engine():get_system_locale("en-US")
-    if locale then
-      table.insert(locale_list, locale)
+    table.insert(locale_list, self:get_engine():get_system_locale("en-US"))
+  end
+
+  return locale_list
+end
+
+function Style:get_in_style_locale (lang)
+  for _, locale in ipairs(self:query_selector("locale")) do
+    if locale:get_attribute("xml:lang") == lang then
+      return locale
     end
   end
-  return locale_list
+  return nil
+end
+
+function Style:get_term (...)
+  for _, locale in ipairs(self:get_locales()) do
+    local res = locale:get_term(...)
+    if res then
+      return res
+    end
+  end
+  return nil
 end
 
 

@@ -230,36 +230,8 @@ function Element:get_macro (name)
   return macro
 end
 
-function Element:get_term (name, form, lang)
-  local term = nil
-  local style = self:get_style()
-  if form == "long" then
-    form = nil
-  end
-  local query = string.format("term[name=\"%s\"]", name)
-  -- LuaXML v0.1o does not support multiple attribute selectors
-  -- if form then
-  --     query = query .. string.format("[form=\"%s\"]", form)
-  -- end
-  for _, locale in ipairs(style:get_locales(lang)) do
-    -- LuaXML v0.1o does not support multiple attribute selectors
-    for _, t in ipairs(locale:query_selector(query)) do
-      if t:get_attribute("form") == form then
-        term = t
-        break
-      end
-    end
-    if term then
-      break
-    end
-  end
-  if not term then
-    if name ~= "author" then
-      util.warning(string.format("Failed to find '%s'", query))
-    end
-    return nil
-  end
-  return term
+function Element:get_term (name, form, number, gender)
+  return self:get_style():get_term(name, form, number, gender)
 end
 
 -- Formatting

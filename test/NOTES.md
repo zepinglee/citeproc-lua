@@ -10,6 +10,11 @@ The expected output here includes a trailing space, which we delete.
 - Not initialized. It should be `<name initialized-with="." />`.
 
 
+### number_OrdinalSpacing
+
+Heuristics are used to render pages label.
+
+
 ### number_PlainHyphenOrEnDashAlwaysPlural
 
 - The difference of cs:text and cs:name is not revealed.

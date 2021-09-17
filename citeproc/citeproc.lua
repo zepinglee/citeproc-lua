@@ -118,6 +118,7 @@ function CiteProc:get_system_locale (lang)
       locale = dom.parse(locale)
     end
     locale:traverse_elements(self.set_base_class)
+    locale = locale:get_path("locale")[1]
     locale:root_node().engine = self
     locale:root_node().style = self.style
     self.system_locales[lang] = locale

@@ -8,32 +8,54 @@ function Number:render (item, context)
   self:debug_info(context)
   context = self:process_context(context)
   local form = context.options["form"] or "numeric"
-  local variable = self:get_variable(item, context.options["variable"], context)
+  local variable = context.options["variable"]
+
+  local number = self:get_variable(item, variable, context)
 
   table.insert(context.variable_attempt, variable ~= nil)
   table.insert(context.rendered_quoted_text, false)
 
+  if not number then
+    return false
+  end
+  number = tostring(number)
+
   local res = nil
 
   if form == "numeric" then
-    res = tostring(variable)
-  elseif form == "ordinal" then
-    if type(variable) == "string" then
-      variable = string.match(variable, "^%d+")
-      if not variable then
-        return nil
-      end
-      variable = tonumber(variable)
-    end
-    res = util.to_ordinal(variable)
-
-  elseif form == "long-ordinal" then
     -- TODO
-    res = tostring(variable)
+    res = number
+
+  elseif form == "ordinal" or form == "long-ordinal" then
+    number = string.match(number, "^%d+")
+    if not number then
+      return nil
+    end
+
+    if form == "long-ordinal" then
+      local value = tonumber(number)
+      if value < 1 or value > 10 then
+        form = "ordinal"
+      end
+    end
+
+    local gender = nil
+    local term = self:get_term(variable)
+    if term then
+      gender = term:get_attribute("gender")
+    end
+
+    term = self:get_term(form, nil, number, gender)
+    local suffix = term:render(context)
+    if form == "ordinal" then
+      res = number .. suffix
+    else
+      res = suffix
+    end
 
   elseif form == "roman" then
     -- TODO
-    res = tostring(variable)
+    res = number
 
   end
 

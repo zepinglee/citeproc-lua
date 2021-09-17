@@ -206,16 +206,17 @@ local function main ()
 
     local result = run_test(fixture, #files > 1)
 
+    local sucessed = (result == fixture.result)
+
     if #files == 1 then
       print("RESULT  : ", inspect(result))
       print("EXPECTED: ", inspect(fixture.result))
-      if result == fixture.result then
+      if sucessed then
         print("Passed")
       else
         print("Failed")
       end
     end
-
 
     local prefix = string.match(file, "^[^_]+")
     if prefix_num_tests[prefix] then
@@ -226,7 +227,7 @@ local function main ()
       prefix_num_passed_tests[prefix] = 0
     end
 
-    if result == fixture.result then
+    if sucessed then
       num_passed_tests = num_passed_tests + 1
       prefix_num_passed_tests[prefix] = prefix_num_passed_tests[prefix] + 1
     else
