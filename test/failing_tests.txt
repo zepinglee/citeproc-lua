@@ -53,7 +53,6 @@ bugreports_NumberInMacroWithVerticalAlign
 bugreports_OldMhraDisambiguationFailure
 bugreports_OverwriteCitationItems
 bugreports_ProcessorHang1
-bugreports_SectionAndLocator
 bugreports_SelfLink
 bugreports_SingleQuote
 bugreports_SingleQuoteXml
@@ -95,7 +94,6 @@ collapse_YearSuffixCollapseNoRange
 collapse_YearSuffixCollapseNoYearSuffixDelimiter
 collapse_YearSuffixImplicitCollapseNoYearSuffixDelimiter
 
-condition_LocatorIsFalse
 condition_SingletonIfMatchNone
 
 date_EmptyStrings
@@ -220,7 +218,6 @@ integration_YearSuffixOnOffOn
 label_CollapsedPageNumberPluralDetection
 label_EditorTranslator1
 label_EditorTranslator2
-label_EmptyLabelVanishPage
 label_NameLabelThroughSubstitute
 label_PluralWithAmpersand
 label_PluralWithAnd
@@ -287,7 +284,6 @@ number_LimitOrdinalsToDayOne
 number_OrdinalSpacing
 number_PlainHyphenOrEnDashAlwaysPlural
 
-plural_LabelForced
 plural_NameLabelAlways
 plural_NameLabelContextualPlural
 plural_NameLabelContextualSingular

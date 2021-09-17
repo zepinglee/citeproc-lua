@@ -63,6 +63,7 @@ function CiteProc:makeCitationCluster (citation_items)
   local items = {}
   for _, cite_item in ipairs(citation_items) do
     local item = self:retrieve_item(cite_item.id)
+    item["locator"] = cite_item["locator"]
     table.insert(items, item)
     table.insert(self.registry.reflist, item)
   end

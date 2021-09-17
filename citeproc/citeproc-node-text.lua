@@ -21,7 +21,7 @@ function Text:render (item, context)
     end
     if res then
       res = tostring(res)
-      if variable_name == "page" then
+      if variable_name == "page" or variable_name == "locator" then
         res = self:_format_page(res, context)
       end
     end

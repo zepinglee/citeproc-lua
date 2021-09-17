@@ -21,6 +21,10 @@ function Label:render (item, context)
     variable_name = context.options["variable"]
   end
 
+  if variable_name == "locator" then
+    variable_name = "page"
+  end
+
   local form = context.options["form"]
   local plural = context.options["plural"] or "contextual"
 
