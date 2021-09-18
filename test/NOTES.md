@@ -1,4 +1,15 @@
-## Notes on failures
+# Notes on failures
+
+
+## Capitalizing
+
+It is beyond the spec to capitalize the initial term of each item.
+See <https://github.com/jgm/citeproc/blob/b27201c3ac48ffd2853f77152df19b6e2cf36987/README.md#L107-L113>.
+
+- `position_IbidWithLocator`
+- `position_IfIbidWithLocatorIsTrueThenIbidIsTrue`
+
+
 
 ### bugreports_UnisaHarvardInitialization
 
@@ -27,11 +38,6 @@ Heuristics are used to render pages label.
   ending in a number, or alphabetic strings consisting entirely of
   characters appropriate to a roman numeral."  This won't catch
   4a-5a or IIa-VIb.
-
-
-### position_IbidWithLocator
-
-Why is "ibid" converted to title case?
 
 
 ### position_IbidWithSuffix
