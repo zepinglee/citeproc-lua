@@ -67,17 +67,16 @@ function CiteProc:makeCitationCluster (citation_items)
   for _, cite in ipairs(citation_items) do
     local position_first = false
 
-    local res = self.registry.registry[id]
+    local res = self.registry.registry[cite.id]
     if not res then
       position_first = true
       res = self:retrieve_item(cite.id)
     end
 
-    local item = {
-      ["locator"] = cite["locator"],
-      ["label"]   = cite["label"],
-      position    = cite["position"],
-    }
+    local item = {}
+    for key, value in pairs(cite) do
+      item[key] = value
+    end
     setmetatable(item, {__index = res})
 
     if not item.position and position_first then

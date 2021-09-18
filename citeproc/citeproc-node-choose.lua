@@ -49,6 +49,8 @@ If.render = function (self, item, context)
       if context.mode == "citation" then
         if position == "first" then
           res = (item.position == util.position_map["first"])
+        elseif position == "near-note" then
+          res = item["near-note"] ~= nil and item["near-note"] ~= false
         else
           res = (item.position >= util.position_map[position])
         end
