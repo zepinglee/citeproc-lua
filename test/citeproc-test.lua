@@ -231,7 +231,19 @@ local function main ()
       num_passed_tests = num_passed_tests + 1
       prefix_num_passed_tests[prefix] = prefix_num_passed_tests[prefix] + 1
     else
-      table.insert(failing_tests, file)
+      local test_type = "citation-items"
+      if fixture.citations then
+        test_type = "citations"
+      elseif fixture.mode == "bibliography" then
+        test_type = "bibliography"
+        if fixture.bibentries  then
+          test_type = "bibentries"
+        elseif fixture.bibsection then
+          test_type = "bibsection"
+        end
+
+      end
+      table.insert(failing_tests, file .. " [" .. test_type .. "]")
     end
   end
 
