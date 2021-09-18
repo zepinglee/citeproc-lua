@@ -285,22 +285,27 @@ function Element:_concat (str1, str2, context)
   if not str2 or str2 == "" then
     return str1
   end
-  local res = str1 .. str2
-  if context.rendered_quoted_text[#context.rendered_quoted_text] == true then
-    local prefix = string.sub(str2, 1, 1)
-    if prefix == "," or prefix == "." then
+
+  local first_char = string.sub(str2, 1, 1)
+  if first_char == "," or first_char == "." then
+    -- Remove the repeating punctuation.
+    if util.endswith(str1, first_char) then
+      str2 = string.sub(str2, 2)
+
+    -- Process `punctuation-in-quote`.
+    elseif context.rendered_quoted_text[#context.rendered_quoted_text] then
       if self:get_locale_option("punctuation-in-quote") then
         local close_quote = self:get_term("close-quote"):render(context)
         if util.endswith(str1, close_quote) then
-          res = string.sub(str1, 1, #str1 - #close_quote)
-          res = res .. string.sub(str2, 1, 1)
-          res = res .. close_quote
-          res = res .. string.sub(str2, 2)
+          str1 = string.sub(str1, 1, #str1 - #close_quote)
+          str1 = str1 .. first_char .. close_quote
+          str2 = string.sub(str2, 2)
         end
       end
     end
   end
-  return res
+
+  return str1 .. str2
 end
 
 function Element:_concat_list (strings, delimiter, context)
