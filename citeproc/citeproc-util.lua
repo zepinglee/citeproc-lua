@@ -530,6 +530,20 @@ util.roman_numerals = {
   {"i",  1},
 };
 
+
+-- Choose
+
+util.position_map = {
+  ["first"] = 0,
+  ["subsequent"] = 1,
+  ["ibid"] = 2,
+  ["ibid-with-locator"] = 3,
+  ["container-subsequent"] = 4,
+}
+
+
+-- Output
+
 util.superscripts = {
   ["\u{00AA}"] = "\u{0061}",
   ["\u{00B2}"] = "\u{0032}",

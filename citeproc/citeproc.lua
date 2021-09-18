@@ -23,7 +23,9 @@ function CiteProc:new (sys, style)
   end
   local o = {}
   o.registry = {
-    reflist = {}
+    registry = {},  -- A map
+    reflist = {},  -- A list
+    previous_citation = nil,
   }
 
   o.sys = sys
@@ -47,9 +49,10 @@ function CiteProc:new (sys, style)
 end
 
 function CiteProc:updateItems (ids)
+  self.registry.reslist = {}
+  self.registry.registry = {}
   for _, id in ipairs(ids) do
     local item = self:retrieve_item(id)
-    table.insert(self.registry.reflist, item)
   end
 end
 
@@ -61,17 +64,38 @@ end
 
 function CiteProc:makeCitationCluster (citation_items)
   local items = {}
-  for _, cite_item in ipairs(citation_items) do
-    local item = self:retrieve_item(cite_item.id)
-    item["locator"] = cite_item["locator"]
+  for _, cite in ipairs(citation_items) do
+    local position_first = false
+
+    local res = self.registry.registry[id]
+    if not res then
+      position_first = true
+      res = self:retrieve_item(cite.id)
+    end
+
+    local item = {
+      ["locator"] = cite["locator"],
+      ["label"]   = cite["label"],
+      position    = cite["position"],
+    }
+    setmetatable(item, {__index = res})
+
+    if not item.position and position_first then
+      item.position = util.position_map["first"]
+    end
     table.insert(items, item)
-    table.insert(self.registry.reflist, item)
   end
-  return self.style:render_citation(items, {})
+  local res = self.style:render_citation(items, {engine=self})
+  self.registry.previous_citation = items
+  return res
 end
 
 function CiteProc:makeBibliography ()
-  local res = self.style:render_biblography(self.registry.reflist, {})
+  local items = {}
+  for _, id in pairs(self.registry.reflist) do
+    table.insert(items, self.registry.registry[id])
+  end
+  local res = self.style:render_biblography(items, {engine=self})
   local params = {}
   return params, res
 end
@@ -88,23 +112,37 @@ function CiteProc.set_base_class (node)
   end
 end
 
+function CiteProc:get_item (id)
+  local res = {}
+  local item = self.registry.registry[id]
+  if not item then
+    item = self:retrieve_item(id)
+  end
+  -- Create a wrapper of the orignal item from registry so that
+  -- it may hold different `locator` or `position` values for cites.
+   setmetatable(res, {__index = item})
+  return res
+end
+
 function CiteProc:retrieve_item (id)
-  local item = {}
-  local item_raw = self.sys:retrieveItem(id)
-  if not item_raw then
+  local res = {}
+  local item = self.sys:retrieveItem(id)
+  if not item then
     error("Failed to retrieve \"" .. id .. "\"")
   end
-  for key, value in pairs(item_raw) do
-    if key == "page" then
-      item["page"] = value
-      local page_first = util.split(value, "%s*[&,-]%s*")[1]
-      page_first = util.split(page_first, util.unicode["en dash"])[1]
-      item["page-first"] = page_first
-    else
-      item[key] = value
-    end
+  setmetatable(res, {__index = item})
+
+  if res["page"] and not res["page-first"] then
+    local page_first = util.split(res["page"], "%s*[&,-]%s*")[1]
+    page_first = util.split(page_first, util.unicode["en dash"])[1]
+    res["page-first"] = page_first
   end
-  return item
+
+  if not self.registry.registry[id] then
+    table.insert(self.registry.reflist, id)
+  end
+  self.registry.registry[id] = res
+  return res
 end
 
 function CiteProc:get_system_locale (lang)

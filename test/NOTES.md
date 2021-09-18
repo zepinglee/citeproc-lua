@@ -28,6 +28,12 @@ Heuristics are used to render pages label.
   characters appropriate to a roman numeral."  This won't catch
   4a-5a or IIa-VIb.
 
+
+### position_IbidWithLocator
+
+Why is "ibid" converted to title case?
+
+
 ### variables_TitleShortOnShortTitleNoTitleCondition
 
 This test is contrary to the spec.  The whole group should

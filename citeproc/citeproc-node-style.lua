@@ -114,6 +114,8 @@ function Citation:render (items, context)
   self:debug_info(context)
   context = self:process_context(context)
 
+  context.mode = "citation"
+
   local sort = self:get_child("sort")
   if sort then
     sort:sort(items, context)
@@ -129,6 +131,8 @@ local Bibliography = Element:new()
 function Bibliography:render (items, context)
   self:debug_info(context)
   context = self:process_context(context)
+
+  context.mode = "bibliography"
 
   local sort = self:get_child("sort")
   if sort then

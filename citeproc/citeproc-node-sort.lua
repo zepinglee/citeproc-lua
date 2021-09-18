@@ -29,23 +29,20 @@ function Sort:sort (items, context)
       table.insert(key_dict[item.id], value)
     end
   end
+
   local compare_entry = function (item1, item2)
     for i, value1 in ipairs(key_dict[item1.id]) do
       local descending = descendings[i]
       local value2 = key_dict[item2.id][i]
       if value1 and value2 then
-        if value1 < value2 then
-          if descending then
-            return false
-          else
-            return true
-          end
-        elseif value1 > value2 then
-          if descending then
-            return true
-          else
-            return false
-          end
+        local res
+        if descending then
+          res = value1 > value2
+        else
+          res = value1 < value2
+        end
+        if res or value1 ~= value2 then
+          return res
         end
       elseif value1 then
         return true

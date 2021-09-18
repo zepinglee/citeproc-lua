@@ -42,10 +42,13 @@ If.render = function (self, item, context)
     end
   end
 
-  local position = context.options["position"]
-  if position then
-    -- TODO:
-    table.insert(results, position == "first")
+  local positions = context.options["position"]
+  if positions then
+    for _, position in ipairs(util.split(positions)) do
+      local res = (context.mode == "citation" and
+        item.position >= util.position_map[position])
+      table.insert(results, res)
+    end
   end
 
   local type_names = context.options["type"]
