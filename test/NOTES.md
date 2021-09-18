@@ -34,6 +34,12 @@ Heuristics are used to render pages label.
 Why is "ibid" converted to title case?
 
 
+### position_IbidWithSuffix
+
+
+Name splitting issue.
+
+
 ### variables_TitleShortOnShortTitleNoTitleCondition
 
 This test is contrary to the spec.  The whole group should

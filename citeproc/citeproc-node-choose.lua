@@ -45,8 +45,14 @@ If.render = function (self, item, context)
   local positions = context.options["position"]
   if positions then
     for _, position in ipairs(util.split(positions)) do
-      local res = (context.mode == "citation" and
-        item.position >= util.position_map[position])
+      local res = false
+      if context.mode == "citation" then
+        if position == "first" then
+          res = (item.position == util.position_map["first"])
+        else
+          res = (item.position >= util.position_map[position])
+        end
+      end
       table.insert(results, res)
     end
   end
