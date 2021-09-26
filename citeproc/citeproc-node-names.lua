@@ -1,7 +1,9 @@
 local unicode = require("unicode")
 
+local FormattedText = require("citeproc.citeproc-formatted-text")
 local Element = require("citeproc.citeproc-node-element")
 local util = require("citeproc.citeproc-util")
+-- local inspect = require("inspect")
 
 
 local Name = Element:new()
@@ -52,7 +54,7 @@ function Name:render (names, context)
     end
   end
 
-  local output = ""
+  local output = nil
 
   local res = nil
   local inverted = false
@@ -61,12 +63,12 @@ function Name:render (names, context)
     if et_al_truncate and i > et_al_use_first then
       if et_al_last then
         if i == #names then
-          output = self:_concat(output, delimiter, context)
+          output = FormattedText.concat(output, delimiter)
           output = output .. util.unicode["horizontal ellipsis"]
           if delimiter_precedes_last == "never" then
             output = output .. " "
           else
-            output = self:_concat(output, delimiter, context)
+            output = FormattedText.concat(output, delimiter)
           end
           res = self:render_single_name(name, i, context)
           output = output .. res
@@ -75,14 +77,14 @@ function Name:render (names, context)
         if not self:_check_delimiter(delimiter_precedes_et_al, i, inverted) then
           delimiter = " "
         end
-        output = self:_concat_list({output, context.et_al:render(context)}, delimiter, context)
+        output = FormattedText.concat_list({output, context.et_al:render(context)}, delimiter)
         break
       end
     else
       if i > 1 then
         if i == #names and context.options["and"] then
           if self:_check_delimiter(delimiter_precedes_last, i, inverted) then
-            output = self:_concat(output, delimiter, context)
+            output = FormattedText.concat(output, delimiter)
           else
             output = output .. " "
           end
@@ -94,12 +96,19 @@ function Name:render (names, context)
           end
           output = output .. and_term .. " "
         else
-          output = self:_concat(output, delimiter, context)
+          output = FormattedText.concat(output, delimiter)
         end
       end
       res, inverted = self:render_single_name(name, i, context)
       if res and res ~= "" then
-        output = output .. res
+        if output then
+          output = FormattedText.concat(output, res)
+        else
+          if res._type ~= "FormattedText" then
+            res = FormattedText.new(res)
+          end
+          output = res
+        end
       end
     end
   end
@@ -199,7 +208,7 @@ function Name:render_single_name (name, index, context)
         local particle
         particle, family = table.unpack(hyphen_parts)
         particle = particle .. "-"
-        ndp = self._concat(ndp, particle)
+        ndp = FormattedText.concat(ndp, particle)
       end
 
       if demote_ndp then
@@ -218,12 +227,13 @@ function Name:render_single_name (name, index, context)
       else
         suffix_separator = " "
       end
-      family = self:_concat_list({family, suffix}, suffix_separator, context)
+      family = FormattedText.concat_list({family, suffix}, suffix_separator)
       family, given = self:format_name_parts(family, given, context)
       order = {given, family}
       sort_separator = " "
     end
-    res = self:_concat_list(order, sort_separator, context)
+    res = FormattedText.concat_list(order, sort_separator)
+
   elseif form == "short" then
     family = util.concat({ndp, family}, " ")
     family, _ = self:format_name_parts(family, _, context)
@@ -464,7 +474,7 @@ function Names:render (item, context)
         elseif label then
           local label_result = label:render(role, context)
           if label_result then
-            res = res .. label_result
+            res = FormattedText.concat(res, label_result)
           end
         end
       end
@@ -474,12 +484,10 @@ function Names:render (item, context)
 
   local ret = nil
   if num_names > 0 then
-    ret = num_names
+    ret = tostring(num_names)
   else
     ret = self:concat(output, context)
   end
-
-  table.insert(context.rendered_quoted_text, false)
 
   if ret then
     ret = self:format(ret, context)

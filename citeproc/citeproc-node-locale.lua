@@ -7,7 +7,13 @@ function Locale:get_option (key)
   local query = string.format("style-options[%s]", key)
   local option = self:query_selector(query)[1]
   if option then
-    return option:get_attribute(key)
+    local value = option:get_attribute(key)
+      if self.option_type[key] == "integer" then
+        value = tonumber(value)
+      elseif self.option_type[key] == "boolean" then
+        value = (value == "true")
+      end
+    return value
   else
     return nil
   end

@@ -1,6 +1,8 @@
 local unicode = require("unicode")
 
+local FormattedText = require("citeproc.citeproc-formatted-text")
 local util = require("citeproc.citeproc-util")
+-- local inspect = require("inspect")
 
 
 local Element = {
@@ -198,7 +200,7 @@ function Element:get_locale_option (key)
   local locales = self:get_style():get_locales()
   for i, locale in ipairs(locales) do
     local option = locale:get_option(key)
-    if option then
+    if option ~= nil then
       return option
     end
   end
@@ -234,12 +236,16 @@ end
 
 -- Formatting
 function Element:escape (str, context)
-  return self:get_engine().formatter.text_escape(str)
+  return str
+  -- return self:get_engine().formatter.text_escape(str)
 end
 
 function Element:format (str, context)
-  if not str then
+  if not str or str == "" then
     return nil
+  end
+  if str._type ~= "FormattedText" then
+    str = FormattedText.new(str)
   end
   local attributes = {
     "font-style",
@@ -251,15 +257,7 @@ function Element:format (str, context)
   for _, attribute in ipairs(attributes) do
     local value = context.options[attribute]
     if value then
-      local key = string.format("@%s/%s", attribute, value)
-      local formatter = self:get_engine().formatter[key]
-      if formatter then
-        if type(formatter) == "string" then
-          str = string.gsub(formatter, "%%%%STRING%%%%", str)
-        elseif type(formatter) == "function" then
-          str = formatter(str, context.item)
-        end
-      end
+      str:add_format(attribute, value)
     end
   end
   return str
@@ -270,120 +268,125 @@ function Element:wrap (str, context)
   if not str then
     return nil
   end
-  local prefix = context.options["prefix"] or ""
-  local suffix = context.options["suffix"] or ""
-  local res = prefix .. str
-  res = self:_concat(res, suffix, context)
-  return res
-end
-
-function Element:_concat (str1, str2, context)
-  -- a helper function that concatenates two strings with `punctuation-in-quote`
-  if not str1 then
-    return nil
+  local prefix = context.options["prefix"]
+  local suffix = context.options["suffix"]
+  local res = str
+  if prefix and prefix ~= "" then
+    res = FormattedText.concat(prefix, res)
   end
-  if not str2 or str2 == "" then
-    return str1
-  end
-
-  local first_char = string.sub(str2, 1, 1)
-  if first_char == "," or first_char == "." then
-    -- Remove the repeating punctuation.
-    if util.endswith(str1, first_char) then
-      str2 = string.sub(str2, 2)
-
-    -- Process `punctuation-in-quote`.
-    elseif context.rendered_quoted_text[#context.rendered_quoted_text] then
-      if self:get_locale_option("punctuation-in-quote") then
-        local close_quote = self:get_term("close-quote"):render(context)
-        if util.endswith(str1, close_quote) then
-          str1 = string.sub(str1, 1, #str1 - #close_quote)
-          str1 = str1 .. first_char .. close_quote
-          str2 = string.sub(str2, 2)
-        end
-      end
-    end
-  end
-
-  return str1 .. str2
-end
-
-function Element:_concat_list (strings, delimiter, context)
-  local res = nil
-  for _, s in ipairs(strings) do
-    if s and s ~= "" then
-      if res then
-        res = self:_concat(res, delimiter, context)
-        res = self:_concat(res, s, context)
-      else
-        res = s
-      end
-    end
+  if suffix and suffix ~= "" then
+    res = FormattedText.concat(res, suffix)
   end
   return res
 end
+
+-- function Element:_concat (str1, str2, context)
+--   -- a helper function that concatenates two strings with `punctuation-in-quote`
+--   if not str1 then
+--     return nil
+--   end
+--   if not str2 or str2 == "" then
+--     return str1
+--   end
+
+--   local first_char = string.sub(str2, 1, 1)
+--   if first_char == "," or first_char == "." then
+--     -- Remove the repeating punctuation.
+--     if util.endswith(str1, first_char) then
+--       str2 = string.sub(str2, 2)
+
+--   return str1 .. str2
+-- end
+
+-- function Element:_concat_list (strings, delimiter, context)
+--   local res = nil
+--   for _, s in ipairs(strings) do
+--     if s and s ~= "" then
+--       if res then
+--         res = self:_concat(res, delimiter, context)
+--         res = self:_concat(res, s, context)
+--       else
+--         res = s
+--       end
+--     end
+--   end
+--   return res
+-- end
 
 -- Delimiters
 function Element:concat (strings, context)
-  local delimiter = context.options["delimiter"] or ""
-  return self:_concat_list(strings, delimiter, context)
+  local delimiter = context.options["delimiter"]
+  return FormattedText.concat_list(strings, delimiter)
 end
 
 -- Quotes
 function Element:quote (str, context)
+  if not str then
+    return nil
+  end
+  if not str._type == "FormattedText" then
+    str = FormattedText.new(str)
+  end
   local quotes = context.options["quotes"] or false
   if quotes then
-    local open_quote = self:get_term("open-quote"):render(context)
-    local close_quote = self:get_term("close-quote"):render(context)
-    str = open_quote .. str .. close_quote
+    str:add_format("quotes", "true")
   end
   return str
 end
 
--- Quotes
+-- Strip periods
 function Element:strip_periods (str, context)
   if not str then
     return nil
   end
+  if str._type ~= "FormattedText" then
+    str = FormattedText.new(str)
+  end
   local strip_periods = context.options["strip-periods"]
   if strip_periods then
-    if string.sub(str, -1) == "." then
-      str = string.sub(str, 1, -2)
-    end
+    str:strip_periods()
   end
   return str
 end
 
 -- Text-case
-function Element:case (str, context)
-  if not str then
+function Element:case (text, context)
+  if not text then
     return nil
   end
+  if text._type ~= "FormattedText" then
+    text = FormattedText.new(text)
+  end
+  if not(#text.contents == 1 and type(text.contents[1]) == "string") then
+    return text
+  end
   local text_case = context.options["text-case"]
+  if not text_case then
+    return text
+  end
   local language = context.item["language"]
   if not language then
     language = self:get_style():get_attribute("default-locale") or "en-US"
   end
   if not util.startswith(language, "en") then
-    return str
+    return text
   end
-  if not text_case then
-    return str
-  elseif text_case == "lowercase" then
-    return unicode.utf8.lower(str)
+  if text_case == "lowercase" then
+    text.contents[1] = unicode.utf8.lower(text.contents[1])
   elseif text_case == "uppercase" then
-    return unicode.utf8.upper(str)
+    text.contents[1] = unicode.utf8.upper(text.contents[1])
   elseif text_case == "capitalize-first" then
-    return util.capitalize_first(str)
+    text.contents[1] = util.capitalize_first(text.contents[1])
   elseif text_case == "capitalize-all" then
-    return util.capitalize_all(str)
+    text.contents[1] = util.capitalize_all(text.contents[1])
   elseif text_case == "sentence" then
-    return util.sentence(str)
+    text.contents[1] = util.sentence(text.contents[1])
   elseif text_case == "title" then
-    return util.title(str)
+    text.contents[1] = util.title(text.contents[1])
   else
     error("Ivalid attribute \"text-case\"")
   end
+  return text
 end
 
 

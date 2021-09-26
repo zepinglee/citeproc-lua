@@ -8,49 +8,54 @@ local util = require("citeproc.citeproc-util")
 local formats = {}
 
 formats.html = {
-  ["text_escape"] = function (text)
-    text = string.gsub(text, "%&", "&#38;")
-    text = string.gsub(text, "<", "&#60;")
-    text = string.gsub(text, ">", "&#62;")
-    text = string.gsub(text, "%s%s", "\u{00A0}")
+  ["text_escape"] = function (str)
+    str = string.gsub(str, "%&", "&#38;")
+    str = string.gsub(str, "<", "&#60;")
+    str = string.gsub(str, ">", "&#62;")
+    -- str = string.gsub(str, "%s%s", "\u{00A0}")
     for char, sub in pairs(util.superscripts) do
-      text = string.gsub(text, char, "<sup>" .. sub .. "</sup>")
+      str = string.gsub(str, char, "<sup>" .. sub .. "</sup>")
     end
-    return text
+    return str
   end,
   ["@font-style/italic"] = "<i>%%STRING%%</i>",
   ["@font-style/oblique"] = "<em>%%STRING%%</em>",
-  ["@font-style/normal"] = "<span style=\"font-style:normal;\">%%STRING%%</span>",
-  ["@font-variant/small-caps"] = "<span style=\"font-variant:small-caps;\">%%STRING%%</span>",
-  ["@font-variant/normal"] = "<span style=\"font-variant:normal;\">%%STRING%%</span>",
+  ["@font-style/normal"] = '<span style="font-style:normal;">%%STRING%%</span>',
+  ["@font-variant/small-caps"] = '<span style="font-variant:small-caps;">%%STRING%%</span>',
+  ["@font-variant/normal"] = '<span style="font-variant:normal;">%%STRING%%</span>',
   ["@font-weight/bold"] = "<b>%%STRING%%</b>",
-  ["@font-weight/normal"] = "<span style=\"font-weight:normal;\">%%STRING%%</span>",
+  ["@font-weight/normal"] = '<span style="font-weight:normal;">%%STRING%%</span>',
   ["@font-weight/light"] = false,
-  ["@text-decoration/none"] = "<span style=\"text-decoration:none;\">%%STRING%%</span>",
-  ["@text-decoration/underline"] = "<span style=\"text-decoration:underline;\">%%STRING%%</span>",
+  ["@text-decoration/none"] = '<span style="text-decoration:none;">%%STRING%%</span>',
+  ["@text-decoration/underline"] = '<span style="text-decoration:underline;">%%STRING%%</span>',
   ["@vertical-align/sup"] = "<sup>%%STRING%%</sup>",
   ["@vertical-align/sub"] = "<sub>%%STRING%%</sub>",
-  ["@vertical-align/baseline"] = "<span style=\"baseline\">%%STRING%%</span>",
-  ["@bibliography/entry"] = function (res, item)
-    return "<div class=\"csl-entry\">" .. res .. "</div>"
+  ["@vertical-align/baseline"] = '<span style="baseline">%%STRING%%</span>',
+  ["@quotes/true"] = function (str, context)
+    local open_quote = context.style:get_term("open-quote"):render(context)
+    local close_quote = context.style:get_term("close-quote"):render(context)
+    return open_quote .. str .. close_quote
+  end,
+  ["@bibliography/entry"] = function (str, context)
+    return "<div class=\"csl-entry\">" .. str .. "</div>"
   end
 }
 
 formats.latex = {
-  ["text_escape"] = function (text)
-    text = text:gsub("\\", "\\textbackslash")
-    text = text:gsub("#", "\\#")
-    text = text:gsub("$", "\\$")
-    text = text:gsub("%%", "\\%")
-    text = text:gsub("&", "\\&")
-    text = text:gsub("{", "\\{")
-    text = text:gsub("}", "\\}")
-    text = text:gsub("_", "\\_")
-    text = text:gsub("%s%s", "~")
+  ["text_escape"] = function (str)
+    str = str:gsub("\\", "\\textbackslash")
+    str = str:gsub("#", "\\#")
+    str = str:gsub("$", "\\$")
+    str = str:gsub("%%", "\\%")
+    str = str:gsub("&", "\\&")
+    str = str:gsub("{", "\\{")
+    str = str:gsub("}", "\\}")
+    str = str:gsub("_", "\\_")
+    str = str:gsub("%s%s", "~")
     for char, sub in pairs(util.superscripts) do
-      text = string.gsub(text, char, "\\textsuperscript{" .. sub "}")
+      str = string.gsub(str, char, "\\textsuperscript{" .. sub "}")
     end
-    return text
+    return str
   end,
   ["@font-style/normal"] = "{\\normalshape %%STRING%%}",
   ["@font-style/italic"] = "\\emph{%%STRING%%}",
@@ -65,8 +70,13 @@ formats.latex = {
   ["@vertical-align/sup"] = "\\textsuperscript{%%STRING%%}",
   ["@vertical-align/sub"] = "\\textsubscript{%%STRING%%}",
   ["@vertical-align/baseline"] = false,
-  ["@bibliography/entry"] = function (res, item)
-    return "\\bibitem[".. item.id .. "]{} " .. res
+  ["@quotes/true"] = function (str, context)
+    local open_quote = context.style:get_term("open-quote"):render(context)
+    local close_quote = context.style:get_term("close-quote"):render(context)
+    return open_quote .. str .. close_quote
+  end,
+  ["@bibliography/entry"] = function (str, context)
+    return "\\bibitem[".. context.item.id .. "]{} " .. str
   end
 }
 

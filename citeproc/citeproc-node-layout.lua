@@ -1,6 +1,8 @@
 local Element = require("citeproc.citeproc-node-element")
 local util = require("citeproc.citeproc-util")
 
+local inspect = require("inspect")
+
 
 local Layout = Element:new()
 
@@ -18,7 +20,6 @@ function Layout:render (items, context)
   for _, item in ipairs(items) do
 
     context.item = item
-    context.rendered_quoted_text = {}
     context.variable_attempt = {}
     context.suppressed_variables = {}
     context.suppress_subsequent_variables = false
@@ -29,9 +30,6 @@ function Layout:render (items, context)
 
     local res = self:render_children(item, context)
     if res then
-      if context.mode == "bibliography" then
-        res = self:get_engine().formatter["@bibliography/entry"](res, item)
-      end
       table.insert(output, res)
     end
     previous_cite = item
@@ -46,8 +44,15 @@ function Layout:render (items, context)
     local res = self:concat(output, context)
     res = self:wrap(res, context)
     res = self:format(res, context)
+    if res then
+      res = res:render(context.engine.formatter, context)
+    end
     return res
   else
+    for i, text in ipairs(output) do
+      text = text:render(context.engine.formatter, context)
+      output[i] = context.engine.formatter["@bibliography/entry"](text, context)
+    end
     return output
   end
 end

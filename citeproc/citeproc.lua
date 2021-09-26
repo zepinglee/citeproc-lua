@@ -4,6 +4,7 @@
 
 local dom = require("luaxml-domobject")
 
+local FormattedText = require("citeproc.citeproc-formatted-text")
 local Node = require("citeproc.citeproc-node")
 local formats = require("citeproc.citeproc-formats")
 local util = require("citeproc.citeproc-util")

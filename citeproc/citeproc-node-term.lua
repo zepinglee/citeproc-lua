@@ -21,7 +21,9 @@ function Term:render (context, is_plural)
       res = output.multiple
     end
   end
-  res = self:escape(res)
+  if res == "" then
+    return nil
+  end
   return res
 end
 

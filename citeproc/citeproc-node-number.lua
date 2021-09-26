@@ -11,7 +11,6 @@ function Number:render (item, context)
   local content = self:get_variable(item, variable, context)
 
   table.insert(context.variable_attempt, content ~= nil)
-  table.insert(context.rendered_quoted_text, false)
 
   if not content then
     return nil

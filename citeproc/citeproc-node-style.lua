@@ -15,6 +15,7 @@ Style.default_options = {
 function Style:render_citation (items, context)
   self:debug_info(context)
   context = self:process_context(context)
+  context.style = self
   local citation = self:get_child("citation")
   return citation:render(items, context)
 end
@@ -22,6 +23,7 @@ end
 function Style:render_biblography (items, context)
   self:debug_info(context)
   context = self:process_context(context)
+  context.style = self
   local bibliography = self:get_child("bibliography")
   return bibliography:render(items, context)
 end

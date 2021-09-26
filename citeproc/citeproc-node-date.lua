@@ -64,7 +64,6 @@ function Date:render (item, context)
   end
 
   table.insert(context.variable_attempt, res ~= nil)
-  table.insert(context.rendered_quoted_text, false)
 
   res = self:format(res, context)
   res = self:wrap(res, context)

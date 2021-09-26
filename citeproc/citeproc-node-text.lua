@@ -1,4 +1,5 @@
 local Element = require("citeproc.citeproc-node-element")
+local FormattedText = require("citeproc.citeproc-formatted-text")
 local util = require("citeproc.citeproc-util")
 
 
@@ -51,10 +52,8 @@ function Text:render (item, context)
     res = self:escape(res)
   end
 
-  if res and context.options["quotes"] then
-    table.insert(context.rendered_quoted_text, true)
-  else
-    table.insert(context.rendered_quoted_text, false)
+  if type(res) == "string" and res ~= "" then
+    res = FormattedText.new(res)
   end
 
   res = self:strip_periods(res, context)
