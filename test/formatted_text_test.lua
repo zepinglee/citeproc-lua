@@ -63,10 +63,16 @@ describe("FormattedText", function()
   end)
 
   it("merge punctuation", function()
-    local foo = FormattedText.new("foo<i>bar</i>baz")
+    local foo = FormattedText.new()
     foo.contents = {"(", "ed.", ".)"}
     local res = foo:render(formatter, nil)
     assert.equal("(ed.)", res)
+  end)
+
+  it("merge punctuation with formats", function()
+    local foo = FormattedText.new("<i>Foo.</i>. 1965")
+    local res = foo:render(formatter, nil)
+    assert.equal("<i>Foo.</i> 1965", res)
   end)
 
   it("concat text", function()

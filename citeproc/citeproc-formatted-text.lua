@@ -73,7 +73,6 @@ FormattedText.punctuation_map = {
     [":"] = "!",
     [","] = "!,",
     [";"] = "!;",
-    ["!"] = "!",
   },
   ["?"] = {
     ["!"] = "?!",
@@ -81,7 +80,6 @@ FormattedText.punctuation_map = {
     [":"] = "?",
     [","] = "?,",
     [";"] = "?;",
-    ["?"] = "?",
   },
   ["."] = {
     ["!"] = ".!",
@@ -89,7 +87,6 @@ FormattedText.punctuation_map = {
     [":"] = ".:",
     [","] = ".,",
     [";"] = ".;",
-    ["."] = ".",
   },
   [":"] = {
     ["!"] = "!",
@@ -97,7 +94,6 @@ FormattedText.punctuation_map = {
     ["."] = ":",
     [","] = ":,",
     [";"] = ":;",
-    [":"] = ":",
   },
   [","] = {
     ["!"] = ",!",
@@ -105,7 +101,6 @@ FormattedText.punctuation_map = {
     [":"] = ",:",
     ["."] = ",.",
     [";"] = ",;",
-    [","] = ",",
   },
   [";"] = {
     ["!"] = "!",
@@ -113,7 +108,6 @@ FormattedText.punctuation_map = {
     [":"] = ";",
     [","] = ";,",
     ["."] = ";",
-    [";"] = ";",
   }
 }
 
@@ -122,30 +116,39 @@ FormattedText.in_quote_punctuations = {
   ["."] = true,
 }
 
-function FormattedText:merge_punctuations()
+function FormattedText:merge_punctuations(contents, index)
   -- From right to left
-  for i = #self.contents, 1, -1 do
-    local text = self.contents[i]
+  for i, text in ipairs(self.contents) do
     if text._type == "FormattedText" then
-      text:merge_punctuations()
-    elseif type(text) == "string" and i > 1 then
-      local previous = self.contents[i-1]
-      if type(previous) == "string" then
-        local right_punct_map = self.punctuation_map[string.sub(previous, -1)]
+      contents, index = text:merge_punctuations(contents, index)
+    elseif type(text) == "string" then
+      if contents and index then
+        local previous_string = contents[index]
+        local last_char = string.sub(previous_string, -1)
+        local right_punct_map = self.punctuation_map[last_char]
         if right_punct_map then
-          local new_punctuations = right_punct_map[string.sub(text, 1, 1)]
+          local first_char = string.sub(text, 1, 1)
+          local new_punctuations = nil
+          if first_char == last_char then
+            new_punctuations = last_char
+          elseif contents == self.contents then
+            new_punctuations = right_punct_map[first_char]
+          end
           if new_punctuations then
             if #text == 1 then
               table.remove(self.contents, i)
             else
               self.contents[i] = string.sub(text, 2)
             end
-            self.contents[i-1] = string.sub(previous, 1, -2) .. new_punctuations
+            contents[index] = string.sub(previous_string, 1, -2) .. new_punctuations
           end
         end
       end
+      contents = self.contents
+      index = i
     end
   end
+  return contents, index
 end
 
 function FormattedText:move_punctuation_in_quote()
