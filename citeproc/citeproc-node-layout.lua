@@ -51,6 +51,7 @@ function Layout:render (items, context)
     return res
   else
     for i, text in ipairs(output) do
+      text = self:wrap(text, context)
       text = text:render(context.engine.formatter, context)
       output[i] = context.engine.formatter["@bibliography/entry"](text, context)
     end
