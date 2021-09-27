@@ -2,6 +2,8 @@ local Element = require("citeproc.citeproc-node-element")
 local FormattedText = require("citeproc.citeproc-formatted-text")
 local util = require("citeproc.citeproc-util")
 
+local inspect = require("inspect")
+
 
 local Text = Element:new()
 
@@ -21,7 +23,9 @@ function Text:render (item, context)
       res = self:get_variable(item, variable_name, context)
     end
     if res then
-      res = tostring(res)
+      if type(res) == "number" then
+        res = tostring(res)
+      end
       if variable_name == "page" or variable_name == "locator" then
         res = self:_format_page(res, context)
       end

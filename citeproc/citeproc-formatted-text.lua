@@ -201,12 +201,15 @@ end
 
 function FormattedText.concat(str1, str2)
   assert(str1 and str2)
+  local res = FormattedText.new()
   if str1._type ~= "FormattedText" then
     str1 = FormattedText.new(str1)
   end
-  local res = nil
   if next(str1.formats) == nil or str2 == "" then
-    res = str1
+    -- shallow copy
+    for _, text in ipairs(str1.contents) do
+      table.insert(res.contents, text)
+    end
   else
     res = FormattedText.new()
     res.contents = {str1}

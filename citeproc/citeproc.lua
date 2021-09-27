@@ -9,6 +9,8 @@ local Node = require("citeproc.citeproc-node")
 local formats = require("citeproc.citeproc-formats")
 local util = require("citeproc.citeproc-util")
 
+local inspect = require("inspect")
+
 
 local CiteProc = {}
 
@@ -93,8 +95,10 @@ end
 function CiteProc:makeBibliography ()
   local items = {}
   for _, id in pairs(self.registry.reflist) do
-    table.insert(items, self.registry.registry[id])
+    local item = self.registry.registry[id]
+    table.insert(items, item)
   end
+
   local res = self.style:render_biblography(items, {engine=self})
   local params = {}
   return params, res
@@ -130,7 +134,13 @@ function CiteProc:retrieve_item (id)
   if not item then
     error("Failed to retrieve \"" .. id .. "\"")
   end
-  setmetatable(res, {__index = item})
+
+  for key, value in pairs(item) do
+    if key == "title" then
+      value = self.normalize_string(value)
+    end
+    res[key] = value
+  end
 
   if res["page"] and not res["page-first"] then
     local page_first = util.split(res["page"], "%s*[&,-]%s*")[1]
@@ -143,6 +153,23 @@ function CiteProc:retrieve_item (id)
   end
   self.registry.registry[id] = res
   return res
+end
+
+function CiteProc.normalize_string (str)
+  if not str or str == "" then
+    return str
+  end
+  -- French punctuation spacing
+  if type(str) == "string" then
+    str = string.gsub(str, " ;", "\u{202F};")
+    str = string.gsub(str, " %?", "\u{202F}?")
+    str = string.gsub(str, " !", "\u{202F}!")
+    str = string.gsub(str, " »", "\u{202F}»")
+    str = string.gsub(str, "« ", "«\u{202F}")
+  end
+  -- local text = str
+  local text = FormattedText.new(str)
+  return text
 end
 
 function CiteProc:get_system_locale (lang)

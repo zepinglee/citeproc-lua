@@ -2,7 +2,8 @@ local unicode = require("unicode")
 
 local FormattedText = require("citeproc.citeproc-formatted-text")
 local util = require("citeproc.citeproc-util")
--- local inspect = require("inspect")
+
+local inspect = require("inspect")
 
 
 local Element = {
@@ -212,14 +213,7 @@ function Element:get_variable (item, name, context)
     return nil
   else
     local res = item[name]
-    -- French punctuation spacing
-    if type(res) == "string" and res ~= "" then
-      res = string.gsub(res, " ;", "\u{202F};")
-      res = string.gsub(res, " %?", "\u{202F}?")
-      res = string.gsub(res, " !", "\u{202F}!")
-      res = string.gsub(res, " »", "\u{202F}»")
-      res = string.gsub(res, "« ", "«\u{202F}")
-    end
+
     if res and res ~= "" then
       if context.suppress_subsequent_variables then
         context.suppressed_variables[name] = true

@@ -1,6 +1,7 @@
 local Element = require("citeproc.citeproc-node-element")
 local util = require("citeproc.citeproc-util")
 
+-- TODO: remove inspect later
 local inspect = require("inspect")
 
 
@@ -52,6 +53,7 @@ function Layout:render (items, context)
   else
     for i, text in ipairs(output) do
       text = self:wrap(text, context)
+      -- print(inspect(text))
       text = text:render(context.engine.formatter, context)
       output[i] = context.engine.formatter["@bibliography/entry"](text, context)
     end

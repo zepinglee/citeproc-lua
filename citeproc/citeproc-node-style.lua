@@ -3,6 +3,8 @@ local dom = require("luaxml-domobject")
 local Element = require("citeproc.citeproc-node-element")
 local util = require("citeproc.citeproc-util")
 
+local inspect = require("inspect")
+
 
 local Style = Element:new()
 
