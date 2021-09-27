@@ -30,16 +30,16 @@ local FormattedText = {
   _type = "FormattedText",
 }
 
-function FormattedText:render(formatter, context)
+function FormattedText:render(formatter, context, punctuation_in_quote)
   local res = ""
 
   self:merge_punctuations()
 
   if context then
-    local punctuation_in_quote = context.style:get_locale_option("punctuation-in-quote")
-    if punctuation_in_quote then
-      self:move_punctuation_in_quote()
-    end
+    punctuation_in_quote = context.style:get_locale_option("punctuation-in-quote")
+  end
+  if punctuation_in_quote then
+    self:move_punctuation_in_quote()
   end
 
   for _, text in ipairs(self.contents) do
@@ -114,10 +114,11 @@ FormattedText.punctuation_map = {
 FormattedText.in_quote_punctuations = {
   [","] = true,
   ["."] = true,
+  ["?"] = true,
+  ["!"] = true,
 }
 
 function FormattedText:merge_punctuations(contents, index)
-  -- From right to left
   for i, text in ipairs(self.contents) do
     if text._type == "FormattedText" then
       contents, index = text:merge_punctuations(contents, index)
@@ -152,37 +153,49 @@ function FormattedText:merge_punctuations(contents, index)
 end
 
 function FormattedText:move_punctuation_in_quote()
-  for i = #self.contents, 1, -1 do
+  local i = 1
+  while i < #self.contents do
     local text = self.contents[i]
     if text._type == "FormattedText" then
       text:move_punctuation_in_quote()
+      if text.formats["quotes"] then
 
-    elseif type(text) == "string" and i > 1 then
-      local first_char = string.sub(text, 1, 1)
-      if self.in_quote_punctuations[first_char] then
-        local previous = self.contents[i-1]
-        if previous._type == "FormattedText" and previous.formats["quotes"] then
-          local contents = self.contents
-          local last_string = previous
-          while last_string._type == "FormattedText" do
-            contents = last_string.contents
-            last_string = contents[#contents]
-          end
-          local right_punct_map = self.punctuation_map[string.sub(last_string, -1)]
-          if right_punct_map then
-            first_char  = right_punct_map[first_char]
-            last_string = string.sub(last_string, 1, -2)
-          end
-          contents[#contents] = last_string .. first_char
+        local contents = self.contents
+        local last_string = text
+        while last_string._type == "FormattedText" do
+          contents = last_string.contents
+          last_string = contents[#contents]
+        end
 
-          if #text == 1 then
-            table.remove(self.contents, i)
-          else
-            self.contents[i] = string.sub(text, 2)
+        local done = false
+        while not done do
+          done = true
+          last_string = contents[#contents]
+          local last_char = string.sub(last_string, -1)
+          if i < #self.contents then
+            local next_text = self.contents[i + 1]
+            if type(next_text) == "string" then
+              local first_char = string.sub(next_text, 1, 1)
+              if self.in_quote_punctuations[first_char] then
+                done = false
+                local right_punct_map = self.punctuation_map[last_char]
+                if right_punct_map then
+                  first_char  = right_punct_map[first_char]
+                  last_string = string.sub(last_string, 1, -2)
+                end
+                contents[#contents] = last_string .. first_char
+                if #next_text == 1 then
+                  table.remove(self.contents, i + 1)
+                else
+                  self.contents[i + 1] = string.sub(next_text, 2)
+                end
+              end
+            end
           end
         end
       end
     end
+    i = i + 1
   end
 end
 

@@ -30,6 +30,11 @@ describe("FormattedText", function()
     ["@vertical-align/sup"] = "<sup>%%STRING%%</sup>",
     ["@vertical-align/sub"] = "<sub>%%STRING%%</sub>",
     ["@vertical-align/baseline"] = '<span style="baseline">%%STRING%%</span>',
+    ["@quotes/true"] = function (str, context)
+      local open_quote = "“"
+      local close_quote = "”"
+      return open_quote .. str .. close_quote
+    end,
     ["@bibliography/entry"] = function (res, context)
       return '<div class="csl-entry">' .. res .. "</div>"
     end
@@ -73,6 +78,16 @@ describe("FormattedText", function()
     local foo = FormattedText.new("<i>Foo.</i>. 1965")
     local res = foo:render(formatter, nil)
     assert.equal("<i>Foo.</i> 1965", res)
+  end)
+
+  it("move punctuation in quotes", function()
+    local quoted = FormattedText.new()
+    quoted.contents = {"comma"}
+    quoted:add_format("quotes", "true")
+    local res = FormattedText.new()
+    res.contents = {quoted, ",", ". ", "period"}
+    res = res:render(formatter, nil, true)
+    assert.equal("“comma,.” period", res)
   end)
 
   it("concat text", function()

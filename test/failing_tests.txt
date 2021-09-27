@@ -284,7 +284,6 @@ position_NearNoteSameNote [citations]
 position_ResetNoteNumbers [citations]
 
 punctuation_DefaultYearSuffixDelimiter [citation-items]
-punctuation_FullMontyQuotesIn [citation-items]
 punctuation_SuppressPrefixPeriodForDelimiterSemicolon [citations]
 
 quotes_PunctuationNasty [bibliography]

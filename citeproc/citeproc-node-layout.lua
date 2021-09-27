@@ -45,6 +45,7 @@ function Layout:render (items, context)
     res = self:wrap(res, context)
     res = self:format(res, context)
     if res then
+      -- print(inspect(res))
       res = res:render(context.engine.formatter, context)
     end
     return res
