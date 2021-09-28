@@ -59,6 +59,13 @@ function Sort:sort (items, context)
     end
   end
   table.sort(items, compare_entry)
+
+  if context.mode == "bibliography" then
+    for i, item in ipairs(items) do
+      item["citation-number"] = i
+    end
+  end
+
   return items
 end
 

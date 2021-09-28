@@ -71,6 +71,8 @@ function CiteProc:makeCitationCluster (citation_items)
     local position_first = (self.registry.registry[cite.id] == nil)
     local res = self:get_item(cite.id)
 
+    -- Create a wrapper of the orignal item from registry so that
+    -- it may hold different `locator` or `position` values for cites.
     local item = {}
     for key, value in pairs(cite) do
       item[key] = value
@@ -119,8 +121,6 @@ function CiteProc:get_item (id)
     item["citation-number"] = #self.registry.reflist
     self.registry.registry[id] = item
   end
-  -- Create a wrapper of the orignal item from registry so that
-  -- it may hold different `locator` or `position` values for cites.
   local res = {}
   setmetatable(res, {__index = item})
   return res

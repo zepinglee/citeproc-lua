@@ -138,6 +138,10 @@ function Bibliography:render (items, context)
 
   context.mode = "bibliography"
 
+  for i, item in ipairs(items) do
+    item["citation-number"] = i
+  end
+
   local sort = self:get_child("sort")
   if sort then
     sort:sort(items, context)
