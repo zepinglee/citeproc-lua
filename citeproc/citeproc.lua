@@ -55,7 +55,7 @@ function CiteProc:updateItems (ids)
   self.registry.reslist = {}
   self.registry.registry = {}
   for _, id in ipairs(ids) do
-    local item = self:retrieve_item(id)
+    self:get_item(id)
   end
 end
 
@@ -68,13 +68,8 @@ end
 function CiteProc:makeCitationCluster (citation_items)
   local items = {}
   for _, cite in ipairs(citation_items) do
-    local position_first = false
-
-    local res = self.registry.registry[cite.id]
-    if not res then
-      position_first = true
-      res = self:retrieve_item(cite.id)
-    end
+    local position_first = (self.registry.registry[cite.id] == nil)
+    local res = self:get_item(cite.id)
 
     local item = {}
     for key, value in pairs(cite) do
@@ -117,18 +112,22 @@ function CiteProc.set_base_class (node)
 end
 
 function CiteProc:get_item (id)
-  local res = {}
   local item = self.registry.registry[id]
   if not item then
-    item = self:retrieve_item(id)
+    item = self:_retrieve_item(id)
+    table.insert(self.registry.reflist, id)
+    item["citation-number"] = #self.registry.reflist
+    self.registry.registry[id] = item
   end
   -- Create a wrapper of the orignal item from registry so that
   -- it may hold different `locator` or `position` values for cites.
-   setmetatable(res, {__index = item})
+  local res = {}
+  setmetatable(res, {__index = item})
   return res
 end
 
-function CiteProc:retrieve_item (id)
+function CiteProc:_retrieve_item (id)
+  -- Retrieve, copy, and normalize
   local res = {}
   local item = self.sys:retrieveItem(id)
   if not item then
@@ -148,10 +147,6 @@ function CiteProc:retrieve_item (id)
     res["page-first"] = page_first
   end
 
-  if not self.registry.registry[id] then
-    table.insert(self.registry.reflist, id)
-  end
-  self.registry.registry[id] = res
   return res
 end
 
