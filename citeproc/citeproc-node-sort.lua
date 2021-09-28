@@ -1,3 +1,6 @@
+local unicode = require("unicode")
+local inspect = require("inspect")
+
 local Element = require("citeproc.citeproc-node-element")
 local Names = require("citeproc.citeproc-node-names").names
 local util = require("citeproc.citeproc-util")
@@ -26,6 +29,9 @@ function Sort:sort (items, context)
         value = false
       elseif value._type == "FormattedText" then
         value = value:render(context.engine.formatter, context)
+      end
+      if type(value) == "string" then
+        value = unicode.utf8.lower(value)
       end
       table.insert(key_dict[item.id], value)
     end
