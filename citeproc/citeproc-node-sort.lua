@@ -27,7 +27,7 @@ function Sort:sort (items, context)
       local value = key:render(item, context)
       if value == nil then
         value = false
-      elseif value._type == "FormattedText" then
+      elseif type(value) == "table" and value._type == "FormattedText" then
         value = value:render(context.engine.formatter, context)
       end
       if type(value) == "string" then
