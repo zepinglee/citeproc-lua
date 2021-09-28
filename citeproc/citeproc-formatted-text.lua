@@ -43,11 +43,17 @@ function FormattedText:render(formatter, context, punctuation_in_quote)
   end
 
   for _, text in ipairs(self.contents) do
+    local str
     if type(text) == "string" then
-      res = res .. formatter.text_escape(text)
+      str = formatter.text_escape(text)
     else  -- FormattedText
-      res = res .. text:render(formatter, context)
+      str = text:render(formatter, context)
     end
+    -- Remove leading spaces
+    if string.sub(res, -1) == " " and string.sub(str, 1, 1) == " " then
+      str = string.gsub(str, "^%s+", "")
+    end
+    res = res .. str
   end
   for _, attr in ipairs(self._format_sequence) do
     local value = self.formats[attr]
