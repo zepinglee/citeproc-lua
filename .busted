@@ -1,10 +1,14 @@
 return {
   _all = {
-    ["lua"] = "texlua",
-    ["ROOT"] = {"test"},
-    ["exclude-pattern"] = {"citeproc-"},
+    lua = "texlua",
+    pattern = {"_test"},
+    recursive = "off",
   },
   default = {
-    ["pattern"] = {"%.lua$"},
-  }
+    ROOT = {"test"},
+  },
+  citeproc = {
+    ROOT = {"test/citeproc-test.lua"},
+    output = "test/bust-output.lua",
+  },
 }

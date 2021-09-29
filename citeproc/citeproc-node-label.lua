@@ -70,7 +70,7 @@ function Label:_is_plural (variable_name, context)
       res = true
     end
   else
-    util.warning("Invalid attribute \"variable\".")
+    context.engine:warning("Invalid attribute \"variable\".")
   end
   return res
 end

@@ -14,7 +14,7 @@ local inspect = require("inspect")
 
 local CiteProc = {}
 
-function CiteProc:new (sys, style)
+function CiteProc:new (sys, style, mode)
   if sys == nil then
     error("\"citeprocSys\" required")
   end
@@ -43,6 +43,8 @@ function CiteProc:new (sys, style)
   o.csl:root_node().engine = o
   o.style = o.csl:get_path("style")[1]
   o.csl:root_node().style = o.style
+
+  o.mode = mode
 
   o.formatter = formats.html
 
@@ -172,7 +174,7 @@ function CiteProc:get_system_locale (lang)
   if not locale then
     locale = self.sys:retrieveLocale(lang)
     if not locale then
-      util.warning(string.format("Failed to retrieve locale \"%s\"", lang))
+      self:warning(string.format("Failed to retrieve locale \"%s\"", lang))
       return nil
     end
     if type(locale) == "string" then
@@ -185,6 +187,17 @@ function CiteProc:get_system_locale (lang)
     self.system_locales[lang] = locale
   end
   return locale
+end
+
+function CiteProc:warning(message)
+  if self.mode ~= "test" then
+    if message == nil then
+      message = ""
+    else
+      message = tostring(message)
+    end
+    io.stderr:write("Warning: " .. message .. "\n")
+  end
 end
 
 

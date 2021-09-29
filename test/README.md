@@ -1,48 +1,53 @@
-# citeproc test
+# Notes on failures
 
 
-All test scripts are supposed to be run from the root directory of the repository.
+## Capitalizing
+
+It is beyond the spec to capitalize the initial term of each item.
+See <https://github.com/jgm/citeproc/blob/b27201c3ac48ffd2853f77152df19b6e2cf36987/README.md#L107-L113>.
+
+- `position_IbidWithLocator`
+- `position_IfIbidWithLocatorIsTrueThenIbidIsTrue`
 
 
-## CSL test-suite
 
-The [`citeproc-test.lua`](https://github.com/zepinglee/citeproc-lua/tree/main/test/citeproc-test.lua) is used for running the [CSL test-suite](https://github.com/citation-style-language/test-suite).
+## bugreports_UnisaHarvardInitialization
 
-
-First clone the two submodules `test-suite` and [`locales`](https://github.com/citation-style-language/locales).
-```bash
-git submodule update --init
-```
-
-Then you can run the test script
-```bash
-texlua test/citepric-test.lua
-```
-
-The names of failing tests are printed to [`test/failing_tests.txt`](https://github.com/zepinglee/citeproc-lua/tree/main/test/failing_tests.txt).
+The expected output here includes a trailing space, which we delete.
 
 
-Run a single test.
-```bash
-texlua test/citepric-test.lua name_AfterInvertedName
-```
+## name_AllCapsInitialsUntouched
 
-Run a subset of tests with same prefix.
-```bash
-texlua test/citepric-test.lua name_
-```
+- Not initialized. It should be `<name initialized-with="." />`.
 
 
-## Other tests
+## number_OrdinalSpacing
 
-Other Lua script are for various tests purposes. They are run with [`busted`](https://github.com/Olivine-Labs/busted).
+Heuristics are used to render pages label.
 
-Run all tests.
-```bash
-busted
-```
 
-Run single test.
-```bash
-busted test/date-test.lua
-```
+## number_PlainHyphenOrEnDashAlwaysPlural
+
+- The difference of cs:text and cs:name is not revealed.
+  (Should it be `<number variable="page"/>`?)
+- Duplicate item id `ITEM-4`.
+- citeproc-js uses some heuristics to identify plurals,
+  but they aren't part of the spec and aren't entirely reliable.
+  "The logic will only set plurals where there is a numeric unit
+  on either side of a hyphen or en-dash. Numeric units are strings
+  ending in a number, or alphabetic strings consisting entirely of
+  characters appropriate to a roman numeral."  This won't catch
+  4a-5a or IIa-VIb.
+
+
+## position_IbidWithSuffix
+
+
+Name splitting issue.
+
+
+## variables_TitleShortOnShortTitleNoTitleCondition
+
+This test is contrary to the spec.  The whole group should
+be suppressed because it contains variables but none are
+called. See https://github.com/citation-style-language/test-suite/issues/29

@@ -6,6 +6,7 @@
         "kpse",
         "utilities",
         "describe",
-        "it"
+        "it",
+        "pending"
     ]
 }

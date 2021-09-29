@@ -88,29 +88,38 @@ result = {
 
 ## Running the tests
 
-First clone the two submodules [`test-suite`](https://github.com/citation-style-language/test-suite) and [`locales`](https://github.com/citation-style-language/locales) into the [`test/`](https://github.com/zepinglee/citeproc-lua/tree/main/test) directory.
+The [`busted`](https://olivinelabs.com/busted/#output-handlers) library is required to run the tests. Make sure it is installed with the same Lua version as LuaTeX so that it can be loaded correctly.
+
+```bash
+luarocks --lua-dir /usr/local/opt/lua@5.3 --lua-version 5.3 install busted
+```
+
+Clone the two submodules [`test-suite`](https://github.com/citation-style-language/test-suite) and [`locales`](https://github.com/citation-style-language/locales) into the [`test/`](https://github.com/zepinglee/citeproc-lua/tree/main/test) directory.
 
 ```bash
 git submodule update --init
 ```
 
-Then you can run the test script [`test/citeproc-test.lua`](https://github.com/zepinglee/citeproc-lua/tree/main/test/citeproc-test.lua).
+Run all the tests from `test-suite`.
 
 ```bash
-texlua test/citepric-test.lua
+busted --run=citeproc
 ```
 
-The names of failing tests are printed to [`test/failing_tests.txt`](https://github.com/zepinglee/citeproc-lua/tree/main/test/failing_tests.txt).
+The log is printed to [`test/citeproc-test.log`](https://github.com/zepinglee/citeproc-lua/tree/main/test/citeproc-test.log).
+Currently the `citeproc-lua` has passed 529 of 853 tests from test-suite.
 
-
-You may also run a single test or a subset of tests with common prefix.
+Select tests via pattern.
 
 ```bash
-texlua test/citepric-test.lua name_AfterInvertedName
-texlua test/citepric-test.lua name_
+busted --run=citeproc --filter=sort_CitationNumber
 ```
 
-Currently the `citeproc-lua` has passed 315 of 853 tests of test-suite.
+Run the test of modules in `citeproc-lua`.
+
+```bash
+busted --pattern=formatted_text --filter=quotes
+```
 
 
 

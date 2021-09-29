@@ -53,7 +53,7 @@ function Style:get_locale_list (lang)
   local language = string.sub(lang, 1, 2)
   local primary_dialect = util.primary_dialects[language]
   if not primary_dialect then
-    util.warning(string.format("Failed to find primary dialect of \"%s\"", language))
+    -- context.engine:warning(string.format("Failed to find primary dialect of \"%s\"", language))
   end
   local locale_list = {}
 

@@ -28,16 +28,6 @@ util.error = function (message)
 end
 
 
-util.warning = function (message)
-  if message == nil then
-    message = ""
-  else
-    message = tostring(message)
-  end
-  io.stderr:write("Warning: " .. message .. "\n")
-end
-
-
 util.debug = function (message)
   io.stderr:write("Debug: " .. tostring(message) .. "\n")
 end
