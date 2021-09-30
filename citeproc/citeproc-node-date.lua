@@ -283,6 +283,10 @@ DatePart.render = function (self, date, context, last_range_begin, range_end)
     if form == "numeric" then
       res = tostring(day)
     elseif form == "numeric-leading-zeros" then
+      -- TODO: day == nil?
+      if not day then
+        return nil
+      end
       res = string.format("%02d", day)
     elseif form == "ordinal" then
       res = util.to_ordinal(day)
@@ -328,6 +332,10 @@ DatePart.render = function (self, date, context, last_range_begin, range_end)
     elseif form == "numeric" then
       res = tostring(month)
     elseif form == "numeric-leading-zeros" then
+      -- TODO: month == nil?
+      if not month then
+        return nil
+      end
       res = string.format("%02d", month)
     end
     res = self:strip_periods(res, context)

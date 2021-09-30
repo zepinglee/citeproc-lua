@@ -452,6 +452,26 @@ Passed in:
 Expected:
 (string) 'Jennifer J. Davis, “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830” (Ph.D. diss., Pennsylvania State University, History, 2004), s.v. “gargoyle.”'
 
+Failure → test-suite bugreports_NoCaseEscape
+test/citeproc-test.lua:185: Expected objects to be equal.
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Aalto, Alan N.d.'"PIAAC-Longitudinal (Piaac-l) 2015"'.</div>
+  <div class="csl-entry">Aalto, Alan N.d."PIAAC-Longitudinal (PIAAC-Lx) 2015".</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+
+    <div class="csl-block">Aalto, Alan</div>
+
+    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">“‘PIAAC-Longitudinal (PIAAC-L) 2015.’”</div>
+  </div>
+  <div class="csl-entry"> 
+    <div class="csl-left-margin">N.d.</div><div class="csl-right-inline">“PIAAC-Longitudinal (PIAAC-Lx) 2015.”</div>
+  </div>
+</div>'
+
 Failure → test-suite bugreports_NumberInMacroWithVerticalAlign
 test/citeproc-test.lua:185: Expected objects to be equal.
 Passed in:
@@ -496,6 +516,22 @@ Passed in:
 (string) '[CSL STYLE ERROR: reference with no printed form.]'
 Expected:
 (string) '[Cite with a composer ; O A. "hello" <i>Book Title</i>]'
+
+Failure → test-suite bugreports_SmallCapsEscape
+test/citeproc-test.lua:185: Expected objects to be equal.
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Aalto, Alan N.d.<span style="font-variant:normal;">Here</span>.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+
+    <div class="csl-block">Aalto, Alan</div>
+
+    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline"><span style="font-variant:small-caps;">Here</span>.</div>
+  </div>
+</div>'
 
 Failure → test-suite bugreports_SortSecondaryKey
 test/citeproc-test.lua:185: Expected objects to be equal.
@@ -1400,6 +1436,13 @@ Expected:
   <div class="csl-entry">John Doe et al.</div>
 </div>'
 
+Failure → test-suite flipflop_ApostropheInsideTag
+test/citeproc-test.lua:185: Expected objects to be equal.
+Passed in:
+(string) 'l''''
+Expected:
+(string) 'l’’’'
+
 Failure → test-suite flipflop_Apostrophes
 test/citeproc-test.lua:185: Expected objects to be equal.
 Passed in:
@@ -1439,6 +1482,28 @@ One TwoC Three <i>Four Five!</i>
 <i>One TwoD</i> Three <i>Four Five!</i>
 <i>One TwoE <span style="font-style:normal;">Three</span> Four Five!</i>
 One TwoF&#60;/i&#62; Three Four Five!'
+
+Failure → test-suite flipflop_ItalicsWithOk
+test/citeproc-test.lua:185: Expected objects to be equal.
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"><i>Lessard v. Schmidt</i>. 1972. 349 F. Supp. 1078 (E.D. Wisc.).</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"><i>Lessard <span style="font-style:normal;">v.</span> Schmidt</i>. 1972. 349 F. Supp. 1078 (E.D. Wisc.).</div>
+</div>'
+
+Failure → test-suite flipflop_ItalicsWithOkAndTextcase
+test/citeproc-test.lua:185: Expected objects to be equal.
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"><span style="font-variant:small-caps;">lessard v. schmidt</span>. 1972. 349 F. Supp. 1078 (E.D. Wisc.).</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"><span style="font-variant:small-caps;">Lessard <span style="font-variant:normal;">v.</span> Schmidt</span>. 1972. 349 F. Supp. 1078 (E.D. Wisc.).</div>
+</div>'
 
 Failure → test-suite flipflop_LeadingMarkupWithApostrophe
 test/citeproc-test.lua:185: Expected objects to be equal.
@@ -1502,6 +1567,13 @@ Passed in:
 (string) 'It is official ("<i>My Title</i>") now'
 Expected:
 (string) 'It is official (“<i>My Title</i>”) now'
+
+Failure → test-suite flipflop_SmallCaps
+test/citeproc-test.lua:185: Expected objects to be equal.
+Passed in:
+(string) '<span style="font-variant:small-caps;">His Anonymous Life</span>, His Anthology'
+Expected:
+(string) '<span style="font-variant:small-caps;">His <span style="font-variant:normal;">Anonymous</span> Life</span>, His <span style="font-variant:small-caps;">Anthology</span>'
 
 Failure → test-suite flipflop_StartingApostrophe
 test/citeproc-test.lua:185: Expected objects to be equal.
@@ -2631,6 +2703,13 @@ Expected:
   <div class="csl-entry">Brooker, C. (2011, July 31). Let’s think outside the box here: maybe blue-sky thinking is nonsense. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/31/blue-sky-thinking</div>
 </div>'
 
+Failure → test-suite sort_WithAndInOneEntry
+test/citeproc-test.lua:185: Expected objects to be equal.
+Passed in:
+(string) '(Beck 1991; Beck and Katz 2001; Beck and Katz 2011; Beck, Katz, and Tucker 1998; Beck, King, and Zeng 2000; Colaresi 2006; Colaresi and Thompson 2002; Colaresi, Rasler, and Thompson 2007; Gochman 1993; Gochman and Leng 1983; Gochman and Maoz 1984)'
+Expected:
+(string) '(Beck 1991; Beck and Katz 2001, 2011; Beck, Katz, and Tucker 1998; Beck, King, and Zeng 2000; Colaresi 2006; Colaresi, Rasler, and Thompson 2007; Colaresi and Thompson 2002; Gochman 1993; Gochman and Leng 1983; Gochman and Maoz 1984)'
+
 Failure → test-suite substitute_SharedMacro
 test/citeproc-test.lua:185: Expected objects to be equal.
 Passed in:
@@ -2648,12 +2727,33 @@ Expected:
   <div class="csl-entry">---: Book Two.</div>
 </div>'
 
+Failure → test-suite substitute_SubstituteOnlyOnceString
+test/citeproc-test.lua:185: Expected objects to be equal.
+Passed in:
+(string) '[CSL STYLE ERROR: reference with no printed form.]'
+Expected:
+(string) 'a'
+
+Failure → test-suite substitute_SubstituteOnlyOnceTerm
+test/citeproc-test.lua:185: Expected objects to be equal.
+Passed in:
+(string) '[CSL STYLE ERROR: reference with no printed form.]'
+Expected:
+(string) 'Editor Term'
+
 Failure → test-suite substitute_SubstituteOnlyOnceTermEmpty
 test/citeproc-test.lua:185: Expected objects to be equal.
 Passed in:
 (string) '[CSL STYLE ERROR: reference with no printed form.]'
 Expected:
 (string) 'Content:'
+
+Failure → test-suite substitute_SubstituteOnlyOnceVariable
+test/citeproc-test.lua:185: Expected objects to be equal.
+Passed in:
+(string) '[CSL STYLE ERROR: reference with no printed form.]'
+Expected:
+(string) 'Title'
 
 Failure → test-suite testers_SecondAutoGeneratedZoteroPluginTest
 test/citeproc-test.lua:185: Expected objects to be equal.
@@ -2676,6 +2776,27 @@ Passed in:
 (string) 'The “New Career” And Organizational Commitment'
 Expected:
 (string) 'The “New Career” and Organizational Commitment'
+
+Failure → test-suite textcase_CapitalizeAll
+test/citeproc-test.lua:185: Expected objects to be equal.
+Passed in:
+(string) 'This IS a Pen that is a SMITH Pencil'
+Expected:
+(string) 'This IS A Pen That Is A SMITH Pencil'
+
+Failure → test-suite textcase_CapitalizeFirst
+test/citeproc-test.lua:185: Expected objects to be equal.
+Passed in:
+(string) 'this is a Pen that is a Smith Pencil'
+Expected:
+(string) 'This is a Pen that is a Smith Pencil'
+
+Failure → test-suite textcase_CapitalizeFirstWithDecor
+test/citeproc-test.lua:185: Expected objects to be equal.
+Passed in:
+(string) '<i>this is a Pen that is a Smith Pencil</i>'
+Expected:
+(string) '<i>This is a Pen that is a Smith Pencil</i>'
 
 Failure → test-suite textcase_CapitalsUntouched
 test/citeproc-test.lua:185: Expected objects to be equal.
@@ -2723,6 +2844,13 @@ IA AND IB EN
 İC AND ID TR
 BAD LANGUAGE CODE THAT PASSES IN NODE.JS BUT FAILS IN SOME BROWSERS'
 
+Failure → test-suite textcase_Lowercase
+test/citeproc-test.lua:185: Expected objects to be equal.
+Passed in:
+(string) 'This is a pen that is a Smith pencil'
+Expected:
+(string) 'this is a pen that is a Smith pencil'
+
 Failure → test-suite textcase_NoSpaceBeforeApostrophe
 test/citeproc-test.lua:185: Expected objects to be equal.
 Passed in:
@@ -2741,6 +2869,13 @@ Expected:
 (string) 'Saline Solution of β-Carotine
 Saline Solution of Beta-Carotine'
 
+Failure → test-suite textcase_SentenceCapitalization
+test/citeproc-test.lua:185: Expected objects to be equal.
+Passed in:
+(string) 'This is a Pen that is a Smith Pencil'
+Expected:
+(string) 'This is a pen that is a Smith pencil'
+
 Failure → test-suite textcase_SkipNameParticlesInTitleCase
 test/citeproc-test.lua:185: Expected objects to be equal.
 Passed in:
@@ -2754,6 +2889,20 @@ Passed in:
 (string) 'Employee Pro-environmental Behavior'
 Expected:
 (string) 'Employee Pro-Environmental Behavior'
+
+Failure → test-suite textcase_TitleCapitalization
+test/citeproc-test.lua:185: Expected objects to be equal.
+Passed in:
+(string) 'This IS a pen that is a smith pencil'
+Expected:
+(string) 'This IS a Pen That Is a smith Pencil'
+
+Failure → test-suite textcase_TitleCapitalization2
+test/citeproc-test.lua:185: Expected objects to be equal.
+Passed in:
+(string) 'This IS a pen that is a cat/mouse smith pencil'
+Expected:
+(string) 'This IS a Pen That Is a Cat/Mouse smith Pencil'
 
 Failure → test-suite textcase_TitleCaseNonEnglish2
 test/citeproc-test.lua:185: Expected objects to be equal.
@@ -2796,6 +2945,13 @@ Passed in:
 (string) 'Closing The Scientist–practitioner Gap: Studies From 2016 With Significant Practical Utility'
 Expected:
 (string) 'Closing the Scientist–Practitioner Gap: Studies from 2016 with Significant Practical Utility'
+
+Failure → test-suite textcase_Uppercase
+test/citeproc-test.lua:185: Expected objects to be equal.
+Passed in:
+(string) 'SMITH, John: This is a pen that is a Smith pencil'
+Expected:
+(string) 'SMITH, John: THIS IS A PEN THAT IS A Smith PENCIL'
 
 Failure → test-suite textcase_UppercaseNumber
 test/citeproc-test.lua:185: Expected objects to be equal.
@@ -2849,77 +3005,17 @@ Expected:
 My Long Title 2 does not have title-short
 does not have title-short'
 
-Error → test-suite bugreports_NoCaseEscape
-...e/2021/texmf-dist/tex/luatex/luaxml/luaxml-domobject.lua:223: attempt to call a nil value (method 'is_element')
-
-Error → test-suite bugreports_SmallCapsEscape
-...e/2021/texmf-dist/tex/luatex/luaxml/luaxml-domobject.lua:223: attempt to call a nil value (method 'is_element')
-
-Error → test-suite date_EmptyStrings
-./citeproc/citeproc-node-date.lua:331: bad argument #2 to 'format' (number expected, got nil)
-
-Error → test-suite flipflop_ApostropheInsideTag
-...e/2021/texmf-dist/tex/luatex/luaxml/luaxml-domobject.lua:223: attempt to call a nil value (method 'is_element')
-
-Error → test-suite flipflop_ItalicsWithOk
-...e/2021/texmf-dist/tex/luatex/luaxml/luaxml-domobject.lua:223: attempt to call a nil value (method 'is_element')
-
-Error → test-suite flipflop_ItalicsWithOkAndTextcase
-...e/2021/texmf-dist/tex/luatex/luaxml/luaxml-domobject.lua:223: attempt to call a nil value (method 'is_element')
-
-Error → test-suite flipflop_SmallCaps
-...e/2021/texmf-dist/tex/luatex/luaxml/luaxml-domobject.lua:223: attempt to call a nil value (method 'is_element')
-
-Error → test-suite sort_WithAndInOneEntry
-./citeproc/citeproc.lua:148: Failed to retrieve "315"
-
-Error → test-suite substitute_SubstituteOnlyOnceString
-./citeproc/citeproc-util.lua:38: Invalid string.
-
-Error → test-suite substitute_SubstituteOnlyOnceTerm
-./citeproc/citeproc-util.lua:38: Invalid string.
-
-Error → test-suite substitute_SubstituteOnlyOnceVariable
-./citeproc/citeproc-util.lua:38: Invalid string.
-
-Error → test-suite textcase_CapitalizeAll
-...e/2021/texmf-dist/tex/luatex/luaxml/luaxml-domobject.lua:223: attempt to call a nil value (method 'is_element')
-
-Error → test-suite textcase_CapitalizeFirst
-...e/2021/texmf-dist/tex/luatex/luaxml/luaxml-domobject.lua:223: attempt to call a nil value (method 'is_element')
-
-Error → test-suite textcase_CapitalizeFirstWithDecor
-...e/2021/texmf-dist/tex/luatex/luaxml/luaxml-domobject.lua:223: attempt to call a nil value (method 'is_element')
-
-Error → test-suite textcase_Lowercase
-...e/2021/texmf-dist/tex/luatex/luaxml/luaxml-domobject.lua:223: attempt to call a nil value (method 'is_element')
-
-Error → test-suite textcase_SentenceCapitalization
-...e/2021/texmf-dist/tex/luatex/luaxml/luaxml-domobject.lua:223: attempt to call a nil value (method 'is_element')
-
-Error → test-suite textcase_TitleCapitalization
-...e/2021/texmf-dist/tex/luatex/luaxml/luaxml-domobject.lua:223: attempt to call a nil value (method 'is_element')
-
-Error → test-suite textcase_TitleCapitalization2
-...e/2021/texmf-dist/tex/luatex/luaxml/luaxml-domobject.lua:223: attempt to call a nil value (method 'is_element')
-
-Error → test-suite textcase_TitleCaseWithFinalNocase
-...e/2021/texmf-dist/tex/luatex/luaxml/luaxml-domobject.lua:223: attempt to call a nil value (method 'is_element')
-
-Error → test-suite textcase_Uppercase
-...e/2021/texmf-dist/tex/luatex/luaxml/luaxml-domobject.lua:223: attempt to call a nil value (method 'is_element')
-
 category       success failure   error pending
 affix                2       6       0       1
-bugreports          28      45       2       7
+bugreports          28      47       0       7
 collapse             4      16       0       1
 condition           16       1       0       0
-date                94       6       1       0
+date                95       6       0       0
 decorations          3       4       0       0
 disambiguate        19      48       0       4
 display              1       4       0       0
 etal                 3       1       0       0
-flipflop             1      14       4       0
+flipflop             1      18       0       0
 form                 3       0       0       0
 fullstyles           3       2       0       0
 group                4       2       0       1
@@ -2939,13 +3035,13 @@ position             8       1       0       7
 punctuation         14       1       0       1
 quotes               2       2       0       0
 simplespace          1       0       0       0
-sort                32      25       1       8
+sort                32      26       0       8
 sortseparator        1       0       0       0
-substitute           2       2       3       0
+substitute           2       5       0       0
 testers              0       1       0       1
-textcase             4      16       9       0
+textcase             5      24       0       0
 unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              531     258      20      44
+(all)              533     276       0      44

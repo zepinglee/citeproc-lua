@@ -71,6 +71,7 @@ end
 function CiteProc:makeCitationCluster (citation_items)
   local items = {}
   for _, cite in ipairs(citation_items) do
+    cite.id = tostring(cite.id)
     local position_first = (self.registry.registry[cite.id] == nil)
     local res = self:get_item(cite.id)
 
@@ -147,6 +148,8 @@ function CiteProc:_retrieve_item (id)
   if not item then
     error("Failed to retrieve \"" .. id .. "\"")
   end
+
+  item.id = tostring(item.id)
 
   for key, value in pairs(item) do
     if key == "title" then

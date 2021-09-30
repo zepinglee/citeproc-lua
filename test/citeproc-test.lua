@@ -44,7 +44,7 @@ local function test_citation_items(citeproc, fixture)
   if not citation_items then
     citation_items = {{}}
     for _, item in ipairs(fixture.input) do
-      table.insert(citation_items[1], {id = item.id})
+      table.insert(citation_items[1], {id = tostring(item.id)})
     end
   end
 
@@ -63,7 +63,7 @@ local function test_bibliography(citeproc, fixture)
   if not bibentries then
     bibentries = {{}}
     for _, item in ipairs(fixture.input) do
-      table.insert(bibentries[1], item.id)
+      table.insert(bibentries[1], tostring(item.id))
     end
   end
 
@@ -92,7 +92,7 @@ local function run_test(fixture)
     if item.id == nil then
       item.id = "item-" .. tostring(i)
     end
-    bib[item.id] = item
+    bib[tostring(item.id)] = item
   end
 
   local citeproc_sys = {

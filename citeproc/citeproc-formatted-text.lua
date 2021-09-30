@@ -345,7 +345,7 @@ function FormattedText.new(text, formats)
       if value then
         res.formats = value
       elseif tag == "span" then
-        local style = text.get_attribute("style")
+        local style = text:get_attribute("style")
         if style == "font-variant: small-caps;" then
           res.formats = FormattedText._tag_formats['span style="font-variant: small-caps;"']
         elseif style == "nocase" then

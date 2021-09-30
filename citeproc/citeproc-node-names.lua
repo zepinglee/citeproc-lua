@@ -431,6 +431,10 @@ function Names:render (item, context)
   end
   local variable_names = context.options["variable"] or context.variable
 
+  if not variable_names then
+    return nil
+  end
+
   local name = self:get_child("name")
   if not name then
     name = context.name_element
