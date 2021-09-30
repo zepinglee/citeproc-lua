@@ -3,6 +3,7 @@ local inspect = require("inspect")
 
 local Element = require("citeproc.citeproc-node-element")
 local Names = require("citeproc.citeproc-node-names").names
+local Date = require("citeproc.citeproc-node-date").date
 local util = require("citeproc.citeproc-util")
 
 
@@ -17,13 +18,20 @@ function Sort:sort (items, context)
   context.variable_attempt = {}
 
   local key_map = {}
+  local sort_directions = {}
+  -- true: ascending
+  -- false: descending
 
   for _, item in ipairs(items) do
     if not key_map[item.id] then
       key_map[item.id] = {}
 
       context.item = item
-      for _, key in ipairs(self:query_selector("key")) do
+      for i, key in ipairs(self:query_selector("key")) do
+        if sort_directions[i] == nil then
+          local direction = (key:get_attribute("sort") ~= "descending")
+          sort_directions[i] = direction
+        end
         local value = key:render(item, context)
         if value == nil then
           value = false
@@ -38,14 +46,7 @@ function Sort:sort (items, context)
     end
   end
 
-
-  local sort_directions = {}
-  -- true: ascending
-  -- false: descending
-  for i, key in ipairs(self:query_selector("key")) do
-    local direction = (key:get_attribute("sort") ~= "descending")
-    sort_directions[i] = direction
-  end
+  -- print(inspect(key_map))
 
   local compare_entry = function (item1, item2)
     for i, value1 in ipairs(key_map[item1.id]) do
@@ -70,12 +71,6 @@ function Sort:sort (items, context)
   end
   table.sort(items, compare_entry)
 
-  if context.mode == "bibliography" then
-    for i, item in ipairs(items) do
-      item["citation-number"] = i
-    end
-  end
-
   return items
 end
 
@@ -85,7 +80,7 @@ local Key = Element:new()
 function Key:render (item, context)
   context = self:process_context(context)
   context.options["name-as-sort-order"] = "all"
-  context.name_sorting = true
+  context.sorting = true
   local variable = self:get_attribute("variable")
   if variable then
     context.variable = variable
@@ -119,21 +114,14 @@ function Key:_render_name (item, context)
 end
 
 function Key:_render_date (item, context)
-  local variable = self:get_variable(item, context.options["variable"], context)
-  if not variable then
-    return nil
+  if not self.date then
+    self.date = self:create_element("date", {}, self)
+    Date:set_base_class(self.date)
+    self.date:set_attribute("variable", context.options["variable"])
+    self.date:set_attribute("form", "numeric")
   end
-  local date_parts = variable["date-parts"][1]
-  local date_parts_number = {}
-  for i = 1, 3 do
-    local number = 0
-    if date_parts[i] then
-      number = tonumber(date_parts[i])
-    end
-    table.insert(date_parts_number, number)
-  end
-  local year, month, day = table.unpack(date_parts_number)
-  return string.format("%05d%02d%02d", year + 10000, month, day)
+  local res = self.date:render(item, context)
+  return res
 end
 
 

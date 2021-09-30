@@ -2402,21 +2402,6 @@ Passed in:
 Expected:
 (string) 'Banda 1999; Aalto 2000, Aalto 2001'
 
-Failure → test-suite sort_ConditionalMacroDates
-test/citeproc-test.lua:185: Expected objects to be equal.
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Title 1</div>
-  <div class="csl-entry">Title 2</div>
-  <div class="csl-entry">Title 3</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Title 3</div>
-  <div class="csl-entry">Title 1</div>
-  <div class="csl-entry">Title 2</div>
-</div>'
-
 Failure → test-suite sort_DateMacroSortWithSecondFieldAlign
 test/citeproc-test.lua:185: Expected objects to be equal.
 Passed in:
@@ -2871,7 +2856,7 @@ Error → test-suite bugreports_SmallCapsEscape
 ...e/2021/texmf-dist/tex/luatex/luaxml/luaxml-domobject.lua:223: attempt to call a nil value (method 'is_element')
 
 Error → test-suite date_EmptyStrings
-./citeproc/citeproc-node-date.lua:288: bad argument #2 to 'format' (number expected, got nil)
+./citeproc/citeproc-node-date.lua:331: bad argument #2 to 'format' (number expected, got nil)
 
 Error → test-suite flipflop_ApostropheInsideTag
 ...e/2021/texmf-dist/tex/luatex/luaxml/luaxml-domobject.lua:223: attempt to call a nil value (method 'is_element')
@@ -2954,7 +2939,7 @@ position             8       1       0       7
 punctuation         14       1       0       1
 quotes               2       2       0       0
 simplespace          1       0       0       0
-sort                31      26       1       8
+sort                32      25       1       8
 sortseparator        1       0       0       0
 substitute           2       2       3       0
 testers              0       1       0       1
@@ -2963,4 +2948,4 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              530     259      20      44
+(all)              531     258      20      44

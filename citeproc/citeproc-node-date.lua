@@ -1,3 +1,5 @@
+local inspect = require("inspect")
+
 local Element = require("citeproc.citeproc-node-element")
 local util = require("citeproc.citeproc-util")
 
@@ -7,6 +9,11 @@ local Date = Element:new()
 function Date:render (item, context)
   self:debug_info(context)
   context = self:process_context(context)
+
+  if context.sorting then
+    return self:render_sort_key(item, context)
+  end
+
   local variable_name = context.options["variable"]
 
   local is_locale_date
@@ -84,6 +91,42 @@ function Date:get_locale_date (form, lang)
     error(string.format("Failed to find '%s'", query))
   end
   return date
+end
+
+function Date:render_sort_key (item, context)
+  local variable_name = context.options["variable"]
+  local date = self:get_variable(item, variable_name, context)
+  if not date or not date["date-parts"] then
+    return nil
+  end
+  local show_parts = {
+    year = false,
+    month = false,
+    day = false,
+  }
+  if self:get_attribute("form") then
+    local date_parts = self:get_attribute("date-parts") or "year-month-day"
+    for _, dp_name in ipairs(util.split(date_parts, "%-")) do
+      show_parts[dp_name] = true
+    end
+  else
+    for _, child in ipairs(self:query_selector("date-part")) do
+      show_parts[child:get_attribute("name")] = true
+    end
+  end
+  local res = ""
+  for i, dp_name in ipairs({"year", "month", "day"}) do
+    local value = date["date-parts"][1][i]
+    if not value or not show_parts[dp_name] then
+      value = 0
+    end
+    if i == 1 then
+      res = res .. string.format("%05d", value + 10000)
+    else
+      res = res .. string.format("%02d", value)
+    end
+  end
+  return res
 end
 
 function Date:_render_single_date (date, context)

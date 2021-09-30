@@ -148,7 +148,6 @@ function Name:render_single_name (name, index, context)
   local sort_separator = context.options["sort-separator"]
 
   local demote_non_dropping_particle = context.options["demote-non-dropping-particle"]
-  local name_sorting = context.name_sorting
 
   -- TODO: make it a module
   local function _strip_quotes(str)
@@ -185,7 +184,7 @@ function Name:render_single_name (name, index, context)
 
   local demote_ndp = false  -- only active when form == "long"
   if demote_non_dropping_particle == "display-and-sort" or
-  demote_non_dropping_particle == "sort-only" and name_sorting then
+  demote_non_dropping_particle == "sort-only" and context.sorting then
     demote_ndp = true
   else  -- demote_non_dropping_particle == "never"
     demote_ndp = false
