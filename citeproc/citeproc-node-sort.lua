@@ -9,44 +9,54 @@ local util = require("citeproc.citeproc-util")
 local Sort = Element:new()
 
 function Sort:sort (items, context)
-  self:debug_info(context)
-
+  -- key_map = {
+  --   id1 = {key1, key2, ...},
+  --   id2 = {key1, key2, ...},
+  --   ...
+  -- }
   context.variable_attempt = {}
 
-  local key_dict = {}
-  for _, item in ipairs(items) do
-    key_dict[item.id] = {}
-  end
-  local descendings = {}
-  for i, key in ipairs(self:query_selector("key")) do
-    local descending = key:get_attribute("sort") == "descending"
+  local key_map = {}
 
-    table.insert(descendings, descending)
-    for _, item in ipairs(items) do
+  for _, item in ipairs(items) do
+    if not key_map[item.id] then
+      key_map[item.id] = {}
+
       context.item = item
-      local value = key:render(item, context)
-      if value == nil then
-        value = false
-      elseif type(value) == "table" and value._type == "FormattedText" then
-        value = value:render(context.engine.formatter, context)
+      for _, key in ipairs(self:query_selector("key")) do
+        local value = key:render(item, context)
+        if value == nil then
+          value = false
+        elseif type(value) == "table" and value._type == "FormattedText" then
+          value = value:render(context.engine.formatter, context)
+        end
+        if type(value) == "string" then
+          value = unicode.utf8.lower(value)
+        end
+        table.insert(key_map[item.id], value)
       end
-      if type(value) == "string" then
-        value = unicode.utf8.lower(value)
-      end
-      table.insert(key_dict[item.id], value)
     end
   end
 
+
+  local sort_directions = {}
+  -- true: ascending
+  -- false: descending
+  for i, key in ipairs(self:query_selector("key")) do
+    local direction = (key:get_attribute("sort") ~= "descending")
+    sort_directions[i] = direction
+  end
+
   local compare_entry = function (item1, item2)
-    for i, value1 in ipairs(key_dict[item1.id]) do
-      local descending = descendings[i]
-      local value2 = key_dict[item2.id][i]
+    for i, value1 in ipairs(key_map[item1.id]) do
+      local ascending = sort_directions[i]
+      local value2 = key_map[item2.id][i]
       if value1 and value2 then
         local res
-        if descending then
-          res = value1 > value2
-        else
+        if ascending then
           res = value1 < value2
+        else
+          res = value1 > value2
         end
         if res or value1 ~= value2 then
           return res

@@ -2395,13 +2395,6 @@ Expected:
   <div class="csl-entry">[1] Aaaa (first-cited)</div>
 </div>'
 
-Failure → test-suite sort_CitationNumberSecondaryAscendingViaMacroCitation
-test/citeproc-test.lua:185: Expected objects to be equal.
-Passed in:
-(string) '[1] Aaaa (first-cited); [2] Bbbb (second-cited); [3] Zzzz (third-cited); [4] Xxxx (fourth-cited)'
-Expected:
-(string) '[1] Zzzz (third-cited); [2] Xxxx (fourth-cited); [3] Bbbb (second-cited); [4] Aaaa (first-cited)'
-
 Failure → test-suite sort_CiteGroupDelimiter
 test/citeproc-test.lua:185: Expected objects to be equal.
 Passed in:
@@ -2893,7 +2886,7 @@ Error → test-suite flipflop_SmallCaps
 ...e/2021/texmf-dist/tex/luatex/luaxml/luaxml-domobject.lua:223: attempt to call a nil value (method 'is_element')
 
 Error → test-suite sort_WithAndInOneEntry
-./citeproc/citeproc.lua:136: Failed to retrieve "315"
+./citeproc/citeproc.lua:148: Failed to retrieve "315"
 
 Error → test-suite substitute_SubstituteOnlyOnceString
 ./citeproc/citeproc-util.lua:38: Invalid string.
@@ -2961,7 +2954,7 @@ position             8       1       0       7
 punctuation         14       1       0       1
 quotes               2       2       0       0
 simplespace          1       0       0       0
-sort                30      27       1       8
+sort                31      26       1       8
 sortseparator        1       0       0       0
 substitute           2       2       3       0
 testers              0       1       0       1
@@ -2970,4 +2963,4 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              529     260      20      44
+(all)              530     259      20      44

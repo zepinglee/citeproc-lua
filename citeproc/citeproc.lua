@@ -29,6 +29,7 @@ function CiteProc:new (sys, style, mode)
     registry = {},  -- A map
     reflist = {},  -- A list
     previous_citation = nil,
+    requires_sorting = false,
   }
 
   o.sys = sys
@@ -86,6 +87,11 @@ function CiteProc:makeCitationCluster (citation_items)
     end
     table.insert(items, item)
   end
+
+  if self.registry.requires_sorting then
+    self:sort_bibliography()
+  end
+
   local res = self.style:render_citation(items, {engine=self})
   self.registry.previous_citation = items
   return res
@@ -93,6 +99,11 @@ end
 
 function CiteProc:makeBibliography ()
   local items = {}
+
+  if self.registry.requires_sorting then
+    self:sort_bibliography()
+  end
+
   for _, id in pairs(self.registry.reflist) do
     local item = self.registry.registry[id]
     table.insert(items, item)
@@ -122,6 +133,7 @@ function CiteProc:get_item (id)
     table.insert(self.registry.reflist, id)
     item["citation-number"] = #self.registry.reflist
     self.registry.registry[id] = item
+    self.registry.requires_sorting = true
   end
   local res = {}
   setmetatable(res, {__index = item})
@@ -167,6 +179,35 @@ function CiteProc.normalize_string (str)
   -- local text = str
   local text = FormattedText.new(str)
   return text
+end
+
+function CiteProc:sort_bibliography()
+  -- Sort the items in registry according to the `sort` in `bibliography.`
+  -- This will update the `citation-number` of each item.
+  local bibliography_sort = self.style:get_path("style bibliography sort")[1]
+  if not bibliography_sort then
+    return
+  end
+  local items = {}
+  for _, id in ipairs(self.registry.reflist) do
+    table.insert(items, self.registry.registry[id])
+  end
+
+  local context = {
+    engine = self,
+    style = self.style,
+    mode = "bibliography",
+  }
+  context = self.style:process_context(context)
+  context = self.style:get_path("style bibliography")[1]:process_context(context)
+
+  bibliography_sort:sort(items, context)
+  self.registry.reflist = {}
+  for i, item in ipairs(items) do
+    item["citation-number"] = i
+    table.insert(self.registry.reflist, item.id)
+  end
+  self.registry.requires_sorting = false
 end
 
 function CiteProc:get_system_locale (lang)
