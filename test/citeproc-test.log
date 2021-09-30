@@ -2487,20 +2487,6 @@ Expected:
   </div>
 </div>'
 
-Failure → test-suite sort_DateVariableRange
-test/citeproc-test.lua:185: Expected objects to be equal.
-Passed in:
-(string) 'Book A; Book B'
-Expected:
-(string) 'Book B; Book A'
-
-Failure → test-suite sort_DateVariableRangeMixed
-test/citeproc-test.lua:185: Expected objects to be equal.
-Passed in:
-(string) 'Book A; Book B'
-Expected:
-(string) 'Book B; Book A'
-
 Failure → test-suite sort_DropNameLabelInSort
 test/citeproc-test.lua:185: Expected objects to be equal.
 Passed in:
@@ -3035,7 +3021,7 @@ position             8       1       0       7
 punctuation         14       1       0       1
 quotes               2       2       0       0
 simplespace          1       0       0       0
-sort                32      26       0       8
+sort                34      24       0       8
 sortseparator        1       0       0       0
 substitute           2       5       0       0
 testers              0       1       0       1
@@ -3044,4 +3030,4 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              533     276       0      44
+(all)              535     274       0      44

@@ -115,15 +115,17 @@ function Date:render_sort_key (item, context)
     end
   end
   local res = ""
-  for i, dp_name in ipairs({"year", "month", "day"}) do
-    local value = date["date-parts"][1][i]
-    if not value or not show_parts[dp_name] then
-      value = 0
-    end
-    if i == 1 then
-      res = res .. string.format("%05d", value + 10000)
-    else
-      res = res .. string.format("%02d", value)
+  for _, date_parts in ipairs(date["date-parts"]) do
+    for i, dp_name in ipairs({"year", "month", "day"}) do
+      local value = date_parts[i]
+      if not value or not show_parts[dp_name] then
+        value = 0
+      end
+      if i == 1 then
+        res = res .. string.format("%05d", value + 10000)
+      else
+        res = res .. string.format("%02d", value)
+      end
     end
   end
   return res
