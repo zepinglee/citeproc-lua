@@ -8,7 +8,6 @@ local io_write = io.write
 local io_flush = io.flush
 local pairs = pairs
 
-
 local colors
 
 if package.config:sub(1,1) == '\\' and not os.getenv("ANSICON") then
@@ -81,7 +80,8 @@ return function(options)
   local failureMessage = function(failure)
     local string = failure.randomseed and ('Random seed: ' .. failure.randomseed .. '\n') or ''
     if type(failure.message) == 'string' then
-      string = string .. failure.message
+      local message = string.gsub(failure.message, "^.-\n", "")
+      string = string .. message
     elseif failure.message == nil then
       string = string .. 'Nil error'
     else
