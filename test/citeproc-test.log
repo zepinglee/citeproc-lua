@@ -2491,9 +2491,9 @@ Failure → test-suite sort_DropNameLabelInSort
 test/citeproc-test.lua:185: Expected objects to be equal.
 Passed in:
 (string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe, John ed. <i>Hello</i>.</div>
   <div class="csl-entry">Doe, John. <i>Hello</i>.</div>
   <div class="csl-entry">Doe, John Eamon. <i>Hello</i>.</div>
-  <div class="csl-entry">Doe, John ed. <i>Hello</i>.</div>
   <div class="csl-entry">Doe, John Egbert. <i>Hello</i>.</div>
 </div>'
 Expected:
@@ -2656,9 +2656,9 @@ Failure → test-suite sort_SeparateAuthorsAndOthers
 test/citeproc-test.lua:185: Expected objects to be equal.
 Passed in:
 (string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe, John ed. <i>Hello 1</i>.</div>
   <div class="csl-entry">Doe, John. <i>Hello 4</i>.</div>
   <div class="csl-entry">Doe, John Barbitol. <i>Hello 2</i>.</div>
-  <div class="csl-entry">Doe, John ed. <i>Hello 1</i>.</div>
   <div class="csl-entry">Doe, John Egbert. <i>Hello 3</i>.</div>
 </div>'
 Expected:

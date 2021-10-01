@@ -474,7 +474,8 @@ function Names:render (item, context)
       if res then
         if type(res) == "number" then  -- name[form="count"]
           num_names = num_names + res
-        elseif label then
+        elseif label and not context.sorting then
+          -- drop name label in sorting
           local label_result = label:render(role, context)
           if label_result then
             res = FormattedText.concat(res, label_result)
