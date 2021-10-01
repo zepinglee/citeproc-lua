@@ -195,16 +195,6 @@ Expected:
   </div>
 </div>'
 
-Failure → test-suite bugreports_AuthorPosition
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">A00, A., A01, B., A02, C., A03, D., A04, E., A05, F., … A50, K. (2010). Modelling the Species Distribution of Flat-Headed Cats (<i>Prionailurus planiceps</i>), an Endangered South-East Asian Small Felid. <i>PLoS One</i>, <i>5</i>(3), e9612. doi:10.1371/journal.pone.0009612</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">A00, A., A01, B., A02, C., A03, D., A04, E., A05, F., … A50, K. (2010). Modelling the Species Distribution of Flat-Headed Cats (<i>Prionailurus planiceps</i>), an Endangered South-East Asian Small Felid. <i>PLoS ONE</i>, <i>5</i>(3), e9612. doi:10.1371/journal.pone.0009612</div>
-</div>'
-
 Failure → test-suite bugreports_AutomaticallyDeleteItemsFails
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -309,7 +299,7 @@ Expected:
 
 Failure → test-suite bugreports_DoubleEncodedAngleBraces
 Passed in:
-(string) '<span style="font-variant:small-caps;">Center for History and New Media</span>, « Zotero Quick Start Guide », [En ligne]. &#60;http://zotero.org/support/quick_start_guide&#62;. (consulté le.'
+(string) '<span style="font-variant:small-caps;">Center for History and New Media</span>, « Zotero Quick Start Guide », [En ligne]. &#60;http://zotero.org/support/quick_start_guide&#62;. (Consulté le.'
 Expected:
 (string) '<span style="font-variant:small-caps;">Center for History and New Media</span>, « Zotero Quick Start Guide », s.d., [En ligne]. &#60;http://zotero.org/support/quick_start_guide&#62;. .'
 
@@ -420,7 +410,7 @@ Expected:
 Failure → test-suite bugreports_NoCaseEscape
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Aalto, Alan N.d.'"PIAAC-Longitudinal (Piaac-l) 2015"'.</div>
+  <div class="csl-entry">Aalto, Alan N.d.'"PIAAC-Longitudinal (PIAAC-L) 2015"'.</div>
   <div class="csl-entry">Aalto, Alan N.d."PIAAC-Longitudinal (PIAAC-Lx) 2015".</div>
 </div>'
 Expected:
@@ -529,9 +519,19 @@ Expected:
   <div class="csl-entry"><i>Anonymous Journal One</i>.</div>
 </div>'
 
+Failure → test-suite bugreports_ThesisUniversityAppearsTwice
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Davis, Jennifer J. “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830.” Ph.D. Diss., Pennsylvania State University, History, 2004.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Davis, Jennifer J. “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830.” Ph.D. diss., Pennsylvania State University, History, 2004.</div>
+</div>'
+
 Failure → test-suite bugreports_TitleCase
 Passed in:
-(string) 'One But Two Or Three Yet Four So Five For Six And Seven Nor Eight A Nine An Ten The Eleven At Twelve By Thirteen From Fourteen In Fifteen Into Sixteen Of Seventeen On Eighteen To Nineteen With Twenty Up Twenty-one Down Twenty-two As Twenty-three Via Twenty-four Till Twenty-five Onto Twenty-six Over Twenty-seven.'
+(string) 'One but Two or Three yet Four so Five for Six and Seven nor Eight a Nine an Ten the Eleven at Twelve by Thirteen from Fourteen in Fifteen into Sixteen of Seventeen on Eighteen to Nineteen with Twenty up Twenty-one down Twenty-two as Twenty-three via Twenty-four till Twenty-five onto Twenty-six over Twenty-seven.'
 Expected:
 (string) 'One but Two or Three yet Four so Five for Six and Seven nor Eight a Nine an Ten the Eleven at Twelve by Thirteen from Fourteen in Fifteen into Sixteen of Seventeen on Eighteen to Nineteen with Twenty up Twenty-One down Twenty-Two as Twenty-Three via Twenty-Four till Twenty-Five onto Twenty-Six over Twenty-Seven.'
 
@@ -1323,8 +1323,8 @@ Expected:
 
 Failure → test-suite flipflop_ItalicsFlipped
 Passed in:
-(string) '<i>One Two <i>Three</i> Four Five!</i>
-<i>One <i>Two <i>Three</i> Four</i> Five!</i>'
+(string) '<i>One Two <span style="font-style:normal;">Three</span> Four Five!</i>
+<i>One <span style="font-style:normal;">Two <span style="font-style:normal;">Three</span> Four</span> Five!</i>'
 Expected:
 (string) '<i>One Two <span style="font-style:normal;">Three</span> Four Five!</i>
 <i>One <span style="font-style:normal;">Two <i>Three</i> Four</span> Five!</i>'
@@ -1358,7 +1358,7 @@ Expected:
 Failure → test-suite flipflop_ItalicsWithOkAndTextcase
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"><span style="font-variant:small-caps;">lessard v. schmidt</span>. 1972. 349 F. Supp. 1078 (E.D. Wisc.).</div>
+  <div class="csl-entry"><span style="font-variant:small-caps;">Lessard V. Schmidt</span>. 1972. 349 F. Supp. 1078 (E.D. Wisc.).</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1391,7 +1391,7 @@ Expected:
 
 Failure → test-suite flipflop_OrphanQuote
 Passed in:
-(string) 'Nation Of "Positive Obligations " Of State Under The European Convention On Human Rights (1)'
+(string) 'Nation of "Positive Obligations " of State Under the European Convention on Human Rights (1)'
 Expected:
 (string) 'Nation of "Positive Obligations " of State under the European Convention on Human Rights (1)'
 
@@ -1409,7 +1409,7 @@ Expected:
 
 Failure → test-suite flipflop_SingleBeforeColon
 Passed in:
-(string) ''Nobody Knows You're A Dog': As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows The Joke Rings As Relevant As Ever'
+(string) ''Nobody Knows You're a Dog': As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
 Expected:
 (string) '“Nobody Knows You’re a Dog”: As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
 
@@ -1434,7 +1434,7 @@ Expected:
 Failure → test-suite fullstyles_ABdNT
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Cole, S. J.; Moore, R. Hydrological modelling using raingauge- and radar-based estimators of areal rainfall. <b>Journal of Hydrology</b>, v. 358, n. 3-4, p. 159–181, 2008. </div>
+  <div class="csl-entry">COLE, S. J.; MOORE, R. Hydrological modelling using raingauge- and radar-based estimators of areal rainfall. <b>Journal of Hydrology</b>, v. 358, n. 3-4, p. 159–181, 2008. </div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1769,7 +1769,7 @@ Expected:
 Failure → test-suite name_EditorTranslatorBoth
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Noakes, Richard. <i>Hello</i>. John DoeEd. by . Jane RoeTrans. by .</div>
+  <div class="csl-entry">Noakes, Richard. <i>Hello</i>. John DoeEd. By . Jane RoeTrans. By .</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1785,7 +1785,7 @@ Expected:
 Failure → test-suite name_EditorTranslatorWithTranslatorOnlyBib
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Noakes, Richard. <i>Hello</i>. Jane RoeTrans. by .</div>
+  <div class="csl-entry">Noakes, Richard. <i>Hello</i>. Jane RoeTrans. By .</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1821,8 +1821,8 @@ Expected:
 Failure → test-suite name_InTextMarkupInitialize
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"><span style="font-weight:normal;">Doe</span>, &#60;b&#62;John&#60;/b&#62; Q.</div>
-  <div class="csl-entry"><span style="font-weight:normal;">Doe</span>, &#60;b&#62;John&#60;/b&#62;-Q.</div>
+  <div class="csl-entry"><b>Doe</b>, &#60;b&#62;John&#60;/b&#62; Q.</div>
+  <div class="csl-entry"><b>Doe</b>, &#60;b&#62;John&#60;/b&#62;-Q.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1833,8 +1833,8 @@ Expected:
 Failure → test-suite name_InTextMarkupNormalizeInitials
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"><span style="font-weight:normal;">Doe</span>, &#60;b&#62;J&#60;/b&#62; Q.</div>
-  <div class="csl-entry"><span style="font-weight:normal;">Doe</span>, &#60;b&#62;J&#60;/b&#62;-Q.</div>
+  <div class="csl-entry"><b>Doe</b>, &#60;b&#62;J&#60;/b&#62; Q.</div>
+  <div class="csl-entry"><b>Doe</b>, &#60;b&#62;J&#60;/b&#62;-Q.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2276,26 +2276,6 @@ Expected:
   <div class="csl-entry">Doe, John Egbert. <i>Hello</i>.</div>
 </div>'
 
-Failure → test-suite sort_LeadingA
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">A Hansen, Martin. <i>Alfabetiseringsproblemer</i>. København: Gyldendal, 2012.</div>
-  <div class="csl-entry">A kasernes fællesvirke. <i>Problemer med alfabetet</i>. Kbh: Dafolo, 2015.</div>
-  <div class="csl-entry">Ab Delrahman, Hussein. <i>Det danske alfabet er sært</i>. Kbh: Politiken, 2012.</div>
-  <div class="csl-entry">B Gjengen. <i>Alfabeta</i>. Kbh, 2009.</div>
-  <div class="csl-entry">Juul Jensen, Uffe, Carsten Hædersdal, og Mogens Kim Skadborg. “Etablering af klinisk etiske komitéer i Danmark: en praksis-filosofisk tilgang til klinisk etik fra bibliotek.dk”. <i>Bibliotek for læger</i> 206, nr. 1 (2014): 44–61.</div>
-  <div class="csl-entry">“A er det første bogstav i alfabetet”. television broadcast. DR, 2011.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">“A er det første bogstav i alfabetet”. Television broadcast. DR, 2011.</div>
-  <div class="csl-entry">A Hansen, Martin. <i>Alfabetiseringsproblemer</i>. København: Gyldendal, 2012.</div>
-  <div class="csl-entry">A kasernes fællesvirke. <i>Problemer med alfabetet</i>. Kbh: Dafolo, 2015.</div>
-  <div class="csl-entry">Ab Delrahman, Hussein. <i>Det danske alfabet er sært</i>. Kbh: Politiken, 2012.</div>
-  <div class="csl-entry">B Gjengen. <i>Alfabeta</i>. Kbh, 2009.</div>
-  <div class="csl-entry">Juul Jensen, Uffe, Carsten Hædersdal, og Mogens Kim Skadborg. “Etablering af klinisk etiske komitéer i Danmark: en praksis-filosofisk tilgang til klinisk etik fra bibliotek.dk”. <i>Bibliotek for læger</i> 206, nr. 1 (2014): 44–61.</div>
-</div>'
-
 Failure → test-suite sort_LeadingApostropheOnNameParticle
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -2391,8 +2371,8 @@ Failure → test-suite sort_Quotes
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Simple 'title' here C</div>
-  <div class="csl-entry">Simple title, here A</div>
   <div class="csl-entry">“Simple title here B”</div>
+  <div class="csl-entry">Simple title, here A</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2484,7 +2464,7 @@ Expected:
 Failure → test-suite testers_SecondAutoGeneratedZoteroPluginTest
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Center <sup>for</sup> History <sub>and</sub> New Media. “<span style="font-weight:normal;">Zotero</span> … "Quick Start" &#38; Guide 日本語.” http://zotero.org/support/quick_start_guide.</div>
+  <div class="csl-entry">Center <sup>for</sup> History <sub>and</sub> New Media. “<b>Zotero</b> … "Quick Start" &#38; Guide 日本語.” http://zotero.org/support/quick_start_guide.</div>
   <div class="csl-entry">Smith, John. <i>Book A</i>, 2000.</div>
   <div class="csl-entry">Smith, Steven. <i>Book A</i>, 2000.</div>
 </div>'
@@ -2497,34 +2477,16 @@ Expected:
 
 Failure → test-suite textcase_AfterQuote
 Passed in:
-(string) 'The “New Career” And Organizational Commitment'
+(string) 'The “new Career” and Organizational Commitment'
 Expected:
 (string) 'The “New Career” and Organizational Commitment'
-
-Failure → test-suite textcase_CapitalizeAll
-Passed in:
-(string) 'This IS a Pen that is a SMITH Pencil'
-Expected:
-(string) 'This IS A Pen That Is A SMITH Pencil'
-
-Failure → test-suite textcase_CapitalizeFirst
-Passed in:
-(string) 'this is a Pen that is a Smith Pencil'
-Expected:
-(string) 'This is a Pen that is a Smith Pencil'
-
-Failure → test-suite textcase_CapitalizeFirstWithDecor
-Passed in:
-(string) '<i>this is a Pen that is a Smith Pencil</i>'
-Expected:
-(string) '<i>This is a Pen that is a Smith Pencil</i>'
 
 Failure → test-suite textcase_CapitalsUntouched
 Passed in:
 (string) 'Uk
-Review Of Book By A.n. Author
-Writings On Uk People And Places
-All For One. For All.
+Review of Book by A.N. Author
+Writings on UK People and Places
+All for One. For All.
 Oc 1'
 Expected:
 (string) 'UK
@@ -2535,9 +2497,9 @@ OC 1'
 
 Failure → test-suite textcase_ImplicitNocase
 Passed in:
-(string) 'My small caps phrase in a title
-My <sup>superscript phrase</sup> in a title
-My <sub>subscript phrase</sub> in a title'
+(string) 'My Small Caps Phrase in a Title
+My <sup>Superscript Phrase</sup> in a Title
+My <sub>Subscript Phrase</sub> in a Title'
 Expected:
 (string) 'My <span style="font-variant:small-caps;">small caps phrase</span> in a Title
 My <sup>superscript phrase</sup> in a Title
@@ -2545,7 +2507,7 @@ My <sub>subscript phrase</sub> in a Title'
 
 Failure → test-suite textcase_InQuotes
 Passed in:
-(string) 'From "Distance" To "Friction": Substituting Metaphors And Redirecting Intercultural Research For'
+(string) 'From "distance" to "friction": Substituting Metaphors and Redirecting Intercultural Research for'
 Expected:
 (string) 'From “Distance” to “Friction”: Substituting Metaphors and Redirecting Intercultural Research For'
 
@@ -2553,8 +2515,8 @@ Failure → test-suite textcase_LocaleUnicode
 Passed in:
 (string) 'IA AND IB EN
 IA AND IB EN
-ic and ıd TR
-bad language code that passes in node.js but fails in some browsers'
+IC AND ID TR
+BAD LANGUAGE CODE THAT PASSES IN NODE.JS BUT FAILS IN SOME BROWSERS'
 Expected:
 (string) 'IA AND IB EN
 IA AND IB EN
@@ -2563,22 +2525,22 @@ BAD LANGUAGE CODE THAT PASSES IN NODE.JS BUT FAILS IN SOME BROWSERS'
 
 Failure → test-suite textcase_Lowercase
 Passed in:
-(string) 'This is a pen that is a Smith pencil'
+(string) 'this is a pen that is a smith pencil'
 Expected:
 (string) 'this is a pen that is a Smith pencil'
 
 Failure → test-suite textcase_NoSpaceBeforeApostrophe
 Passed in:
-(string) 'Marcus Shafi’i (ed.), Response To Shafi'i Comment
-Marcus Shafi`i (ed.), Response To Shafi`i Comment'
+(string) 'Marcus Shafi’i (ed.), Response to Shafi'i Comment
+Marcus Shafi`i (ed.), Response to Shafi`i Comment'
 Expected:
 (string) 'Marcus Shafi’i (ed.), Response to Shafi’i Comment
 Marcus Shafi`i (ed.), Response to Shafi`i Comment'
 
 Failure → test-suite textcase_NonEnglishChars
 Passed in:
-(string) 'Saline Solution Of β-Carotine
-Saline Solution Of Beta-carotine'
+(string) 'Saline Solution of Β-carotine
+Saline Solution of Beta-carotine'
 Expected:
 (string) 'Saline Solution of β-Carotine
 Saline Solution of Beta-Carotine'
@@ -2591,7 +2553,7 @@ Expected:
 
 Failure → test-suite textcase_SkipNameParticlesInTitleCase
 Passed in:
-(string) 'John Von Doe: An About Up Life; John Van Doe? A Life; John d'Doe! A Life; John De Doe A Life'
+(string) 'John Von Doe: An About up Life; John Van Doe? A Life; John d'Doe! A Life; John De Doe a Life'
 Expected:
 (string) 'John von Doe: An about up Life; John van Doe? A Life; John d’Doe! A Life; John de Doe a Life'
 
@@ -2603,21 +2565,15 @@ Expected:
 
 Failure → test-suite textcase_TitleCapitalization
 Passed in:
-(string) 'This IS a pen that is a smith pencil'
+(string) 'This IS a Pen That Is a Smith Pencil'
 Expected:
 (string) 'This IS a Pen That Is a smith Pencil'
 
 Failure → test-suite textcase_TitleCapitalization2
 Passed in:
-(string) 'This IS a pen that is a cat/mouse smith pencil'
+(string) 'This IS a Pen That Is a Cat/mouse Smith Pencil'
 Expected:
 (string) 'This IS a Pen That Is a Cat/Mouse smith Pencil'
-
-Failure → test-suite textcase_TitleCaseNonEnglish2
-Passed in:
-(string) 'Review Of Book By A.n. Author'
-Expected:
-(string) 'Review of Book by A.N. Author'
 
 Failure → test-suite textcase_TitleCaseWithHyphens
 Passed in:
@@ -2625,33 +2581,27 @@ Passed in:
 Expected:
 (string) 'Out-of-Fashion Initiatives: A Second Story'
 
-Failure → test-suite textcase_TitleCaseWithInitials
-Passed in:
-(string) 'Review Of Book By A.n. Author'
-Expected:
-(string) 'Review of Book by A.N. Author'
-
 Failure → test-suite textcase_TitleCaseWithNonBreakSpace
 Passed in:
-(string) 'The Physical volcanology Of The 1600 Eruption Of Huaynaputina'
+(string) 'The Physical volcanology of the 1600 Eruption of Huaynaputina'
 Expected:
 (string) 'The Physical Volcanology of the 1600 Eruption of Huaynaputina'
 
 Failure → test-suite textcase_TitleWithEmDash
 Passed in:
-(string) 'Relationship Of Core Self-evaluation Traits—self-esteem, Generalized Self-efficacy, Locus Of Control, And Emotional Stability—with Job Satisfaction And Job Performance: A Meta-analysis'
+(string) 'Relationship of Core Self-evaluation Traits—self-esteem, Generalized Self-efficacy, Locus of Control, and Emotional Stability—with Job Satisfaction and Job Performance: A Meta-analysis'
 Expected:
 (string) 'Relationship of Core Self-Evaluation Traits—Self-Esteem, Generalized Self-Efficacy, Locus of Control, and Emotional Stability—with Job Satisfaction and Job Performance: A Meta-Analysis'
 
 Failure → test-suite textcase_TitleWithEnDash
 Passed in:
-(string) 'Closing The Scientist–practitioner Gap: Studies From 2016 With Significant Practical Utility'
+(string) 'Closing the Scientist–practitioner Gap: Studies from 2016 with Significant Practical Utility'
 Expected:
 (string) 'Closing the Scientist–Practitioner Gap: Studies from 2016 with Significant Practical Utility'
 
 Failure → test-suite textcase_Uppercase
 Passed in:
-(string) 'SMITH, John: This is a pen that is a Smith pencil'
+(string) 'SMITH, John: THIS IS A PEN THAT IS A SMITH PENCIL'
 Expected:
 (string) 'SMITH, John: THIS IS A PEN THAT IS A Smith PENCIL'
 
@@ -2733,13 +2683,13 @@ position             8       1       0       7
 punctuation         14       1       0       1
 quotes               2       2       0       0
 simplespace          1       0       0       0
-sort                35      23       0       8
+sort                36      22       0       8
 sortseparator        1       0       0       0
 substitute           2       5       0       0
 testers              0       1       0       1
-textcase             5      24       0       0
+textcase            10      19       0       0
 unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              536     273       0      44
+(all)              542     267       0      44

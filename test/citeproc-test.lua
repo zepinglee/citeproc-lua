@@ -137,7 +137,7 @@ local function parse_fixture(path)
   local section = nil
   local contents = nil
   for line in file:lines() do
-    -- print(inspect(line), section)
+    --
     local start = string.match(line, ">>=+%s*([%w-]+)%s*=+")
     if start then
       section = start

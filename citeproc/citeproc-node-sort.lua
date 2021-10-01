@@ -1,5 +1,4 @@
 local unicode = require("unicode")
-local inspect = require("inspect")
 
 local Element = require("citeproc.citeproc-node-element")
 local Names = require("citeproc.citeproc-node-names").names
@@ -46,7 +45,7 @@ function Sort:sort (items, context)
     end
   end
 
-  -- print(inspect(key_map))
+  -- util.debug(inspect(key_map))
 
   local compare_entry = function (item1, item2)
     for i, value1 in ipairs(key_map[item1.id]) do

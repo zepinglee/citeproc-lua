@@ -4,6 +4,7 @@
 
 -- load `slnunicode` from LuaTeX
 local unicode = require("unicode")
+local inspect = require("inspect")
 
 
 local util = {}
@@ -28,8 +29,19 @@ util.error = function (message)
 end
 
 
-util.debug = function (message)
-  io.stderr:write("Debug: " .. tostring(message) .. "\n")
+-- local remove_all_metatables = function(item, path)
+--   if path[#path] ~= inspect.METATABLE then return item end
+-- end
+
+function util.debug(...)
+  -- io.stderr:write(inspect(message, {process = remove_all_metatables}))
+  for i, message in ipairs({...}) do
+    if i > 1 then
+      io.stderr:write("\t")
+    end
+    io.stderr:write(inspect(message))
+  end
+  io.stderr:write("\n")
 end
 
 -- Similar to re.split() in Python
@@ -310,28 +322,6 @@ function util.capitalize (str)
   str = unicode.utf8.lower(str)
   local res = string.gsub(str, "%w", unicode.utf8.upper, 1)
   return res
-end
-
-function util.capitalize_first (str)
-  local output = {}
-  for i, word in ipairs(util.split(str)) do
-    if i == 1 and util.is_lower(word) then
-      word = util.capitalize(word)
-    end
-    table.insert(output, word)
-  end
-  return table.concat(output, " ")
-end
-
-function util.capitalize_all (str)
-  local output = {}
-  for _, word in ipairs(util.split(str)) do
-    if util.is_lower(word) then
-      word = util.capitalize(word)
-    end
-    table.insert(output, word)
-  end
-  return table.concat(output, " ")
 end
 
 function util.sentence (str)

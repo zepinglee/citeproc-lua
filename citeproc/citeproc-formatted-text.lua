@@ -1,6 +1,8 @@
 local dom = require("luaxml-domobject")
-
+local unicode = require("unicode")
 local inspect = require("inspect")
+
+local util = require("citeproc.citeproc-util")
 
 
 local FormattedText = {
@@ -41,6 +43,8 @@ function FormattedText:render(formatter, context, punctuation_in_quote)
   if punctuation_in_quote then
     self:move_punctuation_in_quote()
   end
+
+  self:change_case()
 
   for _, text in ipairs(self.contents) do
     local str
@@ -205,6 +209,190 @@ function FormattedText:move_punctuation_in_quote()
   end
 end
 
+function FormattedText:change_case()
+  local text_case = self.formats["text-case"]
+  if text_case then
+    if text_case == "lowercase" then
+      self:lowercase()
+    elseif text_case == "uppercase" then
+      self:uppercase()
+    elseif text_case == "capitalize-first" then
+      self:capitalize_first()
+    elseif text_case == "capitalize-all" then
+      self:capitalize_all()
+    elseif text_case == "sentence" then
+      self:sentence()
+    elseif text_case == "title" then
+      self:title()
+    end
+  else
+    for _, text in ipairs(self.contents) do
+      if type(text) == "table" and text._type == "FormattedText" then
+        text:change_case()
+      end
+    end
+  end
+end
+
+function FormattedText:lowercase()
+  for i, text in ipairs(self.contents) do
+    if type(text) == "string" then
+      self.contents[i] = unicode.utf8.lower(text)
+    else
+      text:lowercase()
+    end
+  end
+end
+
+function FormattedText:uppercase()
+  for i, text in ipairs(self.contents) do
+    if type(text) == "string" then
+      self.contents[i] = unicode.utf8.upper(text)
+    else
+      text:uppercase()
+    end
+  end
+end
+
+-- function FormattedText:capitalize_first(state)
+--   state = state or "after-sentence"
+--   for i, text in ipairs(self.contents) do
+--     if type(text) == "string" then
+--       local sentences = {}
+--       local last_position = 1
+--       for sentence, pos in string.gmatch(text, "(.-[.!?:]%s+)()") do
+--         table.insert(sentences, sentence)
+--         last_position = pos
+--       end
+--       table.insert(sentences , string.sub(text, last_position))
+
+--       local res = ""
+--       for _, sentence in ipairs(sentences) do
+--         if state == "after-sentence" and util.is_lower(util.split(sentence)[1]) then
+--           res = res .. capitalize(sentence)
+--         else
+--           res = res .. sentence
+--         end
+--         state = "after-sentence"
+--       end
+--       self.contents[i] = res
+--       state = get_state(text)
+--     else
+--       state = text:capitalize_first(state)
+--     end
+--   end
+--   return state
+-- end
+
+function FormattedText:_change_word_case(state, word_transform, first_tranform)
+  state = state or "after-sentence"
+  word_transform = word_transform or function (x) return x end
+  first_tranform = first_tranform or word_transform
+  for i, text in ipairs(self.contents) do
+    if type(text) == "string" then
+      local res = {}
+      for _, word in ipairs(util.split(text, " ")) do
+        if state == "after-sentence" then
+          table.insert(res, first_tranform(word))
+          if string.match(word, "%w") then
+            state = "after-word"
+          end
+        else
+          table.insert(res, word_transform(word))
+        end
+        if string.match(word, "[.!?:]%s*$") then
+          state = "after-sentence"
+        end
+      end
+      self.contents[i] = table.concat(res, " ")
+    else
+      state = text:_change_word_case(state, word_transform, first_tranform)
+    end
+  end
+  return state
+end
+
+local function capitalize(str)
+  local res = string.gsub(str, utf8.charpattern, unicode.utf8.upper, 1)
+  return res
+end
+
+local function capitalize_if_lower(word)
+  if util.is_lower(word) then
+    return capitalize(word)
+  else
+    return word
+  end
+end
+
+function FormattedText:capitalize_first(state)
+  local first_tranform = capitalize_if_lower
+  self:_change_word_case("after-sentence", nil, first_tranform)
+end
+
+function FormattedText:capitalize_all()
+  local word_transform = capitalize_if_lower
+  self:_change_word_case("after-sentence", word_transform)
+end
+
+function FormattedText:is_upper()
+  for _, text in ipairs(self.contents) do
+    if type(text) == "string" then
+      if not util.is_upper(text) then
+        return false
+      end
+    else
+      local res = text:is_upper()
+      if not res then
+        return false
+      end
+    end
+  end
+  return true
+end
+
+function FormattedText:sentence()
+  if self:is_upper() then
+    local first_tranform = function(word)
+      return capitalize(unicode.utf8.lower(word))
+    end
+    local word_transform = unicode.utf8.lower
+    self:_change_word_case("after-sentence", word_transform, first_tranform)
+  else
+    local first_tranform = capitalize_if_lower
+    self:_change_word_case("after-sentence", nil, first_tranform)
+  end
+end
+
+function FormattedText:title()
+  if self:is_upper() then
+    local first_tranform = function(word)
+      return capitalize(unicode.utf8.lower(word))
+    end
+    local word_transform = function(word)
+      local res = unicode.utf8.lower(word)
+      if not util.stop_words[res] then
+        res = capitalize(res)
+      end
+      return res
+    end
+    self:_change_word_case("after-sentence", word_transform, first_tranform)
+  else
+    local first_tranform = capitalize_if_lower
+    local word_transform = function(word)
+      local lower = unicode.utf8.lower(word)
+      if util.stop_words[lower] then
+        return lower
+      elseif word == lower then
+        return capitalize(word)
+      else
+        return word
+      end
+    end
+    self:_change_word_case("after-sentence", word_transform, first_tranform)
+  end
+end
+
 function FormattedText.concat(str1, str2)
   assert(str1 and str2)
   local res = FormattedText.new()
@@ -308,6 +496,13 @@ local FormattedText_mt = {
   __concat = FormattedText.concat,
 }
 
+local function table_update(t, new_t)
+  for key, value in pairs(new_t) do
+    t[key] = value
+  end
+  return t
+end
+
 function FormattedText.new(text, formats)
   local res = {
     contents = {},
@@ -329,7 +524,8 @@ function FormattedText.new(text, formats)
       return res
     end
 
-  else
+  elseif text.get_node_type then
+    -- DOM Object
     if text:is_text() then
       res = text:get_text()
       return res
@@ -341,19 +537,25 @@ function FormattedText.new(text, formats)
       end
 
       local tag = text:get_element_name()
-      local value = FormattedText._tag_formats[tag]
-      if value then
-        res.formats = value
+      local formats = FormattedText._tag_formats[tag]
+      if formats then
+        table_update(res.formats, formats)
       elseif tag == "span" then
         local style = text:get_attribute("style")
         if style == "font-variant: small-caps;" then
-          res.formats = FormattedText._tag_formats['span style="font-variant: small-caps;"']
+          table_update(res.formats, FormattedText._tag_formats['span style="font-variant: small-caps;"'])
         elseif style == "nocase" then
-          res.formats = FormattedText._tag_formats['span style="nocase"']
+          table_update(res.formats, FormattedText._tag_formats['span style="nocase"'])
         end
       end
       return res
     end
+
+  elseif text._type and text._type == "FormattedText" then
+
+  elseif type(text) == "table" then
+    res.contents = text
+    return res
   end
   return nil
 end

@@ -116,7 +116,7 @@ function Element:debug_info (context, debug)
       end
       text = text .. "[" .. table.concat(attrs, " ") .. "]"
     end
-    util.debug(text)
+    io.stderr:write(text .. "\n")
   end
 end
 
@@ -326,6 +326,9 @@ function Element:quote (str, context)
   if not str then
     return nil
   end
+  if context.sorting then
+    return str
+  end
   if not str._type == "FormattedText" then
     str = FormattedText.new(str)
   end
@@ -359,35 +362,21 @@ function Element:case (text, context)
   if text._type ~= "FormattedText" then
     text = FormattedText.new(text)
   end
-  if not(#text.contents == 1 and type(text.contents[1]) == "string") then
-    return text
-  end
   local text_case = context.options["text-case"]
   if not text_case then
     return text
   end
-  local language = context.item["language"]
-  if not language then
-    language = self:get_style():get_attribute("default-locale") or "en-US"
+  if text_case == "title" then
+    -- title case conversion only affects English-language items
+    local language = context.item["language"]
+    if not language then
+      language = self:get_style():get_attribute("default-locale") or "en-US"
+    end
+    if not util.startswith(language, "en") then
+      return text
+    end
   end
-  if not util.startswith(language, "en") then
-    return text
-  end
-  if text_case == "lowercase" then
-    text.contents[1] = unicode.utf8.lower(text.contents[1])
-  elseif text_case == "uppercase" then
-    text.contents[1] = unicode.utf8.upper(text.contents[1])
-  elseif text_case == "capitalize-first" then
-    text.contents[1] = util.capitalize_first(text.contents[1])
-  elseif text_case == "capitalize-all" then
-    text.contents[1] = util.capitalize_all(text.contents[1])
-  elseif text_case == "sentence" then
-    text.contents[1] = util.sentence(text.contents[1])
-  elseif text_case == "title" then
-    text.contents[1] = util.title(text.contents[1])
-  else
-    error("Ivalid attribute \"text-case\"")
-  end
+  text:add_format("text-case", text_case)
   return text
 end
 
