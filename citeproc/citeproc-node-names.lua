@@ -65,11 +65,7 @@ function Name:render (names, context)
         if i == #names then
           output = FormattedText.concat(output, delimiter)
           output = output .. util.unicode["horizontal ellipsis"]
-          if delimiter_precedes_last == "never" then
-            output = output .. " "
-          else
-            output = FormattedText.concat(output, delimiter)
-          end
+          output = output .. " "
           res = self:render_single_name(name, i, context)
           output = output .. res
         end

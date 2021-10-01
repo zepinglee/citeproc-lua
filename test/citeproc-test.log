@@ -198,7 +198,7 @@ Expected:
 Failure → test-suite bugreports_AuthorPosition
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">A00, A., A01, B., A02, C., A03, D., A04, E., A05, F., …, A50, K. (2010). Modelling the Species Distribution of Flat-Headed Cats (<i>Prionailurus planiceps</i>), an Endangered South-East Asian Small Felid. <i>PLoS One</i>, <i>5</i>(3), e9612. doi:10.1371/journal.pone.0009612</div>
+  <div class="csl-entry">A00, A., A01, B., A02, C., A03, D., A04, E., A05, F., … A50, K. (2010). Modelling the Species Distribution of Flat-Headed Cats (<i>Prionailurus planiceps</i>), an Endangered South-East Asian Small Felid. <i>PLoS One</i>, <i>5</i>(3), e9612. doi:10.1371/journal.pone.0009612</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2276,20 +2276,6 @@ Expected:
   <div class="csl-entry">Doe, John Egbert. <i>Hello</i>.</div>
 </div>'
 
-Failure → test-suite sort_EtAlUseLast
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Roe, Doe, …, Aogh, Book A</div>
-  <div class="csl-entry">Roe, Doe, …, Bogh, Book A</div>
-  <div class="csl-entry">Roe, Doe, …, Gogh, Book A</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Roe, Doe, … Aogh, Book A</div>
-  <div class="csl-entry">Roe, Doe, … Bogh, Book A</div>
-  <div class="csl-entry">Roe, Doe, … Gogh, Book A</div>
-</div>'
-
 Failure → test-suite sort_LeadingA
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -2747,7 +2733,7 @@ position             8       1       0       7
 punctuation         14       1       0       1
 quotes               2       2       0       0
 simplespace          1       0       0       0
-sort                34      24       0       8
+sort                35      23       0       8
 sortseparator        1       0       0       0
 substitute           2       5       0       0
 testers              0       1       0       1
@@ -2756,4 +2742,4 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              535     274       0      44
+(all)              536     273       0      44
