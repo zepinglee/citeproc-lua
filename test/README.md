@@ -10,6 +10,13 @@ See <https://github.com/jgm/citeproc/blob/b27201c3ac48ffd2853f77152df19b6e2cf369
 - `position_IfIbidWithLocatorIsTrueThenIbidIsTrue`
 
 
+## Empty bibliography output
+
+- `sort_OmittedBibRefMixedNumericStyle`
+- `sort_OmittedBibRefNonNumericStyle`
+
+How to distinguish a numeric style?
+
 
 ## bugreports_UnisaHarvardInitialization
 
@@ -41,7 +48,6 @@ Heuristics are used to render pages label.
 
 
 ## position_IbidWithSuffix
-
 
 Name splitting issue.
 

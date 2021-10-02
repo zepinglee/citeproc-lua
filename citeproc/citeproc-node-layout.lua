@@ -1,3 +1,4 @@
+local FormattedText = require("citeproc.citeproc-formatted-text")
 local Element = require("citeproc.citeproc-node-element")
 local util = require("citeproc.citeproc-util")
 
@@ -27,9 +28,10 @@ function Layout:render (items, context)
     end
 
     local res = self:render_children(item, context)
-    if res then
-      table.insert(output, res)
+    if not res and context.mode == "bibliography" then
+      res = FormattedText.new("[CSL STYLE ERROR: reference with no printed form.]")
     end
+    table.insert(output, res)
     previous_cite = item
   end
 
