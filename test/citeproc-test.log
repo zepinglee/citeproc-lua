@@ -2290,20 +2290,6 @@ Expected:
   <div class="csl-entry">Roe, Book A</div>
 </div>'
 
-Failure → test-suite sort_NameVariable
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Jacob [F]linders</div>
-  <div class="csl-entry">John Doe</div>
-  <div class="csl-entry">Jane Roe</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe</div>
-  <div class="csl-entry">Jacob [F]linders</div>
-  <div class="csl-entry">Jane Roe</div>
-</div>'
-
 Failure → test-suite sort_NamesUseLast
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -2659,7 +2645,7 @@ position             8       1       0       7
 punctuation         14       1       0       1
 quotes               2       2       0       0
 simplespace          1       0       0       0
-sort                37      21       0       8
+sort                38      20       0       8
 sortseparator        1       0       0       0
 substitute           2       5       0       0
 testers              0       1       0       1
@@ -2668,4 +2654,4 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              543     266       0      44
+(all)              544     265       0      44

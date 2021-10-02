@@ -129,8 +129,10 @@ function Key:_render_date (item, context)
 end
 function Key._normalize_string(str)
   str = unicode.utf8.lower(str)
+  str = string.gsub(str, "[%[%]]", "")
   local words = {}
   for _, word in ipairs(util.split(str, " ")) do
+    -- TODO: strip leading prepositions
     -- remove leading apostrophe on name particle
     word = string.gsub(word, "^" .. util.unicode["apostrophe"], "")
     table.insert(words, word)
