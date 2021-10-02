@@ -2337,8 +2337,8 @@ Expected:
 Failure → test-suite sort_SeparateAuthorsAndOthers
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, John ed. <i>Hello 1</i>.</div>
   <div class="csl-entry">Doe, John. <i>Hello 4</i>.</div>
+  <div class="csl-entry">Doe, John ed. <i>Hello 1</i>.</div>
   <div class="csl-entry">Doe, John Barbitol. <i>Hello 2</i>.</div>
   <div class="csl-entry">Doe, John Egbert. <i>Hello 3</i>.</div>
 </div>'
@@ -2349,12 +2349,6 @@ Expected:
   <div class="csl-entry">Doe, John Barbitol. <i>Hello 2</i>.</div>
   <div class="csl-entry">Doe, John Egbert. <i>Hello 3</i>.</div>
 </div>'
-
-Failure → test-suite sort_StripMarkup
-Passed in:
-(string) 'Roe, Doe'
-Expected:
-(string) 'Doe, Roe'
 
 Failure → test-suite sort_SubstituteTitle
 Passed in:
@@ -2636,7 +2630,7 @@ position             8       1       0       7
 punctuation         14       1       0       1
 quotes               2       2       0       0
 simplespace          1       0       0       0
-sort                39      19       0       8
+sort                40      18       0       8
 sortseparator        1       0       0       0
 substitute           2       5       0       0
 testers              0       1       0       1
@@ -2645,4 +2639,4 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              545     264       0      44
+(all)              546     263       0      44

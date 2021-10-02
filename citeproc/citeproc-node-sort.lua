@@ -98,7 +98,7 @@ function Key:render (item, context)
   if res == nil then
     res = false
   elseif type(res) == "table" and res._type == "FormattedText" then
-    res = res:render(context.engine.formatter, context)
+    res = res:render(nil, context)
   end
   if type(res) == "string" then
     res = self._normalize_string(res)

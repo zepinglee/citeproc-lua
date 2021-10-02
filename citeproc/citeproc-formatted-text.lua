@@ -49,7 +49,11 @@ function FormattedText:render(formatter, context, punctuation_in_quote)
   for _, text in ipairs(self.contents) do
     local str
     if type(text) == "string" then
-      str = formatter.text_escape(text)
+      if formatter and formatter.text_escape then
+        str = formatter.text_escape(text)
+      else
+        str = text
+      end
     else  -- FormattedText
       str = text:render(formatter, context)
     end
@@ -63,11 +67,13 @@ function FormattedText:render(formatter, context, punctuation_in_quote)
     local value = self.formats[attr]
     if value then
       local key = string.format("@%s/%s", attr, value)
-      local format = formatter[key]
-      if type(format) == "string" then
-        res = string.gsub(format, "%%%%STRING%%%%", res)
-      elseif type(format) == "function" then
-        res = format(res, context)
+      if formatter then
+        local format = formatter[key]
+        if type(format) == "string" then
+          res = string.gsub(format, "%%%%STRING%%%%", res)
+        elseif type(format) == "function" then
+          res = format(res, context)
+        end
       end
     end
   end
