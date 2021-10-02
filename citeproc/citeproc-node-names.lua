@@ -40,8 +40,18 @@ function Name:render (names, context)
   local et_al_subsequent_use_first = context.options["et-al-subsequent-use-first "]
   local et_al_use_last = context.options["et-al-use-last"]
 
+  -- sorting
+  if context.options["names-min"] then
+    et_al_min = context.options["names-min"]
+  end
+  if context.options["names-use-first"] then
+    et_al_use_first = context.options["names-use-first"]
+  end
+  if context.options["names-use-last"] ~= nil then
+    et_al_use_last = context.options["names-use-last"]
+  end
+
   local form = context.options["form"]
-  local name_as_sort_order = context.options["name-as-sort-order"]
 
   local et_al_truncate = et_al_min > 0 and et_al_use_first > 0 and #names >= et_al_min
   local et_al_last = et_al_use_last and et_al_use_first <= et_al_min - 2
@@ -141,6 +151,9 @@ function Name:render_single_name (name, index, context)
   local initialize = context.options["initialize"]
   local initialize_with = context.options["initialize-with"]
   local name_as_sort_order = context.options["name-as-sort-order"]
+  if context.sorting then
+    name_as_sort_order = "all"
+  end
   local sort_separator = context.options["sort-separator"]
 
   local demote_non_dropping_particle = context.options["demote-non-dropping-particle"]
