@@ -426,9 +426,9 @@ function Names:render (item, context)
   end
 
   -- Inherit attributes of parent `names` element
-  local names = context.names_element
-  if names then
-    for key, value in pairs(names._attr) do
+  local names_element = context.names_element
+  if names_element then
+    for key, value in pairs(names_element._attr) do
       context.options[key] = value
     end
     for key, value in pairs(self._attr) do
@@ -438,13 +438,8 @@ function Names:render (item, context)
     context.names_element = self
     context.variable = context.options["variable"]
   end
-  local variable_names = context.options["variable"] or context.variable
 
-  if not variable_names then
-    return nil
-  end
-
-  local name = self:get_child("name")
+  local     name = self:get_child("name")
   if not name then
     name = context.name_element
   end
@@ -471,35 +466,39 @@ function Names:render (item, context)
     label = context.label
   end
 
-  local output = {}
-  local num_names = 0
-  for _, role in ipairs(util.split(variable_names)) do
-    local names = self:get_variable(item, role, context)
+  local variable_names = context.options["variable"] or context.variable
+  local ret = nil
 
-    table.insert(context.variable_attempt, names ~= nil)
+  if variable_names then
+    local output = {}
+    local num_names = 0
+    for _, role in ipairs(util.split(variable_names)) do
+      local names = self:get_variable(item, role, context)
 
-    if names then
-      local res = name:render(names, context)
-      if res then
-        if type(res) == "number" then  -- name[form="count"]
-          num_names = num_names + res
-        elseif label and not context.sorting then
-          -- drop name label in sorting
-          local label_result = label:render(role, context)
-          if label_result then
-            res = FormattedText.concat(res, label_result)
+      table.insert(context.variable_attempt, names ~= nil)
+
+      if names then
+        local res = name:render(names, context)
+        if res then
+          if type(res) == "number" then  -- name[form="count"]
+            num_names = num_names + res
+          elseif label and not context.sorting then
+            -- drop name label in sorting
+            local label_result = label:render(role, context)
+            if label_result then
+              res = FormattedText.concat(res, label_result)
+            end
           end
         end
+        table.insert(output, res)
       end
-      table.insert(output, res)
     end
-  end
 
-  local ret = nil
-  if num_names > 0 then
-    ret = tostring(num_names)
-  else
-    ret = self:concat(output, context)
+    if num_names > 0 then
+      ret = tostring(num_names)
+    else
+      ret = self:concat(output, context)
+    end
   end
 
   if ret then
