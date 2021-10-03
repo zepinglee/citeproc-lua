@@ -13,8 +13,9 @@ local FormattedText = {
     ["b"] = {["font-weight"] = "bold"},
     ["sup"] = {["vertical-align"] = "sup"},
     ["sub"] = {["vertical-align"] = "sub"},
-    ['span style="font-variant: small-caps;"'] = {["font-variant"] = "normal"},
-    ['span style="nocase"'] = {["style"] = "nocase"},
+    ["sc"] = {["font-variant"] = "small-caps"},
+    ['span style="font-variant: small-caps;"'] = {["font-variant"] = "smal-caps"},
+    ['span class="nocase"'] = {["class"] = "nocase"},
   },
   _format_sequence = {
     "font-style",
@@ -33,8 +34,6 @@ local FormattedText = {
 }
 
 function FormattedText:render(formatter, context, punctuation_in_quote)
-  local res = ""
-
   self:merge_punctuations()
 
   if context then
@@ -46,6 +45,11 @@ function FormattedText:render(formatter, context, punctuation_in_quote)
 
   self:change_case()
 
+  return self:_render(formatter, context)
+end
+
+function FormattedText:_render(formatter, context)
+  local res = ""
   for _, text in ipairs(self.contents) do
     local str
     if type(text) == "string" then
@@ -55,7 +59,7 @@ function FormattedText:render(formatter, context, punctuation_in_quote)
         str = text
       end
     else  -- FormattedText
-      str = text:render(formatter, context)
+      str = text:_render(formatter, context)
     end
     -- Remove leading spaces
     if string.sub(res, -1) == " " and string.sub(str, 1, 1) == " " then
@@ -240,57 +244,13 @@ function FormattedText:change_case()
   end
 end
 
-function FormattedText:lowercase()
-  for i, text in ipairs(self.contents) do
-    if type(text) == "string" then
-      self.contents[i] = unicode.utf8.lower(text)
-    else
-      text:lowercase()
-    end
-  end
-end
-
-function FormattedText:uppercase()
-  for i, text in ipairs(self.contents) do
-    if type(text) == "string" then
-      self.contents[i] = unicode.utf8.upper(text)
-    else
-      text:uppercase()
-    end
-  end
-end
-
--- function FormattedText:capitalize_first(state)
---   state = state or "after-sentence"
---   for i, text in ipairs(self.contents) do
---     if type(text) == "string" then
---       local sentences = {}
---       local last_position = 1
---       for sentence, pos in string.gmatch(text, "(.-[.!?:]%s+)()") do
---         table.insert(sentences, sentence)
---         last_position = pos
---       end
---       table.insert(sentences , string.sub(text, last_position))
-
---       local res = ""
---       for _, sentence in ipairs(sentences) do
---         if state == "after-sentence" and util.is_lower(util.split(sentence)[1]) then
---           res = res .. capitalize(sentence)
---         else
---           res = res .. sentence
---         end
---         state = "after-sentence"
---       end
---       self.contents[i] = res
---       state = get_state(text)
---     else
---       state = text:capitalize_first(state)
---     end
---   end
---   return state
--- end
-
 function FormattedText:_change_word_case(state, word_transform, first_tranform)
+  if self.formats["vertical-align"] == "sup" or
+      self.formats["vertical-align"] == "sub" or
+      self.formats["font-variant"] == "small-caps" or
+      self.formats["class"] == "nocase" then
+    return
+  end
   state = state or "after-sentence"
   word_transform = word_transform or function (x) return x end
   first_tranform = first_tranform or word_transform
@@ -316,6 +276,16 @@ function FormattedText:_change_word_case(state, word_transform, first_tranform)
     end
   end
   return state
+end
+
+function FormattedText:lowercase()
+  local word_transform = unicode.utf8.lower
+  self:_change_word_case("after-sentence", word_transform)
+end
+
+function FormattedText:uppercase()
+  local word_transform = unicode.utf8.upper
+  self:_change_word_case("after-sentence", word_transform)
 end
 
 local function capitalize(str)
@@ -547,11 +517,10 @@ function FormattedText.new(text, formats)
       if formats then
         table_update(res.formats, formats)
       elseif tag == "span" then
-        local style = text:get_attribute("style")
-        if style == "font-variant: small-caps;" then
+        if text:get_attribute("style") == "font-variant: small-caps;" then
           table_update(res.formats, FormattedText._tag_formats['span style="font-variant: small-caps;"'])
-        elseif style == "nocase" then
-          table_update(res.formats, FormattedText._tag_formats['span style="nocase"'])
+        elseif text:get_attribute("class")  == "nocase" then
+          table_update(res.formats, FormattedText._tag_formats['span class="nocase"'])
         end
       end
       return res
@@ -560,7 +529,6 @@ function FormattedText.new(text, formats)
   elseif text._type and text._type == "FormattedText" then
 
   elseif type(text) == "table" then
-    res.contents = text
     return res
   end
   return nil
