@@ -256,21 +256,45 @@ function FormattedText:_change_word_case(state, word_transform, first_tranform)
   first_tranform = first_tranform or word_transform
   for i, text in ipairs(self.contents) do
     if type(text) == "string" then
-      local res = {}
-      for _, word in ipairs(util.split(text, " ")) do
+
+      local res = ""
+      local last_position = 1
+      local words = {}
+      for word, punctuation, pos in string.gmatch(text, "(.-)([ /-])()") do
+        table.insert(words, {word, punctuation})
+        last_position = pos
+      end
+      table.insert(words, {string.sub(text, last_position), ""})
+      for _, t in ipairs(words) do
+        local word, punctuation = table.unpack(t)
         if state == "after-sentence" then
-          table.insert(res, first_tranform(word))
+          res = res .. first_tranform(word)
           if string.match(word, "%w") then
             state = "after-word"
           end
         else
-          table.insert(res, word_transform(word))
+          res = res .. word_transform(word)
         end
+        res = res .. punctuation
         if string.match(word, "[.!?:]%s*$") then
           state = "after-sentence"
         end
       end
-      self.contents[i] = table.concat(res, " ")
+
+      -- local word_index = 0
+      -- local res = string.gsub(text, "%w+", function (word)
+      --   word_index = word_index + 1
+      --   if word_index == 1 then
+      --     return first_tranform(word)
+      --   else
+      --     return word_transform(word)
+      --   end
+      -- end)
+      -- if string.match(res, "[.!?:]%s*$") then
+      --   state = "after-sentence"
+      -- end
+
+      self.contents[i] = res
     else
       state = text:_change_word_case(state, word_transform, first_tranform)
     end

@@ -530,12 +530,6 @@ Expected:
   <div class="csl-entry">Davis, Jennifer J. “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830.” Ph.D. diss., Pennsylvania State University, History, 2004.</div>
 </div>'
 
-Failure → test-suite bugreports_TitleCase
-Passed in:
-(string) 'One but Two or Three yet Four so Five for Six and Seven nor Eight a Nine an Ten the Eleven at Twelve by Thirteen from Fourteen in Fifteen into Sixteen of Seventeen on Eighteen to Nineteen with Twenty up Twenty-one down Twenty-two as Twenty-three via Twenty-four till Twenty-five onto Twenty-six over Twenty-seven.'
-Expected:
-(string) 'One but Two or Three yet Four so Five for Six and Seven nor Eight a Nine an Ten the Eleven at Twelve by Thirteen from Fourteen in Fifteen into Sixteen of Seventeen on Eighteen to Nineteen with Twenty up Twenty-One down Twenty-Two as Twenty-Three via Twenty-Four till Twenty-Five onto Twenty-Six over Twenty-Seven.'
-
 Failure → test-suite bugreports_UndefinedBeforeVal
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -2430,6 +2424,14 @@ Passed in:
 Expected:
 (string) 'From “Distance” to “Friction”: Substituting Metaphors and Redirecting Intercultural Research For'
 
+Failure → test-suite textcase_LastChar
+Passed in:
+(string) '07-X
+07-X Test'
+Expected:
+(string) '07-x
+07-x Test'
+
 Failure → test-suite textcase_LocaleUnicode
 Passed in:
 (string) 'IA AND IB EN
@@ -2452,8 +2454,8 @@ Marcus Shafi`i (ed.), Response to Shafi`i Comment'
 
 Failure → test-suite textcase_NonEnglishChars
 Passed in:
-(string) 'Saline Solution of Β-carotine
-Saline Solution of Beta-carotine'
+(string) 'Saline Solution of Β-Carotine
+Saline Solution of Beta-Carotine'
 Expected:
 (string) 'Saline Solution of β-Carotine
 Saline Solution of Beta-Carotine'
@@ -2470,24 +2472,6 @@ Passed in:
 Expected:
 (string) 'John von Doe: An about up Life; John van Doe? A Life; John d’Doe! A Life; John de Doe a Life'
 
-Failure → test-suite textcase_StopWordBeforeHyphen
-Passed in:
-(string) 'Employee Pro-environmental Behavior'
-Expected:
-(string) 'Employee Pro-Environmental Behavior'
-
-Failure → test-suite textcase_TitleCapitalization2
-Passed in:
-(string) 'This IS a Pen That Is a Cat/mouse smith Pencil'
-Expected:
-(string) 'This IS a Pen That Is a Cat/Mouse smith Pencil'
-
-Failure → test-suite textcase_TitleCaseWithHyphens
-Passed in:
-(string) 'Out-of-fashion Initiatives: A Second Story'
-Expected:
-(string) 'Out-of-Fashion Initiatives: A Second Story'
-
 Failure → test-suite textcase_TitleCaseWithNonBreakSpace
 Passed in:
 (string) 'The Physical volcanology of the 1600 Eruption of Huaynaputina'
@@ -2496,7 +2480,7 @@ Expected:
 
 Failure → test-suite textcase_TitleWithEmDash
 Passed in:
-(string) 'Relationship of Core Self-evaluation Traits—self-esteem, Generalized Self-efficacy, Locus of Control, and Emotional Stability—with Job Satisfaction and Job Performance: A Meta-analysis'
+(string) 'Relationship of Core Self-Evaluation Traits—self-Esteem, Generalized Self-Efficacy, Locus of Control, and Emotional Stability—with Job Satisfaction and Job Performance: A Meta-Analysis'
 Expected:
 (string) 'Relationship of Core Self-Evaluation Traits—Self-Esteem, Generalized Self-Efficacy, Locus of Control, and Emotional Stability—with Job Satisfaction and Job Performance: A Meta-Analysis'
 
@@ -2556,7 +2540,7 @@ does not have title-short'
 
 category       success failure   error pending
 affix                2       6       0       1
-bugreports          28      47       0       7
+bugreports          29      46       0       7
 collapse             4      16       0       1
 condition           16       1       0       0
 date                95       6       0       0
@@ -2588,9 +2572,9 @@ sort                40      18       0       8
 sortseparator        1       0       0       0
 substitute           5       2       0       0
 testers              0       1       0       1
-textcase            14      15       0       0
+textcase            16      13       0       0
 unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              553     256       0      44
+(all)              556     253       0      44
