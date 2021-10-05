@@ -12,7 +12,6 @@ formats.html = {
     str = string.gsub(str, "%&", "&#38;")
     str = string.gsub(str, "<", "&#60;")
     str = string.gsub(str, ">", "&#62;")
-    -- str = string.gsub(str, "%s%s", "\u{00A0}")
     for char, sub in pairs(util.superscripts) do
       str = string.gsub(str, char, "<sup>" .. sub .. "</sup>")
     end
@@ -51,7 +50,7 @@ formats.latex = {
     str = str:gsub("{", "\\{")
     str = str:gsub("}", "\\}")
     str = str:gsub("_", "\\_")
-    str = str:gsub("%s%s", "~")
+    str = str:gsub(util.unicode["no-break space"], "~")
     for char, sub in pairs(util.superscripts) do
       str = string.gsub(str, char, "\\textsuperscript{" .. sub "}")
     end

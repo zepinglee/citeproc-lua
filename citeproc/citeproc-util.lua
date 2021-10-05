@@ -297,6 +297,7 @@ util.primary_dialects = {
 -- Range delimiter
 
 util.unicode = {
+  ["no-break space"] = "\u{00A0}",
   ["en dash"] = "\u{2013}",
   ["em dash"] = "\u{2014}",
   ["left single quotation mark"] = "\u{2018}",
@@ -304,7 +305,8 @@ util.unicode = {
   ["apostrophe"] = "\u{2019}",
   ["left double quotation mark"] = "\u{201C}",
   ["right double quotation mark"] = "\u{201D}",
-  ["horizontal ellipsis"] = "\u{2026}"
+  ["horizontal ellipsis"] = "\u{2026}",
+  ["narrow no-break space"] = "\u{202F}",
 }
 
 

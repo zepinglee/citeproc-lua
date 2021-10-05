@@ -342,7 +342,7 @@ Expected:
 
 Failure → test-suite bugreports_GreekStyleProblems
 Passed in:
-(string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Κώστας Καρυωτάκης, <i>Ποιήματα και πεζά</i>, Andreas Dimitriadisμτφ. , Γ. Π. Σαββίδηςεπιμ. , 1998, σ .'
+(string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Κώστας Καρυωτάκης, <i>Ποιήματα και πεζά</i>, Andreas Dimitriadisμτφ. , Γ. Π. Σαββίδηςεï�ιμ. , 1998, σ .'
 Expected:
 (string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Κώστας Καρυωτάκης, <i>Ποιήματα και πεζά</i>, μτφ. Andreas Dimitriadis, επιμ. Γ. Π. Σαββίδης, 1998.'
 
@@ -2472,24 +2472,6 @@ Passed in:
 Expected:
 (string) 'John von Doe: An about up Life; John van Doe? A Life; John d’Doe! A Life; John de Doe a Life'
 
-Failure → test-suite textcase_TitleCaseWithNonBreakSpace
-Passed in:
-(string) 'The Physical volcanology of the 1600 Eruption of Huaynaputina'
-Expected:
-(string) 'The Physical Volcanology of the 1600 Eruption of Huaynaputina'
-
-Failure → test-suite textcase_TitleWithEmDash
-Passed in:
-(string) 'Relationship of Core Self-Evaluation Traits—self-Esteem, Generalized Self-Efficacy, Locus of Control, and Emotional Stability—with Job Satisfaction and Job Performance: A Meta-Analysis'
-Expected:
-(string) 'Relationship of Core Self-Evaluation Traits—Self-Esteem, Generalized Self-Efficacy, Locus of Control, and Emotional Stability—with Job Satisfaction and Job Performance: A Meta-Analysis'
-
-Failure → test-suite textcase_TitleWithEnDash
-Passed in:
-(string) 'Closing the Scientist–practitioner Gap: Studies from 2016 with Significant Practical Utility'
-Expected:
-(string) 'Closing the Scientist–Practitioner Gap: Studies from 2016 with Significant Practical Utility'
-
 Failure → test-suite textcase_UppercaseNumber
 Passed in:
 (string) 'xxiii'
@@ -2572,9 +2554,9 @@ sort                40      18       0       8
 sortseparator        1       0       0       0
 substitute           5       2       0       0
 testers              0       1       0       1
-textcase            16      13       0       0
+textcase            19      10       0       0
 unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              556     253       0      44
+(all)              559     250       0      44

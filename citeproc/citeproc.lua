@@ -173,11 +173,11 @@ function CiteProc.normalize_string (str)
   end
   -- French punctuation spacing
   if type(str) == "string" then
-    str = string.gsub(str, " ;", "\u{202F};")
-    str = string.gsub(str, " %?", "\u{202F}?")
-    str = string.gsub(str, " !", "\u{202F}!")
-    str = string.gsub(str, " »", "\u{202F}»")
-    str = string.gsub(str, "« ", "«\u{202F}")
+    str = string.gsub(str, " ;", util.unicode["narrow no-break space"] .. ";")
+    str = string.gsub(str, " %?", util.unicode["narrow no-break space"] .. "?")
+    str = string.gsub(str, " !", util.unicode["narrow no-break space"] .. "!")
+    str = string.gsub(str, " »", util.unicode["narrow no-break space"] .. "»")
+    str = string.gsub(str, "« ", "«" .. util.unicode["narrow no-break space"])
   end
   -- local text = str
   local text = FormattedText.new(str)

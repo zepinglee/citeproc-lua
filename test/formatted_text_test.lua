@@ -14,7 +14,6 @@ describe("FormattedText", function()
       text = string.gsub(text, "%&", "&#38;")
       text = string.gsub(text, "<", "&#60;")
       text = string.gsub(text, ">", "&#62;")
-      text = string.gsub(text, "%s%s", "\u{00A0}")
       return text
     end,
     ["@font-style/italic"] = "<i>%%STRING%%</i>",

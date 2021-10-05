@@ -260,7 +260,10 @@ function FormattedText:_change_word_case(state, word_transform, first_tranform)
       local res = ""
       local last_position = 1
       local words = {}
-      for word, punctuation, pos in string.gmatch(text, "(.-)([ /-])()") do
+      -- ["no-break space"] = "\u{00A0}",
+      -- ["en dash"] = "\u{2013}",
+      -- ["em dash"] = "\u{2014}",
+      for word, punctuation, pos in string.gmatch(text, "(.-)([- /\u{00A0}\u{2013}\u{2014}])()") do
         table.insert(words, {word, punctuation})
         last_position = pos
       end
