@@ -42,6 +42,7 @@ function Number:render (item, context)
   end
 
   res = self:wrap(res, context)
+  res = self:case(res, context)
 
   return res
 end

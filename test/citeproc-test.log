@@ -2472,12 +2472,6 @@ Passed in:
 Expected:
 (string) 'John von Doe: An about up Life; John van Doe? A Life; John d’Doe! A Life; John de Doe a Life'
 
-Failure → test-suite textcase_UppercaseNumber
-Passed in:
-(string) 'xxiii'
-Expected:
-(string) 'XXIII'
-
 Failure → test-suite variables_ContainerTitleShort
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -2554,9 +2548,9 @@ sort                40      18       0       8
 sortseparator        1       0       0       0
 substitute           5       2       0       0
 testers              0       1       0       1
-textcase            19      10       0       0
+textcase            20       9       0       0
 unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              559     250       0      44
+(all)              560     249       0      44
