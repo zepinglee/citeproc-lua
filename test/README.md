@@ -18,6 +18,15 @@ See <https://github.com/jgm/citeproc/blob/b27201c3ac48ffd2853f77152df19b6e2cf369
 How to distinguish a numeric style?
 
 
+## Group suppressed
+
+
+- `variables_TitleShortOnShortTitleNoTitleCondition`
+  This test is contrary to the spec.  The whole group should
+  be suppressed because it contains variables but none are
+  called. See https://github.com/citation-style-language/test-suite/issues/29
+- `variables_TitleShortOnShortTitleNoTitleCondition`
+
 ## bugreports_UnisaHarvardInitialization
 
 The expected output here includes a trailing space, which we delete.
@@ -50,10 +59,3 @@ Heuristics are used to render pages label.
 ## position_IbidWithSuffix
 
 Name splitting issue.
-
-
-## variables_TitleShortOnShortTitleNoTitleCondition
-
-This test is contrary to the spec.  The whole group should
-be suppressed because it contains variables but none are
-called. See https://github.com/citation-style-language/test-suite/issues/29
