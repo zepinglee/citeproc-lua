@@ -133,7 +133,7 @@ test/citeproc-test.lua:39: citations
 
 Failure → test-suite affix_CommaAfterQuote
 Passed in:
-(string) ''quote', Hello Thing'
+(string) '‘quote’, Hello Thing'
 Expected:
 (string) '“quote”, Hello Thing'
 
@@ -306,15 +306,15 @@ Expected:
 
 Failure → test-suite bugreports_FourAndFour
 Passed in:
-(string) 'Anne Tyler et al., <i>Ladder of his' Years</i>, vol. 2003 (New York: Ivy Books, 1997).
-Anne Tyler et al., <i>Ladder of his' Years</i>, vol. 2003 (New York: Ivy Books, 1997).'
+(string) 'Anne Tyler et al., <i>Ladder of his’ Years</i>, vol. 2003 (New York: Ivy Books, 1997).
+Anne Tyler et al., <i>Ladder of his’ Years</i>, vol. 2003 (New York: Ivy Books, 1997).'
 Expected:
 (string) 'Anne Tyler, George Smith, John Brown, and Cat Garfield, <i>Ladder of his’ Years</i>, vol. 2003 (New York: Ivy Books, 1997).
 Anne Tyler, George Smith, John Brown, and Cat Felix, <i>Ladder of his’ Years</i>, vol. 2003 (New York: Ivy Books, 1997).'
 
 Failure → test-suite bugreports_FrenchApostrophe
 Passed in:
-(string) '« Life's 'Little' Surprises »'
+(string) '« Life’s ’Little’ Surprises »'
 Expected:
 (string) '« Life’s “Little” Surprises »'
 
@@ -355,7 +355,7 @@ Expected:
 Failure → test-suite bugreports_LegislationCrash
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"><i>Arrêté du 23 mars 1992 relatif au programme des études conduisant au diplôme d'État d'infirmier</i>, </div>
+  <div class="csl-entry"><i>Arrêté du 23 mars 1992 relatif au programme des études conduisant au diplôme d’État d’infirmier</i>, </div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -383,8 +383,8 @@ Expected:
 Failure → test-suite bugreports_NoCaseEscape
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Aalto, Alan N.d.'"PIAAC-Longitudinal (PIAAC-L) 2015"'.</div>
-  <div class="csl-entry">Aalto, Alan N.d."PIAAC-Longitudinal (PIAAC-Lx) 2015".</div>
+  <div class="csl-entry">Aalto, Alan N.d.‘“PIAAC-Longitudinal (PIAAC-L) 2015”’.</div>
+  <div class="csl-entry">Aalto, Alan N.d.“PIAAC-Longitudinal (PIAAC-Lx) 2015”.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -424,7 +424,7 @@ Expected:
 Failure → test-suite bugreports_SingleQuote
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">[1]“production d ' eau glacée à condensation à eau avec récupération de chaleur . Modélisation simplifiée dans l ’ optique d ’ un calcul des consommations d ’ énergie d ’ une insta.”</div>
+  <div class="csl-entry">[1]“production d ’ eau glacée à condensation à eau avec récupération de chaleur . Modélisation simplifiée dans l ’ optique d ’ un calcul des consommations d ’ énergie d ’ une insta.”</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1231,8 +1231,8 @@ Expected:
 Failure → test-suite display_SecondFieldAlignClone
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">[1] John Aloysius Doe, “John's Book” (1999)</div>
-  <div class="csl-entry">[2] Jane Henrietta Roe, “Jane's Book” (2000)</div>
+  <div class="csl-entry">[1] John Aloysius Doe, “John’s Book” (1999)</div>
+  <div class="csl-entry">[2] Jane Henrietta Roe, “Jane’s Book” (2000)</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1248,7 +1248,7 @@ Failure → test-suite display_SecondFieldAlignMigratePunctuation
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">[1] B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005.</div>
-  <div class="csl-entry">[2] F.G. Bennett Jr., “Getting Property Right: "Informal" Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol'y J.</i>, vol. 18, Aug. 2009, pp. 463–509.</div>
+  <div class="csl-entry">[2] F.G. Bennett Jr., “Getting Property Right: “Informal” Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>, vol. 18, Aug. 2009, pp. 463–509.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1270,23 +1270,11 @@ Expected:
   <div class="csl-entry">John Doe et al.</div>
 </div>'
 
-Failure → test-suite flipflop_ApostropheInsideTag
-Passed in:
-(string) 'l''''
-Expected:
-(string) 'l’’’'
-
 Failure → test-suite flipflop_Apostrophes
 Passed in:
-(string) '“Supplément Aux Annales Du Service Des Antiquités De l'Égypte, Cahier” (Cairo: Conseil Suprême des Antiquités de l'Égypte [formerly Imprimerie de l'Institut français d'archéologie orientale], n.d.).'
+(string) '“Supplément Aux Annales Du Service Des Antiquités De L’Égypte, Cahier” (Cairo: Conseil Suprême des Antiquités de l’Égypte [formerly Imprimerie de l’Institut français d’archéologie orientale], n.d.).'
 Expected:
 (string) '“Supplément Aux Annales Du Service Des Antiquités de l’Égypte, Cahier” (Cairo: Conseil Suprême des Antiquités de l’Égypte [formerly Imprimerie de l’Institut français d’archéologie orientale], n.d.).'
-
-Failure → test-suite flipflop_CompleteCiteInPrefix
-Passed in:
-(string) 'Wilhelm Dilthey, "The Types of World Views and Their Unfoldment Within the Metaphysical Systems," in <i>Dilthey’s Philosophy of Existence: Introduction to Weltanschauungslehre</i>, trans. William Kluback and Martin Weinbaum (New York: Bookman Associates, 1957), 26–27 Other Book Title'
-Expected:
-(string) 'Wilhelm Dilthey, “The Types of World Views and Their Unfoldment Within the Metaphysical Systems,” in <i>Dilthey’s Philosophy of Existence: Introduction to Weltanschauungslehre</i>, trans. William Kluback and Martin Weinbaum (New York: Bookman Associates, 1957), 26–27 Other Book Title'
 
 Failure → test-suite flipflop_ItalicsFlipped
 Passed in:
@@ -1332,12 +1320,6 @@ Expected:
   <div class="csl-entry"><span style="font-variant:small-caps;">Lessard <span style="font-variant:normal;">v.</span> Schmidt</span>. 1972. 349 F. Supp. 1078 (E.D. Wisc.).</div>
 </div>'
 
-Failure → test-suite flipflop_LeadingSingleQuote
-Passed in:
-(string) '“‘Parmenides’ 132c–133a and the development of Plato's thought”'
-Expected:
-(string) '“‘Parmenides’ 132c–133a and the development of Plato’s thought”'
-
 Failure → test-suite flipflop_NumericField
 Passed in:
 (string) '1<sup>er</sup>'
@@ -1346,45 +1328,33 @@ Expected:
 
 Failure → test-suite flipflop_OrphanQuote
 Passed in:
-(string) 'Nation of "Positive Obligations " of State Under the European Convention on Human Rights (1)'
+(string) 'Nation of “Positive Obligations ” of State Under the European Convention on Human Rights (1)'
 Expected:
 (string) 'Nation of "Positive Obligations " of State under the European Convention on Human Rights (1)'
 
 Failure → test-suite flipflop_QuotesInFieldNotOnNode
 Passed in:
-(string) 'Speak, 'friend', and enter.'
+(string) 'Speak, ‘friend’, and enter.'
 Expected:
 (string) 'Speak, “friend,” and enter.'
 
 Failure → test-suite flipflop_QuotesNodeLevelMarkup
 Passed in:
-(string) '“Speak, "friend" of mine on this day, March 15, 1973, and enter.”'
+(string) '“Speak, “friend” of mine on this day, March 15, 1973, and enter.”'
 Expected:
 (string) '“Speak, ‘friend’ of mine on this day, March 15, 1973, and enter.”'
 
 Failure → test-suite flipflop_SingleBeforeColon
 Passed in:
-(string) ''Nobody Knows You're a Dog': As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
+(string) '‘Nobody Knows You’re a Dog’: As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
 Expected:
 (string) '“Nobody Knows You’re a Dog”: As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
-
-Failure → test-suite flipflop_SingleQuotesOnItalics
-Passed in:
-(string) 'It is official ("<i>My Title</i>") now'
-Expected:
-(string) 'It is official (“<i>My Title</i>”) now'
 
 Failure → test-suite flipflop_SmallCaps
 Passed in:
 (string) '<span style="font-variant:small-caps;">His Anonymous Life</span>, His Anthology'
 Expected:
 (string) '<span style="font-variant:small-caps;">His <span style="font-variant:normal;">Anonymous</span> Life</span>, His <span style="font-variant:small-caps;">Anthology</span>'
-
-Failure → test-suite flipflop_StartingApostrophe
-Passed in:
-(string) 'IEEE Conference on Emerging Technologies and Factory Automation (ETFA '09)'
-Expected:
-(string) 'IEEE Conference on Emerging Technologies and Factory Automation (ETFA ’09)'
 
 Failure → test-suite fullstyles_ABdNT
 Passed in:
@@ -2038,7 +2008,7 @@ Expected:
 Failure → test-suite quotes_PunctuationWithInnerQuote
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">“This is 'The One'.”</div>
+  <div class="csl-entry">“This is ’The One’.”</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2048,7 +2018,7 @@ Expected:
 Failure → test-suite quotes_QuotesUnderQuotesFalse
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"> 'Title with "quotes" in it',.</div>
+  <div class="csl-entry"> ’Title with “quotes” in it',.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2277,8 +2247,8 @@ Expected:
 Failure → test-suite sort_Quotes
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Simple 'title' here C</div>
   <div class="csl-entry">“Simple title here B”</div>
+  <div class="csl-entry">Simple ’title’ here C</div>
   <div class="csl-entry">Simple title, here A</div>
 </div>'
 Expected:
@@ -2302,18 +2272,6 @@ Expected:
   <div class="csl-entry">--- ed. <i>Hello 1</i>.</div>
   <div class="csl-entry">Doe, John Barbitol. <i>Hello 2</i>.</div>
   <div class="csl-entry">Doe, John Egbert. <i>Hello 3</i>.</div>
-</div>'
-
-Failure → test-suite sort_SubstituteTitle
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brooker, C. (2011, July 24). The news coverage of the Norway mass-killings was fact-free conjecture. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/24/charlie-brooker-norway-mass-killings</div>
-  <div class="csl-entry">Brooker, C. (2011, July 31). Let's think outside the box here: maybe blue-sky thinking is nonsense. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/31/blue-sky-thinking</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brooker, C. (2011, July 24). The news coverage of the Norway mass-killings was fact-free conjecture. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/24/charlie-brooker-norway-mass-killings</div>
-  <div class="csl-entry">Brooker, C. (2011, July 31). Let’s think outside the box here: maybe blue-sky thinking is nonsense. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/31/blue-sky-thinking</div>
 </div>'
 
 Failure → test-suite sort_WithAndInOneEntry
@@ -2347,7 +2305,7 @@ Expected:
 Failure → test-suite testers_SecondAutoGeneratedZoteroPluginTest
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Center <sup>for</sup> History <sub>and</sub> New Media. “<b>Zotero</b> … "Quick Start" &#38; <span style="font-variant:small-caps;">Guide</span> 日本語.” http://zotero.org/support/quick_start_guide.</div>
+  <div class="csl-entry">Center <sup>for</sup> History <sub>and</sub> New Media. “<b>Zotero</b> … “Quick Start” &#38; <span style="font-variant:small-caps;">Guide</span> 日本語.” http://zotero.org/support/quick_start_guide.</div>
   <div class="csl-entry">Smith, John. <i>Book A</i>, 2000.</div>
   <div class="csl-entry">Smith, Steven. <i>Book A</i>, 2000.</div>
 </div>'
@@ -2380,7 +2338,7 @@ OC 1'
 
 Failure → test-suite textcase_InQuotes
 Passed in:
-(string) 'From "distance" to "friction": Substituting Metaphors and Redirecting Intercultural Research for'
+(string) 'From “distance” to “friction”: Substituting Metaphors and Redirecting Intercultural Research for'
 Expected:
 (string) 'From “Distance” to “Friction”: Substituting Metaphors and Redirecting Intercultural Research For'
 
@@ -2404,13 +2362,11 @@ IA AND IB EN
 İC AND ID TR
 BAD LANGUAGE CODE THAT PASSES IN NODE.JS BUT FAILS IN SOME BROWSERS'
 
-Failure → test-suite textcase_NoSpaceBeforeApostrophe
+Failure → test-suite textcase_Lowercase
 Passed in:
-(string) 'Marcus Shafi’i (ed.), Response to Shafi'i Comment
-Marcus Shafi`i (ed.), Response to Shafi`i Comment'
+(string) 'this is a pen that is a smith pencil'
 Expected:
-(string) 'Marcus Shafi’i (ed.), Response to Shafi’i Comment
-Marcus Shafi`i (ed.), Response to Shafi`i Comment'
+(string) 'this is a pen that is a Smith pencil'
 
 Failure → test-suite textcase_NonEnglishChars
 Passed in:
@@ -2428,9 +2384,27 @@ Expected:
 
 Failure → test-suite textcase_SkipNameParticlesInTitleCase
 Passed in:
-(string) 'John Von Doe: An About up Life; John Van Doe? A Life; John d'Doe! A Life; John De Doe a Life'
+(string) 'John Von Doe: An About up Life; John Van Doe? A Life; John D’Doe! A Life; John De Doe a Life'
 Expected:
 (string) 'John von Doe: An about up Life; John van Doe? A Life; John d’Doe! A Life; John de Doe a Life'
+
+Failure → test-suite textcase_TitleCapitalization
+Passed in:
+(string) 'This IS a Pen That Is a Smith Pencil'
+Expected:
+(string) 'This IS a Pen That Is a smith Pencil'
+
+Failure → test-suite textcase_TitleCapitalization2
+Passed in:
+(string) 'This IS a Pen That Is a Cat/Mouse Smith Pencil'
+Expected:
+(string) 'This IS a Pen That Is a Cat/Mouse smith Pencil'
+
+Failure → test-suite textcase_Uppercase
+Passed in:
+(string) 'SMITH, John: THIS IS A PEN THAT IS A SMITH PENCIL'
+Expected:
+(string) 'SMITH, John: THIS IS A PEN THAT IS A Smith PENCIL'
 
 Failure → test-suite variables_ContainerTitleShort
 Passed in:
@@ -2484,7 +2458,7 @@ decorations          3       4       0       0
 disambiguate        19      48       0       4
 display              1       4       0       0
 etal                 3       1       0       0
-flipflop             3      16       0       0
+flipflop             8      11       0       0
 form                 3       0       0       0
 fullstyles           3       2       0       0
 group                4       2       0       1
@@ -2504,13 +2478,13 @@ position             8       1       0       7
 punctuation         14       1       0       1
 quotes               2       2       0       0
 simplespace          1       0       0       0
-sort                40      18       0       8
+sort                41      17       0       8
 sortseparator        1       0       0       0
 substitute           5       2       0       0
 testers              0       1       0       1
-textcase            20       9       0       0
+textcase            17      12       0       0
 unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              566     243       0      44
+(all)              569     240       0      44

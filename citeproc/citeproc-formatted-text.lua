@@ -519,6 +519,17 @@ function FormattedText.new(text, formats)
   end
 
   if type(text) == "string" then
+
+    -- normalize unicode quotes
+    text = string.gsub(text, '"(.-)"', '“%1”')
+    text = string.gsub(text, "()'", function(pos)
+      if pos == 1 or text[pos - 1] == " " then
+        return "‘"
+      else
+        return "’"
+      end
+    end)
+
     local status, dom_object = pcall(dom.parse, "<p>"..text.."</p>")
     if status then
       return FormattedText.new(dom_object:get_path("p")[1])
@@ -550,6 +561,9 @@ function FormattedText.new(text, formats)
           table_update(res.formats, FormattedText._tag_formats['span class="nocase"'])
         end
       end
+
+      res:process_quotes()
+
       return res
     end
 
@@ -559,6 +573,10 @@ function FormattedText.new(text, formats)
     return res
   end
   return nil
+end
+
+
+function FormattedText.process_quotes()
 end
 
 
