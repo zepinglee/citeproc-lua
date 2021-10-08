@@ -15,6 +15,14 @@ local FormattedText = {
     ['span style="font-variant: small-caps;"'] = {["font-variant"] = "smal-caps"},
     ['span class="nocase"'] = {["class"] = "nocase"},
   },
+  _default_formats = {
+    ["font-style"] = "normal",
+    ["font-variant"] = "normal",
+    ["font-weight"] = "normal",
+    ["text-decoration"] = "none",
+    ["vertical-align"] = "baseline",
+    ["quotes"] = "false",
+  },
   _format_sequence = {
     "font-style",
     "font-variant",
@@ -36,13 +44,14 @@ function FormattedText:render(formatter, context, punctuation_in_quote)
 
   if punctuation_in_quote == nil and context then
     punctuation_in_quote = context.style:get_locale_option("punctuation-in-quote")
-    util.debug(punctuation_in_quote)
   end
   if punctuation_in_quote then
     self:move_punctuation_in_quote()
   end
 
   self:change_case()
+
+  self:clean_formats()
 
   self:flip_flop()
 
@@ -462,6 +471,28 @@ end
 
 function FormattedText:add_format(attr, value)
   self.formats[attr] = value
+end
+
+function FormattedText:clean_formats(format)
+  -- Remove the formats that are default values
+  if not format then
+    for format, _ in pairs(self._default_formats) do
+      self:clean_formats(format)
+    end
+    return
+  end
+  if self.formats[format] then
+    if self.formats[format] == self._default_formats[format] then
+      self.formats[format] = nil
+    else
+      return
+    end
+  end
+  for _, text in ipairs(self.contents) do
+    if type(text) == "table" and text._type == "FormattedText" then
+      text:clean_formats(format)
+    end
+  end
 end
 
 function FormattedText:flip_flop(attr, value)

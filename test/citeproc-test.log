@@ -137,12 +137,6 @@ Passed in:
 Expected:
 (string) '“quote”, Hello Thing'
 
-Failure → test-suite bugreports_AccidentalAllCaps
-Passed in:
-(string) '<span style="font-variant:normal;">J. Doe</span>, <i>His Anonymous Life</i>, , 1965.'
-Expected:
-(string) 'J. Doe, <i>His Anonymous Life</i>, , 1965.'
-
 Failure → test-suite bugreports_ApostropheOnParticle
 Passed in:
 (string) 'John d’ Jones'
@@ -748,9 +742,9 @@ Expected:
 
 Failure → test-suite decorations_NoNormalWithoutDecoration
 Passed in:
-(string) '<span style="font-weight:normal;"><i>His Anonymous Life</i>
+(string) '<i>His Anonymous Life</i>
 <i>His Anonymous Life</i>
-<i>His Anonymous Life</i></span>'
+<i>His Anonymous Life</i>'
 Expected:
 (string) 'His Anonymous Life
 <i>His Anonymous Life</i>
@@ -1254,25 +1248,25 @@ Expected:
 
 Failure → test-suite flipflop_CompleteCiteInPrefix
 Passed in:
-(string) 'Wilhelm Dilthey, “The Types of World Views and Their Unfoldment Within the Metaphysical Systems,” in <span style="font-style:normal;">Dilthey’s Philosophy of Existence: Introduction to Weltanschauungslehre</span>, trans. William Kluback and Martin Weinbaum (New York: Bookman Associates, 1957), 26–27 Other Book Title'
+(string) 'Wilhelm Dilthey, “The Types of World Views and Their Unfoldment Within the Metaphysical Systems,” in Dilthey’s Philosophy of Existence: Introduction to Weltanschauungslehre, trans. William Kluback and Martin Weinbaum (New York: Bookman Associates, 1957), 26–27 Other Book Title'
 Expected:
 (string) 'Wilhelm Dilthey, “The Types of World Views and Their Unfoldment Within the Metaphysical Systems,” in <i>Dilthey’s Philosophy of Existence: Introduction to Weltanschauungslehre</i>, trans. William Kluback and Martin Weinbaum (New York: Bookman Associates, 1957), 26–27 Other Book Title'
 
 Failure → test-suite flipflop_ItalicsFlipped
 Passed in:
-(string) '<i>One Two <span style="font-style:normal;">Three</span> Four Five!</i>
-<i>One <span style="font-style:normal;">Two &#60;i&#62;Three</span> Four&#60;/i&#62; Five!</i>'
+(string) '<i>One Two Three Four Five!</i>
+<i>One Two &#60;i&#62;Three Four&#60;/i&#62; Five!</i>'
 Expected:
 (string) '<i>One Two <span style="font-style:normal;">Three</span> Four Five!</i>
 <i>One <span style="font-style:normal;">Two <i>Three</i> Four</span> Five!</i>'
 
 Failure → test-suite flipflop_ItalicsSimple
 Passed in:
-(string) 'One TwoA <span style="font-style:normal;">Three Four</span> Five!
-<span style="font-style:normal;">One TwoB</span> Three Four Five!
-One TwoC Three <span style="font-style:normal;">Four Five!</span>
-<span style="font-style:normal;">One TwoD</span> Three <span style="font-style:normal;">Four Five!</span>
-<span style="font-style:normal;">One TwoE &#60;i&#62;Three</span> Four Five!&#60;/i&#62;
+(string) 'One TwoA Three Four Five!
+One TwoB Three Four Five!
+One TwoC Three Four Five!
+One TwoD Three Four Five!
+One TwoE &#60;i&#62;Three Four Five!&#60;/i&#62;
 One TwoF&#60;/i&#62; Three Four Five!'
 Expected:
 (string) 'One TwoA <i>Three Four</i> Five!
@@ -1304,13 +1298,13 @@ Expected:
 
 Failure → test-suite flipflop_LeadingMarkupWithApostrophe
 Passed in:
-(string) '<span style="font-style:normal;">Insha’Allah</span> is an Arabic phrase meaning “God willing.” Another Arabic word is <span style="font-style:normal;">bukra</span>. Aalto'
+(string) 'Insha’Allah is an Arabic phrase meaning “God willing.” Another Arabic word is bukra. Aalto'
 Expected:
 (string) '<i>Insha’Allah</i> is an Arabic phrase meaning ‘God willing’. Another Arabic word is <i>bukra</i>. Aalto'
 
 Failure → test-suite flipflop_LongComplexPrefix
 Passed in:
-(string) 'The French translation provided there runs, <span style="font-style:normal;">Toi, qui cultives notre philosophie sous lhabit étranger—et peut-être pas si étranger que cela, puisque la chevelure des naziréens et la consécration de la tête, dont il a toujours tenu le fer à lécart, sont aussi comme une loi des sanctuaires, et que la blancheur et l’éclat des vêtements appartiennent aux anges, quand on les représente sous une forme corporelle: c’est, je pense, le symbole de la pureté propre à leur nature—!</span> Other Book Title'
+(string) 'The French translation provided there runs, Toi, qui cultives notre philosophie sous lhabit étranger—et peut-être pas si étranger que cela, puisque la chevelure des naziréens et la consécration de la tête, dont il a toujours tenu le fer à lécart, sont aussi comme une loi des sanctuaires, et que la blancheur et l’éclat des vêtements appartiennent aux anges, quand on les représente sous une forme corporelle: c’est, je pense, le symbole de la pureté propre à leur nature—! Other Book Title'
 Expected:
 (string) 'The French translation provided there runs, <i>Toi, qui cultives notre philosophie sous lhabit étranger—et peut-être pas si étranger que cela, puisque la chevelure des naziréens et la consécration de la tête, dont il a toujours tenu le fer à lécart, sont aussi comme une loi des sanctuaires, et que la blancheur et l’éclat des vêtements appartiennent aux anges, quand on les représente sous une forme corporelle: c’est, je pense, le symbole de la pureté propre à leur nature—!</i> Other Book Title'
 
@@ -1328,7 +1322,7 @@ Expected:
 
 Failure → test-suite flipflop_SingleQuotesOnItalics
 Passed in:
-(string) 'It is official (“<span style="font-style:normal;">My Title</span>”) now'
+(string) 'It is official (“My Title”) now'
 Expected:
 (string) 'It is official (“<i>My Title</i>”) now'
 
@@ -1728,8 +1722,8 @@ Expected:
 Failure → test-suite name_InTextMarkupInitialize
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"><span style="font-weight:normal;">Doe</span>, &#60;b&#62;John&#60;/b&#62; Q.</div>
-  <div class="csl-entry"><span style="font-weight:normal;">Doe</span>, &#60;b&#62;John&#60;/b&#62;-Q.</div>
+  <div class="csl-entry">Doe, &#60;b&#62;John&#60;/b&#62; Q.</div>
+  <div class="csl-entry">Doe, &#60;b&#62;John&#60;/b&#62;-Q.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1740,8 +1734,8 @@ Expected:
 Failure → test-suite name_InTextMarkupNormalizeInitials
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"><span style="font-weight:normal;">Doe</span>, &#60;b&#62;J&#60;/b&#62; Q.</div>
-  <div class="csl-entry"><span style="font-weight:normal;">Doe</span>, &#60;b&#62;J&#60;/b&#62;-Q.</div>
+  <div class="csl-entry">Doe, &#60;b&#62;J&#60;/b&#62; Q.</div>
+  <div class="csl-entry">Doe, &#60;b&#62;J&#60;/b&#62;-Q.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2287,7 +2281,7 @@ Expected:
 Failure → test-suite testers_SecondAutoGeneratedZoteroPluginTest
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Center <sup>for</sup> History <sub>and</sub> New Media. “<span style="font-weight:normal;">Zotero</span> … ‘Quick Start’ &#38; <span style="font-variant:small-caps;">Guide</span> 日本語.” http://zotero.org/support/quick_start_guide.</div>
+  <div class="csl-entry">Center <sup>for</sup> History <sub>and</sub> New Media. “Zotero … ‘Quick Start’ &#38; <span style="font-variant:small-caps;">Guide</span> 日本語.” http://zotero.org/support/quick_start_guide.</div>
   <div class="csl-entry">Smith, John. <i>Book A</i>, 2000.</div>
   <div class="csl-entry">Smith, Steven. <i>Book A</i>, 2000.</div>
 </div>'
@@ -2402,7 +2396,7 @@ does not have title-short'
 
 category       success failure   error pending
 affix                7       1       0       1
-bugreports          30      45       0       7
+bugreports          31      44       0       7
 collapse             4      16       0       1
 condition           16       1       0       0
 date                95       6       0       0
@@ -2439,4 +2433,4 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              577     232       0      44
+(all)              578     231       0      44
