@@ -133,7 +133,7 @@ test/citeproc-test.lua:39: citations
 
 Failure → test-suite affix_CommaAfterQuote
 Passed in:
-(string) '‘quote’, Hello Thing'
+(string) '“quote,” Hello Thing'
 Expected:
 (string) '“quote”, Hello Thing'
 
@@ -383,7 +383,7 @@ Expected:
 Failure → test-suite bugreports_NoCaseEscape
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Aalto, Alan N.d.‘“PIAAC-Longitudinal (PIAAC-L) 2015”’.</div>
+  <div class="csl-entry">Aalto, Alan N.d.“‘PIAAC-Longitudinal (PIAAC-L) 2015’”.</div>
   <div class="csl-entry">Aalto, Alan N.d.“PIAAC-Longitudinal (PIAAC-Lx) 2015”.</div>
 </div>'
 Expected:
@@ -757,18 +757,6 @@ Passed in:
 (string) '<span style="font-variant:small-caps;">John</span> <span style="font-variant:small-caps;">Doe III</span> and <span style="font-variant:small-caps;">Jane</span> <span style="font-variant:small-caps;">van Roe</span>'
 Expected:
 (string) '<span style="font-variant:small-caps;">John</span> <span style="font-variant:small-caps;">Doe</span> III and <span style="font-variant:small-caps;">Jane</span> <span style="font-variant:small-caps;">van</span> <span style="font-variant:small-caps;">Roe</span>'
-
-Failure → test-suite decorations_NestedQuotes
-Passed in:
-(string) '“My “Amazing” Title”'
-Expected:
-(string) '“My ‘Amazing’ Title”'
-
-Failure → test-suite decorations_NestedQuotesInnerReverse
-Passed in:
-(string) '“My “‘Amazing’ <b>and</b> Bogus” Title”'
-Expected:
-(string) '“My ‘“Amazing” <b>and</b> Bogus’ Title”'
 
 Failure → test-suite decorations_NoNormalWithoutDecoration
 Passed in:
@@ -1248,7 +1236,7 @@ Failure → test-suite display_SecondFieldAlignMigratePunctuation
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">[1] B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005.</div>
-  <div class="csl-entry">[2] F.G. Bennett Jr., “Getting Property Right: “Informal” Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>, vol. 18, Aug. 2009, pp. 463–509.</div>
+  <div class="csl-entry">[2] F.G. Bennett Jr., “Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>, vol. 18, Aug. 2009, pp. 463–509.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1276,21 +1264,27 @@ Passed in:
 Expected:
 (string) '“Supplément Aux Annales Du Service Des Antiquités de l’Égypte, Cahier” (Cairo: Conseil Suprême des Antiquités de l’Égypte [formerly Imprimerie de l’Institut français d’archéologie orientale], n.d.).'
 
+Failure → test-suite flipflop_CompleteCiteInPrefix
+Passed in:
+(string) 'Wilhelm Dilthey, “The Types of World Views and Their Unfoldment Within the Metaphysical Systems,” in <span style="font-style:normal;">Dilthey’s Philosophy of Existence: Introduction to Weltanschauungslehre</span>, trans. William Kluback and Martin Weinbaum (New York: Bookman Associates, 1957), 26–27 Other Book Title'
+Expected:
+(string) 'Wilhelm Dilthey, “The Types of World Views and Their Unfoldment Within the Metaphysical Systems,” in <i>Dilthey’s Philosophy of Existence: Introduction to Weltanschauungslehre</i>, trans. William Kluback and Martin Weinbaum (New York: Bookman Associates, 1957), 26–27 Other Book Title'
+
 Failure → test-suite flipflop_ItalicsFlipped
 Passed in:
 (string) '<i>One Two <span style="font-style:normal;">Three</span> Four Five!</i>
-<i>One <span style="font-style:normal;">Two <span style="font-style:normal;">Three</span> Four</span> Five!</i>'
+<i>One <span style="font-style:normal;">Two &#60;i&#62;Three</span> Four&#60;/i&#62; Five!</i>'
 Expected:
 (string) '<i>One Two <span style="font-style:normal;">Three</span> Four Five!</i>
 <i>One <span style="font-style:normal;">Two <i>Three</i> Four</span> Five!</i>'
 
 Failure → test-suite flipflop_ItalicsSimple
 Passed in:
-(string) 'One TwoA <i>Three Four</i> Five!
-<i>One TwoB</i> Three Four Five!
-One TwoC Three <i>Four Five!</i>
-<i>One TwoD</i> Three <i>Four Five!</i>
-<i>One TwoE <i>Three</i> Four Five!</i>
+(string) 'One TwoA <span style="font-style:normal;">Three Four</span> Five!
+<span style="font-style:normal;">One TwoB</span> Three Four Five!
+One TwoC Three <span style="font-style:normal;">Four Five!</span>
+<span style="font-style:normal;">One TwoD</span> Three <span style="font-style:normal;">Four Five!</span>
+<span style="font-style:normal;">One TwoE &#60;i&#62;Three</span> Four Five!&#60;/i&#62;
 One TwoF&#60;/i&#62; Three Four Five!'
 Expected:
 (string) 'One TwoA <i>Three Four</i> Five!
@@ -1320,6 +1314,18 @@ Expected:
   <div class="csl-entry"><span style="font-variant:small-caps;">Lessard <span style="font-variant:normal;">v.</span> Schmidt</span>. 1972. 349 F. Supp. 1078 (E.D. Wisc.).</div>
 </div>'
 
+Failure → test-suite flipflop_LeadingMarkupWithApostrophe
+Passed in:
+(string) '<span style="font-style:normal;">Insha’Allah</span> is an Arabic phrase meaning “God willing.” Another Arabic word is <span style="font-style:normal;">bukra</span>. Aalto'
+Expected:
+(string) '<i>Insha’Allah</i> is an Arabic phrase meaning ‘God willing’. Another Arabic word is <i>bukra</i>. Aalto'
+
+Failure → test-suite flipflop_LongComplexPrefix
+Passed in:
+(string) 'The French translation provided there runs, <span style="font-style:normal;">Toi, qui cultives notre philosophie sous lhabit étranger—et peut-être pas si étranger que cela, puisque la chevelure des naziréens et la consécration de la tête, dont il a toujours tenu le fer à lécart, sont aussi comme une loi des sanctuaires, et que la blancheur et l’éclat des vêtements appartiennent aux anges, quand on les représente sous une forme corporelle: c’est, je pense, le symbole de la pureté propre à leur nature—!</span> Other Book Title'
+Expected:
+(string) 'The French translation provided there runs, <i>Toi, qui cultives notre philosophie sous lhabit étranger—et peut-être pas si étranger que cela, puisque la chevelure des naziréens et la consécration de la tête, dont il a toujours tenu le fer à lécart, sont aussi comme une loi des sanctuaires, et que la blancheur et l’éclat des vêtements appartiennent aux anges, quand on les représente sous une forme corporelle: c’est, je pense, le symbole de la pureté propre à leur nature—!</i> Other Book Title'
+
 Failure → test-suite flipflop_NumericField
 Passed in:
 (string) '1<sup>er</sup>'
@@ -1332,23 +1338,11 @@ Passed in:
 Expected:
 (string) 'Nation of "Positive Obligations " of State under the European Convention on Human Rights (1)'
 
-Failure → test-suite flipflop_QuotesInFieldNotOnNode
+Failure → test-suite flipflop_SingleQuotesOnItalics
 Passed in:
-(string) 'Speak, ‘friend’, and enter.'
+(string) 'It is official (“<span style="font-style:normal;">My Title</span>”) now'
 Expected:
-(string) 'Speak, “friend,” and enter.'
-
-Failure → test-suite flipflop_QuotesNodeLevelMarkup
-Passed in:
-(string) '“Speak, “friend” of mine on this day, March 15, 1973, and enter.”'
-Expected:
-(string) '“Speak, ‘friend’ of mine on this day, March 15, 1973, and enter.”'
-
-Failure → test-suite flipflop_SingleBeforeColon
-Passed in:
-(string) '‘Nobody Knows You’re a Dog’: As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
-Expected:
-(string) '“Nobody Knows You’re a Dog”: As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
+(string) 'It is official (“<i>My Title</i>”) now'
 
 Failure → test-suite flipflop_SmallCaps
 Passed in:
@@ -1746,8 +1740,8 @@ Expected:
 Failure → test-suite name_InTextMarkupInitialize
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"><b>Doe</b>, &#60;b&#62;John&#60;/b&#62; Q.</div>
-  <div class="csl-entry"><b>Doe</b>, &#60;b&#62;John&#60;/b&#62;-Q.</div>
+  <div class="csl-entry"><span style="font-weight:normal;">Doe</span>, &#60;b&#62;John&#60;/b&#62; Q.</div>
+  <div class="csl-entry"><span style="font-weight:normal;">Doe</span>, &#60;b&#62;John&#60;/b&#62;-Q.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1758,8 +1752,8 @@ Expected:
 Failure → test-suite name_InTextMarkupNormalizeInitials
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"><b>Doe</b>, &#60;b&#62;J&#60;/b&#62; Q.</div>
-  <div class="csl-entry"><b>Doe</b>, &#60;b&#62;J&#60;/b&#62;-Q.</div>
+  <div class="csl-entry"><span style="font-weight:normal;">Doe</span>, &#60;b&#62;J&#60;/b&#62; Q.</div>
+  <div class="csl-entry"><span style="font-weight:normal;">Doe</span>, &#60;b&#62;J&#60;/b&#62;-Q.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2018,7 +2012,7 @@ Expected:
 Failure → test-suite quotes_QuotesUnderQuotesFalse
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"> ’Title with “quotes” in it',.</div>
+  <div class="csl-entry"> ’Title with ‘quotes’ in it',.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2305,7 +2299,7 @@ Expected:
 Failure → test-suite testers_SecondAutoGeneratedZoteroPluginTest
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Center <sup>for</sup> History <sub>and</sub> New Media. “<b>Zotero</b> … “Quick Start” &#38; <span style="font-variant:small-caps;">Guide</span> 日本語.” http://zotero.org/support/quick_start_guide.</div>
+  <div class="csl-entry">Center <sup>for</sup> History <sub>and</sub> New Media. “<span style="font-weight:normal;">Zotero</span> … ‘Quick Start’ &#38; <span style="font-variant:small-caps;">Guide</span> 日本語.” http://zotero.org/support/quick_start_guide.</div>
   <div class="csl-entry">Smith, John. <i>Book A</i>, 2000.</div>
   <div class="csl-entry">Smith, Steven. <i>Book A</i>, 2000.</div>
 </div>'
@@ -2315,12 +2309,6 @@ Expected:
   <div class="csl-entry">Smith, John. <i>Book A</i>, 2000.</div>
   <div class="csl-entry">Smith, Steven. <i>Book A</i>, 2000.</div>
 </div>'
-
-Failure → test-suite textcase_AfterQuote
-Passed in:
-(string) 'The “new Career” and Organizational Commitment'
-Expected:
-(string) 'The “New Career” and Organizational Commitment'
 
 Failure → test-suite textcase_CapitalsUntouched
 Passed in:
@@ -2338,7 +2326,7 @@ OC 1'
 
 Failure → test-suite textcase_InQuotes
 Passed in:
-(string) 'From “distance” to “friction”: Substituting Metaphors and Redirecting Intercultural Research for'
+(string) 'From “Distance” to “Friction”: Substituting Metaphors and Redirecting Intercultural Research for'
 Expected:
 (string) 'From “Distance” to “Friction”: Substituting Metaphors and Redirecting Intercultural Research For'
 
@@ -2362,12 +2350,6 @@ IA AND IB EN
 İC AND ID TR
 BAD LANGUAGE CODE THAT PASSES IN NODE.JS BUT FAILS IN SOME BROWSERS'
 
-Failure → test-suite textcase_Lowercase
-Passed in:
-(string) 'this is a pen that is a smith pencil'
-Expected:
-(string) 'this is a pen that is a Smith pencil'
-
 Failure → test-suite textcase_NonEnglishChars
 Passed in:
 (string) 'Saline Solution of Β-Carotine
@@ -2387,24 +2369,6 @@ Passed in:
 (string) 'John Von Doe: An About up Life; John Van Doe? A Life; John D’Doe! A Life; John De Doe a Life'
 Expected:
 (string) 'John von Doe: An about up Life; John van Doe? A Life; John d’Doe! A Life; John de Doe a Life'
-
-Failure → test-suite textcase_TitleCapitalization
-Passed in:
-(string) 'This IS a Pen That Is a Smith Pencil'
-Expected:
-(string) 'This IS a Pen That Is a smith Pencil'
-
-Failure → test-suite textcase_TitleCapitalization2
-Passed in:
-(string) 'This IS a Pen That Is a Cat/Mouse Smith Pencil'
-Expected:
-(string) 'This IS a Pen That Is a Cat/Mouse smith Pencil'
-
-Failure → test-suite textcase_Uppercase
-Passed in:
-(string) 'SMITH, John: THIS IS A PEN THAT IS A SMITH PENCIL'
-Expected:
-(string) 'SMITH, John: THIS IS A PEN THAT IS A Smith PENCIL'
 
 Failure → test-suite variables_ContainerTitleShort
 Passed in:
@@ -2454,11 +2418,11 @@ bugreports          30      45       0       7
 collapse             4      16       0       1
 condition           16       1       0       0
 date                95       6       0       0
-decorations          3       4       0       0
+decorations          5       2       0       0
 disambiguate        19      48       0       4
 display              1       4       0       0
 etal                 3       1       0       0
-flipflop             8      11       0       0
+flipflop             7      12       0       0
 form                 3       0       0       0
 fullstyles           3       2       0       0
 group                4       2       0       1
@@ -2482,9 +2446,9 @@ sort                41      17       0       8
 sortseparator        1       0       0       0
 substitute           5       2       0       0
 testers              0       1       0       1
-textcase            17      12       0       0
+textcase            22       7       0       0
 unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              569     240       0      44
+(all)              575     234       0      44

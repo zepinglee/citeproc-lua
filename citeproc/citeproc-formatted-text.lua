@@ -1,6 +1,4 @@
-local dom = require("luaxml-domobject")
 local unicode = require("unicode")
-local inspect = require("inspect")
 
 local util = require("citeproc.citeproc-util")
 
@@ -36,14 +34,17 @@ local FormattedText = {
 function FormattedText:render(formatter, context, punctuation_in_quote)
   self:merge_punctuations()
 
-  if context then
+  if punctuation_in_quote == nil and context then
     punctuation_in_quote = context.style:get_locale_option("punctuation-in-quote")
+    util.debug(punctuation_in_quote)
   end
   if punctuation_in_quote then
     self:move_punctuation_in_quote()
   end
 
   self:change_case()
+
+  self:flip_flop()
 
   return self:_render(formatter, context)
 end
@@ -461,35 +462,50 @@ end
 
 function FormattedText:add_format(attr, value)
   self.formats[attr] = value
-  if self._flip_flop_formats[attr] == value then
-    for _, text in ipairs(self.contents) do
-      if text._type == "FormattedText" then
-        text:flip_flop(attr)
-      end
-    end
-  end
 end
 
-function FormattedText:flip_flop(attr)
+function FormattedText:flip_flop(attr, value)
+  if not attr then
+    for attr, _ in pairs(FormattedText._flip_flop_formats) do
+      self:flip_flop(attr)
+    end
+    return
+  end
+
   if attr == "font-style" then
-    local value = self.formats[attr]
-    if value == "italic" then
-      self.formats[attr] = "normal"
-    elseif value == "normal" then
-      self.formats[attr] = "italic"
+    if self.formats[attr] == "italic" then
+      if value then
+        self.formats[attr] = "normal"
+        value = nil
+      else
+        value = "italic"
+      end
     end
 
   elseif attr == "font-weight" then
-    local value = self.formats[attr]
-    if value == "bold" then
-      self.formats[attr] = "normal"
-    elseif value == "normal" then
-      self.formats[attr] = "bold"
+    if self.formats[attr] == "bold" then
+      if value then
+        self.formats[attr] = "normal"
+        value = nil
+      else
+        value = "bold"
+      end
+    end
+
+  elseif attr == "quotes" then
+    if self.formats[attr] == "true" then
+      if value then
+        self.formats[attr] = "inner"
+        value = nil
+      else
+        value = "true"
+      end
     end
   end
+
   for _, text in ipairs(self.contents) do
-    if text._type == "FormattedText" then
-      text:flip_flop(attr)
+    if type(text) == "table" and text._type == "FormattedText" then
+      text:flip_flop(attr, value)
     end
   end
 end
@@ -509,7 +525,7 @@ end
 function FormattedText.new(text, formats)
   local res = {
     contents = {},
-    formats = {},
+    formats = formats or {},
   }
 
   setmetatable(res, FormattedText_mt)
@@ -520,8 +536,9 @@ function FormattedText.new(text, formats)
 
   if type(text) == "string" then
 
+    -- util.debug(text)
+
     -- normalize unicode quotes
-    text = string.gsub(text, '"(.-)"', '“%1”')
     text = string.gsub(text, "()'", function(pos)
       if pos == 1 or text[pos - 1] == " " then
         return "‘"
@@ -530,53 +547,88 @@ function FormattedText.new(text, formats)
       end
     end)
 
-    local status, dom_object = pcall(dom.parse, "<p>"..text.."</p>")
-    if status then
-      return FormattedText.new(dom_object:get_path("p")[1])
-    else
-      res.contents = {text}
-      return res
-    end
+    local done = false
 
-  elseif text.get_node_type then
-    -- DOM Object
-    if text:is_text() then
-      res = text:get_text()
-      return res
+    while not done do
+      local prefix, pos, contents, suffix
+      local tag, attributes
 
-    elseif text:is_element() then
-      res.contents = {}
-      for _, child in ipairs(text:get_children()) do
-        table.insert(res.contents, FormattedText.new(child))
-      end
-
-      local tag = text:get_element_name()
-      local formats = FormattedText._tag_formats[tag]
-      if formats then
-        table_update(res.formats, formats)
-      elseif tag == "span" then
-        if text:get_attribute("style") == "font-variant: small-caps;" then
-          table_update(res.formats, FormattedText._tag_formats['span style="font-variant: small-caps;"'])
-        elseif text:get_attribute("class")  == "nocase" then
-          table_update(res.formats, FormattedText._tag_formats['span class="nocase"'])
+      prefix, pos, tag, attributes, contents, suffix = string.match(text, "^(.-)()<(%w+)%s*(.-)>(.-)</%3>(.*)$")
+      -- util.debug(tag, attributes)
+      if contents then
+        if tag == "span" then
+          formats = FormattedText._tag_formats[tag .. " " .. attributes]
+        else
+          formats = FormattedText._tag_formats[tag]
         end
       end
 
-      res:process_quotes()
+      -- text = string.gsub(text, '"(.-)"', '“%1”')
 
-      return res
+      local new_pos = string.match(text, '^.-()“.-”')
+      if not pos or (new_pos and new_pos < pos) then
+        prefix, contents, suffix = string.match(text, '^(.-)“(.-)”(.*)$')
+        if contents then
+          pos = new_pos
+          formats = {quotes = "true"}
+        end
+      end
+
+      new_pos = string.match(text, '^.-()".-"')
+      if not pos or (new_pos and new_pos < pos) then
+        prefix, contents, suffix = string.match(text, '^(.-)"(.-)"(.*)$')
+        if contents then
+          pos = new_pos
+          formats = {quotes = "true"}
+        end
+      end
+
+      new_pos = string.match(text, "^.-()‘.-’%W")
+      if not pos or (new_pos and new_pos < pos) then
+        prefix, contents, suffix = string.match(text, "^(.-)‘(.-)’(%W.*)$")
+        if contents then
+          pos = new_pos
+          formats = {quotes = "true"}
+        end
+      end
+
+      new_pos = string.match(text, "^.-()‘.-’$")
+      if not pos or (new_pos and new_pos < pos) then
+        prefix, contents, suffix = string.match(text, "^(.-)‘(.-)’$")
+        if contents then
+          pos = new_pos
+          formats = {quotes = "true"}
+          suffix = ""
+        end
+      end
+
+      if contents then
+        if prefix ~= "" then
+          table.insert(res.contents, prefix)
+        end
+        table.insert(res.contents, FormattedText.new(contents, formats))
+
+        if suffix == "" then
+          done = true
+        else
+          text = suffix
+        end
+      else
+        table.insert(res.contents, text)
+        done = true
+      end
+
     end
 
-  elseif text._type and text._type == "FormattedText" then
+    return res
+
+  elseif type(text) == "table" and text._type == "FormattedText" then
+    return text
 
   elseif type(text) == "table" then
     return res
   end
   return nil
-end
-
-
-function FormattedText.process_quotes()
 end
 
 

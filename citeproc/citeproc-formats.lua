@@ -35,6 +35,11 @@ formats.html = {
     local close_quote = context.style:get_term("close-quote"):render(context)
     return open_quote .. str .. close_quote
   end,
+  ["@quotes/inner"] = function (str, context)
+    local open_quote = context.style:get_term("open-inner-quote"):render(context)
+    local close_quote = context.style:get_term("close-inner-quote"):render(context)
+    return open_quote .. str .. close_quote
+  end,
   ["@bibliography/entry"] = function (str, context)
     return "<div class=\"csl-entry\">" .. str .. "</div>"
   end
@@ -72,6 +77,11 @@ formats.latex = {
   ["@quotes/true"] = function (str, context)
     local open_quote = context.style:get_term("open-quote"):render(context)
     local close_quote = context.style:get_term("close-quote"):render(context)
+    return open_quote .. str .. close_quote
+  end,
+  ["@quotes/inner"] = function (str, context)
+    local open_quote = context.style:get_term("open-inner-quote"):render(context)
+    local close_quote = context.style:get_term("close-inner-quote"):render(context)
     return open_quote .. str .. close_quote
   end,
   ["@bibliography/entry"] = function (str, context)
