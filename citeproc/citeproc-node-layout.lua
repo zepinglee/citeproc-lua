@@ -29,10 +29,10 @@ function Layout:render (items, context)
 
     local res = self:render_children(item, context)
     if res and item["prefix"] then
-      res = FormattedText.concat(item["prefix"], res)
+      res = FormattedText.new(item["prefix"]) .. res
     end
     if res and item["suffix"] then
-      res = FormattedText.concat(res, item["suffix"])
+      res = res .. FormattedText.new(item["suffix"])
     end
     if not res and context.mode == "bibliography" then
       res = FormattedText.new("[CSL STYLE ERROR: reference with no printed form.]")

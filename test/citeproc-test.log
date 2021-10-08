@@ -137,18 +137,6 @@ Passed in:
 Expected:
 (string) '“quote”, Hello Thing'
 
-Failure → test-suite affix_MovingPunctuation
-Passed in:
-(string) '“The Title.” And "so it goes"'
-Expected:
-(string) '“The Title.” And “so it goes”'
-
-Failure → test-suite affix_SpaceWithQuotes
-Passed in:
-(string) 'The Title And "so it goes"'
-Expected:
-(string) 'The Title And “so it goes”'
-
 Failure → test-suite bugreports_AccidentalAllCaps
 Passed in:
 (string) '<span style="font-variant:normal;">J. Doe</span>, <i>His Anonymous Life</i>, , 1965.'
@@ -1415,7 +1403,7 @@ Expected:
 
 Failure → test-suite label_EditorTranslator2
 Passed in:
-(string) 'Some title, "Hello there".'
+(string) 'Some title, “Hello there.”'
 Expected:
 (string) 'Some title, “Hello there”.'
 
@@ -2413,7 +2401,7 @@ My Long Title 2 does not have title-short
 does not have title-short'
 
 category       success failure   error pending
-affix                5       3       0       1
+affix                7       1       0       1
 bugreports          30      45       0       7
 collapse             4      16       0       1
 condition           16       1       0       0
@@ -2451,4 +2439,4 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              575     234       0      44
+(all)              577     232       0      44
