@@ -133,43 +133,21 @@ test/citeproc-test.lua:39: citations
 
 Failure → test-suite affix_CommaAfterQuote
 Passed in:
-(string) 'Hello Thing'
+(string) ''quote', Hello Thing'
 Expected:
 (string) '“quote”, Hello Thing'
 
 Failure → test-suite affix_MovingPunctuation
 Passed in:
-(string) '“The Title”'
+(string) '“The Title.” And "so it goes"'
 Expected:
 (string) '“The Title.” And “so it goes”'
 
-Failure → test-suite affix_PrefixFullCitationTextOnly
-Passed in:
-(string) '(Smith 2000)'
-Expected:
-(string) '(As written in Smith 2000)'
-
-Failure → test-suite affix_PrefixWithDecorations
-Passed in:
-(string) '(Smith 2000)'
-Expected:
-(string) '(<span style="font-variant:small-caps;">See</span> Smith 2000)'
-
 Failure → test-suite affix_SpaceWithQuotes
 Passed in:
-(string) 'The Title'
+(string) 'The Title And "so it goes"'
 Expected:
 (string) 'The Title And “so it goes”'
-
-Failure → test-suite affix_WordProcessorAffixNoSpace
-Passed in:
-(string) 'My Title
-My Title
-My Title'
-Expected:
-(string) '<i>My Prefix</i> My Title My Suffix
-My Prefix. My Title, My Suffix
-My Prefix My Title My Suffix'
 
 Failure → test-suite bugreports_AccidentalAllCaps
 Passed in:
@@ -238,8 +216,8 @@ Expected:
 
 Failure → test-suite bugreports_CapsAfterOneWordPrefix
 Passed in:
-(string) 'Ibid.
-Ibid.'
+(string) 'Nocapsafter. ibid.
+Caps after. ibid.'
 Expected:
 (string) 'Nocapsafter. ibid.
 Caps after. Ibid.'
@@ -395,12 +373,6 @@ Expected:
   <div class="csl-entry">Brown, J. 2006a, August. <b><i>Tijdschrift voor praktijkondersteuning</i></b>. http://dx.doi.org/10.1007/bf03074904.</div>
   <div class="csl-entry">Brown, J. 2006b, August. <b><i>Huisarts en Wetenschap</i></b>. http://dx.doi.org/10.1007/bf03084836.</div>
 </div>'
-
-Failure → test-suite bugreports_MissingItemInJoin
-Passed in:
-(string) '<i>Aalto</i>, Book One, S. 100<i>Álvarez</i>, Book Two, S. 200<i>Álvarez</i>, Film One, 300'
-Expected:
-(string) '<i>Aalto</i>, Book One, S. 100 This.<i>Álvarez</i>, Book Two, S. 200<i>Álvarez</i>, Film One, 300'
 
 Failure → test-suite bugreports_MovePunctuationInsideQuotesForLocator
 Passed in:
@@ -1312,7 +1284,7 @@ Expected:
 
 Failure → test-suite flipflop_CompleteCiteInPrefix
 Passed in:
-(string) 'Other Book Title'
+(string) 'Wilhelm Dilthey, "The Types of World Views and Their Unfoldment Within the Metaphysical Systems," in <i>Dilthey’s Philosophy of Existence: Introduction to Weltanschauungslehre</i>, trans. William Kluback and Martin Weinbaum (New York: Bookman Associates, 1957), 26–27 Other Book Title'
 Expected:
 (string) 'Wilhelm Dilthey, “The Types of World Views and Their Unfoldment Within the Metaphysical Systems,” in <i>Dilthey’s Philosophy of Existence: Introduction to Weltanschauungslehre</i>, trans. William Kluback and Martin Weinbaum (New York: Bookman Associates, 1957), 26–27 Other Book Title'
 
@@ -1360,23 +1332,11 @@ Expected:
   <div class="csl-entry"><span style="font-variant:small-caps;">Lessard <span style="font-variant:normal;">v.</span> Schmidt</span>. 1972. 349 F. Supp. 1078 (E.D. Wisc.).</div>
 </div>'
 
-Failure → test-suite flipflop_LeadingMarkupWithApostrophe
-Passed in:
-(string) 'Aalto'
-Expected:
-(string) '<i>Insha’Allah</i> is an Arabic phrase meaning ‘God willing’. Another Arabic word is <i>bukra</i>. Aalto'
-
 Failure → test-suite flipflop_LeadingSingleQuote
 Passed in:
 (string) '“‘Parmenides’ 132c–133a and the development of Plato's thought”'
 Expected:
 (string) '“‘Parmenides’ 132c–133a and the development of Plato’s thought”'
-
-Failure → test-suite flipflop_LongComplexPrefix
-Passed in:
-(string) 'Other Book Title'
-Expected:
-(string) 'The French translation provided there runs, <i>Toi, qui cultives notre philosophie sous lhabit étranger—et peut-être pas si étranger que cela, puisque la chevelure des naziréens et la consécration de la tête, dont il a toujours tenu le fer à lécart, sont aussi comme une loi des sanctuaires, et que la blancheur et l’éclat des vêtements appartiennent aux anges, quand on les représente sous une forme corporelle: c’est, je pense, le symbole de la pureté propre à leur nature—!</i> Other Book Title'
 
 Failure → test-suite flipflop_NumericField
 Passed in:
@@ -1491,7 +1451,7 @@ Expected:
 
 Failure → test-suite label_EditorTranslator2
 Passed in:
-(string) 'Some title'
+(string) 'Some title, "Hello there".'
 Expected:
 (string) 'Some title, “Hello there”.'
 
@@ -1719,7 +1679,7 @@ Expected:
 
 Failure → test-suite magic_SuppressLayoutDelimiterIfPrefixComma
 Passed in:
-(string) 'Book A; Book B'
+(string) 'Book A; , cited in Book B'
 Expected:
 (string) 'Book A, cited in Book B'
 
@@ -2515,8 +2475,8 @@ My Long Title 2 does not have title-short
 does not have title-short'
 
 category       success failure   error pending
-affix                2       6       0       1
-bugreports          29      46       0       7
+affix                5       3       0       1
+bugreports          30      45       0       7
 collapse             4      16       0       1
 condition           16       1       0       0
 date                95       6       0       0
@@ -2524,7 +2484,7 @@ decorations          3       4       0       0
 disambiguate        19      48       0       4
 display              1       4       0       0
 etal                 3       1       0       0
-flipflop             1      18       0       0
+flipflop             3      16       0       0
 form                 3       0       0       0
 fullstyles           3       2       0       0
 group                4       2       0       1
@@ -2553,4 +2513,4 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              560     249       0      44
+(all)              566     243       0      44

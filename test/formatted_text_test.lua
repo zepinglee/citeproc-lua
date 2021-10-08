@@ -53,7 +53,7 @@ describe("FormattedText", function()
     local foo = FormattedText.new()
     foo.contents = {"foo"}
     local res = foo:render(formatter, nil)
-    assert.equal( "foo", res)
+    assert.equal("foo", res)
   end)
 
   it("initialize with tags", function()
@@ -64,6 +64,11 @@ describe("FormattedText", function()
   it("initialize with tags", function()
     local foo = FormattedText.new("<b>foo<i>bar</i>baz</b>")
     assert.equal("<b>foo<i>bar</i>baz</b>", foo:render(formatter, nil))
+  end)
+
+  it("initialize with quotes", function()
+    local foo = FormattedText.new('foo "bar" baz')
+    assert.equal('foo “bar” baz', foo:render(formatter, nil))
   end)
 
   it("merge punctuation", function()
