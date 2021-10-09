@@ -46,6 +46,8 @@ Element.inheritable_options = {
   ["initialize-with-hyphen"] = true,
   ["page-range-format"] = true,
   ["demote-non-dropping-particle"] = true,
+  -- Bibliography
+  ["second-field-align"] = true,  -- for use in layout
   -- Date
   ["date-parts"] = true,
   -- Names

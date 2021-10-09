@@ -30,6 +30,7 @@ local FormattedText = {
     "text-decoration",
     "vertical-align",
     "quotes",
+    "display",
   },
   _flip_flop_formats = {
     ["font-style"] = "italic",

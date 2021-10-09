@@ -41,8 +41,20 @@ formats.html = {
     return open_quote .. str .. close_quote
   end,
   ["@bibliography/entry"] = function (str, context)
-    return "<div class=\"csl-entry\">" .. str .. "</div>"
-  end
+    return '<div class="csl-entry">' .. str .. "</div>"
+  end,
+  ["@display/block"] = function (str, state)
+    return '\n\n    <div class="csl-block">' .. str .. "</div>\n";
+  end,
+  ["@display/left-margin"] = function (str, state)
+    return '\n    <div class="csl-left-margin">' .. str .. "</div>";
+  end,
+  ["@display/right-inline"] = function (str, state)
+    return '<div class="csl-right-inline">' .. str .. "</div>\n  ";
+  end,
+  ["@display/indent"] = function (str, state)
+    return '<div class="csl-indent">' .. str .. "</div>\n  ";
+  end,
 }
 
 formats.latex = {

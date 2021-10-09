@@ -27,15 +27,56 @@ function Layout:render (items, context)
       item.position = self:_get_position(item, previous_cite, context)
     end
 
-    local res = self:render_children(item, context)
-    if res and item["prefix"] then
-      res = FormattedText.new(item["prefix"]) .. res
+    local first = nil
+    local second = {}
+    local element_index = 0
+    for _, child in ipairs(self:get_children()) do
+      if child:is_element() then
+        element_index = element_index + 1
+        local text = child:render(item, context)
+        if element_index == 1 then
+          first = text
+        else
+          table.insert(second, text)
+        end
+      end
     end
-    if res and item["suffix"] then
-      res = res .. FormattedText.new(item["suffix"])
+    second = self:concat(second, context)
+
+    if context.mode == "bibliography" then
+      if first and context.options["prefix"] then
+        first = FormattedText.new(context.options["prefix"]) .. first
+      end
+      if second and context.options["suffix"] then
+        second = second .. FormattedText.new(context.options["suffix"])
+      end
     end
-    if not res and context.mode == "bibliography" then
-      res = FormattedText.new("[CSL STYLE ERROR: reference with no printed form.]")
+
+    local res = nil
+    if context.options["second-field-align"] == "flush" then
+      if first then
+        first:add_format("display", "left-margin")
+        res = first
+      end
+      if second then
+        second:add_format("display", "right-inline")
+        res = FormattedText.concat(res, second)
+      end
+    else
+      res = self:concat({first, second}, context)
+    end
+
+    if context.mode == "citation" then
+      if res and item["prefix"] then
+        res = FormattedText.new(item["prefix"]) .. res
+      end
+      if res and item["suffix"] then
+        res = res .. FormattedText.new(item["suffix"])
+      end
+    elseif context.mode == "bibliography" then
+      if not res then
+        res = FormattedText.new("[CSL STYLE ERROR: reference with no printed form.]")
+      end
     end
     table.insert(output, res)
     previous_cite = item
