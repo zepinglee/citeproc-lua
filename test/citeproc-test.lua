@@ -124,6 +124,9 @@ local function run_test(fixture)
     end
 
   elseif fixture.mode == "bibliography" then
+    if fixture.citations then
+      pending("citations")
+    end
     return test_bibliography(citeproc, fixture)
   end
 end

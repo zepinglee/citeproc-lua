@@ -2,6 +2,9 @@
 Pending → test-suite affix_WithCommas
 test/citeproc-test.lua:39: citations
 
+Pending → test-suite bugreports_AutomaticallyDeleteItemsFails
+test/citeproc-test.lua:128: citations
+
 Pending → test-suite bugreports_CreepingAddNames
 test/citeproc-test.lua:39: citations
 
@@ -80,6 +83,9 @@ test/citeproc-test.lua:39: citations
 Pending → test-suite magic_TermCapitalizationWithPrefix
 test/citeproc-test.lua:39: citations
 
+Pending → test-suite name_BibliographyNameFormNeverShrinks
+test/citeproc-test.lua:128: citations
+
 Pending → test-suite position_FirstTrueOnlyOnce
 test/citeproc-test.lua:39: citations
 
@@ -142,29 +148,6 @@ Passed in:
 (string) 'John d’ Jones'
 Expected:
 (string) 'John d’Jones'
-
-Failure → test-suite bugreports_AutomaticallyDeleteItemsFails
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Doe, <i>Book A</i>, 2000.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> J. Doe, <i>Book B</i>, 2000.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[3]</div><div class="csl-right-inline"> R. Snoakes, <i>Book C</i>, 2000.</div>
-  </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Doe, <i>Book A</i>, 2000.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> J. Doe, <i>Book B</i>, 2000.</div>
-  </div>
-</div>'
 
 Failure → test-suite bugreports_BadCitationUpdate
 Passed in:
@@ -2375,7 +2358,7 @@ Error → test-suite magic_CitationLabelInBibliography
 
 category       success failure   error pending
 affix                7       1       0       1
-bugreports          32      43       0       7
+bugreports          32      42       0       8
 collapse             4      16       0       1
 condition           16       1       0       0
 date                94       7       0       0
@@ -2392,7 +2375,7 @@ label                9      10       0       0
 locale              23       0       0       0
 locator              0       6       0       0
 magic               24      14       1       1
-name                88      23       0       0
+name                87      23       0       1
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -2412,4 +2395,4 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              580     228       1      44
+(all)              579     227       1      46
