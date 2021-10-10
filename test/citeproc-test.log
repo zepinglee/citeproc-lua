@@ -267,13 +267,13 @@ Expected:
 
 Failure → test-suite bugreports_GreekStyleProblems
 Passed in:
-(string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Κώστας Καρυωτάκης, <i>Ποιήματα και πεζά</i>, Andreas Dimitriadisμτφ. , Γ. Π. Σαββίδηςεï�ιμ. , 1998, σ .'
+(string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Κώστας Καρυωτάκης, <i>Ποιήματα και πεζά</i>, μτφ. Andreas Dimitriadis, εï�ιμ. Γ. Π. Σαββίδης, 1998, σ .'
 Expected:
 (string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Κώστας Καρυωτάκης, <i>Ποιήματα και πεζά</i>, μτφ. Andreas Dimitriadis, επιμ. Γ. Π. Σαββίδης, 1998.'
 
 Failure → test-suite bugreports_GreekStyleTwoEditors
 Passed in:
-(string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Γ. Π. Σαββίδης και Κώστας Καρυωτάκης (επιμ.), <i>Ποιήματα και πεζά</i>, Andreas Dimitriadisμτφ. , 1998, σ .'
+(string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Γ. Π. Σαββίδης και Κώστας Καρυωτάκης (επιμ.), <i>Ποιήματα και πεζά</i>, μτφ. Andreas Dimitriadis, 1998, σ .'
 Expected:
 (string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Γ. Π. Σαββίδης και Κώστας Καρυωτάκης (επιμ.), <i>Ποιήματα και πεζά</i>, μτφ. Andreas Dimitriadis, 1998.'
 
@@ -289,16 +289,6 @@ Expected:
   <div class="csl-entry">
     <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> P.G. Zimbardo, “Does Psychology make a significant difference in our lives?,” <i>American Psychologist</i>, vol. 59, Jan. 2004, pp. 339–351.</div>
   </div>
-</div>'
-
-Failure → test-suite bugreports_LabelsOutOfPlace
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Jones, Colin. <i>Bourgeois Revolution Revivified: 1789 and Social Change</i>. Colin Lucas Edited by . Oxford: Clarendon Press, 1991.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Jones, Colin. <i>Bourgeois Revolution Revivified: 1789 and Social Change</i>. Edited by Colin Lucas. Oxford: Clarendon Press, 1991.</div>
 </div>'
 
 Failure → test-suite bugreports_LegislationCrash
@@ -457,16 +447,6 @@ Passed in:
 Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Davis, Jennifer J. “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830.” Ph.D. diss., Pennsylvania State University, History, 2004.</div>
-</div>'
-
-Failure → test-suite bugreports_UndefinedBeforeVal
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Aalto, A. Boy BeamishTranslated by .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Aalto, A. Translated by Boy Beamish.</div>
 </div>'
 
 Failure → test-suite bugreports_UndefinedInName3
@@ -666,12 +646,6 @@ Smith 2000;Smith 2000;Smith 2000;Smith 2000;Smith 2001'
 Expected:
 (string) 'Smith 2000a–e;2001
 Smith 2000a;c–e;2001'
-
-Failure → test-suite condition_SingletonIfMatchNone
-Passed in:
-(string) 'Γ. Π. Σαββίδηςed. by '
-Expected:
-(string) 'ed. by Γ. Π. Σαββίδης'
 
 Failure → test-suite date_LopsidedDataYearSuffixCollapse
 Passed in:
@@ -1387,7 +1361,7 @@ Failure → test-suite label_EditorTranslator1
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">1.	Иванов И.И. 
-      . Пример оформления книги с редактором и переводчиком в одном лице : вид издания : in 5 vols. Vol. 2 / И.И. Иванов, П.П. Петров, С.С. Сидоров; Р.Р. Романов ed. ; Р.Р. Романов tran. Дополнительно. – Тюмень: Дом, 2013. – 10. – 100 p.</div>
+      . Пример оформления книги с редактором и переводчиком в одном лице : вид издания : in 5 vols. Vol. 2 / И.И. Иванов, П.П. Петров, С.С. Сидоров; ed. Р.Р. Романов; tran. Р.Р. Романов Дополнительно. – Тюмень: Дом, 2013. – 10. – 100 p.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1633,7 +1607,7 @@ Expected:
 Failure → test-suite name_EditorTranslatorBoth
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Noakes, Richard. <i>Hello</i>. John DoeEd. By . Jane RoeTrans. By .</div>
+  <div class="csl-entry">Noakes, Richard. <i>Hello</i>. Ed. By John Doe. Trans. By Jane Roe.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1649,7 +1623,7 @@ Expected:
 Failure → test-suite name_EditorTranslatorWithTranslatorOnlyBib
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Noakes, Richard. <i>Hello</i>. Jane RoeTrans. By .</div>
+  <div class="csl-entry">Noakes, Richard. <i>Hello</i>. Trans. By Jane Roe.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2358,9 +2332,9 @@ Error → test-suite magic_CitationLabelInBibliography
 
 category       success failure   error pending
 affix                7       1       0       1
-bugreports          32      42       0       8
+bugreports          34      40       0       8
 collapse             4      16       0       1
-condition           16       1       0       0
+condition           17       0       0       0
 date                94       7       0       0
 decorations          5       2       0       0
 disambiguate        19      48       0       4
@@ -2395,4 +2369,4 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              579     227       1      46
+(all)              582     224       1      46

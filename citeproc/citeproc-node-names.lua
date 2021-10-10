@@ -439,7 +439,35 @@ function Names:render (item, context)
     context.variable = context.options["variable"]
   end
 
-  local     name = self:get_child("name")
+  local name, et_al, label
+  -- The position of cs:label relative to cs:name determines the order of
+  -- the name and label in the rendered text.
+  local label_position = nil
+  for _, child in ipairs(self:get_children()) do
+    if child:is_element() then
+      local element_name = child:get_element_name()
+      if element_name == "name" then
+        name = child
+        if label then
+          label_position = "before"
+        end
+      elseif element_name == "et-al" then
+        et_al = child
+      elseif element_name == "label" then
+        label = child
+        if name then
+          label_position = "after"
+        end
+      end
+    end
+  end
+  if label_position then
+    context.label_position = label_position
+  else
+    label_position = context.label_position or "after"
+  end
+
+  -- local name = self:get_child("name")
   if not name then
     name = context.name_element
   end
@@ -449,7 +477,7 @@ function Names:render (item, context)
   end
   context.name_element = name
 
-  local et_al = self:get_child("et-al")
+  -- local et_al = self:get_child("et-al")
   if not et_al then
     et_al = context.et_al
   end
@@ -459,7 +487,7 @@ function Names:render (item, context)
   end
   context.et_al = et_al
 
-  local label = self:get_child("label")
+  -- local label = self:get_child("label")
   if label then
     context.label = label
   else
@@ -486,7 +514,12 @@ function Names:render (item, context)
             -- drop name label in sorting
             local label_result = label:render(role, context)
             if label_result then
-              res = FormattedText.concat(res, label_result)
+              util.debug(label_position)
+              if label_position == "before" then
+                res = FormattedText.concat(label_result, res)
+              else
+                res = FormattedText.concat(res, label_result)
+              end
             end
           end
         end
