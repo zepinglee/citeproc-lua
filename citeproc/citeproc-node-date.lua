@@ -368,6 +368,7 @@ DatePart.render = function (self, date, context, last_range_begin, range_end)
   res = self:case(res, context)
   res = self:format(res, context)
   res = self:wrap(res, context)
+  res = self:display(res, context)
   return res
 end
 

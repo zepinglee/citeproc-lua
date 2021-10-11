@@ -119,8 +119,8 @@ function Name:render (names, context)
     end
   end
 
-  local ret = self:wrap(output, context)
-  ret = self:format(ret, context)
+  local ret = self:format(output, context)
+  ret = self:wrap(ret, context)
   return ret
 end
 
@@ -575,6 +575,7 @@ function Names:render (item, context)
   if ret then
     ret = self:format(ret, context)
     ret = self:wrap(ret, context)
+    ret = self:display(ret, context)
     return ret
   else
     local substitute = self:get_child("substitute")

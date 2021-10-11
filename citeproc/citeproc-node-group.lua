@@ -20,6 +20,7 @@ function Group:render (item, context)
 
   res = self:format(res, context)
   res = self:wrap(res, context)
+  res = self:display(res, context)
   return res
 end
 

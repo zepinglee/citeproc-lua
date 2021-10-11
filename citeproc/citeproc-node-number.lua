@@ -41,8 +41,9 @@ function Number:render (item, context)
     end
   end
 
-  res = self:wrap(res, context)
   res = self:case(res, context)
+  res = self:wrap(res, context)
+  res = self:display(res, context)
 
   return res
 end

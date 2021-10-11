@@ -301,6 +301,22 @@ function Element:concat (strings, context)
   return FormattedText.concat_list(strings, delimiter)
 end
 
+-- Display
+function Element:display(text, context)
+  if not text then
+    return text
+  end
+  local value = context.options["display"]
+  if not value then
+    return text
+  end
+  if type(text) == "string" then
+    text = FormattedText.new(text)
+  end
+  text:add_format("display", value)
+  return text
+end
+
 -- Quotes
 function Element:quote (str, context)
   if not str then

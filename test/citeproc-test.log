@@ -322,8 +322,18 @@ Expected:
 Failure → test-suite bugreports_NoCaseEscape
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Aalto, Alan N.d.“‘PIAAC-Longitudinal (PIAAC-L) 2015’”.</div>
-  <div class="csl-entry">Aalto, Alan N.d.“PIAAC-Longitudinal (PIAAC-Lx) 2015”.</div>
+  <div class="csl-entry">
+
+    <div class="csl-block">Aalto, Alan</div>
+
+    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">“‘PIAAC-Longitudinal (PIAAC-L) 2015’”</div>
+  .</div>
+  <div class="csl-entry">
+
+    <div class="csl-block">Aalto, Alan</div>
+
+    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">“PIAAC-Longitudinal (PIAAC-Lx) 2015”</div>
+  .</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -383,7 +393,12 @@ Expected:
 Failure → test-suite bugreports_SmallCapsEscape
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Aalto, Alan N.d.Here.</div>
+  <div class="csl-entry">
+
+    <div class="csl-block">Aalto, Alan</div>
+
+    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">Here</div>
+  .</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1090,11 +1105,36 @@ Expected:
 Failure → test-suite display_AuthorAsHeading
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Aloysius Doe1999Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa</div>
-  <div class="csl-entry">John Aloysius Doe2000Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb</div>
-  <div class="csl-entry">Jane Henrietta Roe1999Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc</div>
-  <div class="csl-entry">Jane Henrietta Roe1999Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd</div>
-  <div class="csl-entry">Jane Henrietta Roe2000Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee</div>
+  <div class="csl-entry">
+
+    <div class="csl-block">John Aloysius Doe</div>
+
+    <div class="csl-left-margin">1999</div><div class="csl-right-inline">Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa</div>
+  </div>
+  <div class="csl-entry">
+
+    <div class="csl-block">John Aloysius Doe</div>
+
+    <div class="csl-left-margin">2000</div><div class="csl-right-inline">Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb</div>
+  </div>
+  <div class="csl-entry">
+
+    <div class="csl-block">Jane Henrietta Roe</div>
+
+    <div class="csl-left-margin">1999</div><div class="csl-right-inline">Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc</div>
+  </div>
+  <div class="csl-entry">
+
+    <div class="csl-block">Jane Henrietta Roe</div>
+
+    <div class="csl-left-margin">1999</div><div class="csl-right-inline">Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd</div>
+  </div>
+  <div class="csl-entry">
+
+    <div class="csl-block">Jane Henrietta Roe</div>
+
+    <div class="csl-left-margin">2000</div><div class="csl-right-inline">Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee</div>
+  </div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1118,36 +1158,6 @@ Expected:
   </div>
   <div class="csl-entry">
     <div class="csl-left-margin">2000</div><div class="csl-right-inline">Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee</div>
-  </div>
-</div>'
-
-Failure → test-suite display_DisplayBlock
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Smith, Book A (2000)An interesting book by an interesting author.</div>
-  <div class="csl-entry">Robert Jones, Book B (2001)An old contribution to a new field.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Smith, Book A (2000)<div class="csl-indent">An interesting book by an interesting author.</div>
-  </div>
-  <div class="csl-entry">Robert Jones, Book B (2001)<div class="csl-indent">An old contribution to a new field.</div>
-  </div>
-</div>'
-
-Failure → test-suite display_SecondFieldAlignClone
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">[1] John Aloysius Doe, “John’s Book” (1999)</div>
-  <div class="csl-entry">[2] Jane Henrietta Roe, “Jane’s Book” (2000)</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> John Aloysius Doe, “John’s Book” (1999)</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> Jane Henrietta Roe, “Jane’s Book” (2000)</div>
   </div>
 </div>'
 
@@ -2300,7 +2310,7 @@ condition           17       0       0       0
 date                95       6       0       0
 decorations          7       0       0       0
 disambiguate        19      48       0       4
-display              1       4       0       0
+display              3       2       0       0
 etal                 3       1       0       0
 flipflop             7      12       0       0
 form                 3       0       0       0
@@ -2331,4 +2341,4 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              587     219       1      46
+(all)              589     217       1      46
