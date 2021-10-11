@@ -237,7 +237,7 @@ Expected:
 
 Failure → test-suite bugreports_DoubleEncodedAngleBraces
 Passed in:
-(string) '<span style="font-variant:small-caps;">Center for History and New Media</span>, « Zotero Quick Start Guide », [En ligne]. &#60;http://zotero.org/support/quick_start_guide&#62;. (Consulté le.'
+(string) 'Center for History and New Media, « Zotero Quick Start Guide », [En ligne]. &#60;http://zotero.org/support/quick_start_guide&#62;. (Consulté le.'
 Expected:
 (string) '<span style="font-variant:small-caps;">Center for History and New Media</span>, « Zotero Quick Start Guide », s.d., [En ligne]. &#60;http://zotero.org/support/quick_start_guide&#62;. .'
 
@@ -511,16 +511,6 @@ Expected:
 Smith 1990b
 Jones 1990'
 
-Failure → test-suite bugreports_parenthesis
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">[CSL STYLE ERROR: reference with no printed form.].</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"> (2006): 1–7.</div>
-</div>'
-
 Failure → test-suite bugreports_parseName
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -673,12 +663,6 @@ Expected:
   <div class="csl-entry">Year, with differing year: 1999_[YRD]_2000</div>
 </div>'
 
-Failure → test-suite date_Uncertain
-Passed in:
-(string) 'circa 15 December 2005'
-Expected:
-(string) 'circa 15 December 2005; 20 December 2005'
-
 Failure → test-suite date_YearSuffixDelimiter
 Passed in:
 (string) 'Doe 2000;Doe 2000;Doe 2001'
@@ -702,12 +686,6 @@ Passed in:
 (string) '(John Doe [Accessed: June 1, 1965]; John Doe [Accessed: June 1, 2065])'
 Expected:
 (string) '(John Doe n.d.-a [Accessed: June 1, 1965]; John Doe n.d.-b [Accessed: June 1, 2065])'
-
-Failure → test-suite decorations_AndTermUnaffectedByNameDecorations
-Passed in:
-(string) '<span style="font-variant:small-caps;">John</span> <span style="font-variant:small-caps;">Doe III</span> and <span style="font-variant:small-caps;">Jane</span> <span style="font-variant:small-caps;">van Roe</span>'
-Expected:
-(string) '<span style="font-variant:small-caps;">John</span> <span style="font-variant:small-caps;">Doe</span> III and <span style="font-variant:small-caps;">Jane</span> <span style="font-variant:small-caps;">van</span> <span style="font-variant:small-caps;">Roe</span>'
 
 Failure → test-suite disambiguate_AddNamesSuccess
 Passed in:
@@ -1634,12 +1612,6 @@ Expected:
   <div class="csl-entry">田中太郎, Yossarian Yoda, 等翻譯員。</div>
 </div>'
 
-Failure → test-suite name_FormattingOfParticles
-Passed in:
-(string) 'Gerard VAN DER MEER'
-Expected:
-(string) 'Gerard van DER MEER'
-
 Failure → test-suite name_HebrewAnd
 Passed in:
 (string) 'תפוח ו  תפוז'
@@ -1649,8 +1621,8 @@ Expected:
 Failure → test-suite name_InTextMarkupInitialize
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, &#60;b&#62;John&#60;/b&#62; Q.</div>
-  <div class="csl-entry">Doe, &#60;b&#62;John&#60;/b&#62;-Q.</div>
+  <div class="csl-entry">Doe, John Q.</div>
+  <div class="csl-entry">Doe, John-Q.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1661,14 +1633,20 @@ Expected:
 Failure → test-suite name_InTextMarkupNormalizeInitials
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, &#60;b&#62;J&#60;/b&#62; Q.</div>
-  <div class="csl-entry">Doe, &#60;b&#62;J&#60;/b&#62;-Q.</div>
+  <div class="csl-entry">Doe, J Q.</div>
+  <div class="csl-entry">Doe, J-Q.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry"><b>Doe</b>, <b>J.</b> Q.</div>
   <div class="csl-entry"><b>Doe</b>, <b>J.</b>-Q.</div>
 </div>'
+
+Failure → test-suite name_InstitutionDecoration
+Passed in:
+(string) 'São Paulo (Estado)'
+Expected:
+(string) 'SÃO PAULO (ESTADO)'
 
 Failure → test-suite name_ParseNames
 Passed in:
@@ -1681,12 +1659,6 @@ Passed in:
 (string) 'François Hédelin d’ (Aubignac)'
 Expected:
 (string) 'François Hédelin (d’Aubignac)'
-
-Failure → test-suite name_ParsedNonDroppingParticleWithAffixes
-Passed in:
-(string) '<span style="font-variant:small-caps;">(La Fontaine)</span> Jean de'
-Expected:
-(string) '(<span style="font-variant:small-caps;">La Fontaine</span>) Jean de'
 
 Failure → test-suite name_ParsedNonDroppingParticleWithApostrophe
 Passed in:
@@ -1921,7 +1893,7 @@ Expected:
 Failure → test-suite quotes_QuotesUnderQuotesFalse
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">[CSL STYLE ERROR: reference with no printed form.].</div>
+  <div class="csl-entry"> ’Title with ‘quotes’ in it',..</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2322,11 +2294,11 @@ Error → test-suite magic_CitationLabelInBibliography
 
 category       success failure   error pending
 affix                7       1       0       1
-bugreports          34      40       0       8
+bugreports          35      39       0       8
 collapse             4      16       0       1
 condition           17       0       0       0
-date                94       7       0       0
-decorations          6       1       0       0
+date                95       6       0       0
+decorations          7       0       0       0
 disambiguate        19      48       0       4
 display              1       4       0       0
 etal                 3       1       0       0
@@ -2339,7 +2311,7 @@ label                9      10       0       0
 locale              23       0       0       0
 locator              0       6       0       0
 magic               24      14       1       1
-name                87      23       0       1
+name                88      22       0       1
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -2359,4 +2331,4 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              583     223       1      46
+(all)              587     219       1      46

@@ -446,10 +446,11 @@ function FormattedText.concat(str1, str2)
 end
 
 function FormattedText.concat_list(list, delimiter)
-  -- Strings in the list may be nil.
+  -- Strings in the list may be nil thus ipairs() should be avoided.
   -- The delimiter may be nil.
   local res = nil
-  for _, text in ipairs(list) do
+  for i = 1, #list do
+    local text = list[i]
     if text and text ~= "" then
       if res then
         if delimiter and delimiter ~= "" then
@@ -577,8 +578,6 @@ function FormattedText.new(text, formats)
 
   if type(text) == "string" then
 
-    -- util.debug(text)
-
     -- normalize unicode quotes
     text = string.gsub(text, "()'", function(pos)
       if pos == 1 or text[pos - 1] == " " then
@@ -595,7 +594,6 @@ function FormattedText.new(text, formats)
       local tag, attributes
 
       prefix, pos, tag, attributes, contents, suffix = string.match(text, "^(.-)()<(%w+)%s*(.-)>(.-)</%3>(.*)$")
-      -- util.debug(tag, attributes)
       if contents then
         if tag == "span" then
           formats = FormattedText._tag_formats[tag .. " " .. attributes]

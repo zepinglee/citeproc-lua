@@ -178,9 +178,9 @@ function Name:render_single_name (name, index, context)
     family = literal
     if family == "" then
       family = given
+      given = ""
     end
     if family ~= "" then
-      family, _ = self:format_name_parts(family, nil, context)
       return family
     else
       error("Name not avaliable")
@@ -197,6 +197,19 @@ function Name:render_single_name (name, index, context)
     demote_ndp = true
   else  -- demote_non_dropping_particle == "never"
     demote_ndp = false
+  end
+
+  local family_name_part = nil
+  local given_name_part = nil
+  for _, child in ipairs(self:get_children()) do
+    if child:is_element() and child:get_element_name() == "name-part" then
+      local name_part = child:get_attribute("name")
+      if name_part == "family" then
+        family_name_part = child
+      elseif name_part == "given" then
+        given_name_part = child
+      end
+    end
   end
 
   local res = nil
@@ -219,32 +232,70 @@ function Name:render_single_name (name, index, context)
         ndp = FormattedText.concat(ndp, particle)
       end
 
-      if demote_ndp then
-        given = util.concat({given, dp, ndp}, " ")
-      else
-        family = util.concat({ndp, family}, " ")
-        given = util.concat({given, dp}, " ")
+      if family_name_part then
+        family = family_name_part:format_name_part(family, context)
+        ndp = family_name_part:format_name_part(ndp, context)
       end
-      family, given = self:format_name_parts(family, given, context)
+      if given_name_part then
+        given = given_name_part:format_name_part(given, context)
+        dp = family_name_part:format_name_part(dp, context)
+      end
+
+      if demote_ndp then
+        given = FormattedText.concat_list({given, dp, ndp}, " ")
+      else
+        family = FormattedText.concat_list({ndp, family}, " ")
+        given = FormattedText.concat_list({given, dp}, " ")
+      end
+
+      if family_name_part then
+        family = family_name_part:wrap_name_part(family, context)
+      end
+      if given_name_part then
+        given = given_name_part:wrap_name_part(given, context)
+      end
+
       order = {family, given, suffix}
       inverted = true
     else
-      family = util.concat({dp, ndp, family}, " ")
+      if family_name_part then
+        family = family_name_part:format_name_part(family, context)
+        ndp = family_name_part:format_name_part(ndp, context)
+      end
+      if given_name_part then
+        given = given_name_part:format_name_part(given, context)
+        dp = family_name_part:format_name_part(dp, context)
+      end
+
+      family = FormattedText.concat_list({dp, ndp, family}, " ")
       if name["comma-suffix"] then
         suffix_separator = ", "
       else
         suffix_separator = " "
       end
       family = FormattedText.concat_list({family, suffix}, suffix_separator)
-      family, given = self:format_name_parts(family, given, context)
+
+      if family_name_part then
+        family = family_name_part:wrap_name_part(family, context)
+      end
+      if given_name_part then
+        given = given_name_part:wrap_name_part(given, context)
+      end
+
       order = {given, family}
       sort_separator = " "
     end
     res = FormattedText.concat_list(order, sort_separator)
 
   elseif form == "short" then
+    if family_name_part then
+      family = family_name_part:format_name_part(family, context)
+      ndp = family_name_part:format_name_part(ndp, context)
+    end
     family = util.concat({ndp, family}, " ")
-    family, _ = self:format_name_parts(family, _, context)
+      if family_name_part then
+        family = family_name_part:wrap_name_part(family, context)
+      end
     res = family
   else
     error(string.format('Invalid attribute form="%s" of "name".', form))
@@ -349,31 +400,19 @@ function Name:initialize (given, terminator, context)
 
 end
 
-function Name:format_name_parts (family, given, context)
-  for _, child in ipairs(self:get_children()) do
-    if child:is_element() and child:get_element_name() == "name-part" then
-      family, given = child:format_parts(family, given, context)
-    end
-  end
-  return family, given
-end
-
 local NamePart = Element:new()
 
-NamePart.format_parts = function (self, family, given, context)
+function NamePart:format_name_part(name_part, context)
   context = self:process_context(context)
-  local name = context.options["name"]
+  local res = self:case(name_part, context)
+  res = self:format(res, context)
+  return res
+end
 
-  if name == "family" and family then
-    family = self:case(family, context)
-    family = self:wrap(family, context)
-    family = self:format(family, context)
-  elseif name == "given" and given then
-    given = self:case(given, context)
-    given = self:format(given, context)
-    given = self:wrap(given, context)
-  end
-  return family, given
+function NamePart:wrap_name_part(name_part, context)
+  context = self:process_context(context)
+  local res = self:wrap(name_part, context)
+  return res
 end
 
 
@@ -514,7 +553,6 @@ function Names:render (item, context)
             -- drop name label in sorting
             local label_result = label:render(role, context)
             if label_result then
-              util.debug(label_position)
               if label_position == "before" then
                 res = FormattedText.concat(label_result, res)
               else

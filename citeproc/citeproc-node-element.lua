@@ -280,7 +280,7 @@ end
 
 -- Affixes
 function Element:wrap (str, context)
-  if not str then
+  if not str or str == "" then
     return nil
   end
   local prefix = context.options["prefix"]
@@ -294,39 +294,6 @@ function Element:wrap (str, context)
   end
   return res
 end
-
--- function Element:_concat (str1, str2, context)
---   -- a helper function that concatenates two strings with `punctuation-in-quote`
---   if not str1 then
---     return nil
---   end
---   if not str2 or str2 == "" then
---     return str1
---   end
-
---   local first_char = string.sub(str2, 1, 1)
---   if first_char == "," or first_char == "." then
---     -- Remove the repeating punctuation.
---     if util.endswith(str1, first_char) then
---       str2 = string.sub(str2, 2)
-
---   return str1 .. str2
--- end
-
--- function Element:_concat_list (strings, delimiter, context)
---   local res = nil
---   for _, s in ipairs(strings) do
---     if s and s ~= "" then
---       if res then
---         res = self:_concat(res, delimiter, context)
---         res = self:_concat(res, s, context)
---       else
---         res = s
---       end
---     end
---   end
---   return res
--- end
 
 -- Delimiters
 function Element:concat (strings, context)
@@ -369,7 +336,7 @@ end
 
 -- Text-case
 function Element:case (text, context)
-  if not text then
+  if not text or text == "" then
     return nil
   end
   if text._type ~= "FormattedText" then

@@ -99,7 +99,8 @@ function util.concat (list, sep)
   -- This helper function omits empty strings in list, which is different from table.concat
   -- This function always returns a string, even empty.
   local res = ""
-  for _, s in ipairs(list) do
+  for i = 1, #list do
+    local s = list[i]
     if s and s~= "" then
       if res == "" then
         res = s
