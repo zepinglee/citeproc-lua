@@ -40,6 +40,17 @@ local FormattedText = {
   _type = "FormattedText",
 }
 
+function FormattedText:shallow_copy()
+  local res = FormattedText.new()
+  for _, text in ipairs(self.contents) do
+    table.insert(res.contents, text)
+  end
+  for key, value in ipairs(self.formats) do
+    res.formats[key] = value
+  end
+  return res
+end
+
 function FormattedText:render(formatter, context, punctuation_in_quote)
   self:merge_punctuations()
 
@@ -415,9 +426,7 @@ function FormattedText.concat(str1, str2)
   end
   if next(str1.formats) == nil or str2 == "" then
     -- shallow copy
-    for _, text in ipairs(str1.contents) do
-      table.insert(res.contents, text)
-    end
+    res = str1:shallow_copy()
   else
     res = FormattedText.new()
     res.contents = {str1}

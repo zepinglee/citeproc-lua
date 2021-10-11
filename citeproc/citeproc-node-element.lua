@@ -218,6 +218,9 @@ function Element:get_variable (item, name, context)
     return nil
   else
     local res = item[name]
+    if type(res) == "table" and res._type == "FormattedText" then
+      res = res:shallow_copy()
+    end
 
     if res and res ~= "" then
       if context.suppress_subsequent_variables then
@@ -247,12 +250,12 @@ function Element:escape (str, context)
   -- return self:get_engine().formatter.text_escape(str)
 end
 
-function Element:format (str, context)
-  if not str or str == "" then
+function Element:format(text, context)
+  if not text or text == "" then
     return nil
   end
-  if str._type ~= "FormattedText" then
-    str = FormattedText.new(str)
+  if text._type ~= "FormattedText" then
+    text = FormattedText.new(text)
   end
   local attributes = {
     "font-style",
@@ -264,10 +267,15 @@ function Element:format (str, context)
   for _, attribute in ipairs(attributes) do
     local value = context.options[attribute]
     if value then
-      str:add_format(attribute, value)
+      if text.formats[attribute] then
+        local new = FormattedText.new()
+        new.contents = {text}
+        text = new
+      end
+      text:add_format(attribute, value)
     end
   end
-  return str
+  return text
 end
 
 -- Affixes

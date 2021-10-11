@@ -709,16 +709,6 @@ Passed in:
 Expected:
 (string) '<span style="font-variant:small-caps;">John</span> <span style="font-variant:small-caps;">Doe</span> III and <span style="font-variant:small-caps;">Jane</span> <span style="font-variant:small-caps;">van</span> <span style="font-variant:small-caps;">Roe</span>'
 
-Failure → test-suite decorations_NoNormalWithoutDecoration
-Passed in:
-(string) '<i>His Anonymous Life</i>
-<i>His Anonymous Life</i>
-<i>His Anonymous Life</i>'
-Expected:
-(string) 'His Anonymous Life
-<i>His Anonymous Life</i>
-<i><span style="font-style:normal;">His Anonymous Life</span></i>'
-
 Failure → test-suite disambiguate_AddNamesSuccess
 Passed in:
 (string) 'Smith et al. (1980); Smith et al. (1980)'
@@ -2328,7 +2318,7 @@ My Long Title 2 does not have title-short
 does not have title-short'
 
 Error → test-suite magic_CitationLabelInBibliography
-./citeproc/citeproc-formatted-text.lua:411: assertion failed!
+./citeproc/citeproc-formatted-text.lua:422: assertion failed!
 
 category       success failure   error pending
 affix                7       1       0       1
@@ -2336,7 +2326,7 @@ bugreports          34      40       0       8
 collapse             4      16       0       1
 condition           17       0       0       0
 date                94       7       0       0
-decorations          5       2       0       0
+decorations          6       1       0       0
 disambiguate        19      48       0       4
 display              1       4       0       0
 etal                 3       1       0       0
@@ -2369,4 +2359,4 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              582     224       1      46
+(all)              583     223       1      46
