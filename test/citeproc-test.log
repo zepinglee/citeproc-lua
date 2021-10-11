@@ -277,20 +277,6 @@ Passed in:
 Expected:
 (string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Γ. Π. Σαββίδης και Κώστας Καρυωτάκης (επιμ.), <i>Ποιήματα και πεζά</i>, μτφ. Andreas Dimitriadis, 1998.'
 
-Failure → test-suite bugreports_IeeePunctuation
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> P.G. Zimbardo, “Does Psychology make a significant difference in our lives?”, <i>American Psychologist</i>, vol. 59, Jan. 2004, pp. 339–351.</div>
-  </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> P.G. Zimbardo, “Does Psychology make a significant difference in our lives?,” <i>American Psychologist</i>, vol. 59, Jan. 2004, pp. 339–351.</div>
-  </div>
-</div>'
-
 Failure → test-suite bugreports_LegislationCrash
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -370,20 +356,6 @@ Passed in:
 Expected:
 (string) '[O A. <i>Book Title</i>]'
 
-Failure → test-suite bugreports_SingleQuote
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline">“production d ’ eau glacée à condensation à eau avec récupération de chaleur . Modélisation simplifiée dans l ’ optique d ’ un calcul des consommations d ’ énergie d ’ une insta”.</div>
-  </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline">“production d ’ eau glacée à condensation à eau avec récupération de chaleur . Modélisation simplifiée dans l ’ optique d ’ un calcul des consommations d ’ énergie d ’ une insta.”</div>
-  </div>
-</div>'
-
 Failure → test-suite bugreports_SingleQuoteXml
 Passed in:
 (string) '[CSL STYLE ERROR: reference with no printed form.]'
@@ -415,32 +387,6 @@ Passed in:
 (string) '(Roe, 1995; Roe, 1996)'
 Expected:
 (string) '(Roe, 1995, 1996)'
-
-Failure → test-suite bugreports_SortedIeeeItalicsFail
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Doe, “His Anonymous Article”, <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> G. Everhardt, “His Anonymous Article”, <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[3]</div><div class="csl-right-inline"> J. Roe, “His Anonymous Article”, <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965.</div>
-  </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Doe, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> G. Everhardt, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[3]</div><div class="csl-right-inline"> J. Roe, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965.</div>
-  </div>
-</div>'
 
 Failure → test-suite bugreports_StyleError001
 Passed in:
@@ -1158,26 +1104,6 @@ Expected:
   </div>
   <div class="csl-entry">
     <div class="csl-left-margin">2000</div><div class="csl-right-inline">Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee</div>
-  </div>
-</div>'
-
-Failure → test-suite display_SecondFieldAlignMigratePunctuation
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> F.G. Bennett Jr., “Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts”, <i>Pac. Rim L. &#38; Pol’y J.</i>, vol. 18, Aug. 2009, pp. 463–509.</div>
-  </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> F.G. Bennett Jr., “Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>, vol. 18, Aug. 2009, pp. 463–509.</div>
   </div>
 </div>'
 
@@ -2304,13 +2230,13 @@ Error → test-suite magic_CitationLabelInBibliography
 
 category       success failure   error pending
 affix                7       1       0       1
-bugreports          35      39       0       8
+bugreports          38      36       0       8
 collapse             4      16       0       1
 condition           17       0       0       0
 date                95       6       0       0
 decorations          7       0       0       0
 disambiguate        19      48       0       4
-display              3       2       0       0
+display              4       1       0       0
 etal                 3       1       0       0
 flipflop             7      12       0       0
 form                 3       0       0       0
@@ -2341,4 +2267,4 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              589     217       1      46
+(all)              593     213       1      46

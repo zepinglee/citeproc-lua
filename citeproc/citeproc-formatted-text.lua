@@ -196,7 +196,7 @@ end
 
 function FormattedText:move_punctuation_in_quote()
   local i = 1
-  while i < #self.contents do
+  while i <= #self.contents do
     local text = self.contents[i]
     if text._type == "FormattedText" then
       text:move_punctuation_in_quote()
