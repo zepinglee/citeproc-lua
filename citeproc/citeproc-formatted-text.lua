@@ -282,23 +282,23 @@ function FormattedText:_change_word_case(state, word_transform, first_tranform)
       local res = ""
       local last_position = 1
       local words = {}
-      -- ["no-break space"] = "\u{00A0}",
-      -- ["en dash"] = "\u{2013}",
-      -- ["em dash"] = "\u{2014}",
-      for word, punctuation, pos in string.gmatch(text, "(.-)([- /\u{00A0}\u{2013}\u{2014}])()") do
-        table.insert(words, {word, punctuation})
-        last_position = pos
-      end
-      table.insert(words, {string.sub(text, last_position), ""})
-      for _, t in ipairs(words) do
-        local word, punctuation = table.unpack(t)
+      local word_seps = {
+        " ",
+        "%-",
+        "/",
+        util.unicode["no-break space"],
+        util.unicode["en dash"],
+        util.unicode["em dash"],
+      }
+      for _, tuple in ipairs(util.split(text, word_seps, nil, true)) do
+        local word, punctuation = table.unpack(tuple)
         if state == "after-sentence" then
           res = res .. first_tranform(word)
           if string.match(word, "%w") then
             state = "after-word"
           end
         else
-          res = res .. word_transform(word)
+          res = res .. word_transform(word, punctuation)
         end
         res = res .. punctuation
         if string.match(word, "[.!?:]%s*$") then
@@ -394,7 +394,7 @@ function FormattedText:title()
     local first_tranform = function(word)
       return capitalize(unicode.utf8.lower(word))
     end
-    local word_transform = function(word)
+    local word_transform = function(word, sep)
       local res = unicode.utf8.lower(word)
       if not util.stop_words[res] then
         res = capitalize(res)
@@ -404,9 +404,10 @@ function FormattedText:title()
     self:_change_word_case("after-sentence", word_transform, first_tranform)
   else
     local first_tranform = capitalize_if_lower
-    local word_transform = function(word)
+    local word_transform = function(word, sep)
       local lower = unicode.utf8.lower(word)
-      if util.stop_words[lower] then
+      -- Stop word before hyphen is treated as a normal word.
+      if util.stop_words[lower] and sep ~= "-" then
         return lower
       elseif word == lower then
         return capitalize(word)

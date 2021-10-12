@@ -267,7 +267,7 @@ Expected:
 
 Failure → test-suite bugreports_GreekStyleProblems
 Passed in:
-(string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Κώστας Καρυωτάκης, <i>Ποιήματα και πεζά</i>, μτφ. Andreas Dimitriadis, εï�ιμ. Γ. Π. Σαββίδης, 1998, σ .'
+(string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Κώστας Καρυωτάκης, <i>Ποιήματα και πεζά</i>, μτφ. Andreas Dimitriadis, επιμ. Γ. Π. Σαββίδης, 1998, σ .'
 Expected:
 (string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Κώστας Καρυωτάκης, <i>Ποιήματα και πεζά</i>, μτφ. Andreas Dimitriadis, επιμ. Γ. Π. Σαββίδης, 1998.'
 
@@ -1107,12 +1107,6 @@ Expected:
   </div>
 </div>'
 
-Failure → test-suite flipflop_Apostrophes
-Passed in:
-(string) '“Supplément Aux Annales Du Service Des Antiquités De L’Égypte, Cahier” (Cairo: Conseil Suprême des Antiquités de l’Égypte [formerly Imprimerie de l’Institut français d’archéologie orientale], n.d.).'
-Expected:
-(string) '“Supplément Aux Annales Du Service Des Antiquités de l’Égypte, Cahier” (Cairo: Conseil Suprême des Antiquités de l’Égypte [formerly Imprimerie de l’Institut français d’archéologie orientale], n.d.).'
-
 Failure → test-suite flipflop_CompleteCiteInPrefix
 Passed in:
 (string) 'Wilhelm Dilthey, “The Types of World Views and Their Unfoldment Within the Metaphysical Systems,” in Dilthey’s Philosophy of Existence: Introduction to Weltanschauungslehre, trans. William Kluback and Martin Weinbaum (New York: Bookman Associates, 1957), 26–27 Other Book Title'
@@ -1183,7 +1177,7 @@ Expected:
 
 Failure → test-suite flipflop_OrphanQuote
 Passed in:
-(string) 'Nation of “Positive Obligations ” of State Under the European Convention on Human Rights (1)'
+(string) 'Nation of “Positive Obligations ” of State under the European Convention on Human Rights (1)'
 Expected:
 (string) 'Nation of "Positive Obligations " of State under the European Convention on Human Rights (1)'
 
@@ -2161,9 +2155,15 @@ Expected:
 
 Failure → test-suite textcase_SkipNameParticlesInTitleCase
 Passed in:
-(string) 'John Von Doe: An About up Life; John Van Doe? A Life; John D’Doe! A Life; John De Doe a Life'
+(string) 'John von Doe: An About up Life; John van Doe? A Life; John d’Doe! A Life; John de Doe a Life'
 Expected:
 (string) 'John von Doe: An about up Life; John van Doe? A Life; John d’Doe! A Life; John de Doe a Life'
+
+Failure → test-suite textcase_TitleCaseWithHyphens
+Passed in:
+(string) 'Out-Of-Fashion Initiatives: A Second Story'
+Expected:
+(string) 'Out-of-Fashion Initiatives: A Second Story'
 
 Failure → test-suite variables_ContainerTitleShort
 Passed in:
@@ -2216,7 +2216,7 @@ My Long Title 2 does not have title-short
 does not have title-short'
 
 Error → test-suite magic_CitationLabelInBibliography
-./citeproc/citeproc-formatted-text.lua:422: assertion failed!
+./citeproc/citeproc-formatted-text.lua:423: assertion failed!
 
 category       success failure   error pending
 affix                7       1       0       1
@@ -2228,7 +2228,7 @@ decorations          7       0       0       0
 disambiguate        19      48       0       4
 display              4       1       0       0
 etal                 4       0       0       0
-flipflop             7      12       0       0
+flipflop             8      11       0       0
 form                 3       0       0       0
 fullstyles           3       2       0       0
 group                4       2       0       1
@@ -2252,7 +2252,7 @@ sort                42      16       0       8
 sortseparator        1       0       0       0
 substitute           5       2       0       0
 testers              0       1       0       1
-textcase            22       7       0       0
+textcase            21       8       0       0
 unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0

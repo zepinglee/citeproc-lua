@@ -185,6 +185,14 @@ describe("FormattedText", function()
         local res = foo:render(formatter, nil)
         assert.equal("The Foo: On <i>the bAR</i> Down", res)
       end)
+
+      it("suppl", function()
+        local foo = FormattedText.new("Supplément aux annales du Service des Antiquités de l'Égypte, Cahier")
+        foo:add_format("text-case", "title")
+        local res = foo:render(formatter, nil)
+        assert.equal("Supplément Aux Annales Du Service Des Antiquités de l’Égypte, Cahier", res)
+      end)
+
     end)
 
   end)

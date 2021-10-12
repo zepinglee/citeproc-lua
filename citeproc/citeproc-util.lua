@@ -45,36 +45,46 @@ function util.debug(...)
 end
 
 -- Similar to re.split() in Python
-function util.split(str, sep, maxsplit)
+function util.split(str, seps, maxsplit, include_sep)
   if not str then
     error("Invalid string.")
   end
-  sep = sep or "%s+"
-  if sep == "" then
+  seps = seps or "%s+"
+  if seps == "" then
     error("Empty separator")
   end
-  if string.find(str, sep) == nil then
-    return { str }
+  if type(seps) == "string" then
+    seps = {seps}
   end
 
-  if maxsplit == nil or maxsplit < 0 then
-    maxsplit = -1    -- No limit
-  end
-  local result = {}
-  local pattern = "(.-)" .. sep .. "()"
-  local num_splits = 0
-  local lastPos = 1
-  for part, pos in string.gmatch(str, pattern) do
-    if num_splits == maxsplit then
-      break
+  local splits = {}
+  for _, sep_pattern in ipairs(seps) do
+    for start, sep, stop in string.gmatch(str, "()(" .. sep_pattern .. ")()") do
+      table.insert(splits, {start, sep, stop})
     end
-    num_splits = num_splits + 1
-    result[num_splits] = part
-    lastPos = pos
   end
-  -- Handle the last field
-  result[num_splits + 1] = string.sub(str, lastPos)
-  return result
+
+  if #seps > 1 then
+    table.sort(splits, function(a, b) return a[1] < b[1] end)
+  end
+
+  local res = {}
+  local previous = 1
+  for _, sep_tuple in ipairs(splits) do
+    local start, sep, stop = table.unpack(sep_tuple)
+    local item = string.sub(str, previous, start - 1)
+    if include_sep then
+      item = {item, sep}
+    end
+    table.insert(res, item)
+    previous = stop
+  end
+  local item = string.sub(str, previous, #str)
+  if include_sep then
+    item = {item, ""}
+  end
+  table.insert(res, item)
+  return res
 end
 
 function util.slice (t, start, stop)
@@ -343,32 +353,124 @@ function util.sentence (str)
   end
 end
 
+-- TODO: process multiple words
 util.stop_words = {
   ["a"] = true,
+  ["according to"] = true,
+  ["across"] = true,
+  ["afore"] = true,
+  ["after"] = true,
+  ["against"] = true,
+  ["ahead of"] = true,
+  ["along"] = true,
+  ["alongside"] = true,
+  ["amid"] = true,
+  ["amidst"] = true,
+  ["among"] = true,
+  ["amongst"] = true,
   ["an"] = true,
   ["and"] = true,
+  ["anenst"] = true,
+  ["apart from"] = true,
+  ["apropos"] = true,
+  ["apud"] = true,
+  ["around"] = true,
   ["as"] = true,
+  ["as regards"] = true,
+  ["aside"] = true,
+  ["astride"] = true,
   ["at"] = true,
+  ["athwart"] = true,
+  ["atop"] = true,
+  ["back to"] = true,
+  ["barring"] = true,
+  ["because of"] = true,
+  ["before"] = true,
+  ["behind"] = true,
+  ["below"] = true,
+  ["beneath"] = true,
+  ["beside"] = true,
+  ["besides"] = true,
+  ["between"] = true,
+  ["beyond"] = true,
   ["but"] = true,
   ["by"] = true,
+  ["c"] = true,
+  ["ca"] = true,
+  ["circa"] = true,
+  ["close to"] = true,
+  ["d'"] = true,
+  ["de"] = true,
+  ["despite"] = true,
   ["down"] = true,
+  ["due to"] = true,
+  ["during"] = true,
+  ["et"] = true,
+  ["except"] = true,
+  ["far from"] = true,
   ["for"] = true,
+  ["forenenst"] = true,
   ["from"] = true,
+  ["given"] = true,
   ["in"] = true,
+  ["inside"] = true,
+  ["instead of"] = true,
   ["into"] = true,
+  ["lest"] = true,
+  ["like"] = true,
+  ["modulo"] = true,
+  ["near"] = true,
+  ["next"] = true,
   ["nor"] = true,
+  ["notwithstanding"] = true,
   ["of"] = true,
+  ["off"] = true,
   ["on"] = true,
   ["onto"] = true,
   ["or"] = true,
+  ["out"] = true,
+  ["outside of"] = true,
   ["over"] = true,
+  ["per"] = true,
+  ["plus"] = true,
+  ["prior to"] = true,
+  ["pro"] = true,
+  ["pursuant to"] = true,
+  ["qua"] = true,
+  ["rather than"] = true,
+  ["regardless of"] = true,
+  ["sans"] = true,
+  ["since"] = true,
   ["so"] = true,
+  ["such as"] = true,
+  ["than"] = true,
+  ["that of"] = true,
   ["the"] = true,
+  ["through"] = true,
+  ["throughout"] = true,
+  ["thru"] = true,
+  ["thruout"] = true,
   ["till"] = true,
   ["to"] = true,
+  ["toward"] = true,
+  ["towards"] = true,
+  ["under"] = true,
+  ["underneath"] = true,
+  ["until"] = true,
+  ["unto"] = true,
   ["up"] = true,
+  ["upon"] = true,
+  ["v."] = true,
+  ["van"] = true,
+  ["versus"] = true,
   ["via"] = true,
+  ["vis-à-vis"] = true,
+  ["von"] = true,
+  ["vs."] = true,
+  ["where as"] = true,
   ["with"] = true,
+  ["within"] = true,
+  ["without"] = true,
   ["yet"] = true,
 }
 
