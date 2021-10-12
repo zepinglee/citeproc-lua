@@ -1107,16 +1107,6 @@ Expected:
   </div>
 </div>'
 
-Failure → test-suite etal_UseZeroFirst
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe // John Doe et al.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe et al.</div>
-</div>'
-
 Failure → test-suite flipflop_Apostrophes
 Passed in:
 (string) '“Supplément Aux Annales Du Service Des Antiquités De L’Égypte, Cahier” (Cairo: Conseil Suprême des Antiquités de l’Égypte [formerly Imprimerie de l’Institut français d’archéologie orientale], n.d.).'
@@ -2237,7 +2227,7 @@ date                95       6       0       0
 decorations          7       0       0       0
 disambiguate        19      48       0       4
 display              4       1       0       0
-etal                 3       1       0       0
+etal                 4       0       0       0
 flipflop             7      12       0       0
 form                 3       0       0       0
 fullstyles           3       2       0       0
@@ -2267,4 +2257,4 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              593     213       1      46
+(all)              594     212       1      46

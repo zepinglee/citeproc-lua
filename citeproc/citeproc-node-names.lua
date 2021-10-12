@@ -12,10 +12,10 @@ Name.default_options = {
   ["delimiter"] = ", ",
   ["delimiter-precedes-et-al"] = "contextual",
   ["delimiter-precedes-last"] = "contextual",
-  ["et-al-min"] = 0,
-  ["et-al-use-first"] = 0,
-  ["et-al-subsequent-min"] = 0,
-  ["et-al-subsequent-use-first "] = 0,
+  ["et-al-min"] = nil,
+  ["et-al-use-first"] = nil,
+  ["et-al-subsequent-min"] = nil,
+  ["et-al-subsequent-use-first "] = nil,
   ["et-al-use-last"] = false,
   ["form"] = "long",
   ["initialize"] = true,
@@ -53,7 +53,7 @@ function Name:render (names, context)
 
   local form = context.options["form"]
 
-  local et_al_truncate = et_al_min > 0 and et_al_use_first > 0 and #names >= et_al_min
+  local et_al_truncate = et_al_min and et_al_use_first and #names >= et_al_min
   local et_al_last = et_al_use_last and et_al_use_first <= et_al_min - 2
 
   if form == "count" then
@@ -83,7 +83,9 @@ function Name:render (names, context)
         if not self:_check_delimiter(delimiter_precedes_et_al, i, inverted) then
           delimiter = " "
         end
-        output = FormattedText.concat_list({output, context.et_al:render(context)}, delimiter)
+        if output then
+          output = FormattedText.concat_list({output, context.et_al:render(context)}, delimiter)
+        end
         break
       end
     else
