@@ -44,16 +44,16 @@ formats.html = {
     return '<div class="csl-entry">' .. str .. "</div>"
   end,
   ["@display/block"] = function (str, state)
-    return '\n\n    <div class="csl-block">' .. str .. "</div>\n";
+    return '\n\n    <div class="csl-block">' .. str .. "</div>\n"
   end,
   ["@display/left-margin"] = function (str, state)
-    return '\n    <div class="csl-left-margin">' .. str .. "</div>";
+    return '\n    <div class="csl-left-margin">' .. str .. "</div>"
   end,
   ["@display/right-inline"] = function (str, state)
-    return '<div class="csl-right-inline">' .. str .. "</div>\n  ";
+    return '<div class="csl-right-inline">' .. str .. "</div>\n  "
   end,
   ["@display/indent"] = function (str, state)
-    return '<div class="csl-indent">' .. str .. "</div>\n  ";
+    return '<div class="csl-indent">' .. str .. "</div>\n  "
   end,
 }
 
@@ -61,7 +61,7 @@ formats.latex = {
   ["text_escape"] = function (str)
     str = str:gsub("\\", "\\textbackslash")
     str = str:gsub("#", "\\#")
-    str = str:gsub("$", "\\$")
+    str = str:gsub("%$", "\\$")
     str = str:gsub("%%", "\\%")
     str = str:gsub("&", "\\&")
     str = str:gsub("{", "\\{")
@@ -69,7 +69,7 @@ formats.latex = {
     str = str:gsub("_", "\\_")
     str = str:gsub(util.unicode["no-break space"], "~")
     for char, sub in pairs(util.superscripts) do
-      str = string.gsub(str, char, "\\textsuperscript{" .. sub "}")
+      str = string.gsub(str, char, "\\textsuperscript{" .. sub .. "}")
     end
     return str
   end,
@@ -96,9 +96,23 @@ formats.latex = {
     local close_quote = context.style:get_term("close-inner-quote"):render(context)
     return open_quote .. str .. close_quote
   end,
+  -- TODO: The bibliography label (e.g., citation-number) should be put in the
+  -- optional argument of `\bibitem`.
   ["@bibliography/entry"] = function (str, context)
     return "\\bibitem[".. context.item.id .. "]{} " .. str
-  end
+  end,
+  ["@display/block"] = function (str, state)
+    return str
+  end,
+  ["@display/left-margin"] = function (str, state)
+    return str
+  end,
+  ["@display/right-inline"] = function (str, state)
+    return str
+  end,
+  ["@display/indent"] = function (str, state)
+    return str
+  end,
 }
 
 
