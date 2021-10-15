@@ -1,0 +1,1170 @@
+{
+    "description": "Bib CSL mapping",
+    "types": {
+        "article": {
+            "csl": "article",
+            "notes": "May also be `article-journal`, `article-magazine` or `article-newspaper` depending upon the field `entrysubtype`.",
+            "source": "bibtex"
+        },
+        "artwork": {
+            "csl": "graphic",
+            "source": "biblatex"
+        },
+        "audio": {
+            "csl": "song",
+            "notes": "CSL's `song` can be used for any audio recording (not only music).",
+            "source": "biblatex"
+        },
+        "bibnote": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex"
+        },
+        "book": {
+            "csl": "book",
+            "source": "bibtex"
+        },
+        "bookinbook": {
+            "csl": "chapter",
+            "source": "biblatex"
+        },
+        "booklet": {
+            "csl": "pamphlet",
+            "source": "bibtex"
+        },
+        "collection": {
+            "csl": "book",
+            "source": "biblatex"
+        },
+        "commentary": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex"
+        },
+        "conference": {
+            "alias": "inproceedings",
+            "csl": "paper-conference",
+            "source": "bibtex"
+        },
+        "customa": {
+            "csl": null,
+            "source": "biblatex"
+        },
+        "customb": {
+            "csl": null,
+            "source": "biblatex"
+        },
+        "customc": {
+            "csl": null,
+            "source": "biblatex"
+        },
+        "customd": {
+            "csl": null,
+            "source": "biblatex"
+        },
+        "custome": {
+            "csl": null,
+            "source": "biblatex"
+        },
+        "customf": {
+            "csl": null,
+            "source": "biblatex"
+        },
+        "dataset": {
+            "csl": "dataset",
+            "source": "biblatex"
+        },
+        "electronic": {
+            "alias": "online",
+            "csl": "webpage",
+            "source": "biblatex"
+        },
+        "image": {
+            "csl": "graphic",
+            "source": "biblatex"
+        },
+        "inbook": {
+            "csl": "chapter",
+            "source": "bibtex"
+        },
+        "incollection": {
+            "csl": "chapter",
+            "source": "bibtex"
+        },
+        "inproceedings": {
+            "csl": "paper-conference",
+            "source": "bibtex"
+        },
+        "inreference": {
+            "csl": "entry",
+            "notes": "May also be `entry`, `entry-dictionary` or `entry-encyclopedia`.",
+            "source": "biblatex"
+        },
+        "jurisdiction": {
+            "csl": null,
+            "notes": "\"Court decisions, court recordings, and similar things.\"",
+            "source": "biblatex"
+        },
+        "legal": {
+            "csl": "treaty",
+            "notes": "\"Legal documents such as treaties.\"",
+            "source": "biblatex"
+        },
+        "legislation": {
+            "csl": "legislation",
+            "notes": "\"Laws, bills, legislative proposals, and similar things.\" The `bill` in CSL is used for a proposed piece of legislation.",
+            "source": "biblatex"
+        },
+        "letter": {
+            "csl": "personal_communication",
+            "source": "biblatex"
+        },
+        "manual": {
+            "csl": "report",
+            "nots": "CSL's `report` is also used for manuals and similar technical documentation (e.g. a software, instrument, or test manual).",
+            "source": "bibtex"
+        },
+        "mastersthesis": {
+            "alias": "thesis",
+            "csl": "thesis",
+            "source": "bibtex"
+        },
+        "misc": {
+            "csl": "article",
+            "notes": "Use `article` as default generic type.",
+            "source": "bibtex"
+        },
+        "movie": {
+            "csl": "motion_picture",
+            "source": "biblatex"
+        },
+        "music": {
+            "csl": "song",
+            "source": "biblatex"
+        },
+        "mvbook": {
+            "csl": "book",
+            "source": "biblatex"
+        },
+        "mvcollection": {
+            "csl": "book",
+            "source": "biblatex"
+        },
+        "mvproceedings": {
+            "csl": "book",
+            "source": "biblatex"
+        },
+        "mvreference": {
+            "csl": "book",
+            "source": "biblatex"
+        },
+        "online": {
+            "csl": "webpage",
+            "source": "biblatex"
+        },
+        "patent": {
+            "csl": "patent",
+            "source": "biblatex"
+        },
+        "performance": {
+            "csl": "performance",
+            "source": "biblatex"
+        },
+        "periodical": {
+            "csl": "periodical",
+            "source": "biblatex"
+        },
+        "phdthesis": {
+            "alias": "thesis",
+            "csl": "thesis",
+            "source": "bibtex"
+        },
+        "proceedings": {
+            "csl": "book",
+            "source": "bibtex"
+        },
+        "reference": {
+            "csl": "book",
+            "source": "biblatex"
+        },
+        "report": {
+            "csl": "report",
+            "source": "biblatex"
+        },
+        "review": {
+            "csl": "review",
+            "notes": "\"A more specific variant of the `@article` type\"",
+            "source": "biblatex"
+        },
+        "set": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex"
+        },
+        "software": {
+            "csl": "software",
+            "source": "biblatex"
+        },
+        "standard": {
+            "csl": "standard",
+            "source": "biblatex"
+        },
+        "suppbook": {
+            "csl": "chapter",
+            "notes": "lossy mapping; \"Supplemental material in a `@book`. This type is closely related to the @inbook entry type. While `@inbook` is primarily intended for a part of a book with its own title (e. g., a single essay in a collection of essays by the same author), this type is provided for elements such as prefaces, introductions, forewords, afterwords, etc. which often have a generic title only. Style guides may require such items to be formatted differently from other `@inbook` items.\"",
+            "source": "biblatex"
+        },
+        "suppcollection": {
+            "csl": "chapter",
+            "notes": "lossy mapping; see `suppbook`",
+            "source": "biblatex"
+        },
+        "suppperiodical": {
+            "csl": "article",
+            "notes": "see `article`",
+            "source": "biblatex"
+        },
+        "techreport": {
+            "alias": "report",
+            "csl": "report",
+            "source": "bibtex"
+        },
+        "thesis": {
+            "csl": "thesis",
+            "source": "biblatex"
+        },
+        "unpublished": {
+            "csl": "manuscript",
+            "source": "bibtex"
+        },
+        "video": {
+            "csl": "motion_picture",
+            "source": "biblatex"
+        },
+        "www": {
+            "alias": "online",
+            "csl": "webpage",
+            "source": "biblatex"
+        },
+        "xdata": {
+            "csl": null,
+            "notes": "special item type: \"`@xdata` entries hold data which may be inherited by other entries using the xdata field. Entries of this type only serve as data containers; they may not be cited or added to the bibliography.\"",
+            "source": "biblatex"
+        }
+    },
+    "fields": {
+        "abstract": {
+            "csl": "abstract",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "addendum": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "address": {
+            "alias": "location",
+            "csl": null,
+            "source": "bibtex",
+            "type": "literal"
+        },
+        "afterword": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "name"
+        },
+        "annotation": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "annotator": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "name"
+        },
+        "annote": {
+            "alias": "annotation",
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "archiveprefix": {
+            "alias": "eprinttype",
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "author": {
+            "csl": "author",
+            "source": "bibtex",
+            "type": "name"
+        },
+        "authortype": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "key"
+        },
+        "bookauthor": {
+            "csl": "container-author",
+            "source": "biblatex",
+            "type": "name"
+        },
+        "bookpagination": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "key"
+        },
+        "booksubtitle": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "booktitle": {
+            "csl": "container-title",
+            "source": "bibtex",
+            "type": "literal"
+        },
+        "booktitleaddon": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "chapter": {
+            "csl": "chapter-number",
+            "source": "bibtex",
+            "type": "literal"
+        },
+        "commentator": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "name"
+        },
+        "crossref": {
+            "csl": null,
+            "notes": "Inherits data from a parent entry.",
+            "source": "biblatex",
+            "type": "entrykey"
+        },
+        "date": {
+            "csl": "issued",
+            "source": "biblatex",
+            "type": "date"
+        },
+        "doi": {
+            "csl": "DOI",
+            "source": "biblatex",
+            "type": "verbatim"
+        },
+        "edition": {
+            "csl": "edition",
+            "source": "bibtex",
+            "type": "literal"
+        },
+        "editor": {
+            "csl": "editor",
+            "source": "bibtex",
+            "type": "name"
+        },
+        "editora": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "name"
+        },
+        "editoratype": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "key"
+        },
+        "editorb": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "name"
+        },
+        "editorbtype": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "key"
+        },
+        "editorc": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "name"
+        },
+        "editorctype": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "key"
+        },
+        "editortype": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "key"
+        },
+        "eid": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "entryset": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "entrykey"
+        },
+        "entrysubtype": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "eprint": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "verbatim"
+        },
+        "eprintclass": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "eprinttype": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "eventdate": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "date"
+        },
+        "eventtitle": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "eventtitleaddon": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "execute": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "code"
+        },
+        "file": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "verbatim"
+        },
+        "foreword": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "name"
+        },
+        "gender": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "holder": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "name"
+        },
+        "howpublished": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "bibtex",
+            "type": "literal"
+        },
+        "hyphenation": {
+            "alias": "langid",
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "ids": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "entrykey"
+        },
+        "indexsorttitle": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "indextitle": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "institution": {
+            "csl": "publisher",
+            "source": "bibtex",
+            "type": "literal"
+        },
+        "introduction": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "name"
+        },
+        "isan": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "isbn": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "ismn": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "isrn": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "issn": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "issue": {
+            "csl": "issue",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "issuesubtitle": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "issuetitle": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "issuetitleaddon": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "iswc": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "journal": {
+            "alias": "journaltitle",
+            "csl": "container-title",
+            "source": "bibtex",
+            "type": "literal"
+        },
+        "journalsubtitle": {
+            "csl": null,
+            "notes": "It should be concatenated to the `container-title`.",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "journaltitle": {
+            "csl": "container-title",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "journaltitleaddon": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "key": {
+            "alias": "sortkey",
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "bibtex",
+            "type": "literal"
+        },
+        "keywords": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "keyword"
+        },
+        "label": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "langid": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "langidopts": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "language": {
+            "csl": "language",
+            "source": "biblatex",
+            "type": "key"
+        },
+        "library": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "lista": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "listb": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "listc": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "listd": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "liste": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "listf": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "location": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "mainsubtitle": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "maintitle": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "maintitleaddon": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "month": {
+            "csl": null,
+            "notes": "Part of `issued` date",
+            "source": "bibtex",
+            "type": "literal"
+        },
+        "namea": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "name"
+        },
+        "nameaddon": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "nameatype": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "key"
+        },
+        "nameb": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "name"
+        },
+        "namebtype": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "key"
+        },
+        "namec": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "name"
+        },
+        "namectype": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "key"
+        },
+        "note": {
+            "csl": "note",
+            "source": "bibtex",
+            "type": "literal"
+        },
+        "number": {
+            "csl": "issue",
+            "notes": "It is mapped to `issue` in `@ariticle` but to `number` in `@patent` or `@report`.",
+            "source": "bibtex",
+            "type": "literal"
+        },
+        "options": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "option"
+        },
+        "organization": {
+            "csl": "publisher",
+            "notes": "It is mapped to `author` (in `institution` property) if possible.",
+            "source": "bibtex",
+            "type": "literal"
+        },
+        "origdate": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "date"
+        },
+        "origlanguage": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "key"
+        },
+        "origlocation": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "origpublisher": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "origtitle": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "pages": {
+            "csl": "page",
+            "source": "bibtex",
+            "type": "range"
+        },
+        "pagetotal": {
+            "csl": "number-of-pages",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "pagination": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "key"
+        },
+        "part": {
+            "csl": "part",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "pdf": {
+            "alias": "file",
+            "csl": null,
+            "source": "biblatex",
+            "type": "verbatim"
+        },
+        "presort": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "primaryclass": {
+            "alias": "eprintclass",
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "publisher": {
+            "csl": "publisher",
+            "source": "bibtex",
+            "type": "literal"
+        },
+        "pubstate": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "key"
+        },
+        "related": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "entrykey"
+        },
+        "relatedoptions": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "option"
+        },
+        "relatedstring": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "relatedtype": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "reprinttitle": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "school": {
+            "alias": "institution",
+            "csl": "publisher",
+            "source": "bibtex",
+            "type": "literal"
+        },
+        "series": {
+            "csl": "collection-title",
+            "source": "bibtex",
+            "type": "literal"
+        },
+        "shortauthor": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "name"
+        },
+        "shorteditor": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "name"
+        },
+        "shorthand": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "shorthandintro": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "shortjournal": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "shortseries": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "shorttitle": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "sortkey": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "sortname": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "name"
+        },
+        "sortshorthand": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "sorttitle": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "sortyear": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "integer"
+        },
+        "subtitle": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "title": {
+            "csl": "title",
+            "source": "bibtex",
+            "type": "literal"
+        },
+        "titleaddon": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "translator": {
+            "csl": "translator",
+            "source": "biblatex",
+            "type": "name"
+        },
+        "type": {
+            "csl": "genre",
+            "source": "bibtex",
+            "type": "key"
+        },
+        "url": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "uri"
+        },
+        "urldate": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "date"
+        },
+        "usera": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "userb": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "userc": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "userd": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "usere": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "userf": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "venue": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "verba": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "verbatim"
+        },
+        "verbb": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "verbatim"
+        },
+        "verbc": {
+            "csl": null,
+            "source": "biblatex",
+            "type": "verbatim"
+        },
+        "version": {
+            "csl": "version",
+            "source": "biblatex",
+            "type": "literal"
+        },
+        "volume": {
+            "csl": "volume",
+            "source": "bibtex",
+            "type": "integer"
+        },
+        "volumes": {
+            "csl": "number-of-volumes",
+            "source": "biblatex",
+            "type": "integer"
+        },
+        "xdata": {
+            "csl": null,
+            "notes": "inherits fields from other items.",
+            "source": "biblatex",
+            "type": "entrykey"
+        },
+        "xref": {
+            "csl": null,
+            "notes": "Establishes a parent-child relationship in biblatex, but without inheriting data => no need to parse this.",
+            "source": "biblatex",
+            "type": "entrykey"
+        },
+        "year": {
+            "csl": "issued",
+            "source": "bibtex",
+            "type": "entrykey"
+        }
+    },
+    "macros": {
+        "jan": {
+            "value": "1",
+            "source": "bibtex"
+        },
+        "feb": {
+            "value": "2",
+            "source": "bibtex"
+        },
+        "mar": {
+            "value": "3",
+            "source": "bibtex"
+        },
+        "apr": {
+            "value": "4",
+            "source": "bibtex"
+        },
+        "may": {
+            "value": "5",
+            "source": "bibtex"
+        },
+        "jun": {
+            "value": "6",
+            "source": "bibtex"
+        },
+        "jul": {
+            "value": "7",
+            "source": "bibtex"
+        },
+        "aug": {
+            "value": "8",
+            "source": "bibtex"
+        },
+        "sep": {
+            "value": "9",
+            "source": "bibtex"
+        },
+        "oct": {
+            "value": "10",
+            "source": "bibtex"
+        },
+        "nov": {
+            "value": "11",
+            "source": "bibtex"
+        },
+        "dec": {
+            "value": "12",
+            "source": "bibtex"
+        },
+        "acmcs": {
+            "value": "ACM Computing Surveys",
+            "source": "bibtex"
+        },
+        "acta": {
+            "value": "Acta Informatica",
+            "source": "bibtex"
+        },
+        "cacm": {
+            "value": "Communications of the ACM",
+            "source": "bibtex"
+        },
+        "ibmjrd": {
+            "value": "IBM Journal of Research and Development",
+            "source": "bibtex"
+        },
+        "ibmsj": {
+            "value": "IBM Systems Journal",
+            "source": "bibtex"
+        },
+        "ieeese": {
+            "value": "IEEE Transactions on Software Engineering",
+            "source": "bibtex"
+        },
+        "ieeetc": {
+            "value": "IEEE Transactions on Computers",
+            "source": "bibtex"
+        },
+        "ieeetcad": {
+            "value": "IEEE Transactions on Computer-Aided Design of Integrated Circuits",
+            "source": "bibtex"
+        },
+        "ipl": {
+            "value": "Information Processing Letters",
+            "source": "bibtex"
+        },
+        "jacm": {
+            "value": "Journal of the ACM",
+            "source": "bibtex"
+        },
+        "jcss": {
+            "value": "Journal of Computer and System Sciences",
+            "source": "bibtex"
+        },
+        "scp": {
+            "value": "Science of Computer Programming",
+            "source": "bibtex"
+        },
+        "sicomp": {
+            "value": "SIAM Journal on Computing",
+            "source": "bibtex"
+        },
+        "tocs": {
+            "value": "ACM Transactions on Computer Systems",
+            "source": "bibtex"
+        },
+        "tods": {
+            "value": "ACM Transactions on Database Systems",
+            "source": "bibtex"
+        },
+        "tog": {
+            "value": "ACM Transactions on Graphics",
+            "source": "bibtex"
+        },
+        "toms": {
+            "value": "ACM Transactions on Mathematical Software",
+            "source": "bibtex"
+        },
+        "toois": {
+            "value": "ACM Transactions on Office Information Systems",
+            "source": "bibtex"
+        },
+        "toplas": {
+            "value": "ACM Transactions on Programming Languages and Systems",
+            "source": "bibtex"
+        },
+        "tcs": {
+            "value": "Theoretical Computer Science",
+            "source": "bibtex"
+        }
+    },
+    "descriptiont ": "Bib(La)TeX CSL mapping ans type"
+}
