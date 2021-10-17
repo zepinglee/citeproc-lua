@@ -1,0 +1,102 @@
+#!/usr/bin/env texlua
+
+kpse.set_program_name("luatex")
+
+require("lualibs")
+local citeproc = require("citeproc.citeproc")
+local util = require("citeproc.citeproc-util")
+
+local function getopt( arg, options )
+  local tab = {}
+  for k, v in ipairs(arg) do
+    if string.sub( v, 1, 2) == "--" then
+      local x = string.find( v, "=", 1, true )
+      if x then tab[ string.sub( v, 3, x-1 ) ] = string.sub( v, x+1 )
+      else      tab[ string.sub( v, 3 ) ] = true
+      end
+    elseif string.sub( v, 1, 1 ) == "-" then
+      local y = 2
+      local l = string.len(v)
+      local jopt
+      while ( y <= l ) do
+        jopt = string.sub( v, y, y )
+        if string.find( options, jopt, 1, true ) then
+          if y < l then
+            tab[ jopt ] = string.sub( v, y+1 )
+            y = l
+          else
+            tab[ jopt ] = arg[ k + 1 ]
+          end
+        else
+          tab[ jopt ] = true
+        end
+        y = y + 1
+      end
+    else
+      if tab.file then
+        error(string.format('Invalid argument "%s"', v))
+      end
+      tab.file = v
+    end
+
+  end
+  return tab
+end
+
+
+local function print_version()
+  io.write(string.format("CiteProc-Lua %s\n", citeproc.VERSION))
+end
+
+
+local function print_help()
+  io.write("Usage: citeproc [OPTIONS] BIBFILE.bib\n")
+  io.write("Options:\n")
+  io.write("  -h, --help          Print this message and exit.\n")
+  io.write("  -v, --version       Print the version number and exit.\n")
+end
+
+
+local function convert_bib(path, output_path)
+  local contents = util.read_file(path)
+  local bib = citeproc.parse_bib(contents)
+  if not output_path then
+    output_path = string.gsub(path, "%.bib$", ".json")
+  end
+  local file = io.open(output_path, "w")
+  file:write(utilities.json.tojson(bib))
+  file:write('\n')
+  file:close()
+end
+
+
+local function main()
+  local args = getopt(arg, "o")
+
+  -- for k, v in pairs(args) do
+  --   print( k, v )
+  -- end
+
+  if args.v or args.version then
+    print_version()
+    return
+  end
+  if args.h or args.help then
+    print_help()
+    return
+  end
+
+  if not args.file then
+    error("citeproc: Need exactly one file argument.\n")
+  end
+
+  local path = args.file
+
+  local output_path = args.o or args.output
+  if util.endswith(path, ".bib") then
+    convert_bib(path, output_path)
+  end
+
+end
+
+main()

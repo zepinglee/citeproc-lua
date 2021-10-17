@@ -75,7 +75,11 @@ function bibtex.parse_item(contents)
 end
 
 function bibtex.parse_field(bib_field, value)
-  local field_type = bibtex.bib_data.fields[bib_field].type
+  local field_data = bibtex.bib_data.fields[bib_field]
+  if not field_data then
+    return nil
+  end
+  local field_type = field_data.type
   if field_type == "name" then
     return bibtex.parse_names(value)
   elseif field_type == "date" then

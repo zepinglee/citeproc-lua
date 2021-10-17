@@ -1,4 +1,5 @@
 #!/usr/bin/env texlua
+---@diagnostic disable: lowercase-global
 
 -- Configuration file of "citeproc" for use with "l3build"
 

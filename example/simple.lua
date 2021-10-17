@@ -5,7 +5,7 @@ require("lualibs")
 local dom = require("luaxml-domobject")
 local inspect = require("inspect")
 
-local CiteProc = require("citeproc")
+local citeproc = require("citeproc.citeproc")
 
 
 local function read_file(path)
@@ -22,7 +22,7 @@ local function main ()
     local style = read_file("example/simple.csl")
 
     local bib = {}
-    local items = utilities.json.tolua(read_file("example/bib.json"))
+    local items = utilities.json.tolua(read_file("example/simple.json"))
     for _, item in ipairs(items) do
         bib[item["id"]] = item
     end
@@ -41,19 +41,19 @@ local function main ()
         end
     }
 
-    local citeproc = CiteProc:new(citeproc_sys, style)
+    local processor = citeproc:new(citeproc_sys, style)
 
     local cite_items = {
         {id = "ITEM-1"},
         {id = "ITEM-2"},
     }
 
-    local result = citeproc:makeCitationCluster(cite_items)
+    local result = processor:makeCitationCluster(cite_items)
     print(inspect(result))
 
-    local params, result = citeproc:makeBibliography()
+    local params, bibliography = processor:makeBibliography()
     print(inspect(params))
-    print(inspect(result))
+    print(inspect(bibliography))
 end
 
 

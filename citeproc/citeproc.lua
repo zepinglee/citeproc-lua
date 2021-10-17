@@ -7,12 +7,13 @@ local dom = require("luaxml-domobject")
 local FormattedText = require("citeproc.citeproc-formatted-text")
 local Node = require("citeproc.citeproc-node")
 local formats = require("citeproc.citeproc-formats")
+local bibtex = require("citeproc.citeproc-bibtex")
 local util = require("citeproc.citeproc-util")
-
-local inspect = require("inspect")
 
 
 local CiteProc = {}
+
+CiteProc.VERSION = "0.0.1"
 
 function CiteProc:new (sys, style, mode)
   if sys == nil then
@@ -243,6 +244,8 @@ function CiteProc:warning(message)
     io.stderr:write("Warning: " .. message .. "\n")
   end
 end
+
+CiteProc.parse_bib = bibtex.parse
 
 
 return CiteProc

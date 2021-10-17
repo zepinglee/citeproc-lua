@@ -1033,7 +1033,7 @@
         "year": {
             "csl": "issued",
             "source": "bibtex",
-            "type": "entrykey"
+            "type": "date"
         }
     },
     "macros": {
@@ -1165,6 +1165,5 @@
             "value": "Theoretical Computer Science",
             "source": "bibtex"
         }
-    },
-    "descriptiont ": "Bib(La)TeX CSL mapping ans type"
+    }
 }
