@@ -36,10 +36,43 @@ function bibtex.parse_item(contents)
   end
 
   local item = {}
-  -- TODO: map bib entry type to CSL-JSON type
-  item.type = bib_type
+  local type_data = bibtex.bib_data.types[bib_type]
+  if not type_data then
+    return nil
+  end
   item.id = id
+  item.type = type_data.csl
 
+  local bib_fields = bibtex.parse_fields(contents)
+  -- util.debug(bib_fields)
+
+  for bib_field, value in pairs(bib_fields) do
+    local csl_field, csl_value = bibtex.convert_field(bib_field, value)
+
+    if bib_field == "year" and item.issued then
+      csl_field = nil
+    end
+    if csl_field and csl_value then
+      item[csl_field] = csl_value
+    end
+  end
+
+  -- Special types and fields
+  if item.type == "misc"then
+    if bib_fields.url then
+      item.type = "webpage"
+    end
+  end
+
+  if bib_type == "article-journal" and bib_fields.eprint then
+    item.type = "article"
+  end
+
+  return item
+end
+
+function bibtex.parse_fields(contents)
+  local fields = {}
   local field_patterns = {
     "^(%w+)%s*=%s*(%b{}),?%s*(.-)$",
     '^(%w+)%s*=%s*"([^"]*)",?%s*(.-)$',
@@ -47,46 +80,53 @@ function bibtex.parse_item(contents)
   }
 
   while #contents > 0 do
-    local bib_field, value, rest
+    local field, value, rest
     -- This pattern may fail in the case of `title = {foo\}bar}`.
-    for i, pattern in ipairs(field_patterns) do
-      bib_field, value, rest = string.match(contents, pattern)
+    for pattern_index, pattern in ipairs(field_patterns) do
+      field, value, rest = string.match(contents, pattern)
       if value then
-        if i == 1 then
+        if pattern_index == 1 then
+          -- Strip braces "{}"
           value = string.sub(value, 2, -2)
+        elseif pattern_index == 3 then
+          if not string.match(value, "^%d+$") then
+            local string_name = value
+            local macro = bibtex.bib_data.macros[string_name]
+            if macro then
+              value = macro.value
+            else
+              util.warning(string.format('String name "%s" is undefined', string_name))
+            end
+          end
         end
-        -- TODO: map bib field to CSL-JSON field
-        local field = bib_field
-        -- TODO: text escaping
-        value = bibtex.parse_field(bib_field, value)
-        item[field] = value
+        -- TODO: text unescaping
+        -- value = bibtex.unescape(value)
+        fields[field] = value
         contents = rest
         break
       end
     end
-    if not value then
-      bib_field = string.match(contents, "^%s*%w+")
-      error(string.format('Invalid %s in "%s".', bib_field, id))
-      return {}
-    end
   end
-
-  return item
+  return fields
 end
 
-function bibtex.parse_field(bib_field, value)
+function bibtex.convert_field(bib_field, value)
   local field_data = bibtex.bib_data.fields[bib_field]
   if not field_data then
-    return nil
+    return nil, nil
   end
+  local csl_field = field_data.csl
+  if not csl_field then
+    return nil, nil
+  end
+
   local field_type = field_data.type
   if field_type == "name" then
-    return bibtex.parse_names(value)
+    value = bibtex.parse_names(value)
   elseif field_type == "date" then
-    return bibtex.parse_date(value)
-  else
-    return value
+    value = bibtex.parse_date(value)
   end
+  return csl_field, value
 end
 
 function bibtex.parse_names(str)

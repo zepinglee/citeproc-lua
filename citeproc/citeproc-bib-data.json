@@ -2,7 +2,7 @@
     "description": "Bib CSL mapping",
     "types": {
         "article": {
-            "csl": "article",
+            "csl": "article-journal",
             "notes": "May also be `article-journal`, `article-magazine` or `article-newspaper` depending upon the field `entrysubtype`.",
             "source": "bibtex"
         },

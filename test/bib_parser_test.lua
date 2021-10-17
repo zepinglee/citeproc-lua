@@ -8,23 +8,56 @@ local util = require("citeproc.citeproc-util")
 
 describe("BibParser", function()
 
-  -- it("render text", function()
-  --   local bib = [[
-  --     @article{key,
-  --       author = {von Last, First and von Last, First, Jr},
-  --       editor = {First de la Last and First de la Von Last},
-  --       title = {One ``two'' “three” `four' ‘five’},
-  --       year = 1999,
-  --       date = {1999-01-01/2000-12-11},
-  --       month = jul,
-  --     }
-  --   ]]
-  --   local res = bibtex.parse(bib)
-  --   util.debug(res)
-  -- end)
+  it("bib entry", function()
+    local bib = [[
+      @article{key,
+        author = {von Last, First and von Last, First, Jr},
+        editor = {First de la Last and First de la Von Last},
+        title = {One ``two'' “three” `four' ‘five’},
+        date = {1999-01-01/2000-12-11},
+        year = 1999,
+        month = jul,
+      }
+    ]]
+    local res = bibtex.parse(bib)
+    local expected = {
+      {
+        author = {
+          {
+            family = "Last",
+            given = "First",
+            ["non-dropping-particle"] = "von"
+          }, {
+            family = "Last",
+            given = "Jr",
+            ["non-dropping-particle"] = "von",
+            suffix = "First"
+          }
+        },
+        editor = {
+          {
+            family = "Last",
+            given = "First",
+            ["non-dropping-particle"] = "de la"
+          }, {
+            family = "Von Last",
+            given = "First",
+            ["non-dropping-particle"] = "de la"
+          }
+        },
+        id = "key",
+        issued = {
+          ["date-parts"] = { { 1999, 1, 1 }, { 2000, 12, 11 } }
+        },
+        title = "One ``two'' “three” `four' ‘five’",
+        type = "article-journal"
+      }
+    }
+    assert.same(expected, res)
+  end)
 
   describe("parse single name", function()
-    -- http://maverick.inria.fr/ Xavier.Decoret/resources/xdkbibtex/bibtex_summary.html
+    -- http://maverick.inria.fr/~Xavier.Decoret/resources/xdkbibtex/bibtex_summary.html
 
     describe("non-reversed name", function()
 
