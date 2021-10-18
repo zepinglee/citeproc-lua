@@ -1,12 +1,13 @@
+local names_module = {}
+
 local unicode = require("unicode")
 
-local FormattedText = require("citeproc.citeproc-formatted-text")
-local Element = require("citeproc.citeproc-node-element")
+local richtext = require("citeproc.citeproc-richtext")
+local element = require("citeproc.citeproc-element")
 local util = require("citeproc.citeproc-util")
--- local inspect = require("inspect")
 
 
-local Name = Element:new()
+local Name = element.Element:new()
 
 Name.default_options = {
   ["delimiter"] = ", ",
@@ -73,7 +74,7 @@ function Name:render (names, context)
     if et_al_truncate and i > et_al_use_first then
       if et_al_last then
         if i == #names then
-          output = FormattedText.concat(output, delimiter)
+          output = richtext.concat(output, delimiter)
           output = output .. util.unicode["horizontal ellipsis"]
           output = output .. " "
           res = self:render_single_name(name, i, context)
@@ -84,7 +85,7 @@ function Name:render (names, context)
           delimiter = " "
         end
         if output then
-          output = FormattedText.concat_list({output, context.et_al:render(context)}, delimiter)
+          output = richtext.concat_list({output, context.et_al:render(context)}, delimiter)
         end
         break
       end
@@ -92,7 +93,7 @@ function Name:render (names, context)
       if i > 1 then
         if i == #names and context.options["and"] then
           if self:_check_delimiter(delimiter_precedes_last, i, inverted) then
-            output = FormattedText.concat(output, delimiter)
+            output = richtext.concat(output, delimiter)
           else
             output = output .. " "
           end
@@ -104,16 +105,16 @@ function Name:render (names, context)
           end
           output = output .. and_term .. " "
         else
-          output = FormattedText.concat(output, delimiter)
+          output = richtext.concat(output, delimiter)
         end
       end
       res, inverted = self:render_single_name(name, i, context)
       if res and res ~= "" then
         if output then
-          output = FormattedText.concat(output, res)
+          output = richtext.concat(output, res)
         else
-          if res._type ~= "FormattedText" then
-            res = FormattedText.new(res)
+          if res._type ~= "RichText" then
+            res = richtext.new(res)
           end
           output = res
         end
@@ -231,7 +232,7 @@ function Name:render_single_name (name, index, context)
         local particle
         particle, family = table.unpack(hyphen_parts)
         particle = particle .. "-"
-        ndp = FormattedText.concat(ndp, particle)
+        ndp = richtext.concat(ndp, particle)
       end
 
       if family_name_part then
@@ -244,10 +245,10 @@ function Name:render_single_name (name, index, context)
       end
 
       if demote_ndp then
-        given = FormattedText.concat_list({given, dp, ndp}, " ")
+        given = richtext.concat_list({given, dp, ndp}, " ")
       else
-        family = FormattedText.concat_list({ndp, family}, " ")
-        given = FormattedText.concat_list({given, dp}, " ")
+        family = richtext.concat_list({ndp, family}, " ")
+        given = richtext.concat_list({given, dp}, " ")
       end
 
       if family_name_part then
@@ -269,13 +270,13 @@ function Name:render_single_name (name, index, context)
         dp = family_name_part:format_name_part(dp, context)
       end
 
-      family = FormattedText.concat_list({dp, ndp, family}, " ")
+      family = richtext.concat_list({dp, ndp, family}, " ")
       if name["comma-suffix"] then
         suffix_separator = ", "
       else
         suffix_separator = " "
       end
-      family = FormattedText.concat_list({family, suffix}, suffix_separator)
+      family = richtext.concat_list({family, suffix}, suffix_separator)
 
       if family_name_part then
         family = family_name_part:wrap_name_part(family, context)
@@ -287,7 +288,7 @@ function Name:render_single_name (name, index, context)
       order = {given, family}
       sort_separator = " "
     end
-    res = FormattedText.concat_list(order, sort_separator)
+    res = richtext.concat_list(order, sort_separator)
 
   elseif form == "short" then
     if family_name_part then
@@ -402,7 +403,7 @@ function Name:initialize (given, terminator, context)
 
 end
 
-local NamePart = Element:new()
+local NamePart = element.Element:new()
 
 function NamePart:format_name_part(name_part, context)
   context = self:process_context(context)
@@ -418,7 +419,7 @@ function NamePart:wrap_name_part(name_part, context)
 end
 
 
-local EtAl = Element:new()
+local EtAl = element.Element:new()
 
 EtAl.default_options = {
   term = "et-al",
@@ -433,7 +434,7 @@ EtAl.render = function (self, context)
 end
 
 
-local Substitute = Element:new()
+local Substitute = element.Element:new()
 
 function Substitute:render (item, context)
   self:debug_info(context)
@@ -455,7 +456,7 @@ function Substitute:render (item, context)
 end
 
 
-local Names = Element:new()
+local Names = element.Element:new()
 
 function Names:render (item, context)
   self:debug_info(context)
@@ -556,9 +557,9 @@ function Names:render (item, context)
             local label_result = label:render(role, context)
             if label_result then
               if label_position == "before" then
-                res = FormattedText.concat(label_result, res)
+                res = richtext.concat(label_result, res)
               else
-                res = FormattedText.concat(res, label_result)
+                res = richtext.concat(res, label_result)
               end
             end
           end
@@ -590,11 +591,10 @@ function Names:render (item, context)
 end
 
 
+names_module.Names = Names
+names_module.Name = Name
+names_module.NamePart = NamePart
+names_module.EtAl = EtAl
+names_module.Substitute = Substitute
 
-return {
-  names = Names,
-  name = Name,
-  ["name-part"] = NamePart,
-  ["et-al"] = EtAl,
-  substitute = Substitute,
-}
+return names_module

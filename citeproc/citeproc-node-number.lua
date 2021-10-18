@@ -1,8 +1,10 @@
-local Element = require("citeproc.citeproc-node-element")
+local number_module = {}
+
+local element = require("citeproc.citeproc-element")
 local util = require("citeproc.citeproc-util")
 
 
-local Number = Element:new()
+local Number = element.Element:new()
 
 function Number:render (item, context)
   self:debug_info(context)
@@ -87,6 +89,6 @@ function Number:_format_oridinal(number, form, context)
 end
 
 
+number_module.Number = Number
 
-
-return Number
+return number_module

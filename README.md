@@ -27,11 +27,11 @@ Note that the API is not stable and is likely to change in the future.
 
 ### Create an engine instance
 ```lua
-local CiteProc = require("citeproc")
-local citeproc = CiteProc:new(sys, style)
+local citeproc = require("citeproc")
+local engine = citeproc.new(sys, style)
 ```
 
-The sys is a table which must contain `retrieveLocale()` and `retrieveItem()` methods. Thet are called to feed the engine with inputs.
+The `sys` is a table which must contain `retrieveLocale()` and `retrieveItem()` methods. Thet are called to feed the engine with inputs.
 
 
 
@@ -39,7 +39,7 @@ The sys is a table which must contain `retrieveLocale()` and `retrieveItem()` me
 
 The `updateItems()` method refreshes the registry of the engine.
 ```lua
-params, result = citeproc:updateItems(ids)
+params, result = engine:updateItems(ids)
 ```
 The `ids` is just a list of `id`s.
 ```lua
@@ -52,7 +52,7 @@ ids = {"ITEM-1", "ITEM-2"}
 The `makeCitationCluster()` method is called to generate a citation of (possibly) multiple items.
 
 ```lua
-params, result = citeproc:makeCitationCluster(cite_items)
+params, result = engine:makeCitationCluster(cite_items)
 ```
 
 The `cite_items` is a list of tables which contain the `id` and other options (not implemented).
@@ -75,7 +75,7 @@ The more complicated method `processCitationCluster()` is not implemented yet.
 
 The `makeBibliography()` method produces the bibliography and parameters required for formatting.
 ```lua
-params, result = citeproc:makeBibliography()
+params, result = engine:makeBibliography()
 ```
 
 Returns:
@@ -130,11 +130,16 @@ busted --pattern=formatted_text --filter=quotes
 - CSL
   - [CSL Homepage](https://citationstyles.org/)
   - [CSL 1.0.1 specification](https://docs.citationstyles.org/en/stable/specification.html)
+  - [CSL 1.0.2 specification](https://github.com/citation-style-language/documentation/blob/master/specification.rst)
+  - [CSL 1.1 specification](https://github.com/citation-style-language/documentation/blob/v1.1/specification.rst)
   - [CSL schema](https://github.com/citation-style-language/schema)
   - [CSL processors in other languages](https://citationstyles.org/developers/#csl-processors)
     - [Juris-M/citeproc-js](https://github.com/Juris-M/citeproc-js)
       - [documentation](https://citeproc-js.readthedocs.io/en/latest/)
     - [brechtm/citeproc-py](https://github.com/brechtm/citeproc-py)
+    - [jgm/citeproc](https://github.com/jgm/citeproc)
+    - [andras-simonyi/citeproc-el](https://github.com/andras-simonyi/citeproc-el)
+    - [inukshuk/citeproc-ruby](https://github.com/inukshuk/citeproc-ruby)
     - [zotero/citeproc-rs](https://github.com/zotero/citeproc-rs)
   - [CSL locales](https://github.com/citation-style-language/locales)
   - [CSL styles](https://github.com/citation-style-language/styles)

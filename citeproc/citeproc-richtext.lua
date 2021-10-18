@@ -1,9 +1,15 @@
+--[[
+  Copyright (C) 2021 Zeping Lee
+--]]
+
+local richtext = {}
+
 local unicode = require("unicode")
 
 local util = require("citeproc.citeproc-util")
 
 
-local FormattedText = {
+local RichText = {
   contents = nil,
   formats = nil,
   _tag_formats = {
@@ -37,11 +43,11 @@ local FormattedText = {
     ["font-weight"] = "bold",
     ["quotes"] = "true"
   },
-  _type = "FormattedText",
+  _type = "RichText",
 }
 
-function FormattedText:shallow_copy()
-  local res = FormattedText.new()
+function RichText:shallow_copy()
+  local res = richtext.new()
   for _, text in ipairs(self.contents) do
     table.insert(res.contents, text)
   end
@@ -51,7 +57,7 @@ function FormattedText:shallow_copy()
   return res
 end
 
-function FormattedText:render(formatter, context, punctuation_in_quote)
+function RichText:render(formatter, context, punctuation_in_quote)
   self:merge_punctuations()
 
   if punctuation_in_quote == nil and context then
@@ -70,7 +76,7 @@ function FormattedText:render(formatter, context, punctuation_in_quote)
   return self:_render(formatter, context)
 end
 
-function FormattedText:_render(formatter, context)
+function RichText:_render(formatter, context)
   local res = ""
   for _, text in ipairs(self.contents) do
     local str
@@ -80,7 +86,7 @@ function FormattedText:_render(formatter, context)
       else
         str = text
       end
-    else  -- FormattedText
+    else  -- RichText
       str = text:_render(formatter, context)
     end
     -- Remove leading spaces
@@ -108,7 +114,7 @@ end
 
 -- https://github.com/Juris-M/citeproc-js/blob/aa2683f48fe23be459f4ed3be3960e2bb56203f0/src/queue.js#L724
 -- Also merge duplicate punctuations.
-FormattedText.punctuation_map = {
+RichText.punctuation_map = {
   ["!"] = {
     ["."] = "!",
     ["?"] = "!?",
@@ -153,16 +159,16 @@ FormattedText.punctuation_map = {
   }
 }
 
-FormattedText.in_quote_punctuations = {
+RichText.in_quote_punctuations = {
   [","] = true,
   ["."] = true,
   ["?"] = true,
   ["!"] = true,
 }
 
-function FormattedText:merge_punctuations(contents, index)
+function RichText:merge_punctuations(contents, index)
   for i, text in ipairs(self.contents) do
-    if text._type == "FormattedText" then
+    if text._type == "RichText" then
       contents, index = text:merge_punctuations(contents, index)
     elseif type(text) == "string" then
       if contents and index then
@@ -194,17 +200,17 @@ function FormattedText:merge_punctuations(contents, index)
   return contents, index
 end
 
-function FormattedText:move_punctuation_in_quote()
+function RichText:move_punctuation_in_quote()
   local i = 1
   while i <= #self.contents do
     local text = self.contents[i]
-    if text._type == "FormattedText" then
+    if text._type == "RichText" then
       text:move_punctuation_in_quote()
       if text.formats["quotes"] then
 
         local contents = self.contents
         local last_string = text
-        while last_string._type == "FormattedText" do
+        while last_string._type == "RichText" do
           contents = last_string.contents
           last_string = contents[#contents]
         end
@@ -241,7 +247,7 @@ function FormattedText:move_punctuation_in_quote()
   end
 end
 
-function FormattedText:change_case()
+function RichText:change_case()
   local text_case = self.formats["text-case"]
   if text_case then
     if text_case == "lowercase" then
@@ -259,14 +265,14 @@ function FormattedText:change_case()
     end
   else
     for _, text in ipairs(self.contents) do
-      if type(text) == "table" and text._type == "FormattedText" then
+      if type(text) == "table" and text._type == "RichText" then
         text:change_case()
       end
     end
   end
 end
 
-function FormattedText:_change_word_case(state, word_transform, first_tranform)
+function RichText:_change_word_case(state, word_transform, first_tranform)
   if self.formats["vertical-align"] == "sup" or
       self.formats["vertical-align"] == "sub" or
       self.formats["font-variant"] == "small-caps" or
@@ -327,12 +333,12 @@ function FormattedText:_change_word_case(state, word_transform, first_tranform)
   return state
 end
 
-function FormattedText:lowercase()
+function RichText:lowercase()
   local word_transform = unicode.utf8.lower
   self:_change_word_case("after-sentence", word_transform)
 end
 
-function FormattedText:uppercase()
+function RichText:uppercase()
   local word_transform = unicode.utf8.upper
   self:_change_word_case("after-sentence", word_transform)
 end
@@ -350,17 +356,17 @@ local function capitalize_if_lower(word)
   end
 end
 
-function FormattedText:capitalize_first(state)
+function RichText:capitalize_first(state)
   local first_tranform = capitalize_if_lower
   self:_change_word_case("after-sentence", nil, first_tranform)
 end
 
-function FormattedText:capitalize_all()
+function RichText:capitalize_all()
   local word_transform = capitalize_if_lower
   self:_change_word_case("after-sentence", word_transform)
 end
 
-function FormattedText:is_upper()
+function RichText:is_upper()
   for _, text in ipairs(self.contents) do
     if type(text) == "string" then
       if not util.is_upper(text) then
@@ -376,7 +382,7 @@ function FormattedText:is_upper()
   return true
 end
 
-function FormattedText:sentence()
+function RichText:sentence()
   if self:is_upper() then
     local first_tranform = function(word)
       return capitalize(unicode.utf8.lower(word))
@@ -389,7 +395,7 @@ function FormattedText:sentence()
   end
 end
 
-function FormattedText:title()
+function RichText:title()
   if self:is_upper() then
     local first_tranform = function(word)
       return capitalize(unicode.utf8.lower(word))
@@ -419,20 +425,20 @@ function FormattedText:title()
   end
 end
 
-function FormattedText.concat(str1, str2)
+function richtext.concat(str1, str2)
   assert(str1 and str2)
-  local res = FormattedText.new()
-  if str1._type ~= "FormattedText" then
-    str1 = FormattedText.new(str1)
+  local res = richtext.new()
+  if str1._type ~= "RichText" then
+    str1 = richtext.new(str1)
   end
   if next(str1.formats) == nil or str2 == "" then
     -- shallow copy
     res = str1:shallow_copy()
   else
-    res = FormattedText.new()
+    res = richtext.new()
     res.contents = {str1}
   end
-  if str2._type == "FormattedText" then
+  if str2._type == "RichText" then
     if next(str2.formats) == nil then
       for _, text in ipairs(str2.contents) do
         table.insert(res.contents, text)
@@ -446,7 +452,7 @@ function FormattedText.concat(str1, str2)
   return res
 end
 
-function FormattedText.concat_list(list, delimiter)
+function richtext.concat_list(list, delimiter)
   -- Strings in the list may be nil thus ipairs() should be avoided.
   -- The delimiter may be nil.
   local res = nil
@@ -455,12 +461,12 @@ function FormattedText.concat_list(list, delimiter)
     if text and text ~= "" then
       if res then
         if delimiter and delimiter ~= "" then
-          res = FormattedText.concat(res, delimiter)
+          res = richtext.concat(res, delimiter)
         end
-        res = FormattedText.concat(res, text)
+        res = richtext.concat(res, text)
       else
         if type(text) == "string" then
-          text = FormattedText.new(text)
+          text = richtext.new(text)
         end
         res = text
       end
@@ -469,10 +475,10 @@ function FormattedText.concat_list(list, delimiter)
   return res
 end
 
-function FormattedText:strip_periods()
+function RichText:strip_periods()
   local last_string = self
   local contents = self.contents
-  while last_string._type == "FormattedText" do
+  while last_string._type == "RichText" do
     contents = last_string.contents
     last_string = contents[#contents]
   end
@@ -481,11 +487,11 @@ function FormattedText:strip_periods()
   end
 end
 
-function FormattedText:add_format(attr, value)
+function RichText:add_format(attr, value)
   self.formats[attr] = value
 end
 
-function FormattedText:clean_formats(format)
+function RichText:clean_formats(format)
   -- Remove the formats that are default values
   if not format then
     for format, _ in pairs(self._default_formats) do
@@ -501,15 +507,15 @@ function FormattedText:clean_formats(format)
     end
   end
   for _, text in ipairs(self.contents) do
-    if type(text) == "table" and text._type == "FormattedText" then
+    if type(text) == "table" and text._type == "RichText" then
       text:clean_formats(format)
     end
   end
 end
 
-function FormattedText:flip_flop(attr, value)
+function RichText:flip_flop(attr, value)
   if not attr then
-    for attr, _ in pairs(FormattedText._flip_flop_formats) do
+    for attr, _ in pairs(RichText._flip_flop_formats) do
       self:flip_flop(attr)
     end
     return
@@ -547,15 +553,15 @@ function FormattedText:flip_flop(attr, value)
   end
 
   for _, text in ipairs(self.contents) do
-    if type(text) == "table" and text._type == "FormattedText" then
+    if type(text) == "table" and text._type == "RichText" then
       text:flip_flop(attr, value)
     end
   end
 end
 
-local FormattedText_mt = {
-  __index = FormattedText,
-  __concat = FormattedText.concat,
+local RichText_mt = {
+  __index = RichText,
+  __concat = richtext.concat,
 }
 
 local function table_update(t, new_t)
@@ -565,13 +571,13 @@ local function table_update(t, new_t)
   return t
 end
 
-function FormattedText.new(text, formats)
+function richtext.new(text, formats)
   local res = {
     contents = {},
     formats = formats or {},
   }
 
-  setmetatable(res, FormattedText_mt)
+  setmetatable(res, RichText_mt)
 
   if not text then
     return res
@@ -597,9 +603,9 @@ function FormattedText.new(text, formats)
       prefix, pos, tag, attributes, contents, suffix = string.match(text, "^(.-)()<(%w+)%s*(.-)>(.-)</%3>(.*)$")
       if contents then
         if tag == "span" then
-          formats = FormattedText._tag_formats[tag .. " " .. attributes]
+          formats = RichText._tag_formats[tag .. " " .. attributes]
         else
-          formats = FormattedText._tag_formats[tag]
+          formats = RichText._tag_formats[tag]
         end
       end
 
@@ -646,7 +652,7 @@ function FormattedText.new(text, formats)
         if prefix ~= "" then
           table.insert(res.contents, prefix)
         end
-        table.insert(res.contents, FormattedText.new(contents, formats))
+        table.insert(res.contents, richtext.new(contents, formats))
 
         if suffix == "" then
           done = true
@@ -662,7 +668,7 @@ function FormattedText.new(text, formats)
 
     return res
 
-  elseif type(text) == "table" and text._type == "FormattedText" then
+  elseif type(text) == "table" and text._type == "RichText" then
     return text
 
   elseif type(text) == "table" then
@@ -672,4 +678,4 @@ function FormattedText.new(text, formats)
 end
 
 
-return FormattedText
+return richtext

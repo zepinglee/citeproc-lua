@@ -1,8 +1,10 @@
-local Element = require("citeproc.citeproc-node-element")
+local choose = {}
+
+local element = require("citeproc.citeproc-element")
 local util = require("citeproc.citeproc-util")
 
 
-local Choose = Element:new()
+local Choose = element.Element:new()
 
 function Choose:render (item, context)
   self:debug_info(context)
@@ -19,7 +21,7 @@ function Choose:render (item, context)
 end
 
 
-local If = Element:new()
+local If = element.Element:new()
 
 If.render = function (self, item, context)
   self:debug_info(context)
@@ -95,7 +97,7 @@ end
 local ElseIf = If:new()
 
 
-local Else = Element:new()
+local Else = element.Element:new()
 
 Else.render = function (self, item, context)
   self:debug_info(context)
@@ -104,9 +106,9 @@ Else.render = function (self, item, context)
 end
 
 
-return {
-  choose = Choose,
-  ["if"] = If,
-  ["else-if"] = ElseIf,
-  ["else"] = Else,
-}
+choose.Choose = Choose
+choose.If = If
+choose.ElseIf = ElseIf
+choose.Else = Else
+
+return choose

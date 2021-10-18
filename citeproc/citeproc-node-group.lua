@@ -1,8 +1,10 @@
-local Element = require("citeproc.citeproc-node-element")
+local group = {}
+
+local element = require("citeproc.citeproc-element")
 local util = require("citeproc.citeproc-util")
 
 
-local Group = Element:new()
+local Group = element.Element:new()
 
 function Group:render (item, context)
   self:debug_info(context)
@@ -25,4 +27,6 @@ function Group:render (item, context)
 end
 
 
-return Group
+group.Group = Group
+
+return group

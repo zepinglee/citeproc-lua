@@ -1,9 +1,9 @@
+local element = {}
+
 local unicode = require("unicode")
 
-local FormattedText = require("citeproc.citeproc-formatted-text")
+local richtext = require("citeproc.citeproc-richtext")
 local util = require("citeproc.citeproc-util")
-
-local inspect = require("inspect")
 
 
 local Element = {
@@ -218,7 +218,7 @@ function Element:get_variable (item, name, context)
     return nil
   else
     local res = item[name]
-    if type(res) == "table" and res._type == "FormattedText" then
+    if type(res) == "table" and res._type == "RichText" then
       res = res:shallow_copy()
     end
 
@@ -254,8 +254,8 @@ function Element:format(text, context)
   if not text or text == "" then
     return nil
   end
-  if text._type ~= "FormattedText" then
-    text = FormattedText.new(text)
+  if text._type ~= "RichText" then
+    text = richtext.new(text)
   end
   local attributes = {
     "font-style",
@@ -268,7 +268,7 @@ function Element:format(text, context)
     local value = context.options[attribute]
     if value then
       if text.formats[attribute] then
-        local new = FormattedText.new()
+        local new = richtext.new()
         new.contents = {text}
         text = new
       end
@@ -287,10 +287,10 @@ function Element:wrap (str, context)
   local suffix = context.options["suffix"]
   local res = str
   if prefix and prefix ~= "" then
-    res = FormattedText.concat(prefix, res)
+    res = richtext.concat(prefix, res)
   end
   if suffix and suffix ~= "" then
-    res = FormattedText.concat(res, suffix)
+    res = richtext.concat(res, suffix)
   end
   return res
 end
@@ -298,7 +298,7 @@ end
 -- Delimiters
 function Element:concat (strings, context)
   local delimiter = context.options["delimiter"]
-  return FormattedText.concat_list(strings, delimiter)
+  return richtext.concat_list(strings, delimiter)
 end
 
 -- Display
@@ -311,7 +311,7 @@ function Element:display(text, context)
     return text
   end
   if type(text) == "string" then
-    text = FormattedText.new(text)
+    text = richtext.new(text)
   end
   text:add_format("display", value)
   return text
@@ -325,8 +325,8 @@ function Element:quote (str, context)
   if context.sorting then
     return str
   end
-  if not str._type == "FormattedText" then
-    str = FormattedText.new(str)
+  if not str._type == "RichText" then
+    str = richtext.new(str)
   end
   local quotes = context.options["quotes"] or false
   if quotes then
@@ -340,8 +340,8 @@ function Element:strip_periods (str, context)
   if not str then
     return nil
   end
-  if str._type ~= "FormattedText" then
-    str = FormattedText.new(str)
+  if str._type ~= "RichText" then
+    str = richtext.new(str)
   end
   local strip_periods = context.options["strip-periods"]
   if strip_periods then
@@ -355,8 +355,8 @@ function Element:case (text, context)
   if not text or text == "" then
     return nil
   end
-  if text._type ~= "FormattedText" then
-    text = FormattedText.new(text)
+  if text._type ~= "RichText" then
+    text = richtext.new(text)
   end
   local text_case = context.options["text-case"]
   if not text_case then
@@ -377,4 +377,6 @@ function Element:case (text, context)
 end
 
 
-return Element
+element.Element = Element
+
+return element

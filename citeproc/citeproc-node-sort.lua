@@ -1,12 +1,14 @@
+local sort = {}
+
 local unicode = require("unicode")
 
-local Element = require("citeproc.citeproc-node-element")
-local Names = require("citeproc.citeproc-node-names").names
-local Date = require("citeproc.citeproc-node-date").date
+local element = require("citeproc.citeproc-element")
+local names = require("citeproc.citeproc-node-names")
+local date = require("citeproc.citeproc-node-date")
 local util = require("citeproc.citeproc-util")
 
 
-local Sort = Element:new()
+local Sort = element.Element:new()
 
 function Sort:sort (items, context)
   -- key_map = {
@@ -69,7 +71,7 @@ function Sort.compare_entry(key_map, sort_directions, item1, item2)
   end
 end
 
-local Key = Element:new()
+local Key = element.Element:new()
 
 function Key:render (item, context)
   context = self:process_context(context)
@@ -97,7 +99,7 @@ function Key:render (item, context)
   end
   if res == nil then
     res = false
-  elseif type(res) == "table" and res._type == "FormattedText" then
+  elseif type(res) == "table" and res._type == "RichText" then
     res = res:render(nil, context)
   end
   if type(res) == "string" then
@@ -109,7 +111,7 @@ end
 function Key:_render_name (item, context)
   if not self.names then
     self.names = self:create_element("names", {}, self)
-    Names:set_base_class(self.names)
+    names.Names:set_base_class(self.names)
     self.names:set_attribute("variable", context.options["variable"])
     self.names:set_attribute("form", "long")
   end
@@ -120,7 +122,7 @@ end
 function Key:_render_date (item, context)
   if not self.date then
     self.date = self:create_element("date", {}, self)
-    Date:set_base_class(self.date)
+    date.Date:set_base_class(self.date)
     self.date:set_attribute("variable", context.options["variable"])
     self.date:set_attribute("form", "numeric")
   end
@@ -142,7 +144,8 @@ function Key._normalize_string(str)
   return str
 end
 
-return {
-  sort = Sort,
-  key = Key,
-}
+
+sort.Sort = Sort
+sort.Key = Key
+
+return sort

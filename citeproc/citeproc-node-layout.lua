@@ -1,9 +1,11 @@
-local FormattedText = require("citeproc.citeproc-formatted-text")
-local Element = require("citeproc.citeproc-node-element")
+local layout = {}
+
+local richtext = require("citeproc.citeproc-richtext")
+local element = require("citeproc.citeproc-element")
 local util = require("citeproc.citeproc-util")
 
 
-local Layout = Element:new()
+local Layout = element.Element:new()
 
 function Layout:render (items, context)
   self:debug_info(context)
@@ -45,10 +47,10 @@ function Layout:render (items, context)
 
     if context.mode == "bibliography" then
       if first and context.options["prefix"] then
-        first = FormattedText.new(context.options["prefix"]) .. first
+        first = richtext.new(context.options["prefix"]) .. first
       end
       if second and context.options["suffix"] then
-        second = second .. FormattedText.new(context.options["suffix"])
+        second = second .. richtext.new(context.options["suffix"])
       end
     end
 
@@ -60,7 +62,7 @@ function Layout:render (items, context)
       end
       if second then
         second:add_format("display", "right-inline")
-        res = FormattedText.concat(res, second)
+        res = richtext.concat(res, second)
       end
     else
       res = self:concat({first, second}, context)
@@ -68,14 +70,14 @@ function Layout:render (items, context)
 
     if context.mode == "citation" then
       if res and item["prefix"] then
-        res = FormattedText.new(item["prefix"]) .. res
+        res = richtext.new(item["prefix"]) .. res
       end
       if res and item["suffix"] then
-        res = res .. FormattedText.new(item["suffix"])
+        res = res .. richtext.new(item["suffix"])
       end
     elseif context.mode == "bibliography" then
       if not res then
-        res = FormattedText.new("[CSL STYLE ERROR: reference with no printed form.]")
+        res = richtext.new("[CSL STYLE ERROR: reference with no printed form.]")
       end
     end
     table.insert(output, res)
@@ -157,4 +159,6 @@ function Layout:_get_position (item, previous_cite, context)
 end
 
 
-return Layout
+layout.Layout = Layout
+
+return layout

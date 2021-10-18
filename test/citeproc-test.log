@@ -2216,7 +2216,7 @@ My Long Title 2 does not have title-short
 does not have title-short'
 
 Error → test-suite magic_CitationLabelInBibliography
-./citeproc/citeproc-formatted-text.lua:423: assertion failed!
+./citeproc/citeproc-richtext.lua:429: assertion failed!
 
 category       success failure   error pending
 affix                7       1       0       1

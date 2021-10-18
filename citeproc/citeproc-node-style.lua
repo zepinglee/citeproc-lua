@@ -1,12 +1,10 @@
-local dom = require("luaxml-domobject")
+local style = {}
 
-local Element = require("citeproc.citeproc-node-element")
+local element = require("citeproc.citeproc-element")
 local util = require("citeproc.citeproc-util")
 
-local inspect = require("inspect")
 
-
-local Style = Element:new()
+local Style = element.Element:new()
 
 Style.default_options = {
   ["initialize-with-hyphen"] = true,
@@ -112,7 +110,7 @@ function Style:get_term (...)
 end
 
 
-local Citation = Element:new()
+local Citation = element.Element:new()
 
 function Citation:render (items, context)
   self:debug_info(context)
@@ -130,7 +128,7 @@ function Citation:render (items, context)
 end
 
 
-local Bibliography = Element:new()
+local Bibliography = element.Element:new()
 
 function Bibliography:render (items, context)
   self:debug_info(context)
@@ -144,9 +142,9 @@ function Bibliography:render (items, context)
   return layout:render(items, context)
 end
 
+style.Style = Style
+style.Citation = Citation
+style.Bibliography = Bibliography
 
-return {
-  style = Style,
-  citation = Citation,
-  bibliography = Bibliography,
-}
+
+return style

@@ -1,10 +1,10 @@
-local inspect = require("inspect")
+local date_module = {}
 
-local Element = require("citeproc.citeproc-node-element")
+local element = require("citeproc.citeproc-element")
 local util = require("citeproc.citeproc-util")
 
 
-local Date = Element:new()
+local Date = element.Element:new()
 
 function Date:render (item, context)
   self:debug_info(context)
@@ -235,7 +235,7 @@ function Date:_get_show_parts (context)
 end
 
 
-local DatePart = Element:new()
+local DatePart = element.Element:new()
 
 DatePart.render = function (self, date, context, last_range_begin, range_end)
   self:debug_info(context)
@@ -373,7 +373,7 @@ DatePart.render = function (self, date, context, last_range_begin, range_end)
 end
 
 
-return {
-  date = Date,
-  ["date-part"] = DatePart,
-}
+date_module.Date = Date
+date_module.DatePart = DatePart
+
+return date_module

@@ -8,26 +8,26 @@
   - https://github.com/pcooksey/bibtex-js/blob/master/src/bibtex_js.js
 --]]
 
+local bib = {}
+
 require("lualibs")
 
 local util = require("citeproc.citeproc-util")
 
 
-local bibtex = {}
-
-bibtex.bib_data = utilities.json.tolua(util.read_file("citeproc/citeproc-bib-data.json"))
+bib.bib_data = utilities.json.tolua(util.read_file("citeproc/citeproc-bib-data.json"))
 
 
-function bibtex.parse(contents)
+function bib.parse(contents)
   local items = {}
   for item_contents in string.gmatch(contents, "(@%w+%b{})") do
-    local item = bibtex.parse_item(item_contents)
+    local item = bib.parse_item(item_contents)
     table.insert(items, item)
   end
   return items
 end
 
-function bibtex.parse_item(contents)
+function bib.parse_item(contents)
   contents = string.gsub(contents, "%s*\r?\n%s*", " ")
   local bib_type, id
   bib_type, id, contents = string.match(contents, "^@(%w+){([^%s,]+),%s*(.*)}$")
@@ -36,18 +36,18 @@ function bibtex.parse_item(contents)
   end
 
   local item = {}
-  local type_data = bibtex.bib_data.types[bib_type]
+  local type_data = bib.bib_data.types[bib_type]
   if not type_data then
     return nil
   end
   item.id = id
   item.type = type_data.csl
 
-  local bib_fields = bibtex.parse_fields(contents)
+  local bib_fields = bib.parse_fields(contents)
   -- util.debug(bib_fields)
 
   for bib_field, value in pairs(bib_fields) do
-    local csl_field, csl_value = bibtex.convert_field(bib_field, value)
+    local csl_field, csl_value = bib.convert_field(bib_field, value)
 
     if bib_field == "year" and item.issued then
       csl_field = nil
@@ -71,7 +71,7 @@ function bibtex.parse_item(contents)
   return item
 end
 
-function bibtex.parse_fields(contents)
+function bib.parse_fields(contents)
   local fields = {}
   local field_patterns = {
     "^(%w+)%s*=%s*(%b{}),?%s*(.-)$",
@@ -91,7 +91,7 @@ function bibtex.parse_fields(contents)
         elseif pattern_index == 3 then
           if not string.match(value, "^%d+$") then
             local string_name = value
-            local macro = bibtex.bib_data.macros[string_name]
+            local macro = bib.bib_data.macros[string_name]
             if macro then
               value = macro.value
             else
@@ -100,7 +100,7 @@ function bibtex.parse_fields(contents)
           end
         end
         -- TODO: text unescaping
-        -- value = bibtex.unescape(value)
+        -- value = bib.unescape(value)
         fields[field] = value
         contents = rest
         break
@@ -110,8 +110,8 @@ function bibtex.parse_fields(contents)
   return fields
 end
 
-function bibtex.convert_field(bib_field, value)
-  local field_data = bibtex.bib_data.fields[bib_field]
+function bib.convert_field(bib_field, value)
+  local field_data = bib.bib_data.fields[bib_field]
   if not field_data then
     return nil, nil
   end
@@ -122,23 +122,23 @@ function bibtex.convert_field(bib_field, value)
 
   local field_type = field_data.type
   if field_type == "name" then
-    value = bibtex.parse_names(value)
+    value = bib.parse_names(value)
   elseif field_type == "date" then
-    value = bibtex.parse_date(value)
+    value = bib.parse_date(value)
   end
   return csl_field, value
 end
 
-function bibtex.parse_names(str)
+function bib.parse_names(str)
   local names = {}
   for _, name_str in ipairs(util.split(str, "%s+and%s+")) do
-    local name = bibtex.parse_single_name(name_str)
+    local name = bib.parse_single_name(name_str)
     table.insert(names, name)
   end
   return names
 end
 
-function bibtex.parse_single_name(str)
+function bib.parse_single_name(str)
   local literal = string.match(str, "^{(.*)}$")
   if literal then
     return {
@@ -148,13 +148,13 @@ function bibtex.parse_single_name(str)
 
   local name_parts = util.split(str, ",%s*")
   if #name_parts > 1 then
-    return bibtex.parse_revesed_name(name_parts)
+    return bib.parse_revesed_name(name_parts)
   else
-    return bibtex.parse_non_revesed_name(str)
+    return bib.parse_non_revesed_name(str)
   end
 end
 
-function bibtex.parse_revesed_name(name_parts)
+function bib.parse_revesed_name(name_parts)
   local name = {}
   local von, last, jr, first
   if #name_parts == 2 then
@@ -184,7 +184,7 @@ function bibtex.parse_revesed_name(name_parts)
   return name
 end
 
-function bibtex.parse_non_revesed_name(str)
+function bib.parse_non_revesed_name(str)
   local name = {}
   local words = util.split(str)
 
@@ -212,7 +212,7 @@ function bibtex.parse_non_revesed_name(str)
   return name
 end
 
-function bibtex.parse_date(str)
+function bib.parse_date(str)
   local date_range = util.split(str, "/")
   if #date_range == 1 then
     date_range = util.split(str, util.unicode["en dash"])
@@ -227,7 +227,7 @@ function bibtex.parse_date(str)
   local date = {}
   date["date-parts"] = {}
   for _, date_part in ipairs(date_range) do
-    local date_ = bibtex.parse_single_date(date_part)
+    local date_ = bib.parse_single_date(date_part)
     if not date_ then
       return literal
     end
@@ -236,7 +236,7 @@ function bibtex.parse_date(str)
   return date
 end
 
-function bibtex.parse_single_date(str)
+function bib.parse_single_date(str)
   local date = {}
   for _, date_part in ipairs(util.split(str, "%-")) do
     if not string.match(date_part, "^%d+$") then
@@ -247,4 +247,4 @@ function bibtex.parse_single_date(str)
   return date
 end
 
-return bibtex
+return bib

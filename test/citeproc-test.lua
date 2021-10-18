@@ -8,7 +8,7 @@ require("lualibs")
 local dom = require("luaxml-domobject")
 local lfs = require("lfs")
 
-local CiteProc = require("citeproc.citeproc")
+local citeproc = require("citeproc.citeproc")
 
 
 local function read_file(path)
@@ -34,12 +34,12 @@ local function listdir(path)
   return files
 end
 
-local function test_citations(citeproc, fixture)
+local function test_citations(engine, fixture)
   -- TODO
   pending("citations")
 end
 
-local function test_citation_items(citeproc, fixture)
+local function test_citation_items(engine, fixture)
   local citation_items = fixture.citation_items
   if not citation_items then
     citation_items = {{}}
@@ -50,7 +50,7 @@ local function test_citation_items(citeproc, fixture)
 
   local output = {}
   for _, items in ipairs(citation_items) do
-    local res = citeproc:makeCitationCluster(items)
+    local res = engine:makeCitationCluster(items)
     -- Some hacks to pass the test-suite
     res = string.gsub(res, "^ibid", "Ibid")
     table.insert(output, res)
@@ -58,7 +58,7 @@ local function test_citation_items(citeproc, fixture)
   return table.concat(output, "\n")
 end
 
-local function test_bibliography(citeproc, fixture)
+local function test_bibliography(engine, fixture)
   local bibentries = fixture.bibentries
   if not bibentries then
     bibentries = {{}}
@@ -74,8 +74,8 @@ local function test_bibliography(citeproc, fixture)
 
   local output = {}
   for _, items in ipairs(bibentries) do
-    citeproc:updateItems(items)
-    local _, entries = citeproc:makeBibliography()
+    engine:updateItems(items)
+    local _, entries = engine:makeBibliography()
     local res = "<div class=\"csl-bib-body\">\n"
     for _, entry in ipairs(entries) do
       res = res .. "  " .. entry .. "\n"
@@ -114,20 +114,20 @@ local function run_test(fixture)
 
   local style = dom.parse(fixture.csl)
 
-  local citeproc = CiteProc:new(citeproc_sys, style, "test")
+  local engine = citeproc.new(citeproc_sys, style, "test")
 
   if fixture.mode == "citation" then
     if fixture.citations then
-      return test_citations(citeproc, fixture)
+      return test_citations(engine, fixture)
     else
-      return test_citation_items(citeproc, fixture)
+      return test_citation_items(engine, fixture)
     end
 
   elseif fixture.mode == "bibliography" then
     if fixture.citations then
       pending("citations")
     end
-    return test_bibliography(citeproc, fixture)
+    return test_bibliography(engine, fixture)
   end
 end
 

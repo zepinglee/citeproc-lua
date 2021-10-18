@@ -1,11 +1,11 @@
-local Element = require("citeproc.citeproc-node-element")
-local FormattedText = require("citeproc.citeproc-formatted-text")
+local text = {}
+
+local element = require("citeproc.citeproc-element")
+local richtext = require("citeproc.citeproc-richtext")
 local util = require("citeproc.citeproc-util")
 
-local inspect = require("inspect")
 
-
-local Text = Element:new()
+local Text = element.Element:new()
 
 function Text:render (item, context)
   self:debug_info(context)
@@ -57,7 +57,7 @@ function Text:render (item, context)
   end
 
   if type(res) == "string" and res ~= "" then
-    res = FormattedText.new(res)
+    res = richtext.new(res)
   end
 
   res = self:strip_periods(res, context)
@@ -191,4 +191,7 @@ function Text:_format_range_minimal(start, stop, threshold)
   return string.sub(stop, -threshold)
 end
 
-return Text
+
+text.Text = Text
+
+return text

@@ -41,17 +41,17 @@ local function main ()
         end
     }
 
-    local processor = citeproc:new(citeproc_sys, style)
+    local engine = citeproc.new(citeproc_sys, style)
 
     local cite_items = {
         {id = "ITEM-1"},
         {id = "ITEM-2"},
     }
 
-    local result = processor:makeCitationCluster(cite_items)
+    local result = engine:makeCitationCluster(cite_items)
     print(inspect(result))
 
-    local params, bibliography = processor:makeBibliography()
+    local params, bibliography = engine:makeBibliography()
     print(inspect(params))
     print(inspect(bibliography))
 end

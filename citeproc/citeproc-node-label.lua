@@ -1,10 +1,10 @@
-local Element = require("citeproc.citeproc-node-element")
+local label = {}
+
+local element = require("citeproc.citeproc-element")
 local util = require("citeproc.citeproc-util")
 
-local inspect = require("inspect")
 
-
-local Label = Element:new()
+local Label = element.Element:new()
 
 function Label:render (item, context)
   self:debug_info(context)
@@ -76,4 +76,6 @@ function Label:_is_plural (variable_name, context)
 end
 
 
-return Label
+label.Label = Label
+
+return label

@@ -2,14 +2,14 @@ require("busted.runner")()
 
 kpse.set_program_name("luatex")
 
-local bibtex = require("citeproc.citeproc-bibtex")
+local bib = require("citeproc.citeproc-bib")
 local util = require("citeproc.citeproc-util")
 
 
 describe("BibParser", function()
 
   it("bib entry", function()
-    local bib = [[
+    local contents = [[
       @article{key,
         author = {von Last, First and von Last, First, Jr},
         editor = {First de la Last and First de la Von Last},
@@ -19,7 +19,7 @@ describe("BibParser", function()
         month = jul,
       }
     ]]
-    local res = bibtex.parse(bib)
+    local res = bib.parse(contents)
     local expected = {
       {
         author = {
@@ -62,7 +62,7 @@ describe("BibParser", function()
     describe("non-reversed name", function()
 
       it("Testing simple case with no von.", function()
-        local res = bibtex.parse_single_name("AA BB")
+        local res = bib.parse_single_name("AA BB")
         local expected = {
           given = "AA",
           family = "BB",
@@ -71,7 +71,7 @@ describe("BibParser", function()
       end)
 
       it("Testing that Last cannot be empty.", function()
-        local res = bibtex.parse_single_name("AA")
+        local res = bib.parse_single_name("AA")
         local expected = {
           family = "AA",
         }
@@ -79,7 +79,7 @@ describe("BibParser", function()
       end)
 
       it("Testing that Last cannot be empty.", function()
-        local res = bibtex.parse_single_name("AA bb")
+        local res = bib.parse_single_name("AA bb")
         local expected = {
           given = "AA",
           family = "bb",
@@ -88,7 +88,7 @@ describe("BibParser", function()
       end)
 
       it("Testing that Last cannot be empty.", function()
-        local res = bibtex.parse_single_name("aa")
+        local res = bib.parse_single_name("aa")
         local expected = {
           family = "aa",
         }
@@ -96,7 +96,7 @@ describe("BibParser", function()
       end)
 
       it("Testing simple von.", function()
-        local res = bibtex.parse_single_name("AA bb CC")
+        local res = bib.parse_single_name("AA bb CC")
         local expected = {
           given = "AA",
           ["non-dropping-particle"] = "bb",
@@ -106,7 +106,7 @@ describe("BibParser", function()
       end)
 
       it("Testing simple von (with inner uppercase words)", function()
-        local res = bibtex.parse_single_name("AA bb CC dd EE")
+        local res = bib.parse_single_name("AA bb CC dd EE")
         local expected = {
           given = "AA",
           ["non-dropping-particle"] = "bb CC dd",
@@ -115,7 +115,7 @@ describe("BibParser", function()
       end)
 
       it("Testing that digits are caseless (B fixes the case of 1B to uppercase).", function()
-        local res = bibtex.parse_single_name("AA 1B cc dd")
+        local res = bib.parse_single_name("AA 1B cc dd")
         local expected = {
           given = "AA 1B",
           ["non-dropping-particle"] = "cc",
@@ -125,7 +125,7 @@ describe("BibParser", function()
       end)
 
       it("Testing that digits are caseless (b fixes the case of 1b to lowercase)", function()
-        local res = bibtex.parse_single_name("AA 1b cc dd")
+        local res = bib.parse_single_name("AA 1b cc dd")
         local expected = {
           given = "AA",
           ["non-dropping-particle"] = "1b cc",
@@ -135,7 +135,7 @@ describe("BibParser", function()
       end)
 
       it("Testing that pseudo letters are caseless.", function()
-        local res = bibtex.parse_single_name("AA {b}B cc dd")
+        local res = bib.parse_single_name("AA {b}B cc dd")
         local expected = {
           given = "AA {b}B",
           ["non-dropping-particle"] = "cc",
@@ -145,7 +145,7 @@ describe("BibParser", function()
       end)
 
       it("Testing that pseudo letters are caseless.", function()
-        local res = bibtex.parse_single_name("AA {b}b cc dd")
+        local res = bib.parse_single_name("AA {b}b cc dd")
         local expected = {
           given = "AA",
           ["non-dropping-particle"] = "{b}b cc",
@@ -155,7 +155,7 @@ describe("BibParser", function()
       end)
 
       it("Testing that pseudo letters are caseless.", function()
-        local res = bibtex.parse_single_name("AA {B}b cc dd")
+        local res = bib.parse_single_name("AA {B}b cc dd")
         local expected = {
           given = "AA",
           ["non-dropping-particle"] = "{B}b cc",
@@ -165,7 +165,7 @@ describe("BibParser", function()
       end)
 
       it("Testing that pseudo letters are caseless.", function()
-        local res = bibtex.parse_single_name("AA {B}B cc dd")
+        local res = bib.parse_single_name("AA {B}B cc dd")
         local expected = {
           given = "AA {B}B",
           ["non-dropping-particle"] = "cc",
@@ -175,7 +175,7 @@ describe("BibParser", function()
       end)
 
       it("Testing that non letters are case less (in particular show how latex command are considered).", function()
-        local res = bibtex.parse_single_name("AA \\BB{b} cc dd")
+        local res = bib.parse_single_name("AA \\BB{b} cc dd")
         local expected = {
           given = "AA \\BB{b}",
           ["non-dropping-particle"] = "cc",
@@ -185,7 +185,7 @@ describe("BibParser", function()
       end)
 
       it("Testing that non letters are case less (in particular show how latex command are considered).", function()
-        local res = bibtex.parse_single_name("AA \\bb{b} cc dd")
+        local res = bib.parse_single_name("AA \\bb{b} cc dd")
         local expected = {
           given = "AA",
           ["non-dropping-particle"] = "\\bb{b} cc",
@@ -195,7 +195,7 @@ describe("BibParser", function()
       end)
 
       it("Testing that caseless words are grouped with First primilarily and then with Last.", function()
-        local res = bibtex.parse_single_name("AA {bb} cc DD")
+        local res = bib.parse_single_name("AA {bb} cc DD")
         local expected = {
           given = "AA {bb}",
           ["non-dropping-particle"] = "cc",
@@ -205,7 +205,7 @@ describe("BibParser", function()
       end)
 
       it("Testing that caseless words are grouped with First primilarily and then with Last.", function()
-        local res = bibtex.parse_single_name("AA bb {cc} DD")
+        local res = bib.parse_single_name("AA bb {cc} DD")
         local expected = {
           given = "AA",
           ["non-dropping-particle"] = "bb",
@@ -215,7 +215,7 @@ describe("BibParser", function()
       end)
 
       it("Testing that caseless words are grouped with First primilarily and then with Last.", function()
-        local res = bibtex.parse_single_name("AA {bb} CC")
+        local res = bib.parse_single_name("AA {bb} CC")
         local expected = {
           given = "AA {bb}",
           family = "CC",
@@ -228,7 +228,7 @@ describe("BibParser", function()
     describe("reversed name", function()
 
       it("Simple case. Case do not matter for First.", function()
-        local res = bibtex.parse_single_name("bb CC, AA")
+        local res = bib.parse_single_name("bb CC, AA")
         local expected = {
           given = "AA",
           ["non-dropping-particle"] = "bb",
@@ -238,7 +238,7 @@ describe("BibParser", function()
       end)
 
       it("Simple case. Case do not matter for First.", function()
-        local res = bibtex.parse_single_name("bb CC, aa")
+        local res = bib.parse_single_name("bb CC, aa")
         local expected = {
           given = "aa",
           ["non-dropping-particle"] = "bb",
@@ -248,7 +248,7 @@ describe("BibParser", function()
       end)
 
       it("Testing simple von (with inner uppercase).", function()
-        local res = bibtex.parse_single_name("bb CC dd EE, AA")
+        local res = bib.parse_single_name("bb CC dd EE, AA")
         local expected = {
           given = "AA",
           ["non-dropping-particle"] = "bb CC dd",
@@ -258,7 +258,7 @@ describe("BibParser", function()
       end)
 
       it("Testing that the Last part cannot be empty.", function()
-        local res = bibtex.parse_single_name("bb, AA")
+        local res = bib.parse_single_name("bb, AA")
         local expected = {
           given = "AA",
           family = "bb",
@@ -267,7 +267,7 @@ describe("BibParser", function()
       end)
 
       it("Testing that first can be empty after coma", function()
-        local res = bibtex.parse_single_name("BB,")
+        local res = bib.parse_single_name("BB,")
         local expected = {
           family = "BB",
         }
@@ -275,7 +275,7 @@ describe("BibParser", function()
       end)
 
       it("Simple Jr. Case do not matter for it.", function()
-        local res = bibtex.parse_single_name("bb CC,XX, AA")
+        local res = bib.parse_single_name("bb CC,XX, AA")
         local expected = {
           given = "AA",
           ["non-dropping-particle"] = "bb",
@@ -286,7 +286,7 @@ describe("BibParser", function()
       end)
 
       it("Simple Jr. Case do not matter for it.", function()
-        local res = bibtex.parse_single_name("bb CC,xx, AA")
+        local res = bib.parse_single_name("bb CC,xx, AA")
         local expected = {
           given = "AA",
           ["non-dropping-particle"] = "bb",
@@ -297,7 +297,7 @@ describe("BibParser", function()
       end)
 
       it("Testing that jr can be empty in between comas.", function()
-        local res = bibtex.parse_single_name("BB,, AA")
+        local res = bib.parse_single_name("BB,, AA")
         local expected = {
           given = "AA",
           family = "BB",
@@ -313,7 +313,7 @@ describe("BibParser", function()
   describe("parse date", function()
 
     it("single date", function()
-      local res = bibtex.parse_date("1992-08-11")
+      local res = bib.parse_date("1992-08-11")
       local expected = {
         ["date-parts"] = {
           { 1992, 8, 11 },
@@ -323,7 +323,7 @@ describe("BibParser", function()
     end)
 
     it("year", function()
-      local res = bibtex.parse_date("1992")
+      local res = bib.parse_date("1992")
       local expected = {
         ["date-parts"] = {
           { 1992 },
@@ -333,7 +333,7 @@ describe("BibParser", function()
     end)
 
     it("date range", function()
-      local res = bibtex.parse_date("1997-07-01/2017-07-01")
+      local res = bib.parse_date("1997-07-01/2017-07-01")
       local expected = {
         ["date-parts"] = {
           { 1997, 7, 1 },
@@ -344,13 +344,13 @@ describe("BibParser", function()
     end)
 
     it("literal date", function()
-      local res = bibtex.parse_date("2003c")
+      local res = bib.parse_date("2003c")
       local expected = { literal = "2003c" }
       assert.same(expected, res)
     end)
 
     it("too many range parts", function()
-      local res = bibtex.parse_date("1992/08/11")
+      local res = bib.parse_date("1992/08/11")
       local expected = { literal = "1992/08/11" }
       assert.same(expected, res)
     end)
