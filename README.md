@@ -31,7 +31,7 @@ local citeproc = require("citeproc")
 local engine = citeproc.new(sys, style)
 ```
 
-The `sys` is a table which must contain `retrieveLocale()` and `retrieveItem()` methods. Thet are called to feed the engine with inputs.
+The `sys` is a table which must contain `retrieveLocale()` and `retrieveItem()` functions. Thet are called to feed the engine with inputs.
 
 
 

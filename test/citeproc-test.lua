@@ -98,7 +98,7 @@ local function run_test(fixture)
   end
 
   local citeproc_sys = {
-    retrieveLocale = function (self, lang)
+    retrieveLocale = function (lang)
       if not lang then
         return nil
       end
@@ -109,7 +109,7 @@ local function run_test(fixture)
       end
       return dom.parse(content)
     end,
-    retrieveItem = function (self, id)
+    retrieveItem = function (id)
       return bib[id]
     end
   }

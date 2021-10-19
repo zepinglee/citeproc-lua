@@ -61,19 +61,18 @@ local function load_bib(bib_names)
 end
 
 local function make_citeproc_sys(bib_names)
-  local citeproc_sys = {}
-
-  function citeproc_sys:retrieveLocale(lang)
-    local locale_name_format = csl.locale_name_format or "locales-%s.xml"
-    local filename = string.format(locale_name_format, lang)
-    local contents = read_file(filename)
-    return contents
-  end
 
   local bib = load_bib(bib_names)
-  function citeproc_sys:retrieveItem(id)
-    return bib[id]
-  end
+  local citeproc_sys = {
+    retrieveLocale = function (lang)
+      local locale_name_format = csl.locale_name_format or "locales-%s.xml"
+      local filename = string.format(locale_name_format, lang)
+      return read_file(filename)
+    end,
+    retrieveItem = function (id)
+      return bib[id]
+    end
+  }
 
   return citeproc_sys
 end

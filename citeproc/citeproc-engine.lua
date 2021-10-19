@@ -145,7 +145,7 @@ end
 function CiteProc:_retrieve_item (id)
   -- Retrieve, copy, and normalize
   local res = {}
-  local item = self.sys:retrieveItem(id)
+  local item = self.sys.retrieveItem(id)
   if not item then
     error("Failed to retrieve \"" .. id .. "\"")
   end
@@ -217,7 +217,7 @@ end
 function CiteProc:get_system_locale (lang)
   local locale = self.system_locales[lang]
   if not locale then
-    locale = self.sys:retrieveLocale(lang)
+    locale = self.sys.retrieveLocale(lang)
     if not locale then
       util.warning(string.format("Failed to retrieve locale \"%s\"", lang))
       return nil
