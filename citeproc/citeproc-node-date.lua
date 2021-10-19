@@ -318,7 +318,7 @@ DatePart.render = function (self, date, context, last_range_begin, range_end)
           end
           term_name = string.format("season-%02d", season)
         else
-          context.engine:warning("Invalid month value")
+          util.warning("Invalid month value")
           return nil
         end
       else

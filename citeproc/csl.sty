@@ -1,0 +1,116 @@
+%
+% Copyright (C) 2021 Zeping Lee
+%
+
+\NeedsTeXFormat{LaTeX2e}
+\RequirePackage{expl3}
+\ProvidesExplPackage{csl}{2021-10-18}{0.0.1}{Citation Style Language for LaTeX}
+
+\msg_new:nnn { csl } { require-luatex }
+  { LuaTeX~ is~ required~ for~ `csl'~ package. }
+\sys_if_engine_luatex:F { \msg_error:nn { csl } { require-luatex } }
+
+\lua_now:n { csl = require("csl") }
+\RequirePackage { filehook }
+
+\cs_new:Npn \csl_incompatible_package:n #1
+  {
+    \AtBeginOfPackageFile* { #1 }
+      { \msg_error:nnn { csl } { incompatible-package } { #1 } }
+  }
+\msg_new:nnn { csl } { incompatible-package }
+  { The~ `#1'~ package~ is~ incompatible~ with~ `citeproc'. }
+
+\csl_incompatible_package:n { babelbib }
+\csl_incompatible_package:n { backref }
+\csl_incompatible_package:n { bibtopic }
+\csl_incompatible_package:n { bibunits }
+\csl_incompatible_package:n { chapterbib }
+\csl_incompatible_package:n { cite }
+\csl_incompatible_package:n { citeref }
+\csl_incompatible_package:n { inlinebib }
+\csl_incompatible_package:n { jurabib }
+\csl_incompatible_package:n { mcite }
+\csl_incompatible_package:n { mciteplus }
+\csl_incompatible_package:n { multibib }
+\csl_incompatible_package:n { natbib }
+\csl_incompatible_package:n { splitbib }
+
+
+\NewDocumentCommand \cslsetup {m}
+  { \keys_set:nn { csl } {#1} }
+
+\DeclareDocumentCommand \cite { o m }
+  { \lua_now:n { csl.cite("#2") } }
+
+\NewDocumentCommand \printbibliography { }
+  { \lua_now:n { csl.bibliography() } }
+
+
+\tl_new:N \l__csl_style_tl
+\clist_new:N \l__csl_bib_data_clist
+
+\keys_define:nn { csl }
+  {
+    style .tl_set:N = \l__csl_style_tl ,
+    bib-data .clist_set:N = \l__csl_bib_data_clist ,
+  }
+
+\AtBeginDocument
+  {
+    \lua_now:e { csl.init("\l__csl_style_tl", "\l__csl_bib_data_clist") }
+  }
+
+\DeclareDocumentCommand \bibliographystyle { m }
+  {
+    \ifx \@begindocumenthook \@undefined \else
+      \expandafter \AtBeginDocument
+    \fi
+      {
+        \if@filesw
+          \immediate \write \@auxout { \string \bibstyle { #1 } }
+        \fi
+      }
+    \tl_gset:Nn \l__csl_style_tl { #1 }
+  }
+
+\DeclareDocumentCommand \bibstyle { m }
+  { \tl_gset:Nn \l__csl_style_tl { #1 } }
+
+
+% Setting bib resource
+\NewDocumentCommand \addbibresource { m }
+  { \clist_put_right:Nn \l__csl_bib_data_clist { #1 } }
+
+\DeclareDocumentCommand \bibdata { m }
+  { \clist_set:Nn \l__csl_bib_data_clist { #1 } }
+
+
+\DeclareDocumentCommand \bibliography { m }
+  {
+    \if@filesw
+      \immediate \write \@auxout
+        { \string \bibdata { \zap@space #1~ \@empty } }
+    \fi
+    \printbibliography
+  }
+
+% For numeric or label-style bibliography
+% \def\@lbibitem[#1]#2{\item[\@biblabel{#1}\hfill]\if@filesw
+%       {\let\protect\noexpand
+%        \immediate
+%        \write\@auxout{\string\bibcite{#2}{#1}}}\fi\ignorespaces}
+\cs_set:Npn \@lbibitem [#1]#2
+  { \item [ \@biblabel { #1 } \hfill ] \ignorespaces }
+
+% For author-date bibliography
+% \def\@bibitem#1{\item\if@filesw \immediate\write\@auxout
+%        {\string\bibcite{#1}{\the\value{\@listctr}}}\fi\ignorespaces}
+\cs_set:Npn \@bibitem #1
+  { \item [ ] \ignorespaces }
+
+% CSL output the whole label thus the brackets are removed from \@biblabel
+% \def\@biblabel#1{[#1]}
+\cs_set:Npn \@biblabel #1 { #1 }
+
+\endinput

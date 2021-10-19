@@ -4,9 +4,11 @@
     },
     "Lua.diagnostics.globals": [
         "kpse",
+        "luatexbase",
+        "tex",
         "utilities",
         "describe",
         "it",
-        "pending"
+        "pending",
     ]
 }

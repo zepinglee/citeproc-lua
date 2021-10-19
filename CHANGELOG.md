@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - The `require("citeproc")` now return a module table instead of a class table. And the intialization method of the engine is changed from `CtieProc:new` to `citeproc.new`.
+- `CiteProc:makebibliography()` now returns a list of two tables: `params` and `bibitems`, not two tables.
 
 ## [v0.0.1] - 2021-09-11
 

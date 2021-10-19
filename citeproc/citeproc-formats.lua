@@ -17,6 +17,8 @@ formats.html = {
     end
     return str
   end,
+  ["bibstart"] = "<div class=\"csl-bib-body\">\n",
+  ["bibend"] = "</div>",
   ["@font-style/italic"] = "<i>%%STRING%%</i>",
   ["@font-style/oblique"] = "<em>%%STRING%%</em>",
   ["@font-style/normal"] = '<span style="font-style:normal;">%%STRING%%</span>',
@@ -73,6 +75,10 @@ formats.latex = {
     end
     return str
   end,
+  ["bibstart"] = function (context)
+    return string.format("\\begin{thebibliography}{%s}", context.longest_label)
+  end,
+  ["bibend"] = "\\end{thebibliography}",
   ["@font-style/normal"] = "{\\normalshape %%STRING%%}",
   ["@font-style/italic"] = "\\emph{%%STRING%%}",
   ["@font-style/oblique"] = "\\textsl{%%STRING%%}",
@@ -99,13 +105,22 @@ formats.latex = {
   -- TODO: The bibliography label (e.g., citation-number) should be put in the
   -- optional argument of `\bibitem`.
   ["@bibliography/entry"] = function (str, context)
-    return "\\bibitem[".. context.item.id .. "]{} " .. str
+    if not string.match(str, "\\bibitem") then
+      str =  "\\bibitem{".. context.item.id .. "} " .. str
+    end
+    return str
   end,
   ["@display/block"] = function (str, state)
     return str
   end,
   ["@display/left-margin"] = function (str, state)
-    return str
+    if #str > #state.longest_label then
+      state.longest_label = str
+    end
+    if string.match(str, "%]") then
+      str = "{" .. str .. "}"
+    end
+    return string.format("\\bibitem[%s]{%s} ", str, state.item.id)
   end,
   ["@display/right-inline"] = function (str, state)
     return str

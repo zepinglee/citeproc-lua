@@ -15,7 +15,7 @@ local util = require("citeproc.citeproc-util")
 
 local CiteProc = {}
 
-function CiteProc.new (sys, style, mode)
+function CiteProc.new (sys, style)
   if sys == nil then
     error("\"citeprocSys\" required")
   end
@@ -46,9 +46,7 @@ function CiteProc.new (sys, style, mode)
   o.style = o.csl:get_path("style")[1]
   o.csl:root_node().style = o.style
 
-  o.mode = mode
-
-  o.formatter = formats.html
+  o.formatter = formats.latex
 
   setmetatable(o, { __index = CiteProc })
   return o
@@ -98,7 +96,7 @@ function CiteProc:makeCitationCluster (citation_items)
   return res
 end
 
-function CiteProc:makeBibliography ()
+function CiteProc:makeBibliography()
   local items = {}
 
   if self.registry.requires_sorting then
@@ -111,8 +109,11 @@ function CiteProc:makeBibliography ()
   end
 
   local res = self.style:render_biblography(items, {engine=self})
-  local params = {}
-  return params, res
+  return res
+end
+
+function CiteProc:set_formatter(format)
+  self.formatter = formats[format]
 end
 
 function CiteProc.set_base_class (node)
@@ -218,7 +219,7 @@ function CiteProc:get_system_locale (lang)
   if not locale then
     locale = self.sys:retrieveLocale(lang)
     if not locale then
-      self:warning(string.format("Failed to retrieve locale \"%s\"", lang))
+      util.warning(string.format("Failed to retrieve locale \"%s\"", lang))
       return nil
     end
     if type(locale) == "string" then
@@ -233,16 +234,6 @@ function CiteProc:get_system_locale (lang)
   return locale
 end
 
-function CiteProc:warning(message)
-  if self.mode ~= "test" then
-    if message == nil then
-      message = ""
-    else
-      message = tostring(message)
-    end
-    io.stderr:write("Warning: " .. message .. "\n")
-  end
-end
 
 engine.CiteProc = CiteProc
 

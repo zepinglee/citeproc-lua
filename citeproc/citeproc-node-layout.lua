@@ -13,6 +13,7 @@ function Layout:render (items, context)
   -- When used within cs:citation, the delimiter attribute may be used to specify a delimiter for cites within a citation.
   -- Thus the processing of context is put after render_children().
   if context.mode ~= "citation" then
+    context.longest_label = ""
     context = self:process_context(context)
   end
 
@@ -79,6 +80,10 @@ function Layout:render (items, context)
       if not res then
         res = richtext.new("[CSL STYLE ERROR: reference with no printed form.]")
       end
+      res = self:wrap(res, context)
+      -- util.debug(text)
+      res = res:render(context.engine.formatter, context)
+      res = context.engine.formatter["@bibliography/entry"](res, context)
     end
     table.insert(output, res)
     previous_cite = item
@@ -98,14 +103,18 @@ function Layout:render (items, context)
       res = res:render(context.engine.formatter, context)
     end
     return res
+
   else
-    for i, text in ipairs(output) do
-      text = self:wrap(text, context)
-      -- util.debug(text)
-      text = text:render(context.engine.formatter, context)
-      output[i] = context.engine.formatter["@bibliography/entry"](text, context)
+    local params = {}
+    for _, key in ipairs({"bibstart", "bibend"}) do
+      local value = context.engine.formatter[key]
+      if type(value) == "function" then
+        value = value(context)
+      end
+      params[key] = value
     end
-    return output
+
+    return {params, output}
   end
 end
 

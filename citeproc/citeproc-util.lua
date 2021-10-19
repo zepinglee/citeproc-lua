@@ -24,10 +24,23 @@ function util.to_ordinal (n)
 end
 
 
-util.error = function (message)
-  error(message, 2)
+function util.error(message)
+  if luatexbase then
+    luatexbase.module_error("citeproc", message)
+  else
+    error(message, 2)
+  end
 end
 
+util.warning_enabled = true
+
+function util.warning(message)
+  if luatexbase then
+    luatexbase.module_warning("citeproc", message)
+  elseif util.warning_enabled then
+    io.stderr:write(message, "\n")
+  end
+end
 
 -- local remove_all_metatables = function(item, path)
 --   if path[#path] ~= inspect.METATABLE then return item end

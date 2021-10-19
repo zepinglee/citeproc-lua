@@ -82,7 +82,7 @@ function Element:render_children (item, context)
     if child:is_element() then
       if child.render == nil then
         local element_name = child:get_element_name()
-        context.engine:warning("Unkown type \"" .. element_name .. "\"")
+        util.warning("Unkown type \"" .. element_name .. "\"")
       end
       local str = child:render(item, context)
       table.insert(output, str)

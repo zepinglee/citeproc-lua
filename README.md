@@ -75,14 +75,20 @@ The more complicated method `processCitationCluster()` is not implemented yet.
 
 The `makeBibliography()` method produces the bibliography and parameters required for formatting.
 ```lua
-params, result = engine:makeBibliography()
+result = engine:makeBibliography()
 ```
 
 Returns:
 ```lua
 result = {
-  '<div class="csl-entry">B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005.</div>',
-  '<div class="csl-entry">F.G. Bennett Jr., “Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>, vol. 18, Aug. 2009, pp. 463–509.</div>'
+  {
+    hangingindent = false,
+    ["second-field-align"] = false,
+  },
+  {
+    '<div class="csl-entry">B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005.</div>',
+    '<div class="csl-entry">F.G. Bennett Jr., “Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>, vol. 18, Aug. 2009, pp. 463–509.</div>'
+  }
 }
 ```
 

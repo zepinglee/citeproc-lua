@@ -3,7 +3,7 @@ Pending → test-suite affix_WithCommas
 test/citeproc-test.lua:39: citations
 
 Pending → test-suite bugreports_AutomaticallyDeleteItemsFails
-test/citeproc-test.lua:128: citations
+test/citeproc-test.lua:132: citations
 
 Pending → test-suite bugreports_CreepingAddNames
 test/citeproc-test.lua:39: citations
@@ -84,7 +84,7 @@ Pending → test-suite magic_TermCapitalizationWithPrefix
 test/citeproc-test.lua:39: citations
 
 Pending → test-suite name_BibliographyNameFormNeverShrinks
-test/citeproc-test.lua:128: citations
+test/citeproc-test.lua:132: citations
 
 Pending → test-suite position_FirstTrueOnlyOnce
 test/citeproc-test.lua:39: citations

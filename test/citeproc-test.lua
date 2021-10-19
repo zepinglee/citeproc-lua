@@ -75,12 +75,14 @@ local function test_bibliography(engine, fixture)
   local output = {}
   for _, items in ipairs(bibentries) do
     engine:updateItems(items)
-    local _, entries = engine:makeBibliography()
-    local res = "<div class=\"csl-bib-body\">\n"
+    local result = engine:makeBibliography()
+    local params = result[1]
+    local entries = result[2]
+    local res = params.bibstart
     for _, entry in ipairs(entries) do
       res = res .. "  " .. entry .. "\n"
     end
-    res = res .. "</div>"
+    res = res .. params.bibend
     table.insert(output, res)
   end
   return table.concat(output, "\n")
@@ -114,7 +116,9 @@ local function run_test(fixture)
 
   local style = dom.parse(fixture.csl)
 
-  local engine = citeproc.new(citeproc_sys, style, "test")
+  local engine = citeproc.new(citeproc_sys, style)
+  engine:set_formatter('html')
+  citeproc.util.warning_enabled = false
 
   if fixture.mode == "citation" then
     if fixture.citations then
