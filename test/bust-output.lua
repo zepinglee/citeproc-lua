@@ -165,7 +165,7 @@ return function(options)
   end
 
   local function get_status_log()
-    local res = string.format("\n%-14s%8s%8s%8s%8s\n", "category",
+    local res = string.format("%-14s%8s%8s%8s%8s\n", "category",
       "success", "failure", "error", "pending")
 
     if not handler.categories then
@@ -177,6 +177,7 @@ return function(options)
     end
 
     if #handler.categories > 1 then
+      res = res .. "-------------- ------- ------- ------- -------\n"
       for _, category in ipairs(handler.categories) do
         local category_count = handler.category_count[category]
         local line = string.format("%-14s", category)
@@ -247,8 +248,8 @@ return function(options)
     if handler.test_count == 853 then
       colors = setmetatable({}, {__index = function() return function(s) return s end end})
       local file = io.open("test/citeproc-test.log", "w")
-      file:write(get_failures_log())
       file:write(get_status_log())
+      file:write(get_failures_log())
       file:close()
     end
 

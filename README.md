@@ -115,7 +115,7 @@ busted --run=citeproc
 ```
 
 The log is printed to [`test/citeproc-test.log`](https://github.com/zepinglee/citeproc-lua/tree/main/test/citeproc-test.log).
-Currently the `citeproc-lua` has passed 594 of 853 tests from test-suite.
+Currently the `citeproc-lua` has passed 600 of 853 tests from test-suite.
 
 Select tests via pattern.
 

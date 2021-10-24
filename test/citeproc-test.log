@@ -1,3 +1,44 @@
+category       success failure   error pending
+-------------- ------- ------- ------- -------
+affix                7       1       0       1
+bugreports          39      35       0       8
+collapse             4      16       0       1
+condition           17       0       0       0
+date                95       6       0       0
+decorations          7       0       0       0
+disambiguate        19      48       0       4
+display              4       1       0       0
+etal                 4       0       0       0
+flipflop            12       6       1       0
+form                 3       0       0       0
+fullstyles           3       2       0       0
+group                4       2       0       1
+integration          2       0       0      12
+label                9      10       0       0
+locale              23       0       0       0
+locator              0       6       0       0
+magic               24      14       1       1
+name                88      22       0       1
+nameattr            97       0       0       0
+nameorder            6       0       0       0
+namespaces           1       0       0       0
+number              17       3       0       0
+page                 9       0       0       0
+plural               7       0       0       0
+position             8       1       0       7
+punctuation         14       1       0       1
+quotes               3       1       0       0
+simplespace          1       0       0       0
+sort                42      16       0       8
+sortseparator        1       0       0       0
+substitute           5       2       0       0
+testers              1       0       0       1
+textcase            21       8       0       0
+unicode              1       0       0       0
+variables            2       3       0       0
+virtual              1       0       0       0
+-------------- ------- ------- ------- -------
+(all)              601     204       2      46
 
 Pending → test-suite affix_WithCommas
 test/citeproc-test.lua:39: citations
@@ -259,12 +300,6 @@ Expected:
 (string) 'Anne Tyler, George Smith, John Brown, and Cat Garfield, <i>Ladder of his’ Years</i>, vol. 2003 (New York: Ivy Books, 1997).
 Anne Tyler, George Smith, John Brown, and Cat Felix, <i>Ladder of his’ Years</i>, vol. 2003 (New York: Ivy Books, 1997).'
 
-Failure → test-suite bugreports_FrenchApostrophe
-Passed in:
-(string) '« Life’s ’Little’ Surprises »'
-Expected:
-(string) '« Life’s “Little” Surprises »'
-
 Failure → test-suite bugreports_GreekStyleProblems
 Passed in:
 (string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Κώστας Καρυωτάκης, <i>Ποιήματα και πεζά</i>, μτφ. Andreas Dimitriadis, επιμ. Γ. Π. Σαββίδης, 1998, σ .'
@@ -312,8 +347,8 @@ Passed in:
 
     <div class="csl-block">Aalto, Alan</div>
 
-    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">“‘PIAAC-Longitudinal (PIAAC-L) 2015’”</div>
-  .</div>
+    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">“‘PIAAC-Longitudinal (PIAAC-L) 2015.’”</div>
+  </div>
   <div class="csl-entry">
 
     <div class="csl-block">Aalto, Alan</div>
@@ -369,7 +404,7 @@ Passed in:
 
     <div class="csl-block">Aalto, Alan</div>
 
-    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">Here</div>
+    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline"><span style="font-variant:small-caps;">Here</span></div>
   .</div>
 </div>'
 Expected:
@@ -1107,36 +1142,6 @@ Expected:
   </div>
 </div>'
 
-Failure → test-suite flipflop_CompleteCiteInPrefix
-Passed in:
-(string) 'Wilhelm Dilthey, “The Types of World Views and Their Unfoldment Within the Metaphysical Systems,” in Dilthey’s Philosophy of Existence: Introduction to Weltanschauungslehre, trans. William Kluback and Martin Weinbaum (New York: Bookman Associates, 1957), 26–27 Other Book Title'
-Expected:
-(string) 'Wilhelm Dilthey, “The Types of World Views and Their Unfoldment Within the Metaphysical Systems,” in <i>Dilthey’s Philosophy of Existence: Introduction to Weltanschauungslehre</i>, trans. William Kluback and Martin Weinbaum (New York: Bookman Associates, 1957), 26–27 Other Book Title'
-
-Failure → test-suite flipflop_ItalicsFlipped
-Passed in:
-(string) '<i>One Two Three Four Five!</i>
-<i>One Two &#60;i&#62;Three Four&#60;/i&#62; Five!</i>'
-Expected:
-(string) '<i>One Two <span style="font-style:normal;">Three</span> Four Five!</i>
-<i>One <span style="font-style:normal;">Two <i>Three</i> Four</span> Five!</i>'
-
-Failure → test-suite flipflop_ItalicsSimple
-Passed in:
-(string) 'One TwoA Three Four Five!
-One TwoB Three Four Five!
-One TwoC Three Four Five!
-One TwoD Three Four Five!
-One TwoE &#60;i&#62;Three Four Five!&#60;/i&#62;
-One TwoF&#60;/i&#62; Three Four Five!'
-Expected:
-(string) 'One TwoA <i>Three Four</i> Five!
-<i>One TwoB</i> Three Four Five!
-One TwoC Three <i>Four Five!</i>
-<i>One TwoD</i> Three <i>Four Five!</i>
-<i>One TwoE <span style="font-style:normal;">Three</span> Four Five!</i>
-One TwoF&#60;/i&#62; Three Four Five!'
-
 Failure → test-suite flipflop_ItalicsWithOk
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -1159,15 +1164,9 @@ Expected:
 
 Failure → test-suite flipflop_LeadingMarkupWithApostrophe
 Passed in:
-(string) 'Insha’Allah is an Arabic phrase meaning “God willing.” Another Arabic word is bukra. Aalto'
+(string) '<i>Insha’Allah</i> is an Arabic phrase meaning “God willing.” Another Arabic word is <i>bukra</i>. Aalto'
 Expected:
 (string) '<i>Insha’Allah</i> is an Arabic phrase meaning ‘God willing’. Another Arabic word is <i>bukra</i>. Aalto'
-
-Failure → test-suite flipflop_LongComplexPrefix
-Passed in:
-(string) 'The French translation provided there runs, Toi, qui cultives notre philosophie sous lhabit étranger—et peut-être pas si étranger que cela, puisque la chevelure des naziréens et la consécration de la tête, dont il a toujours tenu le fer à lécart, sont aussi comme une loi des sanctuaires, et que la blancheur et l’éclat des vêtements appartiennent aux anges, quand on les représente sous une forme corporelle: c’est, je pense, le symbole de la pureté propre à leur nature—! Other Book Title'
-Expected:
-(string) 'The French translation provided there runs, <i>Toi, qui cultives notre philosophie sous lhabit étranger—et peut-être pas si étranger que cela, puisque la chevelure des naziréens et la consécration de la tête, dont il a toujours tenu le fer à lécart, sont aussi comme une loi des sanctuaires, et que la blancheur et l’éclat des vêtements appartiennent aux anges, quand on les représente sous une forme corporelle: c’est, je pense, le symbole de la pureté propre à leur nature—!</i> Other Book Title'
 
 Failure → test-suite flipflop_NumericField
 Passed in:
@@ -1181,15 +1180,9 @@ Passed in:
 Expected:
 (string) 'Nation of "Positive Obligations " of State under the European Convention on Human Rights (1)'
 
-Failure → test-suite flipflop_SingleQuotesOnItalics
-Passed in:
-(string) 'It is official (“My Title”) now'
-Expected:
-(string) 'It is official (“<i>My Title</i>”) now'
-
 Failure → test-suite flipflop_SmallCaps
 Passed in:
-(string) '<span style="font-variant:small-caps;">His Anonymous Life</span>, His Anthology'
+(string) '<span style="font-variant:small-caps;">His &#60;span style=“font-variant:small-caps;”&#62;Anonymous&#60;/span&#62; Life</span>, His &#60;span style=“font-variant:small-caps;”&#62;Anthology&#60;/span&#62;'
 Expected:
 (string) '<span style="font-variant:small-caps;">His <span style="font-variant:normal;">Anonymous</span> Life</span>, His <span style="font-variant:small-caps;">Anthology</span>'
 
@@ -1541,8 +1534,8 @@ Expected:
 Failure → test-suite name_InTextMarkupInitialize
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, John Q.</div>
-  <div class="csl-entry">Doe, John-Q.</div>
+  <div class="csl-entry"><b>Doe</b>, <b>John</b> Q.</div>
+  <div class="csl-entry"><b>Doe</b>, <b>John</b>-Q.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1553,8 +1546,8 @@ Expected:
 Failure → test-suite name_InTextMarkupNormalizeInitials
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, J Q.</div>
-  <div class="csl-entry">Doe, J-Q.</div>
+  <div class="csl-entry"><b>Doe</b>, <b>J</b> Q.</div>
+  <div class="csl-entry"><b>Doe</b>, <b>J</b>-Q.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1800,16 +1793,6 @@ Passed in:
 Expected:
 (string) '(Aalto 2000a; b; c)'
 
-Failure → test-suite quotes_PunctuationWithInnerQuote
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">“This is ’The One’.”</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">“This is ‘The One.’”</div>
-</div>'
-
 Failure → test-suite quotes_QuotesUnderQuotesFalse
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -2031,7 +2014,7 @@ Failure → test-suite sort_Quotes
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">“Simple title here B”</div>
-  <div class="csl-entry">Simple ’title’ here C</div>
+  <div class="csl-entry">Simple “title” here C</div>
   <div class="csl-entry">Simple title, here A</div>
 </div>'
 Expected:
@@ -2084,20 +2067,6 @@ Passed in:
 (string) '[CSL STYLE ERROR: reference with no printed form.]'
 Expected:
 (string) 'Content:'
-
-Failure → test-suite testers_SecondAutoGeneratedZoteroPluginTest
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Center <sup>for</sup> History <sub>and</sub> New Media. “Zotero … ‘Quick Start’ &#38; <span style="font-variant:small-caps;">Guide</span> 日本語.” http://zotero.org/support/quick_start_guide.</div>
-  <div class="csl-entry">Smith, John. <i>Book A</i>, 2000.</div>
-  <div class="csl-entry">Smith, Steven. <i>Book A</i>, 2000.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Center <sup>for</sup> History <sub>and</sub> New Media. “<b>Zotero</b> … ‘Quick Start’ &#38; <span style="font-variant:small-caps;">Guide</span> 日本語.” http://zotero.org/support/quick_start_guide.</div>
-  <div class="csl-entry">Smith, John. <i>Book A</i>, 2000.</div>
-  <div class="csl-entry">Smith, Steven. <i>Book A</i>, 2000.</div>
-</div>'
 
 Failure → test-suite textcase_CapitalsUntouched
 Passed in:
@@ -2215,46 +2184,8 @@ Expected:
 My Long Title 2 does not have title-short
 does not have title-short'
 
-Error → test-suite magic_CitationLabelInBibliography
-./citeproc/citeproc-richtext.lua:429: assertion failed!
+Error → test-suite flipflop_ApostropheInsideTag
+./citeproc/citeproc-richtext.lua:138: bad argument #1 to 'sub' (string expected, got nil)
 
-category       success failure   error pending
-affix                7       1       0       1
-bugreports          38      36       0       8
-collapse             4      16       0       1
-condition           17       0       0       0
-date                95       6       0       0
-decorations          7       0       0       0
-disambiguate        19      48       0       4
-display              4       1       0       0
-etal                 4       0       0       0
-flipflop             8      11       0       0
-form                 3       0       0       0
-fullstyles           3       2       0       0
-group                4       2       0       1
-integration          2       0       0      12
-label                9      10       0       0
-locale              23       0       0       0
-locator              0       6       0       0
-magic               24      14       1       1
-name                88      22       0       1
-nameattr            97       0       0       0
-nameorder            6       0       0       0
-namespaces           1       0       0       0
-number              17       3       0       0
-page                 9       0       0       0
-plural               7       0       0       0
-position             8       1       0       7
-punctuation         14       1       0       1
-quotes               2       2       0       0
-simplespace          1       0       0       0
-sort                42      16       0       8
-sortseparator        1       0       0       0
-substitute           5       2       0       0
-testers              0       1       0       1
-textcase            21       8       0       0
-unicode              1       0       0       0
-variables            2       3       0       0
-virtual              1       0       0       0
--------------- ------- ------- ------- -------
-(all)              594     212       1      46
+Error → test-suite magic_CitationLabelInBibliography
+./citeproc/citeproc-richtext.lua:345: assertion failed!

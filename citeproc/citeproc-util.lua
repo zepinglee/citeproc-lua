@@ -525,15 +525,29 @@ end
 -- ROMANESQUE_REGEXP = "-0-9a-zA-Z\u0e01-\u0e5b\u00c0-\u017f\u0370-\u03ff\u0400-\u052f\u0590-\u05d4\u05d6-\u05ff\u1f00-\u1fff\u0600-\u06ff\u200c\u200d\u200e\u0218\u0219\u021a\u021b\u202a-\u202e"
 
 util.romanesque_ranges = {
-  {0x0E01, 0x0E5B},
-  {0x00C0, 0x017F},
-  {0x0370, 0x03FF},
-  {0x0400, 0x052F},
-  {0x0590, 0x05D4},
-  {0x05D6, 0x05FF},
-  {0x1F00, 0x1FFF},
-  {0x0600, 0x06FF},
-  {0x202A, 0x202E},
+  {0x0030, 0x0039},  -- 0-9
+  {0x0041, 0x005A},  -- A-Z
+  {0x0061, 0x007A},  -- a-z
+  {0x0E01, 0x0E5B},  -- Thai
+  {0x0E01, 0x0E5B},  -- Thai
+  {0x00C0, 0x017F},  -- Latin-1 Supplement
+  {0x0370, 0x03FF},  -- Greek and Coptic
+  {0x0400, 0x052F},  -- Cyrillic
+  {0x0590, 0x05D4},  -- Hebrew
+  {0x05D6, 0x05FF},  -- Hebrew
+  {0x1F00, 0x1FFF},  -- Greek Extended
+  {0x0600, 0x06FF},  -- Arabic
+  {0x202A, 0x202E},  -- Writing directions in General Punctuation
+}
+
+util.romanesque_chars = {
+  0x200c,
+  0x200d,
+  0x200e,
+  0x0218,
+  0x0219,
+  0x021a,
+  0x021b,
 }
 
 util.CJK_ranges = {
@@ -549,16 +563,6 @@ util.CJK_ranges = {
   {0x2CEB0, 0x2EBEF},  -- CJK Unified Ideographs Extension F
   {0x30000, 0x3134F},  -- CJK Unified Ideographs Extension G
   {0x2F800, 0x2FA1F},  -- CJK Compatibility Ideographs Supplement
-}
-
-util.romanesque_chars = {
-  0x200c,
-  0x200d,
-  0x200e,
-  0x0218,
-  0x0219,
-  0x021a,
-  0x021b,
 }
 
 function util.in_list (value, list)
@@ -579,26 +583,30 @@ function util.in_ranges (value, ranges)
   return false
 end
 
-function util.is_romanesque (s)
+function util.is_romanesque(code_point)
+  if not code_point then
+    return false
+  end
+  if util.in_ranges(code_point, util.romanesque_ranges) then
+    return true
+  end
+  if util.in_list(code_point, util.romanesque_chars) then
+    return true
+  end
+  return false
+end
+
+function util.has_romanesque_char(s)
   -- has romanesque char but not necessarily pure romanesque
   if not s then
     return false
   end
-  local res = false
-  if string.match(s, "%a") then
-    res = true
-  else
-    for _, codepoint in utf8.codes(s) do
-      local char_is_romanesque = string.match(utf8.char(codepoint), "[-%w]") or
-        util.in_list(codepoint, util.romanesque_chars) or
-        util.in_ranges(codepoint, util.romanesque_ranges)
-      if char_is_romanesque then
-        res = true
-        break
-      end
+  for _, code_point in utf8.codes(s) do
+    if util.is_romanesque(code_point) then
+      return true
     end
   end
-  return res
+  return false
 end
 
 function util.convert_roman (number)

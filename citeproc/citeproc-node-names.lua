@@ -220,7 +220,7 @@ function Name:render_single_name (name, index, context)
   if form == "long" then
     local order
     local suffix_separator = sort_separator
-    if not util.is_romanesque(name["family"]) then
+    if not util.has_romanesque_char(name["family"]) then
       order = {family, given}
       inverted = true
       sort_separator = ""

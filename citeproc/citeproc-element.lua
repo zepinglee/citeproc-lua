@@ -219,6 +219,7 @@ function Element:get_variable (item, name, context)
   else
     local res = item[name]
     if type(res) == "table" and res._type == "RichText" then
+      -- TODO: should be deep copy
       res = res:shallow_copy()
     end
 

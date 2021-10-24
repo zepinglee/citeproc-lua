@@ -12,37 +12,6 @@ local util = require("citeproc.citeproc-util")
 local RichText = {
   contents = nil,
   formats = nil,
-  _tag_formats = {
-    ["i"] = {["font-style"] = "italic"},
-    ["b"] = {["font-weight"] = "bold"},
-    ["sup"] = {["vertical-align"] = "sup"},
-    ["sub"] = {["vertical-align"] = "sub"},
-    ["sc"] = {["font-variant"] = "small-caps"},
-    ['span style="font-variant: small-caps;"'] = {["font-variant"] = "smal-caps"},
-    ['span class="nocase"'] = {["class"] = "nocase"},
-  },
-  _default_formats = {
-    ["font-style"] = "normal",
-    ["font-variant"] = "normal",
-    ["font-weight"] = "normal",
-    ["text-decoration"] = "none",
-    ["vertical-align"] = "baseline",
-    ["quotes"] = "false",
-  },
-  _format_sequence = {
-    "font-style",
-    "font-variant",
-    "font-weight",
-    "text-decoration",
-    "vertical-align",
-    "quotes",
-    "display",
-  },
-  _flip_flop_formats = {
-    ["font-style"] = "italic",
-    ["font-weight"] = "bold",
-    ["quotes"] = "true"
-  },
   _type = "RichText",
 }
 
@@ -51,13 +20,14 @@ function RichText:shallow_copy()
   for _, text in ipairs(self.contents) do
     table.insert(res.contents, text)
   end
-  for key, value in ipairs(self.formats) do
+  for key, value in pairs(self.formats) do
     res.formats[key] = value
   end
   return res
 end
 
 function RichText:render(formatter, context, punctuation_in_quote)
+  -- util.debug(self)
   self:merge_punctuations()
 
   if punctuation_in_quote == nil and context then
@@ -95,7 +65,7 @@ function RichText:_render(formatter, context)
     end
     res = res .. str
   end
-  for _, attr in ipairs(self._format_sequence) do
+  for _, attr in ipairs(richtext.format_sequence) do
     local value = self.formats[attr]
     if value then
       local key = string.format("@%s/%s", attr, value)
@@ -112,60 +82,6 @@ function RichText:_render(formatter, context)
   return res
 end
 
--- https://github.com/Juris-M/citeproc-js/blob/aa2683f48fe23be459f4ed3be3960e2bb56203f0/src/queue.js#L724
--- Also merge duplicate punctuations.
-RichText.punctuation_map = {
-  ["!"] = {
-    ["."] = "!",
-    ["?"] = "!?",
-    [":"] = "!",
-    [","] = "!,",
-    [";"] = "!;",
-  },
-  ["?"] = {
-    ["!"] = "?!",
-    ["."] = "?",
-    [":"] = "?",
-    [","] = "?,",
-    [";"] = "?;",
-  },
-  ["."] = {
-    ["!"] = ".!",
-    ["?"] = ".?",
-    [":"] = ".:",
-    [","] = ".,",
-    [";"] = ".;",
-  },
-  [":"] = {
-    ["!"] = "!",
-    ["?"] = "?",
-    ["."] = ":",
-    [","] = ":,",
-    [";"] = ":;",
-  },
-  [","] = {
-    ["!"] = ",!",
-    ["?"] = ",?",
-    [":"] = ",:",
-    ["."] = ",.",
-    [";"] = ",;",
-  },
-  [";"] = {
-    ["!"] = "!",
-    ["?"] = "?",
-    [":"] = ";",
-    [","] = ";,",
-    ["."] = ";",
-  }
-}
-
-RichText.in_quote_punctuations = {
-  [","] = true,
-  ["."] = true,
-  ["?"] = true,
-  ["!"] = true,
-}
-
 function RichText:merge_punctuations(contents, index)
   for i, text in ipairs(self.contents) do
     if text._type == "RichText" then
@@ -174,7 +90,7 @@ function RichText:merge_punctuations(contents, index)
       if contents and index then
         local previous_string = contents[index]
         local last_char = string.sub(previous_string, -1)
-        local right_punct_map = self.punctuation_map[last_char]
+        local right_punct_map = richtext.punctuation_map[last_char]
         if right_punct_map then
           local first_char = string.sub(text, 1, 1)
           local new_punctuations = nil
@@ -204,13 +120,13 @@ function RichText:move_punctuation_in_quote()
   local i = 1
   while i <= #self.contents do
     local text = self.contents[i]
-    if text._type == "RichText" then
+    if type(text) == "table" and text._type == "RichText" then
       text:move_punctuation_in_quote()
-      if text.formats["quotes"] then
 
+      if text.formats["quotes"] then
         local contents = self.contents
         local last_string = text
-        while last_string._type == "RichText" do
+        while type(last_string) == "table" and last_string._type == "RichText" do
           contents = last_string.contents
           last_string = contents[#contents]
         end
@@ -224,9 +140,9 @@ function RichText:move_punctuation_in_quote()
             local next_text = self.contents[i + 1]
             if type(next_text) == "string" then
               local first_char = string.sub(next_text, 1, 1)
-              if self.in_quote_punctuations[first_char] then
+              if richtext.in_quote_punctuations[first_char] then
                 done = false
-                local right_punct_map = self.punctuation_map[last_char]
+                local right_punct_map = richtext.punctuation_map[last_char]
                 if right_punct_map then
                   first_char  = right_punct_map[first_char]
                   last_string = string.sub(last_string, 1, -2)
@@ -427,17 +343,20 @@ end
 
 function richtext.concat(str1, str2)
   assert(str1 and str2)
-  local res = richtext.new()
-  if str1._type ~= "RichText" then
+
+  if type(str1) == "string" then
     str1 = richtext.new(str1)
   end
+
+  local res
   if next(str1.formats) == nil or str2 == "" then
     -- shallow copy
-    res = str1:shallow_copy()
+    res = str1
   else
     res = richtext.new()
     res.contents = {str1}
   end
+
   if str2._type == "RichText" then
     if next(str2.formats) == nil then
       for _, text in ipairs(str2.contents) do
@@ -494,13 +413,13 @@ end
 function RichText:clean_formats(format)
   -- Remove the formats that are default values
   if not format then
-    for format, _ in pairs(self._default_formats) do
+    for format, _ in pairs(richtext.default_formats) do
       self:clean_formats(format)
     end
     return
   end
   if self.formats[format] then
-    if self.formats[format] == self._default_formats[format] then
+    if self.formats[format] == richtext.default_formats[format] then
       self.formats[format] = nil
     else
       return
@@ -515,7 +434,7 @@ end
 
 function RichText:flip_flop(attr, value)
   if not attr then
-    for attr, _ in pairs(RichText._flip_flop_formats) do
+    for attr, _ in pairs(richtext.flip_flop_formats) do
       self:flip_flop(attr)
     end
     return
@@ -571,6 +490,60 @@ local function table_update(t, new_t)
   return t
 end
 
+function RichText._split_tags(str)
+  -- str = string.gsub(str, '<span%s+style="font%-variant:%s+small-caps')
+  local strings = {}
+
+  local start_index = 1
+  local i = 1
+
+  while i <= #str do
+    local substr = string.sub(str, i)
+    local starts_with_tag = false
+    for tag, _ in pairs(richtext.tags) do
+      if util.startswith(substr, tag) then
+        if start_index <= i - 1 then
+          table.insert(strings, string.sub(str, start_index, i-1))
+        end
+        table.insert(strings, tag)
+        i = i + #tag
+        start_index = i
+        starts_with_tag = true
+        break
+      end
+    end
+    if not starts_with_tag then
+      i = i + 1
+    end
+  end
+  if start_index <= #str then
+    table.insert(strings, string.sub(str, start_index))
+  end
+
+  for i = 1, #strings do
+    str = strings[i]
+    if str == "'" or str == util.unicode["apostrophe"] then
+      local previous_str = strings[i - 1]
+      local next_str = strings[i + 1]
+      if previous_str and next_str then
+        local previous_code_point = nil
+        for _, code_point in utf8.codes(previous_str) do
+          previous_code_point = code_point
+        end
+        local next_code_point = utf8.codepoint(next_str)
+        if util.is_romanesque(previous_code_point) and util.is_romanesque(next_code_point) then
+          -- An apostrophe
+          strings[i-1] = strings[i-1] .. util.unicode["apostrophe"] .. strings[i+1]
+          table.remove(strings, i+1)
+          table.remove(strings, i)
+        end
+      end
+    end
+  end
+
+  return strings
+end
+
 function richtext.new(text, formats)
   local res = {
     contents = {},
@@ -585,85 +558,57 @@ function richtext.new(text, formats)
 
   if type(text) == "string" then
 
-    -- normalize unicode quotes
-    text = string.gsub(text, "()'", function(pos)
-      if pos == 1 or text[pos - 1] == " " then
-        return "‘"
-      else
-        return "’"
-      end
-    end)
+    local strings = RichText._split_tags(text)
+    local contents = {}
+    for _, str in ipairs(strings) do
+      table.insert(contents, str)
+      if richtext.end_tags[str] then
+        for i = #contents - 1, 1, -1 do
+          local start_tag = contents[i]
+          if type(start_tag) == "string" and richtext.tag_pairs[start_tag] == str then
+            local subtext = richtext.new()
+            -- subtext.contents = util.slice(contents, i + 1, #contents - 1)
+            for j = i + 1, #contents - 1 do
+              local substr = contents[j]
+              if substr == "'" then
+                substr = util.unicode["apostrophe"]
+              end
+              local last_text = subtext.contents[#subtext.contents]
+              if type(substr) == "string" and type(last_text) == "string" then
+                subtext.contents[#subtext.contents] = last_text .. substr
+              else
+                table.insert(subtext.contents, substr)
+              end
+            end
 
-    local done = false
+            for key, value in pairs(richtext.tag_formats[start_tag]) do
+              subtext.formats[key] = value
+            end
 
-    while not done do
-      local prefix, pos, contents, suffix
-      local tag, attributes
-
-      prefix, pos, tag, attributes, contents, suffix = string.match(text, "^(.-)()<(%w+)%s*(.-)>(.-)</%3>(.*)$")
-      if contents then
-        if tag == "span" then
-          formats = RichText._tag_formats[tag .. " " .. attributes]
-        else
-          formats = RichText._tag_formats[tag]
+            for j = #contents, i, -1 do
+              table.remove(contents, j)
+            end
+            table.insert(contents, subtext)
+            break
+          end
         end
       end
+    end
 
-      -- text = string.gsub(text, '"(.-)"', '“%1”')
-
-      local new_pos = string.match(text, '^.-()“.-”')
-      if not pos or (new_pos and new_pos < pos) then
-        prefix, contents, suffix = string.match(text, '^(.-)“(.-)”(.*)$')
-        if contents then
-          pos = new_pos
-          formats = {quotes = "true"}
-        end
+    for i = #contents, 1, -1 do
+      if contents[i] == "'" then
+        contents[i] = util.unicode["apostrophe"]
       end
-
-      new_pos = string.match(text, '^.-()".-"')
-      if not pos or (new_pos and new_pos < pos) then
-        prefix, contents, suffix = string.match(text, '^(.-)"(.-)"(.*)$')
-        if contents then
-          pos = new_pos
-          formats = {quotes = "true"}
-        end
+      if type(contents[i]) == "string" and type(contents[i+1]) == "string" then
+        contents[i] = contents[i] .. contents[i+1]
+        table.remove(contents, i+1)
       end
+    end
 
-      new_pos = string.match(text, "^.-()‘.-’%W")
-      if not pos or (new_pos and new_pos < pos) then
-        prefix, contents, suffix = string.match(text, "^(.-)‘(.-)’(%W.*)$")
-        if contents then
-          pos = new_pos
-          formats = {quotes = "true"}
-        end
-      end
-
-      new_pos = string.match(text, "^.-()‘.-’$")
-      if not pos or (new_pos and new_pos < pos) then
-        prefix, contents, suffix = string.match(text, "^(.-)‘(.-)’$")
-        if contents then
-          pos = new_pos
-          formats = {quotes = "true"}
-          suffix = ""
-        end
-      end
-
-      if contents then
-        if prefix ~= "" then
-          table.insert(res.contents, prefix)
-        end
-        table.insert(res.contents, richtext.new(contents, formats))
-
-        if suffix == "" then
-          done = true
-        else
-          text = suffix
-        end
-      else
-        table.insert(res.contents, text)
-        done = true
-      end
-
+    if #contents == 1 and type(contents[1]) == "table" then
+      res = contents[1]
+    else
+      res.contents = contents
     end
 
     return res
@@ -672,10 +617,128 @@ function richtext.new(text, formats)
     return text
 
   elseif type(text) == "table" then
-    return res
+    return text
   end
   return nil
 end
 
+richtext.tag_formats = {
+  ["<i>"] = {["font-style"] = "italic"},
+  ["<b>"] = {["font-weight"] = "bold"},
+  ["<sup>"] = {["vertical-align"] = "sup"},
+  ["<sub>"] = {["vertical-align"] = "sub"},
+  ["<sc>"] = {["font-variant"] = "small-caps"},
+  ['<span style="font-variant: small-caps;">'] = {["font-variant"] = "small-caps"},
+  ['<span class="nocase">'] = {["class"] = "nocase"},
+  ['<span class="nodecor">'] = {["class"] = "nodecor"},
+  ['"'] = {["quotes"] = "true"},
+  [util.unicode['left double quotation mark']] = {["quotes"] = "true"},
+  ["'"] = {["quotes"] = "true"},
+  [util.unicode['left single quotation mark']] = {["quotes"] = "true"},
+}
+
+richtext.default_formats = {
+  ["font-style"] = "normal",
+  ["font-variant"] = "normal",
+  ["font-weight"] = "normal",
+  ["text-decoration"] = "none",
+  ["vertical-align"] = "baseline",
+  ["quotes"] = "false",
+}
+
+richtext.format_sequence = {
+  "font-style",
+  "font-variant",
+  "font-weight",
+  "text-decoration",
+  "vertical-align",
+  "quotes",
+  "display",
+}
+
+richtext.flip_flop_formats = {
+  ["font-style"] = "italic",
+  ["font-weight"] = "bold",
+  ["quotes"] = "true",
+}
+
+-- https://github.com/Juris-M/citeproc-js/blob/aa2683f48fe23be459f4ed3be3960e2bb56203f0/src/queue.js#L724
+-- Also merge duplicate punctuations.
+richtext.punctuation_map = {
+  ["!"] = {
+    ["."] = "!",
+    ["?"] = "!?",
+    [":"] = "!",
+    [","] = "!,",
+    [";"] = "!;",
+  },
+  ["?"] = {
+    ["!"] = "?!",
+    ["."] = "?",
+    [":"] = "?",
+    [","] = "?,",
+    [";"] = "?;",
+  },
+  ["."] = {
+    ["!"] = ".!",
+    ["?"] = ".?",
+    [":"] = ".:",
+    [","] = ".,",
+    [";"] = ".;",
+  },
+  [":"] = {
+    ["!"] = "!",
+    ["?"] = "?",
+    ["."] = ":",
+    [","] = ":,",
+    [";"] = ":;",
+  },
+  [","] = {
+    ["!"] = ",!",
+    ["?"] = ",?",
+    [":"] = ",:",
+    ["."] = ",.",
+    [";"] = ",;",
+  },
+  [";"] = {
+    ["!"] = "!",
+    ["?"] = "?",
+    [":"] = ";",
+    [","] = ";,",
+    ["."] = ";",
+  }
+}
+
+richtext.in_quote_punctuations = {
+  [","] = true,
+  ["."] = true,
+  ["?"] = true,
+  ["!"] = true,
+}
+
+richtext.tag_pairs = {
+  ["<i>"] = "</i>",
+  ["<b>"] = "</b>",
+  ["<sup>"] = "</sup>",
+  ["<sub>"] = "</sub>",
+  ["<sc>"] = "</sc>",
+  ['<span style="font-variant: small-caps;">'] = "</span>",
+  ['<span class="nocase">'] = "</span>",
+  ['<span class="nodecor">'] = "</span>",
+  ['"'] = '"',
+  [util.unicode['left double quotation mark']] = util.unicode['right double quotation mark'],
+  ["'"] = "'",
+  [util.unicode['left single quotation mark']] = util.unicode['right single quotation mark'],
+}
+
+richtext.tags = {}
+
+richtext.end_tags = {}
+
+for start_tag, end_tag in pairs(richtext.tag_pairs) do
+  richtext.tags[start_tag] = true
+  richtext.tags[end_tag] = true
+  richtext.end_tags[end_tag] = true
+end
 
 return richtext
