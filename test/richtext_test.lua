@@ -318,6 +318,7 @@ describe("RichText", function()
         local res = text:render(formatter, nil)
         assert.equal("fOO <i>bAR</i>", res)
       end)
+
     end)
 
     describe("sentence", function()
@@ -374,6 +375,22 @@ describe("RichText", function()
         assert.equal("Supplément Aux Annales Du Service Des Antiquités de l’Égypte, Cahier", res)
       end)
 
+    end)
+
+    it("nodecor", function()
+      local text = richtext.new('foo <span class="nodecor">bar</span> baz')
+      text:add_format("text-case", "capitalize-all")
+      local res = text:render(formatter, nil)
+      assert.equal("Foo bar Baz", res)
+    end)
+
+    it("small-caps", function()
+      local text = richtext.new('foo bar baz')
+      text:add_format("text-case", "capitalize-all")
+      text:add_format("font-variant", "small-caps")
+      local res = text:render(formatter, nil)
+      local expected = '<span style="font-variant:small-caps;">Foo Bar Baz</span>'
+      assert.equal(expected, res)
     end)
 
   end)

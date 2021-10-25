@@ -9,7 +9,7 @@ decorations          7       0       0       0
 disambiguate        19      48       0       4
 display              4       1       0       0
 etal                 4       0       0       0
-flipflop            13       5       1       0
+flipflop            14       4       1       0
 form                 3       0       0       0
 fullstyles           3       2       0       0
 group                4       2       0       1
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              602     203       2      46
+(all)              603     202       2      46
 
 Pending → test-suite affix_WithCommas
 test/citeproc-test.lua:39: citations
@@ -1142,16 +1142,6 @@ Expected:
   </div>
 </div>'
 
-Failure → test-suite flipflop_ItalicsWithOkAndTextcase
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><span style="font-variant:small-caps;">lessard <span style="font-variant:normal;">v.</span> schmidt</span>. 1972. 349 F. Supp. 1078 (E.D. Wisc.).</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><span style="font-variant:small-caps;">Lessard <span style="font-variant:normal;">v.</span> Schmidt</span>. 1972. 349 F. Supp. 1078 (E.D. Wisc.).</div>
-</div>'
-
 Failure → test-suite flipflop_LeadingMarkupWithApostrophe
 Passed in:
 (string) '<i>Insha’Allah</i> is an Arabic phrase meaning “God willing.” Another Arabic word is <i>bukra</i>. Aalto'
@@ -2175,7 +2165,7 @@ My Long Title 2 does not have title-short
 does not have title-short'
 
 Error → test-suite flipflop_ApostropheInsideTag
-./citeproc/citeproc-richtext.lua:138: bad argument #1 to 'sub' (string expected, got nil)
+./citeproc/citeproc-richtext.lua:137: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → test-suite magic_CitationLabelInBibliography
 ./citeproc/citeproc-richtext.lua:345: assertion failed!

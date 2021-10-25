@@ -27,7 +27,6 @@ function RichText:shallow_copy()
 end
 
 function RichText:render(formatter, context, punctuation_in_quote)
-  -- util.debug(self)
   self:merge_punctuations()
 
   if punctuation_in_quote == nil and context then
@@ -164,6 +163,11 @@ function RichText:move_punctuation_in_quote()
 end
 
 function RichText:change_case()
+  for _, text in ipairs(self.contents) do
+    if type(text) == "table" and text._type == "RichText" then
+      text:change_case()
+    end
+  end
   local text_case = self.formats["text-case"]
   if text_case then
     if text_case == "lowercase" then
@@ -179,20 +183,16 @@ function RichText:change_case()
     elseif text_case == "title" then
       self:title()
     end
-  else
-    for _, text in ipairs(self.contents) do
-      if type(text) == "table" and text._type == "RichText" then
-        text:change_case()
-      end
-    end
   end
 end
 
-function RichText:_change_word_case(state, word_transform, first_tranform)
-  if self.formats["vertical-align"] == "sup" or
+function RichText:_change_word_case(state, word_transform, first_tranform, is_phrase)
+  if self.formats["text-case"] == "nocase" then
+    return
+  end
+  if is_phrase and (self.formats["vertical-align"] == "sup" or
       self.formats["vertical-align"] == "sub" or
-      self.formats["font-variant"] == "small-caps" or
-      self.formats["class"] == "nocase" then
+      self.formats["font-variant"] == "small-caps") then
     return
   end
   state = state or "after-sentence"
@@ -243,7 +243,7 @@ function RichText:_change_word_case(state, word_transform, first_tranform)
 
       self.contents[i] = res
     else
-      state = text:_change_word_case(state, word_transform, first_tranform)
+      state = text:_change_word_case(state, word_transform, first_tranform, true)
     end
   end
   return state
@@ -563,7 +563,7 @@ function richtext.new(text, formats)
               for attr, value in pairs(richtext.default_formats) do
                 subtext.formats[attr] = value
               end
-              subtext.formats["class"] = "nocase"
+              subtext.formats["text-case"] = "nocase"
             else
               for attr, value in pairs(richtext.tag_formats[start_tag]) do
                 subtext.formats[attr] = value
@@ -614,7 +614,7 @@ richtext.tag_formats = {
   ["<sub>"] = {["vertical-align"] = "sub"},
   ["<sc>"] = {["font-variant"] = "small-caps"},
   ['<span style="font-variant: small-caps;">'] = {["font-variant"] = "small-caps"},
-  ['<span class="nocase">'] = {["class"] = "nocase"},
+  ['<span class="nocase">'] = {["text-case"] = "nocase"},
   ['"'] = {["quotes"] = "true"},
   [util.unicode['left double quotation mark']] = {["quotes"] = "true"},
   ["'"] = {["quotes"] = "true"},
