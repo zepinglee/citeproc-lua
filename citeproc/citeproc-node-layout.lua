@@ -63,7 +63,11 @@ function Layout:render (items, context)
       end
       if second then
         second:add_format("display", "right-inline")
-        res = richtext.concat(res, second)
+        if res then
+          res = richtext.concat(res, second)
+        else
+          res = second
+        end
       end
     else
       res = self:concat({first, second}, context)

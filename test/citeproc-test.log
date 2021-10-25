@@ -9,7 +9,7 @@ decorations          7       0       0       0
 disambiguate        19      48       0       4
 display              4       1       0       0
 etal                 4       0       0       0
-flipflop            15       3       1       0
+flipflop            16       3       0       0
 form                 3       0       0       0
 fullstyles           3       2       0       0
 group                4       2       0       1
@@ -17,7 +17,7 @@ integration          2       0       0      12
 label                9      10       0       0
 locale              23       0       0       0
 locator              0       6       0       0
-magic               24      14       1       1
+magic               24      15       0       1
 name                88      22       0       1
 nameattr            97       0       0       0
 nameorder            6       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              604     201       2      46
+(all)              605     202       0      46
 
 Pending → test-suite affix_WithCommas
 test/citeproc-test.lua:39: citations
@@ -1319,6 +1319,29 @@ Passed in:
 Expected:
 (string) 'And'
 
+Failure → test-suite magic_CitationLabelInBibliography
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"><div class="csl-right-inline">Roe, J. and Noakes, R.: Book A., 1978.</div>
+  </div>
+  <div class="csl-entry"><div class="csl-right-inline">Doe, J.: Book A., 1965.</div>
+  </div>
+  <div class="csl-entry"><div class="csl-right-inline">Roe, J. and Noakes, R.: Book A., 1978.</div>
+  </div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">[Doe65]</div><div class="csl-right-inline">Doe, J.: Book A., 1965.</div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[RoNo78a]</div><div class="csl-right-inline">Roe, J. and Noakes, R.: Book A., 1978.</div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[RoNo78b]</div><div class="csl-right-inline">Roe, J. and Noakes, R.: Book A., 1978.</div>
+  </div>
+</div>'
+
 Failure → test-suite magic_CitationLabelInCitation
 Passed in:
 (string) '[CSL STYLE ERROR: reference with no printed form.]'
@@ -2157,9 +2180,3 @@ Expected:
 (string) 'My Long Title 1 has title-short
 My Long Title 2 does not have title-short
 does not have title-short'
-
-Error → test-suite flipflop_ApostropheInsideTag
-./citeproc/citeproc-richtext.lua:137: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → test-suite magic_CitationLabelInBibliography
-./citeproc/citeproc-richtext.lua:345: assertion failed!

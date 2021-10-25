@@ -42,18 +42,13 @@ function util.warning(message)
   end
 end
 
--- local remove_all_metatables = function(item, path)
---   if path[#path] ~= inspect.METATABLE then return item end
--- end
+local function remove_all_metatables(item, path)
+  if path[#path] ~= inspect.METATABLE then return item end
+end
 
 function util.debug(...)
-  -- io.stderr:write(inspect(message, {process = remove_all_metatables}))
-  for i, message in ipairs({...}) do
-    if i > 1 then
-      io.stderr:write("\t")
-    end
-    io.stderr:write(inspect(message))
-  end
+  -- io.stderr:write(inspect(..., {process = remove_all_metatables}))
+  io.stderr:write(inspect(...))
   io.stderr:write("\n")
 end
 

@@ -550,6 +550,12 @@ function richtext.new(text, formats)
           if type(start_tag) == "string" and richtext.tag_pairs[start_tag] == str then
             local subtext = richtext.new()
             -- subtext.contents = util.slice(contents, i + 1, #contents - 1)
+            if start_tag == "'" and str == "'" and i == #contents - 1 then
+              contents[i] = util.unicode["apostrophe"]
+              contents[#contents] = util.unicode["apostrophe"]
+              break
+            end
+
             for j = i + 1, #contents - 1 do
               local substr = contents[j]
               if substr == "'" then
