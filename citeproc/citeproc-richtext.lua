@@ -544,13 +544,26 @@ function richtext.new(text, formats)
     local contents = {}
     for _, str in ipairs(strings) do
       table.insert(contents, str)
-      if richtext.end_tags[str] then
+
+      local end_tag = nil
+      if str == '"' then
+        local last_text = contents[#contents - 1]
+        if last_text and type(last_text) == "string" and string.match(last_text, "%s$") then
+          end_tag = nil
+        else
+          end_tag = str
+        end
+      elseif richtext.end_tags[str] then
+        end_tag = str
+      end
+
+      if end_tag then
         for i = #contents - 1, 1, -1 do
           local start_tag = contents[i]
-          if type(start_tag) == "string" and richtext.tag_pairs[start_tag] == str then
+          if type(start_tag) == "string" and richtext.tag_pairs[start_tag] == end_tag then
             local subtext = richtext.new()
             -- subtext.contents = util.slice(contents, i + 1, #contents - 1)
-            if start_tag == "'" and str == "'" and i == #contents - 1 then
+            if start_tag == "'" and end_tag == "'" and i == #contents - 1 then
               contents[i] = util.unicode["apostrophe"]
               contents[#contents] = util.unicode["apostrophe"]
               break

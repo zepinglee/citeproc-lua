@@ -9,7 +9,7 @@ decorations          7       0       0       0
 disambiguate        19      48       0       4
 display              4       1       0       0
 etal                 4       0       0       0
-flipflop            16       3       0       0
+flipflop            17       2       0       0
 form                 3       0       0       0
 fullstyles           3       2       0       0
 group                4       2       0       1
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              605     202       0      46
+(all)              606     201       0      46
 
 Pending → test-suite affix_WithCommas
 test/citeproc-test.lua:39: citations
@@ -1153,12 +1153,6 @@ Passed in:
 (string) '1<sup>er</sup>'
 Expected:
 (string) '1&#60;sup&#62;er&#60;/sup&#62;'
-
-Failure → test-suite flipflop_OrphanQuote
-Passed in:
-(string) 'Nation of “Positive Obligations ” of State under the European Convention on Human Rights (1)'
-Expected:
-(string) 'Nation of "Positive Obligations " of State under the European Convention on Human Rights (1)'
 
 Failure → test-suite fullstyles_ABdNT
 Passed in:
