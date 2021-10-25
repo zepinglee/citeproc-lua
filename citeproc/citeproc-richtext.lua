@@ -39,9 +39,9 @@ function RichText:render(formatter, context, punctuation_in_quote)
 
   self:change_case()
 
-  self:clean_formats()
-
   self:flip_flop()
+
+  self:clean_formats()
 
   return self:_render(formatter, context)
 end
@@ -410,6 +410,30 @@ function RichText:add_format(attr, value)
   self.formats[attr] = value
 end
 
+function RichText:flip_flop(attr, value)
+  if not attr then
+    for attr, _ in pairs(richtext.flip_flop_formats) do
+      self:flip_flop(attr)
+    end
+    return
+  end
+
+  local default_value = richtext.default_formats[attr]
+
+  if value and value ~= default_value and self.formats[attr] == value then
+    self.formats[attr] = richtext.flip_flop_values[attr][value]
+  end
+  if self.formats[attr] then
+    value = self.formats[attr]
+  end
+
+  for _, text in ipairs(self.contents) do
+    if type(text) == "table" and text._type == "RichText" then
+      text:flip_flop(attr, value)
+    end
+  end
+end
+
 function RichText:clean_formats(format)
   -- Remove the formats that are default values
   if not format then
@@ -428,52 +452,6 @@ function RichText:clean_formats(format)
   for _, text in ipairs(self.contents) do
     if type(text) == "table" and text._type == "RichText" then
       text:clean_formats(format)
-    end
-  end
-end
-
-function RichText:flip_flop(attr, value)
-  if not attr then
-    for attr, _ in pairs(richtext.flip_flop_formats) do
-      self:flip_flop(attr)
-    end
-    return
-  end
-
-  if attr == "font-style" then
-    if self.formats[attr] == "italic" then
-      if value then
-        self.formats[attr] = "normal"
-        value = nil
-      else
-        value = "italic"
-      end
-    end
-
-  elseif attr == "font-weight" then
-    if self.formats[attr] == "bold" then
-      if value then
-        self.formats[attr] = "normal"
-        value = nil
-      else
-        value = "bold"
-      end
-    end
-
-  elseif attr == "quotes" then
-    if self.formats[attr] == "true" then
-      if value then
-        self.formats[attr] = "inner"
-        value = nil
-      else
-        value = "true"
-      end
-    end
-  end
-
-  for _, text in ipairs(self.contents) do
-    if type(text) == "table" and text._type == "RichText" then
-      text:flip_flop(attr, value)
     end
   end
 end
@@ -581,8 +559,15 @@ function richtext.new(text, formats)
               end
             end
 
-            for key, value in pairs(richtext.tag_formats[start_tag]) do
-              subtext.formats[key] = value
+            if start_tag == '<span class="nodecor">' then
+              for attr, value in pairs(richtext.default_formats) do
+                subtext.formats[attr] = value
+              end
+              subtext.formats["class"] = "nocase"
+            else
+              for attr, value in pairs(richtext.tag_formats[start_tag]) do
+                subtext.formats[attr] = value
+              end
             end
 
             for j = #contents, i, -1 do
@@ -630,7 +615,6 @@ richtext.tag_formats = {
   ["<sc>"] = {["font-variant"] = "small-caps"},
   ['<span style="font-variant: small-caps;">'] = {["font-variant"] = "small-caps"},
   ['<span class="nocase">'] = {["class"] = "nocase"},
-  ['<span class="nodecor">'] = {["class"] = "nodecor"},
   ['"'] = {["quotes"] = "true"},
   [util.unicode['left double quotation mark']] = {["quotes"] = "true"},
   ["'"] = {["quotes"] = "true"},
@@ -657,9 +641,24 @@ richtext.format_sequence = {
 }
 
 richtext.flip_flop_formats = {
-  ["font-style"] = "italic",
-  ["font-weight"] = "bold",
-  ["quotes"] = "true",
+  ["font-style"] = true,
+  ["font-weight"] = true,
+  ["quotes"] = true,
+}
+
+richtext.flip_flop_values = {
+  ["font-style"] = {
+    italic = "normal",
+    normal = "italic",
+  },
+  ["font-weight"] = {
+    bold = "normal",
+    normal = "bold",
+  },
+  ["quotes"] = {
+    ["true"] = "inner",
+    inner = "true",
+  },
 }
 
 -- https://github.com/Juris-M/citeproc-js/blob/aa2683f48fe23be459f4ed3be3960e2bb56203f0/src/queue.js#L724

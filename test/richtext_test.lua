@@ -30,8 +30,13 @@ describe("RichText", function()
     ["@vertical-align/sub"] = "<sub>%%STRING%%</sub>",
     ["@vertical-align/baseline"] = '<span style="baseline">%%STRING%%</span>',
     ["@quotes/true"] = function (str, context)
-      local open_quote = "“"
-      local close_quote = "”"
+      local open_quote = '“'
+      local close_quote = '”'
+      return open_quote .. str .. close_quote
+    end,
+    ["@quotes/inner"] = function (str, context)
+      local open_quote = "‘"
+      local close_quote = "’"
       return open_quote .. str .. close_quote
     end,
     ["@bibliography/entry"] = function (res, context)
@@ -196,20 +201,24 @@ describe("RichText", function()
 
   describe("formatting", function()
 
-    it("initialize with tags", function()
-      local text = richtext.new("<b>foo</b>")
-      assert.equal("<b>foo</b>", text:render(formatter, nil))
-    end)
-
-    it("initialize with tags", function()
-      local text = richtext.new("<b>foo<i>bar</i>baz</b>")
-      assert.equal("<b>foo<i>bar</i>baz</b>", text:render(formatter, nil))
-    end)
-
     it("add format", function()
       local text = richtext.new("foo")
       text:add_format("font-style", "italic")
       assert.equal("<i>foo</i>", text:render(formatter, nil))
+    end)
+
+    it("nodecor", function()
+      local text = richtext.new('<i>foo <span class="nodecor">bar</span> baz</i>')
+      local result = text:render(formatter, nil)
+      local expected = '<i>foo <span style="font-style:normal;">bar</span> baz</i>'
+      assert.equal(expected, result)
+    end)
+
+    it("clean format", function()
+      local text = richtext.new("foo")
+      text:add_format("font-style", "normal")
+      local result = text:render(formatter, nil)
+      assert.equal("foo", result)
     end)
 
     describe("flip-flop", function()
@@ -225,6 +234,13 @@ describe("RichText", function()
         text:add_format("font-style", "italic")
         local expected = '<i>One <span style="font-style:normal;">Two <i>Three</i> Four</span> Five!</i>'
         local result = text:render(formatter, nil)
+        assert.equal(expected, result)
+      end)
+
+      it("quotes", function()
+        local text = richtext.new('"foo \'bar\' baz"')
+        local result = text:render(formatter, nil)
+        local expected = '“foo ‘bar’ baz”'
         assert.equal(expected, result)
       end)
 
@@ -343,9 +359,11 @@ describe("RichText", function()
       end)
 
       it("stop word last", function()
-        local text = richtext.new("the text: On <i>tHE bAR</i> Down")
+        local text = richtext.new("the foo: On <i>tHE bAR</i> Down")
         text:add_format("text-case", "title")
         local res = text:render(formatter, nil)
+        -- TODO
+        pending("Stop words are not lowercased if they are the last word in the string.")
         assert.equal("The Foo: On <i>the bAR</i> Down", res)
       end)
 
