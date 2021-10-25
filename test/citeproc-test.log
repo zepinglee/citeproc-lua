@@ -9,7 +9,7 @@ decorations          7       0       0       0
 disambiguate        19      48       0       4
 display              4       1       0       0
 etal                 4       0       0       0
-flipflop            14       4       1       0
+flipflop            15       3       1       0
 form                 3       0       0       0
 fullstyles           3       2       0       0
 group                4       2       0       1
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              603     202       2      46
+(all)              604     201       2      46
 
 Pending → test-suite affix_WithCommas
 test/citeproc-test.lua:39: citations
@@ -1159,12 +1159,6 @@ Passed in:
 (string) 'Nation of “Positive Obligations ” of State under the European Convention on Human Rights (1)'
 Expected:
 (string) 'Nation of "Positive Obligations " of State under the European Convention on Human Rights (1)'
-
-Failure → test-suite flipflop_SmallCaps
-Passed in:
-(string) '<span style="font-variant:small-caps;">His &#60;span style=“font-variant:small-caps;”&#62;Anonymous&#60;/span&#62; Life</span>, His &#60;span style=“font-variant:small-caps;”&#62;Anthology&#60;/span&#62;'
-Expected:
-(string) '<span style="font-variant:small-caps;">His <span style="font-variant:normal;">Anonymous</span> Life</span>, His <span style="font-variant:small-caps;">Anthology</span>'
 
 Failure → test-suite fullstyles_ABdNT
 Passed in:

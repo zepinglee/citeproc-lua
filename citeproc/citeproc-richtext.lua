@@ -469,7 +469,11 @@ local function table_update(t, new_t)
 end
 
 function RichText._split_tags(str)
-  -- str = string.gsub(str, '<span%s+style="font%-variant:%s+small-caps')
+  -- Normalize markup
+  str = string.gsub(str, '<span%s+style="font%-variant:%s*small%-caps;?">', '<span style="font-variant:small-caps;">')
+  str = string.gsub(str, '<span%s+class="nocase">', '<span class="nocase">')
+  str = string.gsub(str, '<span%s+class="nodecor">', '<span class="nodecor">')
+
   local strings = {}
 
   local start_index = 1
@@ -613,7 +617,7 @@ richtext.tag_formats = {
   ["<sup>"] = {["vertical-align"] = "sup"},
   ["<sub>"] = {["vertical-align"] = "sub"},
   ["<sc>"] = {["font-variant"] = "small-caps"},
-  ['<span style="font-variant: small-caps;">'] = {["font-variant"] = "small-caps"},
+  ['<span style="font-variant:small-caps;">'] = {["font-variant"] = "small-caps"},
   ['<span class="nocase">'] = {["text-case"] = "nocase"},
   ['"'] = {["quotes"] = "true"},
   [util.unicode['left double quotation mark']] = {["quotes"] = "true"},
@@ -643,6 +647,7 @@ richtext.format_sequence = {
 richtext.flip_flop_formats = {
   ["font-style"] = true,
   ["font-weight"] = true,
+  ["font-variant"] = true,
   ["quotes"] = true,
 }
 
@@ -654,6 +659,10 @@ richtext.flip_flop_values = {
   ["font-weight"] = {
     bold = "normal",
     normal = "bold",
+  },
+  ["font-variant"] = {
+    ["small-caps"] = "normal",
+    normal = "small-caps",
   },
   ["quotes"] = {
     ["true"] = "inner",
@@ -721,7 +730,7 @@ richtext.tag_pairs = {
   ["<sup>"] = "</sup>",
   ["<sub>"] = "</sub>",
   ["<sc>"] = "</sc>",
-  ['<span style="font-variant: small-caps;">'] = "</span>",
+  ['<span style="font-variant:small-caps;">'] = "</span>",
   ['<span class="nocase">'] = "</span>",
   ['<span class="nodecor">'] = "</span>",
   ['"'] = '"',

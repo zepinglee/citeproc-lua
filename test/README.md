@@ -32,6 +32,11 @@ How to distinguish a numeric style?
 The expected output here includes a trailing space, which we delete.
 
 
+# flipflop_LeadingMarkupWithApostrophe
+
+Quotation marks in the prefix of cite-item are not transformed to double style and the punctuation after is not moved into quotes.
+
+
 ## name_AllCapsInitialsUntouched
 
 - Not initialized. It should be `<name initialized-with="." />`.
