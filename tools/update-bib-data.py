@@ -34,54 +34,94 @@ class BibData(OrderedDict):
             if paths:
                 self.texmf_dist = sorted(paths)[-1]
 
-    def update_bibtex(self):
-        if not self.texmf_dist:
-            return
-        bst_path = os.path.join(self.texmf_dist, 'bibtex', 'bst', 'base',
-                                'plain.bst')
-        self.update_bst(bst_path, 'bibtex')
+        self.skip_field_prefixes = [
+            'CTL',
+            'abnt-',
+            'abnt-',
+            'p.',
+            'r.',
+            'w.',
+        ]
 
-    def update_bst(self, path, source):
-        if not os.path.exists(path):
-            warnings.warn(f'Invalid path "{path}".')
-            return
+    def update_bibtex(self):
+        self.update_bst('plain.bst', 'bibtex')
+
+    def update_bst(self, file_name, source=None):
+        if os.path.exists(file_name):
+            path = file_name
+        else:
+            path = os.popen(f'kpsewhich {file_name}').read().strip()
+            if not os.path.exists(path):
+                warnings.warn(f'Invalid path "{path}".')
+                return
+
+        if not source:
+            source = os.path.split(path)[1]
 
         with open(path) as f:
             contents = f.read()
 
-        if source == "bibtex":
-            for match in re.finditer(r'FUNCTION\s*\{\s*(\w+)\s*\}', contents):
-                entry_type = match.group(1)
-                if entry_type in [
-                        'output', 'not', 'and', 'or', 'emphasize', 'sortify',
-                        'presort'
-                ]:
-                    continue
-                if entry_type not in self['types']:
-                    self['types'][entry_type] = {
-                        'csl': None,
-                        'source': source,
-                    }
+        functions = dict()
+        for match in re.finditer(r'FUNCTION\s*\{\s*(\w+)\s*\}\s*\{\s*([^}]*)\s*\}', contents):
+            name = match.group(1).lower()
+            body = match.group(2)
+            functions[name] = body
+
+        entry_types = []
+
+        for name, body in functions.items():
+            # entry_types.append(name)
+            if 'output.bibitem' in body or 'fin.entry' in body:
+                entry_types.append(name)
+            elif re.match(r'^\w+$', body):
+                entry_types.append(name)
+
+        for name, body in functions.items():
+            body_words = body.split()
+            for entry_type in entry_types:
+                if entry_type in body_words:
+                    if source == 'bibtex':
+                        print(name, entry_type)
+                    entry_types.append(name)
+                    break
+
+        for entry_type in entry_types:
+            if entry_type not in self['types']:
+                self['types'][entry_type] = {
+                    'csl': None,
+                    'source': source,
+                }
 
         fields_str = re.search(r'ENTRY\s*\{\s*([^}]+)\s*\}', contents)
         if fields_str:
-            for field in fields_str.group(1).split():
-                field = field.strip()
-                if field not in self['fields']:
-                    self['fields'][field] = {
-                        'csl': None,
+            for line in fields_str.group(1).splitlines():
+                line = line.split('%')[0]
+                for field in line.split():
+                    field = field.strip()
+                    skip_field = False
+                    for prefix in self.skip_field_prefixes:
+                        if field.startswith(prefix):
+                            skip_field = True
+                            break
+                    if skip_field:
+                        continue
+                    field = field.lower()
+                    if field not in self['fields']:
+                        self['fields'][field] = {
+                            'csl': None,
+                            'source': source,
+                        }
+
+        if source == 'bibtex':
+            for match in re.finditer(
+                    r'MACRO\s*\{\s*(\S+)\s*\}\s*\{\s*"([^"]*)"\s*\}', contents):
+                macro = match.group(1)
+                value = match.group(2)
+                if macro not in self['macros']:
+                    self['macros'][macro] = {
+                        'value': value,
                         'source': source,
                     }
-
-        for match in re.finditer(
-                r'MACRO\s*\{\s*(\S+)\s*\}\s*\{\s*"([^"]*)"\s*\}', contents):
-            macro = match.group(1)
-            value = match.group(2)
-            if macro not in self['macros']:
-                self['macros'][macro] = {
-                    'value': value,
-                    'source': source,
-                }
 
     def update_biblatex(self):
         if not self.texmf_dist:
@@ -144,6 +184,21 @@ class BibData(OrderedDict):
             if 'alias' not in self['fields'][field]:
                 self['fields'][field]['alias'] = target
 
+    def update_all_bst(self):
+        paths = glob.glob(os.path.join(self.texmf_dist, 'bibtex', 'bst', '**' , '*.bst'))
+        for file_name in ['plainnat.bst', 'apacite.bst', 'chicago.bst',
+            'IEEEtran.bst', 'vancouver.bst', 'amsplain.bst', 'biblatex.bst',
+            'cell.bst', 'elsarticle-num.bst', 'apsrev4-2.bst', 'tugboat.bst',
+            'plainurl.bst', 'gbt7714-numerical.bst',
+        ]:
+            self.update_bst(file_name)
+
+        for path in sorted(paths):
+            try:
+                self.update_bst(path)
+            except UnicodeDecodeError:
+                continue
+
     def update_alias_mappings(self):
         for category in ['types', 'fields']:
             for field, value in self[category].items():
@@ -180,9 +235,10 @@ class BibData(OrderedDict):
                 target = value['csl']
 
                 if target and target not in csl_fields:
-                    print(f'Invalid CSL type "{target}".')
-                if category == 'fields' and 'type' not in value:
-                    print(f'Empty type in field "{field}".')
+                    if category == "types":
+                        print(f'Invalid CSL type "{target}".')
+                    elif category == "fields":
+                        print(f'Invalid CSL field "{target}".')
 
 
     def sort_keys(self):
@@ -237,12 +293,15 @@ if __name__ == '__main__':
     bib_data = BibData(bib_data_path)
 
     bib_data.update_bibtex()
+
     bib_data.update_biblatex()
     bib_data.update_alias_mappings()
 
+    bib_data.update_all_bst()
+
     bib_data.check_csl_schema()
     bib_data.sort_keys()
-    bib_data.export_markdown()
+    # bib_data.export_markdown()
 
     with open(bib_data_path, 'w') as f:
         json.dump(bib_data, f, indent=4)
