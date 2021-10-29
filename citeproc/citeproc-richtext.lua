@@ -202,8 +202,6 @@ function RichText:_change_word_case(state, word_transform, first_tranform, is_ph
     if type(text) == "string" then
 
       local res = ""
-      local last_position = 1
-      local words = {}
       local word_seps = {
         " ",
         "%-",

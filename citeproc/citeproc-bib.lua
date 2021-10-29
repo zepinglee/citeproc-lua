@@ -11,6 +11,7 @@
 local bib = {}
 
 require("lualibs")
+local unicode = require("unicode")
 
 local util = require("citeproc.citeproc-util")
 
@@ -42,13 +43,18 @@ function bib.parse_item(contents)
     return nil
   end
 
-  local item = {}
+  local item = {id = id}
+
   local type_data = bib.bib_data.types[bib_type]
-  if not type_data then
-    return nil
+  if type_data then
+    if type_data.csl then
+      item.type = type_data.csl
+    else
+      item.type = "document"
+    end
+  else
+    item.type = "document"
   end
-  item.id = id
-  item.type = type_data.csl
 
   local bib_fields = bib.parse_fields(contents)
   -- util.debug(bib_fields)
@@ -59,23 +65,84 @@ function bib.parse_item(contents)
     if bib_field == "year" and item.issued then
       csl_field = nil
     end
+
+    if bib_field == "title" or bib_field == "booktitle" then
+      csl_value = bib.convert_sentence_case(csl_value)
+    end
+
     if csl_field and csl_value then
       item[csl_field] = csl_value
     end
   end
 
   -- Special types and fields
-  if item.type == "misc"then
+  if item.type == "document" then
     if bib_fields.url then
       item.type = "webpage"
+    else
+      item.type = "article"
     end
   end
 
-  if bib_type == "article-journal" and bib_fields.eprint then
-    item.type = "article"
+  if item.type == "article-journal" then
+    if not item["container-title"] then
+      item.type = "article"
+    end
   end
 
+  if item.number then
+    if not item.issue and item.type == "article-journal" or item.type == "article-magazine" or item.type == "article-newspaper" or item.type == "periodical" then
+      item.issue = item.number
+      item.number = nil
+    elseif item.type == "patent" or item.type == "report" or item.type == "standard" then
+    else
+      item["collection-number"] = item.number
+      item.number = nil
+    end
+  end
+
+  if item.volume then
+    item.volume = string.gsub(item.volume, util.unicode["en dash"], "-")
+  end
+  if item.page then
+    item.page = string.gsub(item.page, util.unicode["en dash"], "-")
+  end
+
+  -- if not item.language then
+  --   if util.has_cjk_char(item.title) then
+  --     item.language = "zh"
+  --   else
+  --     item.language = "en"
+  --   end
+  -- end
+
   return item
+end
+
+function bib.convert_sentence_case(str)
+  local res = ""
+  local to_lower = false
+  local brace_level = 0
+  for _, code_point in utf8.codes(str) do
+    local char = utf8.char(code_point)
+    if to_lower and brace_level == 0 then
+      char = unicode.utf8.lower(char)
+    end
+    if string.match(char, "%S") then
+      to_lower = true
+    end
+    if char == "{" then
+      brace_level = brace_level + 1
+      char = ""
+    elseif char == "}" then
+      brace_level = brace_level - 1
+      char = ""
+    elseif char == ":" then
+      to_lower = false
+    end
+    res = res .. char
+  end
+  return res
 end
 
 function bib.parse_fields(contents)
@@ -106,8 +173,7 @@ function bib.parse_fields(contents)
             end
           end
         end
-        -- TODO: text unescaping
-        -- value = bib.unescape(value)
+        value = bib.unescape(field, value)
         fields[field] = value
         contents = rest
         break
@@ -115,6 +181,27 @@ function bib.parse_fields(contents)
     end
   end
   return fields
+end
+
+function bib.unescape(field, str)
+  str = string.gsub(str, "%-%-%-", util.unicode["em dash"])
+  str = string.gsub(str, "%-%-", util.unicode["en dash"])
+  str = string.gsub(str, "``", util.unicode["left double quotation mark"])
+  str = string.gsub(str, "''", util.unicode["right double quotation mark"])
+  str = string.gsub(str, "`", util.unicode["left single quotation mark"])
+  str = string.gsub(str, "'", util.unicode["right single quotation mark"])
+  str = string.gsub(str, "\\#", "#")
+  str = string.gsub(str, "\\%$", "$")
+  str = string.gsub(str, "\\%%", "%")
+  str = string.gsub(str, "\\&", "&")
+  str = string.gsub(str, "\\{", "{")
+  str = string.gsub(str, "\\}", "}")
+  str = string.gsub(str, "\\_", "_")
+  if field ~= "url" then
+    str = string.gsub(str, "~", util.unicode["no-break space"])
+  end
+  str = string.gsub(str, "\\quad%s+", util.unicode["em space"])
+  return str
 end
 
 function bib.convert_field(bib_field, value)
@@ -137,10 +224,42 @@ function bib.convert_field(bib_field, value)
 end
 
 function bib.parse_names(str)
+   -- "{International Federation of Library Association and Institutions}"
   local names = {}
-  for _, name_str in ipairs(util.split(str, "%s+and%s+")) do
-    local name = bib.parse_single_name(name_str)
-    table.insert(names, name)
+  local brace_level = 0
+  local name = ""
+  local last_word = ""
+  for i = 1, #str do
+    local char = string.sub(str, i, i)
+    if char == " " then
+      if brace_level == 0 and last_word == "and" then
+        table.insert(names, name)
+        name = ""
+      else
+        if name ~= "" then
+          name = name .. " "
+        end
+        name = name .. last_word
+      end
+      last_word = ""
+    else
+      last_word = last_word .. char
+      if char == "{" then
+        brace_level = brace_level + 1
+      elseif char == "}" then
+        brace_level = brace_level - 1
+      end
+    end
+  end
+
+  if name ~= "" then
+    name = name .. " "
+  end
+  name = name .. last_word
+  table.insert(names, name)
+
+  for i, name in ipairs(names) do
+    names[i] = bib.parse_single_name(name)
   end
   return names
 end
@@ -149,7 +268,7 @@ function bib.parse_single_name(str)
   local literal = string.match(str, "^{(.*)}$")
   if literal then
     return {
-      literal = literal,
+      literal = '<span class="nocase">' .. literal .. '</span>',
     }
   end
 

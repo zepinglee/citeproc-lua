@@ -317,6 +317,7 @@ util.primary_dialects = {
 
 util.unicode = {
   ["no-break space"] = "\u{00A0}",
+  ["em space"] = "\u{2003}",
   ["en dash"] = "\u{2013}",
   ["em dash"] = "\u{2014}",
   ["left single quotation mark"] = "\u{2018}",
@@ -598,6 +599,29 @@ function util.has_romanesque_char(s)
   end
   for _, code_point in utf8.codes(s) do
     if util.is_romanesque(code_point) then
+      return true
+    end
+  end
+  return false
+end
+
+function util.is_cjk_char(code_point)
+  if not code_point then
+    return false
+  end
+  if util.in_ranges(code_point, util.CJK_ranges) then
+    return true
+  end
+  return false
+end
+
+function util.has_cjk_char(s)
+  -- has romanesque char but not necessarily pure romanesque
+  if not s then
+    return false
+  end
+  for _, code_point in utf8.codes(s) do
+    if util.is_cjk_char(code_point) then
       return true
     end
   end

@@ -6,7 +6,7 @@
             "source": "jurabib.bst"
         },
         "archive": {
-            "csl": null,
+            "csl": "collection",
             "source": "gbt7714-numerical.bst"
         },
         "article": {
@@ -116,7 +116,7 @@
             "source": "biblatex"
         },
         "database": {
-            "csl": null,
+            "csl": "dataset",
             "source": "gbt7714-numerical.bst"
         },
         "dataset": {
@@ -246,7 +246,7 @@
             "source": "bibtex"
         },
         "map": {
-            "csl": null,
+            "csl": "map",
             "source": "vancouver.bst"
         },
         "mastersthesis": {
@@ -263,8 +263,8 @@
             "source": "achicago.bst"
         },
         "misc": {
-            "csl": "article",
-            "notes": "Use `article` as default generic type.",
+            "csl": "document",
+            "notes": "A catch-all category for items not belonging to other types",
             "source": "bibtex"
         },
         "monograph": {
@@ -304,7 +304,7 @@
             "source": "seuthesix.bst"
         },
         "newspaper": {
-            "csl": null,
+            "csl": "article-newspaper",
             "source": "gbt7714-numerical.bst"
         },
         "online": {
@@ -473,7 +473,7 @@
         },
         "address": {
             "alias": "location",
-            "csl": null,
+            "csl": "publisher-place",
             "source": "bibtex",
             "type": "literal"
         },
@@ -1244,11 +1244,11 @@
             "type": "key"
         },
         "lastaccessed": {
-            "csl": null,
+            "csl": "accessed",
             "source": "ACM-Reference-Format.bst"
         },
         "lastchecked": {
-            "csl": null,
+            "csl": "accessed",
             "source": "apacite.bst"
         },
         "lccn": {
@@ -1295,7 +1295,7 @@
             "source": "seuthesix.bst"
         },
         "location": {
-            "csl": null,
+            "csl": "publisher-place",
             "source": "biblatex",
             "type": "literal"
         },
@@ -1477,7 +1477,7 @@
             "source": "tugboat.bst"
         },
         "number": {
-            "csl": "issue",
+            "csl": "number",
             "notes": "It is mapped to `issue` in `@ariticle` but to `number` in `@patent` or `@report`.",
             "source": "bibtex",
             "type": "literal"
@@ -2043,16 +2043,16 @@
             "source": "vancouver.bst"
         },
         "url": {
-            "csl": null,
+            "csl": "URL",
             "source": "biblatex",
             "type": "uri"
         },
         "urlaccessdate": {
-            "csl": null,
+            "csl": "accessed",
             "source": "abntex2-alf.bst"
         },
         "urldate": {
-            "csl": null,
+            "csl": "accessed",
             "source": "biblatex",
             "type": "date"
         },
