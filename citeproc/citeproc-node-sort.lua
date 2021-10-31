@@ -2,10 +2,10 @@ local sort = {}
 
 local unicode = require("unicode")
 
-local element = require("citeproc.citeproc-element")
-local names = require("citeproc.citeproc-node-names")
-local date = require("citeproc.citeproc-node-date")
-local util = require("citeproc.citeproc-util")
+local element = require("citeproc-element")
+local names = require("citeproc-node-names")
+local date = require("citeproc-node-date")
+local util = require("citeproc-util")
 
 
 local Sort = element.Element:new()

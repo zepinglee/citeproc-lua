@@ -2,9 +2,9 @@ local names_module = {}
 
 local unicode = require("unicode")
 
-local richtext = require("citeproc.citeproc-richtext")
-local element = require("citeproc.citeproc-element")
-local util = require("citeproc.citeproc-util")
+local richtext = require("citeproc-richtext")
+local element = require("citeproc-element")
+local util = require("citeproc-util")
 
 
 local Name = element.Element:new()

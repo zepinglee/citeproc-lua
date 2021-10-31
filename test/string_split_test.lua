@@ -1,6 +1,6 @@
 require("busted.runner")()
 
-local util = require("citeproc.citeproc-util")
+local util = require("citeproc-util")
 
 
 describe("String split", function()

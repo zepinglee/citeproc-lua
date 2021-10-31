@@ -4,11 +4,12 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
+\RequirePackage{xparse}
 \ProvidesExplPackage{csl}{2021-10-18}{0.0.1}{Citation Style Language for LaTeX}
 
 \msg_new:nnn { csl } { require-luatex }
   { LuaTeX~ is~ required~ for~ `csl'~ package. }
-\sys_if_engine_luatex:F { \msg_error:nn { csl } { require-luatex } }
+\sys_if_engine_luatex:F { \msg_fatal:nn { csl } { require-luatex } }
 
 \lua_now:n { csl = require("csl") }
 \RequirePackage { filehook }
@@ -40,21 +41,93 @@
 \NewDocumentCommand \cslsetup {m}
   { \keys_set:nn { csl } {#1} }
 
-\DeclareDocumentCommand \cite { o m }
-  { \lua_now:n { csl.cite("#2") } }
+\DeclareDocumentCommand \cite { o o m }
+  {
+    \if@filesw
+      {
+        \immediate \write \@auxout
+          {
+            \string \citation { { } { } { #3 } }
+          }
+      }
+    \fi
+    \bool_if:NTF \l__csl_engine_initialized_bool
+      {
+        \IfValueTF { #2 }
+          { \csl_cite:nnn { #1 } { #2 } { #3 } }
+          {
+            \IfValueTF { #1 }
+              { \csl_cite:nnn { } { #1 } { #3 } }
+              { \csl_cite:nnn { } { } { #3 } }
+          }
+      }
+      {
+        \hbox { [ \reset@font \textbf { ? } ] }
+        \G@refundefinedtrue
+        \msg_warning:nnn { csl } { citation / undefined } { #3 }
+      }
+  }
+
+\msg_new:nnn { csl } { citation / undefined }
+  {
+    Citation~ `#1'~ on~ page~ \thepage \space undefined~ \msg_line_context: .
+  }
+
+\cs_new:Npn \csl_cite:nnn #1#2#3
+  {
+    \lua_now:e
+      {
+        csl.cite(
+          " #1 \tl_if_empty:nF { #1 } { \l__csl_prefix_separator_tl } ",~
+          " \tl_if_empty:nF { #2 } { \l__csl_suffix_separator_tl } #2 ",~
+          "#3"
+        )
+      }
+  }
+
+
+% Used in aux files to register cite items.
+\DeclareDocumentCommand \citation { m }
+  { \csl_register_items:nnn #1 }
+
+\cs_new:Npn \csl_register_items:nnn #1#2#3
+  { \lua_now:n { csl.register_items("#3") } }
+
 
 \NewDocumentCommand \printbibliography { }
-  { \lua_now:n { csl.bibliography() } }
+  {
+    \bool_if:NTF \l__csl_engine_initialized_bool
+      { \lua_now:n { csl.bibliography() } }
+      { \msg_warning:nnn { csl } { bibliography / empty } }
+  }
+
+\msg_new:nnn { csl } { bibliography / empty }
+  { The~ bibliography~ is~ empty.  }
 
 
 \tl_new:N \l__csl_style_tl
 \clist_new:N \l__csl_bib_data_clist
+\tl_new:N \l__csl_prefix_separator_tl
+\tl_new:N \l__csl_suffix_separator_tl
 
 \keys_define:nn { csl }
   {
     style .tl_set:N = \l__csl_style_tl ,
     bib-data .clist_set:N = \l__csl_bib_data_clist ,
+    prefix-separator .tl_set:N = \l__csl_prefix_separator_tl ,
+    suffix-separator .tl_set:N = \l__csl_suffix_separator_tl ,
   }
+
+\keys_set:nn { csl }
+  {
+    prefix-separator = \space ,
+    suffix-separator = \space ,
+  }
+
+\bool_new:N \l__csl_engine_initialized_bool
+
+\DeclareDocumentCommand \CslEngineInitialized { }
+  { \bool_set_true:N \l__csl_engine_initialized_bool }
 
 \AtBeginDocument
   {
@@ -75,7 +148,10 @@
   }
 
 \DeclareDocumentCommand \bibstyle { m }
-  { \tl_gset:Nn \l__csl_style_tl { #1 } }
+  {
+    \tl_if_empty:NT \l__csl_style_tl
+      { \tl_gset:Nn \l__csl_style_tl { #1 } }
+  }
 
 
 % Setting bib resource
@@ -83,7 +159,10 @@
   { \clist_put_right:Nn \l__csl_bib_data_clist { #1 } }
 
 \DeclareDocumentCommand \bibdata { m }
-  { \clist_set:Nn \l__csl_bib_data_clist { #1 } }
+  {
+    \clist_if_empty:NT \l__csl_bib_data_clist
+      { \clist_gset:Nn \l__csl_bib_data_clist { #1 } }
+  }
 
 
 \DeclareDocumentCommand \bibliography { m }
@@ -109,7 +188,7 @@
 \cs_set:Npn \@bibitem #1
   { \item [ ] \ignorespaces }
 
-% CSL output the whole label thus the brackets are removed from \@biblabel
+% CSL outputs the whole label thus the brackets are removed from \@biblabel
 % \def\@biblabel#1{[#1]}
 \cs_set:Npn \@biblabel #1 { #1 }
 

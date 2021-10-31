@@ -1,7 +1,7 @@
 local style = {}
 
-local element = require("citeproc.citeproc-element")
-local util = require("citeproc.citeproc-util")
+local element = require("citeproc-element")
+local util = require("citeproc-util")
 
 
 local Style = element.Element:new()

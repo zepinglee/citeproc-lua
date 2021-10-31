@@ -1,5 +1,8 @@
 {
     "files.associations": {
+        "*.lvt": "latex",
+        "*.sty": "latex-expl3",
+        "*.tlg": "latex",
         "*.txt": "xml"
     },
     "Lua.diagnostics.globals": [

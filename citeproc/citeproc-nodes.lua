@@ -3,17 +3,17 @@
 --]]
 
 
-local style  = require("citeproc.citeproc-node-style")
-local locale = require("citeproc.citeproc-node-locale")
-local layout = require("citeproc.citeproc-node-layout")
-local text   = require("citeproc.citeproc-node-text")
-local date   = require("citeproc.citeproc-node-date")
-local number = require("citeproc.citeproc-node-number")
-local names  = require("citeproc.citeproc-node-names")
-local label  = require("citeproc.citeproc-node-label")
-local group  = require("citeproc.citeproc-node-group")
-local choose = require("citeproc.citeproc-node-choose")
-local sort   = require("citeproc.citeproc-node-sort")
+local style  = require("citeproc-node-style")
+local locale = require("citeproc-node-locale")
+local layout = require("citeproc-node-layout")
+local text   = require("citeproc-node-text")
+local date   = require("citeproc-node-date")
+local number = require("citeproc-node-number")
+local names  = require("citeproc-node-names")
+local label  = require("citeproc-node-label")
+local group  = require("citeproc-node-group")
+local choose = require("citeproc-node-choose")
+local sort   = require("citeproc-node-sort")
 
 local nodes = {
   ["style"]        = style.Style,

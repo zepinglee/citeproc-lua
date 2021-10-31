@@ -13,10 +13,10 @@ local bib = {}
 require("lualibs")
 local unicode = require("unicode")
 
-local util = require("citeproc.citeproc-util")
+local util = require("citeproc-util")
 
 
-local path = "citeproc/citeproc-bib-data.json"
+local path = "citeproc-bib-data.json"
 if kpse then
   path = kpse.find_file(path)
 end
@@ -62,87 +62,14 @@ function bib.parse_item(contents)
   for bib_field, value in pairs(bib_fields) do
     local csl_field, csl_value = bib.convert_field(bib_field, value)
 
-    if bib_field == "year" and item.issued then
-      csl_field = nil
-    end
-
-    if bib_field == "title" or bib_field == "booktitle" then
-      csl_value = bib.convert_sentence_case(csl_value)
-    end
-
-    if csl_field and csl_value then
+    if csl_field and not item[csl_field] then
       item[csl_field] = csl_value
     end
   end
 
-  -- Special types and fields
-  if item.type == "document" then
-    if bib_fields.url then
-      item.type = "webpage"
-    else
-      item.type = "article"
-    end
-  end
-
-  if item.type == "article-journal" then
-    if not item["container-title"] then
-      item.type = "article"
-    end
-  end
-
-  if item.number then
-    if not item.issue and item.type == "article-journal" or item.type == "article-magazine" or item.type == "article-newspaper" or item.type == "periodical" then
-      item.issue = item.number
-      item.number = nil
-    elseif item.type == "patent" or item.type == "report" or item.type == "standard" then
-    else
-      item["collection-number"] = item.number
-      item.number = nil
-    end
-  end
-
-  if item.volume then
-    item.volume = string.gsub(item.volume, util.unicode["en dash"], "-")
-  end
-  if item.page then
-    item.page = string.gsub(item.page, util.unicode["en dash"], "-")
-  end
-
-  -- if not item.language then
-  --   if util.has_cjk_char(item.title) then
-  --     item.language = "zh"
-  --   else
-  --     item.language = "en"
-  --   end
-  -- end
+  bib.process_special_fields(item, bib_fields)
 
   return item
-end
-
-function bib.convert_sentence_case(str)
-  local res = ""
-  local to_lower = false
-  local brace_level = 0
-  for _, code_point in utf8.codes(str) do
-    local char = utf8.char(code_point)
-    if to_lower and brace_level == 0 then
-      char = unicode.utf8.lower(char)
-    end
-    if string.match(char, "%S") then
-      to_lower = true
-    end
-    if char == "{" then
-      brace_level = brace_level + 1
-      char = ""
-    elseif char == "}" then
-      brace_level = brace_level - 1
-      char = ""
-    elseif char == ":" then
-      to_lower = false
-    end
-    res = res .. char
-  end
-  return res
 end
 
 function bib.parse_fields(contents)
@@ -173,7 +100,6 @@ function bib.parse_fields(contents)
             end
           end
         end
-        value = bib.unescape(field, value)
         fields[field] = value
         contents = rest
         break
@@ -183,6 +109,37 @@ function bib.parse_fields(contents)
   return fields
 end
 
+function bib.convert_field(bib_field, value)
+  local field_data = bib.bib_data.fields[bib_field]
+  if not field_data then
+    return nil, nil
+  end
+  local csl_field = field_data.csl
+  if not csl_field then
+    return nil, nil
+  end
+
+  value = bib.unescape(bib_field, value)
+
+  local field_type = field_data.type
+  if field_type == "name" then
+    value = bib.parse_names(value)
+  elseif field_type == "date" then
+    value = bib.parse_date(value)
+  end
+
+  if bib_field == "title" or bib_field == "booktitle" then
+    -- TODO: check if the original title is in sentence case
+    value = bib.convert_sentence_case(value)
+  end
+
+  if bib_field == "volume" or bib_field == "pages" then
+    value = string.gsub(value, util.unicode["en dash"], "-")
+  end
+
+  return csl_field, value
+end
+
 function bib.unescape(field, str)
   str = string.gsub(str, "%-%-%-", util.unicode["em dash"])
   str = string.gsub(str, "%-%-", util.unicode["en dash"])
@@ -190,6 +147,7 @@ function bib.unescape(field, str)
   str = string.gsub(str, "''", util.unicode["right double quotation mark"])
   str = string.gsub(str, "`", util.unicode["left single quotation mark"])
   str = string.gsub(str, "'", util.unicode["right single quotation mark"])
+  -- TODO: unicode chars like \"{o}
   str = string.gsub(str, "\\#", "#")
   str = string.gsub(str, "\\%$", "$")
   str = string.gsub(str, "\\%%", "%")
@@ -204,23 +162,30 @@ function bib.unescape(field, str)
   return str
 end
 
-function bib.convert_field(bib_field, value)
-  local field_data = bib.bib_data.fields[bib_field]
-  if not field_data then
-    return nil, nil
+function bib.convert_sentence_case(str)
+  local res = ""
+  local to_lower = false
+  local brace_level = 0
+  for _, code_point in utf8.codes(str) do
+    local char = utf8.char(code_point)
+    if to_lower and brace_level == 0 then
+      char = unicode.utf8.lower(char)
+    end
+    if string.match(char, "%S") then
+      to_lower = true
+    end
+    if char == "{" then
+      brace_level = brace_level + 1
+      char = ""
+    elseif char == "}" then
+      brace_level = brace_level - 1
+      char = ""
+    elseif char == ":" then
+      to_lower = false
+    end
+    res = res .. char
   end
-  local csl_field = field_data.csl
-  if not csl_field then
-    return nil, nil
-  end
-
-  local field_type = field_data.type
-  if field_type == "name" then
-    value = bib.parse_names(value)
-  elseif field_type == "date" then
-    value = bib.parse_date(value)
-  end
-  return csl_field, value
+  return res
 end
 
 function bib.parse_names(str)
@@ -371,6 +336,53 @@ function bib.parse_single_date(str)
     table.insert(date, tonumber(date_part))
   end
   return date
+end
+
+function bib.process_special_fields(item, bib_fields)
+  if item.type == "document" then
+    if item.URL then
+      item.type = "webpage"
+    else
+      item.type = "article"
+    end
+  end
+
+  if item.type == "article-journal" then
+    if not item["container-title"] then
+      item.type = "article"
+    end
+  end
+
+  if bib_fields.year and not item.issued then
+    item.issued = bib.parse_date(bib_fields.year)
+  end
+  local month = bib_fields.month
+  if month and string.match(month, "^%d+$") then
+    if item.issued and item.issued["date-parts"] and
+        item.issued["date-parts"][1] and
+        item.issued["date-parts"][1][2] == nil then
+      item.issued["date-parts"][1][2] = tonumber(month)
+    end
+  end
+
+  if item.number then
+    if not item.issue and item.type == "article-journal" or item.type == "article-magazine" or item.type == "article-newspaper" or item.type == "periodical" then
+      item.issue = item.number
+      item.number = nil
+    elseif item.type == "patent" or item.type == "report" or item.type == "standard" then
+    else
+      item["collection-number"] = item.number
+      item.number = nil
+    end
+  end
+
+  -- if not item.language then
+  --   if util.has_cjk_char(item.title) then
+  --     item.language = "zh"
+  --   else
+  --     item.language = "en"
+  --   end
+  -- end
 end
 
 return bib

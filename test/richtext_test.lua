@@ -2,8 +2,8 @@ require("busted.runner")()
 
 kpse.set_program_name("luatex")
 
-local richtext = require("citeproc.citeproc-richtext")
-local util = require("citeproc.citeproc-util")
+local richtext = require("citeproc-richtext")
+local util = require("citeproc-util")
 
 
 

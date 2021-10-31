@@ -5,9 +5,9 @@
 
 local citeproc = {}
 
-local engine = require("citeproc.citeproc-engine")
-local bib = require("citeproc.citeproc-bib")
-local util = require("citeproc.citeproc-util")
+local engine = require("citeproc-engine")
+local bib = require("citeproc-bib")
+local util = require("citeproc-util")
 
 citeproc.__VERSION__ = "0.0.1"
 

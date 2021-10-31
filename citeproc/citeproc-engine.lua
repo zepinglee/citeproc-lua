@@ -6,11 +6,11 @@ local engine = {}
 
 local dom = require("luaxml-domobject")
 
-local richtext = require("citeproc.citeproc-richtext")
-local element = require("citeproc.citeproc-element")
-local nodes = require("citeproc.citeproc-nodes")
-local formats = require("citeproc.citeproc-formats")
-local util = require("citeproc.citeproc-util")
+local richtext = require("citeproc-richtext")
+local element = require("citeproc-element")
+local nodes = require("citeproc-nodes")
+local formats = require("citeproc-formats")
+local util = require("citeproc-util")
 
 
 local CiteProc = {}

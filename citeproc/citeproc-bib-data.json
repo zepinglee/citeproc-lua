@@ -1376,7 +1376,7 @@
         },
         "month": {
             "csl": null,
-            "notes": "Part of `issued` date",
+            "notes": "Only used when `date` is empty.",
             "source": "bibtex",
             "type": "literal"
         },
@@ -2174,7 +2174,8 @@
             "type": "entrykey"
         },
         "year": {
-            "csl": "issued",
+            "csl": null,
+            "notes": "Only used when `date` is empty.",
             "source": "bibtex",
             "type": "date"
         },
@@ -2202,6 +2203,7 @@
     "macros": {
         "jan": {
             "value": "1",
+            "notes": "Use numeric form for easy conversion.",
             "source": "bibtex"
         },
         "feb": {

@@ -2,8 +2,8 @@ require("busted.runner")()
 
 kpse.set_program_name("luatex")
 
-local bib = require("citeproc.citeproc-bib")
-local util = require("citeproc.citeproc-util")
+local bib = require("citeproc-bib")
+local util = require("citeproc-util")
 
 
 describe("BibParser", function()

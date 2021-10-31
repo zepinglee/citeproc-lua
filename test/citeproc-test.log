@@ -41,142 +41,142 @@ virtual              1       0       0       0
 (all)              606     201       0      46
 
 Pending → test-suite affix_WithCommas
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite bugreports_AutomaticallyDeleteItemsFails
-test/citeproc-test.lua:132: citations
+test/citeproc-test.lua:134: citations
 
 Pending → test-suite bugreports_CreepingAddNames
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite bugreports_DelimiterOnLayout
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite bugreports_EnvAndUrb
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite bugreports_EtAlSubsequent
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite bugreports_OldMhraDisambiguationFailure
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite bugreports_OverwriteCitationItems
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite bugreports_ikeyOne
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite collapse_CitationNumberRangesInsert
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite disambiguate_BasedOnSubsequentFormWithBackref2
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite disambiguate_DisambiguationHang
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite disambiguate_YearSuffixFiftyTwoEntries
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite disambiguate_YearSuffixFiftyTwoEntriesByCite
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite group_LegalWithAuthorDate
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite integration_DeleteName
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite integration_DisambiguateAddGivenname1
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite integration_DisambiguateAddGivenname2
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite integration_DuplicateItem
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite integration_DuplicateItem2
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite integration_FirstReferenceNoteNumberPositionChange
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite integration_IbidOnInsert
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite integration_IbidWithDifferentLocators
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite integration_SimpleFirstReferenceNoteNumber
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite integration_SimpleIbid
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite integration_SubsequentWhenInterveningFootnote
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite integration_YearSuffixOnOffOn
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite magic_TermCapitalizationWithPrefix
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite name_BibliographyNameFormNeverShrinks
-test/citeproc-test.lua:132: citations
+test/citeproc-test.lua:134: citations
 
 Pending → test-suite position_FirstTrueOnlyOnce
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite position_IbidInText
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite position_IbidSeparateCiteSameNote
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite position_IbidWithMultipleSoloCitesInBackref
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite position_IbidWithPrefixFullStop
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite position_NearNoteSameNote
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite position_ResetNoteNumbers
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite punctuation_SuppressPrefixPeriodForDelimiterSemicolon
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite sort_AuthorDateWithYearSuffix
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite sort_CitationNumberPrimaryAscendingViaMacroCitation
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite sort_CitationNumberPrimaryAscendingViaVariableCitation
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite sort_CitationNumberPrimaryDescendingViaMacroCitation
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite sort_CitationNumberPrimaryDescendingViaVariableCitation
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite sort_CitationNumberSecondaryAscendingViaVariableCitation
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite sort_GroupedByAuthorstring
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite sort_RangeUnaffected
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Pending → test-suite testers_FirstAutoGeneratedZoteroPluginTest
-test/citeproc-test.lua:39: citations
+test/citeproc-test.lua:41: citations
 
 Failure → test-suite affix_CommaAfterQuote
 Passed in:

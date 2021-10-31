@@ -8,7 +8,7 @@ require("lualibs")
 local dom = require("luaxml-domobject")
 local lfs = require("lfs")
 
-local citeproc = require("citeproc.citeproc")
+local citeproc = require("citeproc")
 
 
 local function read_file(path)

@@ -1,0 +1,35 @@
+\newcommand\testbox[1]{%
+  \setbox0=\hbox{#1}%
+  \showbox0%
+}
+
+\BEGINTEST{Single cite item in a citaion}
+  \testbox{\cite{ITEM-1}}
+\ENDTEST
+
+\BEGINTEST{Multiple cite items in a citaion}
+  \testbox{\cite{ITEM-1, ITEM-2}}
+\ENDTEST
+
+% \BEGINTEST{Citation with page locator}
+%   \testbox{\cite[page=6]{ITEM-1}}
+% \ENDTEST
+
+% \BEGINTEST{Citation with volume locator}
+%   \testbox{\cite[volume=3]{ITEM-1}}
+% \ENDTEST
+
+\BEGINTEST{Citation with implicit page locator}
+  \testbox{\cite[6]{ITEM-1}}
+\ENDTEST
+
+\BEGINTEST{Citation with prefix and suffix}
+  \testbox{\cite[prefix][suffix]{ITEM-1}}
+\ENDTEST
+\BEGINTEST{Citation with suffix}
+  \testbox{\cite[suffix]{ITEM-1}}
+\ENDTEST
+
+\BEGINTEST{Citation with prefix}
+  \testbox{\cite[prefix][]{ITEM-1}}
+\ENDTEST

@@ -6,7 +6,7 @@ local richtext = {}
 
 local unicode = require("unicode")
 
-local util = require("citeproc.citeproc-util")
+local util = require("citeproc-util")
 
 
 local RichText = {

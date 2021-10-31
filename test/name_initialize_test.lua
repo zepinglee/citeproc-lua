@@ -1,6 +1,6 @@
 require("busted.runner")()
 
-local name = require("citeproc.citeproc-node-names").name
+local name = require("citeproc-node-names").name
 
 
 describe("String split", function ()

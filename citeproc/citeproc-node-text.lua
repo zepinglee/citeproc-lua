@@ -1,8 +1,8 @@
 local text = {}
 
-local element = require("citeproc.citeproc-element")
-local richtext = require("citeproc.citeproc-richtext")
-local util = require("citeproc.citeproc-util")
+local element = require("citeproc-element")
+local richtext = require("citeproc-richtext")
+local util = require("citeproc-util")
 
 
 local Text = element.Element:new()

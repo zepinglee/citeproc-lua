@@ -2,7 +2,7 @@
   Copyright (C) 2021 Zeping Lee
 --]]
 
-local util = require("citeproc.citeproc-util")
+local util = require("citeproc-util")
 
 
 local formats = {}

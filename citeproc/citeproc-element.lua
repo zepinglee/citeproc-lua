@@ -2,8 +2,8 @@ local element = {}
 
 local unicode = require("unicode")
 
-local richtext = require("citeproc.citeproc-richtext")
-local util = require("citeproc.citeproc-util")
+local richtext = require("citeproc-richtext")
+local util = require("citeproc-util")
 
 
 local Element = {

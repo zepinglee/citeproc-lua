@@ -4,7 +4,9 @@
 
 local csl = {}
 
-local citeproc = require("citeproc.citeproc")
+csl.ids = {}
+
+local citeproc = require("citeproc")
 local util = citeproc.util
 require("lualibs")
 
@@ -70,7 +72,11 @@ local function make_citeproc_sys(bib_names)
       return read_file(filename)
     end,
     retrieveItem = function (id)
-      return bib[id]
+      local res = bib[id]
+      if not res then
+        csl.error(string.format('Failed to find entry "%s".', id))
+      end
+      return res
     end
   }
 
@@ -78,22 +84,64 @@ local function make_citeproc_sys(bib_names)
 end
 
 function csl.init(style_name, bib_names)
+  if style_name == "" or bib_names == "" then
+    csl.engine = nil
+    return
+  end
   local style = read_file(style_name .. ".csl")
+  if not style then
+    return
+  end
+
   local citeproc_sys = make_citeproc_sys(bib_names)
   csl.engine = citeproc.new(citeproc_sys, style)
+  tex.sprint("\\CslEngineInitialized")
+
+  -- csl.init is called via \AtBeginDocument and it's executed after
+  -- loading .aux file.  The csl.ids are already registered.
+  csl.engine:updateItems(csl.ids)
 end
 
-function csl.cite(citation)
-  local cite_items = {}
-  for item in string.gmatch(citation, "([^,%s]+)") do
-    cite_items[#cite_items+1] = {id = item}
+function csl.cite(prenote, postnote, keys)
+  if not csl.engine then
+    csl.error("CSL engine is not initialized.")
   end
+
+  local cite_items = {}
+  for key in string.gmatch(keys, "([^,%s]+)") do
+    cite_items[#cite_items+1] = {id = key}
+  end
+  if #cite_items == 0 then
+    return
+  end
+
+  if prenote then
+    cite_items[1].prefix = prenote
+  end
+  if postnote then
+    if string.match(postnote, "^%s*%d+$") then
+      cite_items[1].locator = tonumber(postnote)
+    else
+      cite_items[1].suffix = postnote
+    end
+  end
+
   -- TODO: Use processCitationCluster()
   local result = csl.engine:makeCitationCluster(cite_items)
-  tex.print(result)
+  tex.sprint(result)
+end
+
+function csl.register_items(keys)
+  for key in string.gmatch(keys, "([^,%s]+)") do
+    table.insert(csl.ids, key)
+  end
 end
 
 function csl.bibliography()
+  if not csl.engine then
+    csl.error("CSL engine is not initialized.")
+  end
+
   local result = csl.engine:makeBibliography()
 
   local params = result[1]

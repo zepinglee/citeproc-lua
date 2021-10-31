@@ -3,15 +3,39 @@
 \usepackage{csl}
 
 \cslsetup{
-  style    = apa,
+  style    = plain,
   bib-data = example.bib,
 }
 
 
 \begin{document}
 
-Foo \cite{ITEM-1} bar \cite{ITEM-1, ITEM-2} baz.
+% Single cite item in a citation
+\cite{ITEM-1}
 
+% Multiple cite items in a citation
+\cite{ITEM-1, ITEM-2}
+
+% % Citation with page locator
+% \cite[page=6]{ITEM-1}
+
+% % Citation with volume locator
+% \cite[volume=3]{ITEM-1}
+
+% Citation with implicit page locator
+\cite[6]{ITEM-1}
+
+% Citation with prefix and suffix
+\cite[prefix][suffix]{ITEM-1}
+
+% Citation with suffix
+\cite[suffix]{ITEM-1}
+
+% Citation with prefix
+\cite[prefix][]{ITEM-1}
+
+
+% Print the reference list
 \printbibliography
 
 \end{document}

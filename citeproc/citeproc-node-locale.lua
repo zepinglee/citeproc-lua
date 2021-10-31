@@ -1,6 +1,6 @@
 local locale = {}
 
-local element = require("citeproc.citeproc-element")
+local element = require("citeproc-element")
 
 
 local Locale = element.Element:new()

@@ -7,17 +7,37 @@ module = "csl"
 
 docfiledir = "./doc"
 sourcefiledir = "./citeproc"
-testfiledir = "./test"
+supportdir = "./bin"
+testfiledir = "./test/latex"
+testsuppdir = "./test/latex/support"
 
-installfiles = {"*.sty", "*.lua", "*.json"}
-scriptfiles = {"citeproc*.lua"}
+installfiles = {"*.sty", "*.lua", "*.json", "citeproc"}
+scriptfiles = {"*.lua", "citeproc"}
 -- scriptmanfiles = {"citeproc.1"}
-sourcefiles = {"*.sty", "*.lua", "*.json"}
+sourcefiles = {"*.sty", "*.lua", "*.json", "citeproc"}
 -- tagfiles = {}
 -- typesetdemofiles = {}
 
-tdslocations = {
-  "scripts/csl/citeproc/citeproc*.lua",
-  "scripts/csl/*.lua",
-  "tex/latex/csl/citeproc/*.json",
+includetests = {"luatex-1-*"}
+
+checkengines = {"luatex"}
+stdengine = "luatex"
+
+checkconfigs = {
+  "build",
+  "test/latex/config-luatex-2",
+  "test/latex/config-other-1",
+  "test/latex/config-other-3",
 }
+
+checkopts = "-interaction=nonstopmode -shell-escape"
+
+checkruns = 1
+-- flatten = false
+-- flattentds = false
+packtdszip = true
+
+-- tdslocations = {
+--   "scripts/csl/*.lua",
+--   "tex/latex/csl/citeproc/*.json",
+-- }

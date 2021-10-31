@@ -1,0 +1,19 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\usepackage{csl}
+
+\begin{document}
+
+\START
+
+\input{csl-citation-tests}
+
+\TEST{Bibilography}{
+  \bibliographystyle{plain}
+  \bibliography{test}
+  \TRUE
+}
+
+\end{document}
