@@ -9,8 +9,7 @@ checkruns = 3
 
 function runtest_tasks(name, run)
   if run == 1 then
-    -- TODO:
-    return ""
+    return "./citeproc " .. name
   else
     return ""
   end

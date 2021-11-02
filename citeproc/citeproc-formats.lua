@@ -106,7 +106,7 @@ formats.latex = {
   -- optional argument of `\bibitem`.
   ["@bibliography/entry"] = function (str, context)
     if not string.match(str, "\\bibitem") then
-      str =  "\\bibitem{".. context.item.id .. "} " .. str
+      str =  "\\bibitem{".. context.item.id .. "}\n" .. str
     end
     return str
   end,
@@ -120,7 +120,7 @@ formats.latex = {
     if string.match(str, "%]") then
       str = "{" .. str .. "}"
     end
-    return string.format("\\bibitem[%s]{%s} ", str, state.item.id)
+    return string.format("\\bibitem[%s]{%s}\n", str, state.item.id)
   end,
   ["@display/right-inline"] = function (str, state)
     return str

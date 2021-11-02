@@ -2,113 +2,46 @@ This is a generated file for the l3build validation system.
 Don't change this file in any respect.
 (csl-citation-tests.tex
 ============================================================
-TEST 1: Single cite item in a citaion
+TEST 1: Single cite item in a citation
 ============================================================
-> \box...=
-\hbox(7.5+2.5)x10.56, direction TLT
-.\TU/lmr/m/n/10 [
-.\TU/lmr/m/n/10 2
-.\TU/lmr/m/n/10 ]
-! OK.
-l. ...  \testbox{\cite{ITEM-1}}
+> \l__csl_citation_tl=[2].
+<recently read> }
+l. ...}
 ============================================================
 ============================================================
-TEST 2: Multiple cite items in a citaion
+TEST 2: Multiple cite items in a citation
 ============================================================
-> \box...=
-\hbox(7.5+2.5)x21.67, direction TLT
-.\TU/lmr/m/n/10 [
-.\TU/lmr/m/n/10 2
-.\TU/lmr/m/n/10 ,
-.\glue(\spaceskip) 3.33 plus 2.08124 minus 0.888
-.\TU/lmr/m/n/10 1
-.\TU/lmr/m/n/10 ]
-! OK.
-l. ...  \testbox{\cite{ITEM-1, ITEM-2}}
+> \l__csl_citation_tl=[2, 1].
+<recently read> }
+l. ...}
 ============================================================
 ============================================================
 TEST 3: Citation with implicit page locator
 ============================================================
-> \box...=
-\hbox(7.5+2.5)x34.45, direction TLT
-.\TU/lmr/m/n/10 [
-.\TU/lmr/m/n/10 2
-.\TU/lmr/m/n/10 ,
-.\glue(\spaceskip) 3.33 plus 2.08124 minus 0.888
-.\TU/lmr/m/n/10 p
-.\TU/lmr/m/n/10 .
-.\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
-.\TU/lmr/m/n/10 6
-.\TU/lmr/m/n/10 ]
-! OK.
-l. ...  \testbox{\cite[6]{ITEM-1}}
+> \l__csl_citation_tl=[2, p. 6].
+<recently read> }
+l. ...}
 ============================================================
 ============================================================
 TEST 4: Citation with prefix and suffix
 ============================================================
-> \box...=
-\hbox(7.5+2.5)x65.09, direction TLT
-.\TU/lmr/m/n/10 [
-.\TU/lmr/m/n/10 p
-.\TU/lmr/m/n/10 r
-.\TU/lmr/m/n/10 e
-.\discretionary (penalty 50)
-..< \TU/lmr/m/n/10 -
-.\TU/lmr/m/n/10 ﬁ (ligature fi)
-.\TU/lmr/m/n/10 x
-.\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
-.\TU/lmr/m/n/10 2
-.\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
-.\TU/lmr/m/n/10 s
-.\TU/lmr/m/n/10 u
-.\discretionary (penalty 50)
-..< \TU/lmr/m/n/10 f
-..< \TU/lmr/m/n/10 -
-..> \TU/lmr/m/n/10 ﬁ (ligature fi)
-..= \TU/lmr/m/n/10 ﬃ (ligature ffi)
-.\TU/lmr/m/n/10 x
-.\TU/lmr/m/n/10 ]
-! OK.
-l. ...  \testbox{\cite[prefix][suffix]{ITEM-1}}
+> \l__csl_citation_tl=[prefix 2 suffix].
+<recently read> }
+l. ...}
 ============================================================
 ============================================================
 TEST 5: Citation with suffix
 ============================================================
-> \box...=
-\hbox(7.5+2.5)x37.0, direction TLT
-.\TU/lmr/m/n/10 [
-.\TU/lmr/m/n/10 2
-.\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
-.\TU/lmr/m/n/10 s
-.\TU/lmr/m/n/10 u
-.\discretionary (penalty 50)
-..< \TU/lmr/m/n/10 f
-..< \TU/lmr/m/n/10 -
-..> \TU/lmr/m/n/10 ﬁ (ligature fi)
-..= \TU/lmr/m/n/10 ﬃ (ligature ffi)
-.\TU/lmr/m/n/10 x
-.\TU/lmr/m/n/10 ]
-! OK.
-l. ...  \testbox{\cite[suffix]{ITEM-1}}
+> \l__csl_citation_tl=[2 suffix].
+<recently read> }
+l. ...}
 ============================================================
 ============================================================
 TEST 6: Citation with prefix
 ============================================================
-> \box...=
-\hbox(7.5+2.5)x38.65, direction TLT
-.\TU/lmr/m/n/10 [
-.\TU/lmr/m/n/10 p
-.\TU/lmr/m/n/10 r
-.\TU/lmr/m/n/10 e
-.\discretionary (penalty 50)
-..< \TU/lmr/m/n/10 -
-.\TU/lmr/m/n/10 ﬁ (ligature fi)
-.\TU/lmr/m/n/10 x
-.\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
-.\TU/lmr/m/n/10 2
-.\TU/lmr/m/n/10 ]
-! OK.
-l. ...  \testbox{\cite[prefix][]{ITEM-1}}
+> \l__csl_citation_tl=[prefix 2].
+<recently read> }
+l. ...}
 ============================================================
 )
 ============================================================

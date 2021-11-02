@@ -7,11 +7,13 @@
 \RequirePackage{xparse}
 \ProvidesExplPackage{csl}{2021-10-18}{0.0.1}{Citation Style Language for LaTeX}
 
-\msg_new:nnn { csl } { require-luatex }
-  { LuaTeX~ is~ required~ for~ `csl'~ package. }
-\sys_if_engine_luatex:F { \msg_fatal:nn { csl } { require-luatex } }
+% \msg_new:nnn { csl } { require-luatex }
+%   { LuaTeX~ is~ required~ for~ `csl'~ package. }
+% \sys_if_engine_luatex:F { \msg_fatal:nn { csl } { require-luatex } }
 
-\lua_now:n { csl = require("csl") }
+\sys_if_engine_luatex:T
+  { \lua_now:n { csl = require("csl") } }
+
 \RequirePackage { filehook }
 
 \cs_new:Npn \csl_incompatible_package:n #1
@@ -43,29 +45,76 @@
 
 \DeclareDocumentCommand \cite { o o m }
   {
+    \IfValueTF { #2 }
+      { \csl_cite_normalize:nnn { #1 } { #2 } { #3 } }
+      {
+        \IfValueTF { #1 }
+          { \csl_cite_normalize:nnn { } { #1 } { #3 } }
+          { \csl_cite_normalize:nnn { } { } { #3 } }
+      }
+  }
+
+\tl_new:N \l__csl_prefix_tl
+\tl_new:N \l__csl_suffix_tl
+\clist_new:N \l__csl_keys_clist
+\tl_new:N \l__csl_normalized_keys_tl
+
+\cs_new:Npn \csl_cite_normalize:nnn #1#2#3
+  {
+    \tl_set:Nn \l__csl_prefix_tl { #1 }
+    \tl_if_empty:NF \l__csl_prefix_tl
+      { \tl_put_right:NV \l__csl_prefix_tl \l__csl_prefix_separator_tl }
+
+    \tl_set:Nn \l__csl_suffix_tl { #2 }
+    \tl_if_empty:NF \l__csl_suffix_tl
+      { \tl_put_left:NV \l__csl_suffix_tl \l__csl_suffix_separator_tl }
+
+    \clist_set:Nn \l__csl_keys_clist { #3 }
+    \tl_set:Nx \l__csl_normalized_keys_tl
+      { \clist_use:Nn \l__csl_keys_clist { , } }
+
+    \exp_args:NNNV \csl_cite:nnn
+      { \l__csl_prefix_tl } { \l__csl_suffix_tl } { \l__csl_normalized_keys_tl }
+  }
+
+
+\tl_new:N \l__csl_citation_tl
+\tl_new:N \l__csl_citation_count_tl
+
+\cs_new:Npn \csl_cite:nnn #1#2#3
+  {
     \if@filesw
       {
         \immediate \write \@auxout
-          {
-            \string \citation { { } { } { #3 } }
-          }
+          { \string \citation { { #1 } { #2 } { #3 } } }
       }
     \fi
+    \tl_clear:N \l__csl_citation_tl
     \bool_if:NTF \l__csl_engine_initialized_bool
       {
-        \IfValueTF { #2 }
-          { \csl_cite:nnn { #1 } { #2 } { #3 } }
-          {
-            \IfValueTF { #1 }
-              { \csl_cite:nnn { } { #1 } { #3 } }
-              { \csl_cite:nnn { } { } { #3 } }
-          }
+        \tl_set:Nx \l__csl_citation_tl
+          { \lua_now:e { csl.cite("#1",~ "#2",~ "#3") } }
       }
       {
-        \hbox { [ \reset@font \textbf { ? } ] }
-        \G@refundefinedtrue
-        \msg_warning:nnn { csl } { citation / undefined } { #3 }
+        \int_if_exist:cF { g__csl_citation_count_ #3 _int }
+          { \int_gzero_new:c { g__csl_citation_count_ #3 _int } }
+        \int_gincr:c { g__csl_citation_count_ #3 _int }
+        \tl_set:Nx \l__csl_citation_count_tl
+          { \int_use:c { g__csl_citation_count_ #3 _int } }
+        \tl_if_exist:cTF
+          { g__csl_citation_ #3 _ \l__csl_citation_count_tl _tl }
+          {
+            \tl_set_eq:Nc \l__csl_citation_tl
+              { g__csl_citation_ #3 _ \l__csl_citation_count_tl _tl }
+          }
+          {
+            \tl_set:Nn \l__csl_citation_tl
+              { \reset@font [ \textbf { #3 } ] }
+            \G@refundefinedtrue
+            \msg_warning:nnn { csl } { citation / undefined } { #3 }
+          }
       }
+    \l__csl_citation_tl
   }
 
 \msg_new:nnn { csl } { citation / undefined }
@@ -73,47 +122,66 @@
     Citation~ `#1'~ on~ page~ \thepage \space undefined~ \msg_line_context: .
   }
 
-\cs_new:Npn \csl_cite:nnn #1#2#3
-  {
-    \lua_now:e
-      {
-        csl.cite(
-          " #1 \tl_if_empty:nF { #1 } { \l__csl_prefix_separator_tl } ",~
-          " \tl_if_empty:nF { #2 } { \l__csl_suffix_separator_tl } #2 ",~
-          "#3"
-        )
-      }
-  }
-
 
 % Used in aux files to register cite items.
-\DeclareDocumentCommand \citation { m }
-  { \csl_register_items:nnn #1 }
+\cs_set:Npn \citation #1
+  {
+    \sys_if_engine_luatex:T
+      { \csl_register_items:nnn #1 }
+  }
 
 \cs_new:Npn \csl_register_items:nnn #1#2#3
   { \lua_now:n { csl.register_items("#3") } }
 
 
+\cs_new:Npn \cslcite #1#2
+  {
+    \if@filesw
+      \immediate \write \@auxout { \string \bibcite { #1 } { #2 } }
+    \fi
+  }
+
+\tl_new:N \l__csl_bibcite_count_tl
+\cs_set:Npn \bibcite #1#2
+  {
+    \int_if_exist:cF { g__csl_bibcite_count_ #1 _int }
+      { \int_gzero_new:c { g__csl_bibcite_count_ #1 _int } }
+    \int_gincr:c { g__csl_bibcite_count_ #1 _int }
+    \tl_set:Nx \l__csl_bibcite_count_tl
+      { \int_use:c { g__csl_bibcite_count_ #1 _int } }
+    \tl_gset:cn { g__csl_citation_ #1 _ \l__csl_bibcite_count_tl _tl } { #2 }
+  }
+
 \NewDocumentCommand \printbibliography { }
   {
-    \bool_if:NTF \l__csl_engine_initialized_bool
-      { \lua_now:n { csl.bibliography() } }
-      { \msg_warning:nnn { csl } { bibliography / empty } }
+    \sys_if_engine_luatex:TF
+      {
+        \bool_if:NTF \l__csl_engine_initialized_bool
+          { \lua_now:n { csl.bibliography() } }
+          { \msg_warning:nnn { csl } { bibliography / empty } }
+      }
+      {
+        \file_if_exist_input:nF { \jobname .bbl }
+          { \msg_warning:nnx { csl } { file / non-exist} { \jobname .bbl } }
+      }
   }
 
 \msg_new:nnn { csl } { bibliography / empty }
   { The~ bibliography~ is~ empty.  }
 
+\msg_new:nnn { csl } { file / non-exist }
+  { No~ file~ #1. }
+
 
 \tl_new:N \l__csl_style_tl
-\clist_new:N \l__csl_bib_data_clist
+\clist_new:N \l__csl_bib_files_clist
 \tl_new:N \l__csl_prefix_separator_tl
 \tl_new:N \l__csl_suffix_separator_tl
 
 \keys_define:nn { csl }
   {
     style .tl_set:N = \l__csl_style_tl ,
-    bib-data .clist_set:N = \l__csl_bib_data_clist ,
+    bib-data .clist_set:N = \l__csl_bib_files_clist ,
     prefix-separator .tl_set:N = \l__csl_prefix_separator_tl ,
     suffix-separator .tl_set:N = \l__csl_suffix_separator_tl ,
   }
@@ -126,52 +194,69 @@
 
 \bool_new:N \l__csl_engine_initialized_bool
 
-\DeclareDocumentCommand \CslEngineInitialized { }
-  { \bool_set_true:N \l__csl_engine_initialized_bool }
-
 \AtBeginDocument
   {
-    \lua_now:e { csl.init("\l__csl_style_tl", "\l__csl_bib_data_clist") }
+    \tl_if_empty:NTF \l__csl_style_tl
+      { \tl_set_eq:NN \l__csl_style_tl \g__csl_aux_bibstyle_tl }
+      { \exp_args:Nx \csl_write_aux_bibstyle:n { \l__csl_style_tl } }
+    \clist_if_empty:NTF \l__csl_bib_files_clist
+      { \clist_set_eq:NN \l__csl_bib_files_clist \g__csl_aux_bib_files_clist }
+      {
+        \exp_args:Nx \csl_write_aux_bibdata:n
+          { \clist_use:Nn \l__csl_bib_files_clist { , } }
+      }
+    \sys_if_engine_luatex:T
+      {
+        \lua_now:e { csl.init("\l__csl_style_tl", "\l__csl_bib_files_clist") }
+        \str_if_eq:eeT { \lua_now:n { tex.print(csl.initialized) } } { true }
+          { \bool_set_true:N \l__csl_engine_initialized_bool }
+      }
   }
+
+\cs_new:Npn \csl_write_aux_bibstyle:n #1
+  {
+    \if@filesw
+      % \iow_now:Nx \@auxout { \bibstyle { #1 } }
+      \immediate \write \@auxout { \string \bibstyle { #1 } }
+    \fi
+  }
+
 
 \DeclareDocumentCommand \bibliographystyle { m }
   {
-    \ifx \@begindocumenthook \@undefined \else
-      \expandafter \AtBeginDocument
+    \ifx \@begindocumenthook \@undefined
+      \csl_write_aux_bibstyle:n { #1 }
     \fi
-      {
-        \if@filesw
-          \immediate \write \@auxout { \string \bibstyle { #1 } }
-        \fi
-      }
-    \tl_gset:Nn \l__csl_style_tl { #1 }
+    \tl_set:Nn \l__csl_style_tl { #1 }
   }
 
-\DeclareDocumentCommand \bibstyle { m }
-  {
-    \tl_if_empty:NT \l__csl_style_tl
-      { \tl_gset:Nn \l__csl_style_tl { #1 } }
-  }
-
+\tl_new:N \g__csl_aux_bibstyle_tl
+\cs_set:Npn \bibstyle #1
+  { \tl_gset:Nn \g__csl_aux_bibstyle_tl { #1 } }
 
 % Setting bib resource
 \NewDocumentCommand \addbibresource { m }
-  { \clist_put_right:Nn \l__csl_bib_data_clist { #1 } }
-
-\DeclareDocumentCommand \bibdata { m }
   {
-    \clist_if_empty:NT \l__csl_bib_data_clist
-      { \clist_gset:Nn \l__csl_bib_data_clist { #1 } }
+    \clist_put_right:Nn \l__csl_bib_files_clist { #1 }
   }
+
+\clist_new:N \g__csl_aux_bib_files_clist
+\cs_set:Npn \bibdata #1
+  { \clist_gput_right:Nn \g__csl_aux_bib_files_clist { #1 } }
 
 
 \DeclareDocumentCommand \bibliography { m }
+  {
+    \csl_write_aux_bibdata:n { #1 }
+    \printbibliography
+  }
+
+\cs_new:Npn \csl_write_aux_bibdata:n #1
   {
     \if@filesw
       \immediate \write \@auxout
         { \string \bibdata { \zap@space #1~ \@empty } }
     \fi
-    \printbibliography
   }
 
 % For numeric or label-style bibliography

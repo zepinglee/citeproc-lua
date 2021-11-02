@@ -2,9 +2,10 @@
   Copyright (C) 2021 Zeping Lee
 --]]
 
-local csl = {}
-
-csl.ids = {}
+local csl = {
+  ids = {},
+  initialized = "false"
+}
 
 local citeproc = require("citeproc")
 local util = citeproc.util
@@ -39,13 +40,12 @@ local function read_file(filename, ftype)
   return contents
 end
 
-local function load_bib(bib_names)
+local function load_bib(bib_files)
   local bib = {}
-  bib_names = util.strip(bib_names)
-  for _, bib_name in ipairs(util.split(bib_names, ",%s*")) do
+  for _, bib_file in ipairs(bib_files) do
     -- TODO: try to load `<bibname>.json` first?
-    local bib_contents = read_file(bib_name, "bib")
-    local file_name = bib_name
+    local bib_contents = read_file(bib_file, "bib")
+    local file_name = bib_file
     if not util.endswith(file_name, ".bib") then
       file_name = file_name .. ".bib"
     end
@@ -62,9 +62,8 @@ local function load_bib(bib_names)
   return bib
 end
 
-local function make_citeproc_sys(bib_names)
-
-  local bib = load_bib(bib_names)
+local function make_citeproc_sys(bib_files)
+  local bib = load_bib(bib_files)
   local citeproc_sys = {
     retrieveLocale = function (lang)
       local locale_name_format = csl.locale_name_format or "locales-%s.xml"
@@ -83,8 +82,8 @@ local function make_citeproc_sys(bib_names)
   return citeproc_sys
 end
 
-function csl.init(style_name, bib_names)
-  if style_name == "" or bib_names == "" then
+function csl.init(style_name, bib_data)
+  if style_name == "" or bib_data == "" then
     csl.engine = nil
     return
   end
@@ -93,16 +92,18 @@ function csl.init(style_name, bib_names)
     return
   end
 
-  local citeproc_sys = make_citeproc_sys(bib_names)
+  local bib_files = util.split(util.strip(bib_data), ",%s*")
+
+  local citeproc_sys = make_citeproc_sys(bib_files)
   csl.engine = citeproc.new(citeproc_sys, style)
-  tex.sprint("\\CslEngineInitialized")
 
   -- csl.init is called via \AtBeginDocument and it's executed after
   -- loading .aux file.  The csl.ids are already registered.
   csl.engine:updateItems(csl.ids)
+  csl.initialized = "true"
 end
 
-function csl.cite(prenote, postnote, keys)
+function csl.cite(prefix, suffix, keys)
   if not csl.engine then
     csl.error("CSL engine is not initialized.")
   end
@@ -112,17 +113,17 @@ function csl.cite(prenote, postnote, keys)
     cite_items[#cite_items+1] = {id = key}
   end
   if #cite_items == 0 then
-    return
+    return cite_items
   end
 
-  if prenote then
-    cite_items[1].prefix = prenote
+  if prefix then
+    cite_items[1].prefix = prefix
   end
-  if postnote then
-    if string.match(postnote, "^%s*%d+$") then
-      cite_items[1].locator = tonumber(postnote)
+  if suffix then
+    if string.match(suffix, "^%s*%d+$") then
+      cite_items[1].locator = tonumber(suffix)
     else
-      cite_items[1].suffix = postnote
+      cite_items[1].suffix = suffix
     end
   end
 
@@ -145,13 +146,12 @@ function csl.bibliography()
   local result = csl.engine:makeBibliography()
 
   local params = result[1]
-  local bibitems = result[2]
+  local bib_items = result[2]
   -- util.debug(params)
 
   tex.print(params.bibstart)
-  for _, bibitem in ipairs(bibitems) do
-    -- util.debug(bibitem)
-    tex.print(bibitem)
+  for _, bib_item in ipairs(bib_items) do
+    tex.print(util.split(bib_item, "\n"))
   end
   tex.print(params.bibend)
 end

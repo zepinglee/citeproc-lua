@@ -1,8 +1,8 @@
 ---@diagnostic disable: lowercase-global
 
-includetests = {"luatex-2-*"}
+includetests = {"luatex-1-*"}
 
 checkengines = {"luatex"}
 stdengine = "luatex"
 
-checkruns = 2
+checkruns = 1

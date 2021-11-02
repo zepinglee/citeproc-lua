@@ -1,35 +1,45 @@
-\newcommand\testbox[1]{%
-  \setbox0=\hbox{#1}%
-  \showbox0%
+\ExplSyntaxOn
+  \NewDocumentCommand \showcitation { }
+    { \tl_show:N \l__csl_citation_tl }
+\ExplSyntaxOff
+
+
+\TEST{Single cite item in a citation}{
+  \cite{ITEM-1}
+  \showcitation
 }
 
-\BEGINTEST{Single cite item in a citaion}
-  \testbox{\cite{ITEM-1}}
-\ENDTEST
+\TEST{Multiple cite items in a citation}{
+  \cite{ITEM-1, ITEM-2}
+  \showcitation
+}
 
-\BEGINTEST{Multiple cite items in a citaion}
-  \testbox{\cite{ITEM-1, ITEM-2}}
-\ENDTEST
+% \TEST{Citation with page locator}
+%   \cite[page=6]{ITEM-1}
+%   \showcitation
+% }
 
-% \BEGINTEST{Citation with page locator}
-%   \testbox{\cite[page=6]{ITEM-1}}
-% \ENDTEST
+% \TEST{Citation with volume locator}
+%   \cite[volume=3]{ITEM-1}
+%   \showcitation
+% }
 
-% \BEGINTEST{Citation with volume locator}
-%   \testbox{\cite[volume=3]{ITEM-1}}
-% \ENDTEST
+\TEST{Citation with implicit page locator}{
+  \cite[6]{ITEM-1}
+  \showcitation
+}
 
-\BEGINTEST{Citation with implicit page locator}
-  \testbox{\cite[6]{ITEM-1}}
-\ENDTEST
+\TEST{Citation with prefix and suffix}{
+  \cite[prefix][suffix]{ITEM-1}
+  \showcitation
+}
 
-\BEGINTEST{Citation with prefix and suffix}
-  \testbox{\cite[prefix][suffix]{ITEM-1}}
-\ENDTEST
-\BEGINTEST{Citation with suffix}
-  \testbox{\cite[suffix]{ITEM-1}}
-\ENDTEST
+\TEST{Citation with suffix}{
+  \cite[suffix]{ITEM-1}
+  \showcitation
+}
 
-\BEGINTEST{Citation with prefix}
-  \testbox{\cite[prefix][]{ITEM-1}}
-\ENDTEST
+\TEST{Citation with prefix}{
+  \cite[prefix][]{ITEM-1}
+  \showcitation
+}

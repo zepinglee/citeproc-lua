@@ -70,6 +70,213 @@ local function convert_bib(path, output_path)
 end
 
 
+
+local function read_aux_file(aux_file)
+  local bib_style = nil
+  local bib_files = {}
+  local raw_citations = {}
+
+  local file = io.open(aux_file, "r")
+  if not file then
+    error(string.format('Failed to open "%s"', aux_file))
+    return
+  end
+  for line in file:lines() do
+    local match
+    match = string.match(line, "^\\bibstyle%s*(%b{})")
+    if match then
+      bib_style = string.sub(match, 2, -2)
+    else
+      match = string.match(line, "^\\bibdata%s*(%b{})")
+      if match then
+        for _, bib in ipairs(util.split(string.sub(match, 2, -2), ",%s*")) do
+          table.insert(bib_files, bib)
+        end
+      else
+        match = string.match(line, "^\\citation%s*(%b{})")
+        if match then
+          table.insert(raw_citations, string.sub(match, 2, -2))
+        end
+      end
+    end
+  end
+  file:close()
+
+  return bib_style, bib_files, raw_citations
+end
+
+
+local function read_file(filename, ftype)
+  local path = kpse.find_file(filename, ftype)
+  if not path then
+    if ftype and not util.endswith(filename, ftype) then
+      filename = filename .. ftype
+    end
+    error(string.format('Failed to find "%s".', filename))
+  end
+  local file = io.open(path, "r")
+  if not file then
+    error(string.format('Failed to open "%s".', path))
+    return nil
+  end
+  local contents = file:read("*a")
+  file:close()
+  return contents
+end
+
+local function load_bib(bib_files)
+  local bib = {}
+  for _, bib_file in ipairs(bib_files) do
+    -- TODO: try to load `<bibname>.json` first?
+    local bib_contents = read_file(bib_file, "bib")
+    local file_name = bib_file
+    if not util.endswith(file_name, ".bib") then
+      file_name = file_name .. ".bib"
+    end
+    -- TODO: parse bib entries on demand
+    local csl_items = citeproc.parse_bib(bib_contents)
+    for _, item in ipairs(csl_items) do
+      local id = item.id
+      if bib[id] then
+        error(string.format('Duplicate entry key "%s" in "%s".', id, file_name))
+      end
+      bib[id] = item
+    end
+  end
+  return bib
+end
+
+local function make_citeproc_sys(bib_files)
+  local bib = load_bib(bib_files)
+  local citeproc_sys = {
+    retrieveLocale = function (lang)
+      local locale_name_format = "locales-%s.xml"
+      local filename = string.format(locale_name_format, lang)
+      return read_file(filename)
+    end,
+    retrieveItem = function (id)
+      local res = bib[id]
+      if not res then
+        error(string.format('Failed to find entry "%s".', id))
+      end
+      return res
+    end
+  }
+
+  return citeproc_sys
+end
+
+local function make_citation(str)
+  -- str is like "{prefix }{ suffix}{key1,key2}"
+  local arguments = {}
+  for argument in string.gmatch(str, "(%b{})") do
+    table.insert(arguments, string.sub(argument, 2, -2))
+  end
+  if #arguments ~= 3 then
+    error(string.format('Invalid citation "%s"', str))
+    return nil
+  end
+  local prefix, suffix, keys = table.unpack(arguments)
+
+  local cite_items = {}
+  for key in string.gmatch(keys, "([^,%s]+)") do
+    table.insert(cite_items, {id = key})
+  end
+  if #cite_items == 0 then
+    return cite_items
+  end
+
+  if prefix ~= "" then
+    cite_items[1].prefix = prefix
+  end
+  if suffix ~= "" then
+    if string.match(suffix, "^%s*%d+$") then
+      cite_items[1].locator = tonumber(suffix)
+    else
+      cite_items[1].suffix = suffix
+    end
+  end
+
+  return cite_items
+end
+
+
+local function make_citations(raw_citations)
+  local citations = {}
+  for _, str in ipairs(raw_citations) do
+    local citation = make_citation(str)
+    table.insert(citations, citation)
+  end
+  return citations
+end
+
+local function get_citation_ids(citations)
+  local ids = {}
+  local loaded = {}
+  for _, cite_items in ipairs(citations) do
+    for _, item in ipairs(cite_items) do
+      local id = item.id
+      if not loaded[id] then
+        table.insert(ids, id)
+        loaded[id] = true
+      end
+    end
+  end
+  return ids
+end
+
+local function process_citations(aux_file)
+  if not util.endswith(aux_file, ".aux") then
+    aux_file = aux_file .. ".aux"
+  end
+
+  local style_name, bib_files, raw_citations = read_aux_file(aux_file)
+
+  if not style_name or style_name == "" then
+    error(string.format('No style found in "%s"', aux_file))
+    return
+  end
+
+  local style = read_file(style_name .. ".csl")
+
+  if #bib_files == 0 then
+    error(string.format('No database files found in "%s"', aux_file))
+  end
+
+  local citeproc_sys = make_citeproc_sys(bib_files)
+  local engine = citeproc.new(citeproc_sys, style)
+
+  local citations = make_citations(raw_citations)
+  local ids = get_citation_ids(citations)
+  engine:updateItems(ids)
+
+  local output_path = string.gsub(aux_file, "%.aux$", ".bbl")
+  local bbl_file = io.open(output_path, "w")
+  for _, citation in ipairs(citations) do
+    local res = engine:makeCitationCluster(citation)
+    local citation_ids = {}
+    for _, cite_item in ipairs(citation) do
+      table.insert(citation_ids, cite_item.id)
+    end
+    citation_ids = table.concat(citation_ids, ",")
+    bbl_file:write(string.format("\\cslcite{%s}{%s}\n", citation_ids, res))
+  end
+
+  local result = engine:makeBibliography()
+
+  local params = result[1]
+  local bib_items = result[2]
+
+  bbl_file:write("\n", params.bibstart, "\n\n")
+  for _, bib_item in ipairs(bib_items) do
+    bbl_file:write(bib_item, "\n\n")
+  end
+  bbl_file:write(params.bibend, "\n")
+
+  bbl_file:close()
+end
+
+
 local function main()
   local args = getopt(arg, "o")
 
@@ -95,6 +302,8 @@ local function main()
   local output_path = args.o or args.output
   if util.endswith(path, ".bib") then
     convert_bib(path, output_path)
+  else
+    process_citations(path)
   end
 
 end

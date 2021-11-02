@@ -18,13 +18,14 @@ sourcefiles = {"*.sty", "*.lua", "*.json", "citeproc"}
 -- tagfiles = {}
 -- typesetdemofiles = {}
 
-includetests = {"luatex-1-*"}
+includetests = {}
 
-checkengines = {"luatex"}
+-- checkengines = {"luatex"}
 stdengine = "luatex"
 
 checkconfigs = {
   "build",
+  "test/latex/config-luatex-1",
   "test/latex/config-luatex-2",
   "test/latex/config-other-1",
   "test/latex/config-other-3",
@@ -32,7 +33,7 @@ checkconfigs = {
 
 checkopts = "-interaction=nonstopmode -shell-escape"
 
-checkruns = 1
+-- checkruns = 1
 -- flatten = false
 -- flattentds = false
 packtdszip = true
