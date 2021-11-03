@@ -180,7 +180,9 @@ local function make_citation(str)
 
   local cite_items = {}
   for key in string.gmatch(keys, "([^,%s]+)") do
-    table.insert(cite_items, {id = key})
+    if key ~= "*" then
+      table.insert(cite_items, {id = key})
+    end
   end
   if #cite_items == 0 then
     return cite_items
@@ -253,13 +255,16 @@ local function process_citations(aux_file)
   local output_path = string.gsub(aux_file, "%.aux$", ".bbl")
   local bbl_file = io.open(output_path, "w")
   for _, citation in ipairs(citations) do
-    local res = engine:makeCitationCluster(citation)
-    local citation_ids = {}
-    for _, cite_item in ipairs(citation) do
-      table.insert(citation_ids, cite_item.id)
+    if #citation > 0 then
+      -- #citation == 0 in the case of `\nocite{*}`
+      local res = engine:makeCitationCluster(citation)
+      local citation_ids = {}
+      for _, cite_item in ipairs(citation) do
+        table.insert(citation_ids, cite_item.id)
+      end
+      citation_ids = table.concat(citation_ids, ",")
+      bbl_file:write(string.format("\\cslcite{%s}{%s}\n", citation_ids, res))
     end
-    citation_ids = table.concat(citation_ids, ",")
-    bbl_file:write(string.format("\\cslcite{%s}{%s}\n", citation_ids, res))
   end
 
   local result = engine:makeBibliography()

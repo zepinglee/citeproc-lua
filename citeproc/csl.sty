@@ -54,6 +54,18 @@
       }
   }
 
+\DeclareDocumentCommand \nocite { m }
+  {
+    \if@filesw
+      {
+        \immediate \write \@auxout
+          { \string \citation { { } { } { * } } }
+      }
+    \fi
+    \sys_if_engine_luatex:T
+      { \lua_now:n { csl.register_items("#1") } }
+}
+
 \tl_new:N \l__csl_prefix_tl
 \tl_new:N \l__csl_suffix_tl
 \clist_new:N \l__csl_keys_clist

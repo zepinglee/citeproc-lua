@@ -53,7 +53,7 @@ function CiteProc.new (sys, style)
 end
 
 function CiteProc:updateItems (ids)
-  self.registry.reslist = {}
+  self.registry.reflist = {}
   self.registry.registry = {}
   for _, id in ipairs(ids) do
     self:get_item(id)
@@ -103,7 +103,7 @@ function CiteProc:makeBibliography()
     self:sort_bibliography()
   end
 
-  for _, id in pairs(self.registry.reflist) do
+  for _, id in ipairs(self.registry.reflist) do
     local item = self.registry.registry[id]
     table.insert(items, item)
   end

@@ -4,7 +4,10 @@
 
 local csl = {
   ids = {},
-  initialized = "false"
+  loaded_ids = {},
+  bib = {},
+  initialized = "false",
+  include_all_items = false,
 }
 
 local citeproc = require("citeproc")
@@ -63,7 +66,7 @@ local function load_bib(bib_files)
 end
 
 local function make_citeproc_sys(bib_files)
-  local bib = load_bib(bib_files)
+  csl.bib = load_bib(bib_files)
   local citeproc_sys = {
     retrieveLocale = function (lang)
       local locale_name_format = csl.locale_name_format or "locales-%s.xml"
@@ -71,7 +74,7 @@ local function make_citeproc_sys(bib_files)
       return read_file(filename)
     end,
     retrieveItem = function (id)
-      local res = bib[id]
+      local res = csl.bib[id]
       if not res then
         csl.error(string.format('Failed to find entry "%s".', id))
       end
@@ -110,6 +113,10 @@ function csl.cite(prefix, suffix, keys)
 
   local cite_items = {}
   for key in string.gmatch(keys, "([^,%s]+)") do
+    if not csl.loaded_ids[key] then
+      table.insert(csl.ids, key)
+      csl.loaded_ids[key] = true
+    end
     cite_items[#cite_items+1] = {id = key}
   end
   if #cite_items == 0 then
@@ -134,14 +141,30 @@ end
 
 function csl.register_items(keys)
   for key in string.gmatch(keys, "([^,%s]+)") do
-    table.insert(csl.ids, key)
+    if key == "*" then
+      csl.include_all_items = true
+    elseif not csl.loaded_ids[key] then
+      table.insert(csl.ids, key)
+      csl.loaded_ids[key] = true
+    end
   end
 end
 
 function csl.bibliography()
   if not csl.engine then
     csl.error("CSL engine is not initialized.")
+    return
   end
+
+  if csl.include_all_items then
+    for id, _ in pairs(csl.bib) do
+      if not csl.loaded_ids[id] then
+        table.insert(csl.ids, id)
+        csl.loaded_ids[id] = true
+      end
+    end
+  end
+  csl.engine:updateItems(csl.ids)
 
   local result = csl.engine:makeBibliography()
 

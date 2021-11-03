@@ -45,6 +45,7 @@ function bib.parse_item(contents)
 
   local item = {id = id}
 
+  bib_type = string.lower(bib_type)
   local type_data = bib.bib_data.types[bib_type]
   if type_data then
     if type_data.csl then
