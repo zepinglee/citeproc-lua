@@ -76,7 +76,7 @@ formats.latex = {
     return str
   end,
   ["bibstart"] = function (context)
-    return string.format("\\begin{thebibliography}{%s}", context.longest_label)
+    return string.format("\\begin{thebibliography}{%s}\n", context.longest_label)
   end,
   ["bibend"] = "\\end{thebibliography}",
   ["@font-style/normal"] = "{\\normalshape %%STRING%%}",

@@ -5,6 +5,7 @@ kpse.set_program_name("luatex")
 require("lualibs")
 local citeproc = require("citeproc")
 local util = require("citeproc-util")
+local core = require("csl-core")
 
 local function getopt( arg, options )
   local tab = {}
@@ -106,66 +107,6 @@ local function read_aux_file(aux_file)
 end
 
 
-local function read_file(filename, ftype)
-  local path = kpse.find_file(filename, ftype)
-  if not path then
-    if ftype and not util.endswith(filename, ftype) then
-      filename = filename .. ftype
-    end
-    error(string.format('Failed to find "%s".', filename))
-  end
-  local file = io.open(path, "r")
-  if not file then
-    error(string.format('Failed to open "%s".', path))
-    return nil
-  end
-  local contents = file:read("*a")
-  file:close()
-  return contents
-end
-
-local function load_bib(bib_files)
-  local bib = {}
-  for _, bib_file in ipairs(bib_files) do
-    -- TODO: try to load `<bibname>.json` first?
-    local bib_contents = read_file(bib_file, "bib")
-    local file_name = bib_file
-    if not util.endswith(file_name, ".bib") then
-      file_name = file_name .. ".bib"
-    end
-    -- TODO: parse bib entries on demand
-    local csl_items = citeproc.parse_bib(bib_contents)
-    for _, item in ipairs(csl_items) do
-      local id = item.id
-      if bib[id] then
-        error(string.format('Duplicate entry key "%s" in "%s".', id, file_name))
-      end
-      bib[id] = item
-    end
-  end
-  return bib
-end
-
-local function make_citeproc_sys(bib_files)
-  local bib = load_bib(bib_files)
-  local citeproc_sys = {
-    retrieveLocale = function (lang)
-      local locale_name_format = "locales-%s.xml"
-      local filename = string.format(locale_name_format, lang)
-      return read_file(filename)
-    end,
-    retrieveItem = function (id)
-      local res = bib[id]
-      if not res then
-        error(string.format('Failed to find entry "%s".', id))
-      end
-      return res
-    end
-  }
-
-  return citeproc_sys
-end
-
 local function make_citation(str)
   -- str is like "{prefix }{ suffix}{key1,key2}"
   local arguments = {}
@@ -234,19 +175,7 @@ local function process_citations(aux_file)
 
   local style_name, bib_files, raw_citations = read_aux_file(aux_file)
 
-  if not style_name or style_name == "" then
-    error(string.format('No style found in "%s"', aux_file))
-    return
-  end
-
-  local style = read_file(style_name .. ".csl")
-
-  if #bib_files == 0 then
-    error(string.format('No database files found in "%s"', aux_file))
-  end
-
-  local citeproc_sys = make_citeproc_sys(bib_files)
-  local engine = citeproc.new(citeproc_sys, style)
+  local engine = core.init(style_name, bib_files, locale, force_locale)
 
   local citations = make_citations(raw_citations)
   local ids = get_citation_ids(citations)
@@ -266,17 +195,10 @@ local function process_citations(aux_file)
       bbl_file:write(string.format("\\cslcite{%s}{%s}\n", citation_ids, res))
     end
   end
+  bbl_file:write("\n")
 
-  local result = engine:makeBibliography()
-
-  local params = result[1]
-  local bib_items = result[2]
-
-  bbl_file:write("\n", params.bibstart, "\n\n")
-  for _, bib_item in ipairs(bib_items) do
-    bbl_file:write(bib_item, "\n\n")
-  end
-  bbl_file:write(params.bibend, "\n")
+  local result = core.make_bibliography(engine)
+  bbl_file:write(result)
 
   bbl_file:close()
 end

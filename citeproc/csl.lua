@@ -2,17 +2,19 @@
   Copyright (C) 2021 Zeping Lee
 --]]
 
-local csl = {
-  ids = {},
-  loaded_ids = {},
-  bib = {},
-  initialized = "false",
-  include_all_items = false,
-}
+local csl = {}
 
 local citeproc = require("citeproc")
 local util = citeproc.util
 require("lualibs")
+local core = require("csl-core")
+
+
+csl.ids = {}
+csl.loaded_ids = {}
+csl.bib = {}
+csl.initialized = "false"
+csl.include_all_items = false
 
 
 function csl.error(str)
@@ -25,93 +27,19 @@ function csl.info(str)
   luatexbase.module_info("csl", str)
 end
 
-local function read_file(filename, ftype)
-  local path = kpse.find_file(filename, ftype)
-  if not path then
-    if ftype and not util.endswith(filename, ftype) then
-      filename = filename .. ftype
-    end
-    csl.error(string.format('Failed to find "%s".', filename))
-  end
-  local file = io.open(path, "r")
-  if not file then
-    csl.error(string.format('Failed to open "%s".', path))
-    return nil
-  end
-  local contents = file:read("*a")
-  file:close()
-  return contents
-end
 
-local function load_bib(bib_files)
-  local bib = {}
-  for _, bib_file in ipairs(bib_files) do
-    -- TODO: try to load `<bibname>.json` first?
-    local bib_contents = read_file(bib_file, "bib")
-    local file_name = bib_file
-    if not util.endswith(file_name, ".bib") then
-      file_name = file_name .. ".bib"
-    end
-    -- TODO: parse bib entries on demand
-    local csl_items = citeproc.parse_bib(bib_contents)
-    for _, item in ipairs(csl_items) do
-      local id = item.id
-      if bib[id] then
-        csl.error(string.format('Duplicate entry key "%s" in "%s".', id, file_name))
-      end
-      bib[id] = item
-    end
-  end
-  return bib
-end
 
-local function make_citeproc_sys(bib_files)
-  csl.bib = load_bib(bib_files)
-  local citeproc_sys = {
-    retrieveLocale = function (lang)
-      local locale_name_format = csl.locale_name_format or "locales-%s.xml"
-      local filename = string.format(locale_name_format, lang)
-      return read_file(filename)
-    end,
-    retrieveItem = function (id)
-      local res = csl.bib[id]
-      if not res then
-        csl.error(string.format('Failed to find entry "%s".', id))
-      end
-      return res
-    end
-  }
+function csl.init(style_name, bib_files, locale, force_locale)
+  bib_files = util.split(util.strip(bib_files), ",%s*")
 
-  return citeproc_sys
-end
-
-function csl.init(style_name, bib_data, locale, force_locale)
-  if style_name == "" or bib_data == "" then
-    csl.engine = nil
-    return
-  end
-  local style = read_file(style_name .. ".csl")
-  if not style then
-    return
-  end
-
-  local bib_files = util.split(util.strip(bib_data), ",%s*")
-
-  if locale == "" then
-    locale = nil
-  end
-
-  -- if force_locale == "false" then
-  --   force_locale = false
-  -- end
-
-  local citeproc_sys = make_citeproc_sys(bib_files)
-  csl.engine = citeproc.new(citeproc_sys, style, locale, force_locale)
+  csl.engine = core.init(style_name, bib_files, locale, force_locale)
 
   -- csl.init is called via \AtBeginDocument and it's executed after
   -- loading .aux file.  The csl.ids are already registered.
-  csl.engine:updateItems(csl.ids)
-  csl.initialized = "true"
+  if csl.engine then
+    csl.engine:updateItems(csl.ids)
+    csl.initialized = "true"
+  end
 end
 
 function csl.cite(prefix, suffix, keys)
@@ -174,17 +102,9 @@ function csl.bibliography()
   end
   csl.engine:updateItems(csl.ids)
 
-  local result = csl.engine:makeBibliography()
+  local result = core.make_bibliography(csl.engine)
 
-  local params = result[1]
-  local bib_items = result[2]
-  -- util.debug(params)
-
-  tex.print(params.bibstart)
-  for _, bib_item in ipairs(bib_items) do
-    tex.print(util.split(bib_item, "\n"))
-  end
-  tex.print(params.bibend)
+  tex.print(util.split(result, "\n"))
 end
 
 
