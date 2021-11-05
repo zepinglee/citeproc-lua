@@ -48,7 +48,7 @@ function Date:render (item, context)
         end
       end
     end
-    res = self:get_locale_date(form):render(item, context)
+    res = self:get_locale_date(context, form):render(item, context)
   else
     if #date["date-parts"] == 0 then
       local literal = date["literal"]
@@ -77,11 +77,11 @@ function Date:render (item, context)
   return res
 end
 
-function Date:get_locale_date (form, lang)
+function Date:get_locale_date(context, form)
   local date = nil
-  local style = self:get_style()
+  local style = context.style
   local query = string.format("date[form=\"%s\"]", form)
-  for _, locale in ipairs(style:get_locales(lang)) do
+  for _, locale in ipairs(style:get_locales()) do
     date = locale:query_selector(query)[1]
     if date then
       break

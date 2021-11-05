@@ -15,7 +15,7 @@ local util = require("citeproc-util")
 
 local CiteProc = {}
 
-function CiteProc.new (sys, style)
+function CiteProc.new (sys, style, lang, force_lang)
   if sys == nil then
     error("\"citeprocSys\" required")
   end
@@ -44,7 +44,10 @@ function CiteProc.new (sys, style)
   o.csl:traverse_elements(CiteProc.set_base_class)
   o.csl:root_node().engine = o
   o.style = o.csl:get_path("style")[1]
+  o.style.lang = lang
   o.csl:root_node().style = o.style
+
+  o.style:set_lang(lang, force_lang)
 
   o.formatter = formats.latex
 

@@ -85,7 +85,7 @@ local function make_citeproc_sys(bib_files)
   return citeproc_sys
 end
 
-function csl.init(style_name, bib_data)
+function csl.init(style_name, bib_data, locale, force_locale)
   if style_name == "" or bib_data == "" then
     csl.engine = nil
     return
@@ -97,8 +97,16 @@ function csl.init(style_name, bib_data)
 
   local bib_files = util.split(util.strip(bib_data), ",%s*")
 
+  if locale == "" then
+    locale = nil
+  end
+
+  -- if force_locale == "false" then
+  --   force_locale = false
+  -- end
+
   local citeproc_sys = make_citeproc_sys(bib_files)
-  csl.engine = citeproc.new(citeproc_sys, style)
+  csl.engine = citeproc.new(citeproc_sys, style, locale, force_locale)
 
   -- csl.init is called via \AtBeginDocument and it's executed after
   -- loading .aux file.  The csl.ids are already registered.

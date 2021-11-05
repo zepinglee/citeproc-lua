@@ -12,6 +12,17 @@ Style.default_options = {
   ["demote-non-dropping-particle"] = "display-and-sort",
 }
 
+function Style:set_lang(lang, force_lang)
+  local default_locale = self:get_attribute("default-locale")
+  if lang then
+    if default_locale and not force_lang then
+      self.lang = default_locale
+    end
+  else
+    self.lang = default_locale or "en-US"
+  end
+end
+
 function Style:render_citation (items, context)
   self:debug_info(context)
   context = self:process_context(context)
@@ -32,16 +43,14 @@ function Style:get_version ()
   return self:get_attribute("version")
 end
 
-function Style:get_locales (lang)
-  lang = lang or self:get_attribute("default-locale") or "en-US"
-
+function Style:get_locales()
   if not self.locale_dict then
     self.locale_dict = {}
   end
-  local locales = self.locale_dict[lang]
+  local locales = self.locale_dict[self.lang]
   if not locales then
-    locales = self:get_locale_list(lang)
-    self.locale_dict[lang] = locales
+    locales = self:get_locale_list(self.lang)
+    self.locale_dict[self.lang] = locales
   end
   return locales
 end

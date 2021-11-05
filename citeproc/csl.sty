@@ -189,6 +189,8 @@
 \clist_new:N \l__csl_bib_files_clist
 \tl_new:N \l__csl_prefix_separator_tl
 \tl_new:N \l__csl_suffix_separator_tl
+\tl_new:N \l__csl_locale_tl
+\bool_new:N \l__csl_force_locale_bool
 
 \keys_define:nn { csl }
   {
@@ -196,6 +198,8 @@
     bib-data .clist_set:N = \l__csl_bib_files_clist ,
     prefix-separator .tl_set:N = \l__csl_prefix_separator_tl ,
     suffix-separator .tl_set:N = \l__csl_suffix_separator_tl ,
+    locale .tl_set:N = \l__csl_locale_tl ,
+    force-locale .bool_set:N = \l__csl_force_locale_bool ,
   }
 
 \keys_set:nn { csl }
@@ -205,6 +209,123 @@
   }
 
 \bool_new:N \l__csl_engine_initialized_bool
+
+\prop_set_from_keyval:Nn \l__csl_babel_locale_prop
+  {
+    acadian         = fr-CA,
+    american        = en-US,
+    australian      = en-AU,
+    afrikaans       = af-ZA,
+    albanian        = sq-AL,
+    amharic         = am-ET,
+    arabic          = ar,
+    armenian        = hy-AM,
+    asturian        = ast-ES,
+    austrian        = de-AT,
+    bahasa          = id-ID,
+    bahasai         = id-ID,
+    bahasam         = id-ID,
+    basque          = eu-ES,
+    bengali         = bn-BD,
+    bgreek          = el-GR,
+    brazil          = pt-BR,
+    brazilian       = pt-BR,
+    breton          = br-FR,
+    british         = en-GB,
+    bulgarian       = bg-BG,
+    canadian        = en-CA,
+    canadien        = fr-CA,
+    catalan         = ca-AD,
+    coptic          = cop,
+    croatian        = hr-HR,
+    czech           = cs-CZ,
+    danish          = da-DK,
+    divehi          = dv-MV,
+    dutch           = nl-NL,
+    english         = en-US,
+    esperanto       = eo-001,
+    estonian        = et-EE,
+    ethiopia        = am-ET,
+    farsi           = fa-IR,
+    finnish         = fi-FI,
+    francais        = fr-FR,
+    french          = fr-FR,
+    frenchle        = fr-FR,
+    friulan         = fur-IT,
+    galician        = gl-ES,
+    german          = de-DE,
+    germanb         = de-DE,
+    greek           = el-GR,
+    hebrew          = he-IL,
+    hindi           = hi-IN,
+    ibygreek        = el-CY,
+    icelandic       = is-IS,
+    indon           = id-ID,
+    indonesia       = id-ID,
+    interlingua     = ia-FR,
+    irish           = ga-IE,
+    italian         = it-IT,
+    japanese        = ja-JP,
+    kannada         = kn-IN,
+    lao             = lo-LA,
+    latin           = la-Latn,
+    latvian         = lv-LV,
+    lithuanian      = lt-LT,
+    lowersorbian    = dsb-DE,
+    lsorbian        = dsb-DE,
+    magyar          = hu-HU,
+    malay           = id-ID,
+    malayalam       = ml-IN,
+    marathi         = mr-IN,
+    meyalu          = id-ID,
+    mongolian       = mn-Cyrl,
+    naustrian       = de-AT,
+    newzealand      = en-NZ,
+    ngerman         = de-DE,
+    nko             = ha-NG,
+    norsk           = nb-NO,
+    norwegian       = nn-NO,
+    nynorsk         = nn-NO,
+    occitan         = oc-FR,
+    piedmontese     = pms-IT,
+    pinyin          = pny,
+    polish          = pl-PL,
+    polutonikogreek = el-GR,
+    portuges        = pt-PT,
+    portuguese      = pt-PT,
+    romanian        = ro-RO,
+    romansh         = rm-CH,
+    russian         = ru-RU,
+    samin           = se-NO,
+    sanskrit        = sa-IN,
+    scottish        = gd-GB,
+    serbian         = sr-Latn,
+    serbianc        = sr-Cyrl,
+    slovak          = sk-SK,
+    slovene         = sl-SI,
+    slovenian       = sl-SI,
+    spanish         = es-ES,
+    swedish         = sv-SE,
+    swiss           = de-CH,
+    swissgerman     = de-CH,
+    nswissgerman    = de-CH,
+    syriac          = syc,
+    tamil           = ta-IN,
+    telugu          = te-IN,
+    thai            = th-TH,
+    thaicjk         = th-TH,
+    tibetan         = bo-CN,
+    turkish         = tr-TR,
+    turkmen         = tk-TM,
+    ukrainian       = uk-UA,
+    urdu            = ur-IN,
+    UKenglish       = en-UK,
+    uppersorbian    = hsb-DE,
+    USenglish       = en-US,
+    usorbian        = hsb-DE,
+    vietnamese      = vi-VN,
+    welsh           = cy-GB,
+  }
 
 \AtBeginDocument
   {
@@ -217,9 +338,27 @@
         \exp_args:Nx \csl_write_aux_bibdata:n
           { \clist_use:Nn \l__csl_bib_files_clist { , } }
       }
+    \tl_if_empty:NT \l__csl_locale_tl
+      {
+        \tl_if_exist:NT \bbl@main@language
+          {
+            \prop_get:NVN \l__csl_babel_locale_prop \bbl@main@language
+              \l__csl_locale_tl
+          }
+      }
     \sys_if_engine_luatex:T
       {
-        \lua_now:e { csl.init("\l__csl_style_tl", "\l__csl_bib_files_clist") }
+        \lua_now:e
+          {
+            csl.init(
+              "\l__csl_style_tl",
+              "\l__csl_bib_files_clist",
+              "\l__csl_locale_tl",
+              \bool_if:NTF \l__csl_force_locale_bool
+                { true }
+                { false }
+            )
+          }
         \str_if_eq:eeT { \lua_now:n { tex.print(csl.initialized) } } { true }
           { \bool_set_true:N \l__csl_engine_initialized_bool }
       }
