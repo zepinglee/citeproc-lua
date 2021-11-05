@@ -76,6 +76,7 @@ local function read_aux_file(aux_file)
   local bib_style = nil
   local bib_files = {}
   local raw_citations = {}
+  local csl_options = {}
 
   local file = io.open(aux_file, "r")
   if not file then
@@ -97,13 +98,20 @@ local function read_aux_file(aux_file)
         match = string.match(line, "^\\citation%s*(%b{})")
         if match then
           table.insert(raw_citations, string.sub(match, 2, -2))
+        else
+          match = string.match(line, "^\\csloptions%s*(%b{})")
+          if match then
+            for key, value in string.gmatch(match, "([%w-]+)=(%w+)") do
+              csl_options[key] = value
+            end
+          end
         end
       end
     end
   end
   file:close()
 
-  return bib_style, bib_files, raw_citations
+  return bib_style, bib_files, raw_citations, csl_options
 end
 
 
@@ -173,7 +181,10 @@ local function process_citations(aux_file)
     aux_file = aux_file .. ".aux"
   end
 
-  local style_name, bib_files, raw_citations = read_aux_file(aux_file)
+  local style_name, bib_files, raw_citations, csl_options = read_aux_file(aux_file)
+
+  local locale = csl_options.locale
+  local force_locale = csl_options["force_locale"] ~= "false"
 
   local engine = core.init(style_name, bib_files, locale, force_locale)
 

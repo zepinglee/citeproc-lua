@@ -40,8 +40,10 @@
 \csl_incompatible_package:n { splitbib }
 
 
-\NewDocumentCommand \cslsetup {m}
+\NewDocumentCommand \cslsetup { m }
   { \keys_set:nn { csl } {#1} }
+
+\NewDocumentCommand \csloptions { m } { }
 
 \DeclareDocumentCommand \cite { o o m }
   {
@@ -345,6 +347,22 @@
             \prop_get:NVN \l__csl_babel_locale_prop \bbl@main@language
               \l__csl_locale_tl
           }
+      }
+    \tl_if_empty:NF \l__csl_locale_tl
+      {
+        \if@filesw
+          \immediate \write \@auxout
+            {
+              \string \csloptions
+                {
+                  locale = \l__csl_locale_tl,
+                  force-locale =
+                    \bool_if:NTF \l__csl_force_locale_bool
+                      { true }
+                      { false },
+                }
+            }
+        \fi
       }
     \sys_if_engine_luatex:T
       {

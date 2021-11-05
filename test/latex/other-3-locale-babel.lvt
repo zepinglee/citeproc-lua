@@ -1,0 +1,34 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\usepackage[french]{babel}
+\usepackage{csl}
+
+\cslsetup{
+  style    = locale-test,
+  bib-data = test.bib,
+}
+
+\ExplSyntaxOn
+  \NewDocumentCommand \showcitation { }
+    { \tl_show:N \l__csl_citation_tl }
+\ExplSyntaxOff
+
+
+\begin{document}
+
+\START
+
+\TEST{Force locale}{
+  \cite{ITEM-1}
+  \showcitation
+}
+
+
+\TEST{Bibilography}{
+  \printbibliography
+  \TRUE
+}
+
+\end{document}
