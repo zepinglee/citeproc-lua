@@ -23,6 +23,22 @@ function Sort:sort (items, context)
   -- true: ascending
   -- false: descending
 
+  if not Sort.collator_obj then
+    local lang = context.style.lang
+    local language = string.sub(lang, 1, 2)
+    if language ~= "en" then
+      local ducet = require("lua-uca.lua-uca-ducet")
+      local collator = require("lua-uca.lua-uca-collator")
+      local languages = require("lua-uca.lua-uca-languages")
+      local collator_obj = collator.new(ducet)
+      if languages[language] then
+        Sort.collator_obj = languages[language](collator_obj)
+      else
+        util.warning(string.format('Lcoale "%s" is not supported.', lang))
+      end
+    end
+  end
+
   for _, item in ipairs(items) do
     if not key_map[item.id] then
       key_map[item.id] = {}
@@ -49,6 +65,14 @@ function Sort:sort (items, context)
   return items
 end
 
+function Sort.compare_strings(str1, str2)
+  if Sort.collator_obj then
+    return Sort.collator_obj:compare_strings(str1, str2)
+  else
+    return str1 < str2
+  end
+end
+
 function Sort.compare_entry(key_map, sort_directions, item1, item2)
   for i, value1 in ipairs(key_map[item1.id]) do
     local ascending = sort_directions[i]
@@ -56,9 +80,9 @@ function Sort.compare_entry(key_map, sort_directions, item1, item2)
     if value1 and value2 then
       local res
       if ascending then
-        res = value1 < value2
+        res = Sort.compare_strings(value1, value2)
       else
-        res = value1 > value2
+        res = Sort.compare_strings(value2, value1)
       end
       if res or value1 ~= value2 then
         return res

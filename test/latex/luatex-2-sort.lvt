@@ -1,0 +1,34 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\usepackage{csl}
+
+\cslsetup{
+  style    = sort,
+  bib-data = sort.bib,
+  locale   = cs-CZ,
+}
+
+\ExplSyntaxOn
+  \NewDocumentCommand \showcitation { }
+    { \tl_show:N \l__csl_citation_tl }
+\ExplSyntaxOff
+
+
+\begin{document}
+
+\START
+
+\TEST{Locale sorting}{
+  \cite{ITEM-1,ITEM-2,ITEM-3,ITEM-4,ITEM-5}
+  \showcitation
+}
+
+
+\TEST{Bibilography}{
+  \printbibliography
+  \TRUE
+}
+
+\end{document}
