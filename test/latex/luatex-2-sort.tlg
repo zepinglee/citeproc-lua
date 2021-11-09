@@ -3,7 +3,7 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Locale sorting
 ============================================================
-> \l__csl_citation_tl=čáp, cihla, hudba, chochol, jasan.
+> \l__csl_citation_tl=cihla, č^^e1p, hudba, chochol, jasan.
 <recently read> }
 l. ...}
 ============================================================
