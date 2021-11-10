@@ -26,16 +26,16 @@ function Sort:sort (items, context)
   if not Sort.collator_obj then
     local lang = context.style.lang
     local language = string.sub(lang, 1, 2)
-    if language ~= "en" then
-      local ducet = require("lua-uca.lua-uca-ducet")
-      local collator = require("lua-uca.lua-uca-collator")
-      local languages = require("lua-uca.lua-uca-languages")
-      local collator_obj = collator.new(ducet)
-      if languages[language] then
-        Sort.collator_obj = languages[language](collator_obj)
-      else
-        util.warning(string.format('Lcoale "%s" is not supported.', lang))
-      end
+    -- It's 6 seconds slower to run the whole test-suite if these package
+    -- loading statements are put in the header.
+    local ducet = require("lua-uca.lua-uca-ducet")
+    local collator = require("lua-uca.lua-uca-collator")
+    local languages = require("lua-uca.lua-uca-languages")
+    local collator_obj = collator.new(ducet)
+    if languages[language] then
+      Sort.collator_obj = languages[language](collator_obj)
+    else
+      util.warning(string.format('Lcoale "%s" is not supported.', lang))
     end
   end
 
