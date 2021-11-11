@@ -60,8 +60,8 @@
   {
     \if@filesw
       {
-        \immediate \write \@auxout
-          { \string \citation { { } { } { * } } }
+        \iow_now:Nn \@auxout
+          { \citation { { } { } { * } } }
       }
     \fi
     \sys_if_engine_luatex:T
@@ -87,7 +87,7 @@
     \tl_set:Nx \l__csl_normalized_keys_tl
       { \clist_use:Nn \l__csl_keys_clist { , } }
 
-    \exp_args:NNNV \csl_cite:nnn
+    \exp_args:Nooo \csl_cite:nnn
       { \l__csl_prefix_tl } { \l__csl_suffix_tl } { \l__csl_normalized_keys_tl }
   }
 
@@ -99,8 +99,8 @@
   {
     \if@filesw
       {
-        \immediate \write \@auxout
-          { \string \citation { { #1 } { #2 } { #3 } } }
+        \iow_now:Nn \@auxout
+          { \citation { { #1 } { #2 } { #3 } } }
       }
     \fi
     \tl_clear:N \l__csl_citation_tl
@@ -151,7 +151,7 @@
 \cs_new:Npn \cslcite #1#2
   {
     \if@filesw
-      \immediate \write \@auxout { \string \bibcite { #1 } { #2 } }
+      \iow_now:Nn \@auxout { \bibcite { #1 } { #2 } }
     \fi
   }
 
@@ -206,8 +206,8 @@
 
 \keys_set:nn { csl }
   {
-    prefix-separator = \space ,
-    suffix-separator = \space ,
+    prefix-separator = { ~ } ,
+    suffix-separator = { ~ } ,
   }
 
 \bool_new:N \l__csl_engine_initialized_bool
@@ -351,9 +351,9 @@
     \tl_if_empty:NF \l__csl_locale_tl
       {
         \if@filesw
-          \immediate \write \@auxout
+          \iow_now:Nx \@auxout
             {
-              \string \csloptions
+              \csloptions
                 {
                   locale = \l__csl_locale_tl,
                   force-locale =
@@ -385,8 +385,7 @@
 \cs_new:Npn \csl_write_aux_bibstyle:n #1
   {
     \if@filesw
-      % \iow_now:Nx \@auxout { \bibstyle { #1 } }
-      \immediate \write \@auxout { \string \bibstyle { #1 } }
+      \iow_now:Nn \@auxout { \bibstyle { #1 } }
     \fi
   }
 
@@ -423,8 +422,7 @@
 \cs_new:Npn \csl_write_aux_bibdata:n #1
   {
     \if@filesw
-      \immediate \write \@auxout
-        { \string \bibdata { \zap@space #1~ \@empty } }
+      \iow_now:Nn \@auxout { \bibdata { #1 } }
     \fi
   }
 

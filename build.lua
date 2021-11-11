@@ -33,6 +33,7 @@ checkconfigs = {
 
 checkopts = "-interaction=nonstopmode -shell-escape"
 
+asciiengines = {}
 -- checkruns = 1
 -- flatten = false
 -- flattentds = false

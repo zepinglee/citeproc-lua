@@ -1,16 +1,26 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
 ============================================================
-TEST 1: Locale sorting
+TEST 1: Unicode apostrophe
 ============================================================
-> \l__csl_citation_tl=cihla, čáp, hudba, chochol, jasan.
+\g__csl_citation_count_ITEM-1_int=\count...
+> \l__csl_citation_tl=(D’Arcus, 2005).
 <recently read> }
 l. ...}
 ============================================================
 ============================================================
-TEST 2: Bibilography
+TEST 2: Non-break space
 ============================================================
+\g__csl_citation_count_ITEM-4_int=\count...
+> \l__csl_citation_tl=(Mittelbach et al., 2004).
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 3: Bibilography
+============================================================
+(other-3-utf8.bbl)
 TRUE
 ============================================================
 [1
-] (luatex-2-sort.aux)
+] (other-3-utf8.aux)
