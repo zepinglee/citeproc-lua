@@ -1,6 +1,6 @@
 .PHONY: install test
 
-test: install
+test:
 	busted --run=citeproc
 
 install:

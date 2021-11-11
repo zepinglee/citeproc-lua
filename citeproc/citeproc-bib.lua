@@ -20,11 +20,14 @@ local path = "citeproc-bib-data.json"
 if kpse then
   path = kpse.find_file(path)
 end
-local contents = util.read_file(path)
-if not contents then
-  error(string.format('Failed to find "%s"', path))
+if path then
+  --TODO: convert to Lua table and -shell-escape can be omitted?
+  local contents = util.read_file(path)
+  if not contents then
+    error(string.format('Failed to find "%s"', path))
+  end
+  bib.bib_data = utilities.json.tolua(contents)
 end
-bib.bib_data = utilities.json.tolua(contents)
 
 function bib.parse(contents)
   local items = {}

@@ -1,5 +1,6 @@
 return {
   _all = {
+    lpath = "./citeproc/?.lua",
     lua = "texlua",
     pattern = {"_test"},
     recursive = "off",

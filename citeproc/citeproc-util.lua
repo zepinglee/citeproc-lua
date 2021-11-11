@@ -780,6 +780,9 @@ util.superscripts = {
 -- File IO
 
 function util.read_file(path)
+  if not path then
+    print(debug.traceback())
+  end
   local file = io.open(path, "r")
   if not file then return nil end
   local content = file:read("*a")
