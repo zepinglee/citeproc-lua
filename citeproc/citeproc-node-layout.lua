@@ -12,8 +12,9 @@ function Layout:render (items, context)
 
   -- When used within cs:citation, the delimiter attribute may be used to specify a delimiter for cites within a citation.
   -- Thus the processing of context is put after render_children().
-  if context.mode ~= "citation" then
+  if context.mode == "bibliography" then
     context.longest_label = ""
+    context.build.preceding_first_rendered_names = nil
     context = self:process_context(context)
   end
 
@@ -25,6 +26,9 @@ function Layout:render (items, context)
     context.variable_attempt = {}
     context.suppressed_variables = {}
     context.suppress_subsequent_variables = false
+    if context.mode == "bibliography" then
+      context.build.first_rendered_names = {}
+    end
 
     if not item.position then
       item.position = self:_get_position(item, previous_cite, context)

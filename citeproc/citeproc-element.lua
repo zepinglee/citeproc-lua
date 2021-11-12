@@ -48,6 +48,8 @@ Element.inheritable_options = {
   ["demote-non-dropping-particle"] = true,
   -- Bibliography
   ["second-field-align"] = true,  -- for use in layout
+  ["subsequent-author-substitute"] = true,
+  ["subsequent-author-substitute-rule"] = true,
   -- Date
   ["date-parts"] = true,
   -- Names
@@ -148,7 +150,11 @@ end
 
 function Element:process_context (context)
   local state = {
-    options = {}
+    -- The `build` table is directly passed to new context.
+    build = context.build or {},
+    -- The `option` table is copied.
+    options = {},
+    -- Other items in `context` is copied.
   }
   for key, value in pairs(self.default_options) do
     state.options[key] = value

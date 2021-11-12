@@ -109,13 +109,16 @@ function Name:render (names, context)
         end
       end
       res, inverted = self:render_single_name(name, i, context)
+
       if res and res ~= "" then
+        res = richtext.new(res)
+        if context.build.first_rendered_names then
+          table.insert(context.build.first_rendered_names, res)
+        end
+
         if output then
           output = richtext.concat(output, res)
         else
-          if res._type ~= "RichText" then
-            res = richtext.new(res)
-          end
           output = res
         end
       end
@@ -536,6 +539,17 @@ function Names:render (item, context)
     label = context.label
   end
 
+  local sub_str = nil
+  if context.mode == "bibliography" and not context.sorting then
+    sub_str = context.options["subsequent-author-substitute"]
+  --   if sub_str and #context.build.preceding_first_rendered_names == 0 then
+  --     context.rendered_names = {}
+  --   else
+  --     sub_str = nil
+  --     context.rendered_names = nil
+  --   end
+  end
+
   local variable_names = context.options["variable"] or context.variable
   local ret = nil
 
@@ -572,6 +586,9 @@ function Names:render (item, context)
       ret = tostring(num_names)
     else
       ret = self:concat(output, context)
+      if ret and sub_str and context.build.first_rendered_names then
+        ret = self:substitute_names(ret, context)
+      end
     end
   end
 
@@ -590,6 +607,72 @@ function Names:render (item, context)
   end
 end
 
+function Names:substitute_names(result, context)
+  if not context.build.first_rendered_names then
+     return result
+  end
+  local name_strings = {}
+  local match_all
+
+  if #context.build.first_rendered_names > 0 then
+    match_all = true
+  else
+    match_all = false
+  end
+  for i, text in ipairs(context.build.first_rendered_names) do
+    local str = text:render(context.engine.formatter, context)
+    name_strings[i] = str
+    if context.build.preceding_first_rendered_names and str ~= context.build.preceding_first_rendered_names[i] then
+      match_all = false
+    end
+  end
+
+  if context.build.preceding_first_rendered_names then
+    local sub_str = context.options["subsequent-author-substitute"]
+    local sub_rule = context.options["subsequent-author-substitute-rule"]
+
+    if sub_rule == "complete-all" then
+      if match_all then
+        if sub_str == "" then
+          result = nil
+        else
+          result.contents = {sub_str}
+        end
+      end
+
+    elseif sub_rule == "complete-each" then
+      -- In-place substitution
+      if match_all then
+        for _, text in ipairs(context.build.first_rendered_names) do
+          text.contents = {sub_str}
+        end
+        result = self:concat(context.build.first_rendered_names, context)
+      end
+
+    elseif sub_rule == "partial-each" then
+      for i, text in ipairs(context.build.first_rendered_names) do
+        if name_strings[i] == context.build.preceding_first_rendered_names[i] then
+          text.contents = {sub_str}
+        else
+          break
+        end
+      end
+      result = self:concat(context.build.first_rendered_names, context)
+
+    elseif sub_rule == "partial-first" then
+      if name_strings[1] == context.build.preceding_first_rendered_names[1] then
+        context.build.first_rendered_names[1].contents = {sub_str}
+      end
+      result = self:concat(context.build.first_rendered_names, context)
+    end
+  end
+
+  if #context.build.first_rendered_names > 0 then
+    context.build.first_rendered_names = nil
+  end
+  context.build.preceding_first_rendered_names = name_strings
+  return result
+end
 
 names_module.Names = Names
 names_module.Name = Name

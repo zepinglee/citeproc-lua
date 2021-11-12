@@ -11,14 +11,14 @@ display              4       1       0       0
 etal                 4       0       0       0
 flipflop            17       2       0       0
 form                 3       0       0       0
-fullstyles           3       2       0       0
+fullstyles           4       1       0       0
 group                4       2       0       1
 integration          2       0       0      12
 label                9      10       0       0
 locale              23       0       0       0
 locator              0       6       0       0
-magic               24      15       0       1
-name                88      22       0       1
+magic               27      12       0       1
+name                89      21       0       1
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              606     201       0      46
+(all)              611     196       0      46
 
 Pending → test-suite affix_WithCommas
 test/citeproc-test.lua:61: citations
@@ -350,11 +350,7 @@ Passed in:
     <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">“‘PIAAC-Longitudinal (PIAAC-L) 2015.’”</div>
   </div>
   <div class="csl-entry">
-
-    <div class="csl-block">Aalto, Alan</div>
-
-    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">“PIAAC-Longitudinal (PIAAC-Lx) 2015”</div>
-  .</div>
+    <div class="csl-left-margin"> N.d.</div>.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1093,9 +1089,6 @@ Passed in:
     <div class="csl-left-margin">1999</div><div class="csl-right-inline">Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa</div>
   </div>
   <div class="csl-entry">
-
-    <div class="csl-block">John Aloysius Doe</div>
-
     <div class="csl-left-margin">2000</div><div class="csl-right-inline">Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb</div>
   </div>
   <div class="csl-entry">
@@ -1105,15 +1098,9 @@ Passed in:
     <div class="csl-left-margin">1999</div><div class="csl-right-inline">Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc</div>
   </div>
   <div class="csl-entry">
-
-    <div class="csl-block">Jane Henrietta Roe</div>
-
     <div class="csl-left-margin">1999</div><div class="csl-right-inline">Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd</div>
   </div>
   <div class="csl-entry">
-
-    <div class="csl-block">Jane Henrietta Roe</div>
-
     <div class="csl-left-margin">2000</div><div class="csl-right-inline">Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee</div>
   </div>
 </div>'
@@ -1162,24 +1149,6 @@ Passed in:
 Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">COLE, S. J.; MOORE, R. Hydrological modelling using raingauge- and radar-based estimators of areal rainfall. <b>Journal of Hydrology</b>, v. 358, n. 3–4, p. 159–181, 2008. </div>
-</div>'
-
-Failure → test-suite fullstyles_ChicagoAuthorDateSimple
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, John. 1990. <i>Book A</i>. Brobdingnag: Zardoz Press.</div>
-  <div class="csl-entry">Doe, John, and Jane Roe. 1991. <i>Book B</i>.</div>
-  <div class="csl-entry">Doe, John, Jane Roe, and Alvin Asthma. 1992. <i>Book C</i>.</div>
-  <div class="csl-entry">Doe, John, Jane Roe, Alvin Asthma, Bob Bronchitis, Chris Cold, Don Dropsy, Ernie Enteritis, et al. 1993. <i>Book D</i>.</div>
-  <div class="csl-entry">Doe, John, Jane Roe, Alvin Asthma, Bob Bronchitis, Chris Cold, Don Dropsy, Ernie Enteritis, et al. 1994. <i>Book E</i>.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, John. 1990. <i>Book A</i>. Brobdingnag: Zardoz Press.</div>
-  <div class="csl-entry">Doe, John, and Jane Roe. 1991. <i>Book B</i>.</div>
-  <div class="csl-entry">Doe, John, Jane Roe, and Alvin Asthma. 1992. <i>Book C</i>.</div>
-  <div class="csl-entry">Doe, John, Jane Roe, Alvin Asthma, Bob Bronchitis, Chris Cold, Don Dropsy, Ernie Enteritis, et al. 1993. <i>Book D</i>.</div>
-  <div class="csl-entry">---. 1994. <i>Book E</i>.</div>
 </div>'
 
 Failure → test-suite group_ComplexNesting
@@ -1390,48 +1359,6 @@ Passed in:
 Expected:
 (string) 'Am LJ; Am LJ.'
 
-Failure → test-suite magic_SubsequentAuthorSubstitute
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Smith and Jane Roe, Book A (2000)</div>
-  <div class="csl-entry">John Smith and Jane Roe, Book B (2001)</div>
-  <div class="csl-entry">John Smith, Book C (2002)</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Smith and Jane Roe, Book A (2000)</div>
-  <div class="csl-entry">———, Book B (2001)</div>
-  <div class="csl-entry">John Smith, Book C (2002)</div>
-</div>'
-
-Failure → test-suite magic_SubsequentAuthorSubstituteNotFooled
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Silverstein, Theodore, tran.. “Sir Gawain and the Green Knight.” Chicago: University of Chicago Press, 1974.</div>
-  <div class="csl-entry">Soltes, Ori A., ed.. “Georgia: Art and Civilization through the Ages.” London: Philip Wilson, 1999.</div>
-  <div class="csl-entry">“The Chicago Manual of Style.” Chicago: University of Chicago Press, 1993.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Silverstein, Theodore, tran. “Sir Gawain and the Green Knight.” Chicago: University of Chicago Press, 1974.</div>
-  <div class="csl-entry">Soltes, Ori A., ed. “Georgia: Art and Civilization through the Ages.” London: Philip Wilson, 1999.</div>
-  <div class="csl-entry">“The Chicago Manual of Style.” Chicago: University of Chicago Press, 1993.</div>
-</div>'
-
-Failure → test-suite magic_SubsequentAuthorSubstituteOfTitleField
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Warren Smith (2000)</div>
-  <div class="csl-entry">Warren Smith (2001)</div>
-  <div class="csl-entry">Book Y (2002)</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Warren Smith (2000)</div>
-  <div class="csl-entry">----- (2001)</div>
-  <div class="csl-entry">Book Y (2002)</div>
-</div>'
-
 Failure → test-suite magic_SuppressLayoutDelimiterIfPrefixComma
 Passed in:
 (string) 'Book A; , cited in Book B'
@@ -1506,7 +1433,7 @@ Failure → test-suite name_EtAlWithCombined
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">John Doe。</div>
-  <div class="csl-entry">John Doe，Ziggy Zither 等點校。</div>
+  <div class="csl-entry">——，Ziggy Zither 等點校。</div>
   <div class="csl-entry">田中太郎, Yossarian Yoda, 等翻譯員。</div>
 </div>'
 Expected:
@@ -1696,18 +1623,6 @@ Expected:
 <b>Familyname</b>, <i>Givenname</i> <i>des</i>
 <b>Familyname</b>, <i>Givenname</i> <i>auf den</i>'
 
-Failure → test-suite name_SubsequentAuthorSubstituteMultipleNames
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Bumke, Courtly Culture: Literature and Society in the High Middle Ages, Dunlap tran.</div>
-  <div class="csl-entry">Bumke, Höfische</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Bumke, Courtly Culture: Literature and Society in the High Middle Ages, Dunlap tran.</div>
-  <div class="csl-entry">-----, Höfische</div>
-</div>'
-
 Failure → test-suite name_SubsequentAuthorSubstituteSingleField
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -1886,7 +1801,7 @@ Failure → test-suite sort_ChicagoYearSuffix1
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Beijing Zoo. 1974. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
-  <div class="csl-entry">Beijing Zoo. 1974. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
+  <div class="csl-entry">---. 1974. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1898,7 +1813,7 @@ Failure → test-suite sort_ChicagoYearSuffix2
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Beijing Zoo. 1974. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
-  <div class="csl-entry">Beijing Zoo. 1974. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
+  <div class="csl-entry">---. 1974. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2041,9 +1956,9 @@ Failure → test-suite substitute_SharedMacro
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Alan Alto Inc.: Book Four. (zugegriffen am).</div>
-  <div class="csl-entry">Alan Alto Inc.: Book Three. (zugegriffen am).</div>
+  <div class="csl-entry">---: Book Three. (zugegriffen am).</div>
   <div class="csl-entry">Alto, Alan: Book Two. (zugegriffen am).</div>
-  <div class="csl-entry">Alto, Alan: Book One. (zugegriffen am).</div>
+  <div class="csl-entry">---: Book One. (zugegriffen am).</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">

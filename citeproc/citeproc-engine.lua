@@ -94,7 +94,11 @@ function CiteProc:makeCitationCluster (citation_items)
     self:sort_bibliography()
   end
 
-  local res = self.style:render_citation(items, {engine=self})
+  local context = {
+    build = {},
+    engine=self,
+  }
+  local res = self.style:render_citation(items, context)
   self.registry.previous_citation = items
   return res
 end
@@ -111,7 +115,11 @@ function CiteProc:makeBibliography()
     table.insert(items, item)
   end
 
-  local res = self.style:render_biblography(items, {engine=self})
+  local context = {
+    build = {},
+    engine=self,
+  }
+  local res = self.style:render_biblography(items, context)
   return res
 end
 

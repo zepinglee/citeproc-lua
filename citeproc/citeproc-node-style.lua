@@ -126,6 +126,7 @@ function Citation:render (items, context)
   context = self:process_context(context)
 
   context.mode = "citation"
+  context.citation = self
 
   local sort = self:get_child("sort")
   if sort then
@@ -139,11 +140,22 @@ end
 
 local Bibliography = element.Element:new()
 
+Bibliography.default_options = {
+  ["hanging-indent"] = false,
+  ["second-field-align"] = nil,
+  ["line-spacing"] = 1,
+  ["entry-spacing"] = 1,
+  ["subsequent-author-substitute"] = nil,
+  ["subsequent-author-substitute-rule"] = "complete-all",
+}
+
 function Bibliography:render (items, context)
   self:debug_info(context)
   context = self:process_context(context)
+  -- util.debug(context)
 
   context.mode = "bibliography"
+  context.bibliography = self
 
   -- Already sorted in CiteProc:sort_bibliography()
 
