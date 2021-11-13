@@ -18,7 +18,7 @@ label                9      10       0       0
 locale              23       0       0       0
 locator              0       6       0       0
 magic               27      12       0       1
-name                89      21       0       1
+name                91      19       0       1
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              611     196       0      46
+(all)              613     194       0      46
 
 Pending → test-suite affix_WithCommas
 test/citeproc-test.lua:61: citations
@@ -1622,30 +1622,6 @@ Expected:
 <b>Familyname</b>, <i>Givenname</i> <i>der</i>
 <b>Familyname</b>, <i>Givenname</i> <i>des</i>
 <b>Familyname</b>, <i>Givenname</i> <i>auf den</i>'
-
-Failure → test-suite name_SubsequentAuthorSubstituteSingleField
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Yomiuri Shinbun.</div>
-  <div class="csl-entry">Yomiuri Shinbun.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Yomiuri Shinbun.</div>
-  <div class="csl-entry">———.</div>
-</div>'
-
-Failure → test-suite name_SubstitutePartialEach
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Title One</div>
-  <div class="csl-entry">Title One</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Title One</div>
-  <div class="csl-entry">---</div>
-</div>'
 
 Failure → test-suite name_WithNonBreakingSpace
 Passed in:

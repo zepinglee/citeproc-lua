@@ -600,11 +600,24 @@ function Names:render (item, context)
   else
     local substitute = self:get_child("substitute")
     if substitute then
-      return substitute:render(item, context)
-    else
-      return nil
+      ret = substitute:render(item, context)
     end
+    if ret and sub_str then
+      ret = self:substitute_single_field(ret, context)
+    end
+    return ret
   end
+end
+
+function Names:substitute_single_field(result, context)
+  if not result then
+    return nil
+  end
+  if context.build.first_rendered_names and #context.build.first_rendered_names == 0 then
+    context.build.first_rendered_names[1] = result
+  end
+  result = self:substitute_names(result, context)
+  return result
 end
 
 function Names:substitute_names(result, context)

@@ -239,6 +239,7 @@ return function(options)
   handler.suiteEnd = function()
 
     io_write(get_failures_log())
+    io_write("\n")
     io_write(get_status_log())
 
     local sec = handler.getDuration()
