@@ -5,7 +5,7 @@ kpse.set_program_name("luatex")
 local kpse_lua_searcher = package.searchers[2]
 
 local function lua_searcher(name)
-  local file, err = package.searchpath(name,package.path)
+  local file, err = package.searchpath(name, package.path)
   if err then
     return string.format("[lua searcher]: module not found: '%s'%s", name, err)
   else
@@ -14,12 +14,12 @@ local function lua_searcher(name)
 end
 
 package.searchers[2] = function(name)
-  local loader1 = kpse_lua_searcher(name)
+  local loader1 = lua_searcher(name)
   if type(loader1) ~= "string" then
     return loader1
   end
-  local loader2 = lua_searcher(name)
-  if type(loader2) ~= "string" then -- Not found using searcher2. Return error.
+  local loader2 = kpse_lua_searcher(name)
+  if type(loader2) ~= "string" then
     return loader2
   end
   return string.format("%s\n\t%s", loader1, loader2)
@@ -29,6 +29,7 @@ end
 require("busted.runner")()
 require("lualibs")
 local lfs = require("lfs")
+local inspect = require("inspect")
 
 local citeproc = require("citeproc")
 
@@ -56,11 +57,6 @@ local function listdir(path)
   return files
 end
 
-local function test_citations(engine, fixture)
-  -- TODO
-  pending("citations")
-end
-
 local function test_citation_items(engine, fixture)
   local citation_items = fixture.citation_items
   if not citation_items then
@@ -80,13 +76,49 @@ local function test_citation_items(engine, fixture)
   return table.concat(output, "\n")
 end
 
-local function test_bibliography(engine, fixture)
-  local bibentries = fixture.bibentries
-  if not bibentries then
-    bibentries = {{}}
-    for _, item in ipairs(fixture.input) do
-      table.insert(bibentries[1], tostring(item.id))
+local function test_citations(engine, fixture)
+
+  local output = {}
+  local citation_order = {}
+  for _, citation_set in ipairs(fixture.citations) do
+    local citation = citation_set[1]
+    local citationsPre = citation_set[2]
+    local citationsPost = citation_set[3]
+
+    for _, value in pairs(output) do
+      value.prefix = ".."
     end
+
+    local res = engine:processCitationCluster(citation, citationsPre, citationsPost)
+
+    for _, insert in ipairs(res[2]) do
+      local citation_str = insert[2]
+      local citation_id = insert[3]
+
+      if not output[citation_id] then
+        table.insert(citation_order, citation_id)
+      end
+
+      output[citation_id] = {
+        prefix = ">>",
+        string = citation_str,
+      }
+    end
+  end
+
+  local ret = {}
+  for i, citation_id in ipairs(citation_order) do
+    local prefix = output[citation_id].prefix
+    local citation_str = output[citation_id].string
+    table.insert(ret, prefix .. "[" .. tostring(i-1) .. "] " .. citation_str)
+  end
+  return table.concat(ret, "\n")
+end
+
+local function test_bibliography(engine, fixture)
+  if fixture.bibentries then
+    -- TODO
+    pending("bibentries")
   end
 
   if fixture.bibsection then
@@ -94,20 +126,22 @@ local function test_bibliography(engine, fixture)
     pending("bibsection")
   end
 
-  local output = {}
-  for _, items in ipairs(bibentries) do
-    engine:updateItems(items)
-    local result = engine:makeBibliography()
-    local params = result[1]
-    local entries = result[2]
-    local res = params.bibstart
-    for _, entry in ipairs(entries) do
-      res = res .. "  " .. entry .. "\n"
-    end
-    res = res .. params.bibend
-    table.insert(output, res)
+  -- engine:updateItems(items)
+  if fixture.citations then
+    test_citations(engine, fixture)
+  else
+    test_citation_items(engine, fixture)
   end
-  return table.concat(output, "\n")
+
+  local result = engine:makeBibliography()
+  local params = result[1]
+  local entries = result[2]
+  local res = params.bibstart
+  for _, entry in ipairs(entries) do
+    res = res .. "  " .. entry .. "\n"
+  end
+  res = res .. params.bibend
+  return res
 end
 
 local function run_test(fixture)
@@ -150,9 +184,6 @@ local function run_test(fixture)
     end
 
   elseif fixture.mode == "bibliography" then
-    if fixture.citations then
-      pending("citations")
-    end
     return test_bibliography(engine, fixture)
   end
 end

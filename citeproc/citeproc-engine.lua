@@ -27,6 +27,7 @@ function CiteProc.new (sys, style, lang, force_lang)
   end
   local o = {}
   o.registry = {
+    citations = {},  -- A map
     registry = {},  -- A map
     reflist = {},  -- A list
     previous_citation = nil,
@@ -63,26 +64,133 @@ function CiteProc:updateItems (ids)
   end
 end
 
-function CiteProc:processCitationCluster (citation, citationsPre, citationsPost)
+function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
+  -- citation = {
+  --   citationID = "CITATION-3",
+  --   citationItems = {
+  --     { id = "ITEM-1" },
+  --     { id = "ITEM-2" },
+  --   },
+  --   properties = {
+  --     noteIndex = 3,
+  --   },
+  -- }
+  -- citationsPre = {
+  --   {"CITATION-1", 1},
+  --   {"CITATION-2", 2},
+  -- }
+  -- citationsPost = {
+  --   {"CITATION-4", 4},
+  -- }
+  -- returns = {
+  --   {
+  --     bibchange = true,
+  --     citation_errors = {},
+  --   },
+  --   {
+  --     { 2, "[1,2]", "CITATION-3" }
+  --   }
+  -- }
+  self.registry.citations[citation.citationID] = citation
+
+  local items = {}
+
+  for _, cite_item in ipairs(citation.citationItems) do
+    cite_item.id = tostring(cite_item.id)
+    local position_first = (self.registry.registry[cite_item.id] == nil)
+    local item_data = self:get_item(cite_item.id)
+
+    -- Create a wrapper of the orignal item from registry so that
+    -- it may hold different `locator` or `position` values for cites.
+    local item = setmetatable({}, {__index = function (_, key)
+      if cite_item[key] then
+        return cite_item[key]
+      else
+        return item_data[key]
+      end
+    end})
+
+    if not item.position and position_first then
+      item.position = util.position_map["first"]
+    end
+
+    local first_reference_note_number = nil
+    for _, pre_citation in ipairs(citationsPre) do
+      pre_citation = self.registry.citations[pre_citation[1]]
+      for _, pre_cite_item in ipairs(pre_citation.citationItems) do
+        if pre_cite_item.id == cite_item.id then
+          first_reference_note_number = pre_citation.properties.noteIndex
+        end
+        break
+      end
+      if first_reference_note_number then
+        break
+      end
+    end
+    item["first-reference-note-number"] = first_reference_note_number
+
+    table.insert(items, item)
+  end
+
+  if #citationsPre > 0 then
+    local previous_citation_id = citationsPre[#citationsPre][1]
+    local previous_citation = self.registry.citations[previous_citation_id]
+    self.registry.previous_citation = previous_citation
+  end
+
+  if self.registry.requires_sorting then
+    self:sort_bibliography()
+  end
+
+  local params = {
+    bibchange = false,
+    citation_errors = {},
+  }
+
   local output = {}
-  local params = {}
+
+  -- for _, citation_pre in ipairs(citationsPre) do
+  --   local citation_id = citation_pre[1]
+  --   local note_index = citation_pre[2]
+  --   local context = {
+  --     build = {},
+  --     engine = self,
+  --   }
+  --   local citation_pre_items = {}
+  --   local res = self.style:render_citation(citation_pre_items, context)
+  --   -- TODO: correct citation_index
+  --   local citation_index = 0
+  --   table.insert(output, {citation_index, res, citation.citationID})
+  -- end
+
+  local context = {
+    build = {},
+    engine = self,
+  }
+  local res = self.style:render_citation(items, context)
+  -- TODO: correct citation_index
+  local citation_index = 0
+  table.insert(output, {citation_index, res, citation.citationID})
+
   return {params, output}
 end
 
 function CiteProc:makeCitationCluster (citation_items)
   local items = {}
-  for _, cite in ipairs(citation_items) do
-    cite.id = tostring(cite.id)
-    local position_first = (self.registry.registry[cite.id] == nil)
-    local res = self:get_item(cite.id)
+  for _, cite_item in ipairs(citation_items) do
+    cite_item.id = tostring(cite_item.id)
+    local position_first = (self.registry.registry[cite_item.id] == nil)
+    local item_data = self:get_item(cite_item.id)
 
     -- Create a wrapper of the orignal item from registry so that
     -- it may hold different `locator` or `position` values for cites.
-    local item = {}
-    for key, value in pairs(cite) do
-      item[key] = value
-    end
-    setmetatable(item, {__index = res})
+    local item = setmetatable({}, {__index = function (_, key)
+      if cite_item[key] then
+        return cite_item[key]
+      else
+        return item_data[key]
+      end
+    end})
 
     if not item.position and position_first then
       item.position = util.position_map["first"]
@@ -99,7 +207,13 @@ function CiteProc:makeCitationCluster (citation_items)
     engine=self,
   }
   local res = self.style:render_citation(items, context)
-  self.registry.previous_citation = items
+  self.registry.previous_citation = {
+    citationID = "pseudo-citation",
+    citationItems = items,
+    properties = {
+      noteIndex = 1,
+    }
+  }
   return res
 end
 

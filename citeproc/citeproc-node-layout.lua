@@ -142,7 +142,7 @@ function Layout:_get_position (item, previous_cite, context)
     end
   elseif engine.registry.previous_citation then
     -- b. first cite in the citation and previous citation exists
-    for _, cite in ipairs(engine.registry.previous_citation) do
+    for _, cite in ipairs(engine.registry.previous_citation.citationItems) do
       if item.id == cite.id then
         preceding_cite = cite
         break

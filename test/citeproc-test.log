@@ -1,182 +1,44 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
-affix                7       1       0       1
-bugreports          39      35       0       8
-collapse             4      16       0       1
+affix                7       2       0       0
+bugreports          42      40       0       0
+collapse             4      17       0       0
 condition           17       0       0       0
 date                95       6       0       0
 decorations          7       0       0       0
-disambiguate        19      48       0       4
+disambiguate        19      52       0       0
 display              4       1       0       0
 etal                 4       0       0       0
-flipflop            17       2       0       0
+flipflop            16       3       0       0
 form                 3       0       0       0
 fullstyles           4       1       0       0
-group                4       2       0       1
-integration          2       0       0      12
+group                5       2       0       0
+integration         10       4       0       0
 label                9      10       0       0
 locale              23       0       0       0
 locator              0       6       0       0
-magic               27      12       0       1
-name                91      19       0       1
+magic               27      13       0       0
+name                92      19       0       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
 number              17       3       0       0
 page                 9       0       0       0
 plural               7       0       0       0
-position             8       1       0       7
-punctuation         14       1       0       1
+position             8       8       0       0
+punctuation         14       2       0       0
 quotes               3       1       0       0
 simplespace          1       0       0       0
-sort                42      16       0       8
+sort                45      21       0       0
 sortseparator        1       0       0       0
 substitute           5       2       0       0
-testers              1       0       0       1
+testers              1       1       0       0
 textcase            21       8       0       0
 unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              613     194       0      46
-
-Pending → test-suite affix_WithCommas
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite bugreports_AutomaticallyDeleteItemsFails
-test/citeproc-test.lua:154: citations
-
-Pending → test-suite bugreports_CreepingAddNames
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite bugreports_DelimiterOnLayout
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite bugreports_EnvAndUrb
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite bugreports_EtAlSubsequent
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite bugreports_OldMhraDisambiguationFailure
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite bugreports_OverwriteCitationItems
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite bugreports_ikeyOne
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite collapse_CitationNumberRangesInsert
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite disambiguate_BasedOnSubsequentFormWithBackref2
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite disambiguate_DisambiguationHang
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite disambiguate_YearSuffixFiftyTwoEntries
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite disambiguate_YearSuffixFiftyTwoEntriesByCite
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite group_LegalWithAuthorDate
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite integration_DeleteName
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite integration_DisambiguateAddGivenname1
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite integration_DisambiguateAddGivenname2
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite integration_DuplicateItem
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite integration_DuplicateItem2
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite integration_FirstReferenceNoteNumberPositionChange
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite integration_IbidOnInsert
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite integration_IbidWithDifferentLocators
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite integration_SimpleFirstReferenceNoteNumber
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite integration_SimpleIbid
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite integration_SubsequentWhenInterveningFootnote
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite integration_YearSuffixOnOffOn
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite magic_TermCapitalizationWithPrefix
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite name_BibliographyNameFormNeverShrinks
-test/citeproc-test.lua:154: citations
-
-Pending → test-suite position_FirstTrueOnlyOnce
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite position_IbidInText
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite position_IbidSeparateCiteSameNote
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite position_IbidWithMultipleSoloCitesInBackref
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite position_IbidWithPrefixFullStop
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite position_NearNoteSameNote
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite position_ResetNoteNumbers
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite punctuation_SuppressPrefixPeriodForDelimiterSemicolon
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite sort_AuthorDateWithYearSuffix
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite sort_CitationNumberPrimaryAscendingViaMacroCitation
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite sort_CitationNumberPrimaryAscendingViaVariableCitation
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite sort_CitationNumberPrimaryDescendingViaMacroCitation
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite sort_CitationNumberPrimaryDescendingViaVariableCitation
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite sort_CitationNumberSecondaryAscendingViaVariableCitation
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite sort_GroupedByAuthorstring
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite sort_RangeUnaffected
-test/citeproc-test.lua:61: citations
-
-Pending → test-suite testers_FirstAutoGeneratedZoteroPluginTest
-test/citeproc-test.lua:61: citations
+(all)              628     225       0       0
 
 Failure → test-suite affix_CommaAfterQuote
 Passed in:
@@ -184,11 +46,44 @@ Passed in:
 Expected:
 (string) '“quote”, Hello Thing'
 
+Failure → test-suite affix_WithCommas
+Passed in:
+(string) '..[0] John Smith, <i>Book C</i>, 2000; , and David Jones, <i>Book D</i>, 2000.
+..[1] Ibid. is one source,; Jones, <i>Book D</i> is another.
+>>[2] Ibid., p. 23 is one source,; Jones, <i>Book D</i> is another.'
+Expected:
+(string) '..[0] John Smith, <i>Book C</i>, 2000, and David Jones, <i>Book D</i>, 2000.
+..[1] Smith, <i>Book C</i> is one source, Jones, <i>Book D</i> is another.
+>>[2] Smith, <i>Book C</i>, 23 is one source, Jones, <i>Book D</i> is another.'
+
 Failure → test-suite bugreports_ApostropheOnParticle
 Passed in:
 (string) 'John d’ Jones'
 Expected:
 (string) 'John d’Jones'
+
+Failure → test-suite bugreports_AutomaticallyDeleteItemsFails
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Doe, <i>Book A</i>, 2000.</div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> J. Doe, <i>Book B</i>, 2000.</div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[3]</div><div class="csl-right-inline"> R. Snoakes, <i>Book C</i>, 2000.</div>
+  </div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Doe, <i>Book A</i>, 2000.</div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> J. Doe, <i>Book B</i>, 2000.</div>
+  </div>
+</div>'
 
 Failure → test-suite bugreports_BadCitationUpdate
 Passed in:
@@ -292,6 +187,24 @@ Expected:
   <div class="csl-entry">D’Arcus, Bruce. 2006. <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>. New York: Routledge http://www.test01.com.</div>
 </div>'
 
+Failure → test-suite bugreports_EnvAndUrb
+Passed in:
+(string) '..[0] Baines, T S, O Benedettini and J M Kay, ‘Title One’; Baines, T S, F Gump and J M Kay, ‘Title Two’.
+..[1] See reference 1, Baines et al., ‘Title One’.
+>>[2] Baines et al., ‘Title Two’.'
+Expected:
+(string) '>>[0] Baines, T S, O Benedettini and J M Kay, ‘Title One’; Baines, T S, F Gump and J M Kay, ‘Title Two’.
+..[1] See reference 1, Baines et al.
+>>[2] See reference 1, Baines et al.'
+
+Failure → test-suite bugreports_EtAlSubsequent
+Passed in:
+(string) '..[0] John Doe, Jane Roe, Katie Harper, Emmanuel Clutterbuck
+>>[1] John Doe, Jane Roe, Katie Harper, Emmanuel Clutterbuck'
+Expected:
+(string) '..[0] John Doe, Jane Roe, Katie Harper, Emmanuel Clutterbuck
+>>[1] John Doe et al.'
+
 Failure → test-suite bugreports_FourAndFour
 Passed in:
 (string) 'Anne Tyler et al., <i>Ladder of his’ Years</i>, vol. 2003 (New York: Ivy Books, 1997).
@@ -370,6 +283,14 @@ Passed in:
 (string) '<sup>2</sup>; <sup>3-5</sup>'
 Expected:
 (string) '<sup><i>2</i></sup>; <sup><i>3–5</i></sup>'
+
+Failure → test-suite bugreports_OldMhraDisambiguationFailure
+Passed in:
+(string) '..[0] John Doe, <i>Book A</i>, 2000, p. , p. ; John Doe, <i>Book B</i>, 2000, p. , p. .
+>>[1] Doe, Book A, p. , p. ; Doe, Book B, p. , p. .'
+Expected:
+(string) '>>[0] John Doe, <i>Book A</i>, 2000; John Doe, <i>Book B</i>, 2000.
+>>[1] Doe, Book A; Doe, Book B.'
 
 Failure → test-suite bugreports_ProcessorHang1
 Passed in:
@@ -503,6 +424,13 @@ Expected:
 Smith 1990b
 Jones 1990'
 
+Failure → test-suite bugreports_ikeyOne
+Passed in:
+(string) '..[0] (Smith, <i>Book c</i>)
+>>[1] (Smith, <i>Book B</i>)'
+Expected:
+(string) '>>[0] (Smith)'
+
 Failure → test-suite bugreports_parseName
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -542,6 +470,14 @@ Expected:
 (string) '(Whittaker 1967, 1975; Wiens 1989a, 1989b)
 (Wong 1999, 328; 2000, 475; Garcia 1998, 67)
 (Whittaker 1967; Wiens 1989b)'
+
+Failure → test-suite collapse_CitationNumberRangesInsert
+Passed in:
+(string) '>>[0] [1], [2], [3], [4]
+..[1] [4]'
+Expected:
+(string) '..[0] [1]
+>>[1] [1]–[4]'
 
 Failure → test-suite collapse_CitationNumberRangesMixed
 Passed in:
@@ -775,6 +711,20 @@ Passed in:
 Expected:
 (string) '(Baur, Fröberg, Baur, et al. 2000<i>a</i>; Baur, Schileyko &#38; Baur 2000<i>b</i>; Doe 2000)'
 
+Failure → test-suite disambiguate_BasedOnSubsequentFormWithBackref2
+Passed in:
+(string) '..[0] John Doe, His Book (2000); John Doe, His Other Book (2001).
+..[1] Jane Roe, Her Book (1998).
+..[2] Roe, Her Book, supra note 2.
+..[3] Doe, His Book, supra note 1.
+>>[4] Roe, Her Book, supra note 2.'
+Expected:
+(string) '..[0] John Doe, His Book (2000); John Doe, His Other Book (2001).
+..[1] Jane Roe, Her Book (1998).
+..[2] Roe, supra note 2.
+..[3] Doe, His Book, supra note 1.
+>>[4] Roe, supra note 2.'
+
 Failure → test-suite disambiguate_ByCiteBaseNameCountOnFailureIfYearSuffixAvailable
 Passed in:
 (string) 'Asthma et al. (1990); Asthma et al. (1990); Dropsy et al. (2000); Dropsy et al. (2000)'
@@ -874,6 +824,16 @@ Expected:
   <div class="csl-entry">Smith, Book Two</div>
   <div class="csl-entry">Brown</div>
 </div>'
+
+Failure → test-suite disambiguate_DisambiguationHang
+Passed in:
+(string) '..[0] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990)
+..[1] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990)
+>>[2] (Caminiti, Johnson, &#38; Urbano 1990)'
+Expected:
+(string) '>>[0] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990a)
+>>[1] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990b)
+>>[2] (Caminiti, Johnson, &#38; Urbano 1990)'
 
 Failure → test-suite disambiguate_FailWithYearSuffix
 Passed in:
@@ -996,6 +956,22 @@ Passed in:
 (string) 'Smith et al. (1986); Smith et al. (1986); Smith et al. (1986); Smith et al. (1986)'
 Expected:
 (string) 'Smith, Jones &#38; Brown (1986a); Smith, Jones &#38; Brown (1986b); Smith, Jones, Brown, et al. (1986a); Smith, Jones, Brown, et al. (1986b)'
+
+Failure → test-suite disambiguate_YearSuffixFiftyTwoEntries
+Passed in:
+(string) '..[0] (Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986)
+>>[1] (Smith 1986)'
+Expected:
+(string) '..[0] (Smith 1986a; Smith 1986b; Smith 1986c; Smith 1986d; Smith 1986e; Smith 1986f; Smith 1986g; Smith 1986h; Smith 1986i; Smith 1986j; Smith 1986k; Smith 1986l; Smith 1986m; Smith 1986n; Smith 1986o; Smith 1986p; Smith 1986q; Smith 1986r; Smith 1986s; Smith 1986t; Smith 1986u; Smith 1986v; Smith 1986w; Smith 1986x; Smith 1986y; Smith 1986z; Smith 1986aa; Smith 1986ab; Smith 1986ac; Smith 1986ad; Smith 1986ae; Smith 1986af; Smith 1986ag; Smith 1986ah; Smith 1986ai; Smith 1986aj; Smith 1986ak; Smith 1986al; Smith 1986am; Smith 1986an; Smith 1986ao; Smith 1986ap; Smith 1986aq; Smith 1986ar; Smith 1986as; Smith 1986at; Smith 1986au; Smith 1986av; Smith 1986aw; Smith 1986ax; Smith 1986ay)
+>>[1] (Smith 1986az)'
+
+Failure → test-suite disambiguate_YearSuffixFiftyTwoEntriesByCite
+Passed in:
+(string) '..[0] (Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986)
+>>[1] (Smith 1986)'
+Expected:
+(string) '..[0] (Smith 1986a; Smith 1986b; Smith 1986c; Smith 1986d; Smith 1986e; Smith 1986f; Smith 1986g; Smith 1986h; Smith 1986i; Smith 1986j; Smith 1986k; Smith 1986l; Smith 1986m; Smith 1986n; Smith 1986o; Smith 1986p; Smith 1986q; Smith 1986r; Smith 1986s; Smith 1986t; Smith 1986u; Smith 1986v; Smith 1986w; Smith 1986x; Smith 1986y; Smith 1986z; Smith 1986aa; Smith 1986ab; Smith 1986ac; Smith 1986ad; Smith 1986ae; Smith 1986af; Smith 1986ag; Smith 1986ah; Smith 1986ai; Smith 1986aj; Smith 1986ak; Smith 1986al; Smith 1986am; Smith 1986an; Smith 1986ao; Smith 1986ap; Smith 1986aq; Smith 1986ar; Smith 1986as; Smith 1986at; Smith 1986au; Smith 1986av; Smith 1986aw; Smith 1986ax; Smith 1986ay)
+>>[1] (Smith 1986az)'
 
 Failure → test-suite disambiguate_YearSuffixMacroSameYearExplicit
 Passed in:
@@ -1129,6 +1105,16 @@ Expected:
   </div>
 </div>'
 
+Failure → test-suite flipflop_ItalicsWithOkAndTextcase
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"><span style="font-variant:small-caps;">Lessard v. Schmidt</span>. 1972. 349 F. Supp. 1078 (E.D. Wisc.).</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"><span style="font-variant:small-caps;">Lessard <span style="font-variant:normal;">v.</span> Schmidt</span>. 1972. 349 F. Supp. 1078 (E.D. Wisc.).</div>
+</div>'
+
 Failure → test-suite flipflop_LeadingMarkupWithApostrophe
 Passed in:
 (string) '<i>Insha’Allah</i> is an Arabic phrase meaning “God willing.” Another Arabic word is <i>bukra</i>. Aalto'
@@ -1166,6 +1152,50 @@ Passed in:
 (string) 'His Anonymous Life, in '
 Expected:
 (string) 'His Anonymous Life'
+
+Failure → test-suite integration_FirstReferenceNoteNumberPositionChange
+Passed in:
+(string) '..[0] Doe, “Life of Doe” (1901).
+..[1] Roe, “Life of Roe” (1900).
+..[2] Doe, supra note 1.
+..[3] Roe, supra note 2.
+>>[4] Snoakes, “Life of Snoakes” (1902).'
+Expected:
+(string) '>>[0] Snoakes, “Life of Snoakes” (1902).
+>>[1] Doe, “Life of Doe” (1901).
+>>[2] Roe, “Life of Roe” (1900).
+>>[3] Doe, supra note 2.
+>>[4] Roe, supra note 3.'
+
+Failure → test-suite integration_IbidOnInsert
+Passed in:
+(string) '..[0] (Doe p. 12)
+..[1] (Noakes p. 34)
+..[2] (Snoakes p. 45)
+>>[3] (ibid.)'
+Expected:
+(string) '..[0] (Doe p. 12)
+>>[1] (Noakes p. 34)
+>>[2] (Ibid.)
+..[3] (Snoakes p. 45)'
+
+Failure → test-suite integration_IbidWithDifferentLocators
+Passed in:
+(string) '..[0] (Doe p. 12)
+..[1] (ibid.)
+..[2] (Roe p. 20)
+>>[3] (ibid.)'
+Expected:
+(string) '..[0] (Doe p. 12)
+..[1] (ibid-with-locator)
+..[2] (Roe bk. 20)
+>>[3] (ibid-with-locator)'
+
+Failure → test-suite integration_YearSuffixOnOffOn
+Passed in:
+(string) '>>[0] Smith (1986); Smith (1986); Smith (1986); Smith (1986)'
+Expected:
+(string) '>>[0] Smith (1986a); Smith (1986b); Smith (1986c); Smith (1986d)'
 
 Failure → test-suite label_CollapsedPageNumberPluralDetection
 Passed in:
@@ -1364,6 +1394,18 @@ Passed in:
 (string) 'Book A; , cited in Book B'
 Expected:
 (string) 'Book A, cited in Book B'
+
+Failure → test-suite magic_TermCapitalizationWithPrefix
+Passed in:
+(string) '..[0] Doe (1965)
+..[1] See ibid.
+..[2] This has been said. ibid.
+>>[3] ibid.'
+Expected:
+(string) '..[0] Doe (1965)
+..[1] See ibid.
+..[2] This has been said. Ibid.
+>>[3] Ibid.'
 
 Failure → test-suite name_AfterInvertedName
 Passed in:
@@ -1653,6 +1695,60 @@ Passed in:
 Expected:
 (string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) pages i–ix (cs:text) vs His Anonymous Life (2) pages i–ix (cs:number); His Anonymous Life (3) page 3-B (cs:text) vs His Anonymous Life (3) page 3-B (cs:number); His Anonymous Life (4) page Michaelson-Morely (cs:text) vs His Anonymous Life (4) page Michaelson-Morely (cs:number)'
 
+Failure → test-suite position_FirstTrueOnlyOnce
+Passed in:
+(string) '..[0] Appleton “Tom Swift and His Electric Runabout” (1910).
+>>[1] ibid. p. 23.'
+Expected:
+(string) '..[0] Appleton “Tom Swift and His Electric Runabout” (1910).
+>>[1] Ibid. p. 23.'
+
+Failure → test-suite position_IbidInText
+Passed in:
+(string) '..[0] Appleton “Tom Swift and His Electric Runabout” (1910).
+..[1] Bloggs “A Very Short Book Indeed” (2012).
+>>[2] Appleton “Tom Swift and His Electric Runabout” (1910).'
+Expected:
+(string) '..[0] Appleton “Tom Swift and His Electric Runabout” (1910).
+..[1] Bloggs “A Very Short Book Indeed” (2012).
+>>[2] Ibid.'
+
+Failure → test-suite position_IbidSeparateCiteSameNote
+Passed in:
+(string) '..[0] [citation1-item1-note1] Appleton “Tom Swift and His Electric Runabout” (1910).
+..[1] [citation2-item1-note2] ibid.
+..[2] [citation3-item1-note2] ibid. page 33.
+..[3] [citation4-item2-note3] Bloggs “A Very Short Book Indeed” (2012); [citation4-item1-note3] Appleton supra note 1.
+..[4] [citation5-item1-note4] ibid. page 99.
+..[5] [citation6-item1-note4] Appleton supra note 1.
+>>[6] [citation7-item1-note4] ibid.'
+Expected:
+(string) '..[0] [citation1-item1-note1] Appleton “Tom Swift and His Electric Runabout” (1910).
+..[1] [citation2-item1-note2] ibid.
+..[2] [citation3-item1-note2] ibid. page 33.
+..[3] [citation4-item2-note3] Bloggs “A Very Short Book Indeed” (2012); [citation4-item1-note3] Appleton supra note 1.
+..[4] [citation5-item1-note4] Appleton supra note 1 page 99.
+..[5] [citation6-item1-note4] Appleton supra note 1.
+>>[6] [citation7-item1-note4] ibid.'
+
+Failure → test-suite position_IbidWithMultipleSoloCitesInBackref
+Passed in:
+(string) '..[0] Aalto
+..[1] Álvarez
+..[2] ibid.
+>>[3] ibid.'
+Expected:
+(string) '..[0] Aalto
+..[1] Álvarez
+..[2] Álvarez
+>>[3] Ibid.'
+
+Failure → test-suite position_IbidWithPrefixFullStop
+Passed in:
+(string) '>>[0] Book A; . He said “Please work.” ibid.'
+Expected:
+(string) '>>[0] Book A. He said “Please work.” Ibid.'
+
 Failure → test-suite position_IbidWithSuffix
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -1669,11 +1765,49 @@ Expected:
   <div class="csl-entry">Sergei Kaspersky</div>
 </div>'
 
+Failure → test-suite position_NearNoteSameNote
+Passed in:
+(string) '..[0] Plain+Vanilla:Book-A; Plain+Vanilla:Book-A
+..[1] Plain+Vanilla:Book-B
+>>[2] Plain+Vanilla:Book-B; Plain+Vanilla:Book-A'
+Expected:
+(string) '..[0] Plain+Vanilla:Book-A; Near+Ibid:Book-A
+..[1] Plain+Vanilla:Book-B
+>>[2] Plain+Vanilla:Book-B; Plain+Vanilla:Book-A'
+
+Failure → test-suite position_ResetNoteNumbers
+Passed in:
+(string) '..[0] Book A (note 1)
+..[1] ibid (note 2)
+..[2] Book C (note 3)
+..[3] Book C (note 1)
+..[4] Book A, n 1 (note 2)
+..[5] Book A, n 1 (note 3)
+..[6] Book C, n 1 (note 4)
+>>[7] Book A, n 1 (note 5)'
+Expected:
+(string) '..[0] Book A (note 1)
+..[1] Book C (note 1)
+..[2] Book A, n 1 (note 2)
+..[3] ibid (note 2)
+..[4] Book C, n 1 (note 3)
+..[5] Book A, n 1 (note 3)
+..[6] Book C, n 1 (note 4)
+>>[7] Book A, n 1 (note 5)'
+
 Failure → test-suite punctuation_DefaultYearSuffixDelimiter
 Passed in:
 (string) '(Aalto 2000; Aalto 2000; Aalto 2000)'
 Expected:
 (string) '(Aalto 2000a; b; c)'
+
+Failure → test-suite punctuation_SuppressPrefixPeriodForDelimiterSemicolon
+Passed in:
+(string) '..[0] John Doe, “His Anonymous Life,” in , 1965; Jane Roe, “Her Anonymous Life,” in , 1965.
+>>[1] ibid.; Roe, “Her Anonymous Life.”'
+Expected:
+(string) '..[0] John Doe, “His Anonymous Life,” 1965; Jane Roe, “Her Anonymous Life,” 1965.
+>>[1] Doe, “His Anonymous Life”; Roe, “Her Anonymous Life.”'
 
 Failure → test-suite quotes_QuotesUnderQuotesFalse
 Passed in:
@@ -1732,6 +1866,12 @@ Expected:
   <div class="csl-entry">Smith, A. (1989b)</div>
   <div class="csl-entry">Smith, A. (1991)</div>
 </div>'
+
+Failure → test-suite sort_AuthorDateWithYearSuffix
+Passed in:
+(string) '>>[0] (Day and Fitzpatrick, 2005; Mian et al., 2005; Day and Fitzpatrick, 2005)'
+Expected:
+(string) '>>[0] (Day and Fitzpatrick, 2005a, 2005b; Mian et al., 2005)'
 
 Failure → test-suite sort_BibliographyCitationNumberDescendingViaCompositeMacro
 Passed in:
@@ -1813,6 +1953,12 @@ Expected:
   <div class="csl-entry">[1] Aaaa (first-cited)</div>
 </div>'
 
+Failure → test-suite sort_CitationNumberPrimaryDescendingViaMacroCitation
+Passed in:
+(string) '>>[0] [1] Xxxx (fourth-cited); [2] Zzzz (third-cited); [3] Bbbb (second-cited); [4] Aaaa (first-cited)'
+Expected:
+(string) '>>[0] [1] Aaaa (first-cited); [2] Bbbb (second-cited); [3] Zzzz (third-cited); [4] Xxxx (fourth-cited)'
+
 Failure → test-suite sort_CitationNumberPrimaryDescendingViaVariableBibliography
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -1828,6 +1974,12 @@ Expected:
   <div class="csl-entry">[2] Bbbb (second-cited)</div>
   <div class="csl-entry">[1] Aaaa (first-cited)</div>
 </div>'
+
+Failure → test-suite sort_CitationNumberPrimaryDescendingViaVariableCitation
+Passed in:
+(string) '>>[0] [1] Xxxx (fourth-cited); [2] Zzzz (third-cited); [3] Bbbb (second-cited); [4] Aaaa (first-cited)'
+Expected:
+(string) '>>[0] [1] Aaaa (first-cited); [2] Bbbb (second-cited); [3] Zzzz (third-cited); [4] Xxxx (fourth-cited)'
 
 Failure → test-suite sort_CiteGroupDelimiter
 Passed in:
@@ -1850,6 +2002,12 @@ Expected:
   <div class="csl-entry">Doe, John Eamon. <i>Hello</i>.</div>
   <div class="csl-entry">Doe, John Egbert. <i>Hello</i>.</div>
 </div>'
+
+Failure → test-suite sort_GroupedByAuthorstring
+Passed in:
+(string) '>>[0] Smith 2003; Jones 2005; Smith 2010'
+Expected:
+(string) '>>[0] Smith 2003, 2010; Jones 2005'
 
 Failure → test-suite sort_NameImplicitSortOrderAndForm
 Passed in:
@@ -1906,6 +2064,14 @@ Expected:
   <div class="csl-entry">Simple “title” here C</div>
 </div>'
 
+Failure → test-suite sort_RangeUnaffected
+Passed in:
+(string) '..[0] <sup>1,2,3</sup>
+>>[1] <sup>3</sup>'
+Expected:
+(string) '>>[0] <sup>1</sup>
+>>[1] <sup>1–3</sup>'
+
 Failure → test-suite sort_SeparateAuthorsAndOthers
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -1949,6 +2115,14 @@ Passed in:
 (string) '[CSL STYLE ERROR: reference with no printed form.]'
 Expected:
 (string) 'Content:'
+
+Failure → test-suite testers_FirstAutoGeneratedZoteroPluginTest
+Passed in:
+(string) '..[0] Center <sup>for</sup> History <sub>and</sub> New Media, “<b>Zotero</b> … ‘Quick Start’ &#38; <span style="font-variant:small-caps;">Guide</span> 日本語,” p. 47, http://zotero.org/support/quick_start_guide.
+>>[1] John Smith, <i>Book A</i>, 2000; Center <sup>for</sup> History <sub>and</sub> New Media, “<b>Zotero</b> … ‘Quick Start’ &#38; <span style="font-variant:small-caps;">Guide</span> 日本語.”'
+Expected:
+(string) '..[0] Center <sup>for</sup> History <sub>and</sub> New Media, “<b>Zotero</b> … ‘Quick Start’ &#38; <span style="font-variant:small-caps;">Guide</span> 日本語,” 47, http://zotero.org/support/quick_start_guide.
+>>[1] John Smith, <i>Book A</i>, 2000; Center <sup>for</sup> History <sub>and</sub> New Media, “<b>Zotero</b> … ‘Quick Start’ &#38; <span style="font-variant:small-caps;">Guide</span> 日本語.”'
 
 Failure → test-suite textcase_CapitalsUntouched
 Passed in:
