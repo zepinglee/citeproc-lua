@@ -32,6 +32,7 @@ local lfs = require("lfs")
 local inspect = require("inspect")
 
 local citeproc = require("citeproc")
+local util = require("citeproc-util")
 
 
 local function read_file(path)
@@ -138,7 +139,7 @@ local function test_bibliography(engine, fixture)
   local entries = result[2]
   local res = params.bibstart
   for _, entry in ipairs(entries) do
-    res = res .. "  " .. entry .. "\n"
+    res = res .. "  " .. entry
   end
   res = res .. params.bibend
   return res
@@ -233,6 +234,33 @@ local function parse_fixture(path)
 end
 
 
+local function normalize_new_line(str)
+  local lines = util.split(str, "\r?\n")
+  local indent_level = 0
+  for i, line in ipairs(lines) do
+    line = util.lstrip(line)
+
+    if #line > 0 then
+      local current_indent_level = indent_level
+      if util.startswith(line, "</div>") then
+        current_indent_level = indent_level - 1
+      end
+
+      line = string.rep(" ", 2 * current_indent_level) .. line
+    end
+    lines[i] = line
+
+    string.gsub(line, "<div ", function ()
+      indent_level = indent_level + 1
+    end)
+    string.gsub(line, "</div>", function ()
+      indent_level = indent_level - 1
+    end)
+  end
+  return table.concat(lines, "\n")
+end
+
+
 describe("test-suite", function ()
   local test_dir = "./test/test-suite/processor-tests/humans"
   local files = listdir(test_dir)
@@ -242,6 +270,10 @@ describe("test-suite", function ()
 
     it(file, function ()
       local result = run_test(fixture)
+      if util.startswith(fixture.result, "<div") then
+        result = normalize_new_line(result)
+        fixture.result = normalize_new_line(fixture.result)
+      end
       assert.equal(fixture.result, result)
       return fixture.mode
     end)

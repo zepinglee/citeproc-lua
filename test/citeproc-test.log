@@ -35,10 +35,10 @@ substitute           5       2       0       0
 testers              2       0       0       0
 textcase            21       8       0       0
 unicode              1       0       0       0
-variables            2       3       0       0
+variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              644     209       0       0
+(all)              645     208       0       0
 
 Failure → test-suite affix_CommaAfterQuote
 Passed in:
@@ -310,7 +310,7 @@ Passed in:
     <div class="csl-block">Aalto, Alan</div>
 
     <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline"><span style="font-variant:small-caps;">Here</span></div>
-  .</div>
+    .</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1177,7 +1177,7 @@ Failure → test-suite label_EditorTranslator1
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">1.	Иванов И.И. 
-      . Пример оформления книги с редактором и переводчиком в одном лице : вид издания : in 5 vols. Vol. 2 / И.И. Иванов, П.П. Петров, С.С. Сидоров; ed. Р.Р. Романов; tran. Р.Р. Романов Дополнительно. – Тюмень: Дом, 2013. – 10. – 100 p.</div>
+    . Пример оформления книги с редактором и переводчиком в одном лице : вид издания : in 5 vols. Vol. 2 / И.И. Иванов, П.П. Петров, С.С. Сидоров; ed. Р.Р. Романов; tran. Р.Р. Романов Дополнительно. – Тюмень: Дом, 2013. – 10. – 100 p.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2082,44 +2082,24 @@ Passed in:
 Expected:
 (string) 'Out-of-Fashion Initiatives: A Second Story'
 
-Failure → test-suite variables_ContainerTitleShort
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">1. </div><div class="csl-right-inline">Campbell DT, Fiske DW. Main title. In: Container: a title. (Series: a title). </div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. Main title. Container. </div>
-  </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">1. </div><div class="csl-right-inline">Campbell DT, Fiske DW. Main title. In: Container: a title. (Series: a title).</div>
-   </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. Main title. Container.</div>
-   </div>
-</div>'
-
 Failure → test-suite variables_ContainerTitleShort2
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">
-    <div class="csl-left-margin">1. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. p. 25. </div>
+    <div class="csl-left-margin">1. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. p. 25.</div>
   </div>
   <div class="csl-entry">
-    <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. :25. </div>
+    <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. :25.</div>
   </div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">
     <div class="csl-left-margin">1. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. In: Container: a title. p. 25. (Series: a title).</div>
-   </div>
+  </div>
   <div class="csl-entry">
     <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. Container. :25.</div>
-   </div>
+  </div>
 </div>'
 
 Failure → test-suite variables_TitleShortOnShortTitleNoTitleCondition

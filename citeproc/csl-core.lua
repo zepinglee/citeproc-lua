@@ -231,7 +231,7 @@ function core.make_bibliography(engine)
   end
 
   if params.bibend then
-    res = res .. "\n" .. params.bibend .. "\n"
+    res = res .. "\n" .. params.bibend
   end
   return res
 end

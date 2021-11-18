@@ -43,7 +43,7 @@ formats.html = {
     return open_quote .. str .. close_quote
   end,
   ["@bibliography/entry"] = function (str, context)
-    return '<div class="csl-entry">' .. str .. "</div>"
+    return '<div class="csl-entry">' .. str .. "</div>\n"
   end,
   ["@display/block"] = function (str, state)
     return '\n\n    <div class="csl-block">' .. str .. "</div>\n"
@@ -52,6 +52,7 @@ formats.html = {
     return '\n    <div class="csl-left-margin">' .. str .. "</div>"
   end,
   ["@display/right-inline"] = function (str, state)
+    str = util.rstrip(str)
     return '<div class="csl-right-inline">' .. str .. "</div>\n  "
   end,
   ["@display/indent"] = function (str, state)
@@ -106,7 +107,7 @@ formats.latex = {
     if not string.match(str, "\\bibitem") then
       str =  "\\bibitem{".. context.item.id .. "}\n" .. str
     end
-    return str
+    return str .. "\n"
   end,
   ["@display/block"] = function (str, state)
     return str
