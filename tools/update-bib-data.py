@@ -80,8 +80,6 @@ class BibData(OrderedDict):
             body_words = body.split()
             for entry_type in entry_types:
                 if entry_type in body_words:
-                    if source == 'bibtex':
-                        print(name, entry_type)
                     entry_types.append(name)
                     break
 
@@ -126,7 +124,7 @@ class BibData(OrderedDict):
     def update_biblatex(self):
         if not self.texmf_dist:
             return
-        source = "biblatex"
+        source = 'biblatex'
         biblatex_path = os.path.join(self.texmf_dist, 'tex', 'latex',
                                      'biblatex')
         with open(os.path.join(biblatex_path, 'blx-dm.def')) as f:
@@ -211,9 +209,10 @@ class BibData(OrderedDict):
                     value['type'] = alias['type']
 
     def check_csl_schema(self):
-        csl_data_path = '../schema/schemas/input/csl-data.json'
+        csl_data_path = './schema/csl-data.json'  # v1.0.1
+        # csl_data_path = './schema/schemas/input/csl-data.json'  # v1.0.2+
         if not os.path.exists(csl_data_path):
-            warnings.warn(f'Invalid path "{csl_data_path}".')
+            warnings.warn(f'Invalid schema path "{csl_data_path}".')
             return
         with open(csl_data_path) as f:
             csl_data = json.load(f)
@@ -223,23 +222,38 @@ class BibData(OrderedDict):
         # csl_1_1_fields = csl_1_1_data['definitions']['refitem']['properties'].keys()
 
         for category in ['types', 'fields']:
-            if category == "types":
+            if category == 'types':
                 csl_fields = csl_data['items']['properties']['type']['enum']
-            elif category == "fields":
+                # Fix a typo
+                if csl_fields[8] == 'dateset':
+                    csl_fields[8] = 'dataset'
+            elif category == 'fields':
                 csl_fields = csl_data['items']['properties'].keys()
+
+            csl_mapped_fields = dict()
+            for field in csl_fields:
+                csl_mapped_fields[field] = False
 
             for field, value in self[category].items():
                 if 'csl' not in value:
                     print(f'Empty CSL mapping in "{field}".')
                     continue
                 target = value['csl']
+                csl_mapped_fields[target] = True
 
                 if target and target not in csl_fields:
-                    if category == "types":
+                    if category == 'types':
                         print(f'Invalid CSL type "{target}".')
-                    elif category == "fields":
-                        print(f'Invalid CSL field "{target}".')
+                    # elif category == 'fields':
+                    #     print(f'Invalid CSL field "{target}".')
 
+            # # Check unmapped CSL fields.
+            # for field, mapped in csl_mapped_fields.items():
+            #     if not mapped:
+            #         if category == 'types':
+            #             print(f'CSL type "{field}" not mapped.')
+            #         elif category == 'fields':
+            #             print(f'CSL field "{field}" not mapped.')
 
     def sort_keys(self):
         self['types'] = OrderedDict(sorted(self['types'].items()))
@@ -260,12 +274,17 @@ class BibData(OrderedDict):
             res += '\nBib|CSL|Notes\n-|-|-\n'
 
             for field, contents in self[category].items():
+                if contents['source'] not in ['bibtex', 'biblatex']:
+                    continue
                 if re.match(
                         r'(custom[a-f]|editor[a-c]|editor[a-c]type|name[a-c]|name[a-c]type|list[a-f]|user[a-f]|verb[a-c])',
                         field):
                     continue
 
-                field = f"`@{field}`"
+                if category == 'types':
+                    field = f"`@{field}`"
+                else:
+                    field = f"`{field}`"
                 target = contents['csl']
                 if not target:
                     target = '-'
@@ -277,7 +296,7 @@ class BibData(OrderedDict):
                     notes = ''
                 if 'alias' in contents:
                     alias = contents['alias']
-                    if category == "types":
+                    if category == 'types':
                         alias = '@' + alias
                     notes = f'Alias for `{alias}`. ' + notes
                 notes = notes.strip()
@@ -301,7 +320,7 @@ if __name__ == '__main__':
 
     bib_data.check_csl_schema()
     bib_data.sort_keys()
-    # bib_data.export_markdown()
+    bib_data.export_markdown()
 
     with open(bib_data_path, 'w') as f:
         json.dump(bib_data, f, indent=4)

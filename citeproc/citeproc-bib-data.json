@@ -6,12 +6,13 @@
             "source": "jurabib.bst"
         },
         "archive": {
-            "csl": "collection",
+            "csl": "book",
+            "notes": "Will be mapped to `collection` in CSL v1.0.2.",
             "source": "gbt7714-numerical.bst"
         },
         "article": {
             "csl": "article-journal",
-            "notes": "May also be `article-journal`, `article-magazine` or `article-newspaper` depending upon the field `entrysubtype`.",
+            "notes": "May also be `article-magazine` or `article-newspaper` depending upon the field `entrysubtype`.",
             "source": "bibtex"
         },
         "artifactdataset": {
@@ -225,7 +226,7 @@
         },
         "legislation": {
             "csl": "legislation",
-            "notes": "\"Laws, bills, legislative proposals, and similar things.\" The `bill` in CSL is used for a proposed piece of legislation.",
+            "notes": "\"Laws, bills, legislative proposals, and similar things.\" May also be `bill`",
             "source": "biblatex"
         },
         "letter": {
@@ -263,8 +264,8 @@
             "source": "achicago.bst"
         },
         "misc": {
-            "csl": "document",
-            "notes": "A catch-all category for items not belonging to other types",
+            "csl": null,
+            "notes": "Will be mapped to `document` in CSL v1.0.2.",
             "source": "bibtex"
         },
         "monograph": {
@@ -300,7 +301,7 @@
             "source": "biblatex"
         },
         "news": {
-            "csl": null,
+            "csl": "article-newspaper",
             "source": "seuthesix.bst"
         },
         "newspaper": {
@@ -320,11 +321,13 @@
             "source": "biblatex"
         },
         "performance": {
-            "csl": "performance",
+            "csl": null,
+            "notes": "Will be mapped to `performance` in CSL v1.0.2.",
             "source": "biblatex"
         },
         "periodical": {
-            "csl": "periodical",
+            "csl": "book",
+            "notes": "Will be mapped to `periodical` in CSL v1.0.2.",
             "source": "biblatex"
         },
         "phdthesis": {
@@ -338,7 +341,7 @@
             "source": "bibtex"
         },
         "preprint": {
-            "csl": null,
+            "csl": "article",
             "source": "gbt7714-numerical.bst"
         },
         "presentation": {
@@ -376,11 +379,13 @@
             "source": "bestpapers-export.bst"
         },
         "software": {
-            "csl": "software",
+            "csl": "article",
+            "notes": "Will be mapped to `software` in CSL v1.0.2.",
             "source": "biblatex"
         },
         "standard": {
-            "csl": "standard",
+            "csl": "book",
+            "notes": "Will be mapped to `standard` in CSL v1.0.2.",
             "source": "biblatex"
         },
         "string": {
@@ -409,7 +414,8 @@
             "source": "bibtex"
         },
         "techstandard": {
-            "csl": null,
+            "csl": "book",
+            "notes": "Will be mapped to `standard` in CSL v1.0.2.",
             "source": "udesoftec.bst"
         },
         "thesis": {
@@ -429,7 +435,7 @@
             "source": "biblatex"
         },
         "webpage": {
-            "csl": null,
+            "csl": "webpage",
             "source": "IEEEtran.bst"
         },
         "www": {
@@ -525,7 +531,7 @@
         },
         "archiveprefix": {
             "alias": "eprinttype",
-            "csl": null,
+            "csl": "archive",
             "source": "biblatex",
             "type": "literal"
         },
@@ -890,6 +896,7 @@
         },
         "eprint": {
             "csl": null,
+            "notes": "Mapped to `PMID` if `eprinttype` is \"PubMed\".",
             "source": "biblatex",
             "type": "verbatim"
         },
@@ -903,7 +910,7 @@
             "source": "databib.bst"
         },
         "eprinttype": {
-            "csl": null,
+            "csl": "archive",
             "source": "biblatex",
             "type": "literal"
         },
@@ -932,12 +939,13 @@
             "source": "ChemCommun.bst"
         },
         "eventdate": {
-            "csl": null,
+            "csl": "event-date",
             "source": "biblatex",
             "type": "date"
         },
         "eventtitle": {
-            "csl": null,
+            "csl": "event",
+            "notes": "Will be mapped to `event-title` in CSL v1.0.2.",
             "source": "biblatex",
             "type": "literal"
         },
@@ -1047,7 +1055,7 @@
         },
         "howpublished": {
             "csl": null,
-            "notes": "Not supported.",
+            "notes": "Check if a URL is contained.",
             "source": "bibtex",
             "type": "literal"
         },
@@ -1113,7 +1121,7 @@
             "type": "literal"
         },
         "isbn": {
-            "csl": null,
+            "csl": "ISBN",
             "source": "biblatex",
             "type": "literal"
         },
@@ -1140,7 +1148,7 @@
             "type": "literal"
         },
         "issn": {
-            "csl": null,
+            "csl": "ISSN",
             "source": "biblatex",
             "type": "literal"
         },
@@ -1347,11 +1355,11 @@
             "source": "apsrmpM.bst"
         },
         "media": {
-            "csl": null,
+            "csl": "medium",
             "source": "gost2003.bst"
         },
         "medium": {
-            "csl": null,
+            "csl": "medium",
             "source": "gbt7714-numerical.bst"
         },
         "meeting": {
@@ -1376,7 +1384,7 @@
         },
         "month": {
             "csl": null,
-            "notes": "Only used when `date` is empty.",
+            "notes": "Used only when `date` is empty.",
             "source": "bibtex",
             "type": "literal"
         },
@@ -1440,7 +1448,7 @@
             "source": "tugboat.bst"
         },
         "newspaper": {
-            "csl": null,
+            "csl": "container-title",
             "source": "seuthesix.bst"
         },
         "nickname": {
@@ -1511,12 +1519,12 @@
             "type": "literal"
         },
         "origdate": {
-            "csl": null,
+            "csl": "original-date",
             "source": "biblatex",
             "type": "date"
         },
         "originaladdress": {
-            "csl": null,
+            "csl": "original-publisher-place",
             "source": "apacite.bst"
         },
         "originalbooktitle": {
@@ -1544,7 +1552,7 @@
             "source": "apacite.bst"
         },
         "originalpublisher": {
-            "csl": null,
+            "csl": "original-publisher",
             "source": "apacite.bst"
         },
         "originalvolume": {
@@ -1552,7 +1560,7 @@
             "source": "apacite.bst"
         },
         "originalyear": {
-            "csl": null,
+            "csl": "original-date",
             "source": "apacite.bst"
         },
         "origlanguage": {
@@ -1561,17 +1569,17 @@
             "type": "key"
         },
         "origlocation": {
-            "csl": null,
+            "csl": "original-publisher-place",
             "source": "biblatex",
             "type": "literal"
         },
         "origpublisher": {
-            "csl": null,
+            "csl": "original-publisher",
             "source": "biblatex",
             "type": "literal"
         },
         "origtitle": {
-            "csl": null,
+            "csl": "original-title",
             "source": "biblatex",
             "type": "literal"
         },
@@ -1630,7 +1638,7 @@
             "source": "amsra.bst"
         },
         "pmcid": {
-            "csl": null,
+            "csl": "PMCID",
             "source": "apacite.bst"
         },
         "prebibitem": {
@@ -1814,7 +1822,7 @@
             "type": "literal"
         },
         "shortjournal": {
-            "csl": null,
+            "csl": "container-title-short",
             "source": "biblatex",
             "type": "literal"
         },
@@ -1828,7 +1836,7 @@
             "source": "jurabib.bst"
         },
         "shorttitle": {
-            "csl": null,
+            "csl": "title-short",
             "source": "biblatex",
             "type": "literal"
         },
@@ -2107,7 +2115,7 @@
             "source": "bookdb.bst"
         },
         "venue": {
-            "csl": null,
+            "csl": "event-place",
             "source": "biblatex",
             "type": "literal"
         },
@@ -2175,7 +2183,7 @@
         },
         "year": {
             "csl": null,
-            "notes": "Only used when `date` is empty.",
+            "notes": "Used only when `date` is empty.",
             "source": "bibtex",
             "type": "date"
         },
