@@ -27,6 +27,7 @@ function Text:render (item, context)
         res = tostring(res)
       end
       if variable_name == "page" or variable_name == "locator" then
+        res = util.lstrip(res)
         res = self:_format_page(res, context)
       end
     end

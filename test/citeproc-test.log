@@ -16,7 +16,7 @@ group                5       2       0       0
 integration         10       4       0       0
 label               13       6       0       0
 locale              23       0       0       0
-locator              4       2       0       0
+locator              5       1       0       0
 magic               27      13       0       0
 name                92      19       0       0
 nameattr            97       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              639     214       0       0
+(all)              640     213       0       0
 
 Failure → test-suite affix_CommaAfterQuote
 Passed in:
@@ -1219,12 +1219,6 @@ Passed in:
 (string) 'page 213 et 235'
 Expected:
 (string) 'pages 213 et 235'
-
-Failure → test-suite locator_WithLeadingSpace
-Passed in:
-(string) 'Hello Title: 666'
-Expected:
-(string) 'Hello Title:666'
 
 Failure → test-suite locator_WorkaroundTestForSubVerbo
 Passed in:
