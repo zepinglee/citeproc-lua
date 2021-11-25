@@ -14,9 +14,9 @@ form                 3       0       0       0
 fullstyles           4       1       0       0
 group                5       2       0       0
 integration         10       4       0       0
-label                9      10       0       0
+label               10       9       0       0
 locale              23       0       0       0
-locator              1       5       0       0
+locator              2       4       0       0
 magic               27      13       0       0
 name                92      19       0       0
 nameattr            97       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              629     224       0       0
+(all)              631     222       0       0
 
 Failure → test-suite affix_CommaAfterQuote
 Passed in:
@@ -1200,7 +1200,7 @@ Expected:
 Failure → test-suite label_CollapsedPageNumberPluralDetection
 Passed in:
 (string) 'His Anonymous Life, page 327\-30
-His Anonymous Life, page 427–430'
+His Anonymous Life, pages 427–430'
 Expected:
 (string) 'His Anonymous Life, page 327-30
 His Anonymous Life, pages 427–430'
@@ -1232,12 +1232,6 @@ Expected:
   <div class="csl-entry">Wolf, K. S. (2005). The future for Deaf individuals is not that bleak [Peer commentary, <i>Decrease of Deaf potential in a mainstreamed environment</i>, by W. C. Hall]. Retrieved from http://www.personalityresearch.org/papers/hall.html</div>
 </div>'
 
-Failure → test-suite label_PluralWithAmpersand
-Passed in:
-(string) 'page 213 &#38; 235'
-Expected:
-(string) 'pages 213 &#38; 235'
-
 Failure → test-suite label_PluralWithAnd
 Passed in:
 (string) 'page 213and'
@@ -1246,19 +1240,19 @@ Expected:
 
 Failure → test-suite label_PluralWithCommaAnd
 Passed in:
-(string) 'page 213, and235'
+(string) 'pages 213, and235'
 Expected:
 (string) 'pages 213, and 235'
 
 Failure → test-suite label_PluralWithCommaLocalizedAnd
 Passed in:
-(string) 'page 213, et235'
+(string) 'pages 213, et235'
 Expected:
 (string) 'pages 213, et 235'
 
 Failure → test-suite label_PluralWithLocalizedAmpersand
 Passed in:
-(string) 'page 213 &#38; 235'
+(string) 'pages 213 &#38; 235'
 Expected:
 (string) 'pages 213 AMPERSAND 235'
 
@@ -1268,21 +1262,15 @@ Passed in:
 Expected:
 (string) 'pages 213 et 235'
 
-Failure → test-suite locator_SimpleLocators
-Passed in:
-(string) 'Doe, Book A, 2000, p. 100–103; Roe, Book B, 2001, chap. 200–201.'
-Expected:
-(string) 'Doe, Book A, 2000, pp. 100–103; Roe, Book B, 2001, chaps. 200–201.'
-
 Failure → test-suite locator_SingularEmbeddedLabelAfterPlural
 Passed in:
-(string) 'Book One, page 367–368, fig.'
+(string) 'Book One, pages 367–368, fig.'
 Expected:
 (string) 'Book One, pages 367–368, fig. 333'
 
 Failure → test-suite locator_TrickyEntryForPlurals
 Passed in:
-(string) 'Book Title, p. vol., fol., 8April'
+(string) 'Book Title, pp. vol., fol., 8April'
 Expected:
 (string) 'Book Title, vol. 1, fol. 186, 8 April 1544'
 

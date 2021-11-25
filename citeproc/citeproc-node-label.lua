@@ -23,14 +23,17 @@ function Label:render (item, context)
     variable_name = context.options["variable"]
   end
 
-  if variable_name == "locator" then
-    variable_name = item.label or "page"
-  end
 
   local form = context.options["form"]
   local plural = context.options["plural"] or "contextual"
 
-  local term = self:get_term(variable_name, form)
+  local term
+  if variable_name == "locator" then
+    local locator_name = item.label or "page"
+    term = self:get_term(locator_name, form)
+  else
+    term = self:get_term(variable_name, form)
+  end
   local res = nil
   if term then
     if plural == "contextual" and self:_is_plural(variable_name, context) or plural == "always" then
