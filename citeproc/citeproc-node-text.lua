@@ -111,7 +111,7 @@ function Text:_format_page (page, context)
 end
 
 function Text:_format_range (str, format, range_delimiter)
-  local start, delimiter, stop = string.match(str, "(%w+)%s*(%-*)%s*(%S*)")
+  local start, delimiter, stop = string.match(str, "(%w+)%s*(%-+)%s*(%S*)")
   if not stop or stop == "" then
     return str
   end
