@@ -14,7 +14,7 @@ form                 3       0       0       0
 fullstyles           4       1       0       0
 group                5       2       0       0
 integration         10       4       0       0
-label               13       6       0       0
+label               14       5       0       0
 locale              23       0       0       0
 locator              6       0       0       0
 magic               27      13       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              642     211       0       0
+(all)              643     210       0       0
 
 Failure → test-suite affix_CommaAfterQuote
 Passed in:
@@ -1213,12 +1213,6 @@ Passed in:
 (string) 'pages 213 &#38; 235'
 Expected:
 (string) 'pages 213 AMPERSAND 235'
-
-Failure → test-suite label_PluralWithLocalizedAnd
-Passed in:
-(string) 'page 213 et 235'
-Expected:
-(string) 'pages 213 et 235'
 
 Failure → test-suite magic_CapitalizeFirstOccurringTerm
 Passed in:

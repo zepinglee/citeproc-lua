@@ -88,7 +88,7 @@ function Label:_is_plural (variable_name, context)
         -- "i–ix": true
         -- res = string.match(tostring(variable), "%d+%D+%d+") ~= nil
         res = true
-      elseif string.match(variable, "%Aand%A") then
+      elseif string.match(variable, "%Aand%A") or string.match(variable, "%Aet%A") then
         res = true
       else
         res = false
