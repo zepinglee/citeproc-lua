@@ -23,17 +23,36 @@ function Label:render (item, context)
     variable_name = context.options["variable"]
   end
 
-
   local form = context.options["form"]
   local plural = context.options["plural"] or "contextual"
 
+  if not context.names_element then
+    local variable_type = util.variable_types[variable_name]
+    -- variable must be or one of the number variables.
+    if variable_type ~= "number" then
+      return nil
+    end
+    -- The term is only rendered if the selected variable is non-empty
+    local variable = item[variable_name]
+    if not variable then
+      return nil
+    end
+    if type(variable) == "string" then
+      local first_word = string.match(variable, "^%S+")
+      if not util.is_numeric(first_word) then
+        return nil
+      end
+    end
+  end
+
   local term
   if variable_name == "locator" then
-    local locator_name = item.label or "page"
-    term = self:get_term(locator_name, form)
+    local locator_type = item.label or "page"
+    term = self:get_term(locator_type, form)
   else
     term = self:get_term(variable_name, form)
   end
+
   local res = nil
   if term then
     if plural == "contextual" and self:_is_plural(variable_name, context) or plural == "always" then
@@ -53,24 +72,27 @@ end
 function Label:_is_plural (variable_name, context)
   local variable_type = util.variable_types[variable_name]
   -- Don't use self:get_variable here
-  local value = context.item[variable_name]
+  local variable = context.item[variable_name]
   local res = false
   if variable_type == "name" then
     -- Label inside `names`
-    res = #value > 1
+    res = #variable > 1
 
   elseif variable_type == "number" then
     if util.startswith(variable_name, "number-of-") then
-      res = tonumber(value) > 1
-    elseif #util.split(tostring(value), "%s*[,&-]%s*") <= 1 then
-      -- check if contains multiple numbers
-      -- "i–ix": true
-      -- res = string.match(tostring(value), "%d+%D+%d+") ~= nil
-      res = false
-    elseif string.match(value, "\\%-") then
-      res = false
+      res = tonumber(variable) > 1
     else
-      res = true
+      variable = tostring(variable)
+      if #util.split(variable, "%s*[,&-]%s*") > 1 then
+        -- check if contains multiple numbers
+        -- "i–ix": true
+        -- res = string.match(tostring(variable), "%d+%D+%d+") ~= nil
+        res = true
+      elseif string.match(variable, "%Aand%A") then
+        res = true
+      else
+        res = false
+      end
     end
   else
     util.warning("Invalid attribute \"variable\".")

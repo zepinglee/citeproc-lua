@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                7       2       0       0
-bugreports          43      39       0       0
+bugreports          45      37       0       0
 collapse             4      17       0       0
 condition           17       0       0       0
 date                95       6       0       0
@@ -14,9 +14,9 @@ form                 3       0       0       0
 fullstyles           4       1       0       0
 group                5       2       0       0
 integration         10       4       0       0
-label               12       7       0       0
+label               13       6       0       0
 locale              23       0       0       0
-locator              3       3       0       0
+locator              4       2       0       0
 magic               27      13       0       0
 name                92      19       0       0
 nameattr            97       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              635     218       0       0
+(all)              639     214       0       0
 
 Failure → test-suite affix_CommaAfterQuote
 Passed in:
@@ -213,18 +213,6 @@ Expected:
 (string) 'Anne Tyler, George Smith, John Brown, and Cat Garfield, <i>Ladder of his’ Years</i>, vol. 2003 (New York: Ivy Books, 1997).
 Anne Tyler, George Smith, John Brown, and Cat Felix, <i>Ladder of his’ Years</i>, vol. 2003 (New York: Ivy Books, 1997).'
 
-Failure → test-suite bugreports_GreekStyleProblems
-Passed in:
-(string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Κώστας Καρυωτάκης, <i>Ποιήματα και πεζά</i>, μτφ. Andreas Dimitriadis, επιμ. Γ. Π. Σαββίδης, 1998, σ .'
-Expected:
-(string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Κώστας Καρυωτάκης, <i>Ποιήματα και πεζά</i>, μτφ. Andreas Dimitriadis, επιμ. Γ. Π. Σαββίδης, 1998.'
-
-Failure → test-suite bugreports_GreekStyleTwoEditors
-Passed in:
-(string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Γ. Π. Σαββίδης και Κώστας Καρυωτάκης (επιμ.), <i>Ποιήματα και πεζά</i>, μτφ. Andreas Dimitriadis, 1998, σ .'
-Expected:
-(string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Γ. Π. Σαββίδης και Κώστας Καρυωτάκης (επιμ.), <i>Ποιήματα και πεζά</i>, μτφ. Andreas Dimitriadis, 1998.'
-
 Failure → test-suite bugreports_LegislationCrash
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -246,6 +234,12 @@ Expected:
   <div class="csl-entry">Brown, J. 2006a, August. <b><i>Tijdschrift voor praktijkondersteuning</i></b>. http://dx.doi.org/10.1007/bf03074904.</div>
   <div class="csl-entry">Brown, J. 2006b, August. <b><i>Huisarts en Wetenschap</i></b>. http://dx.doi.org/10.1007/bf03084836.</div>
 </div>'
+
+Failure → test-suite bugreports_MovePunctuationInsideQuotesForLocator
+Passed in:
+(string) 'Jennifer J. Davis, “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830” (Ph.D. diss., Pennsylvania State University, History, 2004), “gargoyle.”'
+Expected:
+(string) 'Jennifer J. Davis, “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830” (Ph.D. diss., Pennsylvania State University, History, 2004), s.v. “gargoyle.”'
 
 Failure → test-suite bugreports_NoCaseEscape
 Passed in:
@@ -280,8 +274,8 @@ Expected:
 
 Failure → test-suite bugreports_OldMhraDisambiguationFailure
 Passed in:
-(string) '..[0] John Doe, <i>Book A</i>, 2000, p. , p. ; John Doe, <i>Book B</i>, 2000, p. , p. .
->>[1] Doe, Book A, p. , p. ; Doe, Book B, p. , p. .'
+(string) '..[0] John Doe, <i>Book A</i>, 2000; John Doe, <i>Book B</i>, 2000.
+>>[1] Doe, Book A; Doe, Book B.'
 Expected:
 (string) '>>[0] John Doe, <i>Book A</i>, 2000; John Doe, <i>Book B</i>, 2000.
 >>[1] Doe, Book A; Doe, Book B.'
@@ -334,18 +328,6 @@ Passed in:
 Expected:
 (string) '(Roe, 1995, 1996)'
 
-Failure → test-suite bugreports_StyleError001
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><i>Anonymous Journal</i>, p. .</div>
-  <div class="csl-entry"><i>Anonymous Journal One</i>.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><i>Anonymous Journal</i>.</div>
-  <div class="csl-entry"><i>Anonymous Journal One</i>.</div>
-</div>'
-
 Failure → test-suite bugreports_ThesisUniversityAppearsTwice
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -358,7 +340,7 @@ Expected:
 
 Failure → test-suite bugreports_UndefinedInName3
 Passed in:
-(string) 'B-X Kim and A-Y Kim, p. [accessed].
+(string) 'B-X Kim and A-Y Kim [accessed].
 Kim and Kim, p. 23.'
 Expected:
 (string) 'B-X Kim and A-Y Kim.
@@ -1193,7 +1175,7 @@ Expected:
 
 Failure → test-suite label_CollapsedPageNumberPluralDetection
 Passed in:
-(string) 'His Anonymous Life, page 327\-30
+(string) 'His Anonymous Life, 327\-30
 His Anonymous Life, pages 427–430'
 Expected:
 (string) 'His Anonymous Life, page 327-30
@@ -1226,12 +1208,6 @@ Expected:
   <div class="csl-entry">Wolf, K. S. (2005). The future for Deaf individuals is not that bleak [Peer commentary, <i>Decrease of Deaf potential in a mainstreamed environment</i>, by W. C. Hall]. Retrieved from http://www.personalityresearch.org/papers/hall.html</div>
 </div>'
 
-Failure → test-suite label_PluralWithAnd
-Passed in:
-(string) 'page 213 and 235'
-Expected:
-(string) 'pages 213 and 235'
-
 Failure → test-suite label_PluralWithLocalizedAmpersand
 Passed in:
 (string) 'pages 213 &#38; 235'
@@ -1243,12 +1219,6 @@ Passed in:
 (string) 'page 213 et 235'
 Expected:
 (string) 'pages 213 et 235'
-
-Failure → test-suite locator_TrickyEntryForPlurals
-Passed in:
-(string) 'Book Title, pp. vol. 1, fol. 186, 8 April 1544'
-Expected:
-(string) 'Book Title, vol. 1, fol. 186, 8 April 1544'
 
 Failure → test-suite locator_WithLeadingSpace
 Passed in:
@@ -1649,7 +1619,7 @@ Expected:
 
 Failure → test-suite number_PlainHyphenOrEnDashAlwaysPlural
 Passed in:
-(string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) pages i-ix (cs:text) vs His Anonymous Life (2) pages i-ix (cs:number); His Anonymous Life (3) page 3\-B (cs:text) vs His Anonymous Life (3) page 3\-B (cs:number); His Anonymous Life (4) pages Michaelson-Morely (cs:text) vs His Anonymous Life (4) pages Michaelson-Morely (cs:number); His Anonymous Life (4) pages Michaelson-Morely (cs:text) vs His Anonymous Life (4) pages Michaelson-Morely (cs:number)'
+(string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) i-ix (cs:text) vs His Anonymous Life (2) i-ix (cs:number); His Anonymous Life (3) 3\-B (cs:text) vs His Anonymous Life (3) 3\-B (cs:number); His Anonymous Life (4) Michaelson-Morely (cs:text) vs His Anonymous Life (4) Michaelson-Morely (cs:number); His Anonymous Life (4) Michaelson-Morely (cs:text) vs His Anonymous Life (4) Michaelson-Morely (cs:number)'
 Expected:
 (string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) pages i–ix (cs:text) vs His Anonymous Life (2) pages i–ix (cs:number); His Anonymous Life (3) page 3-B (cs:text) vs His Anonymous Life (3) page 3-B (cs:number); His Anonymous Life (4) page Michaelson-Morely (cs:text) vs His Anonymous Life (4) page Michaelson-Morely (cs:number)'
 
