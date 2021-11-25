@@ -114,8 +114,9 @@ end
 function Text:_format_range (str, format, range_delimiter)
   local start, delimiter, stop = string.match(str, "(%w+)%s*(%-+)%s*(%S*)")
   if not stop or stop == "" then
-    return str
+    return string.gsub(str, "\\%-", "-")
   end
+
 
   local start_prefix, start_num  = string.match(start, "(.-)(%d*)$")
   local stop_prefix, stop_num = string.match(stop, "(.-)(%d*)$")

@@ -20,39 +20,49 @@ How to distinguish a numeric style?
 
 ## Group suppressed
 
-
 - `variables_TitleShortOnShortTitleNoTitleCondition`
   This test is contrary to the spec.  The whole group should
   be suppressed because it contains variables but none are
   called. See https://github.com/citation-style-language/test-suite/issues/29
 - `variables_TitleShortOnShortTitleNoTitleCondition`
 
-## bugreports_UnisaHarvardInitialization
+
+## Varibles set in `note` field
+
+- label_NameLabelThroughSubstitute
+
+
+### bugreports_UnisaHarvardInitialization
 
 The expected output here includes a trailing space, which we delete.
 
 
-## flipflop_LeadingMarkupWithApostrophe
+### flipflop_LeadingMarkupWithApostrophe
 
 Quotation marks in the prefix of cite-item are not transformed to double style and the punctuation after is not moved into quotes.
 
 
-## label_PluralWithLocalizedAmpersand
+### label_EditorTranslator2
+
+The period in `“Hello there.”` should be moved inside quotation marks.
+
+
+### label_PluralWithLocalizedAmpersand
 
 The `<term name="and" form="symbol">` does not exist in any locale files.
 
 
-## name_AllCapsInitialsUntouched
+### name_AllCapsInitialsUntouched
 
 - Not initialized. It should be `<name initialized-with="." />`.
 
 
-## number_OrdinalSpacing
+### number_OrdinalSpacing
 
 Heuristics are used to render pages label.
 
 
-## number_PlainHyphenOrEnDashAlwaysPlural
+### number_PlainHyphenOrEnDashAlwaysPlural
 
 - The difference of cs:text and cs:name is not revealed.
   (Should it be `<number variable="page"/>`?)
@@ -66,6 +76,6 @@ Heuristics are used to render pages label.
   4a-5a or IIa-VIb.
 
 
-## position_IbidWithSuffix
+### position_IbidWithSuffix
 
 Name splitting issue.

@@ -14,7 +14,7 @@ form                 3       0       0       0
 fullstyles           4       1       0       0
 group                5       2       0       0
 integration         10       4       0       0
-label               14       5       0       0
+label               15       4       0       0
 locale              23       0       0       0
 locator              6       0       0       0
 magic               27      13       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              643     210       0       0
+(all)              644     209       0       0
 
 Failure → test-suite affix_CommaAfterQuote
 Passed in:
@@ -1173,14 +1173,6 @@ Passed in:
 Expected:
 (string) '>>[0] Smith (1986a); Smith (1986b); Smith (1986c); Smith (1986d)'
 
-Failure → test-suite label_CollapsedPageNumberPluralDetection
-Passed in:
-(string) 'His Anonymous Life, 327\-30
-His Anonymous Life, pages 427–430'
-Expected:
-(string) 'His Anonymous Life, page 327-30
-His Anonymous Life, pages 427–430'
-
 Failure → test-suite label_EditorTranslator1
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -1599,7 +1591,7 @@ Expected:
 
 Failure → test-suite number_PlainHyphenOrEnDashAlwaysPlural
 Passed in:
-(string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) i-ix (cs:text) vs His Anonymous Life (2) i-ix (cs:number); His Anonymous Life (3) 3\-B (cs:text) vs His Anonymous Life (3) 3\-B (cs:number); His Anonymous Life (4) Michaelson-Morely (cs:text) vs His Anonymous Life (4) Michaelson-Morely (cs:number); His Anonymous Life (4) Michaelson-Morely (cs:text) vs His Anonymous Life (4) Michaelson-Morely (cs:number)'
+(string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) i-ix (cs:text) vs His Anonymous Life (2) i-ix (cs:number); His Anonymous Life (3) page 3-B (cs:text) vs His Anonymous Life (3) page 3-B (cs:number); His Anonymous Life (4) Michaelson-Morely (cs:text) vs His Anonymous Life (4) Michaelson-Morely (cs:number); His Anonymous Life (4) Michaelson-Morely (cs:text) vs His Anonymous Life (4) Michaelson-Morely (cs:number)'
 Expected:
 (string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) pages i–ix (cs:text) vs His Anonymous Life (2) pages i–ix (cs:number); His Anonymous Life (3) page 3-B (cs:text) vs His Anonymous Life (3) page 3-B (cs:number); His Anonymous Life (4) page Michaelson-Morely (cs:text) vs His Anonymous Life (4) page Michaelson-Morely (cs:number)'
 

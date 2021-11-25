@@ -38,8 +38,7 @@ function Label:render (item, context)
       return nil
     end
     if type(variable) == "string" then
-      local first_word = string.match(variable, "^%S+")
-      if not util.is_numeric(first_word) then
+      if not (string.match(variable, "^%d") or util.is_numeric(variable)) then
         return nil
       end
     end
@@ -83,6 +82,7 @@ function Label:_is_plural (variable_name, context)
       res = tonumber(variable) > 1
     else
       variable = tostring(variable)
+      variable = string.gsub(variable, "\\%-", "")
       if #util.split(variable, "%s*[,&-]%s*") > 1 then
         -- check if contains multiple numbers
         -- "i–ix": true
