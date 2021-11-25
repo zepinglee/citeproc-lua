@@ -24,7 +24,7 @@ function Label:render (item, context)
   end
 
   if variable_name == "locator" then
-    variable_name = "page"
+    variable_name = item.label or "page"
   end
 
   local form = context.options["form"]

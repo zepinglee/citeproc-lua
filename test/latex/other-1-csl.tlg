@@ -20,7 +20,7 @@ Package csl Warning: Citation `ITEM-1, ITEM-2' on page 1 undefined on line ....
 l. ...}
 ============================================================
 ============================================================
-TEST 3: Citation with implicit page locator
+TEST 3: Citation with page locator
 ============================================================
 Package csl Warning: Citation `ITEM-1' on page 1 undefined on line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
@@ -28,7 +28,7 @@ Package csl Warning: Citation `ITEM-1' on page 1 undefined on line ....
 l. ...}
 ============================================================
 ============================================================
-TEST 4: Citation with prefix and suffix
+TEST 4: Citation with section locator
 ============================================================
 Package csl Warning: Citation `ITEM-1' on page 1 undefined on line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
@@ -36,7 +36,7 @@ Package csl Warning: Citation `ITEM-1' on page 1 undefined on line ....
 l. ...}
 ============================================================
 ============================================================
-TEST 5: Citation with suffix
+TEST 5: Citation with implicit page locator
 ============================================================
 Package csl Warning: Citation `ITEM-1' on page 1 undefined on line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
@@ -44,7 +44,23 @@ Package csl Warning: Citation `ITEM-1' on page 1 undefined on line ....
 l. ...}
 ============================================================
 ============================================================
-TEST 6: Citation with prefix
+TEST 6: Citation with prefix and suffix
+============================================================
+Package csl Warning: Citation `ITEM-1' on page 1 undefined on line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 7: Citation with suffix
+============================================================
+Package csl Warning: Citation `ITEM-1' on page 1 undefined on line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 8: Citation with prefix
 ============================================================
 Package csl Warning: Citation `ITEM-1' on page 1 undefined on line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
@@ -53,7 +69,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 7: Bibilography
+TEST 9: Bibilography
 ============================================================
 Package csl Warning: No file other-1-csl.bbl.
 TRUE

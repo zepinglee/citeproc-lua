@@ -242,7 +242,7 @@
         \tl_put_right:NV \l__csl_prefix_tl \l__csl_prefix_separator_tl
         \prop_put:NnV \l__csl_cite_item_prop { prefix } { \l__csl_prefix_tl }
       }
-    \tl_if_in:nnTF { = } { #2 }
+    \tl_if_in:nnTF { #2 } { = }
       {
         \keys_set:nn { csl / cite-item } { #2 }
       }

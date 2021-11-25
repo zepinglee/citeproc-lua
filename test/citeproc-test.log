@@ -16,7 +16,7 @@ group                5       2       0       0
 integration         10       4       0       0
 label                9      10       0       0
 locale              23       0       0       0
-locator              0       6       0       0
+locator              1       5       0       0
 magic               27      13       0       0
 name                92      19       0       0
 nameattr            97       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       3       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              628     225       0       0
+(all)              629     224       0       0
 
 Failure → test-suite affix_CommaAfterQuote
 Passed in:
@@ -249,7 +249,7 @@ Expected:
 
 Failure → test-suite bugreports_MovePunctuationInsideQuotesForLocator
 Passed in:
-(string) 'Jennifer J. Davis, “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830” (Ph.D. diss., Pennsylvania State University, History, 2004), p. gargoyle".'
+(string) 'Jennifer J. Davis, “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830” (Ph.D. diss., Pennsylvania State University, History, 2004), s.v. gargoyle".'
 Expected:
 (string) 'Jennifer J. Davis, “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830” (Ph.D. diss., Pennsylvania State University, History, 2004), s.v. “gargoyle.”'
 
@@ -1183,7 +1183,7 @@ Failure → test-suite integration_IbidWithDifferentLocators
 Passed in:
 (string) '..[0] (Doe p. 12)
 ..[1] (ibid.)
-..[2] (Roe p. 20)
+..[2] (Roe bk. 20)
 >>[3] (ibid.)'
 Expected:
 (string) '..[0] (Doe p. 12)
@@ -1270,7 +1270,7 @@ Expected:
 
 Failure → test-suite locator_SimpleLocators
 Passed in:
-(string) 'Doe, Book A, 2000, p. 100–103; Roe, Book B, 2001, p. 200–201.'
+(string) 'Doe, Book A, 2000, p. 100–103; Roe, Book B, 2001, chap. 200–201.'
 Expected:
 (string) 'Doe, Book A, 2000, pp. 100–103; Roe, Book B, 2001, chaps. 200–201.'
 
@@ -1279,12 +1279,6 @@ Passed in:
 (string) 'Book One, page 367–368, fig.'
 Expected:
 (string) 'Book One, pages 367–368, fig. 333'
-
-Failure → test-suite locator_TermSelection
-Passed in:
-(string) 'Book A, p. 101'
-Expected:
-(string) 'Book A, fol. 101'
 
 Failure → test-suite locator_TrickyEntryForPlurals
 Passed in:
