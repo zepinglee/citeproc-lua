@@ -6,7 +6,7 @@ TEST 1: Single cite item in a citation
 ============================================================
 \g__csl_citation_count_ITEM-1_int=\count...
 Package csl Warning: Citation `ITEM-1' on page 1 undefined on line ....
-> \l__csl_citation_tl=\reset@font [\textbf {ITEM-1}].
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
 l. ...}
 ============================================================
@@ -14,8 +14,8 @@ l. ...}
 TEST 2: Multiple cite items in a citation
 ============================================================
 \g__csl_citation_count_ITEM-1,ITEM-2_int=\count...
-Package csl Warning: Citation `ITEM-1,ITEM-2' on page 1 undefined on line ....
-> \l__csl_citation_tl=\reset@font [\textbf {ITEM-1,ITEM-2}].
+Package csl Warning: Citation `ITEM-1, ITEM-2' on page 1 undefined on line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1, ITEM-2}].
 <recently read> }
 l. ...}
 ============================================================
@@ -23,7 +23,7 @@ l. ...}
 TEST 3: Citation with implicit page locator
 ============================================================
 Package csl Warning: Citation `ITEM-1' on page 1 undefined on line ....
-> \l__csl_citation_tl=\reset@font [\textbf {ITEM-1}].
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
 l. ...}
 ============================================================
@@ -31,7 +31,7 @@ l. ...}
 TEST 4: Citation with prefix and suffix
 ============================================================
 Package csl Warning: Citation `ITEM-1' on page 1 undefined on line ....
-> \l__csl_citation_tl=\reset@font [\textbf {ITEM-1}].
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
 l. ...}
 ============================================================
@@ -39,7 +39,7 @@ l. ...}
 TEST 5: Citation with suffix
 ============================================================
 Package csl Warning: Citation `ITEM-1' on page 1 undefined on line ....
-> \l__csl_citation_tl=\reset@font [\textbf {ITEM-1}].
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
 l. ...}
 ============================================================
@@ -47,27 +47,13 @@ l. ...}
 TEST 6: Citation with prefix
 ============================================================
 Package csl Warning: Citation `ITEM-1' on page 1 undefined on line ....
-> \l__csl_citation_tl=\reset@font [\textbf {ITEM-1}].
-<recently read> }
-l. ...}
-============================================================
-============================================================
-TEST 7: Item in bibliography but no citation
-============================================================
-> \l__csl_citation_tl=.
-<recently read> }
-l. ...}
-============================================================
-============================================================
-TEST 8: All items in bibliography but no citations
-============================================================
-> \l__csl_citation_tl=.
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
 l. ...}
 ============================================================
 )
 ============================================================
-TEST 9: Bibilography
+TEST 7: Bibilography
 ============================================================
 Package csl Warning: No file other-1-bibstyle.bbl.
 TRUE

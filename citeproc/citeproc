@@ -75,7 +75,7 @@ end
 local function read_aux_file(aux_file)
   local bib_style = nil
   local bib_files = {}
-  local raw_citations = {}
+  local citations = {}
   local csl_options = {}
 
   local file = io.open(aux_file, "r")
@@ -97,7 +97,8 @@ local function read_aux_file(aux_file)
       else
         match = string.match(line, "^\\citation%s*(%b{})")
         if match then
-          table.insert(raw_citations, string.sub(match, 2, -2))
+          local citation = core.make_citation(string.sub(match, 2, -2))
+          table.insert(citations, citation)
         else
           match = string.match(line, "^\\csloptions%s*(%b{})")
           if match then
@@ -111,106 +112,41 @@ local function read_aux_file(aux_file)
   end
   file:close()
 
-  return bib_style, bib_files, raw_citations, csl_options
+  return bib_style, bib_files, citations, csl_options
 end
 
 
-local function make_citation(str)
-  -- str is like "{prefix }{ suffix}{key1,key2}"
-  local arguments = {}
-  for argument in string.gmatch(str, "(%b{})") do
-    table.insert(arguments, string.sub(argument, 2, -2))
-  end
-  if #arguments ~= 3 then
-    error(string.format('Invalid citation "%s"', str))
-    return nil
-  end
-  local prefix, suffix, keys = table.unpack(arguments)
-
-  local cite_items = {}
-  for key in string.gmatch(keys, "([^,%s]+)") do
-    if key ~= "*" then
-      table.insert(cite_items, {id = key})
-    end
-  end
-  if #cite_items == 0 then
-    return cite_items
-  end
-
-  if prefix ~= "" then
-    cite_items[1].prefix = prefix
-  end
-  if suffix ~= "" then
-    if string.match(suffix, "^%s*%d+$") then
-      cite_items[1].locator = tonumber(suffix)
-    else
-      cite_items[1].suffix = suffix
-    end
-  end
-
-  return cite_items
-end
-
-
-local function make_citations(raw_citations)
-  local citations = {}
-  for _, str in ipairs(raw_citations) do
-    local citation = make_citation(str)
-    table.insert(citations, citation)
-  end
-  return citations
-end
-
-local function get_citation_ids(citations)
-  local ids = {}
-  local loaded = {}
-  for _, cite_items in ipairs(citations) do
-    for _, item in ipairs(cite_items) do
-      local id = item.id
-      if not loaded[id] then
-        table.insert(ids, id)
-        loaded[id] = true
-      end
-    end
-  end
-  return ids
-end
-
-local function process_citations(aux_file)
+local function process_aux_file(aux_file)
   if not util.endswith(aux_file, ".aux") then
     aux_file = aux_file .. ".aux"
   end
 
-  local style_name, bib_files, raw_citations, csl_options = read_aux_file(aux_file)
+  local style_name, bib_files, citations, csl_options = read_aux_file(aux_file)
 
   local locale = csl_options.locale
   local force_locale = csl_options["force_locale"] ~= "false"
 
   local engine = core.init(style_name, bib_files, locale, force_locale)
+  local style_class = engine:get_style_class()
 
-  local citations = make_citations(raw_citations)
-  local ids = get_citation_ids(citations)
-  engine:updateItems(ids)
+  local citation_strings = core.process_citations(engine, citations)
+
+  local output_string = ""
+
+  for _, citation in ipairs(citations) do
+    local citation_id = citation.citationID
+    local citation_str = citation_strings[citation_id]
+    output_string = output_string .. string.format("\\cslcite{%s}{{%s}{%s}}\n", citation_id, style_class, citation_str)
+  end
+
+  output_string = output_string .. "\n"
+
+  local result = core.make_bibliography(engine)
+  output_string = output_string .. result
 
   local output_path = string.gsub(aux_file, "%.aux$", ".bbl")
   local bbl_file = io.open(output_path, "w")
-  for _, citation in ipairs(citations) do
-    if #citation > 0 then
-      -- #citation == 0 in the case of `\nocite{*}`
-      local res = engine:makeCitationCluster(citation)
-      local citation_ids = {}
-      for _, cite_item in ipairs(citation) do
-        table.insert(citation_ids, cite_item.id)
-      end
-      citation_ids = table.concat(citation_ids, ",")
-      bbl_file:write(string.format("\\cslcite{%s}{%s}\n", citation_ids, res))
-    end
-  end
-  bbl_file:write("\n")
-
-  local result = core.make_bibliography(engine)
-  bbl_file:write(result)
-
+  bbl_file:write(output_string)
   bbl_file:close()
 end
 
@@ -241,7 +177,7 @@ local function main()
   if util.endswith(path, ".bib") then
     convert_bib(path, output_path)
   else
-    process_citations(path)
+    process_aux_file(path)
   end
 
 end

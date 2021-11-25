@@ -1,18 +1,3 @@
--- function csl.init(style_name, bib_data, locale, force_locale)
--- function csl.cite(prefix, suffix, keys)
--- function csl.register_items(keys)
--- function csl.bibliography()
-
--- local function convert_bib(path, output_path)
--- local function read_aux_file(aux_file)
-
--- local function make_citation(str)
--- local function make_citations(raw_citations)
--- local function get_citation_ids(citations)
--- local function process_citations(aux_file)
--- local function main()
-
-
 local core = {}
 
 local citeproc = require("citeproc")
@@ -124,6 +109,92 @@ function core.init(style_name, bib_files, locale, force_locale)
   local citeproc_sys = core.make_citeproc_sys(bib_files)
   local engine = citeproc.new(citeproc_sys, style, locale, force_locale)
   return engine
+end
+
+
+function core.make_citation(citation_info)
+  -- `citation_info`: "{ITEM-1@2}{{id={ITEM-1},label={page},locator={6}}}{3}"
+  local arguments = {}
+  for argument in string.gmatch(citation_info, "(%b{})") do
+    table.insert(arguments, string.sub(argument, 2, -2))
+  end
+  if #arguments ~= 3 then
+    error(string.format('Invalid citation "%s"', citation_info))
+    return nil
+  end
+  local citation_id, cite_items_str, note_index = table.unpack(arguments)
+
+  local cite_items = {}
+  for item_str in string.gmatch(cite_items_str, "(%b{})") do
+    item_str = string.sub(item_str, 2, -2)
+    local cite_item = {}
+    for key, value in string.gmatch(item_str, "([%w%-]+)=(%b{})") do
+      if key == "sub-verbo" then
+        key = "sub verbo"
+      end
+      value = string.sub(value, 2, -2)
+      cite_item[key] = value
+    end
+    table.insert(cite_items, cite_item)
+  end
+
+  local citation = {
+    citationID = citation_id,
+    citationItems = cite_items,
+    properties = {
+      noteIndex = tonumber(note_index),
+    },
+  }
+
+  return citation
+end
+
+
+function core.process_citations(engine, citations)
+  local citations_pre = {}
+  local citations_post = {}
+
+  for _, citation in ipairs(citations) do
+    table.insert(citations_post, {citation.citationID, citation.properties.noteIndex})
+  end
+
+  -- Should be removed in future.
+  local ids = core.get_cite_item_ids(citations)
+  engine:updateItems(ids)
+
+  local citation_strings = {}
+
+  for i, citation in ipairs(citations) do
+    table.remove(citations_post, 1)
+
+    local res = engine:processCitationCluster(citation, citations_pre, citations_post)
+
+    for _, citation_res in ipairs(res[2]) do
+      local citation_str = citation_res[2]
+      local citation_id = citation_res[3]
+      citation_strings[citation_id] = citation_str
+    end
+
+    citations_pre[i] = {citation.citationID, citation.properties.noteIndex}
+  end
+
+  return citation_strings
+end
+
+
+function core.get_cite_item_ids(citations)
+  local ids = {}
+  local loaded = {}
+  for _, citation in ipairs(citations) do
+    for _, cite_item in ipairs(citation.citationItems) do
+      local id = cite_item.id
+      if not loaded[id] then
+        table.insert(ids, id)
+        loaded[id] = true
+      end
+    end
+  end
+  return ids
 end
 
 

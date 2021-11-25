@@ -253,6 +253,10 @@ function CiteProc.set_base_class (node)
   end
 end
 
+function CiteProc:get_style_class()
+  return self.style:get_attribute("class") or "in-text"
+end
+
 function CiteProc:get_item (id)
   local item = self.registry.registry[id]
   if not item then
