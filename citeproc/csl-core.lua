@@ -152,11 +152,6 @@ end
 
 function core.process_citations(engine, citations)
   local citations_pre = {}
-  local citations_post = {}
-
-  for _, citation in ipairs(citations) do
-    table.insert(citations_post, {citation.citationID, citation.properties.noteIndex})
-  end
 
   -- Should be removed in future.
   local ids = core.get_cite_item_ids(citations)
@@ -165,9 +160,7 @@ function core.process_citations(engine, citations)
   local citation_strings = {}
 
   for i, citation in ipairs(citations) do
-    table.remove(citations_post, 1)
-
-    local res = engine:processCitationCluster(citation, citations_pre, citations_post)
+    local res = engine:processCitationCluster(citation, citations_pre, {})
 
     for _, citation_res in ipairs(res[2]) do
       local citation_str = citation_res[2]

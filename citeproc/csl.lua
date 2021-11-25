@@ -13,7 +13,6 @@ local core = require("csl-core")
 csl.initialized = "false"
 csl.citations = {}
 csl.citations_pre = {}
-csl.citations_post = {}
 -- csl.ids = {}
 -- csl.loaded_ids = {}
 -- csl.include_all_items = false
@@ -53,10 +52,6 @@ function csl.init(style_name, bib_files, locale, force_locale)
     tex.sprint(bibcite_command)
   end
 
-  for i, citation in ipairs(csl.citations) do
-    csl.citations_post[i] = {citation.citationID, citation.properties.noteIndex}
-  end
-
 end
 
 
@@ -73,11 +68,7 @@ function csl.cite(citation_info)
 
   local citation = core.make_citation(citation_info)
 
-  if csl.citations_post[1] and csl.citations_post[1][1] == citation.citationID then
-    table.remove(csl.citations_post, 1)
-  end
-
-  local res = csl.engine:processCitationCluster(citation, csl.citations_pre, csl.citations_post)
+  local res = csl.engine:processCitationCluster(citation, csl.citations_pre, {})
 
   local citation_str
   for _, citation_res in ipairs(res[2]) do
