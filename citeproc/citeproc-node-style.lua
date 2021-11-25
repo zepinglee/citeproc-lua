@@ -160,7 +160,29 @@ function Bibliography:render (items, context)
   -- Already sorted in CiteProc:sort_bibliography()
 
   local layout = self:get_child("layout")
-  return layout:render(items, context)
+  local res = layout:render(items, context)
+
+  local params = res[1]
+
+  params.entryspacing = context.options["entry-spacing"]
+  params.linespacing = context.options["line-spacing"]
+  params.hangingindent = context.options["hanging-indent"]
+  params["second-field-align"] = context.options["second-field-align"]
+  for _, key in ipairs({"bibstart", "bibend"}) do
+    local value = context.engine.formatter[key]
+    if type(value) == "function" then
+      value = value(context)
+    end
+    params[key] = value
+  end
+
+  params.bibliography_errors = {}
+  params.entry_ids = {}
+  for _, item in ipairs(items) do
+    table.insert(params.entry_ids, item.id)
+  end
+
+  return res
 end
 
 style.Style = Style

@@ -25,6 +25,7 @@ Element.option_type = {
   ["near-note-distance"] = "integer",
   ["near"] = "integer",
   ["line-spacing"] = "integer",
+  ["entry-spacing"] = "integer",
   ["names-min"] = "integer",
   ["names-use-first"] = "integer",
   ["limit-day-ordinals-to-day-1"] = "boolean",

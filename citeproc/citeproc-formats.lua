@@ -76,7 +76,7 @@ formats.latex = {
     return str
   end,
   ["bibstart"] = function (context)
-    return string.format("\\begin{thebibliography}{%s}\n", context.longest_label)
+    return string.format("\\begin{thebibliography}{%s}\n", context.build.longest_label)
   end,
   ["bibend"] = "\\end{thebibliography}",
   ["@font-style/normal"] = "{\\normalshape %%STRING%%}",
@@ -102,8 +102,6 @@ formats.latex = {
     local close_quote = context.style:get_term("close-inner-quote"):render(context)
     return open_quote .. str .. close_quote
   end,
-  -- TODO: The bibliography label (e.g., citation-number) should be put in the
-  -- optional argument of `\bibitem`.
   ["@bibliography/entry"] = function (str, context)
     if not string.match(str, "\\bibitem") then
       str =  "\\bibitem{".. context.item.id .. "}\n" .. str
@@ -114,8 +112,8 @@ formats.latex = {
     return str
   end,
   ["@display/left-margin"] = function (str, state)
-    if #str > #state.longest_label then
-      state.longest_label = str
+    if #str > #state.build.longest_label then
+      state.build.longest_label = str
     end
     if string.match(str, "%]") then
       str = "{" .. str .. "}"

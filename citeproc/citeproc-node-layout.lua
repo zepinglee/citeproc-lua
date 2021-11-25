@@ -13,7 +13,7 @@ function Layout:render (items, context)
   -- When used within cs:citation, the delimiter attribute may be used to specify a delimiter for cites within a citation.
   -- Thus the processing of context is put after render_children().
   if context.mode == "bibliography" then
-    context.longest_label = ""
+    context.build.longest_label = ""
     context.build.preceding_first_rendered_names = nil
     context = self:process_context(context)
   end
@@ -113,14 +113,9 @@ function Layout:render (items, context)
     return res
 
   else
-    local params = {}
-    for _, key in ipairs({"bibstart", "bibend"}) do
-      local value = context.engine.formatter[key]
-      if type(value) == "function" then
-        value = value(context)
-      end
-      params[key] = value
-    end
+    local params = {
+      maxoffset = #context.build.longest_label,
+    }
 
     return {params, output}
   end

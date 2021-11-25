@@ -19,6 +19,8 @@
 
 \START
 
+% See https://github.com/zepinglee/citeproc-lua/issues/6
+
 \TEST{Unicode apostrophe}{
   \cite{ITEM-1}
   \showcitation

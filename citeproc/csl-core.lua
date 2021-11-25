@@ -206,6 +206,22 @@ function core.make_bibliography(engine)
 
   local res = ""
 
+  local bib_options = ""
+  if params["hangingindent"] then
+    bib_options = bib_options .. "\n  hanging-indent = true,"
+  end
+  if params["linespacing"] then
+    bib_options = bib_options .. string.format("\n  line-spacing = %d,", params["linespacing"])
+  end
+  if params["entryspacing"] then
+    bib_options = bib_options .. string.format("\n  entry-spacing = %d,", params["entryspacing"])
+  end
+
+  if bib_options ~= "" then
+    bib_options = "\\cslsetup{" .. bib_options .. "\n}\n\n"
+    res = res .. bib_options
+  end
+
   if params.bibstart then
     res = res .. params.bibstart
   end

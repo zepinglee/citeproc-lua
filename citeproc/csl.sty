@@ -338,6 +338,11 @@
 \tl_new:N \l__csl_suffix_separator_tl
 \tl_new:N \l__csl_locale_tl
 \bool_new:N \l__csl_force_locale_bool
+\bool_new:N \l__csl_hanging_indent_bool
+\tl_new:N \l__csl_line_spacing_tl
+\tl_new:N \l__csl_entry_spacing_tl
+\tl_new:N \l__csl_bib_hang_tl
+\tl_new:N \l__csl_bib_sep_tl
 
 \keys_define:nn { csl }
   {
@@ -347,12 +352,20 @@
     suffix-separator .tl_set:N = \l__csl_suffix_separator_tl ,
     locale .tl_set:N = \l__csl_locale_tl ,
     force-locale .bool_set:N = \l__csl_force_locale_bool ,
+    hanging-indent .bool_set:N = \l__csl_hanging_indent_bool ,
+    line-spacing .tl_set:N = \l__csl_line_spacing_tl ,
+    entry-spacing .tl_set:N = \l__csl_entry_spacing_tl ,
+    bib-hang .tl_set:N = \l__csl_bib_hang_tl ,
+    bib-sep .tl_set:N = \l__csl_bib_sep_tl ,
   }
 
 \keys_set:nn { csl }
   {
     prefix-separator = { ~ } ,
     suffix-separator = { , ~ } ,
+    bib-hang = { 1 em } ,
+    line-spacing = { 1 } ,
+    entry-spacing = { 1 } ,
   }
 
 \bool_new:N \l__csl_engine_initialized_bool
@@ -588,5 +601,130 @@
 % CSL outputs the whole label thus the brackets are removed from \@biblabel
 % \def\@biblabel#1{[#1]}
 \cs_set:Npn \@biblabel #1 { #1 }
+
+
+\cs_if_exist:cTF { chapter }
+  {
+    \cs_set:Nn \csl_bib_section:
+      {
+        \chapter *
+          {
+            \bibname
+            \@mkboth
+              { \MakeUppercase { \bibname } }
+              { \MakeUppercase { \bibname } }
+          }
+      }
+  }
+  {
+    \cs_set:Nn \csl_bib_section:
+      {
+        \section *
+          {
+            \refname
+            \@mkboth
+              { \MakeUppercase { \refname } }
+              { \MakeUppercase { \refname } }
+          }
+      }
+  }
+
+\tl_new:N \l__csl_bib_preamble_tl
+
+\tl_new:N \l__csl_bib_postamble_tl
+
+\tl_new:N \l__csl_bib_font_tl
+
+\dim_new:N \l__csl_bib_hang_dim
+\skip_new:N \l__csl_bib_sep_skip
+
+\cs_new:Npn \csl_set_bib_label_spacing:n #1
+  {
+    \bool_if:NTF \l__csl_hanging_indent_bool
+      {
+        \dim_set:Nn \l__csl_bib_hang_dim { \l__csl_bib_hang_tl }
+        \dim_set_eq:NN \leftmargin \l__csl_bib_hang_dim
+        \dim_set:Nn \itemindent { - \leftmargin }
+      }
+      {
+        \settowidth \labelwidth { \@biblabel { #1 } }
+        \dim_set_eq:NN \leftmargin \labelwidth
+        \dim_add:Nn \leftmargin { \labelsep }
+      }
+  }
+
+\cs_new:Nn \csl_set_bib_item_sep:
+  {
+    \skip_zero:N \parsep
+    \tl_if_empty:NTF \l__csl_bib_sep_tl
+      {
+        \skip_set:Nn \l__csl_bib_sep_skip
+          {
+            8 pt plus 4 pt minus 2 pt * \dim_ratio:nn { 1 em } { 8 pt }
+            * \l__csl_entry_spacing_tl
+          }
+      }
+      { \skip_set:Nn \l__csl_bib_sep_skip { \l__csl_bib_sep_tl } }
+  }
+
+\cs_new:Nn \csl_set_bib_allow_break:
+  {
+    \sloppy
+    \int_set:Nn \clubpenalty { 4000 }
+    \int_set_eq:NN \@clubpenalty \clubpenalty
+    \int_set:Nn \widowpenalty { 4000 }
+    % \sfcode`\.\@m
+    \frenchspacing
+  }
+% TODO: \biburlsetup
+
+\cs_new_eq:NN \csl_set_bib_page_break: \csl_set_bib_allow_break:
+
+\cs_new:Nn \csl_set_bib_no_break:
+  {
+    \sloppy
+    \int_set:Nn \interlinepenalty { 5000 }
+    \int_set:Nn \widowpenalty { 10000 }
+    \int_set:Nn \clubpenalty { 10000 }
+    \int_set_eq:NN \@clubpenalty \clubpenalty
+    \raggedbottom
+    \frenchspacing
+  }
+
+% It will be used for multi-bibliography.
+\cs_new:Nn \csl_reset_bib_format:
+  {
+    \keys_set:nn { csl } {
+      hanging-indent = false ,
+      line-spacing = 1 ,
+      entry-spacing = 1 ,
+    }
+  }
+
+% \newenvironment{thebibliography}[1]
+\RenewDocumentEnvironment { thebibliography } { m }
+  {
+    \csl_bib_section:
+    \dim_zero:N \parindent
+    \l__csl_bib_preamble_tl
+    \tl_if_eq:NnF \l__csl_line_spacing_tl { 1 }
+      { \linespread { \l__csl_line_spacing_tl } \selectfont }
+    \l__csl_bib_font_tl
+    \list { }
+      {
+        \csl_set_bib_label_spacing:n { #1 }
+        \csl_set_bib_item_sep:
+      }
+    \sloppy
+    \csl_set_bib_page_break:
+    \frenchspacing
+  }
+  {
+    \l__csl_bib_postamble_tl
+    \tl_set:Nn \@noitemerr
+      { \msg_warning:nnn { csl } { bibliography / empty } }
+    \endlist
+    \csl_reset_bib_format:
+  }
 
 \endinput
