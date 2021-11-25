@@ -311,6 +311,14 @@
     \tl_gset:cn { g__csl_citation_ #1  _tl } { #2 }
   }
 
+\AtEndOfPackageFile { hyperref }
+  {
+    \cs_set:Npn \bibcite #1#2
+      {
+        \tl_gset:cn { g__csl_citation_ #1  _tl } { #2 }
+      }
+  }
+
 \NewDocumentCommand \printbibliography { }
   {
     \sys_if_engine_luatex:TF
