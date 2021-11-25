@@ -32,9 +32,14 @@ How to distinguish a numeric style?
 The expected output here includes a trailing space, which we delete.
 
 
-# flipflop_LeadingMarkupWithApostrophe
+## flipflop_LeadingMarkupWithApostrophe
 
 Quotation marks in the prefix of cite-item are not transformed to double style and the punctuation after is not moved into quotes.
+
+
+## label_PluralWithLocalizedAmpersand
+
+The `<term name="and" form="symbol">` does not exist in any locale files.
 
 
 ## name_AllCapsInitialsUntouched

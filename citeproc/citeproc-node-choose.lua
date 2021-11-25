@@ -44,6 +44,18 @@ If.render = function (self, item, context)
     end
   end
 
+  local locator_types = context.options["locator"]
+  if locator_types then
+    for _, locator_type in ipairs(util.split(locator_types)) do
+      local locator_label = item.label or "page"
+      local res = locator_label == locator_type
+      if locator_type == "sub-verbo" then
+        res = locator_label == "sub verbo"
+      end
+      table.insert(results, res)
+    end
+  end
+
   local positions = context.options["position"]
   if positions then
     for _, position in ipairs(util.split(positions)) do
