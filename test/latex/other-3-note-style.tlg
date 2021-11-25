@@ -1,0 +1,67 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+(csl-citation-tests.tex
+============================================================
+TEST 1: Single cite item in a citation
+============================================================
+\g__csl_citation_count_ITEM-1_int=\count...
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line ....
+> \l__csl_citation_tl=D’Arcus, \emph {Boundaries of Dissent: Protest and
+State Power in the Media Age}..
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 2: Multiple cite items in a citation
+============================================================
+\g__csl_citation_count_ITEM-1,ITEM-2_int=\count...
+> \l__csl_citation_tl=D’Arcus; Bennett, “Getting Property Right:
+‘Informal’ Mortgages in the Japanese Courts.”.
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 3: Citation with implicit page locator
+============================================================
+> \l__csl_citation_tl=D’Arcus, p. 6..
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 4: Citation with prefix and suffix
+============================================================
+> \l__csl_citation_tl=prefix D’Arcus, \emph {Boundaries of Dissent: Protest
+and State Power in the Media Age}, suffix..
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 5: Citation with suffix
+============================================================
+> \l__csl_citation_tl=D’Arcus, suffix..
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 6: Citation with prefix
+============================================================
+> \l__csl_citation_tl=prefix D’Arcus..
+<recently read> }
+l. ...}
+============================================================
+)
+============================================================
+TEST 7: Bibilography
+============================================================
+(other-3-note-style.bbl)
+TRUE
+============================================================
+[1
+] (other-3-note-style.aux)
