@@ -47,6 +47,16 @@ Element.inheritable_options = {
   ["initialize-with-hyphen"] = true,
   ["page-range-format"] = true,
   ["demote-non-dropping-particle"] = true,
+  -- Citation
+  ["disambiguate-add-givenname"] = true,
+  ["givenname-disambiguation-rule"] = true,
+  ["disambiguate-add-names"] = true,
+  ["disambiguate-add-year-suffix"] = true,
+  ["cite-group-delimiter"] = true,
+  ["collapse"] = true,
+  ["dyear-suffix-delimiteremote"] = true,
+  ["after-collapse-delimiter"] = true,
+  ["near-note-distance"] = true,
   -- Bibliography
   ["second-field-align"] = true,  -- for use in layout
   ["subsequent-author-substitute"] = true,

@@ -7,6 +7,9 @@ local util = require("citeproc-util")
 
 local Layout = element.Element:new()
 
+-- function Layout:_render_single_item(item, context)
+-- end
+
 function Layout:render (items, context)
   self:debug_info(context)
 
@@ -103,6 +106,7 @@ function Layout:render (items, context)
 
   if context.mode == "citation" then
     context = self:process_context(context)
+    output = self:disambiguate(items, output, context)
     local res = self:concat(output, context)
     res = self:wrap(res, context)
     res = self:format(res, context)
@@ -168,6 +172,36 @@ function Layout:_get_position (item, previous_cite, context)
     end
   end
   return position
+end
+
+function Layout:disambiguate(items, output, context)
+  -- output: a list of richtext of items
+  local item_strings = {}
+  for i, item in ipairs(items) do
+    local text = output[i]
+    item_strings[item.id] = text:render(context.engine.formatter, context)
+  end
+
+  local cite_string_ids = {}
+  for id, str in pairs(item_strings) do
+    if cite_string_ids[str] then
+      table.insert(cite_string_ids[str], id)
+    else
+      cite_string_ids[str] = {id}
+    end
+  end
+  -- cite_string_ids = {
+  --   ["Smith et al. (1980)"] = {"ITEM-2", "ITEM-1"},
+  -- }
+
+  for str, ids in pairs(cite_string_ids) do
+    if #ids > 1 then
+      util.debug(str)
+      util.debug(ids)
+    end
+  end
+
+  return output
 end
 
 

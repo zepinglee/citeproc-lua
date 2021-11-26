@@ -128,6 +128,14 @@ function Citation:render (items, context)
   context.mode = "citation"
   context.citation = self
 
+  if context.options["disambiguate-add-givenname"] then
+    context.build.disambiguate_add_givenname = true
+  end
+
+  if context.options["disambiguate-add-givenname"] then
+    context.build.disambiguate_add_givenname = true
+  end
+
   local sort = self:get_child("sort")
   if sort then
     sort:sort(items, context)
