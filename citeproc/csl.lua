@@ -13,9 +13,6 @@ local core = require("csl-core")
 csl.initialized = "false"
 csl.citations = {}
 csl.citations_pre = {}
--- csl.ids = {}
--- csl.loaded_ids = {}
--- csl.include_all_items = false
 
 
 function csl.error(str)
@@ -30,7 +27,7 @@ end
 
 
 function csl.init(style_name, bib_files, locale, force_locale)
-  bib_files = util.split(util.strip(bib_files), ",%s*")
+  bib_files = util.split(util.strip(bib_files), "%s*,%s*")
 
   csl.engine = core.init(style_name, bib_files, locale, force_locale)
 
@@ -82,6 +79,37 @@ function csl.cite(citation_info)
 
   table.insert(csl.citations_pre, {citation.citationID, citation.properties.noteIndex})
 end
+
+
+function csl.nocite(ids_string)
+  local cite_ids = util.split(ids_string, "%s*,%s*")
+  if csl.engine then
+    local ids = {}
+    for _, cite_id in ipairs(cite_ids) do
+      if cite_id == "*" then
+        for item_id, _ in pairs(core.bib) do
+          table.insert(ids, item_id)
+        end
+      else
+        table.insert(ids, cite_id)
+      end
+    end
+    csl.engine:updateUncitedItems(ids)
+  else
+    -- `\nocite` in preamble, where csl.engine is not initialized yet
+    for _, cite_id in ipairs(cite_ids) do
+      if cite_id == "*" then
+        core.uncite_all_items = true
+      else
+        if not core.loaded_ids[cite_id] then
+          table.insert(core.ids, cite_id)
+          core.loaded_ids[cite_id] = true
+        end
+      end
+    end
+  end
+end
+
 
 function csl.bibliography()
   if not csl.engine then

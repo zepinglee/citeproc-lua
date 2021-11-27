@@ -91,7 +91,7 @@ local function read_aux_file(aux_file)
     else
       match = string.match(line, "^\\bibdata%s*(%b{})")
       if match then
-        for _, bib in ipairs(util.split(string.sub(match, 2, -2), ",%s*")) do
+        for _, bib in ipairs(util.split(string.sub(match, 2, -2), "%s*,%s*")) do
           table.insert(bib_files, bib)
         end
       else
@@ -135,8 +135,10 @@ local function process_aux_file(aux_file)
 
   for _, citation in ipairs(citations) do
     local citation_id = citation.citationID
-    local citation_str = citation_strings[citation_id]
-    output_string = output_string .. string.format("\\cslcite{%s}{{%s}{%s}}\n", citation_id, style_class, citation_str)
+    if citation_id ~= "nocite" then
+      local citation_str = citation_strings[citation_id]
+      output_string = output_string .. string.format("\\cslcite{%s}{{%s}{%s}}\n", citation_id, style_class, citation_str)
+    end
   end
 
   output_string = output_string .. "\n"

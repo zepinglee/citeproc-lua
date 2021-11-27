@@ -1,0 +1,26 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\input{csl-test}
+
+\usepackage{csl}
+
+\cslsetup{
+  style    = plain,
+  bib-data = test.bib,
+}
+
+\nocite{*}
+
+
+\begin{document}
+
+\START
+
+\TEST{Bibilography}{
+  \printbibliography
+  \showbibliography
+}
+
+\end{document}

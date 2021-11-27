@@ -67,9 +67,16 @@ Package csl Warning: Citation `ITEM-1' on page 1 undefined on line ....
 <recently read> }
 l. ...}
 ============================================================
+============================================================
+TEST 9: Item in bibliography but no citation
+============================================================
+> \l__csl_citation_tl=.
+<recently read> }
+l. ...}
+============================================================
 )
 ============================================================
-TEST 9: Bibilography
+TEST 10: Bibilography
 ============================================================
 Package csl Warning: No file other-1-bibstyle.bbl.
 The comma list \g__csl_bib_items_clist is empty

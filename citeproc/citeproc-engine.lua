@@ -65,6 +65,15 @@ function CiteProc:updateItems (ids)
   end
 end
 
+function CiteProc:updateUncitedItems(ids)
+  for _, id in ipairs(ids) do
+    if not self.registry.registry[id] then
+      self:get_item(id)
+    end
+  end
+  -- TODO: disambiguation
+end
+
 function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
   -- citation = {
   --   citationID = "CITATION-3",

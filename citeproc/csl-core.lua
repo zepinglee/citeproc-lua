@@ -6,6 +6,9 @@ require("lualibs")
 
 
 core.locale_file_format = nil
+core.ids = {}
+core.loaded_ids = {}
+core.uncite_all_items = false
 
 function core.error(message)
   if luatexbase then
@@ -125,17 +128,24 @@ function core.make_citation(citation_info)
   local citation_id, cite_items_str, note_index = table.unpack(arguments)
 
   local cite_items = {}
-  for item_str in string.gmatch(cite_items_str, "(%b{})") do
-    item_str = string.sub(item_str, 2, -2)
-    local cite_item = {}
-    for key, value in string.gmatch(item_str, "([%w%-]+)=(%b{})") do
-      if key == "sub-verbo" then
-        key = "sub verbo"
-      end
-      value = string.sub(value, 2, -2)
-      cite_item[key] = value
+  if citation_id == "nocite" then
+    for _, cite_id in ipairs(util.split(cite_items_str, "%s*,%s*")) do
+      table.insert(cite_items, {id = cite_id})
     end
-    table.insert(cite_items, cite_item)
+
+  else
+    for item_str in string.gmatch(cite_items_str, "(%b{})") do
+      item_str = string.sub(item_str, 2, -2)
+      local cite_item = {}
+      for key, value in string.gmatch(item_str, "([%w%-]+)=(%b{})") do
+        if key == "sub-verbo" then
+          key = "sub verbo"
+        end
+        value = string.sub(value, 2, -2)
+        cite_item[key] = value
+      end
+      table.insert(cite_items, cite_item)
+    end
   end
 
   local citation = {
@@ -153,41 +163,56 @@ end
 function core.process_citations(engine, citations)
   local citations_pre = {}
 
-  -- Should be removed in future.
-  local ids = core.get_cite_item_ids(citations)
-  engine:updateItems(ids)
-
+  core.update_item_ids(engine, citations)
   local citation_strings = {}
 
-  for i, citation in ipairs(citations) do
-    local res = engine:processCitationCluster(citation, citations_pre, {})
+  for _, citation in ipairs(citations) do
+    if citation.citationID ~= "nocite" then
+      local res = engine:processCitationCluster(citation, citations_pre, {})
 
-    for _, citation_res in ipairs(res[2]) do
-      local citation_str = citation_res[2]
-      local citation_id = citation_res[3]
-      citation_strings[citation_id] = citation_str
+      for _, citation_res in ipairs(res[2]) do
+        local citation_str = citation_res[2]
+        local citation_id = citation_res[3]
+        citation_strings[citation_id] = citation_str
+      end
+
+      table.insert(citations_pre, {citation.citationID, citation.properties.noteIndex})
     end
-
-    citations_pre[i] = {citation.citationID, citation.properties.noteIndex}
   end
 
   return citation_strings
 end
 
 
-function core.get_cite_item_ids(citations)
-  local ids = {}
-  local loaded = {}
-  for _, citation in ipairs(citations) do
-    for _, cite_item in ipairs(citation.citationItems) do
-      local id = cite_item.id
-      if not loaded[id] then
-        table.insert(ids, id)
-        loaded[id] = true
+function core.update_item_ids(engine, citations)
+  if core.uncite_all_items then
+    for item_id, _ in pairs(core.bib) do
+      if not core.loaded_ids[item_id] then
+        table.insert(core.ids, item_id)
+        core.loaded_ids[item_id] = true
       end
     end
   end
-  return ids
+  for _, citation in ipairs(citations) do
+    for _, cite_item in ipairs(citation.citationItems) do
+      local id = cite_item.id
+      if id == "*" then
+        for item_id, _ in pairs(core.bib) do
+          if not core.loaded_ids[item_id] then
+            table.insert(core.ids, item_id)
+            core.loaded_ids[item_id] = true
+          end
+        end
+      else
+        if not core.loaded_ids[id] then
+          table.insert(core.ids, id)
+          core.loaded_ids[id] = true
+        end
+      end
+    end
+  end
+  engine:updateItems(core.ids)
+  -- TODO: engine:updateUncitedItems(ids)
 end
 
 

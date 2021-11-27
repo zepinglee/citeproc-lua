@@ -64,14 +64,17 @@
 
 \DeclareDocumentCommand \nocite { m }
   {
-    \if@filesw
-      {
-        \iow_now:Nn \@auxout
-          { \citation { { } { } { * } } }
-      }
+    \ifx \@begindocumenthook \@undefined \else
+      \exp_after:wN \AtBeginDocument
     \fi
+      {
+        \if@filesw
+          \iow_now:Nn \@auxout
+            { \citation { { nocite } { #1 } { } } }
+        \fi
+      }
     \sys_if_engine_luatex:T
-      { \lua_now:n { csl.register_items("#1") } }
+      { \lua_now:n { csl.nocite("#1") } }
 }
 
 
