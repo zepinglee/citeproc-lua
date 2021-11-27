@@ -408,8 +408,7 @@ Jones 1990'
 
 Failure → test-suite bugreports_ikeyOne
 Passed in:
-(string) '..[0] (Smith, <i>Book c</i>)
->>[1] (Smith, <i>Book B</i>)'
+(string) '>>[0] (Smith, <i>Book B</i>)'
 Expected:
 (string) '>>[0] (Smith)'
 
@@ -455,8 +454,8 @@ Expected:
 
 Failure → test-suite collapse_CitationNumberRangesInsert
 Passed in:
-(string) '>>[0] [1]–[4]
-..[1] [4]'
+(string) '..[0] [4]
+>>[1] [1]–[4]'
 Expected:
 (string) '..[0] [1]
 >>[1] [1]–[4]'
@@ -1095,11 +1094,11 @@ Expected:
 
 Failure → test-suite integration_FirstReferenceNoteNumberPositionChange
 Passed in:
-(string) '..[0] Doe, “Life of Doe” (1901).
-..[1] Roe, “Life of Roe” (1900).
-..[2] Doe, supra note 1.
-..[3] Roe, supra note 2.
->>[4] Snoakes, “Life of Snoakes” (1902).'
+(string) '>>[0] Snoakes, “Life of Snoakes” (1902).
+..[1] Doe, “Life of Doe” (1901).
+..[2] Roe, “Life of Roe” (1900).
+..[3] Doe, supra note 1.
+..[4] Roe, supra note 2.'
 Expected:
 (string) '>>[0] Snoakes, “Life of Snoakes” (1902).
 >>[1] Doe, “Life of Doe” (1901).
@@ -1110,9 +1109,9 @@ Expected:
 Failure → test-suite integration_IbidOnInsert
 Passed in:
 (string) '..[0] (Doe p. 12)
-..[1] (Noakes p. 34)
-..[2] (Snoakes p. 45)
->>[3] (ibid.)'
+>>[1] (ibid.)
+..[2] (Noakes p. 34)
+..[3] (Snoakes p. 45)'
 Expected:
 (string) '..[0] (Doe p. 12)
 >>[1] (Noakes p. 34)
@@ -1642,10 +1641,10 @@ Expected:
 Failure → test-suite position_ResetNoteNumbers
 Passed in:
 (string) '..[0] Book A (note 1)
-..[1] ibid (note 2)
-..[2] Book C (note 3)
-..[3] Book C (note 1)
-..[4] Book A, n 1 (note 2)
+..[1] Book C (note 1)
+..[2] ibid (note 2)
+..[3] Book A, n 1 (note 2)
+..[4] Book C (note 3)
 ..[5] Book A, n 1 (note 3)
 ..[6] Book C, n 1 (note 4)
 >>[7] Book A, n 1 (note 5)'
@@ -1930,8 +1929,8 @@ Expected:
 
 Failure → test-suite sort_RangeUnaffected
 Passed in:
-(string) '..[0] <sup>1–3</sup>
->>[1] <sup>3</sup>'
+(string) '>>[0] <sup>3</sup>
+..[1] <sup>1–3</sup>'
 Expected:
 (string) '>>[0] <sup>1</sup>
 >>[1] <sup>1–3</sup>'

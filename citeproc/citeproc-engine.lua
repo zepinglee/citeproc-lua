@@ -28,6 +28,7 @@ function CiteProc.new (sys, style, lang, force_lang)
   local o = {}
   o.registry = {
     citations = {},  -- A map
+    citation_strings = {},  -- A list
     registry = {},  -- A map
     reflist = {},  -- A list
     previous_citation = nil,
@@ -147,30 +148,55 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
     citation_errors = {},
   }
 
+  local citation_id_note_list = {}
+  for _, citation_id_note in ipairs(citationsPre) do
+    table.insert(citation_id_note_list, citation_id_note)
+  end
+  local note_index = 0
+  if citation.properties and citation.properties.noteIndex then
+    note_index = citation.properties.noteIndex
+  end
+  table.insert(citation_id_note_list, {citation.citationID, note_index})
+  for _, citation_id_note in ipairs(citationsPost) do
+    table.insert(citation_id_note_list, citation_id_note)
+  end
+
+  local citation_id_cited = {}
+  for _, citation_id_note in ipairs(citation_id_note_list) do
+    citation_id_cited[citation_id_note[1]] = true
+  end
+  for citation_id, _ in pairs(self.registry.citations) do
+    if not citation_id_cited[citation_id] then
+      self.registry.citations[citation_id] = nil
+      self.registry.citation_strings[citation_id] = nil
+    end
+  end
+
   local output = {}
 
-  -- for _, citation_pre in ipairs(citationsPre) do
-  --   local citation_id = citation_pre[1]
-  --   local note_index = citation_pre[2]
-  --   local context = {
-  --     build = {},
-  --     engine = self,
-  --   }
-  --   local citation_pre_items = {}
-  --   local res = self.style:render_citation(citation_pre_items, context)
-  --   -- TODO: correct citation_index
-  --   local citation_index = 0
-  --   table.insert(output, {citation_index, res, citation.citationID})
-  -- end
+  for i, citation_id_note in ipairs(citation_id_note_list) do
+    local citation_id = citation_id_note[1]
+    -- local note_index = citation_id_note[2]
+    if citation_id == citation.citationID then
+      local context = {
+        build = {},
+        engine = self,
+      }
+      local citation_str = self.style:render_citation(items, context)
 
-  local context = {
-    build = {},
-    engine = self,
-  }
-  local res = self.style:render_citation(items, context)
-  -- TODO: correct citation_index
-  local citation_index = 0
-  table.insert(output, {citation_index, res, citation.citationID})
+      self.registry.citation_strings[citation_id] = citation_str
+      table.insert(output, {i - 1, citation_str, citation_id})
+    else
+      -- TODO: correct note_index
+      -- TODO: update other citations after disambiguation
+      local citation_str = self.registry.citation_strings[citation_id]
+      if self.registry.citation_strings[citation_id] ~= citation_str then
+        params.bibchange = true
+        self.registry.citation_strings[citation_id] = citation_str
+        table.insert(output, {i - 1, citation_str, citation_id})
+      end
+    end
+  end
 
   return {params, output}
 end

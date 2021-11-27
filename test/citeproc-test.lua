@@ -81,29 +81,46 @@ local function test_citations(engine, fixture)
 
   local output = {}
   local citation_order = {}
-  for _, citation_set in ipairs(fixture.citations) do
-    local citation = citation_set[1]
-    local citationsPre = citation_set[2]
-    local citationsPost = citation_set[3]
+  for i, citation_cluster in ipairs(fixture.citations) do
+    local citation = citation_cluster[1]
+    local citations_pre = citation_cluster[2]
+    local citations_post = citation_cluster[3]
 
-    for _, value in pairs(output) do
-      value.prefix = ".."
+    local res = engine:processCitationCluster(citation, citations_pre, citations_post)
+
+    for citation_id, citation_output in pairs(output) do
+      if not engine.registry.citations[citation_id] then
+        output[citation_id] = nil
+      end
     end
 
-    local res = engine:processCitationCluster(citation, citationsPre, citationsPost)
+    if i == #fixture.citations then
+      for _, citation_output in pairs(output) do
+        citation_output.prefix = ".."
+      end
+      for _, citation_id_note in ipairs(citations_pre) do
+        table.insert(citation_order, citation_id_note[1])
+      end
+      table.insert(citation_order, citation.citationID)
+      for _, citation_id_note in ipairs(citations_post) do
+        table.insert(citation_order, citation_id_note[1])
+      end
+    end
 
     for _, insert in ipairs(res[2]) do
+      local citation_index = insert[1] + 1
       local citation_str = insert[2]
       local citation_id = insert[3]
 
-      if not output[citation_id] then
-        table.insert(citation_order, citation_id)
+      if output[citation_id] then
+        output[citation_id].prefix = ">>"
+        output[citation_id].string = citation_str
+      else
+        output[citation_id] = {
+          prefix = ">>",
+          string = citation_str,
+        }
       end
-
-      output[citation_id] = {
-        prefix = ">>",
-        string = citation_str,
-      }
     end
   end
 
