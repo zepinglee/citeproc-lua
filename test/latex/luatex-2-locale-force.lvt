@@ -3,6 +3,8 @@
 \documentclass{article}
 
 \usepackage[english]{babel}
+\input{csl-test}
+
 \usepackage{csl}
 
 \cslsetup{
@@ -11,11 +13,6 @@
   locale       = zh-CN,
   force-locale = true,
 }
-
-\ExplSyntaxOn
-  \NewDocumentCommand \showcitation { }
-    { \tl_show:N \l__csl_citation_tl }
-\ExplSyntaxOff
 
 
 \begin{document}
@@ -30,7 +27,7 @@
 
 \TEST{Bibilography}{
   \printbibliography
-  \TRUE
+  \showbibliography
 }
 
 \end{document}

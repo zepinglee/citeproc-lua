@@ -2,6 +2,8 @@
 
 \documentclass{article}
 
+\input{csl-test}
+
 \usepackage{csl}
 
 \cslsetup{
@@ -9,11 +11,6 @@
   bib-data = test.bib,
   locale   = zh-CN,
 }
-
-\ExplSyntaxOn
-  \NewDocumentCommand \showcitation { }
-    { \tl_show:N \l__csl_citation_tl }
-\ExplSyntaxOff
 
 
 \begin{document}
@@ -28,7 +25,7 @@
 
 \TEST{Bibilography}{
   \printbibliography
-  \TRUE
+  \showbibliography
 }
 
 \end{document}

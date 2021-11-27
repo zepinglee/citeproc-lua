@@ -63,7 +63,12 @@ l. ...}
 ============================================================
 TEST 9: Bibilography
 ============================================================
-TRUE
+The comma list \g__csl_bib_items_clist contains the items (without outer
+braces):
+>  {ITEM-2}
+>  {ITEM-1}.
+<recently read> }
+l. ...}
 ============================================================
 [1
 ] (luatex-2-bibstyle.aux)

@@ -2,7 +2,10 @@
 
 \documentclass{article}
 
+\input{csl-test}
+
 \usepackage{csl}
+
 
 \begin{document}
 
@@ -13,7 +16,7 @@
 \TEST{Bibilography}{
   \bibliographystyle{plain}
   \bibliography{test}
-  \TRUE
+  \showbibliography
 }
 
 \end{document}

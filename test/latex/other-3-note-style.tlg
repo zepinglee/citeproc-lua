@@ -75,7 +75,12 @@ l. ...}
 TEST 9: Bibilography
 ============================================================
 (other-3-note-style.bbl)
-TRUE
+The comma list \g__csl_bib_items_clist contains the items (without outer
+braces):
+>  {ITEM-2}
+>  {ITEM-1}.
+<recently read> }
+l. ...}
 ============================================================
 [1
 ] (other-3-note-style.aux)

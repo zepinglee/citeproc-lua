@@ -2,12 +2,15 @@
 
 \documentclass{article}
 
+\input{csl-test}
+
 \usepackage{csl}
 
 \cslsetup{
   style    = plain,
   bib-data = test.bib,
 }
+
 
 \begin{document}
 
@@ -17,7 +20,7 @@
 
 \TEST{Bibilography}{
   \printbibliography
-  \TRUE
+  \showbibliography
 }
 
 \end{document}

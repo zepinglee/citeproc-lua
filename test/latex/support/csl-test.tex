@@ -1,0 +1,11 @@
+\usepackage[enable-debug,check-declarations]{expl3}
+
+\ExplSyntaxOn
+\debug_on:n { deprecation }
+
+\cs_new:Npn \showcitation
+  { \tl_show:N \l__csl_citation_tl }
+\cs_new:Npn \showbibliography
+  { \clist_show:N \g__csl_bib_items_clist }
+
+\ExplSyntaxOff

@@ -592,19 +592,28 @@
     \fi
   }
 
+
+\clist_new:N \g__csl_bib_items_clist
+
 % For numeric or label-style bibliography
 % \def\@lbibitem[#1]#2{\item[\@biblabel{#1}\hfill]\if@filesw
 %       {\let\protect\noexpand
 %        \immediate
 %        \write\@auxout{\string\bibcite{#2}{#1}}}\fi\ignorespaces}
 \cs_set:Npn \@lbibitem [#1]#2
-  { \item [ \@biblabel { #1 } \hfill ] \ignorespaces }
+  {
+    \clist_gput_right:Nn \g__csl_bib_items_clist { #2 }
+    \item [ \@biblabel { #1 } \hfill ] \ignorespaces
+  }
 
 % For author-date bibliography
 % \def\@bibitem#1{\item\if@filesw \immediate\write\@auxout
 %        {\string\bibcite{#1}{\the\value{\@listctr}}}\fi\ignorespaces}
 \cs_set:Npn \@bibitem #1
-  { \item [ ] \ignorespaces }
+  {
+    \clist_gput_right:Nn \g__csl_bib_items_clist { #1 }
+    \item [ ] \ignorespaces
+  }
 
 % CSL outputs the whole label thus the brackets are removed from \@biblabel
 % \def\@biblabel#1{[#1]}
@@ -726,6 +735,7 @@
     \sloppy
     \csl_set_bib_page_break:
     \frenchspacing
+    \clist_gclear:N \g__csl_bib_items_clist
   }
   {
     \l__csl_bib_postamble_tl

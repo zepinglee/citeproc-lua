@@ -19,7 +19,15 @@ l. ...}
 ============================================================
 TEST 2: Bibilography
 ============================================================
-TRUE
+The comma list \g__csl_bib_items_clist contains the items (without outer
+braces):
+>  {ITEM-1}
+>  {ITEM-5}
+>  {ITEM-3}
+>  {ITEM-2}
+>  {ITEM-4}.
+<recently read> }
+l. ...}
 ============================================================
 [1
 ] (luatex-2-sort.aux)
