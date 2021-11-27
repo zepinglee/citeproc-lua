@@ -65,6 +65,14 @@ function Sort:sort (items, context)
   return items
 end
 
+function Sort.compare(value1, value2)
+  if type(value1) == "string" then
+    return Sort.compare_strings(value1, value2)
+  else
+    return value1 < value2
+  end
+end
+
 function Sort.compare_strings(str1, str2)
   if Sort.collator_obj then
     return Sort.collator_obj:compare_strings(str1, str2)
@@ -80,9 +88,9 @@ function Sort.compare_entry(key_map, sort_directions, item1, item2)
     if value1 and value2 then
       local res
       if ascending then
-        res = Sort.compare_strings(value1, value2)
+        res = Sort.compare(value1, value2)
       else
-        res = Sort.compare_strings(value2, value1)
+        res = Sort.compare(value2, value1)
       end
       if res or value1 ~= value2 then
         return res

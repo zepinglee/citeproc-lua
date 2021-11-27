@@ -13,16 +13,18 @@ function Text:render (item, context)
 
   local res = nil
 
+  local variable = nil
   local variable_name = self:get_attribute("variable")
   if variable_name then
     local form = self:get_attribute("form")
     if form == "short" then
-      res = self:get_variable(item, variable_name  .. "-" .. form, context)
+      variable = self:get_variable(item, variable_name  .. "-" .. form, context)
     end
-    if not res then
-      res = self:get_variable(item, variable_name, context)
+    if not variable then
+      variable = self:get_variable(item, variable_name, context)
     end
-    if res then
+    if variable then
+      res = variable
       if type(res) == "number" then
         res = tostring(res)
       end
@@ -68,6 +70,22 @@ function Text:render (item, context)
   res = self:wrap(res, context)
   res = self:display(res, context)
 
+  if variable_name == "citation-number" then
+    res = self:_process_citation_number(variable, res, context)
+  end
+
+  return res
+end
+
+
+function Text:_process_citation_number(citation_number, res, context)
+  if context.mode == "citation" and not context.sorting and context.options["collapse"] == "citation-number" then
+    context.build.item_citation_numbers[context.item.id] = citation_number
+    if type(res) == "string" then
+      res = richtext.new(res)
+    end
+    table.insert(context.build.item_citation_number_text, res)
+  end
   return res
 end
 

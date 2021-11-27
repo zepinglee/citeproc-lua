@@ -10,9 +10,16 @@ local Layout = element.Element:new()
 function Layout:render (items, context)
   self:debug_info(context)
 
+  context.items = items
+
   -- When used within cs:citation, the delimiter attribute may be used to specify a delimiter for cites within a citation.
   -- Thus the processing of context is put after render_children().
-  if context.mode == "bibliography" then
+  if context.mode == "citation" then
+    if context.options["collapse"] == "citation-number" then
+      context.build.item_citation_numbers = {}
+      context.build.item_citation_number_text = {}
+    end
+  elseif context.mode == "bibliography" then
     context.build.longest_label = ""
     context.build.preceding_first_rendered_names = nil
     context = self:process_context(context)
@@ -103,7 +110,12 @@ function Layout:render (items, context)
 
   if context.mode == "citation" then
     context = self:process_context(context)
-    local res = self:concat(output, context)
+    local res
+    if context.options["collapse"] then
+      res = self:_collapse_citations(output, context)
+    else
+      res = self:concat(output, context)
+    end
     res = self:wrap(res, context)
     res = self:format(res, context)
     if res then
@@ -168,6 +180,49 @@ function Layout:_get_position (item, previous_cite, context)
     end
   end
   return position
+end
+
+
+function Layout:_collapse_citations(output, context)
+  if context.options["collapse"] == "citation-number" then
+    assert(#output == #context.items)
+    local citation_numbers = {}
+    for i, item in ipairs(context.items) do
+      citation_numbers[i] = context.build.item_citation_numbers[item.id] or 0
+    end
+
+    local collapsed_output = {}
+    local citation_number_range_delimiter = util.unicode["en dash"]
+    local index = 1
+    while index <= #citation_numbers do
+      local stop_index = index + 1
+      if output[index] == context.build.item_citation_number_text[index] then
+        while stop_index <= #citation_numbers  do
+          if output[stop_index] ~= context.build.item_citation_number_text[stop_index] then
+            break
+          end
+          if citation_numbers[stop_index - 1] + 1 ~= citation_numbers[stop_index] then
+            break
+          end
+          stop_index = stop_index + 1
+        end
+      end
+
+      if stop_index >= index + 3 then
+        local range_text = output[index] .. citation_number_range_delimiter .. output[stop_index - 1]
+        table.insert(collapsed_output, range_text)
+      else
+        for i = index, stop_index - 1 do
+          table.insert(collapsed_output, output[i])
+        end
+      end
+
+      index = stop_index
+    end
+
+    return self:concat(collapsed_output, context)
+  end
+  return self:concat(output, context)
 end
 
 

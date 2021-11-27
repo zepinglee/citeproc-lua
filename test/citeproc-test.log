@@ -1,8 +1,8 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                7       2       0       0
-bugreports          45      37       0       0
-collapse             4      17       0       0
+bugreports          44      38       0       0
+collapse            10      11       0       0
 condition           17       0       0       0
 date                95       6       0       0
 decorations          7       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              645     208       0       0
+(all)              650     203       0       0
 
 Failure → test-suite affix_CommaAfterQuote
 Passed in:
@@ -146,6 +146,12 @@ Expected:
   <div class="csl-entry">Anon J/Anon J/Anonymous Journal</div>
   <div class="csl-entry">Journal-1/Journal-1/Anonymous Journal One</div>
 </div>'
+
+Failure → test-suite bugreports_DelimitersOnLocator
+Passed in:
+(string) '[1, 32–3, 32]'
+Expected:
+(string) '[1, 32; 2, 32; 3, 32]'
 
 Failure → test-suite bugreports_DemoPageFullCiteCruftOnSubsequent
 Passed in:
@@ -449,59 +455,17 @@ Expected:
 
 Failure → test-suite collapse_CitationNumberRangesInsert
 Passed in:
-(string) '>>[0] [1], [2], [3], [4]
+(string) '>>[0] [1]–[4]
 ..[1] [4]'
 Expected:
 (string) '..[0] [1]
 >>[1] [1]–[4]'
-
-Failure → test-suite collapse_CitationNumberRangesMixed
-Passed in:
-(string) '([1], [2], [3], [4], [5], [6], [7])
-([1], [2], [3], [5], [6], [7])'
-Expected:
-(string) '([1]–[7])
-([1]–[3], [5]–[7])'
-
-Failure → test-suite collapse_CitationNumberRangesMixed2
-Passed in:
-(string) '([1], [10], [11], [2], [3], [4], [5], [6], [7], [8], [9])
-([1], [10], [11], [3], [4], [5], [7], [9])'
-Expected:
-(string) '([1]–[11])
-([1], [3]–[5], [7], [9]–[11])'
-
-Failure → test-suite collapse_CitationNumberRangesMixed3
-Passed in:
-(string) '([1], [2], [3], [4], [5], [6], [7], [8])
-([1], [4], [6], [7], [8])'
-Expected:
-(string) '([1]–[8])
-([1], [4], [6]–[8])'
-
-Failure → test-suite collapse_CitationNumberRangesWithAffixes
-Passed in:
-(string) '<b>([1],[2],[3])</b>'
-Expected:
-(string) '<b>([1]–[3])</b>'
 
 Failure → test-suite collapse_CitationNumberRangesWithAffixesGrouped
 Passed in:
 (string) '<b>([1],[2],[3])</b>'
 Expected:
 (string) '<b>([1]–[3])</b>'
-
-Failure → test-suite collapse_NumericDuplicate
-Passed in:
-(string) '(1,2,2,3,4)'
-Expected:
-(string) '(1,2,2–4)'
-
-Failure → test-suite collapse_NumericDuplicate2
-Passed in:
-(string) '(1,2,3,3,4,5)'
-Expected:
-(string) '(1–3,3–5)'
 
 Failure → test-suite collapse_TrailingDelimiter
 Passed in:
@@ -1966,7 +1930,7 @@ Expected:
 
 Failure → test-suite sort_RangeUnaffected
 Passed in:
-(string) '..[0] <sup>1,2,3</sup>
+(string) '..[0] <sup>1–3</sup>
 >>[1] <sup>3</sup>'
 Expected:
 (string) '>>[0] <sup>1</sup>

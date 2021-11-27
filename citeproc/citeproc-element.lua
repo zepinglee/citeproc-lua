@@ -23,7 +23,6 @@ Element.option_type = {
   ["et-al-subsequent-min"] = "integer",
   ["et-al-subsequent-use-first"] = "integer",
   ["near-note-distance"] = "integer",
-  ["near"] = "integer",
   ["line-spacing"] = "integer",
   ["entry-spacing"] = "integer",
   ["names-min"] = "integer",
@@ -47,6 +46,16 @@ Element.inheritable_options = {
   ["initialize-with-hyphen"] = true,
   ["page-range-format"] = true,
   ["demote-non-dropping-particle"] = true,
+  -- Citation
+  ["disambiguate-add-givenname"] = true,
+  ["givenname-disambiguation-rule"] = true,
+  ["disambiguate-add-names"] = true,
+  ["disambiguate-add-year-suffix"] = true,
+  ["cite-group-delimiter"] = true,
+  ["collapse"] = true,
+  ["year-suffix-delimiter"] = true,
+  ["after-collapse-delimiter"] = true,
+  ["near-note-distance"] = true,
   -- Bibliography
   ["second-field-align"] = true,  -- for use in layout
   ["subsequent-author-substitute"] = true,
