@@ -35,17 +35,19 @@ function core.info(message)
 end
 
 
-function core.read_file(filename, ftype)
-  local path = kpse.find_file(filename, ftype)
+function core.read_file(file_name, ftype, file_info)
+  file_info = file_info or "file"
+  local path = kpse.find_file(file_name, ftype)
   if not path then
-    if ftype and not util.endswith(filename, ftype) then
-      filename = filename .. ftype
+    if ftype and not util.endswith(file_name, ftype) then
+      file_name = file_name .. ftype
     end
-    core.error(string.format('Failed to find "%s".', filename))
+    core.error(string.format('Failed to find %s "%s"', file_info, file_name))
+    return nil
   end
   local file = io.open(path, "r")
   if not file then
-    core.error(string.format('Failed to open "%s".', path))
+    core.error(string.format('Failed to open %s "%s"', file_info, path))
     return nil
   end
   local contents = file:read("*a")
@@ -57,7 +59,7 @@ local function load_bib(bib_files)
   local bib = {}
   for _, bib_file in ipairs(bib_files) do
     -- TODO: try to load `<bibname>.json` first?
-    local bib_contents = core.read_file(bib_file, "bib")
+    local bib_contents = core.read_file(bib_file, "bib", "database file")
     local file_name = bib_file
     if not util.endswith(file_name, ".bib") then
       file_name = file_name .. ".bib"
@@ -85,9 +87,9 @@ function core.make_citeproc_sys(bib_files)
     end,
     retrieveItem = function (id)
       local res = core.bib[id]
-      if not res then
-        core.error(string.format('Failed to find entry "%s".', id))
-      end
+      -- if not res then
+      --   core.warning(string.format('Failed to find entry "%s".', id))
+      -- end
       return res
     end
   }
@@ -99,9 +101,9 @@ function core.init(style_name, bib_files, locale, force_locale)
   if style_name == "" or #bib_files == 0 then
     return nil
   end
-  local style = core.read_file(style_name .. ".csl")
+  local style = core.read_file(style_name .. ".csl", nil, "style file")
   if not style then
-    core.error(string.format('Failed to load style "%s".csl.', style_name))
+    core.error(string.format('Failed to load style "%s.csl"', style_name))
     return nil
   end
 
@@ -163,6 +165,7 @@ end
 function core.process_citations(engine, citations)
   local citations_pre = {}
 
+  -- Save the time of bibliography sorting by update all ids at one time.
   core.update_item_ids(engine, citations)
   local citation_strings = {}
 
@@ -245,7 +248,7 @@ function core.make_bibliography(engine)
   end
 
   for _, bib_item in ipairs(bib_items) do
-    res = res .. "\n" .. bib_item .. "\n"
+    res = res .. "\n" .. bib_item
   end
 
   if params.bibend then

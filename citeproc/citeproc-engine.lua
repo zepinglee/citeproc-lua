@@ -110,36 +110,38 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
     local position_first = (self.registry.registry[cite_item.id] == nil)
     local item_data = self:get_item(cite_item.id)
 
-    -- Create a wrapper of the orignal item from registry so that
-    -- it may hold different `locator` or `position` values for cites.
-    local item = setmetatable({}, {__index = function (_, key)
-      if cite_item[key] then
-        return cite_item[key]
-      else
-        return item_data[key]
-      end
-    end})
-
-    if not item.position and position_first then
-      item.position = util.position_map["first"]
-    end
-
-    local first_reference_note_number = nil
-    for _, pre_citation in ipairs(citationsPre) do
-      pre_citation = self.registry.citations[pre_citation[1]]
-      for _, pre_cite_item in ipairs(pre_citation.citationItems) do
-        if pre_cite_item.id == cite_item.id then
-          first_reference_note_number = pre_citation.properties.noteIndex
+    if item_data then
+      -- Create a wrapper of the orignal item from registry so that
+      -- it may hold different `locator` or `position` values for cites.
+      local item = setmetatable({}, {__index = function (_, key)
+        if cite_item[key] then
+          return cite_item[key]
+        else
+          return item_data[key]
         end
-        break
-      end
-      if first_reference_note_number then
-        break
-      end
-    end
-    item["first-reference-note-number"] = first_reference_note_number
+      end})
 
-    table.insert(items, item)
+      if not item.position and position_first then
+        item.position = util.position_map["first"]
+      end
+
+      local first_reference_note_number = nil
+      for _, pre_citation in ipairs(citationsPre) do
+        pre_citation = self.registry.citations[pre_citation[1]]
+        for _, pre_cite_item in ipairs(pre_citation.citationItems) do
+          if pre_cite_item.id == cite_item.id then
+            first_reference_note_number = pre_citation.properties.noteIndex
+          end
+          break
+        end
+        if first_reference_note_number then
+          break
+        end
+      end
+      item["first-reference-note-number"] = first_reference_note_number
+
+      table.insert(items, item)
+    end
   end
 
   if #citationsPre > 0 then
@@ -296,6 +298,9 @@ function CiteProc:get_item (id)
   local item = self.registry.registry[id]
   if not item then
     item = self:_retrieve_item(id)
+    if not item then
+      return nil
+    end
     table.insert(self.registry.reflist, id)
     item["citation-number"] = #self.registry.reflist
     self.registry.registry[id] = item
@@ -311,7 +316,8 @@ function CiteProc:_retrieve_item (id)
   local res = {}
   local item = self.sys.retrieveItem(id)
   if not item then
-    error("Failed to retrieve \"" .. id .. "\"")
+    util.warning(string.format('Failed to retrieve item "%s"', id))
+    return nil
   end
 
   item.id = tostring(item.id)

@@ -104,11 +104,11 @@ function Layout:render (items, context)
     previous_cite = item
   end
 
-  if next(output) == nil then
-    return "[CSL STYLE ERROR: reference with no printed form.]"
-  end
-
   if context.mode == "citation" then
+    if next(output) == nil then
+      return "[CSL STYLE ERROR: reference with no printed form.]"
+    end
+
     context = self:process_context(context)
     local res
     if context.options["collapse"] then

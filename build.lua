@@ -31,7 +31,7 @@ checkconfigs = {
   "test/latex/config-other-3",
 }
 
-checkopts = "-interaction=nonstopmode -shell-escape"
+-- checkopts = "-interaction=nonstopmode -shell-escape"
 
 asciiengines = {}
 -- checkruns = 1

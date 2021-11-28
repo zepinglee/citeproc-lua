@@ -1,0 +1,29 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\input{csl-test}
+
+\usepackage{csl}
+
+\cslsetup{
+  style    = plain,
+  bib-data = test.bib,
+}
+
+
+\begin{document}
+
+\START
+
+\TEST{Item unavailable}{
+  \cite{ITEM-UNAVAILABLE}
+  \showcitation
+}
+
+\TEST{Bibilography}{
+  \printbibliography
+  \showbibliography
+}
+
+\end{document}

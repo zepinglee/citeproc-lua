@@ -21,7 +21,6 @@ if kpse then
   path = kpse.find_file(path)
 end
 if path then
-  --TODO: convert to Lua table and -shell-escape can be omitted?
   local contents = util.read_file(path)
   if not contents then
     error(string.format('Failed to find "%s"', path))

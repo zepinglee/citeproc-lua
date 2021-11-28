@@ -1,0 +1,23 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Item unavailable
+============================================================
+\g__csl_citation_count_ITEM-UNAVAILABLE_int=\count...
+Module citeproc Warning: Failed to retrieve item "ITEM-UNAVAILABLE" on input lin
+e 22
+> \l__csl_citation_tl=[CSL STYLE ERROR: reference with no printed form.].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 2: Bibilography
+============================================================
+Package csl Warning: The bibliography is empty.
+The comma list \g__csl_bib_items_clist is empty
+> .
+<recently read> }
+l. ...}
+============================================================
+[1
+] (luatex-1-warning-item-unavailable.aux)
