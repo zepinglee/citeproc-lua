@@ -82,10 +82,15 @@ function Number:_format_oridinal(number, form, context)
   term = self:get_term(form, nil, number, gender)
   local res = term:render(context)
   if form == "ordinal" then
-    return number .. res
+    if res then
+      return tostring(number) .. res
+    else
+      res = tostring(number)
+    end
   else
     return res
   end
+  return res
 end
 
 

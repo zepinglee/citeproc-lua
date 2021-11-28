@@ -50,7 +50,7 @@ function Date:render (item, context)
     end
     res = self:get_locale_date(context, form):render(item, context)
   else
-    if #date["date-parts"] == 0 then
+    if not date["date-parts"] or #date["date-parts"] == 0 then
       local literal = date["literal"]
       if literal then
         res = literal
