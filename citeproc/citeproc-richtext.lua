@@ -71,7 +71,9 @@ function RichText:_render(formatter, context)
       if formatter then
         local format = formatter[key]
         if type(format) == "string" then
-          res = string.gsub(format, "%%%%STRING%%%%", res)
+          if not util.startswith(res, "\\url") then
+            res = string.format(format, res)
+          end
         elseif type(format) == "function" then
           res = format(res, context)
         end

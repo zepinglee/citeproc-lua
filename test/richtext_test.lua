@@ -16,19 +16,19 @@ describe("RichText", function()
       text = string.gsub(text, ">", "&#62;")
       return text
     end,
-    ["@font-style/italic"] = "<i>%%STRING%%</i>",
-    ["@font-style/oblique"] = "<em>%%STRING%%</em>",
-    ["@font-style/normal"] = '<span style="font-style:normal;">%%STRING%%</span>',
-    ["@font-variant/small-caps"] = '<span style="font-variant:small-caps;">%%STRING%%</span>',
-    ["@font-variant/normal"] = '<span style="font-variant:normal;">%%STRING%%</span>',
-    ["@font-weight/bold"] = "<b>%%STRING%%</b>",
-    ["@font-weight/normal"] = '<span style="font-weight:normal;">%%STRING%%</span>',
+    ["@font-style/italic"] = "<i>%s</i>",
+    ["@font-style/oblique"] = "<em>%s</em>",
+    ["@font-style/normal"] = '<span style="font-style:normal;">%s</span>',
+    ["@font-variant/small-caps"] = '<span style="font-variant:small-caps;">%s</span>',
+    ["@font-variant/normal"] = '<span style="font-variant:normal;">%s</span>',
+    ["@font-weight/bold"] = "<b>%s</b>",
+    ["@font-weight/normal"] = '<span style="font-weight:normal;">%s</span>',
     ["@font-weight/light"] = false,
-    ["@text-decoration/none"] = '<span style="text-decoration:none;">%%STRING%%</span>',
-    ["@text-decoration/underline"] = '<span style="text-decoration:underline;">%%STRING%%</span>',
-    ["@vertical-align/sup"] = "<sup>%%STRING%%</sup>",
-    ["@vertical-align/sub"] = "<sub>%%STRING%%</sub>",
-    ["@vertical-align/baseline"] = '<span style="baseline">%%STRING%%</span>',
+    ["@text-decoration/none"] = '<span style="text-decoration:none;">%s</span>',
+    ["@text-decoration/underline"] = '<span style="text-decoration:underline;">%s</span>',
+    ["@vertical-align/sup"] = "<sup>%s</sup>",
+    ["@vertical-align/sub"] = "<sub>%s</sub>",
+    ["@vertical-align/baseline"] = '<span style="baseline">%s</span>',
     ["@quotes/true"] = function (str, context)
       local open_quote = '“'
       local close_quote = '”'
