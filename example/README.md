@@ -38,7 +38,7 @@ pdflatex example.tex
 ```
 
 
-The following commands is used for uninstalling from `TEXMFHOME`.
+The following commands are used for uninstalling from `TEXMFHOME`.
 
 ```bash
 rm -rf "$(kpsewhich -var-value=TEXMFHOME)/scripts/csl"

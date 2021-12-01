@@ -1,6 +1,9 @@
+*.hd
 build/
 csl-ctan/
+csl-doc.pdf
 csl.tds/
+doc/csl-doc.pdf
 example/example.json
 example/example.pdf
 

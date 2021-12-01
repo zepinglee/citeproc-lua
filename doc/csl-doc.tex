@@ -1,0 +1,354 @@
+\documentclass{l3doc}
+
+\usepackage{mathpazo}
+\usepackage{helvet}
+\usepackage{listings}
+
+\NewDocumentCommand\opt{m}{\texttt{#1}}
+
+\lstnewenvironment{LaTeXdemo}{
+  \lstset{
+    basicstyle = \ttfamily\small,
+    basewidth  = 0.51em,
+    frame      = single,
+    gobble     = 2,
+    language   = [LaTeX]TeX,
+  }
+}{}
+
+\lstnewenvironment{bash}{
+  \lstset{
+    basicstyle = \ttfamily\small,
+    basewidth  = 0.51em,
+    gobble     = 2,
+    language   = bash,
+  }
+}{}
+
+% \hypersetup{hidelinks}
+% \urlstyle{same}
+
+\begin{document}
+
+\title{%
+  \pkg{csl} --- Citation Style Language for LaTeX
+}
+
+\author{%
+  Zeping Lee%
+  \thanks{%
+    E-mail:
+    \href{mailto:zepinglee@gmail.com}
+      {zepinglee@gmail.com}%
+  }%
+}
+
+\date{2021-12-12 v0.1}
+
+\maketitle
+
+% \begin{abstract}
+%   Foo
+% \end{abstract}
+
+\begin{documentation}
+
+\section{Introduction}
+
+The Citation Style Language\footnote{\url{https://citationstyles.org/}} (CSL)
+is an XML-based language that defines the formats of citations and bibliography.
+There are currently thousands of styles in CSL including the most widely used
+APA, Chicago, Vancouver, etc.
+The \pkg{csl} package aims to provide another reference system for LaTeX
+that utilizes the CSL styles.
+It contains a citation processor implemented in Lua (\pkg{citeproc-lua})
+which reads bibliographic metadata and performs sorting and formatting
+citations and bibliography according to the selected CSL style.
+A LaTeX package is also provided to communicate with the processor.
+
+
+\section{Getting started}
+
+An example of using \pkg{csl} package is as follows.
+
+\begin{LaTeXdemo}
+  \documentclass{...}
+  \usepackage{csl}
+  \cslsetup{
+    style = ...,
+    ...
+  }
+  \addbibresource{bibfile.json}
+  \begin{document}
+  \cite{...}
+  ...
+  \printbibliography
+  \end{document}
+\end{LaTeXdemo}
+
+The procedure to compile the document is different across engines.
+
+\paragraph{LuaTeX}
+
+The CSL processor is written in Lua and it can be run directly in LuaTeX
+without the need of running external programs.
+For LuaTeX, the compiling procedure is simply running \file{latex} twice,
+which is the same as documents with cross references.
+
+\paragraph{Other engines}
+
+For engines other than LuaTeX, the \file{citeproc} executable is required
+to run on the \file{.aux} file to generate the citations and bibliography.
+The general procedure is as follows, similar to the traditional BibTeX
+workflow.
+\begin{enumerate}
+  \item Run \file{latex} on \file{example.tex}.
+  \item Run \file{citeproc} on \file{example.aux}.
+    The engine reads the \file{.csl} style, CSL locale files, and
+    \file{.bib} database and then writes the processed citations and
+      bibliography to \file{example.bbl}.
+  \item Run \file{latex} on \file{example.tex}.
+    The \file{.bbl} file is loaded and all the citations and bibliography
+    are printed.
+\end{enumerate}
+
+
+
+\section{Package commands}
+
+\begin{function}{\cslsetup}
+  \begin{syntax}
+    \cs{cslsetup}\marg{options}
+  \end{syntax}
+\end{function}
+
+The behavior of the \pkg{csl} package is controlled by several key-value
+options which can be set with the \cs{cslsetup} command.
+For example,
+\begin{LaTeXdemo}
+  \cslsetup{
+    style  = apa,
+    locale = zh-CN,
+  }
+\end{LaTeXdemo}
+
+\DescribeOption{style}
+The \opt{style=}\meta{style-id} option selects the style file
+\meta{style-id}\file{.csl} for both citations and bibliography.
+The implemented CSL style files are available in the official GitHub
+repository\footnote{\url{https://github.com/citation-style-language/styles}}
+as well as the Zotero style
+repository\footnote{\url{https://www.zotero.org/styles}}.
+The user may search and download the \file{.csl} file to the working directory.
+The following styles are distributed within the package and
+each of them can be directly loaded without downloading.
+
+\begin{description}
+  \item[\opt{american-chemical-society}] American Chemical Society
+  \item[\opt{american-medical-association}] American Medical Association 11th edition
+  \item[\opt{american-political-science-association}] American Political Science Association
+  \item[\opt{american-sociological-association}] American Sociological Association 6th edition
+  \item[\opt{apa}] American Psychological Association 7th edition
+  \item[\opt{chicago-author-date}] Chicago Manual of Style 17th edition (author-date)
+  \item[\opt{chicago-fullnote-bibliography}] Chicago Manual of Style 17th edition (full note)
+  \item[\opt{chicago-note-bibliography}] Chicago Manual of Style 17th edition (note)
+  \item[\opt{elsevier-harvard}] Elsevier - Harvard (with titles)
+  \item[\opt{harvard-cite-them-right}] Cite Them Right 11th edition - Harvard
+  \item[\opt{ieee}] IEEE
+  \item[\opt{modern-humanities-research-association}] Modern Humanities Research Association 3rd edition (note with bibliography)
+  \item[\opt{modern-language-association}] Modern Language Association 9th edition
+  \item[\opt{nature}] Nature
+  \item[\opt{vancouver}] Vancouver
+\end{description}
+
+\DescribeOption{locale}
+The \opt{locale} option receives an ISO 639-1 two-letter language code
+(e.g.  ``\opt{en}'', ``\opt{zh}''), optionally with a two-letter locale code
+(e.g. ``\opt{de-DE}'', ``\opt{de-AT}'').
+This option affects sorting of the entries and the output of dates, numbers,
+and terms (e.g., ``et al.'').
+It may also be set \opt{auto} (default) and the \opt{default-locale} attribute in
+the CSL style file will be used.
+The locale falls back to ``\opt{en}'' (English) if the attribute is not set.
+When \pkg{babel} package is loaded, the selected main language is implicitly set
+as the \opt{locale} for \pkg{csl}.
+
+\DescribeOption{bib-font}
+Usually, the list of references is printed in the same font style and size as
+the main text.
+The \opt{bib-font} option is used to set different formats in the
+\env{thebibliography} environment.
+It may override the \opt{line-spacing} attribute configured in the CSL style.
+For example, to force double-spacing in the bibliography:
+\begin{LaTeXdemo}
+  \cslsetup{bib-font = \linespread{2}\selectfont}
+\end{LaTeXdemo}
+
+\DescribeOption{bib-item-sep}
+The vertical space between entries in the bibliography is configured in the
+CSL style.
+It can be overridden by this \opt{bib-item-sep} option.
+It is recommended to set \opt{bib-item-sep} to a stretchable glue rather than
+a fixed length to help reducing page breaks in the middle of an entry.
+\begin{LaTeXdemo}
+  \cslsetup{bib-item-sep = 8 pt plus 4 pt minus 2 pt}
+\end{LaTeXdemo}
+
+\DescribeOption{bib-hang}
+The \opt{bib-hang} option sets the hanging indentation length which is
+usually used for author-date style references.
+By default, it is 1 em (with respect to the \opt{bib-font} size if set).
+
+
+\begin{function}{\addbibresource}
+  \begin{syntax}
+    \cs{addbibresource}\oarg{options}\marg{resouce}
+  \end{syntax}
+\end{function}
+
+The \cs{addbibresource} command adds the contents of \meta{resource} into the
+bibliographic metadata.
+Currently, only Bib(La)TeX \file{.bib} format is supported.
+
+and Bib(La)TeX \file{.bib} are supported.
+It is internally converted to CSL-JSON\footnote{\url{https://github.com/citation-style-language/schema\#csl-json-schema}}, the data model defined with CSL
+and the mapping of entry-types and fields from \file{.bib} to CSL-JSON is detailed
+in GitHub wiki
+page\footnote{\url{https://github.com/zepinglee/citeproc-lua/wiki/Bib-CSL-mapping}}.
+Note that only UTF-8 encoding is supported for the \meta{resource} file.
+\begin{LaTeXdemo}
+  \addbibresource{bibfile.bib}
+\end{LaTeXdemo}
+
+
+\begin{function}{\cite}
+  \begin{syntax}
+    \cs{cite}\oarg{options}\marg{keys}
+  \end{syntax}
+\end{function}
+
+The citation command is similar to the one in standard LaTeX except that the
+\meta{options} is in key-value style.
+The \meta{options} can be \opt{prefix}, \opt{suffix} or one of the locators:
+\opt{book},
+\opt{chapter},
+\opt{column},
+\opt{figure},
+\opt{folio},
+\opt{issue},
+\opt{line},
+\opt{note},
+\opt{opus},
+\opt{page},
+\opt{paragraph},
+\opt{part},
+\opt{section},
+\opt{sub-verbo},
+\opt{verse},
+and \opt{volume}.
+An example is as follows.
+\begin{LaTeXdemo}
+  \cite[prefix = {See }, page = 42]{ITEM-1}
+\end{LaTeXdemo}
+
+The traditional form \cs{cite}\oarg{prenote}\oarg{postnote}\marg{keys}
+introduced in \pkg{natbib} and \pkg{biblatex} is also supported but not
+recommended.
+If only one optional argument is provided, it is treated as \meta{postnote}.
+The \meta{postnote} is used as a page locator if it consists of only digits.
+
+In other packages, several commands are provided for producing citations in
+different styles such as \cs{citet}, \cs{citep}, \cs{parencite}, and
+\cs{footnotecite}.
+In \pkg{csl} package, however, the format of citations is fixed as formatted
+in CSL style and it is impossible to select another format without modifying
+the \file{.csl} style file.
+Note that narrative citation (like ``Doe (2018)'') will be supported in CSL 1.1.
+
+
+
+\begin{function}{\printbibliography}
+  \begin{syntax}
+    \cs{printbibliography}\oarg{options}
+  \end{syntax}
+\end{function}
+
+This command prints the reference list.
+Currently no options are available.
+
+
+% \begin{function}{\cites}
+%   \begin{syntax}
+%     \cs{cite}\oarg{options}\marg{keys}
+%   \end{syntax}
+% \end{function}
+
+
+
+
+% \markdownInput{bib-csl-mapping.md}
+
+
+\section{Compatibility with other packages}
+
+\paragraph{\pkg{babel}}
+
+The main language set by \pkg{babel} is used as the locale for \pkg{csl}.
+
+\paragraph{\pkg{hyperref}}
+
+When \pkg{hyperref} is loaded, the DOIs, PMIDs, and PMCIDs are correctly
+rendered as hyperlinks.
+But the citations are not linked to the entries in bibliography.
+
+\paragraph{Incompatible packages}
+
+The following packages are not compatible with \pkg{csl}.
+An error will be triggered if any of them is loaded together with \pkg{csl}.
+\begin{itemize}
+  \item \pkg{babelbib}
+  \item \pkg{backref}
+  \item \pkg{biblatex}
+  \item \pkg{bibtopic}
+  \item \pkg{bibunits}
+  \item \pkg{chapterbib}
+  \item \pkg{cite}
+  \item \pkg{citeref}
+  \item \pkg{inlinebib}
+  \item \pkg{jurabib}
+  \item \pkg{mcite}
+  \item \pkg{mciteplus}
+  \item \pkg{multibib}
+  \item \pkg{natbib}
+  \item \pkg{splitbib}
+\end{itemize}
+
+
+
+\section{Known issues}
+
+The \pkg{csl} package is in early development stage and there are some issues with it.
+
+\begin{itemize}
+  \item The \pkg{citeproc-lua} has not implemented all the features of CSL,
+    especially disambiguation and collapsing.
+    For detailed information of the coverage on the CSL standard test
+    suite\footnote{\url{https://github.com/citation-style-language/test-suite}},
+    see \href{https://github.com/zepinglee/citeproc-lua/blob/main/test/citeproc-test.log}{citeproc-test.log}
+    in the GitHub repository.
+  \item The processor is much slower than expected compared to other
+    reference engines.
+    This is because little care has been taken in the development so far.
+    Optimization is needed in the future.
+  \item When used with \pkg{hyperref}, the citations are not correctly rendered
+    as hyper links.
+  \item The Unicode sorting method is provided by \pkg{lua-uca} package and
+    CJK scripts are not supported so far.
+\end{itemize}
+
+
+
+
+\end{documentation}
+
+\end{document}
