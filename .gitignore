@@ -1,4 +1,6 @@
 build/
+csl-ctan/
+csl.tds/
 example/example.json
 example/example.pdf
 

@@ -1,9 +1,9 @@
 [submodule "schema"]
 	path = schema
 	url = https://github.com/citation-style-language/schema.git
+[submodule "locales"]
+	path = locales
+	url = https://github.com/citation-style-language/locales.git
 [submodule "test/test-suite"]
 	path = test/test-suite
 	url = https://github.com/citation-style-language/test-suite.git
-[submodule "test/locales"]
-	path = test/locales
-	url = https://github.com/citation-style-language/locales.git

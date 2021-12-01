@@ -176,7 +176,7 @@ local function run_test(fixture)
       if not lang then
         return nil
       end
-      local path = "./test/locales/locales-" .. lang .. ".xml"
+      local path = "./locales/csl-locales-" .. lang .. ".xml"
       local content = read_file(path)
       if not content then
         return nil

@@ -5,3 +5,6 @@ test:
 
 install:
 	l3build install
+
+ctan:
+	l3build ctan

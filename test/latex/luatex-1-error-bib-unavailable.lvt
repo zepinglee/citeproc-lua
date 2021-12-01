@@ -7,7 +7,7 @@
 \usepackage{csl}
 
 \cslsetup{
-  style    = plain,
+  style    = apa,
   bib-data = bib-unavailable.bib,
 }
 

@@ -5,7 +5,7 @@ local util = citeproc.util
 require("lualibs")
 
 
-core.locale_file_format = nil
+core.locale_file_format = "csl-locales-%s.xml"
 core.ids = {}
 core.loaded_ids = {}
 core.uncite_all_items = false

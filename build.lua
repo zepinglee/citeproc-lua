@@ -6,22 +6,18 @@
 module = "csl"
 
 docfiledir = "./doc"
-sourcefiledir = "./citeproc"
-supportdir = "./bin"
 testfiledir = "./test/latex"
-testsuppdir = "./test/latex/support"
+testsuppdir = testfiledir .. "/support"
 
-installfiles = {"*.sty", "*.lua", "*.json", "citeproc"}
-scriptfiles = {"*.lua", "citeproc"}
+exefiles = {"**/citeproc"}
+installfiles = {"**/*.sty", "**/*.json", "**/csl-locales-*.xml", "**/*.csl"}
+scriptfiles = {"**/*.lua", "**/citeproc"}
 -- scriptmanfiles = {"citeproc.1"}
-sourcefiles = {"*.sty", "*.lua", "*.json", "citeproc"}
+sourcefiles = {"citeproc/*", "latex/*", "locales/csl-locales-*.xml", "styles/*.csl"}
 -- tagfiles = {}
--- typesetdemofiles = {}
+typesetfiles = {"*.tex"}
 
 includetests = {}
-
--- checkengines = {"luatex"}
-stdengine = "luatex"
 
 checkconfigs = {
   "build",
@@ -31,15 +27,10 @@ checkconfigs = {
   "test/latex/config-other-3",
 }
 
--- checkopts = "-interaction=nonstopmode -shell-escape"
-
 asciiengines = {}
--- checkruns = 1
--- flatten = false
--- flattentds = false
 packtdszip = true
 
--- tdslocations = {
---   "scripts/csl/*.lua",
---   "tex/latex/csl/citeproc/*.json",
--- }
+tdslocations = {
+  "tex/latex/csl/styles/*.csl",
+  "tex/latex/csl/locales/csl-locales-*.xml",
+}

@@ -14,7 +14,7 @@
 \input{csl-citation-tests}
 
 \TEST{Bibilography}{
-  \bibliographystyle{plain}
+  \bibliographystyle{apa}
   \bibliography{test}
   \showbibliography
 }
