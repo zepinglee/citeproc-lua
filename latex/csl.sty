@@ -27,6 +27,7 @@
 
 \csl_incompatible_package:n { babelbib }
 \csl_incompatible_package:n { backref }
+\csl_incompatible_package:n { biblatex }
 \csl_incompatible_package:n { bibtopic }
 \csl_incompatible_package:n { bibunits }
 \csl_incompatible_package:n { chapterbib }
@@ -350,11 +351,13 @@
 \tl_new:N \l__csl_suffix_separator_tl
 \tl_new:N \l__csl_locale_tl
 \bool_new:N \l__csl_force_locale_bool
+\tl_new:N \l__csl_bib_font_tl
+\tl_new:N \l__csl_bib_item_sep_tl
+\tl_new:N \l__csl_bib_hang_tl
 \bool_new:N \l__csl_hanging_indent_bool
 \tl_new:N \l__csl_line_spacing_tl
 \tl_new:N \l__csl_entry_spacing_tl
-\tl_new:N \l__csl_bib_hang_tl
-\tl_new:N \l__csl_bib_sep_tl
+
 
 \keys_define:nn { csl }
   {
@@ -364,11 +367,12 @@
     suffix-separator .tl_set:N = \l__csl_suffix_separator_tl ,
     locale .tl_set:N = \l__csl_locale_tl ,
     force-locale .bool_set:N = \l__csl_force_locale_bool ,
+    bib-font .tl_set:N = \l__csl_bib_font_tl ,
+    bib-item-sep .tl_set:N = \l__csl_bib_item_sep_tl ,
+    bib-hang .tl_set:N = \l__csl_bib_hang_tl ,
     hanging-indent .bool_set:N = \l__csl_hanging_indent_bool ,
     line-spacing .tl_set:N = \l__csl_line_spacing_tl ,
     entry-spacing .tl_set:N = \l__csl_entry_spacing_tl ,
-    bib-hang .tl_set:N = \l__csl_bib_hang_tl ,
-    bib-sep .tl_set:N = \l__csl_bib_sep_tl ,
   }
 
 \keys_set:nn { csl }
@@ -654,10 +658,8 @@
 
 \tl_new:N \l__csl_bib_postamble_tl
 
-\tl_new:N \l__csl_bib_font_tl
-
 \dim_new:N \l__csl_bib_hang_dim
-\skip_new:N \l__csl_bib_sep_skip
+\skip_new:N \l__csl_bib_item_sep_skip
 
 \cs_new:Npn \csl_set_bib_label_spacing:n #1
   {
@@ -677,15 +679,15 @@
 \cs_new:Nn \csl_set_bib_item_sep:
   {
     \skip_zero:N \parsep
-    \tl_if_empty:NTF \l__csl_bib_sep_tl
+    \tl_if_empty:NTF \l__csl_bib_item_sep_tl
       {
-        \skip_set:Nn \l__csl_bib_sep_skip
+        \skip_set:Nn \l__csl_bib_item_sep_skip
           {
             8 pt plus 4 pt minus 2 pt * \dim_ratio:nn { 1 em } { 8 pt }
             * \l__csl_entry_spacing_tl
           }
       }
-      { \skip_set:Nn \l__csl_bib_sep_skip { \l__csl_bib_sep_tl } }
+      { \skip_set:Nn \l__csl_bib_item_sep_skip { \l__csl_bib_item_sep_tl } }
   }
 
 \cs_new:Nn \csl_set_bib_allow_break:
