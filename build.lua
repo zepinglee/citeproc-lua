@@ -10,7 +10,7 @@ testfiledir = "./test/latex"
 testsuppdir = testfiledir .. "/support"
 
 exefiles = {"**/citeproc"}
-installfiles = {"**/*.sty", "**/*.json", "**/csl-locales-*.xml", "**/*.csl"}
+installfiles = {"**/*.sty", "**/*.lua", "**/*.json", "**/csl-locales-*.xml", "**/*.csl"}
 scriptfiles = {"**/*.lua", "**/citeproc"}
 -- scriptmanfiles = {"citeproc.1"}
 sourcefiles = {"citeproc/*", "latex/*", "locales/csl-locales-*.xml", "styles/*.csl"}
