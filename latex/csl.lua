@@ -26,10 +26,10 @@ function csl.info(str)
 end
 
 
-function csl.init(style_name, bib_files, locale, force_locale)
+function csl.init(style_name, bib_files, lang)
   bib_files = util.split(util.strip(bib_files), "%s*,%s*")
 
-  csl.engine = core.init(style_name, bib_files, locale, force_locale)
+  csl.engine = core.init(style_name, bib_files, lang)
 
   if csl.engine then
     csl.initialized = "true"

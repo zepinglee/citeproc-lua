@@ -350,7 +350,6 @@
 \tl_new:N \l__csl_prefix_separator_tl
 \tl_new:N \l__csl_suffix_separator_tl
 \tl_new:N \l__csl_locale_tl
-\bool_new:N \l__csl_force_locale_bool
 \tl_new:N \l__csl_bib_font_tl
 \tl_new:N \l__csl_bib_item_sep_tl
 \tl_new:N \l__csl_bib_hang_tl
@@ -365,7 +364,6 @@
     prefix-separator .tl_set:N = \l__csl_prefix_separator_tl ,
     suffix-separator .tl_set:N = \l__csl_suffix_separator_tl ,
     locale .tl_set:N = \l__csl_locale_tl ,
-    force-locale .bool_set:N = \l__csl_force_locale_bool ,
     bib-font .tl_set:N = \l__csl_bib_font_tl ,
     bib-item-sep .tl_set:N = \l__csl_bib_item_sep_tl ,
     bib-hang .tl_set:N = \l__csl_bib_hang_tl ,
@@ -529,10 +527,6 @@
               \csloptions
                 {
                   locale = \l__csl_locale_tl,
-                  force-locale =
-                    \bool_if:NTF \l__csl_force_locale_bool
-                      { true }
-                      { false },
                 }
             }
         \fi
@@ -544,10 +538,7 @@
             csl.init(
               "\l__csl_style_tl",
               "\l__csl_bib_resources_clist",
-              "\l__csl_locale_tl",
-              \bool_if:NTF \l__csl_force_locale_bool
-                { true }
-                { false }
+              "\l__csl_locale_tl"
             )
           }
         \str_if_eq:eeT { \lua_now:n { tex.print(csl.initialized) } } { true }

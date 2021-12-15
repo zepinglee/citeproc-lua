@@ -97,7 +97,7 @@ function core.make_citeproc_sys(bib_files)
   return citeproc_sys
 end
 
-function core.init(style_name, bib_files, locale, force_locale)
+function core.init(style_name, bib_files, lang)
   if style_name == "" or #bib_files == 0 then
     return nil
   end
@@ -107,12 +107,15 @@ function core.init(style_name, bib_files, locale, force_locale)
     return nil
   end
 
-  if locale == "" then
-    locale = nil
+  local force_lang = nil
+  if lang and lang ~= "" then
+    force_lang = true
+  else
+    lang = nil
   end
 
   local citeproc_sys = core.make_citeproc_sys(bib_files)
-  local engine = citeproc.new(citeproc_sys, style, locale, force_locale)
+  local engine = citeproc.new(citeproc_sys, style, lang, force_lang)
   return engine
 end
 

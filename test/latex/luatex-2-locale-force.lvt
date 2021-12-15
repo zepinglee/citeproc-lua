@@ -2,15 +2,14 @@
 
 \documentclass{article}
 
-\usepackage[english]{babel}
 \input{csl-test}
 
+\usepackage[english]{babel}
 \usepackage{csl}
 
 \cslsetup{
-  style        = locale-force,
-  locale       = zh-CN,
-  force-locale = true,
+  style  = locale-force,
+  locale = zh-CN,
 }
 \addbibresource{test.bib}
 

@@ -123,10 +123,9 @@ local function process_aux_file(aux_file)
 
   local style_name, bib_files, citations, csl_options = read_aux_file(aux_file)
 
-  local locale = csl_options.locale
-  local force_locale = csl_options["force_locale"] ~= "false"
+  local lang = csl_options.locale
 
-  local engine = core.init(style_name, bib_files, locale, force_locale)
+  local engine = core.init(style_name, bib_files, lang)
   local style_class = engine:get_style_class()
 
   local citation_strings = core.process_citations(engine, citations)
