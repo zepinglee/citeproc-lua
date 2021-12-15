@@ -7,10 +7,10 @@
 \usepackage{csl}
 
 \cslsetup{
-  style    = locale-test,
-  bib-data = test.bib,
-  locale   = zh-CN,
+  style  = locale-test,
+  locale = zh-CN,
 }
+\addbibresource{test.bib}
 
 
 \begin{document}

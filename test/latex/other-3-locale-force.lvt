@@ -9,10 +9,10 @@
 
 \cslsetup{
   style        = locale-force,
-  bib-data     = test.bib,
   locale       = zh-CN,
   force-locale = true,
 }
+\addbibresource{test.bib}
 
 
 \begin{document}

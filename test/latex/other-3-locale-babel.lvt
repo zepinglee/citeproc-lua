@@ -8,10 +8,8 @@
 
 \usepackage{csl}
 
-\cslsetup{
-  style    = locale-test,
-  bib-data = test.bib,
-}
+\cslsetup{style = locale-test}
+\addbibresource{test.bib}
 
 
 \begin{document}

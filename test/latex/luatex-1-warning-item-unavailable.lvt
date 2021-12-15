@@ -6,10 +6,8 @@
 
 \usepackage{csl}
 
-\cslsetup{
-  style    = apa,
-  bib-data = test.bib,
-}
+\cslsetup{style = apa}
+\addbibresource{test.bib}
 
 
 \begin{document}

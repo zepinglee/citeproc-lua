@@ -6,10 +6,8 @@
 
 \usepackage{csl}
 
-\cslsetup{
-  style    = apa,
-  bib-data = bib-unavailable.bib,
-}
+\cslsetup{style = apa}
+\addbibresource{bib-unavailable.bib}
 
 
 \begin{document}

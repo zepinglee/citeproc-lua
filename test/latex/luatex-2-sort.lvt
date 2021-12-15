@@ -7,10 +7,10 @@
 \usepackage{csl}
 
 \cslsetup{
-  style    = sort,
-  bib-data = sort.bib,
-  locale   = cs-CZ,
+  style  = sort,
+  locale = cs-CZ,
 }
+\addbibresource{sort.bib}
 
 
 \begin{document}

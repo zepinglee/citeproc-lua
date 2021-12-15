@@ -5,7 +5,7 @@ TEST 1: Item unavailable
 ============================================================
 \g__csl_citation_count_ITEM-UNAVAILABLE_int=\count...
 Module citeproc Warning: Failed to retrieve item "ITEM-UNAVAILABLE" on input lin
-e 22
+e 20
 > \l__csl_citation_tl=[CSL STYLE ERROR: reference with no printed form.].
 <recently read> }
 l. ...}

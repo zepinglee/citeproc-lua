@@ -346,7 +346,7 @@
 
 
 \tl_new:N \l__csl_style_tl
-\clist_new:N \l__csl_bib_files_clist
+\clist_new:N \l__csl_bib_resources_clist
 \tl_new:N \l__csl_prefix_separator_tl
 \tl_new:N \l__csl_suffix_separator_tl
 \tl_new:N \l__csl_locale_tl
@@ -362,7 +362,6 @@
 \keys_define:nn { csl }
   {
     style .tl_set:N = \l__csl_style_tl ,
-    bib-data .clist_set:N = \l__csl_bib_files_clist ,
     prefix-separator .tl_set:N = \l__csl_prefix_separator_tl ,
     suffix-separator .tl_set:N = \l__csl_suffix_separator_tl ,
     locale .tl_set:N = \l__csl_locale_tl ,
@@ -508,11 +507,11 @@
     \tl_if_empty:NTF \l__csl_style_tl
       { \tl_set_eq:NN \l__csl_style_tl \g__csl_aux_bibstyle_tl }
       { \exp_args:Nx \csl_write_aux_bibstyle:n { \l__csl_style_tl } }
-    \clist_if_empty:NTF \l__csl_bib_files_clist
-      { \clist_set_eq:NN \l__csl_bib_files_clist \g__csl_aux_bib_files_clist }
+    \clist_if_empty:NTF \l__csl_bib_resources_clist
+      { \clist_set_eq:NN \l__csl_bib_resources_clist \g__csl_aux_bib_files_clist }
       {
         \exp_args:Nx \csl_write_aux_bibdata:n
-          { \clist_use:Nn \l__csl_bib_files_clist { , } }
+          { \clist_use:Nn \l__csl_bib_resources_clist { , } }
       }
     \tl_if_empty:NT \l__csl_locale_tl
       {
@@ -544,7 +543,7 @@
           {
             csl.init(
               "\l__csl_style_tl",
-              "\l__csl_bib_files_clist",
+              "\l__csl_bib_resources_clist",
               "\l__csl_locale_tl",
               \bool_if:NTF \l__csl_force_locale_bool
                 { true }
@@ -576,11 +575,10 @@
 \cs_set:Npn \bibstyle #1
   { \tl_gset:Nn \g__csl_aux_bibstyle_tl { #1 } }
 
-% Setting bib resource
-\NewDocumentCommand \addbibresource { m }
-  {
-    \clist_put_right:Nn \l__csl_bib_files_clist { #1 }
-  }
+
+\NewDocumentCommand \addbibresource { o m }
+  { \clist_put_right:Nn \l__csl_bib_resources_clist { #2 } }
+
 
 \clist_new:N \g__csl_aux_bib_files_clist
 \cs_set:Npn \bibdata #1

@@ -6,10 +6,8 @@
 
 \usepackage{csl}
 
-\cslsetup{
-  style    = chicago-note-bibliography,
-  bib-data = test.bib,
-}
+\cslsetup{style = chicago-note-bibliography}
+\addbibresource{test.bib}
 
 
 \begin{document}
