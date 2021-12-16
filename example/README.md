@@ -34,7 +34,6 @@ cd example
 pdflatex example.tex
 "$(kpsewhich -var-value=TEXMFHOME)"/scripts/csl/citeproc example.aux
 pdflatex example.tex
-pdflatex example.tex
 ```
 
 
