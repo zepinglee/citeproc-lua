@@ -58,6 +58,11 @@ function csl.register_citation_info(citation_info)
 end
 
 
+function csl.enable_linking()
+  csl.engine:enable_linking()
+end
+
+
 function csl.cite(citation_info)
   if not csl.engine then
     csl.error("CSL engine is not initialized.")

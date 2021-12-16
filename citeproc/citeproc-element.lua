@@ -304,7 +304,18 @@ function Element:wrap (str, context)
   local suffix = context.options["suffix"]
   local res = str
   if prefix and prefix ~= "" then
+    local linkable = false
+    local variable_name = context.options["variable"]
+    if variable_name == "DOI" or variable_name == "PMID" or variable_name == "PMCID" then
+      linkable = true
+    end
+    if variable_name == "URL" or (linkable and not string.match(prefix, "^https?://")) then
+      res:add_format(variable_name, "true")
+    end
     res = richtext.concat(prefix, res)
+    if linkable and string.match(prefix, "^https?://") then
+      res:add_format("URL", "true")
+    end
   end
   if suffix and suffix ~= "" then
     res = richtext.concat(res, suffix)

@@ -58,25 +58,61 @@ formats.html = {
   ["@display/indent"] = function (str, state)
     return '<div class="csl-indent">' .. str .. "</div>\n  "
   end,
+  ["@URL/true"] = function (str, state)
+    if state.engine.linking_enabled then
+      return string.format('<a href="%s">%s</a>', str, str)
+    else
+      return str
+    end
+  end,
+  ["@DOI/true"] = function (str, state)
+    if state.engine.linking_enabled then
+      local href = str
+      if not string.match(href, "^https?://") then
+        href = "https://doi.org/" .. str;
+      end
+      return string.format('<a href="%s">%s</a>', href, str)
+    else
+      return str
+    end
+  end,
+  ["@PMID/true"] = function (str, state)
+    if state.engine.linking_enabled then
+      local href = str
+      if not string.match(href, "^https?://") then
+        href = "https://www.ncbi.nlm.nih.gov/pubmed/" .. str;
+      end
+      return string.format('<a href="%s">%s</a>', href, str)
+    else
+      return str
+    end
+  end,
+  ["@PMCID/true"] = function (str, state)
+    if state.engine.linking_enabled then
+      local href = str
+      if not string.match(href, "^https?://") then
+        href = "https://www.ncbi.nlm.nih.gov/pmc/articles/" .. str;
+      end
+      return string.format('<a href="%s">%s</a>', href, str)
+    else
+      return str
+    end
+  end,
 }
 
 formats.latex = {
   ["text_escape"] = function (str)
-    if util.startswith(str, "http://") or util.startswith(str, "https://") then
-      str = "\\url{" .. str .. "}"
-    else
-      str = str:gsub("\\", "\\textbackslash")
-      str = str:gsub("#", "\\#")
-      str = str:gsub("%$", "\\$")
-      str = str:gsub("%%", "\\%%")
-      str = str:gsub("&", "\\&")
-      str = str:gsub("{", "\\{")
-      str = str:gsub("}", "\\}")
-      str = str:gsub("_", "\\_")
-      str = str:gsub(util.unicode["no-break space"], "~")
-      for char, sub in pairs(util.superscripts) do
-        str = string.gsub(str, char, "\\textsuperscript{" .. sub .. "}")
-      end
+    str = str:gsub("\\", "\\textbackslash")
+    str = str:gsub("#", "\\#")
+    str = str:gsub("%$", "\\$")
+    str = str:gsub("%%", "\\%%")
+    str = str:gsub("&", "\\&")
+    str = str:gsub("{", "\\{")
+    str = str:gsub("}", "\\}")
+    str = str:gsub("_", "\\_")
+    str = str:gsub(util.unicode["no-break space"], "~")
+    for char, sub in pairs(util.superscripts) do
+      str = string.gsub(str, char, "\\textsuperscript{" .. sub .. "}")
     end
     return str
   end,
@@ -130,6 +166,42 @@ formats.latex = {
   end,
   ["@display/indent"] = function (str, state)
     return str
+  end,
+  ["@URL/true"] = function (str, state)
+    return "\\url{" .. str .. "}"
+  end,
+  ["@DOI/true"] = function (str, state)
+    if state.engine.linking_enabled then
+      local href = str
+      if not string.match(href, "^https?://") then
+        href = "https://doi.org/" .. str;
+      end
+      return string.format("\\href{%s}{%s}", href, str)
+    else
+      return str
+    end
+  end,
+  ["@PMID/true"] = function (str, state)
+    if state.engine.linking_enabled then
+      local href = str
+      if not string.match(href, "^https?://") then
+        href = "https://www.ncbi.nlm.nih.gov/pubmed/" .. str;
+      end
+      return string.format("\\href{%s}{%s}", href, str)
+    else
+      return str
+    end
+  end,
+  ["@PMCID/true"] = function (str, state)
+    if state.engine.linking_enabled then
+      local href = str
+      if not string.match(href, "^https?://") then
+        href = "https://www.ncbi.nlm.nih.gov/pmc/articles/" .. str;
+      end
+      return string.format("\\href{%s}{%s}", href, str)
+    else
+      return str
+    end
   end,
 }
 

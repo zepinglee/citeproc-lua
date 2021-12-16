@@ -1703,8 +1703,8 @@
             "type": "literal"
         },
         "pubmed": {
-            "csl": null,
-            "source": "tugboat.bst"
+            "csl": "PMID",
+            "source": "urlbst"
         },
         "pubstate": {
             "csl": null,

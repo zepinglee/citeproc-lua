@@ -1,0 +1,26 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\input{csl-test}
+
+\usepackage{csl}
+\usepackage{xurl}
+\usepackage{hyperref}
+
+\cslsetup{style = hyperref-test}
+\addbibresource{hyperref-test.bib}
+
+
+\begin{document}
+
+\START
+
+\cite{ITEM-1}
+
+\TEST{Bibilography}{
+  \printbibliography
+  \showbibliography
+}
+
+\end{document}

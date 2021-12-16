@@ -52,6 +52,7 @@ function CiteProc.new (sys, style, lang, force_lang)
   o.style:set_lang(lang, force_lang)
 
   o.formatter = formats.latex
+  o.linking_enabled = false
 
   setmetatable(o, { __index = CiteProc })
   return o
@@ -276,6 +277,14 @@ end
 
 function CiteProc:set_formatter(format)
   self.formatter = formats[format]
+end
+
+function CiteProc:enable_linking()
+  self.linking_enabled = true
+end
+
+function CiteProc:disable_linking()
+  self.linking_enabled = false
 end
 
 function CiteProc.set_base_class (node)

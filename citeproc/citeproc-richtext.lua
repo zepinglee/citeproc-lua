@@ -71,9 +71,7 @@ function RichText:_render(formatter, context)
       if formatter then
         local format = formatter[key]
         if type(format) == "string" then
-          if not util.startswith(res, "\\url") then
-            res = string.format(format, res)
-          end
+          res = string.format(format, res)
         elseif type(format) == "function" then
           res = format(res, context)
         end
@@ -645,6 +643,10 @@ richtext.tag_formats = {
 }
 
 richtext.default_formats = {
+  ["URL"] = "false",
+  ["DOI"] = "false",
+  ["PMID"] = "false",
+  ["PMCID"] = "false",
   ["font-style"] = "normal",
   ["font-variant"] = "normal",
   ["font-weight"] = "normal",
@@ -654,6 +656,10 @@ richtext.default_formats = {
 }
 
 richtext.format_sequence = {
+  "URL",
+  "DOI",
+  "PMID",
+  "PMCID",
   "font-style",
   "font-variant",
   "font-weight",

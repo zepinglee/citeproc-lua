@@ -1,0 +1,27 @@
+<style
+    xmlns="http://purl.org/net/xbiblio/csl"
+    class="in-text"
+    version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2021-12-16T00:00:00+08:00</updated>
+  </info>
+  <citation>
+    <layout>
+      <text value="citation"/>
+    </layout>
+  </citation>
+  <bibliography>
+    <layout delimiter=", ">
+      <text variable="URL" prefix="URL: "/>
+      <text variable="DOI" prefix="DOI: "/>
+      <group delimiter=": ">
+        <text value="URL of DOI"/>
+        <text variable="DOI" prefix="https://doi.org/"/>
+      </group>
+      <text variable="PMID" prefix="PMID: "/>
+      <text variable="PMCID" prefix="PMCID: "/>
+    </layout>
+  </bibliography>
+</style>

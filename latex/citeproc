@@ -126,6 +126,9 @@ local function process_aux_file(aux_file)
   local lang = csl_options.locale
 
   local engine = core.init(style_name, bib_files, lang)
+  if csl_options.linking == "true" then
+    engine:enable_linking()
+  end
   local style_class = engine:get_style_class()
 
   local citation_strings = core.process_citations(engine, citations)

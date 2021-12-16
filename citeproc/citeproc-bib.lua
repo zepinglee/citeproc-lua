@@ -379,6 +379,10 @@ function bib.process_special_fields(item, bib_fields)
     end
   end
 
+  if not item.PMID and bib_fields.eprint and string.lower(bib_fields.eprinttype) == "pubmed" then
+    item.PMID = bib_fields.eprint
+  end
+
   -- if not item.language then
   --   if util.has_cjk_char(item.title) then
   --     item.language = "zh"
