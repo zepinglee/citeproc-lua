@@ -303,7 +303,7 @@ class BibData(OrderedDict):
                 line = f'{field}|{target}|{notes}\n'
                 res += line
 
-        with open('doc/bib-csl-mapping.md', 'w') as f:
+        with open('tools/bib-csl-mapping.md', 'w') as f:
             f.write(res)
 
 

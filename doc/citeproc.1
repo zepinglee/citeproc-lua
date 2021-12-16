@@ -1,0 +1,26 @@
+.TH citeproc 1 "0.0.1"
+.SH NAME
+citeproc \- make CSL citations and bibliography for LaTeX
+.SH SYNOPSIS
+.B citeproc
+.RB [<options>]
+.IR auxname [ \fB.aux\fP ]
+.SH DESCRIPTION
+The citeproc engine is a Citation Style Lanugage processor for LaTeX.
+It reads the auxiliary
+.RB ( .aux )
+file
+.I auxname
+and creates a bibliography
+.RB ( .bbl )
+file
+.SH OPTIONS
+.IP \-h ", " \-\-help
+Prints the usage and exits.
+.IP \-V ", " \-\-version
+Prints the version number and exits.
+.SH AUTHOR
+Zeping Lee <zepinglee@gmail.com>
+.PP
+Please log issues on the GitHub homepage:
+https://github.com/zepinglee/citeproc-lua/issues.

@@ -46,15 +46,15 @@ end
 
 
 local function print_version()
-  io.write(string.format("CiteProc-Lua %s\n", citeproc.VERSION))
+  io.write(string.format("CiteProc-Lua %s\n", citeproc.__VERSION__))
 end
 
 
 local function print_help()
-  io.write("Usage: citeproc [OPTIONS] BIBFILE.bib\n")
+  io.write("Usage: citeproc [options] auxname[.aux]\n")
   io.write("Options:\n")
   io.write("  -h, --help          Print this message and exit.\n")
-  io.write("  -v, --version       Print the version number and exit.\n")
+  io.write("  -V, --version       Print the version number and exit.\n")
 end
 
 
@@ -159,11 +159,10 @@ local function main()
   --   print( k, v )
   -- end
 
-  if args.v or args.version then
+  if args.V or args.version then
     print_version()
     return
-  end
-  if args.h or args.help then
+  elseif args.h or args.help then
     print_help()
     return
   end
