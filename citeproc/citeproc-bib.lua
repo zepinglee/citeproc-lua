@@ -236,7 +236,7 @@ function bib.parse_single_name(str)
   local literal = string.match(str, "^{(.*)}$")
   if literal then
     return {
-      literal = '<span class="nocase">' .. literal .. '</span>',
+      literal = literal,
     }
   end
 
