@@ -1,86 +1,44 @@
-# Notes on failures
+# Tests
 
+## `citeproc-lua` tests
 
-## Capitalizing
+The [`busted`](https://olivinelabs.com/busted/#output-handlers) library is required to run the tests. Make sure it is installed with the same Lua version as LuaTeX so that it can be loaded correctly.
 
-It is beyond the spec to capitalize the initial term of each item.
-See <https://github.com/jgm/citeproc/blob/b27201c3ac48ffd2853f77152df19b6e2cf36987/README.md#L107-L113>.
+```bash
+luarocks --lua-dir /usr/local/opt/lua@5.3 --lua-version 5.3 install busted
+```
 
-- `position_IbidWithLocator`
-- `position_IfIbidWithLocatorIsTrueThenIbidIsTrue`
+Clone the two submodules [`test-suite`](https://github.com/citation-style-language/test-suite) and [`locales`](https://github.com/citation-style-language/locales) into the [`test/`](https://github.com/zepinglee/citeproc-lua/tree/main/test) directory.
 
+```bash
+git submodule update --init
+```
 
-## Empty bibliography output
+Run all the tests from `test-suite`.
 
-- `sort_OmittedBibRefMixedNumericStyle`
-- `sort_OmittedBibRefNonNumericStyle`
+```bash
+busted --run=citeproc
+```
 
-How to distinguish a numeric style?
+The log is printed to [`test/citeproc-test.log`](https://github.com/zepinglee/citeproc-lua/tree/main/test/citeproc-test.log).
+Currently the `citeproc-lua` has passed 600 of 853 tests from test-suite.
 
+Select tests via pattern.
 
-## Group suppressed
+```bash
+busted --run=citeproc --filter=sort_CitationNumber
+```
 
-- `variables_TitleShortOnShortTitleNoTitleCondition`
-  This test is contrary to the spec.  The whole group should
-  be suppressed because it contains variables but none are
-  called. See https://github.com/citation-style-language/test-suite/issues/29
-- `variables_TitleShortOnShortTitleNoTitleCondition`
+Run the test of modules in `citeproc-lua`.
 
+```bash
+busted --pattern=formatted_text --filter=quotes
+```
 
-## Varibles set in `note` field
+# LaTeX tests
 
-- label_NameLabelThroughSubstitute
-
-
-### bugreports_UnisaHarvardInitialization
-
-The expected output here includes a trailing space, which we delete.
-
-
-### flipflop_LeadingMarkupWithApostrophe
-
-Quotation marks in the prefix of cite-item are not transformed to double style and the punctuation after is not moved into quotes.
-
-
-### label_EditorTranslator2
-
-The period in `“Hello there.”` should be moved inside quotation marks.
-
-
-### label_PluralWithLocalizedAmpersand
-
-The `<term name="and" form="symbol">` does not exist in any locale files.
-
-
-### name_AllCapsInitialsUntouched
-
-- Not initialized. It should be `<name initialized-with="." />`.
-
-
-### number_OrdinalSpacing
-
-Heuristics are used to render pages label.
-
-
-### number_PlainHyphenOrEnDashAlwaysPlural
-
-- The difference of cs:text and cs:name is not revealed.
-  (Should it be `<number variable="page"/>`?)
-- Duplicate item id `ITEM-4`.
-- citeproc-js uses some heuristics to identify plurals,
-  but they aren't part of the spec and aren't entirely reliable.
-  "The logic will only set plurals where there is a numeric unit
-  on either side of a hyphen or en-dash. Numeric units are strings
-  ending in a number, or alphabetic strings consisting entirely of
-  characters appropriate to a roman numeral."  This won't catch
-  4a-5a or IIa-VIb.
-
-
-### position_IbidWithSuffix
-
-Name splitting issue.
-
-
-## variables_ContainerTitleShort2
-
-`container-title-short` in `ntoe` field.
+```bash
+l3build check
+l3build check --config test/latex/config-luatex-2 luatex-2-csl
+l3build save --config test/latex/config-other-3 other-3-csl
+```
