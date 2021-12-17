@@ -1,5 +1,10 @@
 # citeproc-lua
 
+[![CTAN](https://img.shields.io/ctan/v/citation-style-language)](https://www.ctan.org/pkg/citation-style-language)
+[![GitHub release](https://img.shields.io/github/v/release/zepinglee/citeproc-lua)](https://github.com/zepinglee/citeproc-lua/releases/latest)
+[![GitHub commits](https://img.shields.io/github/commits-since/zepinglee/citeproc-lua/latest)](https://github.com/zepinglee/citeproc-lua/commits/main)
+<!-- [![Actions Status](https://github.com/zepinglee/citeproc-lua/workflows/Test/badge.svg)](https://github.com/zepinglee/citeproc-lua/actions) -->
+
 The [Citation Style Language](https://citationstyles.org/) (CSL) is an
 XML-based language that defines the formats of citations and bibliography.
 There are currently thousands of styles in CSL including the most widely used
