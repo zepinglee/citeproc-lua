@@ -2,15 +2,14 @@
 
 The [Citation Style Language](https://citationstyles.org/)} (CSL) is an XML-based language that defines the formats of citations and bibliography.
 There are currently thousands of styles in CSL including the most widely used APA, Chicago, Vancouver, etc.
-The `citeproc-lua` project is a Lua implementation of CSL processor that is amimed for use with LaTeX.
-The engine reads bibliographic metadata and performs sorting and formatting
-both citations and bibliography according to the selected CSL style.
-A LaTeX package is also provided to communicate with the processor.
+The `citeproc-lua` project is a Lua implementation of CSL v1.0.1 processor that is aimed for use with LaTeX.
+The engine reads bibliographic metadata and performs sorting and formatting on both citations and bibliography according to the selected CSL style.
+A LaTeX package (`csl.sty`) is provided to communicate with the processor.
 
+This project is in early development stage and some feature of CSL (especially collapsing and disambiguation) are not implemented yet. Comments, suggestions and bug reports are welcome.
 
 ## LaTeX example
-
-A full example is in the [`example/`](example) directory.
+A full LaTeX example is in the [`example/`](example) directory.
 
 - LaTeX document example.tex
 
@@ -55,9 +54,7 @@ The CSL locale files and styles are redistributed under the [Creative Commons At
 
 - CSL
   - [CSL Homepage](https://citationstyles.org/)
-  - [CSL 1.0.1 specification](https://docs.citationstyles.org/en/stable/specification.html)
-  - [CSL 1.0.2 specification](https://github.com/citation-style-language/documentation/blob/master/specification.rst)
-  - [CSL 1.1 specification](https://github.com/citation-style-language/documentation/blob/v1.1/specification.rst)
+  - [CSL specification](https://docs.citationstyles.org/en/stable/specification.html)
   - [CSL schema](https://github.com/citation-style-language/schema)
   - [CSL processors in other languages](https://citationstyles.org/developers/#csl-processors)
     - [Juris-M/citeproc-js](https://github.com/Juris-M/citeproc-js)
