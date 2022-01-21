@@ -33,6 +33,7 @@ tagfiles = {
   "doc/citeproc.1",
   "CHANGELOG.md",
 }
+textfiles = {"doc/README.md", "CHANGELOG.md"}
 typesetfiles = {"*.tex"}
 
 includetests = {}
@@ -76,12 +77,12 @@ function update_tag(file, content, tagname, tagdate)
     local previous = string.match(content, "compare/(v" .. version_pattern .. ")%.%.%.HEAD")
     if tagname == previous then return content end
     content = string.gsub(content,
-      "## %[Unreleased%]",
-      "## [Unreleased]\n\n## [" .. tagname .."]")
-    return string.gsub(content,
+      "## %[Unreleased%]", "## [Unreleased]\n\n## [" .. tagname .. "] - " .. tagdate)
+    content = string.gsub(content,
       "v" .. version_pattern .. "%.%.%.HEAD",
       tagname .. "...HEAD\n[" .. tagname .. "]: " .. url_prefix .. previous
         .. "..." .. tagname)
+    return content
   end
   return content
 end
