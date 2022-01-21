@@ -4,7 +4,7 @@
 
 \input{csl-test}
 
-\usepackage{csl}
+\usepackage{citation-style-language}
 
 \cslsetup{style = apa}
 \addbibresource{test.bib}

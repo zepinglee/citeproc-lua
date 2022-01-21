@@ -1,10 +1,16 @@
-.PHONY: install test
+.PHONY: ctan doc install save test
 
 test:
 	busted --run=citeproc
 
+ctan:
+	l3build ctan
+
+doc:
+	latexmk -cd doc/citation-style-language-doc.tex
+
 install:
 	l3build install
 
-ctan:
-	l3build ctan
+save:
+	bash tools/l3build-save.sh

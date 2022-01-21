@@ -5,7 +5,7 @@
 \input{csl-test}
 
 \usepackage[english]{babel}
-\usepackage{csl}
+\usepackage{citation-style-language}
 
 \cslsetup{
   style  = locale-force,

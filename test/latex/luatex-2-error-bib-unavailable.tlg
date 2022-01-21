@@ -4,7 +4,8 @@ Don't change this file in any respect.
 TEST 1: Citation
 ============================================================
 \g__csl_citation_count_ITEM-1_int=\count...
-Package csl Warning: Citation `ITEM-1' on page 1 undefined on line ....
+Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
+(citation-style-language)                on line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
 l. ...}
@@ -12,7 +13,7 @@ l. ...}
 ============================================================
 TEST 2: Bibilography
 ============================================================
-Package csl Warning: The bibliography is empty.
+Package citation-style-language Warning: The bibliography is empty.
 ============================================================
 [1
 ] (luatex-2-error-bib-unavailable.aux)

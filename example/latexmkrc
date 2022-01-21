@@ -1,1 +1,1 @@
-$bibtex = '"$(kpsewhich -var-value=TEXMFHOME)"/scripts/csl/citeproc %O %S';
+$bibtex = '"$(kpsewhich -var-value=TEXMFHOME)"/scripts/citation-style-language/citeproc %O %S';

@@ -6,7 +6,7 @@
 
 \usepackage[french]{babel}
 
-\usepackage{csl}
+\usepackage{citation-style-language}
 
 \cslsetup{style = locale-test}
 \addbibresource{test.bib}

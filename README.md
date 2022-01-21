@@ -4,7 +4,7 @@ The [Citation Style Language](https://citationstyles.org/)} (CSL) is an XML-base
 There are currently thousands of styles in CSL including the most widely used APA, Chicago, Vancouver, etc.
 The `citeproc-lua` project is a Lua implementation of CSL v1.0.1 processor that is aimed for use with LaTeX.
 The engine reads bibliographic metadata and performs sorting and formatting on both citations and bibliography according to the selected CSL style.
-A LaTeX package (`csl.sty`) is provided to communicate with the processor.
+A LaTeX package (`citation-style-language.sty`) is provided to communicate with the processor.
 
 This project is in early development stage and some feature of CSL (especially collapsing and disambiguation) are not implemented yet. Comments, suggestions and bug reports are welcome.
 
@@ -16,7 +16,7 @@ A full LaTeX example is in the [`example/`](example) directory.
 ```latex
 \documentclass{article}
 
-\usepackage{csl}
+\usepackage{citation-style-language}
 \cslsetup{style = apa}
 \addbibresource{example.bib}
 

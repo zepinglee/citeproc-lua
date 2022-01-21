@@ -31,7 +31,7 @@
 \begin{document}
 
 \title{%
-  \pkg{csl} --- Citation Style Language for LaTeX
+  Bibliography formatting with \pkg{citation-style-language}
 }
 
 \author{%
@@ -59,12 +59,12 @@ The Citation Style Language\footnote{\url{https://citationstyles.org/}} (CSL)
 is an XML-based language that defines the formats of citations and bibliography.
 There are currently thousands of styles in CSL including the most widely used
 APA, Chicago, Vancouver, etc.
-The \pkg{csl} package is aimed to provide another reference formatting method
+The \pkg{citation-style-language} package is aimed to provide another reference formatting method
 for LaTeX that utilizes the CSL styles.
 It contains a citation processor implemented in pure Lua (\pkg{citeproc-lua})
 which reads bibliographic metadata and performs sorting and formatting on both
 citations and bibliography according to the selected CSL style.
-A LaTeX package (\file{csl.sty}) is provided to communicate with the processor.
+A LaTeX package (\file{citation-style-language.sty}) is provided to communicate with the processor.
 
 Note that this project is in early development stage and some feature of CSL
 are not implemented yet (especially collapsing and disambiguation).
@@ -73,11 +73,11 @@ Comments, suggestions, and bug reports are welcome.
 
 \section{Getting started}
 
-An example of using \pkg{csl} package is as follows.
+An example of using \pkg{citation-style-language} package is as follows.
 
 \begin{LaTeXdemo}
   \documentclass{...}
-  \usepackage{csl}
+  \usepackage{citation-style-language}
   \cslsetup{
     style = ...,
     ...
@@ -125,7 +125,7 @@ The general procedure is similar to the traditional BibTeX workflow.
   \end{syntax}
 \end{function}
 
-The behavior of the \pkg{csl} package is controlled by several key-value
+The behavior of the \pkg{citation-style-language} package is controlled by several key-value
 options which can be set with the \cs{cslsetup} command.
 For example,
 \begin{LaTeXdemo}
@@ -174,7 +174,7 @@ It may also be set \opt{auto} (default) and the \opt{default-locale} attribute i
 the CSL style file will be used.
 The locale falls back to ``\opt{en}'' (English) if the attribute is not set.
 When \pkg{babel} package is loaded, the selected main language is implicitly set
-as the \opt{locale} for \pkg{csl}.
+as the \opt{locale} for \pkg{citation-style-language}.
 
 \DescribeOption{bib-font}
 Usually, the list of references is printed in the same font style and size as
@@ -263,7 +263,7 @@ The \meta{postnote} is used as a page locator if it consists of only digits.
 In other packages, several commands are provided for producing citations in
 different styles such as \cs{citet}, \cs{citep}, \cs{parencite}, and
 \cs{footnotecite}.
-In \pkg{csl} package, however, the format of citations is fixed as formatted
+In \pkg{citation-style-language} package, however, the format of citations is fixed as formatted
 in CSL style and it is impossible to select another format without modifying
 the \file{.csl} style file.
 Note that narrative citation (like ``Doe (2018)'') will be supported in CSL 1.1.
@@ -296,7 +296,7 @@ Currently no options are available.
 
 \paragraph{\pkg{babel}}
 
-The main language set by \pkg{babel} is used as the locale for \pkg{csl}.
+The main language set by \pkg{babel} is used as the locale for \pkg{citation-style-language}.
 
 \paragraph{\pkg{hyperref}}
 
@@ -306,8 +306,8 @@ But the citations are not linked to the entries in bibliography.
 
 \paragraph{Incompatible packages}
 
-The following packages are not compatible with \pkg{csl}.
-An error will be triggered if any of them is loaded together with \pkg{csl}.
+The following packages are not compatible with \pkg{citation-style-language}.
+An error will be triggered if any of them is loaded together with \pkg{citation-style-language}.
 \begin{itemize}
   \item \pkg{babelbib}
   \item \pkg{backref}
@@ -330,7 +330,7 @@ An error will be triggered if any of them is loaded together with \pkg{csl}.
 
 \section{Known issues}
 
-The \pkg{csl} package is in early development stage and there are some issues with it.
+The \pkg{citation-style-language} package is in early development stage and there are some issues with it.
 
 \begin{itemize}
   \item The \pkg{citeproc-lua} has not implemented all the features of CSL,

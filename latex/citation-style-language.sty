@@ -5,12 +5,12 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \RequirePackage{xparse}
-\ProvidesExplPackage {csl} {2021-12-18} {v0.1.0}
+\ProvidesExplPackage {citation-style-language} {2021-12-18} {v0.1.0}
   {Citation Style Language for LaTeX}
 
-% \msg_new:nnn { csl } { require-luatex }
-%   { LuaTeX~ is~ required~ for~ `csl'~ package. }
-% \sys_if_engine_luatex:F { \msg_fatal:nn { csl } { require-luatex } }
+% \msg_new:nnn { citation-style-language } { require-luatex }
+%   { LuaTeX~ is~ required~ for~ `citation-style-language'~ package. }
+% \sys_if_engine_luatex:F { \msg_fatal:nn { citation-style-language } { require-luatex } }
 
 \sys_if_engine_luatex:T
   { \lua_now:n { csl = require("csl") } }
@@ -21,9 +21,9 @@
 \cs_new:Npn \csl_incompatible_package:n #1
   {
     \AtBeginOfPackageFile* { #1 }
-      { \msg_error:nnn { csl } { incompatible-package } { #1 } }
+      { \msg_error:nnn { citation-style-language } { incompatible-package } { #1 } }
   }
-\msg_new:nnn { csl } { incompatible-package }
+\msg_new:nnn { citation-style-language } { incompatible-package }
   { The~ `#1'~ package~ is~ incompatible~ with~ `citeproc'. }
 
 \csl_incompatible_package:n { babelbib }
@@ -127,7 +127,7 @@
   {
     \tl_set:Nn \l__csl_citation_tl { [ \textbf { #1 } ] }
     \G@refundefinedtrue
-    \exp_args:Nnnx \msg_warning:nnn { csl } { citation / undefined } { #1 }
+    \exp_args:Nnnx \msg_warning:nnn { citation-style-language } { citation / undefined } { #1 }
     \group_begin:
       \reset@font [ \textbf { #1 } ]
     \group_end:
@@ -147,7 +147,7 @@
   }
 
 
-\msg_new:nnn { csl } { citation / undefined }
+\msg_new:nnn { citation-style-language } { citation / undefined }
   {
     Citation~ `#1'~ on~ page~ \thepage \space undefined~ \msg_line_context: .
   }
@@ -339,14 +339,14 @@
       {
         \bool_if:NTF \l__csl_engine_initialized_bool
           { \lua_now:n { csl.bibliography() } }
-          { \msg_warning:nnn { csl } { bibliography / empty } }
+          { \msg_warning:nnn { citation-style-language } { bibliography / empty } }
       }
       {
         \tl_if_empty:NTF \l__csl_bibliography_tl
           {
             \file_if_exist_input:nF { \jobname .bbl }
               {
-                \msg_warning:nnx { csl } { file / non-exist} { \jobname .bbl }
+                \msg_warning:nnx { citation-style-language } { file / non-exist} { \jobname .bbl }
               }
           }
           { \exp_args:NV \csl_print_bibiliography_tl \l__csl_bibliography_tl }
@@ -360,10 +360,10 @@
     \end { thebibliography }
   }
 
-\msg_new:nnn { csl } { bibliography / empty }
+\msg_new:nnn { citation-style-language } { bibliography / empty }
   { The~ bibliography~ is~ empty.  }
 
-\msg_new:nnn { csl } { file / non-exist }
+\msg_new:nnn { citation-style-language } { file / non-exist }
   { No~ file~ #1. }
 
 
@@ -799,7 +799,7 @@
   {
     \l__csl_bib_postamble_tl
     \tl_set:Nn \@noitemerr
-      { \msg_warning:nnn { csl } { bibliography / empty } }
+      { \msg_warning:nnn { citation-style-language } { bibliography / empty } }
     \endlist
     \csl_reset_bib_format:
   }

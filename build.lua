@@ -3,7 +3,7 @@
 
 -- Configuration file of "citeproc" for use with "l3build"
 
-module = "csl"
+module = "citation-style-language"
 
 docfiledir = "./doc"
 testfiledir = "./test/latex"
@@ -27,9 +27,9 @@ sourcefiles = {
   "styles/*.csl"
 }
 tagfiles = {
-  "latex/csl.sty",
+  "latex/citation-style-language.sty",
   "citeproc/citeproc.lua",
-  "doc/csl-doc.tex",
+  "doc/citation-style-language-doc.tex",
   "doc/citeproc.1",
   "CHANGELOG.md",
 }
@@ -49,22 +49,22 @@ asciiengines = {}
 packtdszip = true
 
 tdslocations = {
-  "tex/latex/csl/styles/*.csl",
-  "tex/latex/csl/locales/csl-locales-*.xml",
+  "tex/latex/citation-style-language/styles/*.csl",
+  "tex/latex/citation-style-language/locales/csl-locales-*.xml",
 }
 
 function update_tag(file, content, tagname, tagdate)
   local version_pattern = "%d[%d.]*"
   local url_prefix = "https://github.com/zepinglee/citeproc-lua/compare/"
-  if file == "csl.sty" then
+  if file == "citation-style-language.sty" then
     return string.gsub(content,
-      "\\ProvidesExplPackage %{csl%} %{[^}]+%} %{[^}]+%}",
-      "\\ProvidesExplPackage {csl} {" .. tagdate .. "} {" .. tagname .. "}")
+      "\\ProvidesExplPackage %{citation-style-language%} %{[^}]+%} %{[^}]+%}",
+      "\\ProvidesExplPackage {citation-style-language} {" .. tagdate .. "} {" .. tagname .. "}")
   elseif file == "citeproc.lua" then
     return string.gsub(content,
       'citeproc%.__VERSION__ = "' .. version_pattern .. '"',
       'citeproc.__VERSION__ = "' .. string.sub(tagname, 2) .. '"')
-  elseif file == "csl-doc.tex" then
+  elseif file == "citation-style-language-doc.tex" then
     return string.gsub(content,
       "\\date%{([^}]+)%}",
       "\\date{" .. tagdate .. " " .. tagname .. "}")

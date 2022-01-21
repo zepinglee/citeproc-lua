@@ -13,7 +13,7 @@ l. ...}
 ============================================================
 TEST 2: Bibilography
 ============================================================
-Package csl Warning: The bibliography is empty.
+Package citation-style-language Warning: The bibliography is empty.
 The comma list \g__csl_bib_items_clist is empty
 > .
 <recently read> }
