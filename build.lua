@@ -9,7 +9,7 @@ docfiledir = "./doc"
 testfiledir = "./test/latex"
 testsuppdir = testfiledir .. "/support"
 
-exefiles = {"**/citeproc"}
+exefiles = {"citeproc", "**/citeproc"}
 installfiles = {
   "**/*.sty",
   "**/*.lua",
