@@ -1,6 +1,8 @@
---[[
-  Copyright (C) 2021 Zeping Lee
---]]
+--
+-- Copyright (c) 2021-2022 Zeping Lee
+-- Released under the MIT license.
+-- Repository: https://github.com/zepinglee/citeproc-lua
+--
 
 -- load `slnunicode` from LuaTeX
 local unicode = require("unicode")
