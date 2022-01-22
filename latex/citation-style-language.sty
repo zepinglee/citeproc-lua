@@ -5,44 +5,36 @@
 %
 
 \NeedsTeXFormat{LaTeX2e}
+
 \RequirePackage{expl3}
 \RequirePackage{xparse}
+
 \ProvidesExplPackage {citation-style-language} {2022-01-22} {v0.1.0}
   {Citation Style Language for LaTeX}
-
-% \msg_new:nnn { citation-style-language } { require-luatex }
-%   { LuaTeX~ is~ required~ for~ `citation-style-language'~ package. }
-% \sys_if_engine_luatex:F { \msg_fatal:nn { citation-style-language } { require-luatex } }
-
-\sys_if_engine_luatex:T
-  { \lua_now:n { csl = require("csl") } }
 
 \RequirePackage { filehook }
 \RequirePackage { url }
 
-\cs_new:Npn \csl_incompatible_package:n #1
-  {
-    \AtBeginOfPackageFile* { #1 }
-      { \msg_error:nnn { citation-style-language } { incompatible-package } { #1 } }
-  }
+% Check incompatible packages
 \msg_new:nnn { citation-style-language } { incompatible-package }
   { The~ `#1'~ package~ is~ incompatible~ with~ `citeproc'. }
 
-\csl_incompatible_package:n { babelbib }
-\csl_incompatible_package:n { backref }
-\csl_incompatible_package:n { biblatex }
-\csl_incompatible_package:n { bibtopic }
-\csl_incompatible_package:n { bibunits }
-\csl_incompatible_package:n { chapterbib }
-\csl_incompatible_package:n { cite }
-\csl_incompatible_package:n { citeref }
-\csl_incompatible_package:n { inlinebib }
-\csl_incompatible_package:n { jurabib }
-\csl_incompatible_package:n { mcite }
-\csl_incompatible_package:n { mciteplus }
-\csl_incompatible_package:n { multibib }
-\csl_incompatible_package:n { natbib }
-\csl_incompatible_package:n { splitbib }
+\cs_new_protected:Npn \csl_load_check:n #1
+  {
+    \AtBeginOfPackageFile* {#1}
+      { \msg_error:nnn { citation-style-language } { incompatible-package } {#1} }
+  }
+
+\clist_map_function:nN
+  {
+    babelbib , backref , biblatex , bibtopic , bibunits , chapterbib ,
+    cite , citeref , inlinebib , jurabib , mcite , mciteplus ,
+    multibib , natbib , splitbib
+  }
+  \csl_load_check:n
+
+\sys_if_engine_luatex:T
+  { \lua_now:n { csl = require("csl") } }
 
 
 \NewDocumentCommand \cslsetup { m }
@@ -53,12 +45,12 @@
 
 \DeclareDocumentCommand \cite { o o m }
   {
-    \IfValueTF { #2 }
-      { \csl_cite:nnn { #1 } { #2 } { #3 } }
+    \IfValueTF {#2}
+      { \csl_cite:nnn {#1} {#2} {#3} }
       {
-        \IfValueTF { #1 }
-          { \csl_cite:nnn { } { #1 } { #3 } }
-          { \csl_cite:nnn { } { } { #3 } }
+        \IfValueTF {#1}
+          { \csl_cite:nnn { } {#1} {#3} }
+          { \csl_cite:nnn { } { } {#3} }
       }
   }
 
@@ -75,7 +67,7 @@
       {
         \if@filesw
           \iow_now:Nn \@auxout
-            { \citation { { nocite } { #1 } { } } }
+            { \citation { { nocite } {#1} { } } }
         \fi
       }
     \sys_if_engine_luatex:T
@@ -91,8 +83,8 @@
 
 \cs_new:Npn \csl_cite:nnn #1#2#3
   {
-    \csl_process_citation_id:n { #3 }
-    \csl_process_cite_items:nnn { #1 } { #2 } { #3 }
+    \csl_process_citation_id:n {#3}
+    \csl_process_cite_items:nnn {#1} {#2} {#3}
     \exp_args:NV \csl_process_note_index:n \l__csl_citation_id_tl
     \tl_set:Nx \l__csl_citation_info_tl
       {
@@ -127,11 +119,11 @@
 
 \cs_new:Npn \csl_print_undefined_citation:n #1
   {
-    \tl_set:Nn \l__csl_citation_tl { [ \textbf { #1 } ] }
+    \tl_set:Nn \l__csl_citation_tl { [ \textbf {#1} ] }
     \G@refundefinedtrue
-    \exp_args:Nnnx \msg_warning:nnn { citation-style-language } { citation / undefined } { #1 }
+    \exp_args:Nnnx \msg_warning:nnn { citation-style-language } { citation / undefined } {#1}
     \group_begin:
-      \reset@font [ \textbf { #1 } ]
+      \reset@font [ \textbf {#1} ]
     \group_end:
   }
 
@@ -142,10 +134,10 @@
 
 \cs_new:Npn \csl_print_defined_citation_aux:nn #1#2
   {
-    \tl_set:Nn \l__csl_citation_tl { #2 }
-    \tl_if_eq:nnTF { #1 } { note }
-      { \footnote { #2 } }
-      { #2 }
+    \tl_set:Nn \l__csl_citation_tl {#2}
+    \tl_if_eq:nnTF {#1} { note }
+      { \footnote {#2} }
+      {#2}
   }
 
 
@@ -162,7 +154,7 @@
 % It sets the `\l__csl_citation_id_tl` `ITEM-1,ITEM-2@4`.
 \cs_new:Npn \csl_process_citation_id:n #1
   {
-    \clist_set:Nn \l__csl_keys_clist { #1 }
+    \clist_set:Nn \l__csl_keys_clist {#1}
     \tl_set:Nx \l__csl_normalized_keys_tl
       { \clist_use:Nn \l__csl_keys_clist { , } }
     \int_if_exist:cF { g__csl_citation_count_ \l__csl_normalized_keys_tl _int }
@@ -185,11 +177,11 @@
 \cs_new:Npn \csl_process_cite_items:nnn #1#2#3
   {
     \tl_clear:N \l__csl_cite_items_tl
-    \clist_map_inline:nn { #3 }
+    \clist_map_inline:nn {#3}
       {
         \tl_if_empty:NTF \l__csl_cite_items_tl
           {
-            \csl_process_cite_item:nnn { #1 } { #2 } { ##1 }
+            \csl_process_cite_item:nnn {#1} {#2} { ##1 }
             \tl_put_right:Nx \l__csl_cite_items_tl { { \l__csl_cite_item_tl } }
           }
           {
@@ -211,28 +203,28 @@
     suppress-author .prop_put:N = \l__csl_cite_item_prop,
     author-only .prop_put:N = \l__csl_cite_item_prop,
     uris .prop_put:N = \l__csl_cite_item_prop,
-    book .code:n = { \csl_set_locator:nn { book } { #1 } } ,
-    chapter .code:n = { \csl_set_locator:nn { chapter } { #1 } } ,
-    column .code:n = { \csl_set_locator:nn { column } { #1 } } ,
-    figure .code:n = { \csl_set_locator:nn { figure } { #1 } } ,
-    folio .code:n = { \csl_set_locator:nn { folio } { #1 } } ,
-    issue .code:n = { \csl_set_locator:nn { issue } { #1 } } ,
-    line .code:n = { \csl_set_locator:nn { line } { #1 } } ,
-    note .code:n = { \csl_set_locator:nn { note } { #1 } } ,
-    opus .code:n = { \csl_set_locator:nn { opus } { #1 } } ,
-    page .code:n = { \csl_set_locator:nn { page } { #1 } } ,
-    paragraph .code:n = { \csl_set_locator:nn { paragraph } { #1 } } ,
-    part .code:n = { \csl_set_locator:nn { part } { #1 } } ,
-    section .code:n = { \csl_set_locator:nn { section } { #1 } } ,
-    sub-verbo .code:n = { \csl_set_locator:nn { sub-verbo } { #1 } } ,
-    verse .code:n = { \csl_set_locator:nn { verse } { #1 } } ,
-    volume .code:n = { \csl_set_locator:nn { volume } { #1 } } ,
+    book .code:n = { \csl_set_locator:nn { book } {#1} } ,
+    chapter .code:n = { \csl_set_locator:nn { chapter } {#1} } ,
+    column .code:n = { \csl_set_locator:nn { column } {#1} } ,
+    figure .code:n = { \csl_set_locator:nn { figure } {#1} } ,
+    folio .code:n = { \csl_set_locator:nn { folio } {#1} } ,
+    issue .code:n = { \csl_set_locator:nn { issue } {#1} } ,
+    line .code:n = { \csl_set_locator:nn { line } {#1} } ,
+    note .code:n = { \csl_set_locator:nn { note } {#1} } ,
+    opus .code:n = { \csl_set_locator:nn { opus } {#1} } ,
+    page .code:n = { \csl_set_locator:nn { page } {#1} } ,
+    paragraph .code:n = { \csl_set_locator:nn { paragraph } {#1} } ,
+    part .code:n = { \csl_set_locator:nn { part } {#1} } ,
+    section .code:n = { \csl_set_locator:nn { section } {#1} } ,
+    sub-verbo .code:n = { \csl_set_locator:nn { sub-verbo } {#1} } ,
+    verse .code:n = { \csl_set_locator:nn { verse } {#1} } ,
+    volume .code:n = { \csl_set_locator:nn { volume } {#1} } ,
   }
 
 \cs_new:Npn \csl_set_locator:nn #1#2
   {
-    \prop_put:Nnn \l__csl_cite_item_prop { label } { #1 }
-    \prop_put:Nnn \l__csl_cite_item_prop { locator } { #2 }
+    \prop_put:Nnn \l__csl_cite_item_prop { label } {#1}
+    \prop_put:Nnn \l__csl_cite_item_prop { locator } {#2}
   }
 
 \tl_new:N \l__csl_prefix_tl
@@ -243,24 +235,24 @@
 \cs_new:Npn \csl_process_cite_item:nnn #1#2#3
   {
     \prop_clear:N \l__csl_cite_item_prop
-    \prop_put:Nnn \l__csl_cite_item_prop { id } { #3 }
-    \tl_if_empty:nF { #1 }
+    \prop_put:Nnn \l__csl_cite_item_prop { id } {#3}
+    \tl_if_empty:nF {#1}
       {
-        \tl_set:Nn \l__csl_prefix_tl { #1 }
+        \tl_set:Nn \l__csl_prefix_tl {#1}
         \tl_put_right:NV \l__csl_prefix_tl \l__csl_prefix_separator_tl
         \prop_put:NnV \l__csl_cite_item_prop { prefix } { \l__csl_prefix_tl }
       }
-    \tl_if_in:nnTF { #2 } { = }
+    \tl_if_in:nnTF {#2} { = }
       {
-        \keys_set:nn { csl / cite-item } { #2 }
+        \keys_set:nn { csl / cite-item } {#2}
       }
       {
-        \tl_if_empty:nF { #2 }
+        \tl_if_empty:nF {#2}
           {
-            \regex_match:nnTF { \d+ } { #2 }
-              { \csl_set_locator:nn { page } { #2 } }
+            \regex_match:nnTF { \d+ } {#2}
+              { \csl_set_locator:nn { page } {#2} }
               {
-                \tl_set:Nn \l__csl_suffix_tl { #2 }
+                \tl_set:Nn \l__csl_suffix_tl {#2}
                 \tl_put_left:NV \l__csl_suffix_tl \l__csl_suffix_separator_tl
                 \prop_put:NnV \l__csl_cite_item_prop { suffix } { \l__csl_suffix_tl }
               }
@@ -308,16 +300,16 @@
 
 \cs_new:Npn \cslcite #1#2
   {
-    \bibcite { #1 } { #2 }
+    \bibcite {#1} {#2}
     \if@filesw
-      \iow_now:Nn \@auxout { \bibcite { #1 } { #2 } }
+      \iow_now:Nn \@auxout { \bibcite {#1} {#2} }
     \fi
   }
 
 
 \cs_set:Npn \bibcite #1#2
   {
-    \tl_gset:cn { g__csl_citation_ #1  _tl } { #2 }
+    \tl_gset:cn { g__csl_citation_ #1  _tl } {#2}
   }
 
 % The `babel` package redefines \bibcite in the \@begindocumenthook.
@@ -331,7 +323,7 @@
   {
     \cs_set:Npn \bibcite #1#2
       {
-        \tl_gset:cn { g__csl_citation_ #1  _tl } { #2 }
+        \tl_gset:cn { g__csl_citation_ #1  _tl } {#2}
       }
   }
 
@@ -560,9 +552,9 @@
     % of `thebibliography` is stored into \l__csl_bibliography_tl.
     \group_begin:
       \RenewDocumentCommand \cslsetup { m }
-        { \tl_set:Nn \l__csl_bibliography_setup_tl { #1 } }
+        { \tl_set:Nn \l__csl_bibliography_setup_tl {#1} }
       \RenewDocumentEnvironment { thebibliography } { m +b }
-        { \tl_set:Nn \l__csl_bibliography_tl { { #1 } #2 } }
+        { \tl_set:Nn \l__csl_bibliography_tl { {#1} #2 } }
         { }
       \file_if_exist_input:n { \jobname .bbl }
     \group_end:
@@ -571,13 +563,13 @@
 \cs_new:Npn \csl_write_aux_bibstyle:n #1
   {
     \if@filesw
-      \iow_now:Nn \@auxout { \bibstyle { #1 } }
+      \iow_now:Nn \@auxout { \bibstyle {#1} }
     \fi
   }
 
 \clist_new:N \l__csl_options_clist
 
-\cs_new:Nn \csl_write_aux_csl_options:
+\cs_new:Npn \csl_write_aux_csl_options:
   {
     \clist_clear:N \l__csl_options_clist
     % locale
@@ -615,35 +607,35 @@
 \DeclareDocumentCommand \bibliographystyle { m }
   {
     \ifx \@begindocumenthook \@undefined
-      \csl_write_aux_bibstyle:n { #1 }
+      \csl_write_aux_bibstyle:n {#1}
     \fi
-    \tl_set:Nn \l__csl_style_tl { #1 }
+    \tl_set:Nn \l__csl_style_tl {#1}
   }
 
 \tl_new:N \g__csl_aux_bibstyle_tl
 \cs_set:Npn \bibstyle #1
-  { \tl_gset:Nn \g__csl_aux_bibstyle_tl { #1 } }
+  { \tl_gset:Nn \g__csl_aux_bibstyle_tl {#1} }
 
 
 \NewDocumentCommand \addbibresource { o m }
-  { \clist_put_right:Nn \l__csl_bib_resources_clist { #2 } }
+  { \clist_put_right:Nn \l__csl_bib_resources_clist {#2} }
 
 
 \clist_new:N \g__csl_aux_bib_files_clist
 \cs_set:Npn \bibdata #1
-  { \clist_gput_right:Nn \g__csl_aux_bib_files_clist { #1 } }
+  { \clist_gput_right:Nn \g__csl_aux_bib_files_clist {#1} }
 
 
 \DeclareDocumentCommand \bibliography { m }
   {
-    \csl_write_aux_bibdata:n { #1 }
+    \csl_write_aux_bibdata:n {#1}
     \printbibliography
   }
 
 \cs_new:Npn \csl_write_aux_bibdata:n #1
   {
     \if@filesw
-      \iow_now:Nn \@auxout { \bibdata { #1 } }
+      \iow_now:Nn \@auxout { \bibdata {#1} }
     \fi
   }
 
@@ -657,8 +649,8 @@
 %        \write\@auxout{\string\bibcite{#2}{#1}}}\fi\ignorespaces}
 \cs_new:Npn \csl_lbibitem:nn [#1]#2
   {
-    \clist_gput_right:Nn \g__csl_bib_items_clist { #2 }
-    \item [ \@biblabel { #1 } \hfill ] \ignorespaces
+    \clist_gput_right:Nn \g__csl_bib_items_clist {#2}
+    \item [ \@biblabel {#1} \hfill ] \ignorespaces
   }
 \cs_set_eq:NN \@lbibitem \csl_lbibitem:nn
 
@@ -667,7 +659,7 @@
 %        {\string\bibcite{#1}{\the\value{\@listctr}}}\fi\ignorespaces}
 \cs_new:Npn \csl_bibitem:n #1
   {
-    \clist_gput_right:Nn \g__csl_bib_items_clist { #1 }
+    \clist_gput_right:Nn \g__csl_bib_items_clist {#1}
     \item [ ] \ignorespaces
   }
 \cs_set_eq:NN \@bibitem \csl_bibitem:n
@@ -680,14 +672,14 @@
 
 % CSL outputs the whole label thus the brackets are removed from \@biblabel
 % \def\@biblabel#1{[#1]}
-\cs_set:Npn \@biblabel #1 { #1 }
+\cs_set:Npn \@biblabel #1 {#1}
 
 
 \cs_if_exist:cTF { chapter }
   {
     \cs_set:Nn \csl_bib_section:
       {
-        \chapter *
+        \chapter*
           {
             \bibname
             \@mkboth
@@ -699,7 +691,7 @@
   {
     \cs_set:Nn \csl_bib_section:
       {
-        \section *
+        \section*
           {
             \refname
             \@mkboth
@@ -725,13 +717,13 @@
         \dim_set:Nn \itemindent { - \leftmargin }
       }
       {
-        \settowidth \labelwidth { \@biblabel { #1 } }
+        \settowidth \labelwidth { \@biblabel {#1} }
         \dim_set_eq:NN \leftmargin \labelwidth
         \dim_add:Nn \leftmargin { \labelsep }
       }
   }
 
-\cs_new:Nn \csl_set_bib_item_sep:
+\cs_new:Npn \csl_set_bib_item_sep:
   {
     \skip_zero:N \parsep
     \tl_if_empty:NTF \l__csl_bib_item_sep_tl
@@ -745,7 +737,7 @@
       { \skip_set:Nn \l__csl_bib_item_sep_skip { \l__csl_bib_item_sep_tl } }
   }
 
-\cs_new:Nn \csl_set_bib_allow_break:
+\cs_new:Npn \csl_set_bib_allow_break:
   {
     \sloppy
     \int_set:Nn \clubpenalty { 4000 }
@@ -758,7 +750,7 @@
 
 \cs_new_eq:NN \csl_set_bib_page_break: \csl_set_bib_allow_break:
 
-\cs_new:Nn \csl_set_bib_no_break:
+\cs_new:Npn \csl_set_bib_no_break:
   {
     \sloppy
     \int_set:Nn \interlinepenalty { 5000 }
@@ -770,7 +762,7 @@
   }
 
 % It will be used for multi-bibliography.
-\cs_new:Nn \csl_reset_bib_format:
+\cs_new:Npn \csl_reset_bib_format:
   {
     \keys_set:nn { csl } {
       hanging-indent = false ,
@@ -790,7 +782,7 @@
     \l__csl_bib_font_tl
     \list { }
       {
-        \csl_set_bib_label_spacing:n { #1 }
+        \csl_set_bib_label_spacing:n {#1}
         \csl_set_bib_item_sep:
       }
     \sloppy
