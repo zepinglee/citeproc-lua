@@ -68,7 +68,7 @@ l. ...}
 ============================================================
 TEST 10: Bibilography
 ============================================================
-(other-3-bibstyle-in-preamble.bbl)
+(other-2-csl.bbl)
 The comma list \g__csl_bib_items_clist contains the items (without outer
 braces):
 >  {ITEM-2}
@@ -78,4 +78,4 @@ braces):
 l. ...}
 ============================================================
 [1
-] (other-3-bibstyle-in-preamble.aux)
+] (other-2-csl.aux)

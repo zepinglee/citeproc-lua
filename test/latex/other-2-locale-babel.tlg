@@ -1,29 +1,21 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
 ============================================================
-TEST 1: Unicode apostrophe
+TEST 1: Force locale
 ============================================================
-> \l__csl_citation_tl=(D’Arcus, 2005).
+> \l__csl_citation_tl=French.
 <recently read> }
 l. ...}
 ============================================================
 ============================================================
-TEST 2: Non-break space
+TEST 2: Bibilography
 ============================================================
-> \l__csl_citation_tl=(Mittelbach et al., 2004).
-<recently read> }
-l. ...}
-============================================================
-============================================================
-TEST 3: Bibilography
-============================================================
-(other-3-utf8.bbl)
+(other-2-locale-babel.bbl)
 The comma list \g__csl_bib_items_clist contains the items (without outer
 braces):
->  {ITEM-1}
->  {ITEM-4}.
+>  {ITEM-1}.
 <recently read> }
 l. ...}
 ============================================================
 [1
-] (other-3-utf8.aux)
+] (other-2-locale-babel.aux)

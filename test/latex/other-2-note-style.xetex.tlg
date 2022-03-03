@@ -12,16 +12,16 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
-> \l__csl_citation_tl=D’Arcus, \emph {Boundaries of Dissent: Protest and
-State Power in the Media Age}..
+> \l__csl_citation_tl=D’Arcus, \emph {Boundaries of Dissent: Protest and State
+Power in the Media Age}..
 <recently read> }
 l. ...}
 ============================================================
 ============================================================
 TEST 2: Multiple cite items in a citation
 ============================================================
-> \l__csl_citation_tl=D’Arcus; Bennett, “Getting Property Right:
-‘Informal’ Mortgages in the Japanese Courts.”.
+> \l__csl_citation_tl=D’Arcus; Bennett, “Getting Property Right: ‘Informal’
+Mortgages in the Japanese Courts.”.
 <recently read> }
 l. ...}
 ============================================================
@@ -79,7 +79,7 @@ l. ...}
 ============================================================
 TEST 10: Bibilography
 ============================================================
-(other-3-note-style.bbl)
+(other-2-note-style.bbl)
 The comma list \g__csl_bib_items_clist contains the items (without outer
 braces):
 >  {ITEM-2}
@@ -89,4 +89,4 @@ braces):
 l. ...}
 ============================================================
 [1
-] (other-3-note-style.aux)
+] (other-2-note-style.aux)

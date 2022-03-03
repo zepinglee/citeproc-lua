@@ -1,6 +1,6 @@
 ---@diagnostic disable: lowercase-global
 
-includetests = {"other-3-*"}
+includetests = {"other-2-*"}
 
 checkengines = {"pdftex", "xetex"}
 stdengine = "pdftex"

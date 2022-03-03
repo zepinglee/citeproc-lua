@@ -43,7 +43,7 @@ checkconfigs = {
   "test/latex/config-luatex-1",
   "test/latex/config-luatex-2",
   "test/latex/config-other-1",
-  "test/latex/config-other-3",
+  "test/latex/config-other-2",
 }
 
 asciiengines = {}

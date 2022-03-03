@@ -3,7 +3,7 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Bibilography
 ============================================================
-(other-3-hyperref.bbl
+(other-2-hyperref.bbl
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -16,6 +16,6 @@ braces):
 l. ...}
 ============================================================
 [1
-] (other-3-hyperref.aux)
-Package rerunfilecheck Info: File `other-3-hyperref.out' has not changed.
+] (other-2-hyperref.aux)
+Package rerunfilecheck Info: File `other-2-hyperref.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.

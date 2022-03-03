@@ -3,14 +3,14 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Force locale
 ============================================================
-> \l__csl_citation_tl=French.
+> \l__csl_citation_tl=Chinese.
 <recently read> }
 l. ...}
 ============================================================
 ============================================================
 TEST 2: Bibilography
 ============================================================
-(other-3-locale-babel.bbl)
+(other-2-locale.bbl)
 The comma list \g__csl_bib_items_clist contains the items (without outer
 braces):
 >  {ITEM-1}.
@@ -18,4 +18,4 @@ braces):
 l. ...}
 ============================================================
 [1
-] (other-3-locale-babel.aux)
+] (other-2-locale.aux)

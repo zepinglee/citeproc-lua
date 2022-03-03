@@ -40,5 +40,5 @@ busted --pattern=formatted_text --filter=quotes
 ```bash
 l3build check
 l3build check --config test/latex/config-luatex-2 luatex-2-csl
-l3build save --config test/latex/config-other-3 other-3-csl
+l3build save --config test/latex/config-other-2 other-2-csl
 ```
