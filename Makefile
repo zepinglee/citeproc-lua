@@ -1,4 +1,4 @@
-.PHONY: ctan doc install save test
+.PHONY: ctan doc install save test uninstall
 
 test:
 	busted --run=citeproc
@@ -14,3 +14,6 @@ install:
 
 save:
 	bash tools/l3build-save.sh
+
+uninstall:
+	l3build uninstall

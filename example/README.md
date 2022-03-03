@@ -32,7 +32,7 @@ For engines other than LuaLaTeX, the `citeproc` executable is required to run as
 ```bash
 cd example
 pdflatex example.tex
-"$(kpsewhich -var-value=TEXMFHOME)"/scripts/csl/citeproc example.aux
+citeproc example.aux
 pdflatex example.tex
 ```
 
@@ -40,8 +40,7 @@ pdflatex example.tex
 The following commands are used for uninstalling from `TEXMFHOME`.
 
 ```bash
-rm -rf "$(kpsewhich -var-value=TEXMFHOME)/scripts/csl"
-rm -rf "$(kpsewhich -var-value=TEXMFHOME)/tex/latex/csl"
+make uninstall
 ```
 
 # Bib example
@@ -49,5 +48,5 @@ rm -rf "$(kpsewhich -var-value=TEXMFHOME)/tex/latex/csl"
 The `citeproc` can also run as a stanalone script to convert a `.bib` database to CSL-JSON format.
 
 ```bash
-texlua bin/citeproc example/example.bib
+citeproc example/example.bib
 ```
