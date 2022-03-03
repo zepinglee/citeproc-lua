@@ -60,6 +60,10 @@
 
 
 \DeclareDocumentCommand \nocite { m }
+  { \csl_no_cite:n {#1} }
+
+
+\cs_new:Npn \csl_no_cite:n #1
   {
     \ifx \@begindocumenthook \@undefined \else
       \exp_after:wN \AtBeginDocument
@@ -310,21 +314,11 @@
   }
 
 
-\cs_set:Npn \bibcite #1#2
+\cs_set:Npn \csl_bibcite:nn #1#2
   { \prop_gput:Nnn \g__csl_citations_prop {#1} {#2} }
 
-% The `babel` package redefines \bibcite in the \@begindocumenthook.
-% This should be disabled.
-\AtEndOfPackageFile* { babel }
-  {
-    \cs_set_eq:NN \bbl@cite@choice \relax
-  }
+\cs_set_eq:NN \bibcite \csl_bibcite:nn
 
-\AtEndOfPackageFile* { hyperref }
-  {
-    \cs_set:Npn \bibcite #1#2
-      { \prop_gput:Nnn \g__csl_citations_prop {#1} {#2} }
-  }
 
 \NewDocumentCommand \printbibliography { }
   {
@@ -663,11 +657,6 @@
   }
 \cs_set_eq:NN \@bibitem \csl_bibitem:n
 
-\AtEndOfPackageFile* { hyperref }
-  {
-    \cs_gset_eq:NN \@lbibitem \csl_lbibitem:nn
-    \cs_gset_eq:NN \@bibitem \csl_bibitem:n
-  }
 
 % CSL outputs the whole label thus the brackets are removed from \@biblabel
 % \def\@biblabel#1{[#1]}
@@ -796,5 +785,41 @@
     \endlist
     \csl_reset_bib_format:
   }
+
+
+
+% Compatibilities with other packages
+
+% babel
+
+% The `babel` package redefines \bibcite in the \@begindocumenthook.
+% This should be disabled.
+\AtEndOfPackageFile* { babel }
+  {
+    \RenewDocumentCommand \nocite { m }
+      {
+        % \@safe@activestrue\org@nocite{#1}\@safe@activesfalse
+        \@safe@activestrue
+        \csl_no_cite:n {#1}
+        \@safe@activesfalse
+      }
+    \cs_set_eq:NN \bibcite \csl_bibcite:nn
+    \cs_set_eq:NN \bbl@cite@choice \relax
+    \cs_set_eq:NN \@bibitem \csl_bibitem:n
+  }
+
+
+% hyperref
+
+% The hyperref package also patches \bibcite but it cannot provide hyperlinks
+% when used with csl.
+\AtEndOfPackageFile* { hyperref }
+  {
+    \cs_set_eq:NN \bibcite \csl_bibcite:nn
+    \cs_set_eq:NN \Hy@bibcite \bibcite
+    \cs_gset_eq:NN \@lbibitem \csl_lbibitem:nn
+    \cs_gset_eq:NN \@bibitem \csl_bibitem:n
+  }
+
 
 \endinput
