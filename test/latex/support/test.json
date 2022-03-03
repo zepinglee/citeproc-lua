@@ -1,0 +1,105 @@
+[
+    {
+        "author": [
+            {
+                "family": "D’Arcus",
+                "given": "Bruce"
+            }
+        ],
+        "id": "ITEM-1",
+        "issued": {
+            "date-parts": [
+                [
+                    2005,
+                    11,
+                    22
+                ]
+            ]
+        },
+        "note": "The apostrophe in Bruce’s name appears in proper typeset form.",
+        "publisher": "Routledge",
+        "title": "Boundaries of dissent: Protest and state power in the media age",
+        "type": "book"
+    },
+    {
+        "author": [
+            {
+                "family": "Bennett",
+                "given": "Frank G.",
+                "suffix": "Jr."
+            }
+        ],
+        "container-title": "Pac. Rim L. & Pol’y J.",
+        "id": "ITEM-2",
+        "issued": {
+            "date-parts": [
+                [
+                    2009,
+                    8
+                ]
+            ]
+        },
+        "page": "463-509",
+        "title": "Getting property right: “informal” mortgages in the Japanese courts",
+        "type": "article-journal",
+        "volume": "18"
+    },
+    {
+        "author": [
+            {
+                "family": "Lamport",
+                "given": "Leslie"
+            }
+        ],
+        "edition": "2",
+        "id": "ITEM-3",
+        "issued": {
+            "date-parts": [
+                [
+                    1994
+                ]
+            ]
+        },
+        "publisher": "Addison-Wesley",
+        "publisher-place": "Reading, MA, USA",
+        "title": "LaTeX: A document preparation system: User’s guide and reference manual",
+        "type": "book"
+    },
+    {
+        "author": [
+            {
+                "family": "Mittelbach",
+                "given": "Frank"
+            },
+            {
+                "family": "Goossens",
+                "given": "Michel"
+            },
+            {
+                "family": "Braams",
+                "given": "Johannes"
+            },
+            {
+                "family": "Carlisle",
+                "given": "David"
+            },
+            {
+                "family": "Rowley",
+                "given": "Chris"
+            }
+        ],
+        "edition": "2",
+        "id": "ITEM-4",
+        "issued": {
+            "date-parts": [
+                [
+                    2004
+                ]
+            ]
+        },
+        "publisher": "Addison-Wesley",
+        "publisher-place": "Reading, MA, USA",
+        "title": "The LaTeX companion",
+        "type": "book"
+    }
+]

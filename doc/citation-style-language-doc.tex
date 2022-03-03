@@ -211,22 +211,24 @@ By default, it is 1 em (with respect to the \opt{bib-font} size if set).
 
 \begin{function}{\addbibresource}
   \begin{syntax}
-    \cs{addbibresource}\oarg{options}\marg{resouce}
+    \cs{addbibresource}\oarg{options}\marg{resource}
   \end{syntax}
 \end{function}
 
 The \cs{addbibresource} command adds the contents of \meta{resource} into the
 bibliographic metadata.
-Currently, only Bib(La)TeX \file{.bib} format is supported.
-
-and Bib(La)TeX \file{.bib} are supported.
-It is internally converted to CSL-JSON\footnote{\url{https://github.com/citation-style-language/schema\#csl-json-schema}}, the data model defined with CSL
-and the mapping of entry-types and fields from \file{.bib} to CSL-JSON is detailed
-in GitHub wiki
+The \meta{resource} may be a CSL-JSON file or the Bib(La)TeX \file{.bib} file.
+CSL-JSON \footnote{\url{https://github.com/citation-style-language/schema\#csl-json-schema}}
+is the default data model defined by CSL.
+Its contents are usually exported from Zotero.
+The traditional \file{.bib} file is converted to CSL-JSON internally for
+further processing.
+The mapping of entry-types and fields between them is detailed in the GitHub wiki
 page\footnote{\url{https://github.com/zepinglee/citeproc-lua/wiki/Bib-CSL-mapping}}.
-Note that only UTF-8 encoding is supported for the \meta{resource} file.
+Note that only UTF-8 encoding is supported in the \meta{resource} file.
 \begin{LaTeXdemo}
-  \addbibresource{bibfile.bib}
+  \addbibresource{data-file.json}
+  \addbibresource{bib-file.bib}
 \end{LaTeXdemo}
 
 

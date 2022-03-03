@@ -3,7 +3,6 @@ build/
 *-doc.pdf
 *-ctan/
 *.tds/
-example/example.json
 example/example.pdf
 
 

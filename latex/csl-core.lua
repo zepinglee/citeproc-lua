@@ -48,12 +48,12 @@ function core.read_file(file_name, ftype, file_info)
     if ftype and not util.endswith(file_name, ftype) then
       file_name = file_name .. ftype
     end
-    core.error(string.format('Failed to find %s "%s"', file_info, file_name))
+    core.error(string.format('Cannot find %s "%s"', file_info, file_name))
     return nil
   end
   local file = io.open(path, "r")
   if not file then
-    core.error(string.format('Failed to open %s "%s"', file_info, path))
+    core.error(string.format('Cannot open %s "%s"', file_info, path))
     return nil
   end
   local contents = file:read("*a")
@@ -61,17 +61,54 @@ function core.read_file(file_name, ftype, file_info)
   return contents
 end
 
-local function load_bib(bib_files)
-  local bib = {}
-  for _, bib_file in ipairs(bib_files) do
-    -- TODO: try to load `<bibname>.json` first?
-    local bib_contents = core.read_file(bib_file, "bib", "database file")
-    local file_name = bib_file
-    if not util.endswith(file_name, ".bib") then
-      file_name = file_name .. ".bib"
+
+local function read_data_file(data_file)
+  local file_name = data_file
+  local extension = nil
+  local contents = nil
+
+  if util.endswith(data_file, ".json") then
+    extension = ".json"
+    contents = core.read_file(data_file, nil, "database file")
+  elseif util.endswith(data_file, ".bib") then
+    extension = ".bib"
+    contents = core.read_file(data_file, "bib", "database file")
+  else
+    local path = kpse.find_file(data_file .. ".json")
+    if path then
+      file_name = data_file .. ".json"
+      extension = ".json"
+      contents = core.read_file(data_file .. ".json", nil, "database file")
+    else
+      path = kpse.find_file(data_file, "bib")
+      if path then
+        file_name = data_file .. ".bib"
+        extension = ".bib"
+        contents = core.read_file(data_file, "bib", "database file")
+      else
+        core.error(string.format('Cannot find database file "%s"', data_file .. ".json"))
+      end
     end
+  end
+
+  local csl_items = nil
+
+  if extension == ".json" then
+    csl_items = utilities.json.tolua(contents)
+  elseif extension == ".bib" then
+    csl_items = citeproc.parse_bib(contents)
+  end
+
+  return file_name, csl_items
+end
+
+
+local function read_data_files(data_files)
+  local bib = {}
+  for _, data_file in ipairs(data_files) do
+    local file_name, csl_items = read_data_file(data_file)
+
     -- TODO: parse bib entries on demand
-    local csl_items = citeproc.parse_bib(bib_contents)
     for _, item in ipairs(csl_items) do
       local id = item.id
       if bib[id] then
@@ -83,8 +120,10 @@ local function load_bib(bib_files)
   return bib
 end
 
-function core.make_citeproc_sys(bib_files)
-  core.bib = load_bib(bib_files)
+
+
+function core.make_citeproc_sys(data_files)
+  core.bib = read_data_files(data_files)
   local citeproc_sys = {
     retrieveLocale = function (lang)
       local locale_file_format = core.locale_file_format or "locales-%s.xml"
@@ -103,8 +142,8 @@ function core.make_citeproc_sys(bib_files)
   return citeproc_sys
 end
 
-function core.init(style_name, bib_files, lang)
-  if style_name == "" or #bib_files == 0 then
+function core.init(style_name, data_files, lang)
+  if style_name == "" or #data_files == 0 then
     return nil
   end
   local style = core.read_file(style_name .. ".csl", nil, "style file")
@@ -120,7 +159,7 @@ function core.init(style_name, bib_files, lang)
     lang = nil
   end
 
-  local citeproc_sys = core.make_citeproc_sys(bib_files)
+  local citeproc_sys = core.make_citeproc_sys(data_files)
   local engine = citeproc.new(citeproc_sys, style, lang, force_lang)
   return engine
 end
