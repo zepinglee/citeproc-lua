@@ -3,7 +3,6 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Unicode apostrophe
 ============================================================
-\g__csl_citation_count_ITEM-1_int=\count...
 > \l__csl_citation_tl=(D’Arcus, 2005).
 <recently read> }
 l. ...}
@@ -11,7 +10,6 @@ l. ...}
 ============================================================
 TEST 2: Non-break space
 ============================================================
-\g__csl_citation_count_ITEM-4_int=\count...
 > \l__csl_citation_tl=(Mittelbach et al., 2004).
 <recently read> }
 l. ...}

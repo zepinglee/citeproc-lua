@@ -81,6 +81,8 @@
 \tl_new:N \l__csl_note_index_tl
 \tl_new:N \l__csl_citation_info_tl
 
+\prop_new:N \g__csl_citations_prop
+
 \cs_new:Npn \csl_cite:nnn #1#2#3
   {
     \csl_process_citation_id:n {#3}
@@ -99,11 +101,9 @@
       }
     \fi
     \tl_clear:N \l__csl_citation_tl
-    \tl_if_exist:cTF { g__csl_citation_ \l__csl_citation_id_tl _tl }
-      {
-        \exp_args:Nv \csl_print_defined_citation:n
-          { g__csl_citation_ \l__csl_citation_id_tl _tl }
-      }
+    \prop_get:NVNTF \g__csl_citations_prop \l__csl_citation_id_tl
+      \l__csl_citation_tl
+      { \exp_args:NV \csl_print_defined_citation:n \l__csl_citation_tl }
       {
         \bool_if:NTF \l__csl_engine_initialized_bool
           {
@@ -149,25 +149,28 @@
 
 \clist_new:N \l__csl_keys_clist
 \tl_new:N \l__csl_normalized_keys_tl
+\tl_new:N \l__csl_citation_count_tl
+\int_new:N \l__csl_citation_count_int
+\prop_new:N \g__csl_citations_count_prop
 
 % \csl_process_citation_id:n { <cite item ids> }
-% It sets the `\l__csl_citation_id_tl` `ITEM-1,ITEM-2@4`.
+% It sets the `\l__csl_citation_id_tl` = `ITEM-1,ITEM-2@4`.
 \cs_new:Npn \csl_process_citation_id:n #1
   {
     \clist_set:Nn \l__csl_keys_clist {#1}
     \tl_set:Nx \l__csl_normalized_keys_tl
       { \clist_use:Nn \l__csl_keys_clist { , } }
-    \int_if_exist:cF { g__csl_citation_count_ \l__csl_normalized_keys_tl _int }
+    \prop_get:NVNTF \g__csl_citations_count_prop \l__csl_normalized_keys_tl
+      \l__csl_citation_count_tl
       {
-        \int_gzero_new:c
-          { g__csl_citation_count_ \l__csl_normalized_keys_tl _int }
+        \int_set:Nn \l__csl_citation_count_int { \l__csl_citation_count_tl }
+        \int_incr:N \l__csl_citation_count_int
       }
-    \int_gincr:c { g__csl_citation_count_ \l__csl_normalized_keys_tl _int }
+      { \int_set_eq:NN \l__csl_citation_count_int \c_one_int }
     \tl_set:Nx \l__csl_citation_id_tl
-      {
-        \l__csl_normalized_keys_tl @
-        \int_use:c { g__csl_citation_count_ \l__csl_normalized_keys_tl _int }
-      }
+      { \l__csl_normalized_keys_tl @ \int_use:N \l__csl_citation_count_int }
+    \prop_gput:NVx \g__csl_citations_count_prop \l__csl_normalized_keys_tl
+      { \int_use:N \l__csl_citation_count_int }
   }
 
 
@@ -275,7 +278,7 @@
 \cs_new:Npn \csl_process_note_index:n #1
   {
     \int_set_eq:Nc \l__csl_note_index_int { c@ \@mpfn }
-    \tl_if_exist:cTF { g__csl_citation_ #1 _tl }
+    \prop_if_in:NnTF \g__csl_citations_prop {#1}
       { \int_incr:N \l__csl_note_index_int }
       { \int_gincr:N \g__csl_citation_note_count_int }
     \int_add:Nn \l__csl_note_index_int { \g__csl_citation_note_count_int }
@@ -308,9 +311,7 @@
 
 
 \cs_set:Npn \bibcite #1#2
-  {
-    \tl_gset:cn { g__csl_citation_ #1  _tl } {#2}
-  }
+  { \prop_gput:Nnn \g__csl_citations_prop {#1} {#2} }
 
 % The `babel` package redefines \bibcite in the \@begindocumenthook.
 % This should be disabled.
@@ -322,9 +323,7 @@
 \AtEndOfPackageFile* { hyperref }
   {
     \cs_set:Npn \bibcite #1#2
-      {
-        \tl_gset:cn { g__csl_citation_ #1  _tl } {#2}
-      }
+      { \prop_gput:Nnn \g__csl_citations_prop {#1} {#2} }
   }
 
 \NewDocumentCommand \printbibliography { }

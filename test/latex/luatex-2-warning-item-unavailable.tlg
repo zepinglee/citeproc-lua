@@ -3,7 +3,6 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Item unavailable
 ============================================================
-\g__csl_citation_count_ITEM-UNAVAILABLE_int=\count...
 > \l__csl_citation_tl=[CSL STYLE ERROR: reference with no printed form.].
 <recently read> }
 l. ...}

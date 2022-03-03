@@ -4,7 +4,6 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Single cite item in a citation
 ============================================================
-\g__csl_citation_count_ITEM-1_int=\count...
 > \l__csl_citation_tl=(D’Arcus, 2005).
 <recently read> }
 l. ...}
@@ -12,7 +11,6 @@ l. ...}
 ============================================================
 TEST 2: Multiple cite items in a citation
 ============================================================
-\g__csl_citation_count_ITEM-1,ITEM-2_int=\count...
 > \l__csl_citation_tl=(Bennett, 2009; D’Arcus, 2005).
 <recently read> }
 l. ...}

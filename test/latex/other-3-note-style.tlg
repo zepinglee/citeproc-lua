@@ -4,7 +4,6 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Single cite item in a citation
 ============================================================
-\g__csl_citation_count_ITEM-1_int=\count...
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -21,7 +20,6 @@ l. ...}
 ============================================================
 TEST 2: Multiple cite items in a citation
 ============================================================
-\g__csl_citation_count_ITEM-1,ITEM-2_int=\count...
 > \l__csl_citation_tl=D’Arcus; Bennett, “Getting Property Right:
 ‘Informal’ Mortgages in the Japanese Courts.”.
 <recently read> }

@@ -4,7 +4,6 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Single cite item in a citation
 ============================================================
-\g__csl_citation_count_ITEM-1_int=\count...
 Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
 (citation-style-language)                on line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
@@ -14,7 +13,6 @@ l. ...}
 ============================================================
 TEST 2: Multiple cite items in a citation
 ============================================================
-\g__csl_citation_count_ITEM-1,ITEM-2_int=\count...
 Package citation-style-language Warning: Citation `ITEM-1, ITEM-2' on page 1
 (citation-style-language)                undefined on line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1, ITEM-2}].

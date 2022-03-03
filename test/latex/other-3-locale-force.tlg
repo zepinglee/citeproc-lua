@@ -3,7 +3,6 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Force locale
 ============================================================
-\g__csl_citation_count_ITEM-1_int=\count...
 > \l__csl_citation_tl=Chinese.
 <recently read> }
 l. ...}
