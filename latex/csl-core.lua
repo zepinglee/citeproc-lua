@@ -188,9 +188,6 @@ function core.make_citation(citation_info)
       item_str = string.sub(item_str, 2, -2)
       local cite_item = {}
       for key, value in string.gmatch(item_str, "([%w%-]+)=(%b{})") do
-        if key == "sub-verbo" then
-          key = "sub verbo"
-        end
         value = string.sub(value, 2, -2)
         cite_item[key] = value
       end

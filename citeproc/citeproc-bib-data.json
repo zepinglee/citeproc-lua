@@ -2,12 +2,12 @@
     "description": "Bib CSL mapping",
     "types": {
         "archival": {
-            "csl": null,
+            "csl": "collection",
             "source": "jurabib.bst"
         },
         "archive": {
-            "csl": "book",
-            "notes": "Will be mapped to `collection` in CSL v1.0.2.",
+            "csl": "collection",
+            "notes": "New in CSL v1.0.2.",
             "source": "gbt7714-numerical.bst"
         },
         "article": {
@@ -20,7 +20,7 @@
             "source": "ACM-Reference-Format.bst"
         },
         "artifactsoftware": {
-            "csl": null,
+            "csl": "software",
             "source": "ACM-Reference-Format.bst"
         },
         "artwork": {
@@ -89,7 +89,7 @@
             "source": "bibtex"
         },
         "ctan": {
-            "csl": null,
+            "csl": "software",
             "source": "tugboat.bst"
         },
         "customa": {
@@ -146,11 +146,11 @@
             "source": "apsrev4-2.bst"
         },
         "game": {
-            "csl": null,
+            "csl": "software",
             "source": "ACM-Reference-Format.bst"
         },
         "govpub": {
-            "csl": null,
+            "csl": "regulation",
             "source": "thesnumb.bst"
         },
         "habthesis": {
@@ -264,8 +264,8 @@
             "source": "achicago.bst"
         },
         "misc": {
-            "csl": null,
-            "notes": "Will be mapped to `document` in CSL v1.0.2.",
+            "csl": "document",
+            "notes": "New in CSL v1.0.2.",
             "source": "bibtex"
         },
         "monograph": {
@@ -321,13 +321,13 @@
             "source": "biblatex"
         },
         "performance": {
-            "csl": null,
-            "notes": "Will be mapped to `performance` in CSL v1.0.2.",
+            "csl": "performance",
+            "notes": "New in CSL v1.0.2.",
             "source": "biblatex"
         },
         "periodical": {
-            "csl": "book",
-            "notes": "Will be mapped to `periodical` in CSL v1.0.2.",
+            "csl": "periodical",
+            "notes": "New in CSL v1.0.2.",
             "source": "biblatex"
         },
         "phdthesis": {
@@ -353,7 +353,7 @@
             "source": "bibtex"
         },
         "program": {
-            "csl": null,
+            "csl": "software",
             "source": "ChemCommun.bst"
         },
         "reference": {
@@ -379,13 +379,13 @@
             "source": "bestpapers-export.bst"
         },
         "software": {
-            "csl": "article",
-            "notes": "Will be mapped to `software` in CSL v1.0.2.",
+            "csl": "software",
+            "notes": "New in CSL v1.0.2.",
             "source": "biblatex"
         },
         "standard": {
-            "csl": "book",
-            "notes": "Will be mapped to `standard` in CSL v1.0.2.",
+            "csl": "standard",
+            "notes": "New in CSL v1.0.2.",
             "source": "biblatex"
         },
         "string": {
@@ -414,8 +414,8 @@
             "source": "bibtex"
         },
         "techstandard": {
-            "csl": "book",
-            "notes": "Will be mapped to `standard` in CSL v1.0.2.",
+            "csl": "standard",
+            "notes": "New in CSL v1.0.2.",
             "source": "udesoftec.bst"
         },
         "thesis": {
@@ -944,8 +944,8 @@
             "type": "date"
         },
         "eventtitle": {
-            "csl": "event",
-            "notes": "Will be mapped to `event-title` in CSL v1.0.2.",
+            "csl": "event-title",
+            "notes": "Supercedes `event` in CSL v1.0.2.",
             "source": "biblatex",
             "type": "literal"
         },
@@ -1061,7 +1061,7 @@
         },
         "hyphenation": {
             "alias": "langid",
-            "csl": null,
+            "csl": "language",
             "source": "biblatex",
             "type": "literal"
         },
@@ -1237,7 +1237,8 @@
             "source": "hustthesis.bst"
         },
         "langid": {
-            "csl": null,
+            "csl": "language",
+            "notes": "The language id of the bibliography entry. The identifier must be a language name known to the babel/polyglossia packages. It should be converted to ISO 639-1 language code in CSL.",
             "source": "biblatex",
             "type": "literal"
         },
@@ -1247,7 +1248,8 @@
             "type": "literal"
         },
         "language": {
-            "csl": "language",
+            "csl": null,
+            "notes": "The `language` field in `biblatex` has no special internal meaning thus it is used only when langid is missing.",
             "source": "biblatex",
             "type": "key"
         },

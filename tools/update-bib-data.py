@@ -209,8 +209,8 @@ class BibData(OrderedDict):
                     value['type'] = alias['type']
 
     def check_csl_schema(self):
-        csl_data_path = './schema/csl-data.json'  # v1.0.1
-        # csl_data_path = './schema/schemas/input/csl-data.json'  # v1.0.2+
+        # csl_data_path = './schema/csl-data.json'  # v1.0.1
+        csl_data_path = './schema/schemas/input/csl-data.json'  # v1.0.2+
         if not os.path.exists(csl_data_path):
             warnings.warn(f'Invalid schema path "{csl_data_path}".')
             return

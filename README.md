@@ -9,7 +9,7 @@ The [Citation Style Language](https://citationstyles.org/) (CSL) is an
 XML-based language that defines the formats of citations and bibliography.
 There are currently thousands of styles in CSL including the most widely used
 APA, Chicago, Vancouver, etc.
-The `citeproc-lua` project is a Lua implementation of CSL v1.0.1 processor
+The `citeproc-lua` project is a Lua implementation of CSL v1.0.2 processor
 that is aimed for use with LaTeX.
 The engine reads bibliographic metadata and performs sorting and formatting on
 both citations and bibliography according to the selected CSL style.

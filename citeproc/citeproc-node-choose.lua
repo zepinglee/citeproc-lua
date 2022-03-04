@@ -56,7 +56,7 @@ If.render = function (self, item, context)
       local locator_label = item.label or "page"
       local res = locator_label == locator_type
       if locator_type == "sub-verbo" then
-        res = locator_label == "sub verbo"
+        res = locator_label == "sub-verbo" or locator_label == "sub verbo"
       end
       table.insert(results, res)
     end

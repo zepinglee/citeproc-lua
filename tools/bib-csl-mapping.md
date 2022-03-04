@@ -29,7 +29,7 @@ Bib|CSL|Notes
 `@letter`|`personal_communication`|
 `@manual`|`report`|
 `@mastersthesis`|`thesis`|Alias for `@thesis`.
-`@misc`|-|Will be mapped to `document` in CSL v1.0.2.
+`@misc`|`document`|New in CSL v1.0.2.
 `@movie`|`motion_picture`|
 `@music`|`song`|
 `@mvbook`|`book`|
@@ -38,8 +38,8 @@ Bib|CSL|Notes
 `@mvreference`|`book`|
 `@online`|`webpage`|
 `@patent`|`patent`|
-`@performance`|-|Will be mapped to `performance` in CSL v1.0.2.
-`@periodical`|`book`|Will be mapped to `periodical` in CSL v1.0.2.
+`@performance`|`performance`|New in CSL v1.0.2.
+`@periodical`|`periodical`|New in CSL v1.0.2.
 `@phdthesis`|`thesis`|Alias for `@thesis`.
 `@preamble`|-|Special entry type for inserting commands or text in the bbl
 `@proceedings`|`book`|
@@ -47,8 +47,8 @@ Bib|CSL|Notes
 `@report`|`report`|
 `@review`|`review`|"A more specific variant of the `@article` type"
 `@set`|-|Not supported.
-`@software`|`article`|Will be mapped to `software` in CSL v1.0.2.
-`@standard`|`book`|Will be mapped to `standard` in CSL v1.0.2.
+`@software`|`software`|New in CSL v1.0.2.
+`@standard`|`standard`|New in CSL v1.0.2.
 `@string`|-|Special entry type for defining abbreviations
 `@suppbook`|`chapter`|lossy mapping; "Supplemental material in a `@book`. This type is closely related to the @inbook entry type. While `@inbook` is primarily intended for a part of a book with its own title (e. g., a single essay in a collection of essays by the same author), this type is provided for elements such as prefaces, introductions, forewords, afterwords, etc. which often have a generic title only. Style guides may require such items to be formatted differently from other `@inbook` items."
 `@suppcollection`|`chapter`|lossy mapping; see `suppbook`
@@ -103,7 +103,7 @@ Bib|CSL|Notes
 `gender`|-|Not supported.
 `holder`|-|
 `howpublished`|-|Check if a URL is contained.
-`hyphenation`|-|Alias for `langid`.
+`hyphenation`|`language`|Alias for `langid`.
 `ids`|-|
 `indexsorttitle`|-|Not supported.
 `indextitle`|-|
@@ -126,9 +126,9 @@ Bib|CSL|Notes
 `key`|-|Alias for `sortkey`. Not supported.
 `keywords`|-|
 `label`|-|
-`langid`|-|
+`langid`|`language`|The language id of the bibliography entry. The identifier must be a language name known to the babel/polyglossia packages. It should be converted to ISO 639-1 language code in CSL.
 `langidopts`|-|
-`language`|`language`|
+`language`|-|The `language` field in `biblatex` has no special internal meaning thus it is used only when langid is missing.
 `library`|-|
 `location`|`publisher-place`|
 `mainsubtitle`|-|

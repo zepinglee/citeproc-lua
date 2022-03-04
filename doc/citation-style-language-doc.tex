@@ -240,27 +240,37 @@ Note that only UTF-8 encoding is supported in the \meta{resource} file.
 
 The citation command is similar to the one in standard LaTeX except that the
 \meta{options} is in key-value style.
-The \meta{options} can be \opt{prefix}, \opt{suffix} or one of the locators:
-\opt{book},
-\opt{chapter},
-\opt{column},
-\opt{figure},
-\opt{folio},
-\opt{issue},
-\opt{line},
-\opt{note},
-\opt{opus},
-\opt{page},
-\opt{paragraph},
-\opt{part},
-\opt{section},
-\opt{sub-verbo},
-\opt{verse},
-and \opt{volume}.
+\DescribeOption{prefix}
+\DescribeOption{suffix}
+\DescribeOption{page}
+\DescribeOption{figure}
+The \meta{options} can be \opt{prefix}, \opt{suffix} or one of locators like
+\opt{page} or \opt{figure}.
+The full list of supported locators is detailed in Table~\ref{tab:locators}.
 An example is as follows.
 \begin{LaTeXdemo}
   \cite[prefix = {See }, page = 42]{ITEM-1}
 \end{LaTeXdemo}
+
+\begin{table}
+  \centering
+  \caption{The locators supported in CSL v1.0.2.}
+  \label{tab:locators}
+  \begin{tabular}{lll}
+    \toprule
+    \opt{act}             & \opt{folio}     & \opt{section}       \\
+    \opt{appendix}        & \opt{issue}     & \opt{sub-verbo}     \\
+    \opt{article-locator} & \opt{line}      & \opt{supplement}    \\
+    \opt{book}            & \opt{note}      & \opt{table}         \\
+    \opt{canon}           & \opt{opus}      & \opt{timestamp}     \\
+    \opt{chapter}         & \opt{page}      & \opt{title-locator} \\
+    \opt{column}          & \opt{paragraph} & \opt{verse}         \\
+    \opt{elocation}       & \opt{part}      & \opt{version}       \\
+    \opt{equation}        & \opt{rule}      & \opt{volume}        \\
+    \opt{figure}          & \opt{scene}     &                     \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 The traditional form \cs{cite}\oarg{prenote}\oarg{postnote}\marg{keys}
 introduced in \pkg{natbib} and \pkg{biblatex} is also supported but not

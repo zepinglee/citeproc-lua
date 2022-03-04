@@ -51,7 +51,7 @@ function bib.parse_item(contents)
     return nil
   end
 
-  local item = {id = id}
+  local item = {id = id, ["citation-key"] = id}
 
   bib_type = string.lower(bib_type)
   local type_data = bib.bib_data.types[bib_type]
@@ -362,6 +362,11 @@ function bib.process_special_fields(item, bib_fields)
     end
   end
 
+  -- event-title: for compatibility with CSL v1.0.1 and earlier versions
+  if item["event-title"] then
+    item.event = item["event-title"]
+  end
+
   if bib_fields.year and not item.issued then
     item.issued = bib.parse_date(bib_fields.year)
   end
@@ -373,6 +378,22 @@ function bib.process_special_fields(item, bib_fields)
       item.issued["date-parts"][1][2] = tonumber(month)
     end
   end
+
+  -- language: convert `babel` language to ISO 639-1 language code
+  if not item.language and bib_fields.language then
+    item.language = bib_fields.language
+  end
+  if item.language then
+    local language_code = bib.babel_locale_mapping[item.language]
+    if language_code then
+      item.language = language_code
+    end
+  end
+  -- if not item.language then
+  --   if util.has_cjk_char(item.title) then
+  --     item.language = "zh"
+  --   end
+  -- end
 
   if item.number then
     if not item.issue and item.type == "article-journal" or item.type == "article-magazine" or item.type == "article-newspaper" or item.type == "periodical" then
@@ -389,13 +410,123 @@ function bib.process_special_fields(item, bib_fields)
     item.PMID = bib_fields.eprint
   end
 
-  -- if not item.language then
-  --   if util.has_cjk_char(item.title) then
-  --     item.language = "zh"
-  --   else
-  --     item.language = "en"
-  --   end
-  -- end
 end
+
+bib.babel_locale_mapping = {
+  acadian         = "fr-CA",
+  american        = "en-US",
+  australian      = "en-AU",
+  afrikaans       = "af-ZA",
+  albanian        = "sq-AL",
+  amharic         = "am-ET",
+  arabic          = "ar",
+  armenian        = "hy-AM",
+  asturian        = "ast-ES",
+  austrian        = "de-AT",
+  bahasa          = "id-ID",
+  bahasai         = "id-ID",
+  bahasam         = "id-ID",
+  basque          = "eu-ES",
+  bengali         = "bn-BD",
+  bgreek          = "el-GR",
+  brazil          = "pt-BR",
+  brazilian       = "pt-BR",
+  breton          = "br-FR",
+  british         = "en-GB",
+  bulgarian       = "bg-BG",
+  canadian        = "en-CA",
+  canadien        = "fr-CA",
+  catalan         = "ca-AD",
+  coptic          = "cop",
+  croatian        = "hr-HR",
+  czech           = "cs-CZ",
+  danish          = "da-DK",
+  divehi          = "dv-MV",
+  dutch           = "nl-NL",
+  english         = "en-US",
+  esperanto       = "eo-001",
+  estonian        = "et-EE",
+  ethiopia        = "am-ET",
+  farsi           = "fa-IR",
+  finnish         = "fi-FI",
+  francais        = "fr-FR",
+  french          = "fr-FR",
+  frenchle        = "fr-FR",
+  friulan         = "fur-IT",
+  galician        = "gl-ES",
+  german          = "de-DE",
+  germanb         = "de-DE",
+  greek           = "el-GR",
+  hebrew          = "he-IL",
+  hindi           = "hi-IN",
+  ibygreek        = "el-CY",
+  icelandic       = "is-IS",
+  indon           = "id-ID",
+  indonesia       = "id-ID",
+  interlingua     = "ia-FR",
+  irish           = "ga-IE",
+  italian         = "it-IT",
+  japanese        = "ja-JP",
+  kannada         = "kn-IN",
+  lao             = "lo-LA",
+  latin           = "la-Latn",
+  latvian         = "lv-LV",
+  lithuanian      = "lt-LT",
+  lowersorbian    = "dsb-DE",
+  lsorbian        = "dsb-DE",
+  magyar          = "hu-HU",
+  malay           = "id-ID",
+  malayalam       = "ml-IN",
+  marathi         = "mr-IN",
+  meyalu          = "id-ID",
+  mongolian       = "mn-Cyrl",
+  naustrian       = "de-AT",
+  newzealand      = "en-NZ",
+  ngerman         = "de-DE",
+  nko             = "ha-NG",
+  norsk           = "nb-NO",
+  norwegian       = "nn-NO",
+  nynorsk         = "nn-NO",
+  occitan         = "oc-FR",
+  piedmontese     = "pms-IT",
+  pinyin          = "pny",
+  polish          = "pl-PL",
+  polutonikogreek = "el-GR",
+  portuges        = "pt-PT",
+  portuguese      = "pt-PT",
+  romanian        = "ro-RO",
+  romansh         = "rm-CH",
+  russian         = "ru-RU",
+  samin           = "se-NO",
+  sanskrit        = "sa-IN",
+  scottish        = "gd-GB",
+  serbian         = "sr-Latn",
+  serbianc        = "sr-Cyrl",
+  slovak          = "sk-SK",
+  slovene         = "sl-SI",
+  slovenian       = "sl-SI",
+  spanish         = "es-ES",
+  swedish         = "sv-SE",
+  swiss           = "de-CH",
+  swissgerman     = "de-CH",
+  nswissgerman    = "de-CH",
+  syriac          = "syc",
+  tamil           = "ta-IN",
+  telugu          = "te-IN",
+  thai            = "th-TH",
+  thaicjk         = "th-TH",
+  tibetan         = "bo-CN",
+  turkish         = "tr-TR",
+  turkmen         = "tk-TM",
+  ukrainian       = "uk-UA",
+  urdu            = "ur-IN",
+  UKenglish       = "en-UK",
+  uppersorbian    = "hsb-DE",
+  USenglish       = "en-US",
+  usorbian        = "hsb-DE",
+  vietnamese      = "vi-VN",
+  welsh           = "cy-GB",
+}
+
 
 return bib

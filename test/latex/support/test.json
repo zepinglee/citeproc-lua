@@ -6,6 +6,7 @@
                 "given": "Bruce"
             }
         ],
+        "citation-key": "ITEM-1",
         "id": "ITEM-1",
         "issued": {
             "date-parts": [
@@ -29,6 +30,7 @@
                 "suffix": "Jr."
             }
         ],
+        "citation-key": "ITEM-2",
         "container-title": "Pac. Rim L. & Pol’y J.",
         "id": "ITEM-2",
         "issued": {
@@ -51,6 +53,7 @@
                 "given": "Leslie"
             }
         ],
+        "citation-key": "ITEM-3",
         "edition": "2",
         "id": "ITEM-3",
         "issued": {
@@ -88,6 +91,7 @@
                 "given": "Chris"
             }
         ],
+        "citation-key": "ITEM-4",
         "edition": "2",
         "id": "ITEM-4",
         "issued": {
