@@ -14,7 +14,7 @@ Bib|CSL|Notes
 `@booklet`|`pamphlet`|
 `@collection`|`book`|
 `@comment`|-|Special entry type for Scribe compatibility
-`@commentary`|-|Not supported.
+`@commentary`|`book`|Not supported.
 `@conference`|`paper-conference`|Alias for `@inproceedings`.
 `@dataset`|`dataset`|
 `@electronic`|`webpage`|Alias for `@online`.
@@ -55,7 +55,7 @@ Bib|CSL|Notes
 `@suppperiodical`|`article`|see `article`
 `@techreport`|`report`|Alias for `@report`.
 `@thesis`|`thesis`|
-`@unpublished`|`manuscript`|
+`@unpublished`|`manuscript`|For unpublished works not made widely available or only hosted on personal websites, use manuscript
 `@video`|`motion_picture`|
 `@www`|`webpage`|Alias for `@online`.
 `@xdata`|-|special item type: "`@xdata` entries hold data which may be inherited by other entries using the xdata field. Entries of this type only serve as data containers; they may not be cited or added to the bibliography."
@@ -69,9 +69,9 @@ Bib|CSL|Notes
 `addendum`|-|Not supported.
 `address`|`publisher-place`|Alias for `location`.
 `afterword`|-|Not supported.
-`annotation`|-|
+`annotation`|`note`|Descriptive text or notes about an item (e.g. in an annotated bibliography)
 `annotator`|-|
-`annote`|-|Alias for `annotation`.
+`annote`|`note`|Alias for `annotation`.
 `archiveprefix`|`archive`|Alias for `eprinttype`.
 `author`|`author`|
 `authortype`|-|
@@ -95,7 +95,7 @@ Bib|CSL|Notes
 `eprintclass`|-|
 `eprinttype`|`archive`|
 `eventdate`|`event-date`|
-`eventtitle`|`event`|Will be mapped to `event-title` in CSL v1.0.2.
+`eventtitle`|`event-title`|Supercedes `event` in CSL v1.0.2.
 `eventtitleaddon`|-|
 `execute`|-|Not supported.
 `file`|-|

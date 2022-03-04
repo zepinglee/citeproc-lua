@@ -16,7 +16,7 @@
             "source": "bibtex"
         },
         "artifactdataset": {
-            "csl": null,
+            "csl": "dataset",
             "source": "ACM-Reference-Format.bst"
         },
         "artifactsoftware": {
@@ -37,7 +37,7 @@
             "source": "biblatex"
         },
         "bachelor": {
-            "csl": null,
+            "csl": "thesis",
             "source": "dlfltxbbibtex.bst"
         },
         "bibnote": {
@@ -58,7 +58,7 @@
             "source": "bibtex"
         },
         "brochure": {
-            "csl": null,
+            "csl": "pamphlet",
             "source": "thesnumb.bst"
         },
         "cconference": {
@@ -75,7 +75,7 @@
             "source": "bibtex"
         },
         "commentary": {
-            "csl": null,
+            "csl": "book",
             "notes": "Not supported.",
             "source": "biblatex"
         },
@@ -125,11 +125,11 @@
             "source": "biblatex"
         },
         "dictionary": {
-            "csl": null,
+            "csl": "book",
             "source": "vancouver.bst"
         },
         "docthesis": {
-            "csl": null,
+            "csl": "thesis",
             "source": "gost2003.bst"
         },
         "electronic": {
@@ -138,7 +138,7 @@
             "source": "biblatex"
         },
         "eulegislation": {
-            "csl": null,
+            "csl": "legislation",
             "source": "bath.bst"
         },
         "footnote": {
@@ -154,7 +154,7 @@
             "source": "thesnumb.bst"
         },
         "habthesis": {
-            "csl": null,
+            "csl": "thesis",
             "source": "bestpapers-export.bst"
         },
         "heading": {
@@ -178,11 +178,12 @@
             "source": "bibtex"
         },
         "inloosecollection": {
-            "csl": null,
+            "csl": "chapter",
             "source": "resphilosophica.bst"
         },
         "inpress": {
-            "csl": null,
+            "csl": "article",
+            "notes": "Use for preprints, working papers, and similar works posted on a platform where some level of persistence or stewardship is expected (e.g. arXiv or other preprint repositories, working paper series).",
             "source": "bjnano.bst"
         },
         "inproceedings": {
@@ -199,7 +200,7 @@
             "source": "asmejour.bst"
         },
         "internet": {
-            "csl": null,
+            "csl": "webpage",
             "source": "IEEEtran.bst"
         },
         "journalpart": {
@@ -207,7 +208,7 @@
             "source": "abntex2-alf.bst"
         },
         "journals": {
-            "csl": null,
+            "csl": "periodical",
             "source": "bestpapers-export.bst"
         },
         "jurisdiction": {
@@ -216,7 +217,7 @@
             "source": "biblatex"
         },
         "jurthesis": {
-            "csl": null,
+            "csl": "thesis",
             "source": "jurabib.bst"
         },
         "legal": {
@@ -234,11 +235,11 @@
             "source": "biblatex"
         },
         "lexicon": {
-            "csl": null,
+            "csl": "book",
             "source": "jurabib.bst"
         },
         "majorthesis": {
-            "csl": null,
+            "csl": "thesis",
             "source": "achicago.bst"
         },
         "manual": {
@@ -256,11 +257,11 @@
             "source": "bibtex"
         },
         "masterthesis": {
-            "csl": null,
+            "csl": "thesis",
             "source": "asaetr.bst"
         },
         "minorthesis": {
-            "csl": null,
+            "csl": "thesis",
             "source": "achicago.bst"
         },
         "misc": {
@@ -269,11 +270,11 @@
             "source": "bibtex"
         },
         "monograph": {
-            "csl": null,
+            "csl": "book",
             "source": "gbt7714-numerical.bst"
         },
         "monography": {
-            "csl": null,
+            "csl": "book",
             "source": "abntex2-alf.bst"
         },
         "movie": {
@@ -342,10 +343,12 @@
         },
         "preprint": {
             "csl": "article",
+            "notes": "Use for preprints, working papers, and similar works posted on a platform where some level of persistence or stewardship is expected (e.g. arXiv or other preprint repositories, working paper series).",
             "source": "gbt7714-numerical.bst"
         },
         "presentation": {
-            "csl": null,
+            "csl": "speech",
+            "notes": "A speech or other presentation (e.g. a paper, talk, poster, or symposium at a conference).",
             "source": "apsrev4-2.bst"
         },
         "proceedings": {
@@ -423,11 +426,12 @@
             "source": "biblatex"
         },
         "uklegislation": {
-            "csl": null,
+            "csl": "legislation",
             "source": "bath.bst"
         },
         "unpublished": {
             "csl": "manuscript",
+            "notes": "For unpublished works not made widely available or only hosted on personal websites, use manuscript",
             "source": "bibtex"
         },
         "video": {
@@ -498,11 +502,12 @@
             "type": "name"
         },
         "annotate": {
-            "csl": null,
+            "csl": "note",
             "source": "apacite.bst"
         },
         "annotation": {
-            "csl": null,
+            "csl": "note",
+            "notes": "Descriptive text or notes about an item (e.g. in an annotated bibliography)",
             "source": "biblatex",
             "type": "literal"
         },
@@ -513,7 +518,7 @@
         },
         "annote": {
             "alias": "annotation",
-            "csl": null,
+            "csl": "note",
             "source": "biblatex",
             "type": "literal"
         },
@@ -526,7 +531,7 @@
             "source": "seuthesix.bst"
         },
         "archive": {
-            "csl": null,
+            "csl": "archive",
             "source": "apsrev4-2.bst"
         },
         "archiveprefix": {
@@ -536,7 +541,7 @@
             "type": "literal"
         },
         "archname": {
-            "csl": null,
+            "csl": "archive",
             "source": "jurabib.bst"
         },
         "articleno": {

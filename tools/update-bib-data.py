@@ -45,6 +45,13 @@ class BibData(OrderedDict):
 
     def update_bibtex(self):
         self.update_bst('plain.bst', 'bibtex')
+        self.update_bst('unsrt.bst', 'bibtex')
+        self.update_bst('alpha.bst', 'bibtex')
+        self.update_bst('abbrv.bst', 'bibtex')
+        self.update_bst('acm.bst', 'bibtex')
+        self.update_bst('apalike.bst', 'bibtex')
+        self.update_bst('ieeetr.bst', 'bibtex')
+        self.update_bst('siam.bst', 'bibtex')
 
     def update_bst(self, file_name, source=None):
         if os.path.exists(file_name):

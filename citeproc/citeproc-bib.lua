@@ -55,12 +55,8 @@ function bib.parse_item(contents)
 
   bib_type = string.lower(bib_type)
   local type_data = bib.bib_data.types[bib_type]
-  if type_data then
-    if type_data.csl then
-      item.type = type_data.csl
-    else
-      item.type = "document"
-    end
+  if type_data and type_data.csl then
+    item.type = type_data.csl
   else
     item.type = "document"
   end
@@ -347,17 +343,13 @@ function bib.parse_single_date(str)
   return date
 end
 
+
 function bib.process_special_fields(item, bib_fields)
+  -- Default entry type `document`
   if item.type == "document" then
     if item.URL then
       item.type = "webpage"
     else
-      item.type = "article"
-    end
-  end
-
-  if item.type == "article-journal" then
-    if not item["container-title"] then
       item.type = "article"
     end
   end
@@ -367,6 +359,7 @@ function bib.process_special_fields(item, bib_fields)
     item.event = item["event-title"]
   end
 
+  -- issued date
   if bib_fields.year and not item.issued then
     item.issued = bib.parse_date(bib_fields.year)
   end
@@ -395,22 +388,26 @@ function bib.process_special_fields(item, bib_fields)
   --   end
   -- end
 
+  -- number
   if item.number then
-    if not item.issue and item.type == "article-journal" or item.type == "article-magazine" or item.type == "article-newspaper" or item.type == "periodical" then
-      item.issue = item.number
-      item.number = nil
-    elseif item.type == "patent" or item.type == "report" or item.type == "standard" then
-    else
+    if item.type == "article-journal" or item.type == "article-magazine" or item.type == "article-newspaper" or item.type == "periodical" then
+      if not item.issue then
+        item.issue = item.number
+        item.number = nil
+      end
+    elseif item["collection-title"] and not item["collection-number"] then
       item["collection-number"] = item.number
       item.number = nil
     end
   end
 
-  if not item.PMID and bib_fields.eprint and string.lower(bib_fields.eprinttype) == "pubmed" then
+  -- PMID
+  if bib_fields.eprint and string.lower(bib_fields.eprinttype) == "pubmed" and not item.PMID then
     item.PMID = bib_fields.eprint
   end
 
 end
+
 
 bib.babel_locale_mapping = {
   acadian         = "fr-CA",
