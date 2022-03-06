@@ -50,26 +50,41 @@ l. ...}
 TEST 6: Citation with prefix and suffix
 ============================================================
 > \l__csl_citation_tl=prefix D’Arcus, \emph {Boundaries of Dissent: Protest
-and State Power in the Media Age}, suffix..
+and State Power in the Media Age} suffix..
 <recently read> }
 l. ...}
 ============================================================
 ============================================================
-TEST 7: Citation with suffix
+TEST 7: Citation with implicit prefix and suffix
+============================================================
+> \l__csl_citation_tl=prefix D’Arcus, suffix..
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 8: Citation with implicit suffix
 ============================================================
 > \l__csl_citation_tl=D’Arcus, suffix..
 <recently read> }
 l. ...}
 ============================================================
 ============================================================
-TEST 8: Citation with prefix
+TEST 9: Citation with implicit prefix
 ============================================================
 > \l__csl_citation_tl=prefix D’Arcus..
 <recently read> }
 l. ...}
 ============================================================
 ============================================================
-TEST 9: Item in bibliography but no citation
+TEST 10: Multiple cite items with options
+============================================================
+> \l__csl_citation_tl=See D’Arcus, 6; Bennett, “Getting Property Right:
+‘Informal’ Mortgages in the Japanese Courts,” fig. 2..
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 11: Item in bibliography but no citation
 ============================================================
 > \l__csl_citation_tl=.
 <recently read> }
@@ -77,7 +92,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 10: Bibilography
+TEST 12: Bibilography
 ============================================================
 (other-2-note-style.bbl)
 The comma list \g__csl_bib_items_clist contains the items (without outer

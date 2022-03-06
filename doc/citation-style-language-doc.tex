@@ -281,10 +281,26 @@ The \meta{postnote} is used as a page locator if it consists of only digits.
 In other packages, several commands are provided for producing citations in
 different styles such as \cs{citet}, \cs{citep}, \cs{parencite}, and
 \cs{footnotecite}.
-In \pkg{citation-style-language} package, however, the format of citations is fixed as formatted
-in CSL style and it is impossible to select another format without modifying
-the \file{.csl} style file.
+In \pkg{citation-style-language} package, however, the format of citations is
+fixed as defined in CSL style and it is impossible to select another format
+without modifying the \file{.csl} style file.
 Note that narrative citation (like ``Doe (2018)'') will be supported in CSL 1.1.
+
+\begin{function}{\cites}
+  \begin{syntax}
+    \cs{cites}\oarg{options}\marg{key}...[options]\marg{key}
+  \end{syntax}
+\end{function}
+
+The \cs{cites} accepts multiple cite items in a single citation.
+This command scans greedily for arguments and a following bracket may be
+mistakenly recognized as a delimiter.
+To prevent this, an explicit \cs{relax} command is required to terminate the
+scanning process. The following example illustrates its usage.
+
+\begin{LaTeXdemo}
+  \cites[prefix = {See }, page = 6]{key1}[section = 2.3]{key2}\relax [Text]
+\end{LaTeXdemo}
 
 
 
