@@ -46,6 +46,7 @@
 \DeclareDocumentCommand \cite { o o m }
   { \__csl_cite:nnn {#1} {#2} {#3} }
 
+
 % \cites[⟨prenote⟩][⟨postnote⟩]{⟨key⟩}...[⟨prenote⟩][⟨postnote⟩]{⟨key⟩}
 \NewDocumentCommand \cites { }
   { \__csl_cites: }
@@ -354,13 +355,13 @@
   }
 
 
-\cs_set:Npn \__csl_bibcite:nn #1#2
+\cs_new:Npn \__csl_bibcite:nn #1#2
   { \prop_gput:Nnn \g__csl_citations_prop {#1} {#2} }
 
 \cs_set_eq:NN \bibcite \__csl_bibcite:nn
 
 
-\NewDocumentCommand \printbibliography { }
+\NewDocumentCommand \printbibliography { O { } }
   {
     \sys_if_engine_luatex:TF
       {
@@ -376,11 +377,11 @@
                 \msg_warning:nnx { citation-style-language } { file / non-exist} { \jobname .bbl }
               }
           }
-          { \exp_args:NV \__csl_print_bibiliography_tl \l__csl_bibliography_tl }
+          { \exp_args:NV \__csl_print_bibliography:n \l__csl_bibliography_tl }
       }
   }
 
-\cs_new:Npn \__csl_print_bibliography_tl #1
+\cs_new:Npn \__csl_print_bibliography:n #1
   {
     \begin { thebibliography }
       #1
