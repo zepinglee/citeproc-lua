@@ -69,6 +69,10 @@ function Text:render (item, context)
     res = richtext.new(res)
   end
 
+  if res and variable_name == "URL" then
+    res:add_format("URL", "true")
+  end
+
   res = self:strip_periods(res, context)
   res = self:case(res, context)
   res = self:format(res, context)
