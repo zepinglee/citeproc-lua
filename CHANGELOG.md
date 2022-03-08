@@ -7,11 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Add
+### Added
 
 - Add support for [CSL v1.0.2](https://github.com/citation-style-language/schema/releases/tag/v1.0.2).
 - Add CSL-JSON format in `\addbibresource` ([#11](https://github.com/zepinglee/citeproc-lua/issues/11)).
 - Add multicite command `\cites` ([#10](https://github.com/zepinglee/citeproc-lua/issues/10)).
+- Add URL format setup.
 
 ### Fixed
 

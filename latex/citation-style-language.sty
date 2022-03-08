@@ -686,6 +686,7 @@
   }
 
 
+% Used for debugging and testing
 \clist_new:N \g__csl_bib_items_clist
 
 % For numeric or label-style bibliography
@@ -787,7 +788,6 @@
     % \sfcode`\.\@m
     \frenchspacing
   }
-% TODO: \biburlsetup
 
 \cs_new_eq:NN \__csl_set_bib_page_break: \__csl_set_bib_allow_break:
 
@@ -801,6 +801,115 @@
     \raggedbottom
     \frenchspacing
   }
+
+
+% Taken from `biblatex`'s \biburlsetup
+% https://github.com/plk/biblatex/blob/dev/tex/latex/biblatex/biblatex.def
+
+\int_new:N \l__csl_url_big_break_penalty_int
+\int_new:N \l__csl_url_break_penalty_int
+\int_new:N \l__csl_url_num_penalty_int
+\int_new:N \l__csl_url_uc_penalty_int
+\int_new:N \l__csl_url_lc_penalty_int
+
+\int_set:Nn \l__csl_url_big_break_penalty_int { 100 }
+\int_set:Nn \l__csl_url_break_penalty_int { 200 }
+% Allow linebreaks before numbers and letters.
+% Taken from `xurl.sty`.
+\int_set:Nn \l__csl_url_num_penalty_int { 9000 }
+\int_set:Nn \l__csl_url_uc_penalty_int { 9000 }
+\int_set:Nn \l__csl_url_lc_penalty_int { 8000 }
+
+\muskip_new:N \l__csl_url_big_muskip
+\muskip_new:N \l__csl_url_num_muskip
+\muskip_new:N \l__csl_url_uc_muskip
+\muskip_new:N \l__csl_url_lc_muskip
+
+\muskip_set:Nn \l__csl_url_big_muskip { 0mu plus 3mu }
+\muskip_set:Nn \l__csl_url_num_muskip { 0mu }
+\muskip_set:Nn \l__csl_url_uc_muskip { 0mu }
+\muskip_set:Nn \l__csl_url_lc_muskip { 0mu }
+
+\cs_new:Npn \__csl_bib_url_setup:
+  {
+    \urlstyle { same }
+    \muskip_set_eq:NN \Urlmuskip \l__csl_url_big_muskip
+    \mathchardef \UrlBigBreakPenalty = \l__csl_url_big_break_penalty_int
+    \mathchardef \UrlBreakPenalty = \l__csl_url_break_penalty_int
+    % \int_set_eq:NN doesn't work here
+    % \int_set_eq:NN \UrlBigBreakPenalty \l__csl_url_big_break_penalty_int
+    % \int_set_eq:NN \UrlBreakPenalty \l__csl_url_break_penalty_int
+    \tl_set:Nn \UrlBigBreaks { \do \: \do \- }
+    \tl_set:Nn \UrlBreaks
+      {
+        \do \. \do \@ \do \/ \do \\ \do \! \do \_ \do \| \do \; \do \> \do \]
+        \do \) \do \} \do \, \do \? \do \' \do \+ \do \= \do \# \do \$ \do \&
+        \do \* \do \^ \do \"
+      }
+    \int_compare:nNnT { \l__csl_url_num_penalty_int } > { 0 }
+      {
+        \clist_map_inline:nn
+          { \1 , \2 , \3 , \4 , \5 , \6 , \7 , \8 , \9 , \0 }
+          {
+            \tl_put_right:Nn \UrlSpecials
+              {
+                \do ##1
+                  {
+                    \mathchar`##1
+                    \mskip \l__csl_url_num_muskip
+                    \penalty \l__csl_url_num_penalty_int
+                  }
+              }
+          }
+      }
+    \int_compare:nNnT { \l__csl_url_uc_penalty_int } > { 0 }
+      {
+        \clist_map_inline:nn
+          {
+            \A , \B , \C , \D , \E , \F , \G , \H , \I , \J ,
+            \K , \L , \M , \N , \O , \P , \Q , \R , \S , \T ,
+            \U , \V , \W , \X , \Y , \Z
+          }
+          {
+            \tl_put_right:Nn \UrlSpecials
+              {
+                \do ##1
+                  {
+                    \mathchar`##1
+                    \mskip \l__csl_url_uc_muskip
+                    \penalty \l__csl_url_uc_penalty_int
+                  }
+              }
+          }
+      }
+    \int_compare:nNnT { \l__csl_url_lc_penalty_int } > { 0 }
+      {
+        \clist_map_inline:nn
+          {
+            \a , \b , \c , \d , \e , \f , \g , \h , \i , \j ,
+            \k , \l , \m , \n , \o , \p , \q , \r , \s , \t ,
+            \u , \v , \w , \x , \y , \z
+          }
+          {
+            \tl_put_right:Nn \UrlSpecials
+              {
+                \do ##1
+                  {
+                    \mathchar`##1
+                    \mskip \l__csl_url_lc_muskip
+                    \penalty \l__csl_url_lc_penalty_int
+                  }
+              }
+          }
+      }
+    \cs_set_eq:NN \do \exp_not:N
+  }
+
+% The above code allows linebreaks before numbers and letters.
+% This is often the only way to break DOIs. It also allows breaks
+% after hyphens and adjusts \Urlmuskip to add some stretchability
+% to URLs.
+
 
 % It will be used for multi-bibliography.
 \cs_new:Npn \__csl_reset_bib_format:
@@ -829,6 +938,7 @@
     \sloppy
     \__csl_set_bib_page_break:
     \frenchspacing
+    \__csl_bib_url_setup:
     \clist_gclear:N \g__csl_bib_items_clist
   }
   {
