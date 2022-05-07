@@ -112,9 +112,10 @@ local function read_data_files(data_files)
     for _, item in ipairs(csl_items) do
       local id = item.id
       if bib[id] then
-        core.error(string.format('Duplicate entry key "%s" in "%s".', id, file_name))
+        core.warning(string.format('Duplicate entry key "%s" in "%s".', id, file_name))
+      else
+        bib[id] = item
       end
-      bib[id] = item
     end
   end
   return bib
