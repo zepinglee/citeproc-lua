@@ -9,17 +9,16 @@ docfiledir = "./doc"
 testfiledir = "./test/latex"
 testsuppdir = testfiledir .. "/support"
 
-exefiles = {"citeproc", "**/citeproc"}
+exefiles = {"**/citeproc-lua.lua"}
 installfiles = {
   "**/*.sty",
   "**/*.lua",
-  "**/citeproc",
   "**/*.json",
   "**/csl-locales-*.xml",
   "**/*.csl",
 }
-scriptfiles = {"**/*.lua", "**/citeproc"}
-scriptmanfiles = {"citeproc.1"}
+scriptfiles = {"**/*.lua"}
+scriptmanfiles = {"citeproc-lua.1"}
 sourcefiles = {
   "citeproc/*",
   "latex/*",
@@ -30,7 +29,7 @@ tagfiles = {
   "latex/citation-style-language.sty",
   "citeproc/citeproc.lua",
   "doc/citation-style-language-doc.tex",
-  "doc/citeproc.1",
+  "doc/citeproc-lua.1",
   "CHANGELOG.md",
 }
 textfiles = {"doc/README.md", "CHANGELOG.md", "DEPENDS.txt"}
@@ -69,10 +68,10 @@ function update_tag(file, content, tagname, tagdate)
     return string.gsub(content,
       "\\date%{([^}]+)%}",
       "\\date{" .. tagdate .. " " .. tagname .. "}")
-  elseif file == "citeproc.1" then
+  elseif file == "citeproc-lua.1" then
     return string.gsub(content,
-      '%.TH citeproc 1 "' .. version_pattern .. '"\n',
-      '.TH citeproc 1 "' .. string.sub(tagname, 2) .. '"\n')
+      '%.TH citeproc-lua 1 "' .. version_pattern .. '"\n',
+      '.TH citeproc-lua 1 "' .. string.sub(tagname, 2) .. '"\n')
   elseif file == "CHANGELOG.md" then
     local previous = string.match(content, "compare/(v" .. version_pattern .. ")%.%.%.HEAD")
     if tagname == previous then return content end

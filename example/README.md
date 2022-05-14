@@ -32,7 +32,7 @@ For engines other than LuaLaTeX, the `citeproc` executable is required to run as
 ```bash
 cd example
 pdflatex example.tex
-citeproc example.aux
+citeproc-lua example.aux
 pdflatex example.tex
 ```
 
@@ -48,5 +48,5 @@ make uninstall
 The `citeproc` can also run as a stanalone script to convert a `.bib` database to CSL-JSON format.
 
 ```bash
-citeproc example/example.bib
+citeproc-lua example/example.bib
 ```

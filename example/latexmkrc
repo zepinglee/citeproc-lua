@@ -1,1 +1,1 @@
-$bibtex = "citeproc %S";
+$bibtex = "citeproc-lua %S";

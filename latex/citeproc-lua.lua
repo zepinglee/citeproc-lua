@@ -52,12 +52,12 @@ end
 
 
 local function print_version()
-  io.write(string.format("CiteProc-Lua %s\n", citeproc.__VERSION__))
+  io.write(string.format("citeproc-lua %s\n", citeproc.__VERSION__))
 end
 
 
 local function print_help()
-  io.write("Usage: citeproc [options] auxname[.aux]\n")
+  io.write("Usage: citeproc-lua [options] auxname[.aux]\n")
   io.write("Options:\n")
   io.write("  -h, --help          Print this message and exit.\n")
   io.write("  -V, --version       Print the version number and exit.\n")

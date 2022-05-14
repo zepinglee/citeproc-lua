@@ -48,7 +48,7 @@ lualatex example.tex
 
 ```bash
 pdflatex example.tex
-citeproc example.aux
+citeproc-lua example.aux
 pdflatex example.tex
 ```
 
