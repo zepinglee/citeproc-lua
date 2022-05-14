@@ -131,14 +131,14 @@ The general procedure is similar to the traditional BibTeX workflow.
   \end{syntax}
 \end{function}
 
-The behavior of the \pkg{citation-style-language} package is controlled by several key-value
-options which can be set with the \cs{cslsetup} command.
-For example,
+Package options may be set when the package is loaded or at any later stage
+with the \cs{cslsetup} command.
+These two methods are equivalent.
 \begin{LaTeXdemo}
-  \cslsetup{
-    style  = apa,
-    locale = zh-CN,
-  }
+  \usepackage[style = apa]{citation-style-langugage}
+  % OR
+  \usepackage{citation-style-langugage}
+  \cslsetup{style = apa}
 \end{LaTeXdemo}
 
 \DescribeOption{style}

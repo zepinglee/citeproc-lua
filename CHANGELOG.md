@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - The `citeproc` executable is renamed to `citeproc-lua`.
+- Pakage configuration can also be given in the package loading options.
 - A warning is raised instead of and error in case of duplicate entry keys ([#14](https://github.com/zepinglee/citeproc-lua/issues/14)).
 
 ## [v0.1.1] - 2022-03-21
