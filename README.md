@@ -20,6 +20,7 @@ This project is in early development stage and some features of CSL (especially
 collapsing and disambiguation) are not implemented yet. Comments, suggestions
 and bug reports are welcome.
 
+
 ## LaTeX example
 
 A full LaTeX example is in the [`example/`](example) directory.
@@ -55,6 +56,16 @@ pdflatex example.tex
 citeproc example.aux
 pdflatex example.tex
 ```
+
+The above example should work out-of-the-box with TeX Live 2022 or later version.
+For older versions of TeX Live, a manual installation of this package is required.
+The dependencis are listed in [DEPENDS.txt](DEPENDS.txt) and they can be installed via `tlmgr`.
+
+```bash
+l3build install
+```
+
+This command installs the `.sty` and `.lua` files to `TEXMFHOME` which is usually `~/texmf` on Linux or `~/Library/texmf` on macOS so that the LaTeX executable can find it.
 
 
 ## License

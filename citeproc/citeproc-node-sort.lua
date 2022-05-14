@@ -36,12 +36,14 @@ function Sort:sort (items, context)
     -- loading statements are put in the header.
     local ducet = require("lua-uca.lua-uca-ducet")
     local collator = require("lua-uca.lua-uca-collator")
-    local languages = require("lua-uca.lua-uca-languages")
-    local collator_obj = collator.new(ducet)
-    if languages[language] then
-      Sort.collator_obj = languages[language](collator_obj)
-    else
-      util.warning(string.format('Lcoale "%s" is not supported.', lang))
+    Sort.collator_obj = collator.new(ducet)
+    if language ~= "en" then
+      local languages = require("lua-uca.lua-uca-languages")
+      if languages[language] then
+        Sort.collator_obj = languages[language](Sort.collator_obj)
+      else
+        util.warning(string.format('Locale "%s" is not provided by lua-uca. The sorting order may be incorrect.', lang))
+      end
     end
   end
 
