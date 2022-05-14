@@ -58,7 +58,7 @@ function update_tag(file, content, tagname, tagdate)
   local url_prefix = "https://github.com/zepinglee/citeproc-lua/compare/"
   if file == "citation-style-language.sty" then
     return string.gsub(content,
-      "\\ProvidesExplPackage %{citation-style-language%} %{[^}]+%} %{[^}]+%}",
+      "\\ProvidesExplPackage %{citation%-style%-language%} %{[^}]+%} %{[^}]+%}",
       "\\ProvidesExplPackage {citation-style-language} {" .. tagdate .. "} {" .. tagname .. "}")
   elseif file == "citeproc.lua" then
     return string.gsub(content,
