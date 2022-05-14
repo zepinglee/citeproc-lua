@@ -1,0 +1,10 @@
+# The format of this file is described in https://www.tug.org/texlive/pkgcontrib.html#deps.
+
+hard luatex
+hard l3kernel
+hard l3packages
+hard filehook
+hard url
+hard luaxml
+hard lua-uca
+hard lualibs

@@ -33,7 +33,7 @@ tagfiles = {
   "doc/citeproc.1",
   "CHANGELOG.md",
 }
-textfiles = {"doc/README.md", "CHANGELOG.md"}
+textfiles = {"doc/README.md", "CHANGELOG.md", "DEPENDS.txt"}
 typesetfiles = {"*.tex"}
 
 includetests = {}
