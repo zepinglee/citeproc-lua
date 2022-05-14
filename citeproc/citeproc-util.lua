@@ -6,7 +6,7 @@
 
 -- load `slnunicode` from LuaTeX
 local unicode = require("unicode")
-local inspect = require("inspect")
+local inspect  -- only load it when debugging
 
 
 local util = {}
@@ -50,6 +50,9 @@ end
 
 function util.debug(...)
   -- io.stderr:write(inspect(..., {process = remove_all_metatables}))
+  if not inspect then
+    inspect = require("inspect")
+  end
   io.stderr:write(inspect(...))
   io.stderr:write("\n")
 end
