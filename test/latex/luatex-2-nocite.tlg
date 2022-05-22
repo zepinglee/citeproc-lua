@@ -1,0 +1,15 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Bibilography
+============================================================
+The comma list \g__csl_bib_items_clist contains the items (without outer
+braces):
+>  {ITEM-1}
+>  {ITEM-3}
+>  {ITEM-4}.
+<recently read> }
+l. ...}
+============================================================
+[1
+] (luatex-2-nocite.aux)

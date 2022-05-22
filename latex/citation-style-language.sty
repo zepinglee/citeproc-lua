@@ -83,8 +83,11 @@
   }
 
 
+% Appends the cite key into \l__csl_cite_keys_seq and cite-items into
+% \l__csl_cite_items_seq
+% #1, #2: prenote/postnote
+% #3: keys
 \cs_new:Npn \__csl_process_cite_items:nnn #1#2#3
-  % #1,#2: prenote/postnote, #3: keys
   {
     \tl_if_novalue:nTF {#2}
       {
@@ -121,25 +124,27 @@
   {
     \prop_clear:N \l__csl_cite_item_prop
     \prop_put:Nnn \l__csl_cite_item_prop { id } {#3}
+    % \bool_if:T \l__csl_suppress_author_bool
+    %   { \prop_put:Nnn \l__csl_cite_item_prop { suppress-author } { true } }
+    % \bool_if:T \l__csl_author_only_bool
+    %   { \prop_put:Nnn \l__csl_cite_item_prop { author-only } { true } }
     \tl_if_empty:nF {#1}
       {
         \tl_set:Nn \l__csl_prefix_tl {#1}
         \tl_put_right:NV \l__csl_prefix_tl \l__csl_prefix_separator_tl
-        \prop_put:NnV \l__csl_cite_item_prop { prefix } { \l__csl_prefix_tl }
+        \prop_put:NnV \l__csl_cite_item_prop { prefix } \l__csl_prefix_tl
       }
-    \tl_if_in:nnTF {#2} { = }
+    \tl_if_empty:nF {#2}
       {
-        \keys_set:nn { csl / cite-item } {#2}
-      }
-      {
-        \tl_if_empty:nF {#2}
+        \tl_if_in:nnTF {#2} { = }
+          { \keys_set:nn { csl / cite-item } {#2} }
           {
             \regex_match:nnTF { \d+ } {#2}
               { \__csl_set_locator:nn { page } {#2} }
               {
                 \tl_set:Nn \l__csl_suffix_tl {#2}
                 \tl_put_left:NV \l__csl_suffix_tl \l__csl_suffix_separator_tl
-                \prop_put:NnV \l__csl_cite_item_prop { suffix } { \l__csl_suffix_tl }
+                \prop_put:NnV \l__csl_cite_item_prop { suffix } \l__csl_suffix_tl
               }
           }
       }
@@ -203,20 +208,26 @@
 \tl_new:N \l__csl_citation_info_tl
 \tl_new:N \l__csl_citation_tl
 \prop_new:N \g__csl_citations_prop
+\prop_clear:N \l__csl_citation_prop
 
 \cs_new:Npn \__csl_make_citation:NN #1#2
   % #1: \l__csl_cite_keys_seq
   % #2: \l__csl_cite_items_seq
   {
+    \prop_clear:N \l__csl_citation_prop
     \__csl_process_citation_id:NN \l__csl_citation_id_tl #1
+    \prop_put:NnV \l__csl_citation_prop { citationID } \l__csl_citation_id_tl
     \tl_set:Nx \l__csl_cite_items_tl
       { \seq_use:Nn #2 { , } }
+    \prop_put:NnV \l__csl_citation_prop { citationItems } \l__csl_cite_items_tl
     \exp_args:NNV \__csl_process_note_index:Nn \l__csl_note_index_tl \l__csl_citation_id_tl
-    \tl_set:Nx \l__csl_citation_info_tl
+    \prop_put:Nnx \l__csl_citation_prop { properties } { noteIndex = { \l__csl_cite_items_tl } }
+    \tl_clear:N \l__csl_citation_info_tl
+    \prop_map_inline:Nn \l__csl_citation_prop
       {
-        { \l__csl_citation_id_tl }
-        { \l__csl_cite_items_tl }
-        { \l__csl_note_index_tl }
+        \tl_if_empty:NF \l__csl_citation_info_tl
+          { \tl_put_right:Nn \l__csl_citation_info_tl { , } }
+          \tl_put_right:Nn \l__csl_citation_info_tl { ##1 = { ##2 } }
       }
     \exp_args:NV \__csl_write_aux_citation:n \l__csl_citation_info_tl
     \prop_get:NVNTF \g__csl_citations_prop \l__csl_citation_id_tl
@@ -331,15 +342,34 @@
 
 \cs_new:Npn \__csl_no_cite:n #1
   {
-    \__csl_if_preamble:TF
+    \seq_clear:N \l__csl_cite_keys_seq
+    \seq_clear:N \l__csl_cite_items_seq
+    \__csl_process_cite_items:nnn { } { } {#1}
+    \tl_set:Nx \l__csl_cite_items_tl
+      { \seq_use:Nn \l__csl_cite_items_seq { , } }
+    \tl_set:Nx \l__csl_citation_info_tl
       {
-        \AtBeginDocument
-          { \__csl_write_aux_citation:n { { nocite } {#1} { } } }
+        citationID    = { @nocite } ,
+        citationItems = { \l__csl_cite_items_tl } ,
+        properties    = { noteIndex = { 0 } }
       }
-      { \__csl_write_aux_citation:n { { nocite } {#1} { } } }
+    \exp_args:NV \__csl_no_cite_write_aux:n \l__csl_citation_info_tl
     \sys_if_engine_luatex:T
       { \lua_now:n { csl.nocite("#1") } }
 }
+
+
+\cs_new:Npn \__csl_no_cite_write_aux:n #1
+  {
+    \__csl_if_preamble:TF
+      {
+        \AtBeginDocument
+          { \exp_args:Nx \__csl_write_aux_citation:n { #1 } }
+      }
+      {
+        \exp_args:Nx \__csl_write_aux_citation:n { #1 }
+      }
+  }
 
 
 \prg_new_conditional:Nnn \__csl_if_preamble: { T , F , TF }

@@ -143,7 +143,7 @@ local function process_aux_file(aux_file)
 
   for _, citation in ipairs(citations) do
     local citation_id = citation.citationID
-    if citation_id ~= "nocite" then
+    if citation_id ~= "@nocite" then
       local citation_str = citation_strings[citation_id]
       output_string = output_string .. string.format("\\cslcite{%s}{{%s}{%s}}\n", citation_id, style_class, citation_str)
     end

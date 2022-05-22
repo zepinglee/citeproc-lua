@@ -165,44 +165,44 @@ function core.init(style_name, data_files, lang)
   return engine
 end
 
+local function parse_latex_seq(s)
+  local t = {}
+  for item in string.gmatch(s, "(%b{})") do
+    item = string.sub(item, 2, -2)
+    table.insert(t, item)
+  end
+  return t
+end
+
+local function parse_latex_prop(s)
+  local t = {}
+  for key, value in string.gmatch(s, "([%w%-]+)%s*=%s*(%b{})") do
+    value = string.sub(value, 2, -2)
+    if value == "true" then
+      value = true
+    elseif value == "false" then
+      value = false
+    end
+    t[key] = value
+  end
+  return t
+end
 
 function core.make_citation(citation_info)
   -- `citation_info`: "{ITEM-1@2}{{id={ITEM-1},label={page},locator={6}}}{3}"
-  local arguments = {}
-  for argument in string.gmatch(citation_info, "(%b{})") do
-    table.insert(arguments, string.sub(argument, 2, -2))
-  end
-  if #arguments ~= 3 then
-    error(string.format('Invalid citation "%s"', citation_info))
-    return nil
-  end
-  local citation_id, cite_items_str, note_index = table.unpack(arguments)
+  -- `citation_info`: "citationID={ITEM-1@2},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={3}}"
+  local citation = parse_latex_prop(citation_info)
+  assert(citation.citationID)
+  assert(citation.citationItems)
+  assert(citation.properties)
 
-  local cite_items = {}
-  if citation_id == "nocite" then
-    for _, cite_id in ipairs(util.split(cite_items_str, "%s*,%s*")) do
-      table.insert(cite_items, {id = cite_id})
-    end
+ citation.citationItems = parse_latex_seq(citation.citationItems)
 
-  else
-    for item_str in string.gmatch(cite_items_str, "(%b{})") do
-      item_str = string.sub(item_str, 2, -2)
-      local cite_item = {}
-      for key, value in string.gmatch(item_str, "([%w%-]+)=(%b{})") do
-        value = string.sub(value, 2, -2)
-        cite_item[key] = value
-      end
-      table.insert(cite_items, cite_item)
-    end
+  for i, item in ipairs(citation.citationItems) do
+    citation.citationItems[i] = parse_latex_prop(item)
   end
 
-  local citation = {
-    citationID = citation_id,
-    citationItems = cite_items,
-    properties = {
-      noteIndex = tonumber(note_index),
-    },
-  }
+  citation.properties = parse_latex_prop(citation.properties)
 
   return citation
 end
@@ -216,7 +216,7 @@ function core.process_citations(engine, citations)
   local citation_strings = {}
 
   for _, citation in ipairs(citations) do
-    if citation.citationID ~= "nocite" then
+    if citation.citationID ~= "@nocite" then
       local res = engine:processCitationCluster(citation, citations_pre, {})
 
       for _, citation_res in ipairs(res[2]) do
