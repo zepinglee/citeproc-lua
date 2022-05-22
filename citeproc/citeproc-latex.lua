@@ -9,7 +9,7 @@ local csl = {}
 local citeproc = require("citeproc")
 local util = citeproc.util
 require("lualibs")
-local core = require("csl-core")
+local core = require("citeproc-latex-core")
 
 
 csl.initialized = "false"

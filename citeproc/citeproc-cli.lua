@@ -1,4 +1,3 @@
-#!/usr/bin/env texlua
 
 --
 -- Copyright (c) 2021-2022 Zeping Lee
@@ -6,12 +5,14 @@
 -- Repository: https://github.com/zepinglee/citeproc-lua
 --
 
-kpse.set_program_name("luatex")
+local cli = {}
+
 
 require("lualibs")
 local citeproc = require("citeproc")
 local util = require("citeproc-util")
-local core = require("csl-core")
+local core = require("citeproc-latex-core")
+
 
 local function getopt( arg, options )
   local tab = {}
@@ -161,7 +162,7 @@ local function process_aux_file(aux_file)
 end
 
 
-local function main()
+function cli.main()
   local args = getopt(arg, "o")
 
   -- for k, v in pairs(args) do
@@ -191,4 +192,5 @@ local function main()
 
 end
 
-main()
+
+return cli

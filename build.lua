@@ -11,25 +11,25 @@ testsuppdir = testfiledir .. "/support"
 
 exefiles = {"**/citeproc-lua.lua"}
 installfiles = {
-  "**/*.sty",
   "**/*.lua",
+  "**/*.sty",
   "**/csl-locales-*.xml",
   "**/*.csl",
 }
 scriptfiles = {"**/*.lua"}
 scriptmanfiles = {"citeproc-lua.1"}
 sourcefiles = {
-  "citeproc/*",
-  "latex/*",
+  "citeproc/*.lua",
+  "latex/*.sty",
   "locales/csl-locales-*.xml",
   "styles/*.csl"
 }
 tagfiles = {
-  "latex/citation-style-language.sty",
+  "CHANGELOG.md",
   "citeproc/citeproc.lua",
   "doc/citation-style-language-doc.tex",
   "doc/citeproc-lua.1",
-  "CHANGELOG.md",
+  "latex/citation-style-language.sty",
 }
 textfiles = {"doc/README.md", "CHANGELOG.md", "DEPENDS.txt"}
 typesetfiles = {"*.tex"}
