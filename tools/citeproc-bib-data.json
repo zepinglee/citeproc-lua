@@ -244,7 +244,7 @@
         },
         "manual": {
             "csl": "report",
-            "nots": "CSL's `report` is also used for manuals and similar technical documentation (e.g. a software, instrument, or test manual).",
+            "notes": "CSL's `report` is also used for manuals and similar technical documentation (e.g. a software, instrument, or test manual).",
             "source": "bibtex"
         },
         "map": {
@@ -367,6 +367,10 @@
             "csl": "report",
             "source": "biblatex"
         },
+        "repository": {
+            "csl": null,
+            "source": "quantum.bst"
+        },
         "review": {
             "csl": "review",
             "notes": "\"A more specific variant of the `@article` type\"",
@@ -441,6 +445,10 @@
         "webpage": {
             "csl": "webpage",
             "source": "IEEEtran.bst"
+        },
+        "website": {
+            "csl": null,
+            "source": "quantum.bst"
         },
         "www": {
             "alias": "online",
@@ -672,6 +680,10 @@
             "csl": null,
             "source": "ACM-Reference-Format.bst"
         },
+        "code": {
+            "csl": null,
+            "source": "quantum.bst"
+        },
         "coden": {
             "csl": null,
             "source": "is-abbrv.bst"
@@ -688,6 +700,10 @@
             "csl": null,
             "source": "biblatex",
             "type": "name"
+        },
+        "commit": {
+            "csl": null,
+            "source": "quantum.bst"
         },
         "compiler": {
             "csl": null,
@@ -1470,6 +1486,10 @@
             "csl": null,
             "source": "jox.bst"
         },
+        "nolink": {
+            "csl": null,
+            "source": "quantum.bst"
+        },
         "normal": {
             "csl": null,
             "source": "bookdb.bst"
@@ -1846,6 +1866,10 @@
             "csl": "title-short",
             "source": "biblatex",
             "type": "literal"
+        },
+        "shorturl": {
+            "csl": null,
+            "source": "quantum.bst"
         },
         "sig1": {
             "csl": null,

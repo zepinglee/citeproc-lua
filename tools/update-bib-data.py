@@ -271,6 +271,32 @@ class BibData(OrderedDict):
         for field, value in self['fields'].items():
             self['fields'][field] = OrderedDict(sorted(value.items()))
 
+    def export_lua(self):
+        res = '-- This file is generated from citeproc-bib-data.json by update-bib-date.py\n\n'
+
+        def to_lua_table(obj, level=0):
+            res = ''
+            if obj is None:
+                res = "nil"
+            elif isinstance(obj, str):
+                res = '"' + obj.replace('"', '\\"') + '"'
+            elif isinstance(obj, dict) or isinstance(obj, OrderedDict):
+                res += '{\n'
+                for key, value in obj.items():
+                    if key == "alias" or key == "notes" or key == "source":
+                        continue
+                    res += '    ' * (level + 1) + f'["{key}"] = ' + to_lua_table(value, level+1) + ',\n'
+                res += '    ' * level + '}'
+            else:
+                print(obj)
+            return res
+
+        res += "return " + to_lua_table(self)
+        # print(to_lua_table(self))
+
+        with open('citeproc/citeproc-bib-data.lua', 'w') as f:
+            f.write(res)
+
     def export_markdown(self):
         res = '# Bib CSL mapping\n'
         for category in ['types', 'fields']:
@@ -315,7 +341,7 @@ class BibData(OrderedDict):
 
 
 if __name__ == '__main__':
-    bib_data_path = 'citeproc/citeproc-bib-data.json'
+    bib_data_path = 'tools/citeproc-bib-data.json'
     bib_data = BibData(bib_data_path)
 
     bib_data.update_bibtex()
@@ -327,6 +353,7 @@ if __name__ == '__main__':
 
     bib_data.check_csl_schema()
     bib_data.sort_keys()
+    bib_data.export_lua()
     bib_data.export_markdown()
 
     with open(bib_data_path, 'w') as f:

@@ -13,7 +13,6 @@ exefiles = {"**/citeproc-lua.lua"}
 installfiles = {
   "**/*.sty",
   "**/*.lua",
-  "**/*.json",
   "**/csl-locales-*.xml",
   "**/*.csl",
 }

@@ -16,23 +16,11 @@
 
 local bib = {}
 
-require("lualibs")
 local unicode = require("unicode")
+bib.bib_data = require("citeproc-bib-data")
 
 local util = require("citeproc-util")
 
-
-local path = "citeproc-bib-data.json"
-if kpse then
-  path = kpse.find_file(path)
-end
-if path then
-  local contents = util.read_file(path)
-  if not contents then
-    error(string.format('Failed to find "%s"', path))
-  end
-  bib.bib_data = utilities.json.tolua(contents)
-end
 
 function bib.parse(contents)
   local items = {}

@@ -27,7 +27,7 @@ Bib|CSL|Notes
 `@legal`|`treaty`|"Legal documents such as treaties."
 `@legislation`|`legislation`|"Laws, bills, legislative proposals, and similar things." May also be `bill`
 `@letter`|`personal_communication`|
-`@manual`|`report`|
+`@manual`|`report`|CSL's `report` is also used for manuals and similar technical documentation (e.g. a software, instrument, or test manual).
 `@mastersthesis`|`thesis`|Alias for `@thesis`.
 `@misc`|`document`|New in CSL v1.0.2.
 `@movie`|`motion_picture`|
