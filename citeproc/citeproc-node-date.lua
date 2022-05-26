@@ -10,7 +10,22 @@ local element = require("citeproc-element")
 local util = require("citeproc-util")
 
 
-local Date = element.Element:new()
+-- [Date](https://docs.citationstyles.org/en/stable/specification.html#date)
+local Date = element.Element:new("date")
+
+Date.date_parts = "year-month-day"
+
+function Date:from_node(node)
+  local o = Date:new()
+  o.variable = node:get_attribute("variable")
+  o.form = node:get_attribute("form")
+  o.date_parts = node:get_attribute("date-parts")
+  o:get_formatting_attributes(node)
+  o:get_affixes_attributes(node)
+  o:get_display_attribute(node)
+  o:get_text_case_attribute(node)
+  return o
+end
 
 function Date:render (item, context)
   self:debug_info(context)
@@ -240,8 +255,19 @@ function Date:_get_show_parts (context)
   return show_parts
 end
 
+-- [Date-part](https://docs.citationstyles.org/en/stable/specification.html#date-part)
+local DatePart = element.Element:new("date-part")
 
-local DatePart = element.Element:new()
+function DatePart:from_node(node)
+  local o = DatePart:new()
+  o.name = node:get_attribute("name")
+  o.form = node:get_attribute("form")
+  o:get_formatting_attributes(node)
+  o:get_text_case_attribute(node)
+  o.range_delimiter = node:get_attribute("range-delimiter")
+  o:get_affixes_attributes(node)
+  return o
+end
 
 DatePart.render = function (self, date, context, last_range_begin, range_end)
   self:debug_info(context)
@@ -346,7 +372,7 @@ DatePart.render = function (self, date, context, last_range_begin, range_end)
       end
       res = string.format("%02d", month)
     end
-    res = self:strip_periods(res, context)
+    res = self:apply_strip_periods(res, context)
 
   elseif name == "year" then
     local year = date["date-parts"][date_parts_index][1]

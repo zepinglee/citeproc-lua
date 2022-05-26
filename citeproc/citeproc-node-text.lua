@@ -10,8 +10,46 @@ local element = require("citeproc-element")
 local richtext = require("citeproc-richtext")
 local util = require("citeproc-util")
 
+-- [Text](https://docs.citationstyles.org/en/stable/specification.html#text)
+local Text = element.Element:new("text")
+Text.variable = nil
+Text.form = "long"
+Text.macro = nil
+Text.term = nil
+Text.plural = false
+Text.value = nil
+-- Style behavior
+Text.font_style = nil
+Text.font_variant = nil
+Text.font_weight = nil
+Text.text_decoration = nil
+Text.vertical_align = nil
+Text.prefix = nil
+Text.suffix = nil
+Text.delimiter = nil
+Text.display = nil
+Text.quotes = false
+Text.strip_periods = false
+Text.text_case = nil
 
-local Text = element.Element:new()
+function Text:from_node(node)
+  local o = Text:new()
+  o.variable = node:get_attribute("variable")
+  o.form = node:get_attribute("form")
+  o.macro = node:get_attribute("macro")
+  o.term = node:get_attribute("term")
+  o.plural = util.to_boolean(node:get_attribute("plural"))
+  o.value = node:get_attribute("value")
+
+  o:get_formatting_attributes(node)
+  o:get_affixes_attributes(node)
+  o:get_delimiter_attribute(node)
+  o:get_display_attribute(node)
+  o:get_quotes_attribute(node)
+  o:get_strip_periods_attribute(node)
+  o:get_text_case_attribute(node)
+  return o
+end
 
 function Text:render (item, context)
   self:debug_info(context)
@@ -73,7 +111,7 @@ function Text:render (item, context)
     res:add_format("URL", "true")
   end
 
-  res = self:strip_periods(res, context)
+  res = self:apply_strip_periods(res, context)
   res = self:case(res, context)
   res = self:format(res, context)
   res = self:quote(res, context)

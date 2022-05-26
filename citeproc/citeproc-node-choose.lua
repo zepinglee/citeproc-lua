@@ -9,8 +9,8 @@ local choose = {}
 local element = require("citeproc-element")
 local util = require("citeproc-util")
 
-
-local Choose = element.Element:new()
+-- [Choose](https://docs.citationstyles.org/en/stable/specification.html#choose)
+local Choose = element.Element:new("choose")
 
 function Choose:render (item, context)
   self:debug_info(context)
@@ -27,7 +27,19 @@ function Choose:render (item, context)
 end
 
 
-local If = element.Element:new()
+local If = element.Element:new("if")
+
+function If:from_node(node)
+  local o = If:new()
+  o.disambiguate = util.to_boolean(node:get_attribute("boolean"))
+  o.is_numeric = util.to_list(node:get_attribute("is-numeric"))
+  o.is_uncertain_date = util.to_list(node:get_attribute("is-uncertain-date"))
+  o.locator = node:get_attribute("locator")
+  o.postition = node:get_attribute("postition")
+  o.type = util.to_list(node:get_attribute("type"))
+  o.variable = util.to_list(node:get_attribute("variable"))
+  return o
+end
 
 If.render = function (self, item, context)
   self:debug_info(context)
@@ -112,10 +124,10 @@ If.render = function (self, item, context)
 end
 
 
-local ElseIf = If:new()
+local ElseIf = If:new("else-if")
 
 
-local Else = element.Element:new()
+local Else = element.Element:new("else")
 
 Else.render = function (self, item, context)
   self:debug_info(context)

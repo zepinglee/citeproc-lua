@@ -14,7 +14,8 @@ local date = require("citeproc-node-date")
 local util = require("citeproc-util")
 
 
-local Sort = element.Element:new()
+-- [Sorting](https://docs.citationstyles.org/en/stable/specification.html#sorting)
+local Sort = element.Element:new("sort")
 
 function Sort:sort (items, context)
   -- key_map = {
@@ -111,7 +112,23 @@ function Sort.compare_entry(key_map, sort_directions, item1, item2)
   end
 end
 
-local Key = element.Element:new()
+local Key = element.Element:new("key")
+
+Key.sort = "ascending"
+
+function Key:from_node(node)
+  local o = Key:new()
+  o.variable = node:get_attribute("variable")
+  o.macro = node:get_attribute("macro")
+  o.names_min = node:get_attribute("names-min")
+  o.names_use_first = node:get_attribute("names-use-first")
+  o.names_use_last = node:get_attribute("names-use-last")
+  o.macro = node:get_attribute("macro")
+  o.macro = node:get_attribute("macro")
+  o.macro = node:get_attribute("macro")
+  o:get_formatting_attributes(node)
+  return o
+end
 
 function Key:render (item, context)
   context = self:process_context(context)

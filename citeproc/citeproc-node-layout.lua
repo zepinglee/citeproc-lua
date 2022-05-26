@@ -11,7 +11,15 @@ local element = require("citeproc-element")
 local util = require("citeproc-util")
 
 
-local Layout = element.Element:new()
+local Layout = element.Element:new("layout")
+
+function Layout:from_node(node)
+  local o = Layout:new()
+  o:get_affixes_attributes(node)
+  o:get_formatting_attributes(node)
+  o:get_delimiter_attribute(node)
+  return o
+end
 
 function Layout:render (items, context)
   self:debug_info(context)

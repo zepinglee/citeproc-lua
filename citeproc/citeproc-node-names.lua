@@ -13,9 +13,39 @@ local element = require("citeproc-element")
 local util = require("citeproc-util")
 
 
-local Name = element.Element:new()
+-- [Name](https://docs.citationstyles.org/en/stable/specification.html#name)
+local Name = element.Element:new("name")
 
-Name.default_options = {
+Name.delimiter = ", "
+Name.delimiter_precedes_et_al = "contextual"
+Name.delimiter_precedes_last = "contextual"
+Name.et_al_use_last = false
+Name.form = "long"
+Name.initialize = false
+Name.sort_separator = false
+
+function Name:from_node(node)
+  local o = Name:new()
+  o.and_ = node:get_attribute("and")
+  o:get_delimiter_attribute(node)
+  o.delimiter_precedes_et_al = node:get_attribute("delimiter-precedes-et-al")
+  o.delimiter_precedes_last = node:get_attribute("delimiter-precedes-last")
+  o.et_al_min = node:get_attribute("et-al-min")
+  o.et_al_use_first = node:get_attribute("et-al-use-first")
+  o.et_al_subsequent_min = node:get_attribute("et-al-subsequent-min")
+  o.et_al_subsequent_use_first = node:get_attribute("et-al-subsequent-use-first")
+  o.et_al_use_last = util.to_boolean(node:get_attribute("et-al-use-last"))
+  o.form = node:get_attribute("form")
+  o.initialize = util.to_boolean(node:get_attribute("initialize"))
+  o.initialize_with = node:get_attribute("initialize-with")
+  o.name_as_sort_order = node:get_attribute("name_as_sort_order")
+  o.sort_separator = node:get_attribute("sort-separator")
+  o:get_affixes_attributes(node)
+  o:get_formatting_attributes(node)
+  return o
+end
+
+Name._default_options = {
   ["delimiter"] = ", ",
   ["delimiter-precedes-et-al"] = "contextual",
   ["delimiter-precedes-last"] = "contextual",
@@ -200,7 +230,7 @@ function Name:render_single_name (name, index, context)
   end
 
   if initialize_with then
-    given = self:initialize(given, initialize_with, context)
+    given = self:initialize_name(given, initialize_with, context)
   end
 
   local demote_ndp = false  -- only active when form == "long"
@@ -315,7 +345,7 @@ function Name:render_single_name (name, index, context)
   return res, inverted
 end
 
-function Name:initialize (given, terminator, context)
+function Name:initialize_name(given, terminator, context)
   if not given or given == "" then
     return ""
   end
@@ -412,7 +442,17 @@ function Name:initialize (given, terminator, context)
 
 end
 
-local NamePart = element.Element:new()
+
+-- [Name-part](https://docs.citationstyles.org/en/stable/specification.html#name-part-formatting)
+local NamePart = element.Element:new("name-part")
+
+function NamePart:from_node(node)
+  local o = NamePart:new()
+  o.name = node:get_attribute("name")
+  o:get_affixes_attributes(node)
+  o:get_text_case_attribute(node)
+  return o
+end
 
 function NamePart:format_name_part(name_part, context)
   context = self:process_context(context)
@@ -428,9 +468,19 @@ function NamePart:wrap_name_part(name_part, context)
 end
 
 
-local EtAl = element.Element:new()
+-- [Et-al](https://docs.citationstyles.org/en/stable/specification.html#et-al)
+local EtAl = element.Element:new("et-al")
 
-EtAl.default_options = {
+EtAl.term = "et-al"
+
+function EtAl:from_node(node)
+  local o = EtAl:new()
+  o.term = node:get_attribute("term")
+  o:get_formatting_attributes(node)
+  return o
+end
+
+EtAl._default_options = {
   term = "et-al",
 }
 
@@ -443,7 +493,7 @@ EtAl.render = function (self, context)
 end
 
 
-local Substitute = element.Element:new()
+local Substitute = element.Element:new("substitute")
 
 function Substitute:render (item, context)
   self:debug_info(context)
@@ -465,7 +515,19 @@ function Substitute:render (item, context)
 end
 
 
-local Names = element.Element:new()
+-- [Names](https://docs.citationstyles.org/en/stable/specification.html#names)
+local Names = element.Element:new("names")
+
+function Names:from_node(node)
+  local o = Names:new()
+  o.variable = node:get_attribute("variable")
+  o:get_delimiter_attribute(node)
+  o:get_affixes_attributes(node)
+  o:get_display_attribute(node)
+  o:get_formatting_attributes(node)
+  o:get_text_case_attribute(node)
+  return o
+end
 
 function Names:render (item, context)
   self:debug_info(context)

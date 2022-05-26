@@ -10,7 +10,16 @@ local element = require("citeproc-element")
 local util = require("citeproc-util")
 
 
-local Group = element.Element:new()
+local Group = element.Element:new("group")
+
+function Group:from_node(node)
+  local o = Group:new()
+  o:get_delimiter_attribute(node)
+  o:get_affixes_attributes(node)
+  o:get_display_attribute(node)
+  o:get_formatting_attributes(node)
+  return o
+end
 
 function Group:render (item, context)
   self:debug_info(context)

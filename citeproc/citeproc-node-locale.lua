@@ -9,16 +9,16 @@ local locale = {}
 local element = require("citeproc-element")
 
 
-local Locale = element.Element:new()
+local Locale = element.Element:new("locale")
 
-function Locale:get_option (key)
+function Locale:get_option(key)
   local query = string.format("style-options[%s]", key)
   local option = self:query_selector(query)[1]
   if option then
     local value = option:get_attribute(key)
-      if self.option_type[key] == "integer" then
+      if self._option_type[key] == "integer" then
         value = tonumber(value)
-      elseif self.option_type[key] == "boolean" then
+      elseif self._option_type[key] == "boolean" then
         value = (value == "true")
       end
     return value
@@ -103,7 +103,7 @@ function Locale:get_term (name, form, number, gender)
 end
 
 
-local Term = element.Element:new()
+local Term = element.Element:new("term")
 
 function Term:render (context, is_plural)
   self:debug_info(context)

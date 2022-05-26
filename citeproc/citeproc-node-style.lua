@@ -10,9 +10,9 @@ local element = require("citeproc-element")
 local util = require("citeproc-util")
 
 
-local Style = element.Element:new()
+local Style = element.Element:new("style")
 
-Style.default_options = {
+Style._default_options = {
   ["initialize-with-hyphen"] = true,
   ["page-range-format"] = nil,
   ["demote-non-dropping-particle"] = "display-and-sort",
@@ -125,7 +125,7 @@ function Style:get_term (...)
 end
 
 
-local Citation = element.Element:new()
+local Citation = element.Element:new("citation")
 
 function Citation:render (items, context)
   self:debug_info(context)
@@ -144,9 +144,9 @@ function Citation:render (items, context)
 end
 
 
-local Bibliography = element.Element:new()
+local Bibliography = element.Element:new("citation")
 
-Bibliography.default_options = {
+Bibliography._default_options = {
   ["hanging-indent"] = false,
   ["second-field-align"] = nil,
   ["line-spacing"] = 1,

@@ -10,7 +10,23 @@ local element = require("citeproc-element")
 local util = require("citeproc-util")
 
 
-local Label = element.Element:new()
+-- [Label](https://docs.citationstyles.org/en/stable/specification.html#label)
+local Label = element.Element:new("label")
+
+Label.form = "long"
+Label.plural = "contextual"
+
+function Label:from_node(node)
+  local o = Label:new()
+  o.variable = node:get_attribute("variable")
+  o.form = node:get_attribute("form")
+  o.plural = node:get_attribute("plural")
+  o:get_affixes_attributes(node)
+  o:get_formatting_attributes(node)
+  o:get_text_case_attribute(node)
+  o:get_strip_periods_attribute(node)
+  return o
+end
 
 function Label:render (item, context)
   self:debug_info(context)
@@ -66,7 +82,7 @@ function Label:render (item, context)
       res = term:render(context, false)
     end
 
-    res = self:strip_periods(res, context)
+    res = self:apply_strip_periods(res, context)
     res = self:case(res, context)
     res = self:format(res, context)
     res = self:wrap(res, context)

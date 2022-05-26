@@ -394,7 +394,7 @@ function richtext.concat_list(list, delimiter)
   return res
 end
 
-function RichText:strip_periods()
+function RichText:apply_strip_periods()
   local last_string = self
   local contents = self.contents
   while last_string._type == "RichText" do

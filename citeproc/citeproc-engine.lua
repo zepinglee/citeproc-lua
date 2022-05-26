@@ -18,7 +18,7 @@ local util = require("citeproc-util")
 local CiteProc = {}
 
 function CiteProc.new (sys, style, lang, force_lang)
-  if sys == nil then
+  if not sys then
     error("\"citeprocSys\" required")
   end
   if sys.retrieveLocale == nil then
@@ -49,6 +49,10 @@ function CiteProc.new (sys, style, lang, force_lang)
   o.csl:root_node().engine = o
   o.style = o.csl:get_path("style")[1]
   o.style.lang = lang
+
+  o.style_element = CiteProc.create_element_tree(o.csl:get_path("style")[1])
+  util.debug(o.style_element)
+
   o.csl:root_node().style = o.style
 
   o.style:set_lang(lang, force_lang)
@@ -299,6 +303,29 @@ function CiteProc.set_base_class (node)
       element.Element:set_base_class(node)
     end
   end
+end
+
+function CiteProc.create_element_tree(node)
+  local element_name = node:get_element_name()
+  local element_class = nodes[element_name]
+  local el = nil
+  if element_class then
+    el = element_class:from_node(node)
+  end
+  if el then
+    for i, child in ipairs(node:get_children()) do
+      if child:is_element() then
+        local child_element = CiteProc.create_element_tree(child)
+        if child_element then
+          if not el.elements then
+            el.elements = {}
+          end
+          table.insert(el.elements, child_element)
+        end
+      end
+    end
+  end
+  return el
 end
 
 function CiteProc:get_style_class()

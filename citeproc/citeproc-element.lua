@@ -13,17 +13,12 @@ local util = require("citeproc-util")
 
 
 local Element = {
-  default_options = {},
+  element_name = nil,
+  elements = nil,
+  _default_options = {},
 }
 
-function Element:new ()
-  local o = {}
-  setmetatable(o, self)
-  self.__index = self
-  return o
-end
-
-Element.option_type = {
+Element._option_type = {
   ["et-al-min"] = "integer",
   ["et-al-use-first"] = "integer",
   ["et-al-subsequent-min"] = "integer",
@@ -47,7 +42,7 @@ Element.option_type = {
   ["strip-periods"] = "boolean",
 }
 
-Element.inheritable_options = {
+Element._inheritable_options = {
   -- Style
   ["initialize-with-hyphen"] = true,
   ["page-range-format"] = true,
@@ -87,6 +82,20 @@ Element.inheritable_options = {
   ["name-delimiter"] = true,
   ["names-delimiter"] = true,
 }
+
+function Element:new(element_name)
+  local o = {
+    element_name = element_name or self.element_name,
+    elements = nil,
+  }
+  setmetatable(o, self)
+  self.__index = self
+  return o
+end
+
+function Element:from_node(node)
+  return self:new()
+end
 
 function Element:render (item, context)
   self:debug_info(context)
@@ -172,7 +181,7 @@ function Element:process_context (context)
     options = {},
     -- Other items in `context` is copied.
   }
-  for key, value in pairs(self.default_options) do
+  for key, value in pairs(self._default_options) do
     state.options[key] = value
   end
   if context then
@@ -180,7 +189,7 @@ function Element:process_context (context)
     for key, value in pairs(context) do
       if key == "options" then
         for k, v in pairs(context.options) do
-          if self.inheritable_options[k] then
+          if self._inheritable_options[k] then
             state.options[k] = v
             if element_name == "name" then
               if k == "name-form" then
@@ -208,9 +217,9 @@ function Element:process_context (context)
   end
   if self._attr then
     for key, value in pairs(self._attr) do
-      if self.option_type[key] == "integer" then
+      if self._option_type[key] == "integer" then
         value = tonumber(value)
-      elseif self.option_type[key] == "boolean" then
+      elseif self._option_type[key] == "boolean" then
         value = (value == "true")
       end
       state.options[key] = value
@@ -271,6 +280,40 @@ end
 function Element:escape (str, context)
   return str
   -- return self:get_engine().formatter.text_escape(str)
+end
+
+function Element:get_formatting_attributes(node)
+  -- Todo: validate?
+  self.font_style = node:get_attribute("font-style")
+  self.font_variant = node:get_attribute("font-variant")
+  self.font_weight = node:get_attribute("font-weight")
+  self.text_decoration = node:get_attribute("text-decoration")
+  self.vertical_align = node:get_attribute("vertical-align")
+end
+
+function Element:get_affixes_attributes(node)
+  self.prefix = node:get_attribute("prefix")
+  self.suffix = node:get_attribute("suffix")
+end
+
+function Element:get_delimiter_attribute(node)
+  self.delimiter = node:get_attribute("delimiter")
+end
+
+function Element:get_display_attribute(node)
+  self.display = node:get_attribute("display")
+end
+
+function Element:get_quotes_attribute(node)
+  self.quotes = util.to_boolean(node:get_attribute("quotes"))
+end
+
+function Element:get_strip_periods_attribute(node)
+  self.strip_periods = util.to_boolean(node:get_attribute("strip-periods"))
+end
+
+function Element:get_text_case_attribute(node)
+  self.text_case = util.to_boolean(node:get_attribute("text-case"))
 end
 
 function Element:format(text, context)
@@ -370,7 +413,7 @@ function Element:quote (str, context)
 end
 
 -- Strip periods
-function Element:strip_periods (str, context)
+function Element:apply_strip_periods(str, context)
   if not str then
     return nil
   end
@@ -379,7 +422,7 @@ function Element:strip_periods (str, context)
   end
   local strip_periods = context.options["strip-periods"]
   if strip_periods then
-    str:strip_periods()
+    str:apply_strip_periods()
   end
   return str
 end

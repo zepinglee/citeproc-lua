@@ -11,6 +11,27 @@ local inspect  -- only load it when debugging
 
 local util = {}
 
+function util.to_boolean(str)
+  if not str then
+    return false
+  end
+  if str == "true" then
+    return true
+  elseif str == "false" then
+    return false
+  else
+    util.warning(string.format('Invalid boolean string "%s"', str))
+    return false
+  end
+end
+
+function util.to_list(str)
+  if not str then
+    return nil
+  end
+  return util.split(str)
+end
+
 function util.to_ordinal (n)
   assert(type(n) == "number")
   local last_digit = n % 10

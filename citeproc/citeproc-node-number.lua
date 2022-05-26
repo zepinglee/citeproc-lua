@@ -10,7 +10,20 @@ local element = require("citeproc-element")
 local util = require("citeproc-util")
 
 
-local Number = element.Element:new()
+local Number = element.Element:new("number")
+
+Number.form = "numeric"
+
+function Number:from_node(node)
+  local o = Number:new()
+  o.variable = node:get_attribute("variable")
+  o.form = node:get_attribute("form")
+  o:get_affixes_attributes(node)
+  o:get_display_attribute(node)
+  o:get_formatting_attributes(node)
+  o:get_text_case_attribute(node)
+  return o
+end
 
 function Number:render (item, context)
   self:debug_info(context)
