@@ -6,25 +6,85 @@
 
 local date_module = {}
 
-local element = require("citeproc-element")
+local Element = require("citeproc-element").Element
+local IrNode = require("citeproc-ir-node").IrNode
 local util = require("citeproc-util")
 
 
 -- [Date](https://docs.citationstyles.org/en/stable/specification.html#date)
-local Date = element.Element:new("date")
-
-Date.date_parts = "year-month-day"
+local Date = Element:derive("date")
 
 function Date:from_node(node)
   local o = Date:new()
+
   o.variable = node:get_attribute("variable")
   o.form = node:get_attribute("form")
-  o.date_parts = node:get_attribute("date-parts")
+  o.date_parts = node:get_attribute("date-parts") or "year-month-day"
+
+  o:get_delimiter_attribute(node)
   o:get_formatting_attributes(node)
   o:get_affixes_attributes(node)
   o:get_display_attribute(node)
   o:get_text_case_attribute(node)
+
+  o:process_children_nodes(node)
   return o
+end
+
+function Date:build_ir(engine, state, context)
+  local variable = context:get_variable(self.variable)
+  if not variable then
+    return nil
+  end
+  if self.form then
+    return self.build_localized_date_ir(variable, engine, state, context)
+  else
+    return self.build_independent_date_ir(variable, engine, state, context)
+  end
+end
+
+function Date:build_localized_date_ir(variable, engine, state, context)
+  -- TODO
+end
+
+function Date:build_independent_date_ir(variable, engine, state, context)
+  local res
+  if variable["date-parts"] and #variable["date-parts"] > 0 then
+    if #variable["date-parts"] == 1 then
+      res = self:_render_single_date(variable, context)
+    elseif #variable["date-parts"] == 2 then
+      res = self:_render_date_range(variable, context)
+    end
+
+  else
+    local literal = variable["literal"]
+    if literal then
+      res = literal
+    else
+      local raw = variable["raw"]
+      if raw then
+        res = raw
+      end
+    end
+
+  end
+end
+
+function Date:build_single_date_ir(variable, engine, state, context)
+  -- TODO
+  local ir = IrNode:new("date")
+  ir.children = {}
+
+  for _, date_part in ipairs(self.children) do
+    table.insert(ir.children, date_part:build_ir(variable, engine, state, context))
+  end
+
+  -- TODO: How to apply text case to date element?
+  -- value = self._apply_text_case(value)
+  ir = self:_apply_formatting(ir)
+  ir = self:_apply_affixes(ir)
+  ir = self:_apply_display(ir)
+  return ir
 end
 
 function Date:render (item, context)
@@ -255,8 +315,9 @@ function Date:_get_show_parts (context)
   return show_parts
 end
 
+
 -- [Date-part](https://docs.citationstyles.org/en/stable/specification.html#date-part)
-local DatePart = element.Element:new("date-part")
+local DatePart = Element:derive("date-part")
 
 function DatePart:from_node(node)
   local o = DatePart:new()
@@ -267,6 +328,30 @@ function DatePart:from_node(node)
   o.range_delimiter = node:get_attribute("range-delimiter")
   o:get_affixes_attributes(node)
   return o
+end
+
+function DatePart:build_ir(variable, engine, state, context)
+  local variable_date_parts = variable["date-parts"][1]
+  local text
+  if self.name == "year" then
+    text = tostring(variable_date_parts[1])
+  elseif self.name == "month" then
+    text = tostring(variable_date_parts[2])
+  elseif self.name == "day" then
+    text = tostring(variable_date_parts[3])
+  end
+  if not text then
+    return nil
+  end
+
+  text = tostring(text)
+  -- TODO: form ...
+  text = self._apply_text_case(text)
+
+  local ir = IrNode:new("date-part", text)
+  ir = self:_apply_formatting(ir)
+  ir = self:_apply_affixes(ir)
+  return ir
 end
 
 DatePart.render = function (self, date, context, last_range_begin, range_end)

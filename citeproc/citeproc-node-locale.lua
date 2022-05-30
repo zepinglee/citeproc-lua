@@ -6,10 +6,46 @@
 
 local locale = {}
 
-local element = require("citeproc-element")
+local Element = require("citeproc-element").Element
+local util = require("citeproc-util")
 
 
-local Locale = element.Element:new("locale")
+local Locale = Element:derive("locale")
+
+function Locale:new()
+  local o = Element:new()
+
+  o.terms = {}
+  o.dates = {}
+  o.style_options = {}
+
+  return o
+end
+
+function Locale:from_node(node)
+  local o = Locale:new()
+  o:process_children_nodes(node)
+
+  for _, child in ipairs(o.children) do
+    local element_name = child.element_name
+    if element_name == "terms" then
+      o.terms = child
+    elseif element_name == "date" then
+      o.dates[child.form] = child
+    elseif element_name == "style-options" then
+      local style_option = child
+      o.style_options.limit_day_ordinals_to_day_1 = util.to_boolean(
+        style_option:get_attribute("limit-day-ordinals-to-day-1")
+      ) or false
+      o.style_options.punctuation_in_quote = util.to_boolean(
+        style_option:get_attribute("punctuation-in-quote")
+      ) or false
+    end
+  end
+
+  return o
+end
+
 
 function Locale:get_option(key)
   local query = string.format("style-options[%s]", key)
@@ -103,7 +139,66 @@ function Locale:get_term (name, form, number, gender)
 end
 
 
-local Term = element.Element:new("term")
+local Terms = Element:derive("terms")
+
+function Terms:new(node)
+  local o = Element:new()
+  o.element_name = "terms"
+  o.children = {}
+  o.term_map = {}
+  return o
+end
+
+
+function Terms:from_node(node)
+  local o = Terms:new()
+  o:process_children_nodes(node)
+  for _, term in ipairs(o.children) do
+    local form = term.form
+    local gender_form = term.gender_form
+    local match = term.match
+
+    local key = term.name
+    if form then
+      key = key .. '/form-' .. form
+    end
+    if gender_form then
+      key = key .. '/gender-' .. gender_form
+    end
+    if match then
+      key = key .. '/match-' .. match
+    end
+
+    o.term_map[key] = term
+  end
+  return o
+end
+
+
+local Term = Element:derive("term")
+
+function Term:from_node(node)
+  local o = Term:new()
+
+  if o.children then
+    for _, child in ipairs(node:get_children()) do
+      if child:is_element() then
+        local element_name = child:get_element_name()
+        if element_name == "single" then
+          o.single = child:get_text()
+          o.text = o.single
+        elseif element_name == "multiple" then
+          o.multiple = child:get_text()
+        end
+      end
+    end
+  else
+    o.text = node:get_text()
+  end
+
+  return o
+end
+
 
 function Term:render (context, is_plural)
   self:debug_info(context)

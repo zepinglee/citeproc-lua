@@ -9,7 +9,7 @@ local engine = {}
 local dom = require("luaxml-domobject")
 
 local richtext = require("citeproc-richtext")
-local element = require("citeproc-element")
+local Element = require("citeproc-element").Element
 local nodes = require("citeproc-nodes")
 local formats = require("citeproc-formats")
 local util = require("citeproc-util")
@@ -50,8 +50,9 @@ function CiteProc.new (sys, style, lang, force_lang)
   o.style = o.csl:get_path("style")[1]
   o.style.lang = lang
 
+  -- TODO: rename to style
   o.style_element = CiteProc.create_element_tree(o.csl:get_path("style")[1])
-  util.debug(o.style_element)
+  -- util.debug(o.style_element)
 
   o.csl:root_node().style = o.style
 
@@ -300,7 +301,7 @@ function CiteProc.set_base_class (node)
     if element_class then
       element_class:set_base_class(node)
     else
-      element.Element:set_base_class(node)
+      Element:set_base_class(node)
     end
   end
 end
@@ -317,10 +318,10 @@ function CiteProc.create_element_tree(node)
       if child:is_element() then
         local child_element = CiteProc.create_element_tree(child)
         if child_element then
-          if not el.elements then
-            el.elements = {}
+          if not el.children then
+            el.children = {}
           end
-          table.insert(el.elements, child_element)
+          table.insert(el.children, child_element)
         end
       end
     end

@@ -7,18 +7,31 @@
 local layout = {}
 
 local richtext = require("citeproc-richtext")
-local element = require("citeproc-element")
+local Element = require("citeproc-element").Element
 local util = require("citeproc-util")
 
 
-local Layout = element.Element:new("layout")
+local Layout = Element:derive("layout")
 
 function Layout:from_node(node)
   local o = Layout:new()
   o:get_affixes_attributes(node)
   o:get_formatting_attributes(node)
   o:get_delimiter_attribute(node)
+
+  o:process_children_nodes(node)
+
   return o
+end
+
+function Layout:build_ir(engine, state, context)
+  local ir = self:build_children_ir(engine, state, context)
+  if context.in_bibliography then
+    ir = self:_apply_delimiter(ir)
+  end
+  ir = self:_apply_formatting(ir)
+  ir = self:_apply_affixes(ir)
+  return ir
 end
 
 function Layout:render (items, context)

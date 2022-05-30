@@ -6,12 +6,13 @@
 
 local label = {}
 
-local element = require("citeproc-element")
+local Element = require("citeproc-element").Element
+local IrNode = require("citeproc-ir-node").IrNode
 local util = require("citeproc-util")
 
 
 -- [Label](https://docs.citationstyles.org/en/stable/specification.html#label)
-local Label = element.Element:new("label")
+local Label = Element:derive("label")
 
 Label.form = "long"
 Label.plural = "contextual"
@@ -19,13 +20,48 @@ Label.plural = "contextual"
 function Label:from_node(node)
   local o = Label:new()
   o.variable = node:get_attribute("variable")
-  o.form = node:get_attribute("form")
-  o.plural = node:get_attribute("plural")
+  o.form = node:get_attribute("form") or "long"
+  o.plural = node:get_attribute("plural") or "contextual"
   o:get_affixes_attributes(node)
   o:get_formatting_attributes(node)
   o:get_text_case_attribute(node)
   o:get_strip_periods_attribute(node)
   return o
+end
+
+function Label:build_ir(engine, state, context)
+  -- local variable = context:get_variable(self.variable, self.form)
+
+  local is_plural = false
+  if self.plural == "always" then
+    is_plural = true
+  elseif self.plural == "never" then
+    is_plural = false
+  elseif self.plural == "contextual" then
+    is_plural = self:_is_variable_plural(self.variable)
+  end
+
+  local text = context:get_term(self.term, self.form, is_plural)
+  if not text then
+    return nil
+  end
+
+  text = self._apply_strip_periods(text)
+  text = self._apply_text_case(text)
+
+  local ir = IrNode:new("label", text)
+  ir = self:_apply_formatting(ir)
+  ir = self:_apply_affixes(ir)
+  return ir
+end
+
+function Label:_is_variable_plural(variable, context)
+  local value = context:get_variable(self.variable)
+  if not value then
+    return false
+  end
+  -- TODO
+  return false
 end
 
 function Label:render (item, context)

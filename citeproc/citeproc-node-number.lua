@@ -6,13 +6,18 @@
 
 local number_module = {}
 
-local element = require("citeproc-element")
+local Element = require("citeproc-element").Element
+local IrNode = require("citeproc-richtext").IrNode
 local util = require("citeproc-util")
 
 
-local Number = element.Element:new("number")
+local Number = Element:derive("number")
 
-Number.form = "numeric"
+function Number:new(node)
+  local o = Element:new("number")
+  o.form = "numeric"
+  return o
+end
 
 function Number:from_node(node)
   local o = Number:new()
@@ -24,6 +29,28 @@ function Number:from_node(node)
   o:get_text_case_attribute(node)
   return o
 end
+
+function Number:build_ir(engine, state, context)
+  local value = context:get_variable(self.variable, self.form)
+  if not value then
+    return nil
+  end
+
+  if type(value) == "number" then
+    value = tostring(value)
+  end
+
+  -- value = self._format_number(value, self.variable, self.form)
+
+  value = self._apply_text_case(value)
+
+  local ir = IrNode:new("text", value)
+  ir = self:_apply_formatting(ir)
+  ir = self:_apply_affixes(ir)
+  ir = self:_apply_display(ir)
+  return ir
+end
+
 
 function Number:render (item, context)
   self:debug_info(context)

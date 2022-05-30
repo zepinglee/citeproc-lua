@@ -4,14 +4,15 @@
 -- Repository: https://github.com/zepinglee/citeproc-lua
 --
 
-local text = {}
+local text_module = {}
 
-local element = require("citeproc-element")
+local Element = require("citeproc-element").Element
+local IrNode = require("citeproc-richtext").IrNode
 local richtext = require("citeproc-richtext")
 local util = require("citeproc-util")
 
 -- [Text](https://docs.citationstyles.org/en/stable/specification.html#text)
-local Text = element.Element:new("text")
+local Text = Element:derive("text")
 Text.variable = nil
 Text.form = "long"
 Text.macro = nil
@@ -43,12 +44,71 @@ function Text:from_node(node)
 
   o:get_formatting_attributes(node)
   o:get_affixes_attributes(node)
-  o:get_delimiter_attribute(node)
   o:get_display_attribute(node)
   o:get_quotes_attribute(node)
   o:get_strip_periods_attribute(node)
   o:get_text_case_attribute(node)
   return o
+end
+
+function Text:build_ir(engine, state, context)
+  local ir = nil
+  if self.variable then
+    ir = self:build_variable_ir(engine, state, context)
+  elseif self.macro then
+    ir = self:build_macro_ir(engine, state, context)
+  elseif self.term then
+    ir = self:build_term_ir(engine, state, context)
+  elseif self.value then
+    ir = self:build_value_ir(engine, state, context)
+  end
+  ir = self:_apply_formatting(ir)
+  ir = self:_apply_quotes(ir)
+  ir = self:_apply_affixes(ir)
+  ir = self:_apply_display(ir)
+  return ir
+end
+
+function Text:build_variable_ir(engine, state, context)
+  local value = context:get_variable(self.name, self.form)
+  if not value then
+    return nil
+  end
+
+  if type(value) == "number" then
+    value = tostring(value)
+  end
+  -- if self.name == "page" or self.name == "locator" then
+  --   value = util.lstrip(value)
+  --   value = self:_format_page(value, context)
+  -- end
+  value = self._apply_strip_periods(value)
+  value = self._apply_text_case(value)
+
+  return IrNode:new("text", value)
+end
+
+function Text:build_macro_ir(engine, state, context)
+  local macro = context:get_macro(self.macro)
+  state:push_macro(self.macro)
+  local res = macro:build_ir(engine, state, context)
+  state:push_macro(self.macro)
+  return res
+end
+
+function Text:build_term_ir(engine, state, context)
+  local term = context:get_term(self.term, self.form, self.plural)
+  -- assert(type(term) == "string")
+  term = self._apply_strip_periods(term)
+  term = self._apply_text_case(term)
+  return IrNode:new("text", term)
+end
+
+function Text:build_value_ir(engine, state, context)
+  local value = self.value
+  value = self._apply_strip_periods(value)
+  value = self._apply_text_case(value)
+  return IrNode:new("text", value)
 end
 
 function Text:render (item, context)
@@ -260,6 +320,6 @@ function Text:_format_range_minimal(start, stop, threshold)
 end
 
 
-text.Text = Text
+text_module.Text = Text
 
-return text
+return text_module

@@ -6,11 +6,72 @@
 
 local style = {}
 
-local element = require("citeproc-element")
+local dom = require("luaxml-domobject")
+
+local Element = require("citeproc-element").Element
 local util = require("citeproc-util")
 
 
-local Style = element.Element:new("style")
+local Style = Element:derive("style")
+
+function Style:new()
+  local o = Element:new()
+  o.children = {}
+  o.macros = {}
+  o.locales = {}
+  o.initialize_with_hyphen = true
+  o.demote_non_dropping_particle = "display-and-sort"
+  return o
+end
+
+function Style:parse(xml_str)
+  local csl_xml = dom.parse(xml_str)
+  if not csl_xml then
+    error("Failed to parse CSL style.")
+  end
+  local style_node = csl_xml:get_path("style")[1]
+  if not csl_xml then
+    error('Element "style" not found.')
+  end
+  return Style:from_node(style_node)
+end
+
+function Style:from_node(node)
+  local o = Style:new()
+  o.children = {}
+
+  o.class = node:get_attribute("class")
+  o.default_locale = node:get_attribute("default-locale")
+  o.version = node:get_attribute("version")
+
+  o.macros = {}
+  o.locales = {}
+
+  o:process_children_nodes(node)
+
+  for _, child in ipairs(o.children) do
+    local element_name = child.element_name
+    if element_name == "info" then
+      o.info = child
+    elseif element_name == "citation" then
+      o.citation = child
+    elseif element_name == "bibliography" then
+      o.bibliography = child
+    elseif element_name == "macro" then
+      o.macros[child.name] = child
+    elseif element_name == "locale" then
+      local xml_lang = child.xml_lang or "generic"
+      o.locales[xml_lang] = child
+    end
+  end
+
+  -- Global Options
+  o.initialize_with_hyphen = util.to_boolean(node:get_attribute("initialize-with-hyphen"))
+  o.demote_non_dropping_particle = node:get_attribute("demote-non-dropping-particle")
+
+  return o
+end
+
 
 Style._default_options = {
   ["initialize-with-hyphen"] = true,
@@ -125,7 +186,106 @@ function Style:get_term (...)
 end
 
 
-local Citation = element.Element:new("citation")
+local Info = Element:derive("info")
+
+
+function Info:from_node(node)
+  local o = Info:new()
+
+  -- o.authors = nil
+  -- o.contributors = nil
+  o.categories = {}
+  o.id = nil
+  -- o.issn = nil
+  -- o.eissn = nil
+  -- o.issnl = nil
+  o.links = {
+    independent_parent = nil,
+  }
+  -- o.published = nil
+  -- o.rights = nil
+  -- o.summary = nil
+  o.title = nil
+  -- o.title_short = nil
+  o.updated = nil
+
+  for _, child in ipairs(node:get_children()) do
+    if child:is_element() then
+      local element_name = child:get_element_name()
+      if element_name == "category" then
+        local citation_format = child:get_attribute("citation-format")
+        if citation_format then
+          o.categories.citation_format = citation_format
+        end
+
+      elseif element_name == "id" then
+        o.id = child:get_text()
+
+      elseif element_name == "link" then
+        local href = child:get_attribute("href")
+        local rel = child:get_attribute("rel")
+        if href and rel == "independent-parent" then
+          o.links.independent_parent = href
+        end
+
+      elseif element_name == "title" then
+        o.title = child:get_text()
+
+      elseif element_name == "updated" then
+        o.updated = child:get_text()
+
+      end
+    end
+  end
+
+  return o
+end
+
+
+local Citation = Element:derive("citation")
+
+function Citation:from_node(node)
+  local o = Citation:new()
+  o.children = {}
+
+  o:process_children_nodes(node)
+
+  -- o.layouts = nil  -- CSL-M extension
+
+  for _, child in ipairs(o.children) do
+    local element_name = child.element_name
+    if element_name == "layout" then
+      o.layout = child
+    elseif element_name == "sort" then
+      o.sort = child
+    end
+  end
+
+
+  -- Disambiguation
+  o.disambiguate_add_givenname = util.to_boolean(node:get_attribute("disambiguate-add-givenname")) or false
+  o.givenname_disambiguation_rule = node:get_attribute("givenname-disambiguation-rule") or "by-cite"
+  o.disambiguate_add_names = util.to_boolean(node:get_attribute("disambiguate-add-names")) or false
+  o.disambiguate_add_year_suffix = util.to_boolean(node:get_attribute("disambiguate-add-year-suffix")) or false
+
+  -- Cite Grouping
+  o.cite_group_delimiter = node:get_attribute("cite-group-delimiter") or ", "
+
+  -- Cite Collapsing
+  o.collapse = node:get_attribute("collapse")
+  o.year_suffix_delimiter = node:get_attribute("year-suffix-delimiter") or o.layout.delimiter
+  o.after_collapse_delimiter = node:get_attribute("after-collapse-delimiter") or o.layout.delimiter
+
+  -- Note Distance
+  o.near_note_distance = util.to_boolean(node:get_attribute("disambiguate-add-names")) or 5
+
+  -- Inheritable Name Options
+  -- o.name_inheritance = nil
+  -- o.names_delimiter = nil
+
+  return o
+end
+
 
 function Citation:render (items, context)
   self:debug_info(context)
@@ -144,7 +304,37 @@ function Citation:render (items, context)
 end
 
 
-local Bibliography = element.Element:new("citation")
+local Bibliography = Element:derive("citation")
+
+function Bibliography:from_node(node)
+  local o = Bibliography:new()
+  o.children = {}
+
+  o:process_children_nodes(node)
+
+  -- o.layouts = nil  -- CSL-M extension
+
+  for _, child in ipairs(o.children) do
+    local element_name = child.element_name
+    if element_name == "layout" then
+      o.layout = child
+    elseif element_name == "sort" then
+      o.sort = child
+    end
+  end
+
+  -- Whitespace
+  o.hanging_indent = util.to_boolean(node:get_attribute("hanging-indent")) or false
+  o.second_field_align = node:get_attribute("second-field-align")
+  o.line_spacing = node:get_attribute("line-spacing")
+  o.entry_spacing = node:get_attribute("entry-spacing")
+
+  -- Reference Grouping
+  o.subsequent_author_substitute = node:get_attribute("subsequent-author-substitute")
+  o.subsequent_author_substitute_rule = node:get_attribute("subsequent-author-substitute-rule") or "complete-all"
+
+  return o
+end
 
 Bibliography._default_options = {
   ["hanging-indent"] = false,
@@ -190,6 +380,18 @@ function Bibliography:render (items, context)
 
   return res
 end
+
+
+local Macro = Element:derive("macro")
+
+function Macro:from_node(node)
+  local o = Macro:new()
+  o.children = {}
+  o.name = node:get_attribute("name")
+  o:process_children_nodes(node)
+  return o
+end
+
 
 style.Style = Style
 style.Citation = Citation

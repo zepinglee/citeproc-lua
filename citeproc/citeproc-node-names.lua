@@ -8,21 +8,28 @@ local names_module = {}
 
 local unicode = require("unicode")
 
+local IrNode = require("citeproc-ir-node").IrNode
 local richtext = require("citeproc-richtext")
-local element = require("citeproc-element")
+local Element = require("citeproc-element").Element
 local util = require("citeproc-util")
 
 
 -- [Name](https://docs.citationstyles.org/en/stable/specification.html#name)
-local Name = element.Element:new("name")
+local Name = Element:derive("name")
 
-Name.delimiter = ", "
-Name.delimiter_precedes_et_al = "contextual"
-Name.delimiter_precedes_last = "contextual"
-Name.et_al_use_last = false
-Name.form = "long"
-Name.initialize = false
-Name.sort_separator = false
+function Name:new(node)
+  local o = Element:new("name")
+
+  o.delimiter = ", "
+  o.delimiter_precedes_et_al = "contextual"
+  o.delimiter_precedes_last = "contextual"
+  o.et_al_use_last = false
+  o.form = "long"
+  o.initialize = false
+  o.sort_separator = false
+
+  return o
+end
 
 function Name:from_node(node)
   local o = Name:new()
@@ -44,6 +51,35 @@ function Name:from_node(node)
   o:get_formatting_attributes(node)
   return o
 end
+
+function Name:build_ir(variable, et_al, label, engine, state, context)
+  local name_variables = context:get_variable(variable)
+  if not name_variables then
+    return nil
+  end
+
+  local ir = IrNode:new("name")
+  ir.children = {}
+
+  for _, name_variable in ipairs(name_variables) do
+    if name_variable.family then
+      local text = name_variable.family
+      if name_variable.given then
+        text = text .. ", " .. name_variable.given
+      end
+      local child_ir = IrNode:new(nil, text)
+      table.insert(ir.children, child_ir)
+    elseif name_variable.literal then
+      local child_ir = IrNode:new(nil, name_variable.literal)
+      table.insert(ir.children, child_ir)
+    end
+  end
+
+  ir = self:_apply_formatting(ir)
+  ir = self:_apply_affixes(ir)
+  return ir
+end
+
 
 Name._default_options = {
   ["delimiter"] = ", ",
@@ -444,7 +480,7 @@ end
 
 
 -- [Name-part](https://docs.citationstyles.org/en/stable/specification.html#name-part-formatting)
-local NamePart = element.Element:new("name-part")
+local NamePart = Element:derive("name-part")
 
 function NamePart:from_node(node)
   local o = NamePart:new()
@@ -469,7 +505,7 @@ end
 
 
 -- [Et-al](https://docs.citationstyles.org/en/stable/specification.html#et-al)
-local EtAl = element.Element:new("et-al")
+local EtAl = Element:derive("et-al")
 
 EtAl.term = "et-al"
 
@@ -493,7 +529,7 @@ EtAl.render = function (self, context)
 end
 
 
-local Substitute = element.Element:new("substitute")
+local Substitute = Element:derive("substitute")
 
 function Substitute:render (item, context)
   self:debug_info(context)
@@ -516,11 +552,19 @@ end
 
 
 -- [Names](https://docs.citationstyles.org/en/stable/specification.html#names)
-local Names = element.Element:new("names")
+local Names = Element:derive("names")
+Names.name = nil
+Names.et_al = nil
+Names.substitute = nil
+Names.label = nil
 
 function Names:from_node(node)
   local o = Names:new()
   o.variable = node:get_attribute("variable")
+  o.name = nil
+  o.et_al = nil
+  o.substitute = nil
+  o.label = nil
   o:get_delimiter_attribute(node)
   o:get_affixes_attributes(node)
   o:get_display_attribute(node)
@@ -528,6 +572,47 @@ function Names:from_node(node)
   o:get_text_case_attribute(node)
   return o
 end
+
+function Names:process_children_nodes(node)
+  for _, child in self.children do
+    local element_name = child.element_name
+    if element_name == "name" then
+      self.name = child
+    elseif element_name == "et-al" then
+      self.et_al = child
+    elseif element_name == "substitute" then
+      self.substitute = child
+    elseif element_name == "label" then
+      self.label = child
+      if self.name then
+        child.after_name = true
+      end
+    else
+      util.warning(string.format('Unkown element "{}".', element_name))
+    end
+  end
+  if not self.name then
+    self.name = Name:new()
+  end
+  if not self.et_al then
+    self.name = EtAl:new()
+  end
+end
+
+function Names:build_ir(engine, state, context)
+  local ir = IrNode:new()
+  ir.children = {}
+  for _, variable in ipairs(util.split(self.variable)) do
+    local name_ir = self.name:build_ir(variable, self.et_al, self.label, engine, state, context)
+    table.insert(ir.children, name_ir)
+  end
+  ir = self:_apply_delimiter(ir)
+  ir = self:_apply_formatting(ir)
+  ir = self:_apply_affixes(ir)
+  ir = self:_apply_display(ir)
+  return ir
+end
+
 
 function Names:render (item, context)
   self:debug_info(context)

@@ -8,13 +8,15 @@ local element = {}
 
 local unicode = require("unicode")
 
+local IrNode = require("citeproc-ir-node").IrNode
 local richtext = require("citeproc-richtext")
 local util = require("citeproc-util")
 
 
 local Element = {
   element_name = nil,
-  elements = nil,
+  children = nil,
+  element_type_map = {},
   _default_options = {},
 }
 
@@ -86,15 +88,62 @@ Element._inheritable_options = {
 function Element:new(element_name)
   local o = {
     element_name = element_name or self.element_name,
-    elements = nil,
   }
   setmetatable(o, self)
   self.__index = self
   return o
 end
 
+function Element:derive(element_name)
+  local o = {
+    element_name = element_name or self.element_name,
+    children = nil,
+  }
+  self.element_type_map[element_name] = o
+  setmetatable(o, self)
+  self.__index = self
+  return o
+end
+
 function Element:from_node(node)
-  return self:new()
+  local o = self:new()
+  o.element_name = self.element_name or node:get_element_name()
+  return o
+end
+
+function Element:process_children_nodes(node)
+  for _, child in ipairs(node:get_children()) do
+    if child:is_element() then
+      local element_name = child:get_element_name()
+      local element_type = self.element_type_map[element_name] or Element
+      local child_element = element_type:from_node(child)
+      if child_element then
+        self.children = self.children or {}
+        table.insert(self.children, child_element)
+      end
+    end
+  end
+
+end
+
+function Element:build_ir(engine, state, context)
+  return self:build_children_ir(engine, state, context)
+end
+
+function Element:build_children_ir(engine, state, context)
+  local ir = IrNode:new()
+  if self.children then
+    for _, child_element in ipairs(self.children) do
+      local child_ir = child_element:build_ir(engine, state, context)
+      if child_ir then
+        if not ir.children then
+          ir.children = {}
+        end
+        table.insert(ir.children, child_ir)
+      end
+    end
+  end
+  return ir
 end
 
 function Element:render (item, context)
@@ -315,6 +364,84 @@ end
 function Element:get_text_case_attribute(node)
   self.text_case = util.to_boolean(node:get_attribute("text-case"))
 end
+
+function Element:_apply_formatting(ir)
+  local attributes = {
+    "font_style",
+    "font_variant",
+    "font_weight",
+    "text_decoration",
+    "vertical_align",
+  }
+  for _, attribute in ipairs(attributes) do
+    local value = self[attribute]
+    if value then
+      if not ir.formatting then
+        ir.formatting = {}
+      end
+      ir.formatting[attribute] = value
+    end
+  end
+  return ir
+end
+
+function Element:_apply_affixes(ir)
+  local res = ir
+  if self.prefix or self.suffix and ir then
+    res = IrNode:new()
+    res.children = {}
+    table.insert(res.children, self.prefix)
+    table.insert(res.children, ir)
+    table.insert(res.children, self.suffix)
+  end
+  return res
+end
+
+function Element:_apply_delimiter(ir)
+  if ir and ir.children then
+    ir.delimiter = self.delimiter
+  end
+  return ir
+end
+
+function Element:_apply_display(ir)
+  local res = ir
+  if ir and self.display then
+    res = IrNode:new()
+    res.display = self.display
+    res.children = {ir}
+  end
+  return res
+end
+
+function Element:_apply_quotes(ir)
+  local res = ir
+  if ir and self.quotes then
+    res = IrNode:new()
+    res.quotes = true
+    res.children = {ir}
+    res.open_quote = nil
+    res.close_quote = nil
+    res.open_inner_quote = nil
+    res.close_inner_quote = nil
+    res.punctuation_in_quote = false
+  end
+  return res
+end
+
+function Element:_apply_strip_periods(str)
+  local res = str
+  if str and self.strip_periods then
+    res = string.gsub(str, "%.", "")
+  end
+  return res
+end
+
+function Element:_apply_text_case(str)
+  -- TODO
+  return str
+end
+
 
 function Element:format(text, context)
   if not text or text == "" then
