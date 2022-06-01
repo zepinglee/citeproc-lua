@@ -69,7 +69,7 @@ function CiteProc.new (sys, style, lang, force_lang)
 end
 
 function CiteProc:build_cluster(citation_items)
-  local ir
+  local irs = {}
   for _, cite_item in ipairs(citation_items) do
     local cite_context = Context:new(self.style_element)
     cite_item.id = tostring(cite_item.id)
@@ -78,14 +78,27 @@ function CiteProc:build_cluster(citation_items)
     cite_context.reference = self:get_item(cite_item.id)
     cite_context.style = self.style_element
 
-    ir = self.style_element.citation:build_ir(self, nil, cite_context)
+    local ir = self.style_element.citation:build_ir(self, nil, cite_context)
+    table.insert(irs, ir)
     break
   end
-    local output_format = OutputFormat:new()
-    -- util.debug(ir)
+
+  local citation_delimiter = self.style_element.citation.delimiter
+  local citation_stream = {}
+
+  local output_format = OutputFormat:new()
+  for i, ir in ipairs(irs) do
+    if i > 1 then
+      table.insert(citation_stream, citation_delimiter)
+    end
     local flattened = ir:flatten(output_format)
-    local str = output_format:output(flattened)
-    -- util.debug(str)
+    for _, el in ipairs(flattened) do
+      table.insert(citation_stream, el)
+    end
+  end
+
+  local str = output_format:output(citation_stream)
+
   return str
 end
 
