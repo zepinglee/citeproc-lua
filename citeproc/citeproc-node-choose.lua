@@ -24,7 +24,7 @@ end
 
 function Choose:build_ir(engine, state, context)
   for _, child in ipairs(self.children) do
-    local ir = child.build_ir()
+    local ir = child:build_ir(engine, state, context)
     if ir then
       return ir
     end
@@ -66,19 +66,10 @@ function Condition:new(condition, value, match_type)
 end
 
 
-local If = Element:derive("if")
-
-function If:new()
-  local o = {
-    element_name = "if",
-    children = nil,
-    conditions = {},
-    match = "all"
-  }
-  setmetatable(o, self)
-  self.__index = self
-  return o
-end
+local If = Element:derive("if", {
+  conditions = {},
+  match = "all"
+})
 
 function If:from_node(node)
   local o = If:new()
@@ -187,9 +178,13 @@ function If:evaluate_condition(condition, state, context)
     return item_type == condition.value
 
   elseif condition.condition == "variable" then
-    local variable = context:get_variable(condition.value)
-    return variable ~= nil
-
+    local var = condition.value
+    if var == "locator" or var == "label" then
+      return context.cite[var] ~= nil
+    else
+      local res = context.reference[var] ~= nil
+      return res
+    end
   end
 end
 

@@ -372,9 +372,10 @@ function CiteProc:get_item (id)
     self.registry.registry[id] = item
     self.registry.requires_sorting = true
   end
-  local res = {}
-  setmetatable(res, {__index = item})
-  return res
+  -- local res = {}
+  -- setmetatable(res, {__index = item})
+  -- return res
+  return item
 end
 
 function CiteProc:_retrieve_item (id)

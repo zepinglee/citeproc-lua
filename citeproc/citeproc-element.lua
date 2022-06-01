@@ -119,9 +119,6 @@ function Element:from_node(node)
 end
 
 function Element:set_attribute(node, attribute)
-  if not node.get_attribute then
-    print(debug.traceback())
-  end
   local value = node:get_attribute(attribute)
   if value then
     local key = string.gsub(attribute, "%-" , "_")
