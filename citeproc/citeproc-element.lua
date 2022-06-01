@@ -94,12 +94,19 @@ function Element:new(element_name)
   return o
 end
 
-function Element:derive(element_name)
+function Element:derive(element_name, default_options)
   local o = {
     element_name = element_name or self.element_name,
     children = nil,
   }
-  self.element_type_map[element_name] = o
+
+  if default_options then
+    for key, value in pairs(default_options) do
+      o[key] = value
+    end
+  end
+
+  Element.element_type_map[element_name] = o
   setmetatable(o, self)
   self.__index = self
   return o
@@ -109,6 +116,30 @@ function Element:from_node(node)
   local o = self:new()
   o.element_name = self.element_name or node:get_element_name()
   return o
+end
+
+function Element:set_attribute(node, attribute)
+  if not node.get_attribute then
+    print(debug.traceback())
+  end
+  local value = node:get_attribute(attribute)
+  if value then
+    local key = string.gsub(attribute, "%-" , "_")
+    self[key] = value
+  end
+end
+
+function Element:set_bool_attribute(node, attribute)
+  local value = node:get_attribute(attribute)
+  if value == "true" then
+    value = true
+    local key = string.gsub(attribute, "%-" , "_")
+    self[key] = value
+  elseif value == "false" then
+    value = false
+    local key = string.gsub(attribute, "%-" , "_")
+    self[key] = value
+  end
 end
 
 function Element:process_children_nodes(node)
@@ -131,7 +162,7 @@ function Element:build_ir(engine, state, context)
 end
 
 function Element:build_children_ir(engine, state, context)
-  local ir = IrNode:new()
+  local ir = IrNode:new(self.element_name)
   if self.children then
     for _, child_element in ipairs(self.children) do
       local child_ir = child_element:build_ir(engine, state, context)
@@ -331,41 +362,41 @@ function Element:escape (str, context)
   -- return self:get_engine().formatter.text_escape(str)
 end
 
-function Element:get_formatting_attributes(node)
+function Element:set_formatting_attributes(node)
   -- Todo: validate?
-  self.font_style = node:get_attribute("font-style")
-  self.font_variant = node:get_attribute("font-variant")
-  self.font_weight = node:get_attribute("font-weight")
-  self.text_decoration = node:get_attribute("text-decoration")
-  self.vertical_align = node:get_attribute("vertical-align")
+  self:set_attribute(node, "font-style")
+  self:set_attribute(node, "font-variant")
+  self:set_attribute(node, "font-weight")
+  self:set_attribute(node, "text-decoration")
+  self:set_attribute(node, "vertical-align")
 end
 
-function Element:get_affixes_attributes(node)
-  self.prefix = node:get_attribute("prefix")
-  self.suffix = node:get_attribute("suffix")
+function Element:set_affixes_attributes(node)
+  self:set_attribute(node, "prefix")
+  self:set_attribute(node, "suffix")
 end
 
 function Element:get_delimiter_attribute(node)
-  self.delimiter = node:get_attribute("delimiter")
+  self:set_attribute(node, "delimiter")
 end
 
-function Element:get_display_attribute(node)
-  self.display = node:get_attribute("display")
+function Element:set_display_attribute(node)
+  self:set_attribute(node, "display")
 end
 
-function Element:get_quotes_attribute(node)
-  self.quotes = util.to_boolean(node:get_attribute("quotes"))
+function Element:set_quotes_attribute(node)
+  self:set_bool_attribute(node, "quotes")
 end
 
-function Element:get_strip_periods_attribute(node)
-  self.strip_periods = util.to_boolean(node:get_attribute("strip-periods"))
+function Element:set_strip_periods_attribute(node)
+  self:set_bool_attribute(node, "strip-periods")
 end
 
-function Element:get_text_case_attribute(node)
-  self.text_case = util.to_boolean(node:get_attribute("text-case"))
+function Element:set_text_case_attribute(node)
+  self:set_bool_attribute(node, "text-case")
 end
 
-function Element:_apply_formatting(ir)
+function Element:apply_formatting(ir)
   local attributes = {
     "font_style",
     "font_variant",
@@ -385,7 +416,7 @@ function Element:_apply_formatting(ir)
   return ir
 end
 
-function Element:_apply_affixes(ir)
+function Element:apply_affixes(ir)
   local res = ir
   if self.prefix or self.suffix and ir then
     res = IrNode:new()
@@ -397,14 +428,14 @@ function Element:_apply_affixes(ir)
   return res
 end
 
-function Element:_apply_delimiter(ir)
+function Element:apply_delimiter(ir)
   if ir and ir.children then
     ir.delimiter = self.delimiter
   end
   return ir
 end
 
-function Element:_apply_display(ir)
+function Element:apply_display(ir)
   local res = ir
   if ir and self.display then
     res = IrNode:new()
@@ -414,7 +445,7 @@ function Element:_apply_display(ir)
   return res
 end
 
-function Element:_apply_quotes(ir)
+function Element:apply_quotes(ir)
   local res = ir
   if ir and self.quotes then
     res = IrNode:new()
@@ -429,7 +460,7 @@ function Element:_apply_quotes(ir)
   return res
 end
 
-function Element:_apply_strip_periods(str)
+function Element:apply_strip_periods(str)
   local res = str
   if str and self.strip_periods then
     res = string.gsub(str, "%.", "")
@@ -437,13 +468,13 @@ function Element:_apply_strip_periods(str)
   return res
 end
 
-function Element:_apply_text_case(str)
+function Element:apply_text_case(str)
   -- TODO
   return str
 end
 
 
-function Element:format(text, context)
+function Element:_apply_format(text, context)
   if not text or text == "" then
     return nil
   end
@@ -472,7 +503,7 @@ function Element:format(text, context)
 end
 
 -- Affixes
-function Element:wrap (str, context)
+function Element:_apply_affixes(str, context)
   if not str or str == "" then
     return nil
   end
@@ -506,7 +537,7 @@ function Element:concat (strings, context)
 end
 
 -- Display
-function Element:display(text, context)
+function Element:_apply_display(text, context)
   if not text then
     return text
   end
@@ -522,7 +553,7 @@ function Element:display(text, context)
 end
 
 -- Quotes
-function Element:quote (str, context)
+function Element:_apply_quote(str, context)
   if not str then
     return nil
   end
@@ -540,7 +571,7 @@ function Element:quote (str, context)
 end
 
 -- Strip periods
-function Element:apply_strip_periods(str, context)
+function Element:_apply_strip_periods(str, context)
   if not str then
     return nil
   end
@@ -549,13 +580,13 @@ function Element:apply_strip_periods(str, context)
   end
   local strip_periods = context.options["strip-periods"]
   if strip_periods then
-    str:apply_strip_periods()
+    str:_apply_strip_periods()
   end
   return str
 end
 
 -- Text-case
-function Element:case (text, context)
+function Element:_apply_case(text, context)
   if not text or text == "" then
     return nil
   end

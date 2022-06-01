@@ -15,8 +15,8 @@ local Layout = Element:derive("layout")
 
 function Layout:from_node(node)
   local o = Layout:new()
-  o:get_affixes_attributes(node)
-  o:get_formatting_attributes(node)
+  o:set_affixes_attributes(node)
+  o:set_formatting_attributes(node)
   o:get_delimiter_attribute(node)
 
   o:process_children_nodes(node)
@@ -27,10 +27,10 @@ end
 function Layout:build_ir(engine, state, context)
   local ir = self:build_children_ir(engine, state, context)
   if context.in_bibliography then
-    ir = self:_apply_delimiter(ir)
+    ir = self:apply_delimiter(ir)
   end
-  ir = self:_apply_formatting(ir)
-  ir = self:_apply_affixes(ir)
+  ir = self:apply_formatting(ir)
+  ir = self:apply_affixes(ir)
   return ir
 end
 
@@ -122,7 +122,7 @@ function Layout:render (items, context)
       if not res then
         res = richtext.new("[CSL STYLE ERROR: reference with no printed form.]")
       end
-      res = self:wrap(res, context)
+      res = self:_apply_affixes(res, context)
       -- util.debug(text)
       res = res:render(context.engine.formatter, context)
       res = context.engine.formatter["@bibliography/entry"](res, context)
@@ -143,8 +143,8 @@ function Layout:render (items, context)
     else
       res = self:concat(output, context)
     end
-    res = self:wrap(res, context)
-    res = self:format(res, context)
+    res = self:_apply_affixes(res, context)
+    res = self:_apply_format(res, context)
     if res then
       -- util.debug(res)
       res = res:render(context.engine.formatter, context)

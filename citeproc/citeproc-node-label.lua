@@ -19,13 +19,13 @@ Label.plural = "contextual"
 
 function Label:from_node(node)
   local o = Label:new()
-  o.variable = node:get_attribute("variable")
-  o.form = node:get_attribute("form") or "long"
-  o.plural = node:get_attribute("plural") or "contextual"
-  o:get_affixes_attributes(node)
-  o:get_formatting_attributes(node)
-  o:get_text_case_attribute(node)
-  o:get_strip_periods_attribute(node)
+  o:set_attribute(node, "variable")
+  o:set_attribute(node, "form")
+  o:set_attribute(node, "plural")
+  o:set_affixes_attributes(node)
+  o:set_formatting_attributes(node)
+  o:set_text_case_attribute(node)
+  o:set_strip_periods_attribute(node)
   return o
 end
 
@@ -46,12 +46,12 @@ function Label:build_ir(engine, state, context)
     return nil
   end
 
-  text = self._apply_strip_periods(text)
-  text = self._apply_text_case(text)
+  text = self:apply_strip_periods(text)
+  text = self:apply_text_case(text)
 
   local ir = IrNode:new("label", text)
-  ir = self:_apply_formatting(ir)
-  ir = self:_apply_affixes(ir)
+  ir = self:apply_formatting(ir)
+  ir = self:apply_affixes(ir)
   return ir
 end
 
@@ -118,10 +118,10 @@ function Label:render (item, context)
       res = term:render(context, false)
     end
 
-    res = self:apply_strip_periods(res, context)
-    res = self:case(res, context)
-    res = self:format(res, context)
-    res = self:wrap(res, context)
+    res = self:_apply_strip_periods(res, context)
+    res = self:_apply_case(res, context)
+    res = self:_apply_format(res, context)
+    res = self:_apply_affixes(res, context)
   end
   return res
 end

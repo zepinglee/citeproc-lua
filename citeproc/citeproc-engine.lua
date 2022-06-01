@@ -11,7 +11,10 @@ local dom = require("luaxml-domobject")
 local richtext = require("citeproc-richtext")
 local Element = require("citeproc-element").Element
 local nodes = require("citeproc-nodes")
+local Style = require("citeproc-node-style").Style
+local Context = require("citeproc-context").Context
 local formats = require("citeproc-formats")
+local OutputFormat = require("citeproc-formats").OutputFormat
 local util = require("citeproc-util")
 
 
@@ -40,6 +43,10 @@ function CiteProc.new (sys, style, lang, force_lang)
   o.sys = sys
   o.system_locales = {}
 
+  -- TODO: rename to style
+  o.style_element = Style:parse(style)
+  -- util.debug(o.style_element)
+
   if type(style) == "string" then
     o.csl = dom.parse(style)
   else
@@ -50,10 +57,6 @@ function CiteProc.new (sys, style, lang, force_lang)
   o.style = o.csl:get_path("style")[1]
   o.style.lang = lang
 
-  -- TODO: rename to style
-  o.style_element = CiteProc.create_element_tree(o.csl:get_path("style")[1])
-  -- util.debug(o.style_element)
-
   o.csl:root_node().style = o.style
 
   o.style:set_lang(lang, force_lang)
@@ -63,6 +66,27 @@ function CiteProc.new (sys, style, lang, force_lang)
 
   setmetatable(o, { __index = CiteProc })
   return o
+end
+
+function CiteProc:build_cluster(citation_items)
+  local ir
+  for _, cite_item in ipairs(citation_items) do
+    local cite_context = Context:new(self.style_element)
+    cite_item.id = tostring(cite_item.id)
+    cite_context.id = cite_item.id
+    cite_context.cite = cite_item
+    cite_context.reference = self:get_item(cite_item.id)
+    cite_context.style = self.style_element
+
+    ir = self.style_element.citation:build_ir(self, nil, cite_context)
+    break
+  end
+    local output_format = OutputFormat:new()
+    -- util.debug(ir)
+    local flattened = ir:flatten(output_format)
+    local str = output_format:output(flattened)
+    -- util.debug(str)
+  return str
 end
 
 function CiteProc:updateItems (ids)
@@ -247,11 +271,14 @@ function CiteProc:makeCitationCluster (citation_items)
     self:sort_bibliography()
   end
 
-  local context = {
-    build = {},
-    engine=self,
-  }
-  local res = self.style:render_citation(items, context)
+  local res = self:build_cluster(citation_items)
+
+  -- local context = {
+  --   build = {},
+  --   engine=self,
+  -- }
+  -- local res = self.style:render_citation(items, context)
+
   self.registry.previous_citation = {
     citationID = "pseudo-citation",
     citationItems = items,
@@ -362,17 +389,14 @@ function CiteProc:_retrieve_item (id)
   item.id = tostring(item.id)
 
   for key, value in pairs(item) do
-    if key == "title" then
-      value = self.normalize_string(value)
-    end
     res[key] = value
   end
 
-  if res["page"] and not res["page-first"] then
-    local page_first = util.split(res["page"], "%s*[&,-]%s*")[1]
-    page_first = util.split(page_first, util.unicode["en dash"])[1]
-    res["page-first"] = page_first
-  end
+  -- if res["page"] and not res["page-first"] then
+  --   local page_first = util.split(res["page"], "%s*[&,-]%s*")[1]
+  --   page_first = util.split(page_first, util.unicode["en dash"])[1]
+  --   res["page-first"] = page_first
+  -- end
 
   return res
 end

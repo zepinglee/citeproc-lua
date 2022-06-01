@@ -11,6 +11,17 @@ local inspect  -- only load it when debugging
 
 local util = {}
 
+function util.join(list, delimiter)
+  local res = {}
+  for i, item in ipairs(list) do
+    if i > 1 then
+      table.insert(res, delimiter)
+    end
+    table.insert(res, item)
+  end
+  return res
+end
+
 function util.to_boolean(str)
   if not str then
     return false
@@ -65,16 +76,18 @@ function util.warning(message)
   end
 end
 
-local function remove_all_metatables(item, path)
-  if path[#path] ~= inspect.METATABLE then return item end
-end
+local remove_all_metatables = nil
 
-function util.debug(...)
-  -- io.stderr:write(inspect(..., {process = remove_all_metatables}))
+function util.debug(obj)
   if not inspect then
     inspect = require("inspect")
+    remove_all_metatables = function (item, path)
+      if path[#path] ~= inspect.METATABLE then
+        return item
+      end
+    end
   end
-  io.stderr:write(inspect(...))
+  io.stderr:write(inspect(obj, {process = remove_all_metatables}))
   io.stderr:write("\n")
 end
 

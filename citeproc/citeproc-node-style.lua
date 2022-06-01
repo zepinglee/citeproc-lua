@@ -9,6 +9,7 @@ local style = {}
 local dom = require("luaxml-domobject")
 
 local Element = require("citeproc-element").Element
+local IrNode = require("citeproc-ir-node").IrNode
 local util = require("citeproc-util")
 
 
@@ -40,9 +41,9 @@ function Style:from_node(node)
   local o = Style:new()
   o.children = {}
 
-  o.class = node:get_attribute("class")
-  o.default_locale = node:get_attribute("default-locale")
-  o.version = node:get_attribute("version")
+  o:set_attribute(node, "class")
+  o:set_attribute(node, "default-locale")
+  o:set_attribute(node, "version")
 
   o.macros = {}
   o.locales = {}
@@ -66,8 +67,8 @@ function Style:from_node(node)
   end
 
   -- Global Options
-  o.initialize_with_hyphen = util.to_boolean(node:get_attribute("initialize-with-hyphen"))
-  o.demote_non_dropping_particle = node:get_attribute("demote-non-dropping-particle")
+  o:set_bool_attribute(node, "initialize-with-hyphen")
+  o:set_attribute(node, "demote-non-dropping-particle")
 
   return o
 end
@@ -261,23 +262,22 @@ function Citation:from_node(node)
     end
   end
 
-
   -- Disambiguation
-  o.disambiguate_add_givenname = util.to_boolean(node:get_attribute("disambiguate-add-givenname")) or false
-  o.givenname_disambiguation_rule = node:get_attribute("givenname-disambiguation-rule") or "by-cite"
-  o.disambiguate_add_names = util.to_boolean(node:get_attribute("disambiguate-add-names")) or false
-  o.disambiguate_add_year_suffix = util.to_boolean(node:get_attribute("disambiguate-add-year-suffix")) or false
+  o:set_bool_attribute(node, "disambiguate-add-givenname")
+  o:set_attribute(node, "givenname-disambiguation-rule")
+  o:set_bool_attribute(node, "disambiguate-add-names")
+  o:set_bool_attribute(node, "disambiguate-add-year-suffix")
 
   -- Cite Grouping
-  o.cite_group_delimiter = node:get_attribute("cite-group-delimiter") or ", "
+  o:set_attribute(node, "cite-group-delimiter")
 
   -- Cite Collapsing
-  o.collapse = node:get_attribute("collapse")
-  o.year_suffix_delimiter = node:get_attribute("year-suffix-delimiter") or o.layout.delimiter
-  o.after_collapse_delimiter = node:get_attribute("after-collapse-delimiter") or o.layout.delimiter
+  o:set_attribute(node, "collapse")
+  o:set_attribute(node, "year-suffix-delimiter")
+  o:set_attribute(node, "after-collapse-delimiter")
 
   -- Note Distance
-  o.near_note_distance = util.to_boolean(node:get_attribute("disambiguate-add-names")) or 5
+  o:set_bool_attribute(node, "disambiguate-add-names")
 
   -- Inheritable Name Options
   -- o.name_inheritance = nil
@@ -286,6 +286,12 @@ function Citation:from_node(node)
   return o
 end
 
+function Citation:build_ir(engine, state, context)
+  if not self.layout then
+    util.error("Missing citation layout.")
+  end
+  return self.layout:build_ir(engine, state, context)
+end
 
 function Citation:render (items, context)
   self:debug_info(context)
@@ -324,14 +330,14 @@ function Bibliography:from_node(node)
   end
 
   -- Whitespace
-  o.hanging_indent = util.to_boolean(node:get_attribute("hanging-indent")) or false
-  o.second_field_align = node:get_attribute("second-field-align")
-  o.line_spacing = node:get_attribute("line-spacing")
-  o.entry_spacing = node:get_attribute("entry-spacing")
+  o:set_bool_attribute(node, "hanging-indent")
+  o:set_attribute(node, "second-field-align")
+  o:set_attribute(node, "line-spacing")
+  o:set_attribute(node, "entry-spacing")
 
   -- Reference Grouping
-  o.subsequent_author_substitute = node:get_attribute("subsequent-author-substitute")
-  o.subsequent_author_substitute_rule = node:get_attribute("subsequent-author-substitute-rule") or "complete-all"
+  o:set_attribute(node, "subsequent-author-substitute")
+  o:set_attribute(node, "subsequent-author-substitute-rule")
 
   return o
 end
@@ -387,7 +393,7 @@ local Macro = Element:derive("macro")
 function Macro:from_node(node)
   local o = Macro:new()
   o.children = {}
-  o.name = node:get_attribute("name")
+  o:set_attribute(node, "name")
   o:process_children_nodes(node)
   return o
 end

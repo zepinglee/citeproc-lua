@@ -17,15 +17,15 @@ local Date = Element:derive("date")
 function Date:from_node(node)
   local o = Date:new()
 
-  o.variable = node:get_attribute("variable")
-  o.form = node:get_attribute("form")
-  o.date_parts = node:get_attribute("date-parts") or "year-month-day"
+  o:set_attribute(node, "variable")
+  o:set_attribute(node, "form")
+  o:set_attribute(node, "date-parts")
 
   o:get_delimiter_attribute(node)
-  o:get_formatting_attributes(node)
-  o:get_affixes_attributes(node)
-  o:get_display_attribute(node)
-  o:get_text_case_attribute(node)
+  o:set_formatting_attributes(node)
+  o:set_affixes_attributes(node)
+  o:set_display_attribute(node)
+  o:set_text_case_attribute(node)
 
   o:process_children_nodes(node)
   return o
@@ -80,10 +80,10 @@ function Date:build_single_date_ir(variable, engine, state, context)
   end
 
   -- TODO: How to apply text case to date element?
-  -- value = self._apply_text_case(value)
-  ir = self:_apply_formatting(ir)
-  ir = self:_apply_affixes(ir)
-  ir = self:_apply_display(ir)
+  -- value = self:apply_text_case(value)
+  ir = self:apply_formatting(ir)
+  ir = self:apply_affixes(ir)
+  ir = self:apply_display(ir)
   return ir
 end
 
@@ -153,8 +153,8 @@ function Date:render (item, context)
 
   table.insert(context.variable_attempt, res ~= nil)
 
-  res = self:format(res, context)
-  res = self:wrap(res, context)
+  res = self:_apply_format(res, context)
+  res = self:_apply_affixes(res, context)
   return res
 end
 
@@ -321,12 +321,12 @@ local DatePart = Element:derive("date-part")
 
 function DatePart:from_node(node)
   local o = DatePart:new()
-  o.name = node:get_attribute("name")
-  o.form = node:get_attribute("form")
-  o:get_formatting_attributes(node)
-  o:get_text_case_attribute(node)
-  o.range_delimiter = node:get_attribute("range-delimiter")
-  o:get_affixes_attributes(node)
+  o:set_attribute(node, "name")
+  o:set_attribute(node, "form")
+  o:set_formatting_attributes(node)
+  o:set_text_case_attribute(node)
+  o:set_attribute(node, "range-delimiter")
+  o:set_affixes_attributes(node)
   return o
 end
 
@@ -346,11 +346,11 @@ function DatePart:build_ir(variable, engine, state, context)
 
   text = tostring(text)
   -- TODO: form ...
-  text = self._apply_text_case(text)
+  text = self:apply_text_case(text)
 
   local ir = IrNode:new("date-part", text)
-  ir = self:_apply_formatting(ir)
-  ir = self:_apply_affixes(ir)
+  ir = self:apply_formatting(ir)
+  ir = self:apply_affixes(ir)
   return ir
 end
 
@@ -457,7 +457,7 @@ DatePart.render = function (self, date, context, last_range_begin, range_end)
       end
       res = string.format("%02d", month)
     end
-    res = self:apply_strip_periods(res, context)
+    res = self:_apply_strip_periods(res, context)
 
   elseif name == "year" then
     local year = date["date-parts"][date_parts_index][1]
@@ -482,10 +482,10 @@ DatePart.render = function (self, date, context, last_range_begin, range_end)
       end
     end
   end
-  res = self:case(res, context)
-  res = self:format(res, context)
-  res = self:wrap(res, context)
-  res = self:display(res, context)
+  res = self:_apply_case(res, context)
+  res = self:_apply_format(res, context)
+  res = self:_apply_affixes(res, context)
+  res = self:_apply_display(res, context)
   return res
 end
 

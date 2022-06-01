@@ -15,9 +15,9 @@ local Group = Element:derive("group")
 function Group:from_node(node)
   local o = Group:new()
   o:get_delimiter_attribute(node)
-  o:get_affixes_attributes(node)
-  o:get_display_attribute(node)
-  o:get_formatting_attributes(node)
+  o:set_affixes_attributes(node)
+  o:set_display_attribute(node)
+  o:set_formatting_attributes(node)
 
   o:process_children_nodes(node)
 
@@ -26,10 +26,10 @@ end
 
 function Group:build_ir(engine, state, context)
   local ir = self:build_children_ir(engine, state, context)
-  ir = self:_apply_delimiter(ir)
-  ir = self:_apply_formatting(ir)
-  ir = self:_apply_affixes(ir)
-  ir = self:_apply_display(ir)
+  ir = self:apply_delimiter(ir)
+  ir = self:apply_formatting(ir)
+  ir = self:apply_affixes(ir)
+  ir = self:apply_display(ir)
   return ir
 end
 
@@ -47,9 +47,9 @@ function Group:render (item, context)
     end
   end
 
-  res = self:format(res, context)
-  res = self:wrap(res, context)
-  res = self:display(res, context)
+  res = self:_apply_format(res, context)
+  res = self:_apply_affixes(res, context)
+  res = self:_apply_display(res, context)
   return res
 end
 

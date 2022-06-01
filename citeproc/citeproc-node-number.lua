@@ -14,19 +14,23 @@ local util = require("citeproc-util")
 local Number = Element:derive("number")
 
 function Number:new(node)
-  local o = Element:new("number")
-  o.form = "numeric"
+  local o = {
+    element_name = "number",
+    form = "numeric",
+  }
+  setmetatable(o, self)
+  self.__index = self
   return o
 end
 
 function Number:from_node(node)
   local o = Number:new()
-  o.variable = node:get_attribute("variable")
-  o.form = node:get_attribute("form")
-  o:get_affixes_attributes(node)
-  o:get_display_attribute(node)
-  o:get_formatting_attributes(node)
-  o:get_text_case_attribute(node)
+  o:set_attribute(node, "variable")
+  o:set_attribute(node, "form")
+  o:set_affixes_attributes(node)
+  o:set_display_attribute(node)
+  o:set_formatting_attributes(node)
+  o:set_text_case_attribute(node)
   return o
 end
 
@@ -42,12 +46,12 @@ function Number:build_ir(engine, state, context)
 
   -- value = self._format_number(value, self.variable, self.form)
 
-  value = self._apply_text_case(value)
+  value = self:apply_text_case(value)
 
   local ir = IrNode:new("text", value)
-  ir = self:_apply_formatting(ir)
-  ir = self:_apply_affixes(ir)
-  ir = self:_apply_display(ir)
+  ir = self:apply_formatting(ir)
+  ir = self:apply_affixes(ir)
+  ir = self:apply_display(ir)
   return ir
 end
 
@@ -89,9 +93,9 @@ function Number:render (item, context)
     end
   end
 
-  res = self:case(res, context)
-  res = self:wrap(res, context)
-  res = self:display(res, context)
+  res = self:_apply_case(res, context)
+  res = self:_apply_affixes(res, context)
+  res = self:_apply_display(res, context)
 
   return res
 end

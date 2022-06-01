@@ -33,22 +33,22 @@ end
 
 function Name:from_node(node)
   local o = Name:new()
-  o.and_ = node:get_attribute("and")
+  o:set_attribute(node, "and")
   o:get_delimiter_attribute(node)
-  o.delimiter_precedes_et_al = node:get_attribute("delimiter-precedes-et-al")
-  o.delimiter_precedes_last = node:get_attribute("delimiter-precedes-last")
-  o.et_al_min = node:get_attribute("et-al-min")
-  o.et_al_use_first = node:get_attribute("et-al-use-first")
-  o.et_al_subsequent_min = node:get_attribute("et-al-subsequent-min")
-  o.et_al_subsequent_use_first = node:get_attribute("et-al-subsequent-use-first")
-  o.et_al_use_last = util.to_boolean(node:get_attribute("et-al-use-last"))
-  o.form = node:get_attribute("form")
-  o.initialize = util.to_boolean(node:get_attribute("initialize"))
-  o.initialize_with = node:get_attribute("initialize-with")
-  o.name_as_sort_order = node:get_attribute("name_as_sort_order")
-  o.sort_separator = node:get_attribute("sort-separator")
-  o:get_affixes_attributes(node)
-  o:get_formatting_attributes(node)
+  o:set_attribute(node, "delimiter-precedes-et-al")
+  o:set_attribute(node, "delimiter-precedes-last")
+  o:set_attribute(node, "et-al-min")
+  o:set_attribute(node, "et-al-use-first")
+  o:set_attribute(node, "et-al-subsequent-min")
+  o:set_attribute(node, "et-al-subsequent-use-first")
+  o:set_bool_attribute(node, "et-al-use-last")
+  o:set_attribute(node, "form")
+  o:set_bool_attribute(node, "initialize")
+  o:set_attribute(node, "initialize-with")
+  o:set_attribute(node, "name_as_sort_order")
+  o:set_attribute(node, "sort-separator")
+  o:set_affixes_attributes(node)
+  o:set_formatting_attributes(node)
   return o
 end
 
@@ -75,8 +75,8 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     end
   end
 
-  ir = self:_apply_formatting(ir)
-  ir = self:_apply_affixes(ir)
+  ir = self:apply_formatting(ir)
+  ir = self:apply_affixes(ir)
   return ir
 end
 
@@ -197,8 +197,8 @@ function Name:render (names, context)
     end
   end
 
-  local ret = self:format(output, context)
-  ret = self:wrap(ret, context)
+  local ret = self:_apply_format(output, context)
+  ret = self:_apply_affixes(ret, context)
   return ret
 end
 
@@ -484,22 +484,22 @@ local NamePart = Element:derive("name-part")
 
 function NamePart:from_node(node)
   local o = NamePart:new()
-  o.name = node:get_attribute("name")
-  o:get_affixes_attributes(node)
-  o:get_text_case_attribute(node)
+  o:set_attribute(node, "name")
+  o:set_affixes_attributes(node)
+  o:set_text_case_attribute(node)
   return o
 end
 
 function NamePart:format_name_part(name_part, context)
   context = self:process_context(context)
-  local res = self:case(name_part, context)
-  res = self:format(res, context)
+  local res = self:_apply_case(name_part, context)
+  res = self:_apply_format(res, context)
   return res
 end
 
 function NamePart:wrap_name_part(name_part, context)
   context = self:process_context(context)
-  local res = self:wrap(name_part, context)
+  local res = self:_apply_affixes(name_part, context)
   return res
 end
 
@@ -511,8 +511,8 @@ EtAl.term = "et-al"
 
 function EtAl:from_node(node)
   local o = EtAl:new()
-  o.term = node:get_attribute("term")
-  o:get_formatting_attributes(node)
+  o:set_attribute(node, "term")
+  o:set_formatting_attributes(node)
   return o
 end
 
@@ -524,7 +524,7 @@ EtAl.render = function (self, context)
   self:debug_info(context)
   context = self:process_context(context)
   local res = self:get_term(context.options["term"]):render(context)
-  res = self:format(res, context)
+  res = self:_apply_format(res, context)
   return res
 end
 
@@ -560,16 +560,16 @@ Names.label = nil
 
 function Names:from_node(node)
   local o = Names:new()
-  o.variable = node:get_attribute("variable")
+  o:set_attribute(node, "variable")
   o.name = nil
   o.et_al = nil
   o.substitute = nil
   o.label = nil
   o:get_delimiter_attribute(node)
-  o:get_affixes_attributes(node)
-  o:get_display_attribute(node)
-  o:get_formatting_attributes(node)
-  o:get_text_case_attribute(node)
+  o:set_affixes_attributes(node)
+  o:set_display_attribute(node)
+  o:set_formatting_attributes(node)
+  o:set_text_case_attribute(node)
   return o
 end
 
@@ -606,10 +606,10 @@ function Names:build_ir(engine, state, context)
     local name_ir = self.name:build_ir(variable, self.et_al, self.label, engine, state, context)
     table.insert(ir.children, name_ir)
   end
-  ir = self:_apply_delimiter(ir)
-  ir = self:_apply_formatting(ir)
-  ir = self:_apply_affixes(ir)
-  ir = self:_apply_display(ir)
+  ir = self:apply_delimiter(ir)
+  ir = self:apply_formatting(ir)
+  ir = self:apply_affixes(ir)
+  ir = self:apply_display(ir)
   return ir
 end
 
@@ -746,9 +746,9 @@ function Names:render (item, context)
   end
 
   if ret then
-    ret = self:format(ret, context)
-    ret = self:wrap(ret, context)
-    ret = self:display(ret, context)
+    ret = self:_apply_format(ret, context)
+    ret = self:_apply_affixes(ret, context)
+    ret = self:_apply_display(ret, context)
     return ret
   else
     local substitute = self:get_child("substitute")

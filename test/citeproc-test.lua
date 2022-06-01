@@ -2,27 +2,13 @@
 
 kpse.set_program_name("luatex")
 
-local kpse_lua_searcher = package.searchers[2]
-
-local function lua_searcher(name)
+local kpse_searcher = package.searchers[2]
+package.searchers[2] = function(name)
   local file, err = package.searchpath(name, package.path)
-  if err then
-    return string.format("[lua searcher]: module not found: '%s'%s", name, err)
-  else
+  if not err then
     return loadfile(file)
   end
-end
-
-package.searchers[2] = function(name)
-  local loader1 = lua_searcher(name)
-  if type(loader1) ~= "string" then
-    return loader1
-  end
-  local loader2 = kpse_lua_searcher(name)
-  if type(loader2) ~= "string" then
-    return loader2
-  end
-  return string.format("%s\n\t%s", loader1, loader2)
+  return kpse_searcher(name)
 end
 
 
@@ -50,8 +36,8 @@ end
 local function listdir(path)
   local files = {}
   for file in lfs.dir(path) do
-    if file ~= "." and file ~= ".." and endswith(file, ".txt") then
-      table.insert(files, string.sub(file, 1, -5))
+    if not string.match(file, "^%.") then
+      table.insert(files, file)
     end
   end
   table.sort(files)
@@ -162,50 +148,6 @@ local function test_bibliography(engine, fixture)
   return res
 end
 
-local function run_test(fixture)
-  local bib = {}
-  for i, item in ipairs(fixture.input) do
-    if item.id == nil then
-      item.id = "item-" .. tostring(i)
-    end
-    bib[tostring(item.id)] = item
-  end
-
-  local citeproc_sys = {
-    retrieveLocale = function (lang)
-      if not lang then
-        return nil
-      end
-      local path = "./locales/csl-locales-" .. lang .. ".xml"
-      local content = read_file(path)
-      if not content then
-        return nil
-      end
-      return content
-    end,
-    retrieveItem = function (id)
-      return bib[id]
-    end
-  }
-
-  local style = fixture.csl
-
-  local engine = citeproc.new(citeproc_sys, style)
-  engine:set_formatter('html')
-  citeproc.util.warning_enabled = false
-
-  if fixture.mode == "citation" then
-    if fixture.citations then
-      return test_citations(engine, fixture)
-    else
-      return test_citation_items(engine, fixture)
-    end
-
-  elseif fixture.mode == "bibliography" then
-    return test_bibliography(engine, fixture)
-  end
-end
-
 local function parse_fixture(path)
   local file = io.open(path, "r")
   if not file then
@@ -250,7 +192,6 @@ local function parse_fixture(path)
   return res
 end
 
-
 local function normalize_new_line(str)
   local lines = util.split(str, "\r?\n")
   local indent_level = 0
@@ -277,22 +218,82 @@ local function normalize_new_line(str)
   return table.concat(lines, "\n")
 end
 
+local function run_test(path)
+  local fixture = parse_fixture(path)
 
-describe("test-suite", function ()
-  local test_dir = "./test/test-suite/processor-tests/humans"
+  if not fixture then
+    error(string.format('Failed to parse fixture "%s".', path))
+    return
+  end
+
+  local bib = {}
+  for i, item in ipairs(fixture.input) do
+    if item.id == nil then
+      item.id = "item-" .. tostring(i)
+    end
+    bib[tostring(item.id)] = item
+  end
+
+  local citeproc_sys = {
+    retrieveLocale = function (lang)
+      if not lang then
+        return nil
+      end
+      local path = "./locales/csl-locales-" .. lang .. ".xml"
+      local content = read_file(path)
+      if not content then
+        return nil
+      end
+      return content
+    end,
+    retrieveItem = function (id)
+      return bib[id]
+    end
+  }
+
+  local style = fixture.csl
+
+  local engine = citeproc.new(citeproc_sys, style)
+  engine:set_formatter('html')
+  citeproc.util.warning_enabled = false
+
+  local result
+
+  if fixture.mode == "citation" then
+    if fixture.citations then
+      result = test_citations(engine, fixture)
+    else
+      result = test_citation_items(engine, fixture)
+    end
+
+  elseif fixture.mode == "bibliography" then
+    result = test_bibliography(engine, fixture)
+  end
+
+  if util.startswith(fixture.result, "<div") then
+    result = normalize_new_line(result)
+    fixture.result = normalize_new_line(fixture.result)
+  end
+  assert.equal(fixture.result, result)
+end
+
+local function run_suite(test_dir)
   local files = listdir(test_dir)
   for _, file in ipairs(files) do
-    local path = test_dir .. "/" .. file .. ".txt"
-    local fixture = parse_fixture(path)
-
-    it(file, function ()
-      local result = run_test(fixture)
-      if util.startswith(fixture.result, "<div") then
-        result = normalize_new_line(result)
-        fixture.result = normalize_new_line(fixture.result)
-      end
-      assert.equal(fixture.result, result)
-      return fixture.mode
-    end)
+    if string.match(file, "%.txt$") then
+      local path = test_dir .. "/" .. file
+      it(file, function ()
+        run_test(path)
+      end)
+    end
   end
+end
+
+describe("citeproc test", function ()
+  describe("fixtures-local", function ()
+    run_suite("./test/fixtures-local")
+  end)
+  describe("test-suite", function ()
+    run_suite("./test/test-suite/processor-tests/humans")
+  end)
 end)

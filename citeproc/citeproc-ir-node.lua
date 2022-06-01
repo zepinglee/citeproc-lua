@@ -6,12 +6,15 @@
 
 local irnode = {}
 
+local util = require("citeproc-util")
+
 
 local IrNode = {
   ir_type = "node",
   element_name = nil,
   text = nil,
   formatting = nil,
+  affixes = nil,
   children = nil,
   delimiter = nil,
 }
@@ -35,8 +38,34 @@ function IrNode:derive(ir_type)
   return o
 end
 
-function IrNode:flatten()
-  return self
+function IrNode:flatten(format)
+  if self.text then
+    return {self.text}
+  elseif self.children and #self.children > 0 then
+    return self:flatten_seq(format)
+  end
+  return nil
+end
+
+function IrNode:flatten_seq(format)
+  local res = {}
+  for _, child in ipairs(self.children) do
+    table.insert(res, child:flatten(format))
+  end
+  if #res == 0 then
+    return nil
+  end
+
+  res = format:group(res, self.delimiter, self.formatting)
+  res = format:affixed_quoted(res, self.affixes, self.quotes);
+  res = format:with_display(res, self.display);
+  return res
+
+  -- if self.delimiter then
+  --   res = util.join(res, self.delimiter)
+  -- end
+
+
 end
 
 

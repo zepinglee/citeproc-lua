@@ -266,7 +266,7 @@ describe("RichText", function()
 
   it("strip periods", function()
     local text = richtext.new("eds.")
-    text:apply_strip_periods()
+    text:_apply_strip_periods()
     local res = text:render(formatter, nil)
     assert.equal("eds", res)
   end)

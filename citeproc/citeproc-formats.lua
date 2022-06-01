@@ -4,10 +4,166 @@
 -- Repository: https://github.com/zepinglee/citeproc-lua
 --
 
+local formats = {}
+
 local util = require("citeproc-util")
 
 
-local formats = {}
+local InlineElement = {
+  type = "InlineElement",
+}
+
+function InlineElement:derive(type)
+  local o = {
+    type = type,
+  }
+  self[type] = o
+  setmetatable(o, self)
+  self.__index = self
+  return o
+end
+
+function InlineElement:new()
+  local o = {}
+  setmetatable(o, self)
+  self.__index = self
+  return o
+end
+
+local Micro = InlineElement:derive("Micro")
+local Formatted = InlineElement:derive("Formatted")
+
+local Quoted = InlineElement:derive("Quoted")
+
+function Quoted:new(nodes, quotes)
+  local o = {
+    children = nodes,
+    quotes = quotes,
+  }
+  setmetatable(o, self)
+  self.__index = self
+  return o
+end
+
+local Text = InlineElement:derive("Text")
+local Linked = InlineElement:derive("Linked")
+
+local Div = InlineElement:derive("Div")
+
+function Div:new(nodes, display)
+  local o = {
+    children = nodes,
+    div = display,
+  }
+  setmetatable(o, self)
+  self.__index = self
+  return o
+end
+
+
+
+
+local OutputFormat = {}
+
+function OutputFormat:new(format_name)
+  local o = {
+    name = format_name,
+  }
+  setmetatable(o, self)
+  self.__index = self
+  return o
+end
+
+function OutputFormat:group(nodes, delimiter, formatting)
+  -- Each node is list of InlineElements
+  if #nodes == 1 then
+    return self:format_list(nodes[1])
+  else
+    nodes = OutputFormat:join_many(nodes, delimiter)
+    return self:format_list(nodes)
+  end
+end
+
+function OutputFormat:format_list(nodes, delimiter, formatting)
+  if formatting then
+    return {Formatted:new(nodes, formatting)}
+  else
+    return nodes
+  end
+end
+
+function OutputFormat:join_many(nodes, delimiter)
+  local res = {}
+  for i, node in ipairs(nodes) do
+    if i > 1 then
+      table.insert(res, delimiter)
+    end
+    for _, el in ipairs(node) do
+      table.insert(res, el)
+    end
+  end
+  return res
+end
+
+function OutputFormat:affixed_quoted(nodes, affixes, quotes)
+  if quotes then
+    nodes = self:quoted(nodes, quotes)
+  end
+  if affixes then
+    if affixes.prefix then
+      table.insert(nodes, 1, affixes.prefix)
+    end
+    if affixes.suffix then
+      table.insert(nodes, affixes.suffix)
+    end
+  end
+  return nodes
+end
+
+function OutputFormat:quoted(nodes, quotes)
+  return {Quoted:new(nodes, quotes)}
+end
+
+function OutputFormat:with_display(nodes, display)
+  if display then
+    return {Div:new(nodes, display)}
+  else
+    return nodes
+  end
+end
+
+function OutputFormat:output(ir)
+  -- TODO: flip-flop
+  -- ir = self:flip_flop_inlines(ir)
+
+  -- TODO: move punctuation
+  -- ir = self:move_punctuation(ir)
+
+  return self:write_inlines(ir)
+end
+
+function OutputFormat:write_inlines(ir)
+  local res = ""
+  for _, node in ipairs(ir) do
+    res = res .. self:write_inline(node)
+  end
+  return res
+end
+
+function OutputFormat:write_inline(inline_element)
+  if type(inline_element) == "string" then
+    return inline_element
+  elseif type(inline_element) == "table" then
+    if inline_element.type and inline_element.children then
+      local res = ""
+      for _, node in ipairs(inline_element.children) do
+        res = res .. self:write_inline(node)
+      end
+      return res
+    end
+  end
+  return ""
+end
 
 formats.html = {
   ["text_escape"] = function (str)
@@ -207,5 +363,7 @@ formats.latex = {
   end,
 }
 
+
+formats.OutputFormat = OutputFormat
 
 return formats

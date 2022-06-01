@@ -122,12 +122,12 @@ end
 
 function Key:from_node(node)
   local o = Key:new()
-  o.variable = node:get_attribute("variable")
-  o.macro = node:get_attribute("macro")
-  o.sort_direction = node:get_attribute("macro")
-  o.names_min = node:get_attribute("names-min")
-  o.names_use_first = node:get_attribute("names-use-first")
-  o.names_use_last = node:get_attribute("names-use-last")
+  o:set_attribute(node, "variable")
+  o:set_attribute(node, "macro")
+  o:set_attribute(node, "macro")
+  o:set_attribute(node, "names-min")
+  o:set_attribute(node, "names-use-first")
+  o:set_attribute(node, "names-use-last")
   return o
 end
 

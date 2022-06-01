@@ -83,12 +83,12 @@ end
 function If:from_node(node)
   local o = If:new()
   -- TODO: disambiguate
-  o.disambiguate = util.to_boolean(node:get_attribute("boolean"))
+  o:set_bool_attribute(node, "disambiguate")
 
   -- o.is_numeric = util.to_list(node:get_attribute("is-numeric"))
   -- o.is_uncertain_date = util.to_list(node:get_attribute("is-uncertain-date"))
-  -- o.locator = node:get_attribute("locator")
-  -- o.postition = node:get_attribute("postition")
+  -- o:set_attribute(node, "locator")
+  -- o:set_attribute(node, "postition")
   -- o.type = util.to_list(node:get_attribute("type"))
   -- o.variable = util.to_list(node:get_attribute("variable"))
 

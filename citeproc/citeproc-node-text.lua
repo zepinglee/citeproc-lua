@@ -7,47 +7,49 @@
 local text_module = {}
 
 local Element = require("citeproc-element").Element
-local IrNode = require("citeproc-richtext").IrNode
+local IrNode = require("citeproc-ir-node").IrNode
 local richtext = require("citeproc-richtext")
 local util = require("citeproc-util")
 
 -- [Text](https://docs.citationstyles.org/en/stable/specification.html#text)
-local Text = Element:derive("text")
-Text.variable = nil
-Text.form = "long"
-Text.macro = nil
-Text.term = nil
-Text.plural = false
-Text.value = nil
--- Style behavior
-Text.font_style = nil
-Text.font_variant = nil
-Text.font_weight = nil
-Text.text_decoration = nil
-Text.vertical_align = nil
-Text.prefix = nil
-Text.suffix = nil
-Text.delimiter = nil
-Text.display = nil
-Text.quotes = false
-Text.strip_periods = false
-Text.text_case = nil
+local Text = Element:derive("text", {
+  -- Default attributes
+  variable = nil,
+  form = "long",
+  macro = nil,
+  term = nil,
+  plural = false,
+  value = nil,
+  -- Style behavior
+  font_style = nil,
+  font_variant = nil,
+  font_weight = nil,
+  text_decoration = nil,
+  vertical_align = nil,
+  prefix = nil,
+  suffix = nil,
+  delimiter = nil,
+  display = nil,
+  quotes = false,
+  strip_periods = false,
+  text_case = nil,
+})
 
 function Text:from_node(node)
   local o = Text:new()
-  o.variable = node:get_attribute("variable")
-  o.form = node:get_attribute("form")
-  o.macro = node:get_attribute("macro")
-  o.term = node:get_attribute("term")
-  o.plural = util.to_boolean(node:get_attribute("plural"))
-  o.value = node:get_attribute("value")
+  o:set_attribute(node, "variable")
+  o:set_attribute(node, "form")
+  o:set_attribute(node, "macro")
+  o:set_attribute(node, "term")
+  o:set_bool_attribute(node, "plural")
+  o:set_attribute(node, "value")
 
-  o:get_formatting_attributes(node)
-  o:get_affixes_attributes(node)
-  o:get_display_attribute(node)
-  o:get_quotes_attribute(node)
-  o:get_strip_periods_attribute(node)
-  o:get_text_case_attribute(node)
+  o:set_formatting_attributes(node)
+  o:set_affixes_attributes(node)
+  o:set_display_attribute(node)
+  o:set_quotes_attribute(node)
+  o:set_strip_periods_attribute(node)
+  o:set_text_case_attribute(node)
   return o
 end
 
@@ -62,15 +64,15 @@ function Text:build_ir(engine, state, context)
   elseif self.value then
     ir = self:build_value_ir(engine, state, context)
   end
-  ir = self:_apply_formatting(ir)
-  ir = self:_apply_quotes(ir)
-  ir = self:_apply_affixes(ir)
-  ir = self:_apply_display(ir)
+  ir = self:apply_formatting(ir)
+  ir = self:apply_quotes(ir)
+  ir = self:apply_affixes(ir)
+  ir = self:apply_display(ir)
   return ir
 end
 
 function Text:build_variable_ir(engine, state, context)
-  local value = context:get_variable(self.name, self.form)
+  local value = context:get_variable(self.variable, self.form)
   if not value then
     return nil
   end
@@ -82,8 +84,8 @@ function Text:build_variable_ir(engine, state, context)
   --   value = util.lstrip(value)
   --   value = self:_format_page(value, context)
   -- end
-  value = self._apply_strip_periods(value)
-  value = self._apply_text_case(value)
+  value = self:apply_strip_periods(value)
+  value = self:apply_text_case(value)
 
   return IrNode:new("text", value)
 end
@@ -99,15 +101,15 @@ end
 function Text:build_term_ir(engine, state, context)
   local term = context:get_term(self.term, self.form, self.plural)
   -- assert(type(term) == "string")
-  term = self._apply_strip_periods(term)
-  term = self._apply_text_case(term)
+  term = self:apply_strip_periods(term)
+  term = self:apply_text_case(term)
   return IrNode:new("text", term)
 end
 
 function Text:build_value_ir(engine, state, context)
   local value = self.value
-  value = self._apply_strip_periods(value)
-  value = self._apply_text_case(value)
+  value = self:apply_strip_periods(value)
+  value = self:apply_text_case(value)
   return IrNode:new("text", value)
 end
 
@@ -171,12 +173,12 @@ function Text:render (item, context)
     res:add_format("URL", "true")
   end
 
-  res = self:apply_strip_periods(res, context)
-  res = self:case(res, context)
-  res = self:format(res, context)
-  res = self:quote(res, context)
-  res = self:wrap(res, context)
-  res = self:display(res, context)
+  res = self:_apply_strip_periods(res, context)
+  res = self:_apply_case(res, context)
+  res = self:_apply_format(res, context)
+  res = self:_apply_quote(res, context)
+  res = self:_apply_affixes(res, context)
+  res = self:_apply_display(res, context)
 
   if variable_name == "citation-number" then
     res = self:_process_citation_number(variable, res, context)
