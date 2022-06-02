@@ -8,6 +8,10 @@ import xml.etree.ElementTree as ET
 failed_fixtures = []
 skipped_fixtures = [
     'affix_CommaAfterQuote.txt',
+    'affix_SpaceWithQuotes.txt',
+    'bugreports_CapsAfterOneWordPrefix.txt',
+    'bugreports_FrenchApostrophe.txt',
+    'bugreports_TitleCase.txt',
 ]
 
 with open('./test/citeproc-test.log') as f:
@@ -26,7 +30,10 @@ num_tags = dict()
 
 # paths = sorted(glob.glob('./test/test-suite/processor-tests/humans/*.txt'))
 paths = sorted(['./test/test-suite/processor-tests/humans/' + f
-                for f in failed_fixtures if f not in skipped_fixtures])
+                for f in failed_fixtures if f not in skipped_fixtures
+                and not f.startswith('collapse_')
+                and not f.startswith('date_')
+                ])
 
 for path in paths:
     # print(path)

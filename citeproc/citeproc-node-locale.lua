@@ -13,12 +13,16 @@ local util = require("citeproc-util")
 local Locale = Element:derive("locale")
 
 function Locale:new()
-  local o = Element:new()
-
-  o.terms = {}
-  o.dates = {}
-  o.style_options = {}
-
+  local o = {
+    terms = {},
+    dates = {},
+    style_options = {
+      limit_day_ordinals_to_day_1 = false,
+      punctuation_in_quote = false,
+    },
+  }
+  setmetatable(o, self)
+  self.__index = self
   return o
 end
 
@@ -29,16 +33,20 @@ function Locale:from_node(node)
   for _, child in ipairs(o.children) do
     local element_name = child.element_name
     if element_name == "terms" then
-      o.terms = child
+      o.terms = child.terms_map
     elseif element_name == "date" then
       o.dates[child.form] = child
-    elseif element_name == "style-options" then
-      local style_option = child
+    end
+  end
+
+  for _, child in ipairs(node:get_children()) do
+    if child:is_element() and child:get_element_name() == "style-options" then
+      local style_options = child
       o.style_options.limit_day_ordinals_to_day_1 = util.to_boolean(
-        style_option:get_attribute("limit-day-ordinals-to-day-1")
+        style_options:get_attribute("limit-day-ordinals-to-day-1")
       ) or false
       o.style_options.punctuation_in_quote = util.to_boolean(
-        style_option:get_attribute("punctuation-in-quote")
+        style_options:get_attribute("punctuation-in-quote")
       ) or false
     end
   end
@@ -46,6 +54,46 @@ function Locale:from_node(node)
   return o
 end
 
+function Locale:merge(other)
+  for key, value in pairs(other.terms) do
+    self.terms[key] = value
+  end
+  for key, value in pairs(other.dates) do
+    self.dates[key] = value
+  end
+  for key, value in pairs(other.style_options) do
+    self.style_options[key] = value
+  end
+  return self
+end
+
+Locale.form_fallbacks = {
+  ["verb-short"] = {"verb-short", "verb", "long"},
+  ["verb"]       = {"verb", "long"},
+  ["symbol"]     = {"symbol", "short", "long"},
+  ["short"]      = {"short", "long"},
+  ["long"]       = {"long"},
+}
+
+-- Keep in sync with Terms:from_node
+function Locale:get_simple_term(name, plural, form)
+  form = form or "long"
+  for _, fallback_form in ipairs(self.form_fallbacks[form]) do
+    local key = name
+    if form ~= "long" then
+      key = key .. "/form-" .. fallback_form
+    end
+    local term = self.terms[key]
+    if term then
+      if plural then
+        return term.multiple or term.text
+      else
+        return term.single or term.text
+      end
+    end
+  end
+  return nil
+end
 
 function Locale:get_option(key)
   local query = string.format("style-options[%s]", key)
@@ -63,80 +111,80 @@ function Locale:get_option(key)
   end
 end
 
-function Locale:get_term (name, form, number, gender)
+-- function Locale:get_term (name, form, number, gender)
 
-  if form == "long" then
-    form = nil
-  end
+--   if form == "long" then
+--     form = nil
+--   end
 
-  local match_last
-  local match_last_two
-  local match_whole
-  if number then
-    assert(type(number) == "number")
-    match_last = string.format("%s-%02d", name, number % 10)
-    match_last_two = string.format("%s-%02d", name, number % 100)
-    match_whole = string.format("%s-%02s", name, number)
-  end
+--   local match_last
+--   local match_last_two
+--   local match_whole
+--   if number then
+--     assert(type(number) == "number")
+--     match_last = string.format("%s-%02d", name, number % 10)
+--     match_last_two = string.format("%s-%02d", name, number % 100)
+--     match_whole = string.format("%s-%02s", name, number)
+--   end
 
-  local res = nil
-  for _, term in ipairs(self:query_selector("term")) do
-    -- Use get_path?
-    local match_name = name
+--   local res = nil
+--   for _, term in ipairs(self:query_selector("term")) do
+--     -- Use get_path?
+--     local match_name = name
 
-    if number then
-      local term_match = term:get_attribute("last-two-digits")
-      if term_match == "whole-number" then
-        match_name = match_whole
-      elseif term_match == "last-two-digits" then
-        match_name = match_last_two
-      elseif number < 10 then
-        -- "13" can match only "ordinal-13" not "ordinal-03"
-        -- It is sliced to "3" in a later checking pass.
-        match_name = match_last_two
-      else
-        match_name = match_last
-      end
-    end
+--     if number then
+--       local term_match = term:get_attribute("last-two-digits")
+--       if term_match == "whole-number" then
+--         match_name = match_whole
+--       elseif term_match == "last-two-digits" then
+--         match_name = match_last_two
+--       elseif number < 10 then
+--         -- "13" can match only "ordinal-13" not "ordinal-03"
+--         -- It is sliced to "3" in a later checking pass.
+--         match_name = match_last_two
+--       else
+--         match_name = match_last
+--       end
+--     end
 
-    local term_name = term:get_attribute("name")
-    local term_form = term:get_attribute("form")
-    if term_form == "long" then
-      term_form = nil
-    end
-    local term_gender = term:get_attribute("gender-form")
+--     local term_name = term:get_attribute("name")
+--     local term_form = term:get_attribute("form")
+--     if term_form == "long" then
+--       term_form = nil
+--     end
+--     local term_gender = term:get_attribute("gender-form")
 
-    if term_name == match_name and term_form == form and term_gender == gender then
-      return term
-    end
+--     if term_name == match_name and term_form == form and term_gender == gender then
+--       return term
+--     end
 
-  end
+--   end
 
-  -- Fallback
-  if form == "verb-sort" then
-    return self:get_term(name, "verb")
-  elseif form == "symbol" then
-    return self:get_term(name, "short")
-  elseif form == "verb" then
-    return self:get_term(name, "long")
-  elseif form == "short" then
-    return self:get_term(name, "long")
-  end
+--   -- Fallback
+--   if form == "verb-sort" then
+--     return self:get_term(name, "verb")
+--   elseif form == "symbol" then
+--     return self:get_term(name, "short")
+--   elseif form == "verb" then
+--     return self:get_term(name, "long")
+--   elseif form == "short" then
+--     return self:get_term(name, "long")
+--   end
 
-  if number and number > 10 then
-    return self:get_term(name, nil, number % 10, gender)
-  end
+--   if number and number > 10 then
+--     return self:get_term(name, nil, number % 10, gender)
+--   end
 
-  if gender then
-    return self:get_term(name, nil, number, nil)
-  end
+--   if gender then
+--     return self:get_term(name, nil, number, nil)
+--   end
 
-  if number then
-    return self:get_term(name, nil, nil, nil)
-  end
+--   if number then
+--     return self:get_term(name, nil, nil, nil)
+--   end
 
-  return nil
-end
+--   return nil
+-- end
 
 
 local Terms = Element:derive("terms")
@@ -145,7 +193,7 @@ function Terms:new(node)
   local o = Element:new()
   o.element_name = "terms"
   o.children = {}
-  o.term_map = {}
+  o.terms_map = {}
   return o
 end
 
@@ -169,7 +217,7 @@ function Terms:from_node(node)
       key = key .. '/match-' .. match
     end
 
-    o.term_map[key] = term
+    o.terms_map[key] = term
   end
   return o
 end
@@ -180,6 +228,7 @@ local Term = Element:derive("term")
 function Term:from_node(node)
   local o = Term:new()
 
+  o.name = node:get_attribute("name")
   if o.children then
     for _, child in ipairs(node:get_children()) do
       if child:is_element() then

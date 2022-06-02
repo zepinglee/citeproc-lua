@@ -107,7 +107,7 @@ function Text:build_macro_ir(engine, state, context)
 end
 
 function Text:build_term_ir(engine, state, context)
-  local term = context:get_term(self.term, self.form, self.plural)
+  local term = context:get_simple_term(self.term, self.plural, self.form)
   -- assert(type(term) == "string")
   term = self:apply_strip_periods(term)
   term = self:apply_text_case(term)

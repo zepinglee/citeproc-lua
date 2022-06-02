@@ -12,6 +12,7 @@ local richtext = require("citeproc-richtext")
 local Element = require("citeproc-element").Element
 local nodes = require("citeproc-nodes")
 local Style = require("citeproc-node-style").Style
+local Locale = require("citeproc-node-locale").Locale
 local Context = require("citeproc-context").Context
 local IrState = require("citeproc-context").IrState
 local formats = require("citeproc-formats")
@@ -42,6 +43,7 @@ function CiteProc.new (sys, style, lang, force_lang)
   }
 
   o.sys = sys
+  o.locales = {}
   o.system_locales = {}
 
   -- TODO: rename to style
@@ -60,7 +62,10 @@ function CiteProc.new (sys, style, lang, force_lang)
 
   o.csl:root_node().style = o.style
 
-  o.style:set_lang(lang, force_lang)
+  o.lang = o.style_element.default_locale
+  if not o.lang or force_lang then
+    o.lang = lang or "en-US"
+  end
 
   o.formatter = formats.latex
   o.linking_enabled = false
@@ -73,12 +78,13 @@ function CiteProc:build_cluster(citation_items)
   local irs = {}
   for _, cite_item in ipairs(citation_items) do
     local state = IrState:new(self.style_element)
-    local context = Context:new(self.style_element)
     cite_item.id = tostring(cite_item.id)
+    local context = Context:new()
+    context.style = self.style_element
+    context.locale = self:get_locale(self.lang)
     context.id = cite_item.id
     context.cite = cite_item
     context.reference = self:get_item(cite_item.id)
-    context.style = self.style_element
 
     local ir = self.style_element.citation:build_ir(self, state, context)
     table.insert(irs, ir)
@@ -325,8 +331,13 @@ function CiteProc:makeBibliography()
   for _, id in ipairs(self:get_sorted_refs()) do
     local ref = self.registry.registry[id]
 
-    local state = IrState:new(self.style_element, id, nil, ref)
-    local context = Context:new(self.style_element, id, nil, ref)
+    local state = IrState:new()
+    local context = Context:new()
+    context.style = self.style_element
+    context.locale = self:get_locale(self.lang)
+    context.id = id
+    context.cite = nil
+    context.reference = self:get_item(id)
 
     local ir = self.style.bibliography:build_ir(self, state, context)
 
@@ -489,23 +500,80 @@ function CiteProc:sort_bibliography()
   self.registry.requires_sorting = false
 end
 
-function CiteProc:get_system_locale (lang)
-  local locale = self.system_locales[lang]
-  if not locale then
-    locale = self.sys.retrieveLocale(lang)
-    if not locale then
-      util.warning(string.format("Failed to retrieve locale \"%s\"", lang))
-      return nil
-    end
-    if type(locale) == "string" then
-      locale = dom.parse(locale)
-    end
-    locale:traverse_elements(self.set_base_class)
-    locale = locale:get_path("locale")[1]
-    locale:root_node().engine = self
-    locale:root_node().style = self.style
-    self.system_locales[lang] = locale
+function CiteProc:get_locale(lang)
+  if string.len(lang) == 2 then
+    lang = util.primary_dialects[lang] or lang
   end
+  local locale = self.locales[lang]
+  if locale then
+    return locale
+  else
+    return self:get_merged_locales(lang)
+  end
+end
+
+function CiteProc:get_merged_locales(lang)
+  local fall_back_locales = {}
+
+  local language = string.sub(lang, 1, 2)
+  local primary_dialect = util.primary_dialects[language]
+
+  -- 1. In-style cs:locale elements
+  --    i. `xml:lang` set to chosen dialect, “de-AT”
+  table.insert(fall_back_locales, self.style_element.locales[lang])
+
+  --    ii. `xml:lang` set to matching language, “de” (German)
+  if language and language ~= lang then
+    table.insert(fall_back_locales, self.style_element.locales[language])
+  end
+
+  --    iii. `xml:lang` not set
+  table.insert(fall_back_locales, self.style_element.locales["@generic"])
+
+  -- 2. Locale files
+  --    iv. `xml:lang` set to chosen dialect, “de-AT”
+  if lang then
+    table.insert(fall_back_locales, self:get_system_locale(lang))
+  end
+
+  --    v. `xml:lang` set to matching primary dialect, “de-DE” (Standard German)
+  --       (only applicable when the chosen locale is a secondary dialect)
+  if primary_dialect and primary_dialect ~= lang then
+    table.insert(fall_back_locales, self:get_system_locale(primary_dialect))
+  end
+
+  --    vi. `xml:lang` set to “en-US” (American English)
+  if lang ~= "en-US" and primary_dialect ~= "en-US" then
+    table.insert(fall_back_locales, self:get_system_locale("en-US"))
+  end
+
+  -- Merge locales
+
+  local locale = Locale:new()
+  for i = #fall_back_locales, 1, -1 do
+    local fall_back_locale = fall_back_locales[i]
+    locale:merge(fall_back_locale)
+  end
+
+  self.locales[lang] = locale
+  return locale
+end
+
+function CiteProc:get_system_locale(lang)
+  local locale = self.system_locales[lang]
+  if locale then
+    return locale
+  end
+
+  local locale_str = self.sys.retrieveLocale(lang)
+  if not locale_str then
+    util.warning(string.format("Failed to retrieve locale \"%s\"", lang))
+    return nil
+  end
+  local locale_xml = dom.parse(locale_str)
+  local root_element = locale_xml:get_path("locale")[1]
+  locale = Locale:from_node(root_element)
+  self.system_locales[lang] = locale
   return locale
 end
 

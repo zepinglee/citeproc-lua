@@ -349,10 +349,6 @@ function Element:get_macro (name)
   return macro
 end
 
-function Element:get_term (name, form, number, gender)
-  return self:get_style():get_term(name, form, number, gender)
-end
-
 -- Formatting
 function Element:escape (str, context)
   return str

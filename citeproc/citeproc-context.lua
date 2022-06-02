@@ -31,13 +31,9 @@ local Context = {
   year_suffix = nil,
 }
 
-function Context:new(style, cite_id, cite, reference)
+function Context:new()
   local o = {
-    reference = reference,
-    cite_id = cite_id,
-    style = style,
-    cite = cite,
-    macro_stack = {},
+    in_bibliography = false
   }
   setmetatable(o, self)
   self.__index = self
@@ -110,7 +106,9 @@ function Context:get_macro(name)
   return res
 end
 
-function Context:get_term(name, form, plural)
+function Context:get_simple_term(name, form, plural)
+  assert(self.locale)
+  return self.locale:get_simple_term(name, plural, form)
 end
 
 function Context.page_first(page)
