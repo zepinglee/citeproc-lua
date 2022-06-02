@@ -79,10 +79,11 @@ function Context:get_ordinary(name, form)
     end
   end
 
-  if name == "title-short" or name == "container-title-short" then
-    variable_name = string.gsub(name, "%-short$", "")
-    res = self.reference[variable_name]
-  end
+  -- if name == "title-short" or name == "container-title-short" then
+  --   variable_name = string.gsub(name, "%-short$", "")
+  --   res = self.reference[variable_name]
+  -- end
+
   return res
 end
 

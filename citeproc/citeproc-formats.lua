@@ -105,17 +105,15 @@ function OutputFormat:join_many(nodes, delimiter)
   return res
 end
 
-function OutputFormat:affixed_quoted(nodes, affixes, quotes)
+function OutputFormat:affixed_quoted(nodes, prefix, suffix, quotes)
   if quotes then
     nodes = self:quoted(nodes, quotes)
   end
-  if affixes then
-    if affixes.prefix then
-      table.insert(nodes, 1, affixes.prefix)
-    end
-    if affixes.suffix then
-      table.insert(nodes, affixes.suffix)
-    end
+  if prefix then
+    table.insert(nodes, 1, prefix)
+  end
+  if suffix then
+    table.insert(nodes, suffix)
   end
   return nodes
 end

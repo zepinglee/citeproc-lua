@@ -342,6 +342,13 @@ function Bibliography:from_node(node)
   return o
 end
 
+function Bibliography:build_ir(engine, state, context)
+  if not self.layout then
+    util.error("Missing citation layout.")
+  end
+  return self.layout:build_ir(engine, state, context)
+end
+
 Bibliography._default_options = {
   ["hanging-indent"] = false,
   ["second-field-align"] = nil,

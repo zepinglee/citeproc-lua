@@ -163,7 +163,7 @@ function Element:build_children_ir(engine, state, context)
   if self.children then
     for _, child_element in ipairs(self.children) do
       local child_ir = child_element:build_ir(engine, state, context)
-      if child_ir then
+      if child_ir and (child_ir.text or child_ir.children) and child_ir.group_var ~= "missing" then
         if not ir.children then
           ir.children = {}
         end
@@ -414,15 +414,15 @@ function Element:apply_formatting(ir)
 end
 
 function Element:apply_affixes(ir)
-  local res = ir
-  if self.prefix or self.suffix and ir then
-    res = IrNode:new()
-    res.children = {}
-    table.insert(res.children, self.prefix)
-    table.insert(res.children, ir)
-    table.insert(res.children, self.suffix)
+  if ir then
+    if self.prefix then
+      ir.prefix = self.prefix
+    end
+    if self.suffix then
+      ir.suffix = self.suffix
+    end
   end
-  return res
+  return ir
 end
 
 function Element:apply_delimiter(ir)
@@ -433,28 +433,21 @@ function Element:apply_delimiter(ir)
 end
 
 function Element:apply_display(ir)
-  local res = ir
-  if ir and self.display then
-    res = IrNode:new()
-    res.display = self.display
-    res.children = {ir}
-  end
-  return res
+  ir.display = self.display
+  return ir
 end
 
 function Element:apply_quotes(ir)
-  local res = ir
   if ir and self.quotes then
-    res = IrNode:new()
-    res.quotes = true
-    res.children = {ir}
-    res.open_quote = nil
-    res.close_quote = nil
-    res.open_inner_quote = nil
-    res.close_inner_quote = nil
-    res.punctuation_in_quote = false
+    ir.quotes = true
+    ir.children = {ir}
+    ir.open_quote = nil
+    ir.close_quote = nil
+    ir.open_inner_quote = nil
+    ir.close_inner_quote = nil
+    ir.punctuation_in_quote = false
   end
-  return res
+  return ir
 end
 
 function Element:apply_strip_periods(str)

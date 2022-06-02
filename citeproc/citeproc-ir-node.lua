@@ -10,7 +10,7 @@ local util = require("citeproc-util")
 
 
 local IrNode = {
-  ir_type = "node",
+  ir_type = "irnode",
   element_name = nil,
   text = nil,
   formatting = nil,
@@ -23,6 +23,8 @@ function IrNode:new(element_name, text)
   local o = {
     element_name = element_name,
     text = text,
+    ir_type = self.ir_type,
+    group_var = "plain",
   }
   setmetatable(o, self)
   self.__index = self
@@ -50,14 +52,18 @@ end
 function IrNode:flatten_seq(format)
   local res = {}
   for _, child in ipairs(self.children) do
-    table.insert(res, child:flatten(format))
+    if type(child) == "string" then
+      table.insert(res, child)
+    elseif type(child) == "table" then
+      table.insert(res, child:flatten(format))
+    end
   end
   if #res == 0 then
     return nil
   end
 
   res = format:group(res, self.delimiter, self.formatting)
-  res = format:affixed_quoted(res, self.affixes, self.quotes);
+  res = format:affixed_quoted(res, self.prefix, self.suffix, self.quotes);
   res = format:with_display(res, self.display);
   return res
 
@@ -69,9 +75,28 @@ function IrNode:flatten_seq(format)
 end
 
 
-local Quoted
+
+
+local TextIr = IrNode:derive("TextIr")
+local NameIr = IrNode:derive("NameIr")
+local SeqIr = IrNode:derive("SeqIr")
 
 
 irnode.IrNode = IrNode
+irnode.TextIr = TextIr
+irnode.NameIr = NameIr
+irnode.SeqIr = SeqIr
+
+function SeqIr:new(element_name)
+  local o = {
+    element_name = element_name,
+    children = {},
+    ir_type = self.ir_type,
+    group_var = "plain",
+  }
+  setmetatable(o, self)
+  self.__index = self
+  return o
+end
 
 return irnode

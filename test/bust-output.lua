@@ -246,7 +246,7 @@ return function(options)
     local formattedTime = string_gsub(string_format('%.6f', sec), '([0-9])0+$', '%1')
     io_write(colors.bright(formattedTime) .. ' ' .. s('output.seconds') .. "\n")
 
-    if handler.test_count == 853 then
+    if handler.test_count > 800 then
       colors = setmetatable({}, {__index = function() return function(s) return s end end})
       local file = io.open("test/citeproc-test.log", "w")
       file:write(get_status_log())

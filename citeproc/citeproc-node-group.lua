@@ -6,6 +6,7 @@
 
 local group = {}
 
+local SeqIr = require("citeproc-ir-node").SeqIr
 local Element = require("citeproc-element").Element
 local util = require("citeproc-util")
 
@@ -25,7 +26,46 @@ function Group:from_node(node)
 end
 
 function Group:build_ir(engine, state, context)
-  local ir = self:build_children_ir(engine, state, context)
+
+  local ir = SeqIr:new(self.element_name)
+  if not self.children then
+    return nil
+  end
+
+  for _, child_element in ipairs(self.children) do
+    local child_ir = child_element:build_ir(engine, state, context)
+
+    if child_ir then  -- TODO: should be removed
+      -- cs:group and its child elements are suppressed if
+      --   a) at least one rendering element in cs:group calls a variable (either
+      --      directly or via a macro), and
+      --   b) all variables that are called are empty. This accommodates
+      --      descriptive cs:text and `cs:label` elements.
+      local child_group_var = child_ir.group_var
+      if child_group_var == "important" then
+        ir.group_var = "important"
+      elseif child_group_var == "missing" then
+        if ir.group_var == "plain" then
+          ir.group_var = "missing"
+        end
+      end
+
+      -- The condition can be simplified
+      if (child_ir.text or child_ir.children) and child_ir.group_var ~= "missing" then
+        table.insert(ir.children, child_ir)
+      end
+    end
+  end
+
+  if #ir.children == 0 or ir.group_var == "missing" then
+    ir.children = nil
+    return ir
+  else
+    -- A non-empty nested cs:group is treated as a non-empty variable for the
+    -- puropses of determining suppression of the outer cs:group.
+    ir.group_var = "important"
+  end
+
   ir = self:apply_delimiter(ir)
   ir = self:apply_formatting(ir)
   ir = self:apply_affixes(ir)

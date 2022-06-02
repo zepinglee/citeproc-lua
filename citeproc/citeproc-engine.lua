@@ -80,8 +80,9 @@ function CiteProc:build_cluster(citation_items)
 
     local ir = self.style_element.citation:build_ir(self, nil, cite_context)
     table.insert(irs, ir)
-    break
   end
+
+  -- TODO: disambiguation
 
   local citation_delimiter = self.style_element.citation.delimiter
   local citation_stream = {}
@@ -303,23 +304,38 @@ function CiteProc:makeCitationCluster (citation_items)
 end
 
 function CiteProc:makeBibliography()
-  local items = {}
+  local params = {}
+  local res = {}
 
+  if not self.style_element.bibliography then
+    return params, res
+  end
+
+  for _, id in ipairs(self:get_sorted_refs()) do
+    local ref = self.registry.registry[id]
+
+    local context = Context:new(self.style_element, id, nil, ref)
+
+    local ir = self.style.bibliography:build_ir(self, nil, context)
+
+    -- subsequent_author_substitute
+
+    local format = OutputFormat:new()
+    local flat = ir:flatten(format)
+
+    local str = format:output(flat)
+
+    table.insert(res, str)
+  end
+
+  return params, res
+end
+
+function CiteProc:get_sorted_refs()
   if self.registry.requires_sorting then
     self:sort_bibliography()
   end
-
-  for _, id in ipairs(self.registry.reflist) do
-    local item = self.registry.registry[id]
-    table.insert(items, item)
-  end
-
-  local context = {
-    build = {},
-    engine=self,
-  }
-  local res = self.style:render_biblography(items, context)
-  return res
+  return self.registry.reflist
 end
 
 function CiteProc:set_formatter(format)

@@ -73,8 +73,11 @@ end
 
 function Text:build_variable_ir(engine, state, context)
   local value = context:get_variable(self.variable, self.form)
+
   if not value then
-    return nil
+    local ir = IrNode:new("text")
+    ir.group_var = "missing"
+    return ir
   end
 
   if type(value) == "number" then
@@ -87,15 +90,20 @@ function Text:build_variable_ir(engine, state, context)
   value = self:apply_strip_periods(value)
   value = self:apply_text_case(value)
 
-  return IrNode:new("text", value)
+  local ir = IrNode:new("text", value)
+  return ir
 end
 
 function Text:build_macro_ir(engine, state, context)
   local macro = context:get_macro(self.macro)
   state:push_macro(self.macro)
-  local res = macro:build_ir(engine, state, context)
+  local ir = macro:build_ir(engine, state, context)
   state:push_macro(self.macro)
-  return res
+
+  if ir and ir.text or (ir.children and #ir.children > 0) then
+    ir.group_var = "important"
+  end
+  return ir
 end
 
 function Text:build_term_ir(engine, state, context)
