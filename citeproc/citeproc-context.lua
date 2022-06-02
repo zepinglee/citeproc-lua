@@ -37,6 +37,7 @@ function Context:new(style, cite_id, cite, reference)
     cite_id = cite_id,
     style = style,
     cite = cite,
+    macro_stack = {},
   }
   setmetatable(o, self)
   self.__index = self
@@ -118,6 +119,32 @@ function Context.page_first(page)
 end
 
 
+local IrState = {}
+
+function IrState:new(style, cite_id, cite, reference)
+  local o = {
+    macro_stack = {},
+  }
+  setmetatable(o, self)
+  self.__index = self
+  return o
+end
+
+function IrState:push_macro(macro_name)
+  for _, name in ipairs(macro_name) do
+    if name == macro_name then
+      util.error(string.format('Recursive macro "%s".', macro_name))
+    end
+    table.insert(self.macro_stack, macro_name)
+  end
+end
+
+function IrState:pop_macro(macro_name)
+  table.remove(self.macro_stack)
+end
+
+
 context.Context = Context
+context.IrState = IrState
 
 return context

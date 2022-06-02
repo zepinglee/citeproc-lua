@@ -13,6 +13,7 @@ local Element = require("citeproc-element").Element
 local nodes = require("citeproc-nodes")
 local Style = require("citeproc-node-style").Style
 local Context = require("citeproc-context").Context
+local IrState = require("citeproc-context").IrState
 local formats = require("citeproc-formats")
 local OutputFormat = require("citeproc-formats").OutputFormat
 local util = require("citeproc-util")
@@ -71,14 +72,15 @@ end
 function CiteProc:build_cluster(citation_items)
   local irs = {}
   for _, cite_item in ipairs(citation_items) do
-    local cite_context = Context:new(self.style_element)
+    local state = IrState:new(self.style_element)
+    local context = Context:new(self.style_element)
     cite_item.id = tostring(cite_item.id)
-    cite_context.id = cite_item.id
-    cite_context.cite = cite_item
-    cite_context.reference = self:get_item(cite_item.id)
-    cite_context.style = self.style_element
+    context.id = cite_item.id
+    context.cite = cite_item
+    context.reference = self:get_item(cite_item.id)
+    context.style = self.style_element
 
-    local ir = self.style_element.citation:build_ir(self, nil, cite_context)
+    local ir = self.style_element.citation:build_ir(self, state, context)
     table.insert(irs, ir)
   end
 
@@ -92,9 +94,18 @@ function CiteProc:build_cluster(citation_items)
     if i > 1 then
       table.insert(citation_stream, citation_delimiter)
     end
+    local cite = citation_items[i]
+    if cite.prefix then
+      table.insert(citation_stream, cite.prefix)
+    end
+
     local flattened = ir:flatten(output_format)
     for _, el in ipairs(flattened) do
       table.insert(citation_stream, el)
+    end
+
+    if cite.suffix then
+      table.insert(citation_stream, cite.suffix)
     end
   end
 
@@ -314,9 +325,10 @@ function CiteProc:makeBibliography()
   for _, id in ipairs(self:get_sorted_refs()) do
     local ref = self.registry.registry[id]
 
+    local state = IrState:new(self.style_element, id, nil, ref)
     local context = Context:new(self.style_element, id, nil, ref)
 
-    local ir = self.style.bibliography:build_ir(self, nil, context)
+    local ir = self.style.bibliography:build_ir(self, state, context)
 
     -- subsequent_author_substitute
 
