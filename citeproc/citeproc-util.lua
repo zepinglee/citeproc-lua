@@ -386,9 +386,9 @@ function util.is_upper (str)
   return unicode.utf8.upper(str) == str
 end
 
-function util.capitalize (str)
-  str = unicode.utf8.lower(str)
-  local res = string.gsub(str, "%w", unicode.utf8.upper, 1)
+function util.capitalize(str)
+  -- str = unicode.utf8.lower(str)
+  local res = string.gsub(str, utf8.charpattern, unicode.utf8.upper, 1)
   return res
 end
 

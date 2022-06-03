@@ -93,6 +93,18 @@ function CiteProc:build_cluster(citation_items)
 
   -- TODO: disambiguation
 
+  -- TODO: collapsing
+
+  -- TODO: Capitalize first
+  for i, ir in ipairs(irs) do
+    local prefix = citation_items[i].prefix
+    if prefix and string.match(prefix, "%.%s*$") and
+        #util.split(util.strip(prefix)) > 1 then
+      -- util.debug(ir)
+      ir:capitalize_first_term()
+    end
+  end
+
   local citation_delimiter = self.style_element.citation.delimiter
   local citation_stream = {}
 

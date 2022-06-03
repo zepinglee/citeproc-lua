@@ -74,6 +74,18 @@ function IrNode:flatten_seq(format)
 
 end
 
+function IrNode:capitalize_first_term()
+  if self.text then
+    self.text = util.capitalize(self.text)
+  elseif self.children and self.children[1] then
+    local child_1 = self.children[1]
+    if type(child_1) == "string" then
+      child_1 = util.capitalize(child_1)
+    elseif type(child_1) == "table" then
+      child_1:capitalize_first_term()
+    end
+  end
+end
 
 
 
