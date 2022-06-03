@@ -17,6 +17,7 @@ local Context = require("citeproc-context").Context
 local IrState = require("citeproc-context").IrState
 local formats = require("citeproc-formats")
 local OutputFormat = require("citeproc-formats").OutputFormat
+local InlineElement = require("citeproc-formats").InlineElement
 local util = require("citeproc-util")
 
 
@@ -102,7 +103,7 @@ function CiteProc:build_cluster(citation_items)
     end
     local cite = citation_items[i]
     if cite.prefix then
-      table.insert(citation_stream, cite.prefix)
+      table.insert(citation_stream, InlineElement:parse(cite.prefix))
     end
 
     local flattened = ir:flatten(output_format)
@@ -111,9 +112,11 @@ function CiteProc:build_cluster(citation_items)
     end
 
     if cite.suffix then
-      table.insert(citation_stream, cite.suffix)
+      table.insert(citation_stream, InlineElement:parse(cite.suffix))
     end
   end
+
+  -- util.debug(citation_stream)
 
   local str = output_format:output(citation_stream)
 

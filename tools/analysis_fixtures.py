@@ -7,11 +7,11 @@ import xml.etree.ElementTree as ET
 
 failed_fixtures = []
 skipped_fixtures = [
-    'affix_CommaAfterQuote.txt',
-    'affix_SpaceWithQuotes.txt',
-    'bugreports_CapsAfterOneWordPrefix.txt',
-    'bugreports_FrenchApostrophe.txt',
-    'bugreports_TitleCase.txt',
+    # 'affix_CommaAfterQuote.txt',
+    # 'affix_SpaceWithQuotes.txt',
+    # 'bugreports_CapsAfterOneWordPrefix.txt',
+    # 'bugreports_FrenchApostrophe.txt',
+    # 'bugreports_TitleCase.txt',
 ]
 
 with open('./test/citeproc-test.log') as f:
@@ -31,8 +31,11 @@ num_tags = dict()
 # paths = sorted(glob.glob('./test/test-suite/processor-tests/humans/*.txt'))
 paths = sorted(['./test/test-suite/processor-tests/humans/' + f
                 for f in failed_fixtures if f not in skipped_fixtures
+                # and not f.startswith('bugreports_')
                 and not f.startswith('collapse_')
-                and not f.startswith('date_')
+                # and not f.startswith('date_')
+                and not f.startswith('disambiguate_')
+                and not f.startswith('flipflop_')
                 ])
 
 for path in paths:
@@ -68,6 +71,6 @@ for path in paths:
 # print(num_tags)
 
 for path in list(sorted(paths, key=lambda x: num_tags[x]))[:10]:
-    print(num_tags[path], os.path.split(path)[1], path, sep='\t')
+    print(f'{num_tags[path]:<4}{os.path.split(path)[1]:50}{path}')
 
 # print(len(failed_fixtures))

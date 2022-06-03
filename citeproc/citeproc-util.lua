@@ -87,6 +87,11 @@ function util.debug(obj)
       end
     end
   end
+  io.stderr:write("[")
+  io.stderr:write(debug.getinfo(2, "S").source:sub(2))
+  io.stderr:write(":")
+  io.stderr:write(debug.getinfo(2, "l").currentline)
+  io.stderr:write("] ")
   io.stderr:write(inspect(obj, {process = remove_all_metatables}))
   io.stderr:write("\n")
 end
@@ -364,6 +369,8 @@ util.unicode = {
   ["apostrophe"] = "\u{2019}",
   ["left double quotation mark"] = "\u{201C}",
   ["right double quotation mark"] = "\u{201D}",
+  ["left-pointing double angle quotation mark"] = "\u{00AB}",
+  ["right-pointing double angle quotation mark"] = "\u{00BB}",
   ["horizontal ellipsis"] = "\u{2026}",
   ["narrow no-break space"] = "\u{202F}",
 }

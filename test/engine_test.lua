@@ -11,15 +11,9 @@ end
 
 
 require("busted.runner")()
-local inspect = require("inspect")
 
 local Style = require("citeproc-node-style").Style
 local util = require("citeproc-util")
-
-
-local remove_all_metatables = function(item, path)
-  if path[#path] ~= inspect.METATABLE then return item end
-end
 
 
 describe("Style", function()
@@ -29,7 +23,7 @@ describe("Style", function()
   it("parses from xml", function()
     local style = Style:parse(str)
     assert.truthy(style)
-    print(inspect(style.citation, {process = remove_all_metatables}))
+    util.debug(style.citation)
   end)
 
 end)
