@@ -76,6 +76,7 @@ function CiteProc.new (sys, style, lang, force_lang)
 end
 
 function CiteProc:build_cluster(citation_items)
+  local output_format = OutputFormat:new()
   local irs = {}
   for _, cite_item in ipairs(citation_items) do
     local state = IrState:new(self.style_element)
@@ -83,6 +84,7 @@ function CiteProc:build_cluster(citation_items)
     local context = Context:new()
     context.style = self.style_element
     context.locale = self:get_locale(self.lang)
+    context.format = output_format
     context.id = cite_item.id
     context.cite = cite_item
     context.reference = self:get_item(cite_item.id)
@@ -90,8 +92,6 @@ function CiteProc:build_cluster(citation_items)
     local ir = self.style_element.citation:build_ir(self, state, context)
     table.insert(irs, ir)
   end
-
-  util.debug(irs)
 
   -- TODO: disambiguation
 
@@ -110,23 +110,25 @@ function CiteProc:build_cluster(citation_items)
   local citation_delimiter = self.style_element.citation.delimiter
   local citation_stream = {}
 
-  local output_format = OutputFormat:new()
   for i, ir in ipairs(irs) do
     if i > 1 then
       table.insert(citation_stream, citation_delimiter)
     end
     local cite = citation_items[i]
     if cite.prefix then
-      table.insert(citation_stream, InlineElement:parse(cite.prefix))
+      for _, inline in ipairs(InlineElement:parse(cite.prefix)) do
+        table.insert(citation_stream, inline)
+      end
     end
 
-    local flattened = ir:flatten(output_format)
-    for _, el in ipairs(flattened) do
+    for _, el in ipairs(ir:flatten(output_format)) do
       table.insert(citation_stream, el)
     end
 
     if cite.suffix then
-      table.insert(citation_stream, InlineElement:parse(cite.suffix))
+      for _, inline in ipairs(InlineElement:parse(cite.suffix)) do
+        table.insert(citation_stream, inline)
+      end
     end
   end
 

@@ -10,7 +10,8 @@ local util = require("citeproc-util")
 
 
 local IrNode = {
-  ir_type = "irnode",
+  type = "IrNode",
+  base_type = "IrNode",
   element_name = nil,
   text = nil,
   formatting = nil,
@@ -19,21 +20,23 @@ local IrNode = {
   delimiter = nil,
 }
 
-function IrNode:new(element_name, text)
+function IrNode:new(children)
   local o = {
-    element_name = element_name,
-    text = text,
-    ir_type = self.ir_type,
+    type = self.type,
+    children = children,
+    base_type = self.base_type,
     group_var = "plain",
+    -- element = element,
   }
   setmetatable(o, self)
   self.__index = self
   return o
 end
 
-function IrNode:derive(ir_type)
+function IrNode:derive(type)
   local o = {
-    ir_type = ir_type,
+    type = type,
+    base_type = self.base_type,
   }
   setmetatable(o, self)
   self.__index = self
@@ -41,74 +44,70 @@ function IrNode:derive(ir_type)
 end
 
 function IrNode:flatten(format)
-  if self.text then
-    return {self.text}
-  elseif self.children and #self.children > 0 then
+  if self.type == "SeqIr" then
     return self:flatten_seq(format)
+  else
+    return self.inlines
   end
-  return nil
+
 end
 
 function IrNode:flatten_seq(format)
-  local res = {}
+  local inlines_list = {}
   for _, child in ipairs(self.children) do
-    if type(child) == "string" then
-      table.insert(res, child)
-    elseif type(child) == "table" then
-      table.insert(res, child:flatten(format))
-    end
-  end
-  if #res == 0 then
-    return nil
+    table.insert(inlines_list, child:flatten())
   end
 
-  res = format:group(res, self.delimiter, self.formatting)
-  res = format:affixed_quoted(res, self.prefix, self.suffix, self.quotes);
-  res = format:with_display(res, self.display);
-  return res
-
-  -- if self.delimiter then
-  --   res = util.join(res, self.delimiter)
-  -- end
-
-
+  local inlines = format:group(inlines_list, self.delimiter, self.formatting)
+  inlines = format:affixed_quoted(inlines, self.prefix, self.suffix, self.quotes);
+  inlines = format:with_display(inlines, self.display);
+  return inlines
 end
 
 function IrNode:capitalize_first_term()
-  if self.text then
-    self.text = util.capitalize(self.text)
-  elseif self.children and self.children[1] then
-    local child_1 = self.children[1]
-    if type(child_1) == "string" then
-      child_1 = util.capitalize(child_1)
-    elseif type(child_1) == "table" then
-      child_1:capitalize_first_term()
-    end
+  if self.type == "SeqIr" and self.children[1] then
+    self.children[1]:capitalize_first_term()
+  else
+    self.inlines[1]:capitalize_first_term()
   end
 end
 
 
 
 local Rendered = IrNode:derive("Rendered")
-local NameIr = IrNode:derive("NameIr")
-local SeqIr = IrNode:derive("SeqIr")
 
-
-irnode.IrNode = IrNode
-irnode.Rendered = Rendered
-irnode.NameIr = NameIr
-irnode.SeqIr = SeqIr
-
-function SeqIr:new(element_name)
+function Rendered:new(inlines, element)
   local o = {
-    element_name = element_name,
-    children = {},
-    ir_type = self.ir_type,
+    inlines = inlines,
+    element = element,
+    type = self.type,
+    base_type = self.base_type,
     group_var = "plain",
   }
   setmetatable(o, self)
   self.__index = self
   return o
 end
+
+local NameIr = IrNode:derive("NameIr")
+local SeqIr = IrNode:derive("SeqIr")
+
+-- function SeqIr:new(children)
+--   o = IrNode.new(self, children)
+--   local o = {
+--     children = children,
+--     group_var = "plain",
+--   }
+--   setmetatable(o, self)
+--   self.__index = self
+--   return o
+-- end
+
+
+
+irnode.IrNode = IrNode
+irnode.Rendered = Rendered
+irnode.NameIr = NameIr
+irnode.SeqIr = SeqIr
 
 return irnode

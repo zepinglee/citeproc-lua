@@ -7,11 +7,8 @@ import xml.etree.ElementTree as ET
 
 failed_fixtures = []
 skipped_fixtures = [
-    # 'affix_CommaAfterQuote.txt',
-    # 'affix_SpaceWithQuotes.txt',
-    # 'bugreports_CapsAfterOneWordPrefix.txt',
-    # 'bugreports_FrenchApostrophe.txt',
-    # 'bugreports_TitleCase.txt',
+    'bugreports_FrenchApostrophe.txt',
+    'bugreports_TitleCase.txt',
 ]
 
 with open('./test/citeproc-test.log') as f:

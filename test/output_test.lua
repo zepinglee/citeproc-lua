@@ -46,10 +46,10 @@ describe("Oputput", function()
     local str = "'quote', "
     local el = InlineElement:parse(str)
 
-    local expected = InlineElement:new({
+    local expected = {
       Quoted:new({PlainText:new("quote")}),
       PlainText:new(", "),
-    })
+    }
     assert.same(expected, el)
   end)
 

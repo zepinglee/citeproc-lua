@@ -9,6 +9,9 @@ local names_module = {}
 local unicode = require("unicode")
 
 local IrNode = require("citeproc-ir-node").IrNode
+local NameIr = require("citeproc-ir-node").NameIr
+local SeqIr = require("citeproc-ir-node").SeqIr
+
 local richtext = require("citeproc-richtext")
 local Element = require("citeproc-element").Element
 local util = require("citeproc-util")
@@ -58,22 +61,22 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     return nil
   end
 
-  local ir = IrNode:new("name")
-  ir.children = {}
+  local child_irs = {}
+  -- for _, name_variable in ipairs(name_variables) do
+  --   if name_variable.family then
+  --     local text = name_variable.family
+  --     if name_variable.given then
+  --       text = text .. ", " .. name_variable.given
+  --     end
+  --     local child_ir = IrNode:new(nil, text)
+  --     table.insert(ir.children, child_ir)
+  --   elseif name_variable.literal then
+  --     local child_ir = IrNode:new(nil, name_variable.literal)
+  --     table.insert(ir.children, child_ir)
+  --   end
+  -- end
 
-  for _, name_variable in ipairs(name_variables) do
-    if name_variable.family then
-      local text = name_variable.family
-      if name_variable.given then
-        text = text .. ", " .. name_variable.given
-      end
-      local child_ir = IrNode:new(nil, text)
-      table.insert(ir.children, child_ir)
-    elseif name_variable.literal then
-      local child_ir = IrNode:new(nil, name_variable.literal)
-      table.insert(ir.children, child_ir)
-    end
-  end
+  local ir = SeqIr:new(child_irs)
 
   ir = self:apply_formatting(ir)
   ir = self:apply_affixes(ir)

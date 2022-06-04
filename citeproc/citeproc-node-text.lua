@@ -69,10 +69,7 @@ function Text:build_ir(engine, state, context)
   elseif self.value then
     ir = self:build_value_ir(engine, state, context)
   end
-  ir = self:apply_formatting(ir)
-  ir = self:apply_quotes(ir)
-  ir = self:apply_affixes(ir)
-  ir = self:apply_display(ir)
+
   return ir
 end
 
@@ -80,7 +77,7 @@ function Text:build_variable_ir(engine, state, context)
   local value = context:get_variable(self.variable, self.form)
 
   if not value then
-    local ir = IrNode:new("text")
+    local ir = Rendered:new()
     ir.group_var = "missing"
     return ir
   end
@@ -92,11 +89,9 @@ function Text:build_variable_ir(engine, state, context)
   --   value = util.lstrip(value)
   --   value = self:_format_page(value, context)
   -- end
-  value = self:apply_strip_periods(value)
-  value = self:apply_text_case(value)
 
-  local ir = Rendered:new("text", value)
-  return ir
+  local inlines = self:render_text_inlines(value, context.format)
+  return Rendered:new(inlines)
 end
 
 function Text:build_macro_ir(engine, state, context)
@@ -112,18 +107,14 @@ function Text:build_macro_ir(engine, state, context)
 end
 
 function Text:build_term_ir(engine, state, context)
-  local term = context:get_simple_term(self.term, self.plural, self.form)
-  -- assert(type(term) == "string")
-  term = self:apply_strip_periods(term)
-  term = self:apply_text_case(term)
-  return IrNode:new("text", term)
+  local str = context:get_simple_term(self.term, self.plural, self.form)
+  local inlines = self:render_text_inlines(str, context.format)
+  return Rendered:new(inlines, self)
 end
 
 function Text:build_value_ir(engine, state, context)
-  local value = self.value
-  value = self:apply_strip_periods(value)
-  value = self:apply_text_case(value)
-  return IrNode:new("text", value)
+  local inlines = self:render_text_inlines(self.value, context.format)
+  return Rendered:new(inlines, self)
 end
 
 function Text:render (item, context)

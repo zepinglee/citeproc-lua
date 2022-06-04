@@ -84,7 +84,7 @@ local Quoted = InlineElement:derive("Quoted")
 
 function Quoted:new(inlines, localized_quotes)
   local o = InlineElement.new(self)
-  o.inlines = nodes
+  o.inlines = inlines
   if localized_quotes then
     o.quotes = localized_quotes
   else
@@ -139,6 +139,7 @@ end
 
 
 function InlineElement:parse(str)
+  -- Return a list of inlines
   local html_str = "<div>" .. str .. "</div>"
   local ok, html = pcall(dom.parse, html_str)
   local el
@@ -151,11 +152,12 @@ function InlineElement:parse(str)
 
   el = InlineElement:parse_quotes(el)
 
-  if el.inlines and #el.inlines == 1 then
-    el = el.inlines[1]
+  if el.inlines then
+    return el.inlines
+  else
+    return {el}
   end
 
-  return el
 end
 
 function InlineElement:from_node(node)
@@ -368,6 +370,14 @@ function InlineElement:get_right_most_string()
   end
 end
 
+function InlineElement:capitalize_first_term()
+  if self.type == "PlainText" then
+    self.value = util.capitalize(self.value)
+  elseif self.inlines[1] then
+    self.inlines[1]:capitalize_first_term()
+  end
+end
+
 
 local OutputFormat = {}
 
@@ -380,21 +390,21 @@ function OutputFormat:new(format_name)
   return o
 end
 
-function OutputFormat:group(nodes, delimiter, formatting)
+function OutputFormat:group(inlines_list, delimiter, formatting)
   -- Each node is list of InlineElements
-  if #nodes == 1 then
-    return self:format_list(nodes[1])
+  if #inlines_list == 1 then
+    return self:format_list(inlines_list[1], formatting)
   else
-    nodes = OutputFormat:join_many(nodes, delimiter)
-    return self:format_list(nodes)
+    local inlines = OutputFormat:join_many(inlines_list, delimiter)
+    return self:format_list(inlines, formatting)
   end
 end
 
-function OutputFormat:format_list(nodes, delimiter, formatting)
+function OutputFormat:format_list(inlines, formatting)
   if formatting then
-    return {Formatted:new(nodes, formatting)}
+    return {Formatted:new(inlines, formatting)}
   else
-    return nodes
+    return inlines
   end
 end
 
@@ -402,13 +412,17 @@ function OutputFormat:join_many(nodes, delimiter)
   local res = {}
   for i, node in ipairs(nodes) do
     if i > 1 then
-      table.insert(res, delimiter)
+      table.insert(res, PlainText:new(delimiter))
     end
     for _, el in ipairs(node) do
       table.insert(res, el)
     end
   end
   return res
+end
+
+function OutputFormat:with_format(inlines, formmatting)
+  return self:format_list(inlines, formmatting)
 end
 
 function OutputFormat:affixed_quoted(nodes, prefix, suffix, quotes)
@@ -490,15 +504,11 @@ function OutputFormat:write_inline(element)
 end
 
 function OutputFormat:write_children(element)
-  if element.value then
-    return element.value
-  elseif element.inlines then
-    local res = ""
-    for _, inline in ipairs(element.inlines) do
-      res = res .. self:write_inline(inline)
-    end
-    return res
+  local res = ""
+  for _, inline in ipairs(element.inlines) do
+    res = res .. self:write_inline(inline)
   end
+  return res
 end
 
 function OutputFormat:write_escaped(str)

@@ -72,19 +72,19 @@ end
 
 function Date:build_single_date_ir(variable, engine, state, context)
   -- TODO
-  local ir = IrNode:new("date")
-  ir.children = {}
+  -- local ir = IrNode:new("date")
+  -- ir.children = {}
 
-  for _, date_part in ipairs(self.children) do
-    table.insert(ir.children, date_part:build_ir(variable, engine, state, context))
-  end
+  -- for _, date_part in ipairs(self.children) do
+  --   table.insert(ir.children, date_part:build_ir(variable, engine, state, context))
+  -- end
 
-  -- TODO: How to apply text case to date element?
-  -- value = self:apply_text_case(value)
-  ir = self:apply_formatting(ir)
-  ir = self:apply_affixes(ir)
-  ir = self:apply_display(ir)
-  return ir
+  -- -- TODO: How to apply text case to date element?
+  -- -- value = self:apply_text_case(value)
+  -- ir = self:apply_formatting(ir)
+  -- ir = self:apply_affixes(ir)
+  -- ir = self:apply_display(ir)
+  return IrNode:new()
 end
 
 function Date:render (item, context)

@@ -46,13 +46,8 @@ function Number:build_ir(engine, state, context)
 
   -- value = self._format_number(value, self.variable, self.form)
 
-  value = self:apply_text_case(value)
-
-  local ir = IrNode:new("text", value)
-  ir = self:apply_formatting(ir)
-  ir = self:apply_affixes(ir)
-  ir = self:apply_display(ir)
-  return ir
+  local inlines = self:render_text_inlines(value, context.format)
+  return Rendered:new(inlines, self)
 end
 
 

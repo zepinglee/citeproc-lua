@@ -9,6 +9,10 @@ local element = {}
 local unicode = require("unicode")
 
 local IrNode = require("citeproc-ir-node").IrNode
+local SeqIr = require("citeproc-ir-node").SeqIr
+
+local InlineElement = require("citeproc-output").InlineElement
+
 local richtext = require("citeproc-richtext")
 local util = require("citeproc-util")
 
@@ -159,20 +163,30 @@ function Element:build_ir(engine, state, context)
 end
 
 function Element:build_children_ir(engine, state, context)
-  local ir = IrNode:new(self.element_name)
+  local child_irs = {}
   if self.children then
     for _, child_element in ipairs(self.children) do
       local child_ir = child_element:build_ir(engine, state, context)
-      if child_ir and (child_ir.text or child_ir.children) and child_ir.group_var ~= "missing" then
-        if not ir.children then
-          ir.children = {}
-        end
-        table.insert(ir.children, child_ir)
+      if child_ir and child_ir.group_var ~= "missing" then
+        table.insert(child_irs, child_ir)
       end
     end
   end
-  return ir
+  return SeqIr:new(child_irs)
 end
+
+function Element:render_text_inlines(str, output_format)
+
+  str = self:apply_strip_periods(str)
+  str = self:apply_text_case(str)
+  -- TODO: try links
+
+  local inlines = InlineElement:parse(str)
+  inlines = output_format:with_format(inlines, self.formmatting)
+  inlines = output_format:affixed_quoted(inlines, self.affixes, self.quotes)
+  return output_format:with_display(inlines, self.display)
+end
+
 
 function Element:render (item, context)
   self:debug_info(context)
