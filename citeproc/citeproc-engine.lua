@@ -18,6 +18,7 @@ local IrState = require("citeproc-context").IrState
 local formats = require("citeproc-formats")
 local OutputFormat = require("citeproc-output").OutputFormat
 local InlineElement = require("citeproc-output").InlineElement
+local PlainText = require("citeproc-output").PlainText
 local util = require("citeproc-util")
 
 
@@ -93,6 +94,8 @@ function CiteProc:build_cluster(citation_items)
     table.insert(irs, ir)
   end
 
+  -- util.debug(irs)
+
   -- TODO: disambiguation
 
   -- TODO: collapsing
@@ -101,7 +104,7 @@ function CiteProc:build_cluster(citation_items)
   for i, ir in ipairs(irs) do
     local prefix = citation_items[i].prefix
     if prefix and string.match(prefix, "%.%s*$") and
-        #util.split(util.strip(prefix)) > 1 then
+        #util.split(util.strip(prefix)) > 1 or not prefix then
       -- util.debug(ir)
       ir:capitalize_first_term()
     end
@@ -111,8 +114,8 @@ function CiteProc:build_cluster(citation_items)
   local citation_stream = {}
 
   for i, ir in ipairs(irs) do
-    if i > 1 then
-      table.insert(citation_stream, citation_delimiter)
+    if citation_delimiter and  i > 1 then
+      table.insert(citation_stream, PlainText:new(citation_delimiter))
     end
     local cite = citation_items[i]
     if cite.prefix then

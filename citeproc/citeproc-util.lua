@@ -99,7 +99,6 @@ end
 -- Similar to re.split() in Python
 function util.split(str, seps, maxsplit, include_sep)
   if not str then
-    print(debug.traceback())
     error("Invalid string.")
   end
   seps = seps or "%s+"

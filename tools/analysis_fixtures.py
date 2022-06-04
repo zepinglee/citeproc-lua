@@ -9,6 +9,8 @@ failed_fixtures = []
 skipped_fixtures = [
     'bugreports_FrenchApostrophe.txt',
     'bugreports_TitleCase.txt',
+    'locale_TitleCaseEmptyLangEmptyLocale.txt',
+    'locale_TitleCaseGarbageLangEmptyLocale.txt',
 ]
 
 with open('./test/citeproc-test.log') as f:

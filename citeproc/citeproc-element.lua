@@ -375,17 +375,33 @@ function Element:escape (str, context)
 end
 
 function Element:set_formatting_attributes(node)
-  -- Todo: validate?
-  self:set_attribute(node, "font-style")
-  self:set_attribute(node, "font-variant")
-  self:set_attribute(node, "font-weight")
-  self:set_attribute(node, "text-decoration")
-  self:set_attribute(node, "vertical-align")
+  for _, attribute in ipairs({
+    "font-style",
+    "font-variant",
+    "font-weight",
+    "text-decoration",
+    "vertical-align",
+  }) do
+    local value = node:get_attribute(attribute)
+    if value then
+      if not self.formatting then
+        self.formatting = {}
+      end
+      self.formatting[attribute] = value
+    end
+  end
 end
 
 function Element:set_affixes_attributes(node)
-  self:set_attribute(node, "prefix")
-  self:set_attribute(node, "suffix")
+  for _, attribute in ipairs({"prefix", "suffix"}) do
+    local value = node:get_attribute(attribute)
+    if value then
+      if not self.affixes then
+        self.affixes = {}
+      end
+      self.affixes[attribute] = value
+    end
+  end
 end
 
 function Element:get_delimiter_attribute(node)

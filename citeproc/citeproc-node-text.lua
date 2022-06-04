@@ -110,12 +110,12 @@ end
 function Text:build_term_ir(engine, state, context)
   local str = context:get_simple_term(self.term, self.plural, self.form)
   local inlines = self:render_text_inlines(str, context)
-  return Rendered:new(inlines, self)
+  return Rendered:new(inlines)
 end
 
 function Text:build_value_ir(engine, state, context)
   local inlines = self:render_text_inlines(self.value, context)
-  return Rendered:new(inlines, self)
+  return Rendered:new(inlines)
 end
 
 function Text:render (item, context)

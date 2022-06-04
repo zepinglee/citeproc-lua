@@ -200,8 +200,8 @@ function InlineElement:from_node(node)
   return el
 end
 
-function InlineElement:parse_quotes(element)
-  local quote_fragments = InlineElement:get_quote_fragments(element)
+function InlineElement:parse_quotes(inline)
+  local quote_fragments = InlineElement:get_quote_fragments(inline)
   -- util.debug(quote_fragments)
 
   local quote_stack = {}
@@ -278,12 +278,12 @@ function InlineElement:parse_quotes(element)
 
 end
 
-function InlineElement:get_quote_fragments(element)
+function InlineElement:get_quote_fragments(inline)
   local inlines
-  if element.value then
-    inlines = {element.value}
+  if inline.value then
+    inlines = {inline.value}
   else
-    inlines = element.inlines
+    inlines = inline.inlines
   end
   local fragments = {}
   for _, inline in ipairs(inlines) do
@@ -409,13 +409,13 @@ function OutputFormat:format_list(inlines, formatting)
   end
 end
 
-function OutputFormat:join_many(nodes, delimiter)
+function OutputFormat:join_many(lists, delimiter)
   local res = {}
-  for i, node in ipairs(nodes) do
-    if i > 1 then
+  for i, list in ipairs(lists) do
+    if delimiter and i > 1 then
       table.insert(res, PlainText:new(delimiter))
     end
-    for _, el in ipairs(node) do
+    for _, el in ipairs(list) do
       table.insert(res, el)
     end
   end
@@ -431,10 +431,10 @@ function OutputFormat:affixed_quoted(inlines, affixes, localized_quotes)
     inlines = self:quoted(inlines, localized_quotes)
   end
   if affixes and affixes.prefix then
-    table.insert(inlines, 1, affixes.prefix)
+    table.insert(inlines, 1, PlainText:new(affixes.prefix))
   end
   if affixes and affixes.suffix then
-    table.insert(inlines, affixes.suffix)
+    table.insert(inlines, PlainText:new(affixes.suffix))
   end
   return inlines
 end
@@ -451,50 +451,50 @@ function OutputFormat:with_display(nodes, display)
   end
 end
 
-function OutputFormat:output(ir)
+function OutputFormat:output(flattened_inlines)
   -- TODO: flip-flop
-  -- ir = self:flip_flop_inlines(ir)
+  -- inlines = self:flip_flop_inlines(inlines)
 
   -- TODO: move punctuation
-  -- ir = self:move_punctuation(ir)
+  -- inlines = self:move_punctuation(inlines)
 
-  return self:write_inlines(ir)
+  return self:write_inlines(flattened_inlines)
 end
 
-function OutputFormat:write_inlines(ir)
+function OutputFormat:write_inlines(inlines)
   local res = ""
-  for _, node in ipairs(ir) do
+  for _, node in ipairs(inlines) do
     res = res .. self:write_inline(node)
   end
   return res
 end
 
-function OutputFormat:write_inline(element)
-  if type(element) == "string" then
-    return self:write_escaped(element)
+function OutputFormat:write_inline(inline)
+  if type(inline) == "string" then
+    return self:write_escaped(inline)
 
-  elseif type(element) == "table" then
-    -- util.debug(element.type)
-    if element.type == "PlainText" then
-      return self:write_escaped(element.value)
+  elseif type(inline) == "table" then
+    -- util.debug(inline.type)
+    if inline.type == "PlainText" then
+      return self:write_escaped(inline.value)
 
-    elseif element.type == "InlineElement" then
-      return self:write_children(element)
+    elseif inline.type == "InlineElement" then
+      return self:write_children(inline)
 
-    elseif element.type == "Formatted" then
-      return self:write_formatted(element)
+    elseif inline.type == "Formatted" then
+      return self:write_formatted(inline)
 
-    elseif element.type == "Quoted" then
-      return self:write_quoted(element)
+    elseif inline.type == "Quoted" then
+      return self:write_quoted(inline)
 
-    elseif element.type == "Div" then
-      return self:write_formatted(element)
+    elseif inline.type == "Div" then
+      return self:write_formatted(inline)
 
-    elseif element.type == "Linked" then
-      return self:write_link(element)
+    elseif inline.type == "Linked" then
+      return self:write_link(inline)
 
       -- local res = ""
-      -- for _, node in ipairs(element.inlines) do
+      -- for _, node in ipairs(inline.inlines) do
       --   res = res .. self:write_inline(node)
       -- end
       -- return res
@@ -504,9 +504,9 @@ function OutputFormat:write_inline(element)
   return ""
 end
 
-function OutputFormat:write_children(element)
+function OutputFormat:write_children(inline)
   local res = ""
-  for _, inline in ipairs(element.inlines) do
+  for _, inline in ipairs(inline.inlines) do
     res = res .. self:write_inline(inline)
   end
   return res
@@ -522,10 +522,10 @@ function OutputFormat:write_escaped(str)
   return str
 end
 
-function OutputFormat:write_quoted(element)
-  local res = self:write_children(element)
-  local quotes = element.quotes
-  if element.is_inner then
+function OutputFormat:write_quoted(inline)
+  local res = self:write_children(inline)
+  local quotes = inline.quotes
+  if inline.is_inner then
     return quotes.inner_open .. res .. quotes.inner_close
   else
     return quotes.outer_open .. res .. quotes.outer_close
