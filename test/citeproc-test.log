@@ -22,23 +22,23 @@ name                 0       0     111       0
 nameattr             0       0      97       0
 nameorder            0       0       6       0
 namespaces           1       0       0       0
-number               4       0      16       0
+number               5       3      12       0
 page                 9       0       0       0
 plural               0       0       7       0
 position             0       0      16       0
 punctuation          1       1      14       0
 quotes               0       0       4       0
 simplespace          0       0       1       0
-sort                 0       9      57       0
+sort                 2       7      57       0
 sortseparator        0       0       1       0
 substitute           0       0       7       0
 testers              0       0       2       0
-textcase             2      23       5       0
+textcase             2      24       4       0
 unicode              1       0       0       0
 variables            1       0       4       0
 virtual              0       0       1       0
 -------------- ------- ------- ------- -------
-(all)               49      60     745       0
+(all)               52      62     740       0
 
 Failure → citeproc test test-suite affix_MovingPunctuation.txt
 Passed in:
@@ -48,7 +48,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_DelimitersOnLocator.txt
 Passed in:
-(string) ', 32, 32, 32'
+(string) ', 32; , 32; , 32'
 Expected:
 (string) '[1, 32; 2, 32; 3, 32]'
 
@@ -66,19 +66,19 @@ Expected:
 
 Failure → citeproc test test-suite date_IgnoreNonexistentSort.txt
 Passed in:
-(string) 'Item 1Item 2Item 3Item 4'
+(string) 'Item 1; Item 2; Item 3; Item 4'
 Expected:
 (string) 'Item 4; Item 2; Item 1; Item 3'
 
 Failure → citeproc test test-suite date_NonexistentSortReverseCitation.txt
 Passed in:
-(string) 'Item 1Item 2Item 3Item 4'
+(string) 'Item 1; Item 2; Item 3; Item 4'
 Expected:
 (string) 'Item 2; Item 4; Item 1; Item 3'
 
 Failure → citeproc test test-suite date_VariousInvalidDates.txt
 Passed in:
-(string) 'Date: ()Date: ()Date: ()Date: ()Date: ()'
+(string) 'Date: (); Date: (); Date: (); Date: (); Date: ()'
 Expected:
 (string) 'Date: (); Date: (Spring); Date: (Spring); Date: (); Date: (Winter)'
 
@@ -180,7 +180,7 @@ Expected:
 
 Failure → citeproc test test-suite locale_TitleCaseGarbageLangEmptyLocale.txt
 Passed in:
-(string) 'His anonymous lifeHis anonymous lifeHis anonymous life'
+(string) 'His anonymous life; His anonymous life; His anonymous life'
 Expected:
 (string) 'His anonymous life; His Anonymous Life; His anonymous life'
 
@@ -202,6 +202,26 @@ Passed in:
 Expected:
 (string) '“An Article,” Am LJ.'
 
+Failure → citeproc test test-suite number_SimpleNumberOrdinalLong.txt
+Passed in:
+(string) '42
+9'
+Expected:
+(string) '42nd
+ninth'
+
+Failure → citeproc test test-suite number_SimpleNumberOrdinalShort.txt
+Passed in:
+(string) '42'
+Expected:
+(string) '42nd'
+
+Failure → citeproc test test-suite number_SimpleNumberRoman.txt
+Passed in:
+(string) '42'
+Expected:
+(string) 'xlii'
+
 Failure → citeproc test test-suite punctuation_FrenchOrthography.txt
 Passed in:
 (string) 'His « Anonymous » Life'
@@ -210,55 +230,43 @@ Expected:
 
 Failure → citeproc test test-suite sort_CaseInsensitiveCitation.txt
 Passed in:
-(string) 'XyzABCAaa'
+(string) 'Xyz - ABC - Aaa'
 Expected:
 (string) 'Aaa - ABC - Xyz'
 
 Failure → citeproc test test-suite sort_DateVariable.txt
 Passed in:
-(string) 'Book ABook B'
+(string) 'Book A; Book B'
 Expected:
 (string) 'Book B; Book A'
 
 Failure → citeproc test test-suite sort_DateVariableMixedElementsAscendingA.txt
 Passed in:
-(string) 'Book ABook B'
+(string) 'Book A; Book B'
 Expected:
 (string) 'Book B; Book A'
 
-Failure → citeproc test test-suite sort_DateVariableMixedElementsAscendingB.txt
-Passed in:
-(string) 'Book ABook B'
-Expected:
-(string) 'Book A; Book B'
-
-Failure → citeproc test test-suite sort_DateVariableMixedElementsDescendingA.txt
-Passed in:
-(string) 'Book ABook B'
-Expected:
-(string) 'Book A; Book B'
-
 Failure → citeproc test test-suite sort_DateVariableMixedElementsDescendingB.txt
 Passed in:
-(string) 'Book ABook B'
+(string) 'Book A; Book B'
 Expected:
 (string) 'Book B; Book A'
 
 Failure → citeproc test test-suite sort_DateVariableRange.txt
 Passed in:
-(string) 'Book ABook B'
+(string) 'Book A; Book B'
 Expected:
 (string) 'Book B; Book A'
 
 Failure → citeproc test test-suite sort_DateVariableRangeMixed.txt
 Passed in:
-(string) 'Book ABook B'
+(string) 'Book A; Book B'
 Expected:
 (string) 'Book B; Book A'
 
 Failure → citeproc test test-suite sort_LocalizedDateLimitedParts.txt
 Passed in:
-(string) 'Book ABook CBook DBook B'
+(string) 'Book A; Book C; Book D; Book B'
 Expected:
 (string) 'Book D; Book A; Book B; Book C'
 
@@ -288,7 +296,11 @@ Expected:
 
 Failure → citeproc test test-suite textcase_CapitalsUntouched.txt
 Passed in:
-(string) 'UKReview of Book by A.N. AuthorWritings on UK people and placesAll for one. For all.OC 1'
+(string) 'UK
+Review of Book by A.N. Author
+Writings on UK people and places
+All for one. For all.
+OC 1'
 Expected:
 (string) 'UK
 Review of Book by A.N. Author
@@ -344,7 +356,7 @@ Expected:
 
 Failure → citeproc test test-suite textcase_SkipNameParticlesInTitleCase.txt
 Passed in:
-(string) 'John von Doe: an about up lifeJohn van Doe? a lifeJohn d’Doe! a lifeJohn de Doe a life'
+(string) 'John von Doe: an about up life; John van Doe? a life; John d’Doe! a life; John de Doe a life'
 Expected:
 (string) 'John von Doe: An about up Life; John van Doe? A Life; John d’Doe! A Life; John de Doe a Life'
 
@@ -414,6 +426,12 @@ Passed in:
 Expected:
 (string) 'Closing the Scientist–Practitioner Gap: Studies from 2016 with Significant Practical Utility'
 
+Failure → citeproc test test-suite textcase_UppercaseNumber.txt
+Passed in:
+(string) '23'
+Expected:
+(string) 'XXIII'
+
 Error → citeproc test test-suite affix_InterveningEmpty.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
@@ -448,7 +466,7 @@ Error → citeproc test test-suite bugreports_ArabicLocale.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite bugreports_AsaSpacing.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite bugreports_AsmJournals.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -484,7 +502,7 @@ Error → citeproc test test-suite bugreports_CollapseFailure.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite bugreports_ContainerTitleShort.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite bugreports_ContentPunctuationDuplicate1.txt
 ./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
@@ -550,7 +568,7 @@ Error → citeproc test test-suite bugreports_LabelsOutOfPlace.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite bugreports_LegislationCrash.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite bugreports_MatchedAuthorAndDate.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -571,10 +589,10 @@ Error → citeproc test test-suite bugreports_NoTitle.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite bugreports_NumberAffixEscape.txt
-./citeproc/citeproc-node-number.lua:50: attempt to index a nil value (global 'Rendered')
+./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite bugreports_NumberInMacroWithVerticalAlign.txt
-./citeproc/citeproc-node-number.lua:50: attempt to index a nil value (global 'Rendered')
+./citeproc/citeproc-ir-node.lua:61: attempt to index a nil value (local 'format')
 
 Error → citeproc test test-suite bugreports_OldMhraDisambiguationFailure.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -592,7 +610,7 @@ Error → citeproc test test-suite bugreports_SelfLink.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite bugreports_SimpleBib.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite bugreports_SingleQuote.txt
 ./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
@@ -640,7 +658,7 @@ Error → citeproc test test-suite bugreports_UndefinedStr.txt
 ./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite bugreports_UnisaHarvardInitialization.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite bugreports_YearSuffixInHarvard1.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -661,7 +679,7 @@ Error → citeproc test test-suite bugreports_parenthesis.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite bugreports_parseName.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite bugreports_undefinedCrash.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -694,7 +712,7 @@ Error → citeproc test test-suite collapse_CitationNumberRangesMixed3.txt
 ./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite collapse_CitationNumberRangesOneOnly.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite collapse_CitationNumberRangesWithAffixes.txt
 ./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
@@ -1009,7 +1027,7 @@ Error → citeproc test test-suite date_OtherWithDate.txt
 ./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite date_RangeDelimiter.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite date_SeasonRange1.txt
 ./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
@@ -1072,7 +1090,7 @@ Error → citeproc test test-suite decorations_AndTermUnaffectedByNameDecoration
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite decorations_Baseline.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite decorations_NestedQuotesInnerReverse.txt
 ./citeproc/citeproc-output.lua:490: attempt to call a nil value (method 'write_formatted')
@@ -1300,7 +1318,7 @@ Error → citeproc test test-suite display_AuthorAsHeading.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite display_DisplayBlock.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite display_LostSuffix.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -1321,7 +1339,7 @@ Error → citeproc test test-suite etal_ShortFormOfName.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite etal_UseZeroFirst.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite flipflop_Apostrophes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -1336,10 +1354,10 @@ Error → citeproc test test-suite flipflop_ItalicsSimple.txt
 ./citeproc/citeproc-output.lua:490: attempt to call a nil value (method 'write_formatted')
 
 Error → citeproc test test-suite flipflop_ItalicsWithOk.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite flipflop_ItalicsWithOkAndTextcase.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite flipflop_LeadingMarkupWithApostrophe.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -1348,7 +1366,7 @@ Error → citeproc test test-suite flipflop_LongComplexPrefix.txt
 ./citeproc/citeproc-output.lua:490: attempt to call a nil value (method 'write_formatted')
 
 Error → citeproc test test-suite flipflop_NumericField.txt
-./citeproc/citeproc-node-number.lua:50: attempt to index a nil value (global 'Rendered')
+./citeproc/citeproc-output.lua:490: attempt to call a nil value (method 'write_formatted')
 
 Error → citeproc test test-suite flipflop_QuotesNodeLevelMarkup.txt
 ./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
@@ -1531,10 +1549,10 @@ Error → citeproc test test-suite magic_CitationLabelInCitation.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite magic_EntrySpacingDouble.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite magic_HangingIndent.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite magic_ImplicitYearSuffixDelimiter.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -1543,10 +1561,10 @@ Error → citeproc test test-suite magic_ImplicitYearSuffixExplicitDelimiter.txt
 ./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite magic_LineSpacingDouble.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite magic_LineSpacingTripleStretch.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite magic_NameParticle.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -1576,7 +1594,7 @@ Error → citeproc test test-suite magic_PunctuationInQuoteSuffixTrue.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite magic_SecondFieldAlign.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite magic_StripPeriodsExcludeAffixes.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -1837,10 +1855,10 @@ Error → citeproc test test-suite name_ParticleCaps1.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite name_ParticleCaps2.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite name_ParticleCaps3.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite name_ParticleFormatting.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -1867,7 +1885,7 @@ Error → citeproc test test-suite name_SplitInitials.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite name_SubsequentAuthorSubstituteMultipleNames.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite name_SubsequentAuthorSubstituteSingleField.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -1903,7 +1921,7 @@ Error → citeproc test test-suite name_SubstituteOnNumberGroupSpanFail.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite name_SubstitutePartialEach.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite name_TwoRolesSameRenderingSeparateRoleLabels.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -1936,7 +1954,7 @@ Error → citeproc test test-suite name_namepartAffixesNameAsSortOrderDemoteNonD
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_AndOnBibliographyInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_AndOnBibliographyInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -1948,19 +1966,19 @@ Error → citeproc test test-suite nameattr_AndOnCitationInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_AndOnNamesInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_AndOnNamesInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_AndOnStyleInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_AndOnStyleInCitation.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_DelimiterPrecedesEtAlOnBibliographyInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_DelimiterPrecedesEtAlOnBibliographyInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -1972,19 +1990,19 @@ Error → citeproc test test-suite nameattr_DelimiterPrecedesEtAlOnCitationInCit
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_DelimiterPrecedesEtAlOnNamesInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_DelimiterPrecedesEtAlOnNamesInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_DelimiterPrecedesEtAlOnStyleInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_DelimiterPrecedesEtAlOnStyleInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_DelimiterPrecedesLastOnBibliographyInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_DelimiterPrecedesLastOnBibliographyInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -1996,19 +2014,19 @@ Error → citeproc test test-suite nameattr_DelimiterPrecedesLastOnCitationInCit
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_DelimiterPrecedesLastOnNamesInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_DelimiterPrecedesLastOnNamesInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_DelimiterPrecedesLastOnStyleInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_DelimiterPrecedesLastOnStyleInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_EtAlMinOnBibliographyInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_EtAlMinOnBibliographyInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -2020,19 +2038,19 @@ Error → citeproc test test-suite nameattr_EtAlMinOnCitationInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_EtAlMinOnNamesInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_EtAlMinOnNamesInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_EtAlMinOnStyleInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_EtAlMinOnStyleInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_EtAlSubsequentMinOnBibliographyInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_EtAlSubsequentMinOnBibliographyInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -2041,13 +2059,13 @@ Error → citeproc test test-suite nameattr_EtAlSubsequentMinOnCitationInBibliog
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_EtAlSubsequentMinOnNamesInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_EtAlSubsequentMinOnStyleInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_EtAlSubsequentUseFirstOnBibliographyInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_EtAlSubsequentUseFirstOnBibliographyInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -2056,10 +2074,10 @@ Error → citeproc test test-suite nameattr_EtAlSubsequentUseFirstOnCitationInBi
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_EtAlSubsequentUseFirstOnStyleInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_EtAlUseFirstOnBibliographyInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_EtAlUseFirstOnBibliographyInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -2071,19 +2089,19 @@ Error → citeproc test test-suite nameattr_EtAlUseFirstOnCitationInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_EtAlUseFirstOnNamesInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_EtAlUseFirstOnNamesInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_EtAlUseFirstOnStyleInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_EtAlUseFirstOnStyleInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_InitializeWithOnBibliographyInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_InitializeWithOnBibliographyInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -2095,19 +2113,19 @@ Error → citeproc test test-suite nameattr_InitializeWithOnCitationInCitation.t
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_InitializeWithOnNamesInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_InitializeWithOnNamesInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_InitializeWithOnStyleInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_InitializeWithOnStyleInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_NameAsSortOrderOnBibliographyInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_NameAsSortOrderOnBibliographyInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -2119,19 +2137,19 @@ Error → citeproc test test-suite nameattr_NameAsSortOrderOnCitationInCitation.
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_NameAsSortOrderOnNamesInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_NameAsSortOrderOnNamesInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_NameAsSortOrderOnStyleInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_NameAsSortOrderOnStyleInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_NameDelimiterOnBibliographyInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_NameDelimiterOnBibliographyInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -2143,19 +2161,19 @@ Error → citeproc test test-suite nameattr_NameDelimiterOnCitationInCitation.tx
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_NameDelimiterOnNamesInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_NameDelimiterOnNamesInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_NameDelimiterOnStyleInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_NameDelimiterOnStyleInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_NameFormOnBibliographyInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_NameFormOnBibliographyInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -2167,19 +2185,19 @@ Error → citeproc test test-suite nameattr_NameFormOnCitationInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_NameFormOnNamesInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_NameFormOnNamesInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_NameFormOnStyleInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_NameFormOnStyleInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_NamesDelimiterOnBibliographyInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_NamesDelimiterOnBibliographyInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -2191,19 +2209,19 @@ Error → citeproc test test-suite nameattr_NamesDelimiterOnCitationInCitation.t
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_NamesDelimiterOnNamesInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_NamesDelimiterOnNamesInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_NamesDelimiterOnStyleInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_NamesDelimiterOnStyleInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_SortSeparatorOnBibliographyInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_SortSeparatorOnBibliographyInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -2215,13 +2233,13 @@ Error → citeproc test test-suite nameattr_SortSeparatorOnCitationInCitation.tx
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_SortSeparatorOnNamesInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_SortSeparatorOnNamesInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite nameattr_SortSeparatorOnStyleInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite nameattr_SortSeparatorOnStyleInCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -2245,7 +2263,7 @@ Error → citeproc test test-suite nameorder_ShortNameAsSortDemoteNever.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite number_FailingDelimiters.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite number_IsNumericWithAlpha.txt
 ./citeproc/citeproc-ir-node.lua:61: attempt to index a nil value (local 'format')
@@ -2256,17 +2274,14 @@ Error → citeproc test test-suite number_LeadingZeros.txt
 Error → citeproc test test-suite number_LimitOrdinalsToDayOne.txt
 ./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
-Error → citeproc test test-suite number_MixedText.txt
-./citeproc/citeproc-node-number.lua:50: attempt to index a nil value (global 'Rendered')
-
 Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite number_NewOrdinalsWithGenderChange.txt
-./citeproc/citeproc-node-number.lua:50: attempt to index a nil value (global 'Rendered')
+./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite number_OrdinalSpacing.txt
-./citeproc/citeproc-node-number.lua:50: attempt to index a nil value (global 'Rendered')
+./citeproc/citeproc-ir-node.lua:61: attempt to index a nil value (local 'format')
 
 Error → citeproc test test-suite number_PageFirst.txt
 ./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
@@ -2278,16 +2293,7 @@ Error → citeproc test test-suite number_PreserveDelimiter.txt
 ./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
 
 Error → citeproc test test-suite number_SeparateOrdinalNamespaces.txt
-./citeproc/citeproc-node-number.lua:50: attempt to index a nil value (global 'Rendered')
-
-Error → citeproc test test-suite number_SimpleNumberOrdinalLong.txt
-./citeproc/citeproc-node-number.lua:50: attempt to index a nil value (global 'Rendered')
-
-Error → citeproc test test-suite number_SimpleNumberOrdinalShort.txt
-./citeproc/citeproc-node-number.lua:50: attempt to index a nil value (global 'Rendered')
-
-Error → citeproc test test-suite number_SimpleNumberRoman.txt
-./citeproc/citeproc-node-number.lua:50: attempt to index a nil value (global 'Rendered')
+./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
 
 Error → citeproc test test-suite number_SpacesMakeIsNumericFalse.txt
 ./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
@@ -2314,7 +2320,7 @@ Error → citeproc test test-suite plural_NameLabelNever.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite position_FalseInBibliography.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite position_FirstTrueOnlyOnce.txt
 ./citeproc/citeproc-element.lua:333: attempt to call a nil value (method 'get_locales')
@@ -2368,13 +2374,13 @@ Error → citeproc test test-suite punctuation_DefaultYearSuffixDelimiter.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite punctuation_DelimiterWithStripPeriodsAndSubstitute1.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite punctuation_DelimiterWithStripPeriodsAndSubstitute2.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite punctuation_DelimiterWithStripPeriodsAndSubstitute3.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite punctuation_FieldDuplicates.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -2404,13 +2410,13 @@ Error → citeproc test test-suite punctuation_SuppressPrefixPeriodForDelimiterS
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite quotes_Punctuation.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite quotes_PunctuationNasty.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite quotes_PunctuationWithInnerQuote.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite quotes_QuotesUnderQuotesFalse.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2611,7 +2617,7 @@ Error → citeproc test test-suite substitute_SubstituteOnlyOnceVariable.txt
 ./citeproc/citeproc-util.lua:102: Invalid string.
 
 Error → citeproc test test-suite substitute_SuppressOrdinaryVariable.txt
-./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite testers_FirstAutoGeneratedZoteroPluginTest.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2630,9 +2636,6 @@ Error → citeproc test test-suite textcase_RepeatedTitleBug.txt
 
 Error → citeproc test test-suite textcase_Uppercase.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
-
-Error → citeproc test test-suite textcase_UppercaseNumber.txt
-./citeproc/citeproc-node-number.lua:50: attempt to index a nil value (global 'Rendered')
 
 Error → citeproc test test-suite variables_ContainerTitleShort.txt
 ./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')

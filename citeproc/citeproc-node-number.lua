@@ -7,7 +7,9 @@
 local number_module = {}
 
 local Element = require("citeproc-element").Element
-local IrNode = require("citeproc-richtext").IrNode
+
+local Rendered = require("citeproc-ir-node").Rendered
+
 local util = require("citeproc-util")
 
 
