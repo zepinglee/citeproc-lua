@@ -12,10 +12,10 @@ end
 
 require("busted.runner")()
 
-local InlineElement = require("citeproc-formats").InlineElement
-local PlainText = require("citeproc-formats").PlainText
-local Formatted = require("citeproc-formats").Formatted
-local Quoted = require("citeproc-formats").Quoted
+local InlineElement = require("citeproc-output").InlineElement
+local PlainText = require("citeproc-output").PlainText
+local Formatted = require("citeproc-output").Formatted
+local Quoted = require("citeproc-output").Quoted
 local util = require("citeproc-util")
 
 
@@ -50,8 +50,21 @@ describe("Oputput", function()
       Quoted:new({PlainText:new("quote")}),
       PlainText:new(", "),
     })
-
     assert.same(expected, el)
+  end)
+
+  it("french apostrophe", function()
+    local str = "Life's 'Little' Surprises"
+    local el = InlineElement:parse(str)
+    assert.truthy(el)
+    util.debug(el)
+
+    -- local expected = InlineElement:new({
+    --   Quoted:new({PlainText:new("quote")}),
+    --   PlainText:new(", "),
+    -- })
+
+    -- assert.same(expected, el)
   end)
 
 end)

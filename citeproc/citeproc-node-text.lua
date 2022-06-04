@@ -7,7 +7,12 @@
 local text_module = {}
 
 local Element = require("citeproc-element").Element
+
 local IrNode = require("citeproc-ir-node").IrNode
+local Rendered = require("citeproc-ir-node").Rendered
+
+local InlineElement = require("citeproc-output").InlineElement
+
 local richtext = require("citeproc-richtext")
 local util = require("citeproc-util")
 
@@ -90,7 +95,7 @@ function Text:build_variable_ir(engine, state, context)
   value = self:apply_strip_periods(value)
   value = self:apply_text_case(value)
 
-  local ir = IrNode:new("text", value)
+  local ir = Rendered:new("text", value)
   return ir
 end
 

@@ -16,8 +16,8 @@ local Locale = require("citeproc-node-locale").Locale
 local Context = require("citeproc-context").Context
 local IrState = require("citeproc-context").IrState
 local formats = require("citeproc-formats")
-local OutputFormat = require("citeproc-formats").OutputFormat
-local InlineElement = require("citeproc-formats").InlineElement
+local OutputFormat = require("citeproc-output").OutputFormat
+local InlineElement = require("citeproc-output").InlineElement
 local util = require("citeproc-util")
 
 
@@ -90,6 +90,8 @@ function CiteProc:build_cluster(citation_items)
     local ir = self.style_element.citation:build_ir(self, state, context)
     table.insert(irs, ir)
   end
+
+  util.debug(irs)
 
   -- TODO: disambiguation
 

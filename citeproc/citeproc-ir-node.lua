@@ -89,13 +89,13 @@ end
 
 
 
-local TextIr = IrNode:derive("TextIr")
+local Rendered = IrNode:derive("Rendered")
 local NameIr = IrNode:derive("NameIr")
 local SeqIr = IrNode:derive("SeqIr")
 
 
 irnode.IrNode = IrNode
-irnode.TextIr = TextIr
+irnode.Rendered = Rendered
 irnode.NameIr = NameIr
 irnode.SeqIr = SeqIr
 
