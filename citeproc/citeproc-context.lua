@@ -95,8 +95,10 @@ function Context:get_number(name)
     return self.bib_number
   elseif name == "first-reference-note-number" then
     return self.cite.first_reference_note_number
-  elseif name == "page" then
-    return self.page_first(self.page)
+  elseif name == "page-first" then
+    return self.page_first(self.reference.page)
+  else
+    return self.reference[name]
   end
 end
 

@@ -74,23 +74,24 @@ function Text:build_ir(engine, state, context)
 end
 
 function Text:build_variable_ir(engine, state, context)
-  local value = context:get_variable(self.variable, self.form)
+  local text = context:get_variable(self.variable, self.form)
 
-  if not value then
+  if not text then
     local ir = Rendered:new()
     ir.group_var = "missing"
     return ir
   end
 
-  if type(value) == "number" then
-    value = tostring(value)
+  if type(text) == "number" then
+    text = tostring(text)
   end
-  -- if self.name == "page" or self.name == "locator" then
-  --   value = util.lstrip(value)
-  --   value = self:_format_page(value, context)
-  -- end
 
-  local inlines = self:render_text_inlines(value, context)
+  if self.variable == "page" or self.variable == "locator" then
+    text = util.strip(text)
+    text = self:_format_page(text, context)
+  end
+
+  local inlines = self:render_text_inlines(text, context)
   return Rendered:new(inlines)
 end
 
@@ -207,10 +208,10 @@ end
 function Text:_format_page (page, context)
   local res = nil
 
-  local page_range_delimiter = self:get_term("page-range-delimiter"):render(context) or util.unicode["en dash"]
-  local page_range_format = context.options["page-range-format"]
+  local page_range_delimiter = context:get_simple_term("page-range-delimiter") or util.unicode["en dash"]
+  local page_range_format = context.style.page_range_format
   if page_range_format == "chicago" then
-    if self:get_style():get_version() >= "1.1" then
+    if self.style.version >= "1.1" then
       page_range_format = "chicago-16"
     else
       page_range_format = "chicago-15"
