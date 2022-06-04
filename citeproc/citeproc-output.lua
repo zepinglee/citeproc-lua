@@ -451,14 +451,19 @@ function OutputFormat:with_display(nodes, display)
   end
 end
 
-function OutputFormat:output(flattened_inlines)
+function OutputFormat:output(inlines, punctuation_in_quote)
   -- TODO: flip-flop
   -- inlines = self:flip_flop_inlines(inlines)
 
-  -- TODO: move punctuation
-  -- inlines = self:move_punctuation(inlines)
+  if punctuation_in_quote then
+    self:move_punctuation(inlines)
+  end
 
-  return self:write_inlines(flattened_inlines)
+  return self:write_inlines(inlines)
+end
+
+function OutputFormat:move_punctuation(inlines)
+  -- TODO
 end
 
 function OutputFormat:write_inlines(inlines)

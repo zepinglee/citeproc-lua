@@ -11,6 +11,8 @@ skipped_fixtures = [
     'bugreports_TitleCase.txt',
     'locale_TitleCaseEmptyLangEmptyLocale.txt',
     'locale_TitleCaseGarbageLangEmptyLocale.txt',
+    'magic_StripPeriodsFalse.txt',
+    'magic_StripPeriodsTrue.txt',
 ]
 
 with open('./test/citeproc-test.log') as f:
@@ -36,6 +38,7 @@ paths = sorted(['./test/test-suite/processor-tests/humans/' + f
                 and not f.startswith('decorations_')
                 and not f.startswith('disambiguate_')
                 and not f.startswith('flipflop_')
+                and not f.startswith('name_')
                 ])
 
 for path in paths:

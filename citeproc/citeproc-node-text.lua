@@ -211,7 +211,7 @@ function Text:_format_page (page, context)
   local page_range_delimiter = context:get_simple_term("page-range-delimiter") or util.unicode["en dash"]
   local page_range_format = context.style.page_range_format
   if page_range_format == "chicago" then
-    if self.style.version >= "1.1" then
+    if context.style.version >= "1.1" then
       page_range_format = "chicago-16"
     else
       page_range_format = "chicago-15"

@@ -48,6 +48,9 @@ function Style:from_node(node)
   o:set_attribute(node, "default-locale")
   o:set_attribute(node, "version")
 
+  o:set_attribute(node, "initialize-with-hyphen")
+  o:set_attribute(node, "page-range-format")
+
   o.macros = {}
   o.locales = {}
 

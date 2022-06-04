@@ -22,8 +22,8 @@ name                 0       0     111       0
 nameattr             0       0      97       0
 nameorder            0       0       6       0
 namespaces           1       0       0       0
-number               3       1      16       0
-page                 4       5       0       0
+number               4       0      16       0
+page                 9       0       0       0
 plural               0       0       7       0
 position             0       0      16       0
 punctuation          1       1      14       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            1       0       4       0
 virtual              0       0       1       0
 -------------- ------- ------- ------- -------
-(all)               43      66     745       0
+(all)               49      60     745       0
 
 Failure → citeproc test test-suite affix_MovingPunctuation.txt
 Passed in:
@@ -201,132 +201,6 @@ Passed in:
 (string) '“An Article”, Am LJ'
 Expected:
 (string) '“An Article,” Am LJ.'
-
-Failure → citeproc test test-suite number_MixedPageRange.txt
-Passed in:
-(string) '142–145 &#38; 235'
-Expected:
-(string) '142–45 &#38; 235'
-
-Failure → citeproc test test-suite page_Chicago.txt
-Passed in:
-(string) 'Example A, at 101–108
-Example B, at 3–10
-Example C, at 71–72
-Example D, at 96–117
-Example E, at 100–4
-Example F, at 600–13
-Example G, at 1100–23
-Example H, at 107–108
-Example I, at 505–17
-Example J, at 1002–1006
-Example K, at 321–325
-Example L, at 415–532
-Example M, at 1536–538
-Example N, at 11564–11568
-Example O, at 11564–11578
-Example P, at 13792–13803
-Example Q, at 1496–504
-Example R, at 2787–816'
-Expected:
-(string) 'Example A, at 101–8
-Example B, at 3–10
-Example C, at 71–72
-Example D, at 96–117
-Example E, at 100–104
-Example F, at 600–613
-Example G, at 1100–1123
-Example H, at 107–8
-Example I, at 505–17
-Example J, at 1002–6
-Example K, at 321–25
-Example L, at 415–532
-Example M, at 1536–38
-Example N, at 11564–68
-Example O, at 11564–78
-Example P, at 13792–803
-Example Q, at 1496–1504
-Example R, at 2787–2816'
-
-Failure → citeproc test test-suite page_ChicagoWeird.txt
-Passed in:
-(string) 'Example S, at 8n11564–8n1568
-Example T, at n11564–n1568
-Example U, at n11564-1568'
-Expected:
-(string) 'Example S, at 8n11564–68
-Example T, at n11564–68
-Example U, at n11564-1568'
-
-Failure → citeproc test test-suite page_Expand.txt
-Passed in:
-(string) 'Example: minimal, at 110–5
-Example: prefix on first number only, at N110-5
-Example: same prefix on both numbers, at N110–N5
-Example: prefix on last number only, at 110-N6
-Example: different prefixes on both numbers, at N110-P5
-Example: leading number before prefix, at 123N110-N5
-Example: multiple ranges, at 123N110-N5, 456K200-99
-Example: first less than second, at 123N110-N5, 000c23-22'
-Expected:
-(string) 'Example: minimal, at 110–115
-Example: prefix on first number only, at N110-5
-Example: same prefix on both numbers, at N110–N115
-Example: prefix on last number only, at 110-N6
-Example: different prefixes on both numbers, at N110-P5
-Example: leading number before prefix, at 123N110-N5
-Example: multiple ranges, at 123N110-N5, 456K200-99
-Example: first less than second, at 123N110-N5, 000c23-22'
-
-Failure → citeproc test test-suite page_Minimal.txt
-Passed in:
-(string) 'Example A, at 101–108
-Example B, at 3–10
-Example C, at 71–72
-Example D, at 96–117
-Example E, at 100–4
-Example F, at 600–13
-Example G, at 1100–23
-Example H, at 107–108
-Example I, at 505–17
-Example J, at 1002–1006
-Example K, at 321–325
-Example L, at 415–532
-Example M, at 1536–538
-Example N, at 11564–11568
-Example O, at 11564–11578
-Example P, at 13792–13803
-Example Q, at 1496–504
-Example R, at 2787–816
-Example S, at n11564–n1568
-Example T, at n11564-1568'
-Expected:
-(string) 'Example A, at 101–8
-Example B, at 3–10
-Example C, at 71–2
-Example D, at 96–117
-Example E, at 100–4
-Example F, at 600–13
-Example G, at 1100–23
-Example H, at 107–8
-Example I, at 505–17
-Example J, at 1002–6
-Example K, at 321–5
-Example L, at 415–532
-Example M, at 1536–8
-Example N, at 11564–8
-Example O, at 11564–78
-Example P, at 13792–803
-Example Q, at 1496–504
-Example R, at 2787–816
-Example S, at n11564–8
-Example T, at n11564-1568'
-
-Failure → citeproc test test-suite page_WithLocaleAndWeirdDelimiter.txt
-Passed in:
-(string) '253‑257'
-Expected:
-(string) '253‑57'
 
 Failure → citeproc test test-suite punctuation_FrenchOrthography.txt
 Passed in:
@@ -556,7 +430,7 @@ Error → citeproc test test-suite affix_WithCommas.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite affix_WordProcessorAffixNoSpace.txt
-./citeproc/citeproc-output.lua:485: attempt to call a nil value (method 'write_formatted')
+./citeproc/citeproc-output.lua:490: attempt to call a nil value (method 'write_formatted')
 
 Error → citeproc test test-suite bugreports_Abnt.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -1201,13 +1075,13 @@ Error → citeproc test test-suite decorations_Baseline.txt
 ./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite decorations_NestedQuotesInnerReverse.txt
-./citeproc/citeproc-output.lua:485: attempt to call a nil value (method 'write_formatted')
+./citeproc/citeproc-output.lua:490: attempt to call a nil value (method 'write_formatted')
 
 Error → citeproc test test-suite decorations_NoNormalWithoutDecoration.txt
 ./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
 
 Error → citeproc test test-suite decorations_SimpleFlipFlop.txt
-./citeproc/citeproc-output.lua:485: attempt to call a nil value (method 'write_formatted')
+./citeproc/citeproc-output.lua:490: attempt to call a nil value (method 'write_formatted')
 
 Error → citeproc test test-suite disambiguate_AddNamesFailure.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -1453,13 +1327,13 @@ Error → citeproc test test-suite flipflop_Apostrophes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite flipflop_CompleteCiteInPrefix.txt
-./citeproc/citeproc-output.lua:485: attempt to call a nil value (method 'write_formatted')
+./citeproc/citeproc-output.lua:490: attempt to call a nil value (method 'write_formatted')
 
 Error → citeproc test test-suite flipflop_ItalicsFlipped.txt
-./citeproc/citeproc-output.lua:485: attempt to call a nil value (method 'write_formatted')
+./citeproc/citeproc-output.lua:490: attempt to call a nil value (method 'write_formatted')
 
 Error → citeproc test test-suite flipflop_ItalicsSimple.txt
-./citeproc/citeproc-output.lua:485: attempt to call a nil value (method 'write_formatted')
+./citeproc/citeproc-output.lua:490: attempt to call a nil value (method 'write_formatted')
 
 Error → citeproc test test-suite flipflop_ItalicsWithOk.txt
 ./citeproc/citeproc-engine.lua:364: attempt to index a nil value (field 'bibliography')
@@ -1471,7 +1345,7 @@ Error → citeproc test test-suite flipflop_LeadingMarkupWithApostrophe.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite flipflop_LongComplexPrefix.txt
-./citeproc/citeproc-output.lua:485: attempt to call a nil value (method 'write_formatted')
+./citeproc/citeproc-output.lua:490: attempt to call a nil value (method 'write_formatted')
 
 Error → citeproc test test-suite flipflop_NumericField.txt
 ./citeproc/citeproc-node-number.lua:50: attempt to index a nil value (global 'Rendered')
@@ -1480,7 +1354,7 @@ Error → citeproc test test-suite flipflop_QuotesNodeLevelMarkup.txt
 ./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite flipflop_SingleQuotesOnItalics.txt
-./citeproc/citeproc-output.lua:485: attempt to call a nil value (method 'write_formatted')
+./citeproc/citeproc-output.lua:490: attempt to call a nil value (method 'write_formatted')
 
 Error → citeproc test test-suite flipflop_SmallCaps.txt
 ./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
@@ -2746,7 +2620,7 @@ Error → citeproc test test-suite testers_SecondAutoGeneratedZoteroPluginTest.t
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite textcase_ImplicitNocase.txt
-./citeproc/citeproc-output.lua:485: attempt to call a nil value (method 'write_formatted')
+./citeproc/citeproc-output.lua:490: attempt to call a nil value (method 'write_formatted')
 
 Error → citeproc test test-suite textcase_NoSpaceBeforeApostrophe.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
