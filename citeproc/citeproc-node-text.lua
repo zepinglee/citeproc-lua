@@ -90,7 +90,7 @@ function Text:build_variable_ir(engine, state, context)
   --   value = self:_format_page(value, context)
   -- end
 
-  local inlines = self:render_text_inlines(value, context.format)
+  local inlines = self:render_text_inlines(value, context)
   return Rendered:new(inlines)
 end
 
@@ -108,12 +108,12 @@ end
 
 function Text:build_term_ir(engine, state, context)
   local str = context:get_simple_term(self.term, self.plural, self.form)
-  local inlines = self:render_text_inlines(str, context.format)
+  local inlines = self:render_text_inlines(str, context)
   return Rendered:new(inlines, self)
 end
 
 function Text:build_value_ir(engine, state, context)
-  local inlines = self:render_text_inlines(self.value, context.format)
+  local inlines = self:render_text_inlines(self.value, context)
   return Rendered:new(inlines, self)
 end
 

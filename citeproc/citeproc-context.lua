@@ -6,6 +6,8 @@
 
 local context = {}
 
+local LocalizedQuotes = require("citeproc-output").LocalizedQuotes
+
 local util = require("citeproc-util")
 
 
@@ -109,6 +111,16 @@ end
 function Context:get_simple_term(name, form, plural)
   assert(self.locale)
   return self.locale:get_simple_term(name, plural, form)
+end
+
+function Context:get_localized_quotes()
+  return LocalizedQuotes:new(
+    self:get_simple_term("open-quote"),
+    self:get_simple_term("close-quote"),
+    self:get_simple_term("open-inner-quote"),
+    self:get_simple_term("close-inner-quote")
+  )
+  -- punctuation-in-quote?
 end
 
 function Context.page_first(page)

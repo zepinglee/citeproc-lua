@@ -24,6 +24,7 @@ function LocalizedQuotes:new(outer_open, outer_close, inner_open, inner_close)
     outer_close = outer_close or util.unicode['right double quotation mark'],
     inner_open = inner_open or util.unicode['left single quotation mark'],
     inner_close = inner_close or util.unicode['right single quotation mark'],
+    -- punctuation-in-quote?
   }
   setmetatable(o, self)
   self.__index = self
@@ -425,21 +426,21 @@ function OutputFormat:with_format(inlines, formmatting)
   return self:format_list(inlines, formmatting)
 end
 
-function OutputFormat:affixed_quoted(nodes, prefix, suffix, quotes)
-  if quotes then
-    nodes = self:quoted(nodes, quotes)
+function OutputFormat:affixed_quoted(inlines, affixes, localized_quotes)
+  if localized_quotes then
+    inlines = self:quoted(inlines, localized_quotes)
   end
-  if prefix then
-    table.insert(nodes, 1, prefix)
+  if affixes and affixes.prefix then
+    table.insert(inlines, 1, affixes.prefix)
   end
-  if suffix then
-    table.insert(nodes, suffix)
+  if affixes and affixes.suffix then
+    table.insert(inlines, affixes.suffix)
   end
-  return nodes
+  return inlines
 end
 
-function OutputFormat:quoted(nodes, quotes)
-  return {Quoted:new(nodes, quotes)}
+function OutputFormat:quoted(inlines, localized_quotes)
+  return {Quoted:new(inlines, localized_quotes)}
 end
 
 function OutputFormat:with_display(nodes, display)
@@ -531,6 +532,8 @@ function OutputFormat:write_quoted(element)
   end
 end
 
+
+output_module.LocalizedQuotes = LocalizedQuotes
 
 output_module.InlineElement = InlineElement
 output_module.PlainText = PlainText

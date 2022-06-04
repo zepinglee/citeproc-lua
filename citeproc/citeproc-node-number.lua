@@ -46,7 +46,7 @@ function Number:build_ir(engine, state, context)
 
   -- value = self._format_number(value, self.variable, self.form)
 
-  local inlines = self:render_text_inlines(value, context.format)
+  local inlines = self:render_text_inlines(value, context)
   return Rendered:new(inlines, self)
 end
 

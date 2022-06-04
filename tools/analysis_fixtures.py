@@ -30,7 +30,7 @@ paths = sorted(['./test/test-suite/processor-tests/humans/' + f
                 for f in failed_fixtures if f not in skipped_fixtures
                 # and not f.startswith('bugreports_')
                 and not f.startswith('collapse_')
-                # and not f.startswith('date_')
+                and not f.startswith('date_')
                 and not f.startswith('disambiguate_')
                 and not f.startswith('flipflop_')
                 ])
