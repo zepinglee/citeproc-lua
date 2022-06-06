@@ -65,6 +65,9 @@ function Date:build_ir(engine, state, context)
         end
       end
     end
+    if variable["season"] and not variable["date-parts"][1][2] then
+      variable["date-parts"][1][2] = 20 + tonumber(variable["season"])
+    end
     variable = variable["date-parts"]
     if self.form then
       ir = self:build_localized_date_ir(variable, engine, state, context)

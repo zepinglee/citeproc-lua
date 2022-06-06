@@ -4,7 +4,7 @@ affix                3       2       4       0
 bugreports           7       8      67       0
 collapse             0      10      11       0
 condition            5      11       1       0
-date                76      10      15       0
+date                78       8      15       0
 decorations          1       4       2       0
 disambiguate         0       4      67       0
 display              0       0       5       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              160     150     544       0
+(all)              162     148     544       0
 
 Failure → citeproc test test-suite affix_MovingPunctuation.txt
 Passed in:
@@ -277,18 +277,6 @@ Passed in:
 (string) 'Item 1; Item 2; Item 3; Item 4'
 Expected:
 (string) 'Item 2; Item 4; Item 1; Item 3'
-
-Failure → citeproc test test-suite date_OtherWithDate.txt
-Passed in:
-(string) '(2000)'
-Expected:
-(string) '(Autumn 2000)'
-
-Failure → citeproc test test-suite date_SeasonSubstituteInGroup.txt
-Passed in:
-(string) '()'
-Expected:
-(string) '(Autumn)'
 
 Failure → citeproc test test-suite date_SortEmptyDatesCitation.txt
 Passed in:
@@ -1699,7 +1687,7 @@ Error → citeproc test test-suite date_AccessedCrash.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite date_DayOrdinalDayOneOnly.txt
-./citeproc/citeproc-node-date.lua:499: attempt to call a nil value (method 'get_locale_option')
+./citeproc/citeproc-node-date.lua:502: attempt to call a nil value (method 'get_locale_option')
 
 Error → citeproc test test-suite date_DisappearingBug.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -1711,7 +1699,7 @@ Error → citeproc test test-suite date_KeyVariable.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite date_LiteralFailGracefullyIfNoValue.txt
-./citeproc/citeproc-node-date.lua:85: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-node-date.lua:88: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite date_LopsidedDataYearSuffixCollapse.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -1726,7 +1714,7 @@ Error → citeproc test test-suite date_SortEmptyDatesBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite date_String.txt
-./citeproc/citeproc-node-date.lua:85: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-node-date.lua:88: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite date_YearSuffixDelimiter.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
