@@ -43,6 +43,19 @@ function Date:build_ir(engine, state, context)
     return ir
   end
 
+  for i = 1, 2 do
+    if variable["date-parts"][i] then
+      for j = 1, 3 do
+        local variabel_part = variable["date-parts"][i][j]
+        if variabel_part == 0 or variabel_part == "" then
+          variable["date-parts"][i][j] = nil
+        else
+          variable["date-parts"][i][j] = tonumber(variabel_part)
+        end
+      end
+    end
+  end
+
   if not variable["date-parts"] or #variable["date-parts"] <= 0 then
     return nil
     -- TODO: literal and raw
@@ -100,16 +113,88 @@ function Date:build_localized_date_ir(variable, engine, state, context)
       table.insert(date_parts, date_part)
     end
   end
-  return self:build_date_parts(date_parts, variable[1], engine, state, context)
+  return self:build_date_parts(date_parts, variable, engine, state, context)
 end
 
-function Date:build_date_parts(date_parts, single_date, engine, state, context)
+function Date:build_date_parts(date_parts, variable, engine, state, context)
+  if #variable >= 2 then
+    return self:build_date_range(date_parts, variable, engine, state, context)
+  elseif #variable == 1 then
+    return self:build_single_date(date_parts, variable[1], engine, state, context)
+  end
+end
+
+function Date:build_single_date(date_parts, single_date, engine, state, context)
   local irs = {}
   for _, date_part in ipairs(date_parts) do
     local ir = date_part:build_ir(single_date, engine, state, context)
     table.insert(irs, ir)
   end
   return SeqIr:new(irs)
+end
+
+local date_part_index = {
+  year = 1,
+  month = 2,
+  day = 3,
+}
+
+function Date:build_date_range(date_parts, variable, engine, state, context)
+  local first, second = variable[1], variable[2]
+  local diff_level = 4
+  for i, date_part in ipairs(date_parts) do
+    local part_index = date_part_index[date_part.name]
+    if first[part_index] and first[part_index] ~= second[part_index] then
+      if part_index < diff_level then
+        diff_level = part_index
+      end
+    end
+  end
+  local irs = {}
+  local range_part_queue = {}
+  local range_delimiter
+  for _, date_part in ipairs(date_parts) do
+    local part_index = date_part_index[date_part.name]
+    if part_index == diff_level then
+      range_delimiter = date_part.range_delimiter or util.unicode["en dash"]
+    end
+    if part_index >= diff_level then
+      table.insert(range_part_queue, date_part)
+    else
+      for _, ir in ipairs(self:build_date_range_irs(range_part_queue, variable,
+          engine, state, context, range_delimiter)) do
+        table.insert(irs, ir)
+      end
+      range_part_queue = {}
+      table.insert(irs, date_part:build_ir(first, engine, state, context))
+    end
+  end
+  for _, ir in ipairs(self:build_date_range_irs(range_part_queue, variable,
+      engine, state, context, range_delimiter)) do
+    table.insert(irs, ir)
+  end
+  return SeqIr:new(irs)
+end
+
+function Date:build_date_range_irs(range_part_queue, variable, engine, state, context, range_delimiter)
+  local first, second = variable[1], variable[2]
+  local irs = {}
+  for i, diff_part in ipairs(range_part_queue) do
+    if i == #diff_part then
+      table.insert(irs, diff_part:build_ir(first, engine, state, context, 'suffix'))
+    else
+      table.insert(irs, diff_part:build_ir(first, engine, state, context))
+    end
+  end
+  table.insert(irs, Rendered:new({PlainText:new(range_delimiter)}))
+  for i, diff_part in ipairs(range_part_queue) do
+    if i == 1 then
+      table.insert(irs, diff_part:build_ir(second, engine, state, context, 'prefix'))
+    else
+      table.insert(irs, diff_part:build_ir(second, engine, state, context))
+    end
+  end
+  return irs
 end
 
 function Date:render (item, context)

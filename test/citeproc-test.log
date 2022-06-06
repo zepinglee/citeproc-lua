@@ -4,7 +4,7 @@ affix                2       2       5       0
 bugreports           1       4      77       0
 collapse             0       0      21       0
 condition            3      11       3       0
-date                19       9      73       0
+date                21       7      73       0
 decorations          1       1       5       0
 disambiguate         0       0      71       0
 display              0       0       5       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            1       1       3       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)               79      87     688       0
+(all)               81      85     688       0
 
 Failure → citeproc test test-suite affix_MovingPunctuation.txt
 Passed in:
@@ -156,12 +156,6 @@ Passed in:
 Expected:
 (string) 'Item 4; Item 2; Item 1; Item 3'
 
-Failure → citeproc test test-suite date_LocalizedNumericYearRange.txt
-Passed in:
-(string) '11/2005'
-Expected:
-(string) '11/2005–12/2006'
-
 Failure → citeproc test test-suite date_LocalizedTextInStyleLocaleWithTextCase.txt
 Passed in:
 (string) 'December 2005'
@@ -186,21 +180,15 @@ Passed in:
 Expected:
 (string) 'Item 2; Item 4; Item 1; Item 3'
 
-Failure → citeproc test test-suite date_SeasonRange1.txt
-Passed in:
-(string) 'Spring 1999'
-Expected:
-(string) 'Spring 1999–Summer 2001'
-
 Failure → citeproc test test-suite date_SeasonRange2.txt
 Passed in:
-(string) 'Summer 1999'
+(string) 'Summer –Spring 1999–'
 Expected:
 (string) 'Summer–Spring 1999'
 
 Failure → citeproc test test-suite date_SeasonRange3.txt
 Passed in:
-(string) 'Spring 1999'
+(string) 'Spring –Summer 1999–'
 Expected:
 (string) 'Spring–Summer 1999'
 
@@ -910,7 +898,7 @@ Error → citeproc test test-suite collapse_YearSuffixImplicitCollapseNoYearSuff
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite condition_MatchAll.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite condition_RefTypeBranching.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -922,16 +910,16 @@ Error → citeproc test test-suite date_AccessedCrash.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite date_DateAD.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite date_DateBC.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite date_DateNoDateNoTest.txt
 ./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite date_DayOrdinalDayOneOnly.txt
-./citeproc/citeproc-node-date.lua:398: attempt to call a nil value (method 'get_locale_option')
+./citeproc/citeproc-node-date.lua:489: attempt to call a nil value (method 'get_locale_option')
 
 Error → citeproc test test-suite date_DisappearingBug.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -1060,19 +1048,19 @@ Error → citeproc test test-suite date_LocalizedDateFormats-zh-TW.txt
 ./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
 
 Error → citeproc test test-suite date_LongMonth.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite date_LopsidedDataYearSuffixCollapse.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite date_NegativeDateSort.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite date_NegativeDateSortViaMacro.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite date_NegativeDateSortViaMacroOnYearMonthOnly.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite date_NonexistentSortReverseBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -1081,49 +1069,49 @@ Error → citeproc test test-suite date_OtherAlone.txt
 ./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite date_OtherWithDate.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite date_RangeDelimiter.txt
 ./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite date_SeasonSubstituteInGroup.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite date_SortEmptyDatesBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite date_SortEmptyDatesCitation.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite date_String.txt
 ./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite date_TextFormFulldateDayRange.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite date_TextFormFulldateMonthRange.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite date_TextFormFulldateYearRange.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite date_TextFormMonthdateMonthRange.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite date_TextFormMonthdateYearRange.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite date_TextFormYeardateYearRange.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite date_TextFormYeardateYearRangeOpen.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite date_Uncertain.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite date_VariousInvalidDates.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite date_YearSuffixDelimiter.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -1264,7 +1252,7 @@ Error → citeproc test test-suite disambiguate_DisambiguateWithThree2.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite disambiguate_DisambiguationHang.txt
-./citeproc/citeproc-node-date.lua:190: attempt to call a nil value (method 'get_locales')
+./citeproc/citeproc-node-date.lua:277: attempt to call a nil value (method 'get_locales')
 
 Error → citeproc test test-suite disambiguate_ExtraTextCitation.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -1447,7 +1435,7 @@ Error → citeproc test test-suite group_ComplexNesting.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite group_LegalWithAuthorDate.txt
-./citeproc/citeproc-node-date.lua:190: attempt to call a nil value (method 'get_locales')
+./citeproc/citeproc-node-date.lua:277: attempt to call a nil value (method 'get_locales')
 
 Error → citeproc test test-suite group_ShortOutputOnly.txt
 ./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
@@ -1456,7 +1444,7 @@ Error → citeproc test test-suite group_SuppressTermInMacro.txt
 ./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
 
 Error → citeproc test test-suite group_SuppressTermWhenNoOutputFromPartialDate.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite group_SuppressValueWithEmptySubgroup.txt
 ./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
@@ -1483,7 +1471,7 @@ Error → citeproc test test-suite integration_DuplicateItem2.txt
 ./citeproc/citeproc-element.lua:333: attempt to call a nil value (method 'get_locales')
 
 Error → citeproc test test-suite integration_FirstReferenceNoteNumberPositionChange.txt
-./citeproc/citeproc-node-date.lua:190: attempt to call a nil value (method 'get_locales')
+./citeproc/citeproc-node-date.lua:277: attempt to call a nil value (method 'get_locales')
 
 Error → citeproc test test-suite integration_IbidOnInsert.txt
 ./citeproc/citeproc-node-label.lua:108: attempt to call a nil value (method 'get_term')
@@ -1492,7 +1480,7 @@ Error → citeproc test test-suite integration_IbidWithDifferentLocators.txt
 ./citeproc/citeproc-node-label.lua:108: attempt to call a nil value (method 'get_term')
 
 Error → citeproc test test-suite integration_SimpleFirstReferenceNoteNumber.txt
-./citeproc/citeproc-node-date.lua:190: attempt to call a nil value (method 'get_locales')
+./citeproc/citeproc-node-date.lua:277: attempt to call a nil value (method 'get_locales')
 
 Error → citeproc test test-suite integration_SimpleIbid.txt
 ./citeproc/citeproc-node-label.lua:108: attempt to call a nil value (method 'get_term')
@@ -1576,7 +1564,7 @@ Error → citeproc test test-suite locator_WithLeadingSpace.txt
 ./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
 
 Error → citeproc test test-suite magic_AllowRepeatDateRenderings.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite magic_CapitalizeFirstOccurringNameParticle.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -1597,7 +1585,7 @@ Error → citeproc test test-suite magic_ImplicitYearSuffixDelimiter.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite magic_ImplicitYearSuffixExplicitDelimiter.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite magic_LineSpacingDouble.txt
 ./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
@@ -1657,7 +1645,7 @@ Error → citeproc test test-suite magic_SuppressDuplicateVariableRendering.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite magic_TermCapitalizationWithPrefix.txt
-./citeproc/citeproc-node-date.lua:190: attempt to call a nil value (method 'get_locales')
+./citeproc/citeproc-node-date.lua:277: attempt to call a nil value (method 'get_locales')
 
 Error → citeproc test test-suite name_AfterInvertedName.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -2386,7 +2374,7 @@ Error → citeproc test test-suite position_ResetNoteNumbers.txt
 ./citeproc/citeproc-element.lua:333: attempt to call a nil value (method 'get_locales')
 
 Error → citeproc test test-suite punctuation_DateStripPeriods.txt
-./citeproc/citeproc-node-date.lua:78: attempt to get length of a nil value (field 'date-parts')
+./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
 Error → citeproc test test-suite punctuation_DefaultYearSuffixDelimiter.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
