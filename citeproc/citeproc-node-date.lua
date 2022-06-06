@@ -30,7 +30,13 @@ function Date:from_node(node)
   o:set_display_attribute(node)
   o:set_text_case_attribute(node)
 
+  o.children = {}
   o:process_children_nodes(node)
+
+  for _, date_part in ipairs(o.children) do
+    o[date_part.name] = date_part
+  end
+
   return o
 end
 
@@ -103,6 +109,11 @@ function Date:build_localized_date_ir(variable, engine, state, context)
   local date_parts = {}
   for _, date_part in ipairs(localized_date.children) do
     if date_part_mask[date_part.name] then
+      date_part = date_part:copy()
+      local local_date_part = self[date_part.name]
+      if local_date_part then
+        local_date_part:override(date_part)
+      end
       table.insert(date_parts, date_part)
     end
   end
@@ -541,6 +552,34 @@ function DatePart:render_year(year, engine, state, context)
     end
   elseif form == "short" then
     return string.sub(tostring(year), -2)
+  end
+end
+
+function DatePart:copy()
+  local o = {}
+  for key, value in pairs(self) do
+    if type(value) == "table" then
+      o[key] = {}
+      for k, v in pairs(value) do
+        o[key][k] = v
+      end
+    else
+      o[key] = value
+    end
+  end
+  setmetatable(o, DatePart)
+  return o
+end
+
+function DatePart:override(localized_date_part)
+  for key, value in pairs(self) do
+    if type(value) == "table" and localized_date_part[key] then
+      for k, v in pairs(value) do
+        localized_date_part[key][k] = v
+      end
+    else
+      localized_date_part[key] = value
+    end
   end
 end
 
