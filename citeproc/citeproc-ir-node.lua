@@ -60,7 +60,7 @@ function IrNode:flatten_seq(format)
 
   local inlines = format:group(inlines_list, self.delimiter, self.formatting)
   -- assert self.quotes == localized quotes
-  inlines = format:affixed_quoted(inlines, self.prefix, self.suffix, self.quotes);
+  inlines = format:affixed_quoted(inlines, self.affixes, self.quotes);
   inlines = format:with_display(inlines, self.display);
   return inlines
 end

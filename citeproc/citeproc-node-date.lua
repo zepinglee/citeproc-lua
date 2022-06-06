@@ -50,11 +50,16 @@ function Date:build_ir(engine, state, context)
 
   variable = variable["date-parts"]
 
+  local ir
   if self.form then
-    return self:build_localized_date_ir(variable, engine, state, context)
+    ir = self:build_localized_date_ir(variable, engine, state, context)
   else
-    return self:build_independent_date_ir(variable, engine, state, context)
+    ir = self:build_independent_date_ir(variable, engine, state, context)
   end
+
+  ir.affixes = self.affixes
+
+  return ir
 end
 
 function Date:build_independent_date_ir(variable, engine, state, context)
@@ -430,7 +435,6 @@ function DatePart:render_month(month, engine, state, context)
   else
     res = tostring(month)
   end
-  util.debug(res)
   return self:apply_strip_periods(res)
 end
 
