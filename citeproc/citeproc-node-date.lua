@@ -158,20 +158,24 @@ function Date:build_date_range(date_parts, variable, engine, state, context)
     if part_index == diff_level then
       range_delimiter = date_part.range_delimiter or util.unicode["en dash"]
     end
-    if part_index >= diff_level then
+    if first[part_index] and part_index >= diff_level then
       table.insert(range_part_queue, date_part)
     else
-      for _, ir in ipairs(self:build_date_range_irs(range_part_queue, variable,
-          engine, state, context, range_delimiter)) do
-        table.insert(irs, ir)
+      if #range_part_queue > 0 then
+        for _, ir in ipairs(self:build_date_range_irs(range_part_queue, variable,
+            engine, state, context, range_delimiter)) do
+          table.insert(irs, ir)
+        end
+        range_part_queue = {}
       end
-      range_part_queue = {}
       table.insert(irs, date_part:build_ir(first, engine, state, context))
     end
   end
-  for _, ir in ipairs(self:build_date_range_irs(range_part_queue, variable,
-      engine, state, context, range_delimiter)) do
-    table.insert(irs, ir)
+  if #range_part_queue > 0 then
+    for _, ir in ipairs(self:build_date_range_irs(range_part_queue, variable,
+        engine, state, context, range_delimiter)) do
+      table.insert(irs, ir)
+    end
   end
   return SeqIr:new(irs)
 end
@@ -180,8 +184,8 @@ function Date:build_date_range_irs(range_part_queue, variable, engine, state, co
   local first, second = variable[1], variable[2]
   local irs = {}
   for i, diff_part in ipairs(range_part_queue) do
-    if i == #diff_part then
-      table.insert(irs, diff_part:build_ir(first, engine, state, context, 'suffix'))
+    if i == #range_part_queue then
+      table.insert(irs, diff_part:build_ir(first, engine, state, context, "suffix"))
     else
       table.insert(irs, diff_part:build_ir(first, engine, state, context))
     end
@@ -189,7 +193,7 @@ function Date:build_date_range_irs(range_part_queue, variable, engine, state, co
   table.insert(irs, Rendered:new({PlainText:new(range_delimiter)}))
   for i, diff_part in ipairs(range_part_queue) do
     if i == 1 then
-      table.insert(irs, diff_part:build_ir(second, engine, state, context, 'prefix'))
+      table.insert(irs, diff_part:build_ir(second, engine, state, context, "prefix"))
     else
       table.insert(irs, diff_part:build_ir(second, engine, state, context))
     end
@@ -322,7 +326,7 @@ function Date:render_sort_key (item, context)
   return res
 end
 
-function Date:_render_single_date (date, context)
+function Date:_render_single_date(date, context)
   local show_parts = self:_get_show_parts(context)
 
   local output = {}
@@ -334,7 +338,7 @@ function Date:_render_single_date (date, context)
   return self:concat(output, context)
 end
 
-function Date:_render_date_range (date, context)
+function Date:_render_date_range(date, context)
   local show_parts = self:_get_show_parts(context)
   local part_index = {}
 
@@ -443,7 +447,7 @@ function DatePart:from_node(node)
   return o
 end
 
-function DatePart:build_ir(single_date, engine, state, context)
+function DatePart:build_ir(single_date, engine, state, context, suppressed_affix)
   local text
   if self.name == "year" then
     text = self:render_year(single_date[1], engine, state, context)
@@ -461,10 +465,10 @@ function DatePart:build_ir(single_date, engine, state, context)
   local inlines = {PlainText:new(text)}
   local output_format = context.format
   inlines = output_format:with_format(inlines, self.formmatting)
-  if self.affixes and self.affixes.prefix then
+  if self.affixes and self.affixes.prefix and suppressed_affix ~= "prefix" then
     table.insert(inlines, 1, PlainText:new(self.affixes.prefix))
   end
-  if self.affixes and self.affixes.suffix then
+  if self.affixes and self.affixes.suffix and suppressed_affix ~= "suffix" then
     table.insert(inlines, PlainText:new(self.affixes.suffix))
   end
   return Rendered:new(inlines)
