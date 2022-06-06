@@ -27,11 +27,13 @@ end
 
 function Group:build_ir(engine, state, context)
 
-  local ir = SeqIr:new(self.element_name)
   if not self.children then
+    -- local ir = SeqIr:new()
     return nil
   end
 
+  local irs = {}
+  local group_var = "plain"
   for _, child_element in ipairs(self.children) do
     local child_ir = child_element:build_ir(engine, state, context)
 
@@ -43,33 +45,38 @@ function Group:build_ir(engine, state, context)
       --      descriptive cs:text and `cs:label` elements.
       local child_group_var = child_ir.group_var
       if child_group_var == "important" then
-        ir.group_var = "important"
+        group_var = "important"
       elseif child_group_var == "missing" then
-        if ir.group_var == "plain" then
-          ir.group_var = "missing"
+        if group_var == "plain" then
+          group_var = "missing"
         end
       end
 
       -- The condition can be simplified
-      if (child_ir.text or child_ir.children) and child_ir.group_var ~= "missing" then
-        table.insert(ir.children, child_ir)
+      if child_ir and child_ir.group_var ~= "missing" then
+        table.insert(irs, child_ir)
       end
     end
   end
 
-  if #ir.children == 0 or ir.group_var == "missing" then
-    ir.children = nil
-    return ir
-  else
-    -- A non-empty nested cs:group is treated as a non-empty variable for the
-    -- puropses of determining suppression of the outer cs:group.
-    ir.group_var = "important"
+  if #irs == 0 or group_var == "missing" then
+    return nil
   end
 
-  ir = self:apply_delimiter(ir)
-  ir = self:apply_formatting(ir)
-  ir = self:apply_affixes(ir)
-  ir = self:apply_display(ir)
+  -- A non-empty nested cs:group is treated as a non-empty variable for the
+  -- puropses of determining suppression of the outer cs:group.
+  local ir = SeqIr:new(irs, self)
+  ir.group_var = "important"
+
+  -- ir = self:apply_delimiter(ir)
+  -- ir = self:apply_formatting(ir)
+  -- ir = self:apply_affixes(ir)
+  -- ir = self:apply_display(ir)
+  ir.delimiter = self.delimiter
+  ir.formattting = self.formattting
+  ir.affixes = self.affixes
+  ir.display = self.display
+
   return ir
 end
 

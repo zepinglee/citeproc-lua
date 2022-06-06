@@ -172,7 +172,7 @@ function Element:build_children_ir(engine, state, context)
       end
     end
   end
-  return SeqIr:new(child_irs)
+  return SeqIr:new(child_irs, self)
 end
 
 function Element:render_text_inlines(str, context)
@@ -187,7 +187,7 @@ function Element:render_text_inlines(str, context)
   end
 
   local inlines = InlineElement:parse(str)
-  inlines = output_format:with_format(inlines, self.formmatting)
+  inlines = output_format:with_format(inlines, self.formatting)
   inlines = output_format:affixed_quoted(inlines, self.affixes, localized_quotes)
   return output_format:with_display(inlines, self.display)
 end

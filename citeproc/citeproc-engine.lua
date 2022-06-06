@@ -110,6 +110,8 @@ function CiteProc:build_cluster(citation_items)
     end
   end
 
+  -- util.debug(irs)
+
   local citation_delimiter = self.style_element.citation.layout.delimiter
   local citation_stream = {}
 

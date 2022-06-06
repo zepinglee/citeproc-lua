@@ -72,10 +72,10 @@ end
 
 local Formatted = InlineElement:derive("Formatted")
 
-function Formatted:new(inlines, formmatting)
+function Formatted:new(inlines, formatting)
   local o = InlineElement.new(self)
   o.inlines = inlines
-  o.formatting = formmatting
+  o.formatting = formatting
   setmetatable(o, self)
   return o
 end
@@ -422,8 +422,8 @@ function OutputFormat:join_many(lists, delimiter)
   return res
 end
 
-function OutputFormat:with_format(inlines, formmatting)
-  return self:format_list(inlines, formmatting)
+function OutputFormat:with_format(inlines, formatting)
+  return self:format_list(inlines, formatting)
 end
 
 function OutputFormat:affixed_quoted(inlines, affixes, localized_quotes)
@@ -526,6 +526,34 @@ function OutputFormat:write_escaped(str)
   end
   return str
 end
+
+function OutputFormat:write_formatted(inline)
+  local res = self:write_children(inline)
+  for key, value in pairs(inline.formatting) do
+    key = "@" .. key .. "/" .. value
+    local format_str = self.html[key]
+    if format_str then
+      res = string.format(format_str, res)
+    end
+  end
+  return res
+end
+
+OutputFormat.html = {
+  ["@font-style/italic"] = "<i>%s</i>",
+  ["@font-style/oblique"] = "<em>%s</em>",
+  ["@font-style/normal"] = '<span style="font-style:normal;">%s</span>',
+  ["@font-variant/small-caps"] = '<span style="font-variant:small-caps;">%s</span>',
+  ["@font-variant/normal"] = '<span style="font-variant:normal;">%s</span>',
+  ["@font-weight/bold"] = "<b>%s</b>",
+  ["@font-weight/normal"] = '<span style="font-weight:normal;">%s</span>',
+  ["@font-weight/light"] = false,
+  ["@text-decoration/none"] = '<span style="text-decoration:none;">%s</span>',
+  ["@text-decoration/underline"] = '<span style="text-decoration:underline;">%s</span>',
+  ["@vertical-align/sup"] = "<sup>%s</sup>",
+  ["@vertical-align/sub"] = "<sub>%s</sub>",
+  ["@vertical-align/baseline"] = '<span style="baseline">%s</span>',
+}
 
 function OutputFormat:write_quoted(inline)
   local res = self:write_children(inline)

@@ -92,7 +92,9 @@ function Text:build_variable_ir(engine, state, context)
   end
 
   local inlines = self:render_text_inlines(text, context)
-  return Rendered:new(inlines, self)
+  local ir = Rendered:new(inlines, self)
+  ir.group_var = "important"
+  return ir
 end
 
 function Text:build_macro_ir(engine, state, context)
