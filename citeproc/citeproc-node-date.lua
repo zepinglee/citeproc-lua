@@ -142,7 +142,7 @@ local date_part_index = {
 function Date:build_date_range(date_parts, variable, engine, state, context)
   local first, second = variable[1], variable[2]
   local diff_level = 4
-  for i, date_part in ipairs(date_parts) do
+  for _, date_part in ipairs(date_parts) do
     local part_index = date_part_index[date_part.name]
     if first[part_index] and first[part_index] ~= second[part_index] then
       if part_index < diff_level then
@@ -158,17 +158,19 @@ function Date:build_date_range(date_parts, variable, engine, state, context)
     if part_index == diff_level then
       range_delimiter = date_part.range_delimiter or util.unicode["en dash"]
     end
-    if first[part_index] and part_index >= diff_level then
-      table.insert(range_part_queue, date_part)
-    else
-      if #range_part_queue > 0 then
-        for _, ir in ipairs(self:build_date_range_irs(range_part_queue, variable,
-            engine, state, context, range_delimiter)) do
-          table.insert(irs, ir)
+    if first[part_index] then
+      if part_index >= diff_level then
+        table.insert(range_part_queue, date_part)
+      else
+        if #range_part_queue > 0 then
+          for _, ir in ipairs(self:build_date_range_irs(range_part_queue, variable,
+              engine, state, context, range_delimiter)) do
+            table.insert(irs, ir)
+          end
+          range_part_queue = {}
         end
-        range_part_queue = {}
+        table.insert(irs, date_part:build_ir(first, engine, state, context))
       end
-      table.insert(irs, date_part:build_ir(first, engine, state, context))
     end
   end
   if #range_part_queue > 0 then
