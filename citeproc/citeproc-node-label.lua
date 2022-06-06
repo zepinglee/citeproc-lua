@@ -8,6 +8,8 @@ local label = {}
 
 local Element = require("citeproc-element").Element
 local IrNode = require("citeproc-ir-node").IrNode
+local Rendered = require("citeproc-ir-node").Rendered
+local PlainText = require("citeproc-output").PlainText
 local util = require("citeproc-util")
 
 
@@ -38,29 +40,37 @@ function Label:build_ir(engine, state, context)
   elseif self.plural == "never" then
     is_plural = false
   elseif self.plural == "contextual" then
-    is_plural = self:_is_variable_plural(self.variable)
+    is_plural = self:_is_variable_plural(self.variable, context)
   end
 
-  local text = context:get_term(self.term, self.form, is_plural)
+  local text = context:get_simple_term(self.variable, self.form, is_plural)
   if not text then
     return nil
   end
 
-  text = self:apply_strip_periods(text)
-  text = self:apply_text_case(text)
-
-  local ir = IrNode:new("label", text)
-  ir = self:apply_formatting(ir)
-  ir = self:apply_affixes(ir)
-  return ir
+  local inlines = self:render_text_inlines(text, context)
+  return Rendered:new(inlines, self)
 end
 
 function Label:_is_variable_plural(variable, context)
-  local value = context:get_variable(self.variable)
+  local value = context:get_variable(variable)
   if not value then
     return false
   end
-  -- TODO
+  local variable_type = util.variable_types[variable]
+  if variable_type == "name" then
+    return #variable > 1
+  elseif variable_type == "number" then
+    if util.startswith(variable, "number-of-") then
+      return tonumber(value) > 1
+    elseif string.match(value, "[,&-]") then
+      return true
+    elseif string.match(value, "%Wand%W") then
+      return true
+    elseif string.match(value, "%Wet%W") then
+      return true
+    end
+  end
   return false
 end
 

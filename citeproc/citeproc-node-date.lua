@@ -192,7 +192,7 @@ function Date:build_date_range_irs(range_part_queue, variable, engine, state, co
       table.insert(irs, diff_part:build_ir(first, engine, state, context))
     end
   end
-  table.insert(irs, Rendered:new({PlainText:new(range_delimiter)}))
+  table.insert(irs, Rendered:new({PlainText:new(range_delimiter)}, self))
   for i, diff_part in ipairs(range_part_queue) do
     if i == 1 then
       table.insert(irs, diff_part:build_ir(second, engine, state, context, "prefix"))
@@ -473,7 +473,7 @@ function DatePart:build_ir(single_date, engine, state, context, suppressed_affix
   if self.affixes and self.affixes.suffix and suppressed_affix ~= "suffix" then
     table.insert(inlines, PlainText:new(self.affixes.suffix))
   end
-  return Rendered:new(inlines)
+  return Rendered:new(inlines, self)
 end
 
 function DatePart:render_day(day, engine, state, context)

@@ -230,48 +230,20 @@ function Term:from_node(node)
 
   o.name = node:get_attribute("name")
   o.form = node:get_attribute("form")
-  if o.children then
-    for _, child in ipairs(node:get_children()) do
-      if child:is_element() then
-        local element_name = child:get_element_name()
-        if element_name == "single" then
-          o.single = child:get_text()
-          o.text = o.single
-        elseif element_name == "multiple" then
-          o.multiple = child:get_text()
-        end
+  o.text = node:get_text()
+  for _, child in ipairs(node:get_children()) do
+    if child:is_element() then
+      local element_name = child:get_element_name()
+      if element_name == "single" then
+        o.single = child:get_text()
+        o.text = o.single
+      elseif element_name == "multiple" then
+        o.multiple = child:get_text()
       end
     end
-  else
-    o.text = node:get_text()
   end
 
   return o
-end
-
-
-function Term:render (context, is_plural)
-  self:debug_info(context)
-  context = self:process_context(context)
-
-  local output = {
-    single = self:get_text(),
-  }
-  for _, child in ipairs(self:get_children()) do
-    if child:is_element() then
-      output[child:get_element_name()] = self:escape(child:get_text())
-    end
-  end
-  local res = output.single
-  if is_plural then
-    if output.multiple then
-      res = output.multiple
-    end
-  end
-  if res == "" then
-    return nil
-  end
-  return res
 end
 
 

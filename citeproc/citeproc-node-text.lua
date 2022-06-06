@@ -92,7 +92,7 @@ function Text:build_variable_ir(engine, state, context)
   end
 
   local inlines = self:render_text_inlines(text, context)
-  return Rendered:new(inlines)
+  return Rendered:new(inlines, self)
 end
 
 function Text:build_macro_ir(engine, state, context)
@@ -110,12 +110,12 @@ end
 function Text:build_term_ir(engine, state, context)
   local str = context:get_simple_term(self.term, self.form, self.plural)
   local inlines = self:render_text_inlines(str, context)
-  return Rendered:new(inlines)
+  return Rendered:new(inlines, self)
 end
 
 function Text:build_value_ir(engine, state, context)
   local inlines = self:render_text_inlines(self.value, context)
-  return Rendered:new(inlines)
+  return Rendered:new(inlines, self)
 end
 
 function Text:render (item, context)

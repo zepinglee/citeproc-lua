@@ -1,32 +1,32 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                2       2       5       0
-bugreports           1       4      77       0
-collapse             0       0      21       0
-condition            3      11       3       0
-date                23       5      73       0
+bugreports           2      10      70       0
+collapse             0       7      14       0
+condition            5      10       2       0
+date                23       8      70       0
 decorations          1       1       5       0
-disambiguate         0       0      71       0
+disambiguate         0       3      68       0
 display              0       0       5       0
 etal                 0       0       4       0
-flipflop             1       6      12       0
-form                 2       1       0       0
+flipflop             1       7      11       0
+form                 3       0       0       0
 fullstyles           0       0       5       0
-group                0       0       7       0
+group                0       1       6       0
 integration          0       1      13       0
-label                2       1      16       0
+label                2      10       7       0
 locale              14       6       3       0
 locator              0       1       5       0
-magic                9       3      28       0
+magic                9       4      27       0
 name                 0       0     111       0
 nameattr             0       0      97       0
 nameorder            0       0       6       0
 namespaces           1       0       0       0
-number               5       5      10       0
+number               6       7       7       0
 page                 9       0       0       0
-plural               0       0       7       0
+plural               0       1       6       0
 position             2       3      11       0
-punctuation          1       1      14       0
+punctuation          1       2      13       0
 quotes               0       0       4       0
 simplespace          0       0       1       0
 sort                 2       7      57       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            1       1       3       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)               83      83     688       0
+(all)               88     116     650       0
 
 Failure → citeproc test test-suite affix_MovingPunctuation.txt
 Passed in:
@@ -58,11 +58,29 @@ Passed in:
 Expected:
 (string) '[1, 32; 2, 32; 3, 32]'
 
+Failure → citeproc test test-suite bugreports_DroppingGroupDelimiterSpace.txt
+Passed in:
+(string) ''
+Expected:
+(string) '17 <span style="font-variant:small-caps;">Studia Patristica</span> 1388'
+
+Failure → citeproc test test-suite bugreports_EmptyIfMatchNoneFail.txt
+Passed in:
+(string) ''
+Expected:
+(string) 'PhD. diss.'
+
 Failure → citeproc test test-suite bugreports_FrenchApostrophe.txt
 Passed in:
 (string) '« Life“s ”Little’ Surprises »'
 Expected:
 (string) '« Life’s “Little” Surprises »'
+
+Failure → citeproc test test-suite bugreports_NumberAffixEscape.txt
+Passed in:
+(string) ''
+Expected:
+(string) '(<sup>a</sup>2)'
 
 Failure → citeproc test test-suite bugreports_NumberInMacroWithVerticalAlign.txt
 Passed in:
@@ -70,11 +88,79 @@ Passed in:
 Expected:
 (string) '<sup><i>2</i></sup>; <sup><i>3–5</i></sup>'
 
+Failure → citeproc test test-suite bugreports_SectionAndLocator.txt
+Passed in:
+(string) '
+'
+Expected:
+(string) 'Title One, 123
+Title Two'
+
+Failure → citeproc test test-suite bugreports_SingletonIfMatchNoneFail.txt
+Passed in:
+(string) ''
+Expected:
+(string) 'PhD. diss.'
+
 Failure → citeproc test test-suite bugreports_TitleCase.txt
 Passed in:
 (string) 'One but two or three yet four so five for six and seven nor eight a nine an ten the eleven at twelve by thirteen from fourteen in fifteen into sixteen of seventeen on eighteen to nineteen with twenty up twenty-one down twenty-two as twenty-three via twenty-four till twenty-five onto twenty-six over twenty-seven.'
 Expected:
 (string) 'One but Two or Three yet Four so Five for Six and Seven nor Eight a Nine an Ten the Eleven at Twelve by Thirteen from Fourteen in Fifteen into Sixteen of Seventeen on Eighteen to Nineteen with Twenty up Twenty-One down Twenty-Two as Twenty-Three via Twenty-Four till Twenty-Five onto Twenty-Six over Twenty-Seven.'
+
+Failure → citeproc test test-suite bugreports_effingBug.txt
+Passed in:
+(string) '; '
+Expected:
+(string) 'Book One, 123 f.; Book Two, 456 f.'
+
+Failure → citeproc test test-suite collapse_CitationNumberRangesMixed.txt
+Passed in:
+(string) ', , , , , , 
+, , , , , '
+Expected:
+(string) '([1]–[7])
+([1]–[3], [5]–[7])'
+
+Failure → citeproc test test-suite collapse_CitationNumberRangesMixed2.txt
+Passed in:
+(string) ', , , , , , , , , , 
+, , , , , , , '
+Expected:
+(string) '([1]–[11])
+([1], [3]–[5], [7], [9]–[11])'
+
+Failure → citeproc test test-suite collapse_CitationNumberRangesMixed3.txt
+Passed in:
+(string) ', , , , , , , 
+, , , , '
+Expected:
+(string) '([1]–[8])
+([1], [4], [6]–[8])'
+
+Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixes.txt
+Passed in:
+(string) ',,'
+Expected:
+(string) '<b>([1]–[3])</b>'
+
+Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesNoCollapse.txt
+Passed in:
+(string) ',,'
+Expected:
+(string) '<b>([1],[2],[3])</b>'
+
+Failure → citeproc test test-suite collapse_NumericDuplicate.txt
+Passed in:
+(string) ',,,,'
+Expected:
+(string) '(1,2,2–4)'
+
+Failure → citeproc test test-suite collapse_NumericDuplicate2.txt
+Passed in:
+(string) ',,,,,'
+Expected:
+(string) '(1–3,3–5)'
 
 Failure → citeproc test test-suite condition_EmptyDate.txt
 Passed in:
@@ -84,18 +170,6 @@ Expected:
 (string) 'No date here
 Have date, will travel'
 
-Failure → citeproc test test-suite condition_EmptyIsNumericFalse.txt
-Passed in:
-(string) 'Empty edition is not numeric'
-Expected:
-(string) 'empty edition is not numeric'
-
-Failure → citeproc test test-suite condition_EmptyIsUncertainDateFalse.txt
-Passed in:
-(string) 'Empty issued is not uncertain'
-Expected:
-(string) 'empty issued is not uncertain'
-
 Failure → citeproc test test-suite condition_LocatorIsFalse.txt
 Passed in:
 (string) 'Book One: (1) Locator false (2) Locator false; Book Two: (1) Locator false (2) Locator false'
@@ -104,7 +178,7 @@ Expected:
 
 Failure → citeproc test test-suite condition_NameAndTextVars.txt
 Passed in:
-(string) 'Should not be this'
+(string) 'should not be this'
 Expected:
 (string) 'should be this!'
 
@@ -125,6 +199,12 @@ Passed in:
 (string) 'FALSE'
 Expected:
 (string) 'TRUE'
+
+Failure → citeproc test test-suite condition_SingletonIfMatchNone.txt
+Passed in:
+(string) ''
+Expected:
+(string) 'ed. by Γ. Π. Σαββίδης'
 
 Failure → citeproc test test-suite condition_VariableAll.txt
 Passed in:
@@ -149,6 +229,12 @@ TRUE'
 Expected:
 (string) 'TRUE
 FALSE'
+
+Failure → citeproc test test-suite date_DateNoDateNoTest.txt
+Passed in:
+(string) ''
+Expected:
+(string) '[CSL STYLE ERROR: reference with no printed form.]'
 
 Failure → citeproc test test-suite date_IgnoreNonexistentSort.txt
 Passed in:
@@ -180,21 +266,55 @@ Passed in:
 Expected:
 (string) 'Item 2; Item 4; Item 1; Item 3'
 
+Failure → citeproc test test-suite date_OtherAlone.txt
+Passed in:
+(string) ''
+Expected:
+(string) '(maybe around 2000bc sometime?)'
+
+Failure → citeproc test test-suite date_String.txt
+Passed in:
+(string) ''
+Expected:
+(string) 'date: Bogus Date'
+
 Failure → citeproc test test-suite decorations_NestedQuotes.txt
 Passed in:
 (string) '“My “Amazing” Title”'
 Expected:
 (string) '“My ‘Amazing’ Title”'
 
+Failure → citeproc test test-suite disambiguate_CitationLabelDefault.txt
+Passed in:
+(string) '; ; '
+Expected:
+(string) 'Asth00a; Asth00b; Bron00'
+
+Failure → citeproc test test-suite disambiguate_CitationLabelInData.txt
+Passed in:
+(string) 'SpiffLabel1900; SpiffLabel1900; ; ; '
+Expected:
+(string) 'SpiffLabel1900a; SpiffLabel1900b; Bron00; BrCh98; DEFG26'
+
+Failure → citeproc test test-suite disambiguate_Trigraph.txt
+Passed in:
+(string) '
+
+'
+Expected:
+(string) 'Aalt02a
+Aalt02b
+Aalt02c'
+
 Failure → citeproc test test-suite flipflop_ApostropheInsideTag.txt
 Passed in:
-(string) 'L''''
+(string) 'l''''
 Expected:
 (string) 'l’’’'
 
 Failure → citeproc test test-suite flipflop_BoldfaceNodeLevelMarkup.txt
 Passed in:
-(string) 'Friend'
+(string) 'friend'
 Expected:
 (string) '<b>Speak, <span style="font-weight:normal;">friend</span>, and enter.</b>'
 
@@ -206,7 +326,7 @@ Expected:
 
 Failure → citeproc test test-suite flipflop_QuotesInFieldNotOnNode.txt
 Passed in:
-(string) 'Friend'
+(string) 'friend'
 Expected:
 (string) 'Speak, “friend,” and enter.'
 
@@ -216,17 +336,23 @@ Passed in:
 Expected:
 (string) '“Nobody Knows You’re a Dog”: As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
 
+Failure → citeproc test test-suite flipflop_SmallCaps.txt
+Passed in:
+(string) ''
+Expected:
+(string) '<span style="font-variant:small-caps;">His <span style="font-variant:normal;">Anonymous</span> Life</span>, His <span style="font-variant:small-caps;">Anthology</span>'
+
 Failure → citeproc test test-suite flipflop_StartingApostrophe.txt
 Passed in:
 (string) 'IEEE Conference on Emerging Technologies and Factory Automation (ETFA '09)'
 Expected:
 (string) 'IEEE Conference on Emerging Technologies and Factory Automation (ETFA ’09)'
 
-Failure → citeproc test test-suite form_TitleTestNoLongFalse.txt
+Failure → citeproc test test-suite group_ShortOutputOnly.txt
 Passed in:
-(string) 'False'
+(string) ''
 Expected:
-(string) 'false'
+(string) 'something'
 
 Failure → citeproc test test-suite integration_CitationSort.txt
 Passed in:
@@ -234,11 +360,65 @@ Passed in:
 Expected:
 (string) '(Doe; Noakes; Roe; Snoakes)'
 
+Failure → citeproc test test-suite label_EmptyLabelVanish.txt
+Passed in:
+(string) '[start][end]'
+Expected:
+(string) '[start](22)[end]'
+
 Failure → citeproc test test-suite label_NoFirstCharCapWithInTextClass.txt
 Passed in:
 (string) 'N.d.'
 Expected:
 (string) 'n.d.'
+
+Failure → citeproc test test-suite label_PluralNumberOfVolumes.txt
+Passed in:
+(string) '; '
+Expected:
+(string) 'volume 1; volumes 2'
+
+Failure → citeproc test test-suite label_PluralPagesWithAlphaPrefix.txt
+Passed in:
+(string) ''
+Expected:
+(string) 'pages S213–S235'
+
+Failure → citeproc test test-suite label_PluralWithAmpersand.txt
+Passed in:
+(string) ''
+Expected:
+(string) 'pages 213 &#38; 235'
+
+Failure → citeproc test test-suite label_PluralWithAnd.txt
+Passed in:
+(string) ''
+Expected:
+(string) 'pages 213 and 235'
+
+Failure → citeproc test test-suite label_PluralWithCommaAnd.txt
+Passed in:
+(string) ''
+Expected:
+(string) 'pages 213, and 235'
+
+Failure → citeproc test test-suite label_PluralWithCommaLocalizedAnd.txt
+Passed in:
+(string) ''
+Expected:
+(string) 'pages 213, et 235'
+
+Failure → citeproc test test-suite label_PluralWithLocalizedAmpersand.txt
+Passed in:
+(string) ''
+Expected:
+(string) 'pages 213 AMPERSAND 235'
+
+Failure → citeproc test test-suite label_PluralWithLocalizedAnd.txt
+Passed in:
+(string) ''
+Expected:
+(string) 'pages 213 et 235'
 
 Failure → citeproc test test-suite locale_EmptyPlusOverrideStyleOpt.txt
 Passed in:
@@ -302,17 +482,138 @@ Passed in:
 Expected:
 (string) '“An Article,” Am LJ.'
 
-Failure → citeproc test test-suite number_IsNumericWithAlpha.txt
+Failure → citeproc test test-suite magic_SuperscriptChars.txt
 Passed in:
-(string) 'Not numeric'
+(string) ''
 Expected:
-(string) 'not numeric'
+(string) '<sup>a</sup>
+<sup>2</sup>
+<sup>3</sup>
+<sup>1</sup>
+<sup>o</sup>
+<sup>h</sup>
+<sup>ɦ</sup>
+<sup>j</sup>
+<sup>r</sup>
+<sup>ɹ</sup>
+<sup>ɻ</sup>
+<sup>ʁ</sup>
+<sup>w</sup>
+<sup>y</sup>
+<sup>ɣ</sup>
+<sup>l</sup>
+<sup>s</sup>
+<sup>x</sup>
+<sup>ʕ</sup>
+<sup>A</sup>
+<sup>Æ</sup>
+<sup>B</sup>
+<sup>D</sup>
+<sup>E</sup>
+<sup>Ǝ</sup>
+<sup>G</sup>
+<sup>H</sup>
+<sup>I</sup>
+<sup>J</sup>
+<sup>K</sup>
+<sup>L</sup>
+<sup>M</sup>
+<sup>N</sup>
+<sup>O</sup>
+<sup>Ȣ</sup>
+<sup>P</sup>
+<sup>R</sup>
+<sup>T</sup>
+<sup>U</sup>
+<sup>W</sup>
+<sup>a</sup>
+<sup>ɐ</sup>
+<sup>ɑ</sup>
+<sup>ᴂ</sup>
+<sup>b</sup>
+<sup>d</sup>
+<sup>e</sup>
+<sup>ə</sup>
+<sup>ɛ</sup>
+<sup>ɜ</sup>
+<sup>g</sup>
+<sup>k</sup>
+<sup>m</sup>
+<sup>ŋ</sup>
+<sup>o</sup>
+<sup>ɔ</sup>
+<sup>ᴖ</sup>
+<sup>ᴗ</sup>
+<sup>p</sup>
+<sup>t</sup>
+<sup>u</sup>
+<sup>ᴝ</sup>
+<sup>ɯ</sup>
+<sup>v</sup>
+<sup>ᴥ</sup>
+<sup>β</sup>
+<sup>γ</sup>
+<sup>δ</sup>
+<sup>φ</sup>
+<sup>χ</sup>
+<sup>0</sup>
+<sup>i</sup>
+<sup>4</sup>
+<sup>5</sup>
+<sup>6</sup>
+<sup>7</sup>
+<sup>8</sup>
+<sup>9</sup>
+<sup>+</sup>
+<sup>−</sup>
+<sup>=</sup>
+<sup>(</sup>
+<sup>)</sup>
+<sup>n</sup>
+<sup>SM</sup>
+<sup>TM</sup>
+<sup>一</sup>
+<sup>二</sup>
+<sup>三</sup>
+<sup>四</sup>
+<sup>上</sup>
+<sup>中</sup>
+<sup>下</sup>
+<sup>甲</sup>
+<sup>乙</sup>
+<sup>丙</sup>
+<sup>丁</sup>
+<sup>天</sup>
+<sup>地</sup>
+<sup>人</sup>
+<sup>ʔ</sup>
+<sup>ʕ</sup>
+<sup>و</sup>
+<sup>ي</sup>'
+
+Failure → citeproc test test-suite number_NewOrdinalsWithGenderChange.txt
+Passed in:
+(string) ''
+Expected:
+(string) 'Title 1: 1<sup>r</sup><sup>e</sup>femmie'
 
 Failure → citeproc test test-suite number_OrdinalSpacing.txt
 Passed in:
 (string) 'Blah blah'
 Expected:
 (string) 'Blah blah. 7th, pp. 3–8DD<i>ed</i>'
+
+Failure → citeproc test test-suite number_PageFirst.txt
+Passed in:
+(string) ''
+Expected:
+(string) '42'
+
+Failure → citeproc test test-suite number_PlainHyphenOrEnDashAlwaysPlural.txt
+Passed in:
+(string) '; ; ; ; '
+Expected:
+(string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) pages i–ix (cs:text) vs His Anonymous Life (2) pages i–ix (cs:number); His Anonymous Life (3) page 3-B (cs:text) vs His Anonymous Life (3) page 3-B (cs:number); His Anonymous Life (4) page Michaelson-Morely (cs:text) vs His Anonymous Life (4) page Michaelson-Morely (cs:number)'
 
 Failure → citeproc test test-suite number_SimpleNumberOrdinalLong.txt
 Passed in:
@@ -333,6 +634,12 @@ Passed in:
 (string) '42'
 Expected:
 (string) 'xlii'
+
+Failure → citeproc test test-suite plural_LabelForced.txt
+Passed in:
+(string) ''
+Expected:
+(string) 'p. 32–34'
 
 Failure → citeproc test test-suite position_IfIbidIsTrueThenSubsequentIsTrue.txt
 Passed in:
@@ -361,6 +668,12 @@ Passed in:
 (string) 'His « Anonymous » Life'
 Expected:
 (string) 'His « Anonymous » Life'
+
+Failure → citeproc test test-suite punctuation_NoSuppressOfPeriodBeforeSemicolon.txt
+Passed in:
+(string) ''
+Expected:
+(string) 'Hello.; Goodbye'
 
 Failure → citeproc test test-suite sort_CaseInsensitiveCitation.txt
 Passed in:
@@ -418,13 +731,13 @@ Expected:
 
 Failure → citeproc test test-suite textcase_CapitalizeFirst.txt
 Passed in:
-(string) 'This is a Pen that is a  Pencil'
+(string) 'this is a Pen that is a  Pencil'
 Expected:
 (string) 'This is a Pen that is a Smith Pencil'
 
 Failure → citeproc test test-suite textcase_CapitalizeFirstWithDecor.txt
 Passed in:
-(string) 'This is a Pen that is a  Pencil'
+(string) 'this is a Pen that is a  Pencil'
 Expected:
 (string) '<i>This is a Pen that is a Smith Pencil</i>'
 
@@ -444,7 +757,7 @@ OC 1'
 
 Failure → citeproc test test-suite textcase_InQuotes.txt
 Passed in:
-(string) 'From “distance” to “friction”: substituting metaphors and redirecting intercultural research for'
+(string) 'from “distance” to “friction”: substituting metaphors and redirecting intercultural research for'
 Expected:
 (string) 'From “Distance” to “Friction”: Substituting Metaphors and Redirecting Intercultural Research For'
 
@@ -458,10 +771,10 @@ Expected:
 
 Failure → citeproc test test-suite textcase_LocaleUnicode.txt
 Passed in:
-(string) 'Ia and ıb EN
-Ia and ıb EN
-Ic and ıd TR
-Bad language code that passes in node.js but fails in some browsers'
+(string) 'ia and ıb EN
+ia and ıb EN
+ic and ıd TR
+bad language code that passes in node.js but fails in some browsers'
 Expected:
 (string) 'IA AND IB EN
 IA AND IB EN
@@ -520,7 +833,7 @@ Expected:
 
 Failure → citeproc test test-suite textcase_TitleCaseWithCleverBrandName.txt
 Passed in:
-(string) 'IPad is a thing'
+(string) 'iPad is a thing'
 Expected:
 (string) 'iPad Is a Thing'
 
@@ -648,9 +961,6 @@ Error → citeproc test test-suite bugreports_ContainerTitleShort.txt
 Error → citeproc test test-suite bugreports_ContentPunctuationDuplicate1.txt
 ./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
 
-Error → citeproc test test-suite bugreports_ContextualPluralWithMainItemFields.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
-
 Error → citeproc test test-suite bugreports_CreepingAddNames.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -669,23 +979,17 @@ Error → citeproc test test-suite bugreports_DisambiguationAddNamesBibliography
 Error → citeproc test test-suite bugreports_DoubleEncodedAngleBraces.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite bugreports_DroppingGroupDelimiterSpace.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
-
 Error → citeproc test test-suite bugreports_DuplicateSpaces.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite bugreports_DuplicateSpaces2.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite bugreports_DuplicateSpaces3.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite bugreports_DuplicateTerminalPunctuationInBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_EmptyIfMatchNoneFail.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite bugreports_EnvAndUrb.txt
 ./citeproc/citeproc-node-names.lua:177: attempt to call a nil value (method 'get_term')
@@ -703,7 +1007,7 @@ Error → citeproc test test-suite bugreports_GreekStyleTwoEditors.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite bugreports_IeeePunctuation.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite bugreports_LabelsOutOfPlace.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -729,9 +1033,6 @@ Error → citeproc test test-suite bugreports_NoEventInNestedMacroWithOldProcess
 Error → citeproc test test-suite bugreports_NoTitle.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite bugreports_NumberAffixEscape.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
-
 Error → citeproc test test-suite bugreports_OldMhraDisambiguationFailure.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -741,9 +1042,6 @@ Error → citeproc test test-suite bugreports_OverwriteCitationItems.txt
 Error → citeproc test test-suite bugreports_ProcessorHang1.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite bugreports_SectionAndLocator.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
-
 Error → citeproc test test-suite bugreports_SelfLink.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -751,13 +1049,10 @@ Error → citeproc test test-suite bugreports_SimpleBib.txt
 ./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite bugreports_SingleQuote.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite bugreports_SingleQuoteXml.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_SingletonIfMatchNoneFail.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite bugreports_SmallCapsEscape.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -790,10 +1085,10 @@ Error → citeproc test test-suite bugreports_UndefinedInName3.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite bugreports_UndefinedNotString.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite bugreports_UndefinedStr.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite bugreports_UnisaHarvardInitialization.txt
 ./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
@@ -806,9 +1101,6 @@ Error → citeproc test test-suite bugreports_YearSuffixLingers.txt
 
 Error → citeproc test test-suite bugreports_disambiguate.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_effingBug.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite bugreports_ikeyOne.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -840,35 +1132,14 @@ Error → citeproc test test-suite collapse_ChicagoAfterCollapse.txt
 Error → citeproc test test-suite collapse_CitationNumberRangesInsert.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite collapse_CitationNumberRangesMixed.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
-
-Error → citeproc test test-suite collapse_CitationNumberRangesMixed2.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
-
-Error → citeproc test test-suite collapse_CitationNumberRangesMixed3.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
-
 Error → citeproc test test-suite collapse_CitationNumberRangesOneOnly.txt
 ./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
-Error → citeproc test test-suite collapse_CitationNumberRangesWithAffixes.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
-
 Error → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGrouped.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
+./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
 
 Error → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGroupedLocator.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
-
-Error → citeproc test test-suite collapse_CitationNumberRangesWithAffixesNoCollapse.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
-
-Error → citeproc test test-suite collapse_NumericDuplicate.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
-
-Error → citeproc test test-suite collapse_NumericDuplicate2.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
+./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
 
 Error → citeproc test test-suite collapse_TrailingDelimiter.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -891,9 +1162,6 @@ Error → citeproc test test-suite condition_MatchAll.txt
 Error → citeproc test test-suite condition_RefTypeBranching.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
-Error → citeproc test test-suite condition_SingletonIfMatchNone.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
-
 Error → citeproc test test-suite date_AccessedCrash.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -902,9 +1170,6 @@ Error → citeproc test test-suite date_DateAD.txt
 
 Error → citeproc test test-suite date_DateBC.txt
 ./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
-
-Error → citeproc test test-suite date_DateNoDateNoTest.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite date_DayOrdinalDayOneOnly.txt
 ./citeproc/citeproc-node-date.lua:489: attempt to call a nil value (method 'get_locale_option')
@@ -1053,9 +1318,6 @@ Error → citeproc test test-suite date_NegativeDateSortViaMacroOnYearMonthOnly.
 Error → citeproc test test-suite date_NonexistentSortReverseBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite date_OtherAlone.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
-
 Error → citeproc test test-suite date_OtherWithDate.txt
 ./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
 
@@ -1070,9 +1332,6 @@ Error → citeproc test test-suite date_SortEmptyDatesBibliography.txt
 
 Error → citeproc test test-suite date_SortEmptyDatesCitation.txt
 ./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
-
-Error → citeproc test test-suite date_String.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite date_TextFormFulldateDayRange.txt
 ./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
@@ -1218,12 +1477,6 @@ Error → citeproc test test-suite disambiguate_ByCiteTwoAuthorsSameCite.txt
 Error → citeproc test test-suite disambiguate_ByCiteTwoAuthorsSameFamilyName.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
-Error → citeproc test test-suite disambiguate_CitationLabelDefault.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
-
-Error → citeproc test test-suite disambiguate_CitationLabelInData.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
-
 Error → citeproc test test-suite disambiguate_DifferentSpacingInInitials.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
@@ -1288,13 +1541,10 @@ Error → citeproc test test-suite disambiguate_SkipAccessedYearSuffix.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite disambiguate_ThreeNoAuthorNoTitleEntries.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite disambiguate_ToInitialOnly.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
-
-Error → citeproc test test-suite disambiguate_Trigraph.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite disambiguate_WithOriginalYear.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -1351,10 +1601,10 @@ Error → citeproc test test-suite display_LostSuffix.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite display_SecondFieldAlignClone.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite display_SecondFieldAlignMigratePunctuation.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite etal_CitationAndBibliographyDecorationsInBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -1401,9 +1651,6 @@ Error → citeproc test test-suite flipflop_QuotesNodeLevelMarkup.txt
 Error → citeproc test test-suite flipflop_SingleQuotesOnItalics.txt
 ./citeproc/citeproc-output.lua:490: attempt to call a nil value (method 'write_formatted')
 
-Error → citeproc test test-suite flipflop_SmallCaps.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
-
 Error → citeproc test test-suite fullstyles_ABdNT.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -1424,9 +1671,6 @@ Error → citeproc test test-suite group_ComplexNesting.txt
 
 Error → citeproc test test-suite group_LegalWithAuthorDate.txt
 ./citeproc/citeproc-node-date.lua:281: attempt to call a nil value (method 'get_locales')
-
-Error → citeproc test test-suite group_ShortOutputOnly.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite group_SuppressTermInMacro.txt
 ./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
@@ -1462,16 +1706,16 @@ Error → citeproc test test-suite integration_FirstReferenceNoteNumberPositionC
 ./citeproc/citeproc-node-date.lua:281: attempt to call a nil value (method 'get_locales')
 
 Error → citeproc test test-suite integration_IbidOnInsert.txt
-./citeproc/citeproc-node-label.lua:108: attempt to call a nil value (method 'get_term')
+./citeproc/citeproc-node-label.lua:118: attempt to call a nil value (method 'get_term')
 
 Error → citeproc test test-suite integration_IbidWithDifferentLocators.txt
-./citeproc/citeproc-node-label.lua:108: attempt to call a nil value (method 'get_term')
+./citeproc/citeproc-node-label.lua:118: attempt to call a nil value (method 'get_term')
 
 Error → citeproc test test-suite integration_SimpleFirstReferenceNoteNumber.txt
 ./citeproc/citeproc-node-date.lua:281: attempt to call a nil value (method 'get_locales')
 
 Error → citeproc test test-suite integration_SimpleIbid.txt
-./citeproc/citeproc-node-label.lua:108: attempt to call a nil value (method 'get_term')
+./citeproc/citeproc-node-label.lua:118: attempt to call a nil value (method 'get_term')
 
 Error → citeproc test test-suite integration_SubsequentWhenInterveningFootnote.txt
 ./citeproc/citeproc-element.lua:333: attempt to call a nil value (method 'get_locales')
@@ -1480,16 +1724,13 @@ Error → citeproc test test-suite integration_YearSuffixOnOffOn.txt
 ./citeproc/citeproc-element.lua:333: attempt to call a nil value (method 'get_locales')
 
 Error → citeproc test test-suite label_CollapsedPageNumberPluralDetection.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
+./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
 
 Error → citeproc test test-suite label_CompactNamesAfterFullNames.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite label_EditorTranslator1.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite label_EmptyLabelVanish.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
 
 Error → citeproc test test-suite label_ImplicitForm.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -1502,30 +1743,6 @@ Error → citeproc test test-suite label_NameLabelThroughSubstitute.txt
 
 Error → citeproc test test-suite label_NonexistentNameVariableLabel.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
-
-Error → citeproc test test-suite label_PluralNumberOfVolumes.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
-
-Error → citeproc test test-suite label_PluralPagesWithAlphaPrefix.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
-
-Error → citeproc test test-suite label_PluralWithAmpersand.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
-
-Error → citeproc test test-suite label_PluralWithAnd.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
-
-Error → citeproc test test-suite label_PluralWithCommaAnd.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
-
-Error → citeproc test test-suite label_PluralWithCommaLocalizedAnd.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
-
-Error → citeproc test test-suite label_PluralWithLocalizedAmpersand.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
-
-Error → citeproc test test-suite label_PluralWithLocalizedAnd.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
 
 Error → citeproc test test-suite locale_ForceEmptyAndOthersTerm.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -1540,16 +1757,16 @@ Error → citeproc test test-suite locator_SimpleLocators.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite locator_SingularEmbeddedLabelAfterPlural.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
+./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
 
 Error → citeproc test test-suite locator_TermSelection.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
+./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
 
 Error → citeproc test test-suite locator_TrickyEntryForPlurals.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
+./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
 
 Error → citeproc test test-suite locator_WithLeadingSpace.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
+./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
 
 Error → citeproc test test-suite magic_AllowRepeatDateRenderings.txt
 ./citeproc/citeproc-node-date.lua:91: attempt to get length of a nil value (field 'date-parts')
@@ -1625,9 +1842,6 @@ Error → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
 
 Error → citeproc test test-suite magic_SubsequentAuthorSubstituteOfTitleField.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
-
-Error → citeproc test test-suite magic_SuperscriptChars.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite magic_SuppressDuplicateVariableRendering.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -2284,31 +2498,19 @@ Error → citeproc test test-suite number_LeadingZeros.txt
 ./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
 
 Error → citeproc test test-suite number_LimitOrdinalsToDayOne.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite number_NewOrdinalsWithGenderChange.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
-
-Error → citeproc test test-suite number_PageFirst.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
-
-Error → citeproc test test-suite number_PlainHyphenOrEnDashAlwaysPlural.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
-
 Error → citeproc test test-suite number_PreserveDelimiter.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
+./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite number_SeparateOrdinalNamespaces.txt
-./citeproc/citeproc-node-label.lua:59: attempt to index a nil value (local 'context')
+./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
 
 Error → citeproc test test-suite number_SpacesMakeIsNumericFalse.txt
 ./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
-
-Error → citeproc test test-suite plural_LabelForced.txt
-./citeproc/citeproc-node-label.lua:44: attempt to call a nil value (method 'get_term')
 
 Error → citeproc test test-suite plural_NameLabelAlways.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -2390,9 +2592,6 @@ Error → citeproc test test-suite punctuation_FullMontyQuotesIn.txt
 
 Error → citeproc test test-suite punctuation_FullMontyQuotesOut.txt
 ./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
-
-Error → citeproc test test-suite punctuation_NoSuppressOfPeriodBeforeSemicolon.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
 
 Error → citeproc test test-suite punctuation_OnMacro.txt
 ./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
@@ -2548,7 +2747,7 @@ Error → citeproc test test-suite sort_NumberOfAuthorsAsKey.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_OmittedBibRefMixedNumericStyle.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite sort_OmittedBibRefNonNumericStyle.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -2632,10 +2831,10 @@ Error → citeproc test test-suite textcase_Uppercase.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite variables_ContainerTitleShort.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite variables_ContainerTitleShort2.txt
-./citeproc/citeproc-ir-node.lua:72: attempt to index a nil value (field 'inlines')
+./citeproc/citeproc-engine.lua:365: attempt to index a nil value (field 'bibliography')
 
 Error → citeproc test test-suite variables_TitleShortOnShortTitleNoTitleCondition.txt
 ./citeproc/citeproc-node-group.lua:55: bad argument #1 to 'insert' (table expected, got string)
