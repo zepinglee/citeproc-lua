@@ -140,6 +140,10 @@ function CiteProc:build_cluster(citation_items)
 
   -- util.debug(citation_stream)
 
+  if #citation_stream == 0 then
+    citation_stream = {PlainText:new("[CSL STYLE ERROR: reference with no printed form.]")}
+  end
+
   local str = output_format:output(citation_stream)
 
   return str
