@@ -87,14 +87,7 @@ function Date:build_independent_date_ir(variable, engine, state, context)
   --     end
   --   end
 
-  local res
-  if #variable["date-parts"] == 1 then
-    res = self:build_single_date_ir(variable["date-parts"][1], context)
-  elseif #variable["date-parts"] == 2 then
-    res = self:build_date_range_ir(variable["date-parts"][2], context)
-  end
-
-  return res
+  return self:build_date_parts(self.children, variable, engine, state, context)
 end
 
 function Date:build_localized_date_ir(variable, engine, state, context)
