@@ -363,6 +363,9 @@ function DatePart:build_ir(single_date, engine, state, context)
     text = self:render_day(single_date[3], engine, state, context)
   end
 
+  if not text then
+    return nil
+  end
   text = self:apply_text_case(text)
 
   local inlines = {PlainText:new(text)}
@@ -378,7 +381,7 @@ function DatePart:build_ir(single_date, engine, state, context)
 end
 
 function DatePart:render_day(day, engine, state, context)
-  if not day then
+  if not day or day == "" then
     return nil
   end
   day = tonumber(day)
@@ -403,7 +406,7 @@ function DatePart:render_day(day, engine, state, context)
 end
 
 function DatePart:render_month(month, engine, state, context)
-  if not month then
+  if not month or month == "" then
     return nil
   end
   month = tonumber(month)
@@ -427,11 +430,12 @@ function DatePart:render_month(month, engine, state, context)
   else
     res = tostring(month)
   end
+  util.debug(res)
   return self:apply_strip_periods(res)
 end
 
 function DatePart:render_year(year, engine, state, context)
-  if not year then
+  if not year or year == "" then
     return nil
   end
   year = tonumber(year)
