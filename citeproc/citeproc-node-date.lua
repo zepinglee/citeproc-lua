@@ -49,31 +49,37 @@ function Date:build_ir(engine, state, context)
     return ir
   end
 
-  for i = 1, 2 do
-    if variable["date-parts"][i] then
-      for j = 1, 3 do
-        local variabel_part = variable["date-parts"][i][j]
-        if variabel_part == 0 or variabel_part == "" then
-          variable["date-parts"][i][j] = nil
-        else
-          variable["date-parts"][i][j] = tonumber(variabel_part)
+  local ir
+
+  if variable["date-parts"] and #variable["date-parts"] > 0 then
+
+    for i = 1, 2 do
+      if variable["date-parts"][i] then
+        for j = 1, 3 do
+          local variabel_part = variable["date-parts"][i][j]
+          if variabel_part == 0 or variabel_part == "" then
+            variable["date-parts"][i][j] = nil
+          else
+            variable["date-parts"][i][j] = tonumber(variabel_part)
+          end
         end
       end
     end
-  end
+    variable = variable["date-parts"]
+    if self.form then
+      ir = self:build_localized_date_ir(variable, engine, state, context)
+    else
+      ir = self:build_independent_date_ir(variable, engine, state, context)
+    end
+    ir.group_var = "important"
 
-  if not variable["date-parts"] or #variable["date-parts"] <= 0 then
-    return nil
-    -- TODO: literal and raw
-  end
+  elseif variable["literal"] then
+    local inlines = self:render_text_inlines(variable["literal"], context)
+    ir = Rendered:new(inlines, self)
+    ir.group_var = "important"
 
-  variable = variable["date-parts"]
+  else -- TODO: raw
 
-  local ir
-  if self.form then
-    ir = self:build_localized_date_ir(variable, engine, state, context)
-  else
-    ir = self:build_independent_date_ir(variable, engine, state, context)
   end
 
   ir.affixes = self.affixes
