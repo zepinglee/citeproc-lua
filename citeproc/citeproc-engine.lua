@@ -277,11 +277,12 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
     local citation_id = citation_id_note[1]
     -- local note_index = citation_id_note[2]
     if citation_id == citation.citationID then
-      local context = {
-        build = {},
-        engine = self,
-      }
-      local citation_str = self.style:render_citation(items, context)
+      -- local context = {
+      --   build = {},
+      --   engine = self,
+      -- }
+      -- local citation_str = self.style:render_citation(items, context)
+      local citation_str = self:build_cluster(items)
 
       self.registry.citation_strings[citation_id] = citation_str
       table.insert(output, {i - 1, citation_str, citation_id})

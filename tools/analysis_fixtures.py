@@ -11,6 +11,7 @@ skipped_fixtures = [
     'bugreports_ArabicLocale.txt',
     'bugreports_FrenchApostrophe.txt',
     'bugreports_TitleCase.txt',
+    'bugreports_EtAlSubsequent.txt',
     'locale_TitleCaseEmptyLangEmptyLocale.txt',
     'locale_TitleCaseGarbageLangEmptyLocale.txt',
     'magic_StripPeriodsFalse.txt',

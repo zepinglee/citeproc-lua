@@ -330,6 +330,7 @@ function Element:get_option (key, context)
 end
 
 function Element:get_locale_option (key)
+  print(debug.traceback())
   local locales = self:get_style():get_locales()
   for i, locale in ipairs(locales) do
     local option = locale:get_option(key)
