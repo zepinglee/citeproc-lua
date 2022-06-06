@@ -387,7 +387,9 @@ function util.is_upper (str)
 end
 
 function util.capitalize(str)
-  -- str = unicode.utf8.lower(str)
+  if not str then
+    print(debug.traceback())
+  end
   local res = string.gsub(str, utf8.charpattern, unicode.utf8.upper, 1)
   return res
 end

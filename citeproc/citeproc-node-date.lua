@@ -8,6 +8,9 @@ local date_module = {}
 
 local Element = require("citeproc-element").Element
 local IrNode = require("citeproc-ir-node").IrNode
+local Rendered = require("citeproc-ir-node").Rendered
+local SeqIr = require("citeproc-ir-node").SeqIr
+local PlainText = require("citeproc-output").PlainText
 local util = require("citeproc-util")
 
 
@@ -33,58 +36,75 @@ end
 
 function Date:build_ir(engine, state, context)
   local variable = context:get_variable(self.variable)
-  if not variable then
-    return nil
-  end
-  if self.form then
-    return self.build_localized_date_ir(variable, engine, state, context)
-  else
-    return self.build_independent_date_ir(variable, engine, state, context)
-  end
-end
 
-function Date:build_localized_date_ir(variable, engine, state, context)
-  -- TODO
+  if not variable then
+    local ir = Rendered:new()
+    ir.group_var = "missing"
+    return ir
+  end
+
+  if not variable["date-parts"] or #variable["date-parts"] <= 0 then
+    return nil
+    -- TODO: literal and raw
+  end
+
+  variable = variable["date-parts"]
+
+  if self.form then
+    return self:build_localized_date_ir(variable, engine, state, context)
+  else
+    return self:build_independent_date_ir(variable, engine, state, context)
+  end
 end
 
 function Date:build_independent_date_ir(variable, engine, state, context)
+  -- else
+  --   local literal = variable["literal"]
+  --   if literal then
+  --     res = literal
+  --   else
+  --     local raw = variable["raw"]
+  --     if raw then
+  --       res = raw
+  --     end
+  --   end
+
   local res
-  if variable["date-parts"] and #variable["date-parts"] > 0 then
-    if #variable["date-parts"] == 1 then
-      res = self:_render_single_date(variable, context)
-    elseif #variable["date-parts"] == 2 then
-      res = self:_render_date_range(variable, context)
-    end
-
-  else
-    local literal = variable["literal"]
-    if literal then
-      res = literal
-    else
-      local raw = variable["raw"]
-      if raw then
-        res = raw
-      end
-    end
-
+  if #variable["date-parts"] == 1 then
+    res = self:build_single_date_ir(variable["date-parts"][1], context)
+  elseif #variable["date-parts"] == 2 then
+    res = self:build_date_range_ir(variable["date-parts"][2], context)
   end
+
+  return res
 end
 
-function Date:build_single_date_ir(variable, engine, state, context)
-  -- TODO
-  -- local ir = IrNode:new("date")
-  -- ir.children = {}
-
+function Date:build_localized_date_ir(variable, engine, state, context)
+  local date_part_mask = {}
+  for _, part in ipairs(util.split(self.date_parts or "year-month-day", "%-")) do
+    date_part_mask[part] = true
+  end
+  -- local date_parts = {}
   -- for _, date_part in ipairs(self.children) do
-  --   table.insert(ir.children, date_part:build_ir(variable, engine, state, context))
+  --   date_parts[date_part.name] = date_part
   -- end
+  local localized_date = context:get_localized_date(self.form)
+  local date_parts = {}
+  for _, date_part in ipairs(localized_date.children) do
+    if date_part_mask[date_part.name] then
+      table.insert(date_parts, date_part)
+    end
+  end
+  return self:build_date_parts(date_parts, variable[1], engine, state, context)
+end
 
-  -- -- TODO: How to apply text case to date element?
-  -- -- value = self:apply_text_case(value)
-  -- ir = self:apply_formatting(ir)
-  -- ir = self:apply_affixes(ir)
-  -- ir = self:apply_display(ir)
-  return IrNode:new()
+function Date:build_date_parts(date_parts, single_date, engine, state, context)
+  local irs = {}
+  for _, date_part in ipairs(date_parts) do
+    local ir = date_part:build_ir(single_date, engine, state, context)
+    table.insert(irs, ir)
+  end
+  return SeqIr:new(irs)
 end
 
 function Date:render (item, context)
@@ -323,6 +343,9 @@ function DatePart:from_node(node)
   local o = DatePart:new()
   o:set_attribute(node, "name")
   o:set_attribute(node, "form")
+  if o.name == "month" then
+    o:set_strip_periods_attribute(node)
+  end
   o:set_formatting_attributes(node)
   o:set_text_case_attribute(node)
   o:set_attribute(node, "range-delimiter")
@@ -330,163 +353,103 @@ function DatePart:from_node(node)
   return o
 end
 
-function DatePart:build_ir(variable, engine, state, context)
-  local variable_date_parts = variable["date-parts"][1]
+function DatePart:build_ir(single_date, engine, state, context)
   local text
   if self.name == "year" then
-    text = tostring(variable_date_parts[1])
+    text = self:render_year(single_date[1], engine, state, context)
   elseif self.name == "month" then
-    text = tostring(variable_date_parts[2])
+    text = self:render_month(single_date[2], engine, state, context)
   elseif self.name == "day" then
-    text = tostring(variable_date_parts[3])
-  end
-  if not text then
-    return nil
+    text = self:render_day(single_date[3], engine, state, context)
   end
 
-  text = tostring(text)
-  -- TODO: form ...
   text = self:apply_text_case(text)
 
-  local ir = IrNode:new("date-part", text)
-  ir = self:apply_formatting(ir)
-  ir = self:apply_affixes(ir)
-  return ir
+  local inlines = {PlainText:new(text)}
+  local output_format = context.format
+  inlines = output_format:with_format(inlines, self.formmatting)
+  if self.affixes and self.affixes.prefix then
+    table.insert(inlines, 1, PlainText:new(self.affixes.prefix))
+  end
+  if self.affixes and self.affixes.suffix then
+    table.insert(inlines, PlainText:new(self.affixes.suffix))
+  end
+  return Rendered:new(inlines)
 end
 
-DatePart.render = function (self, date, context, last_range_begin, range_end)
-  self:debug_info(context)
-  context = self:process_context(context)
-  local name = context.options["name"]
-  local range_delimiter = context.options["range-delimiter"] or false
-
-  -- The attributes set on cs:date-part elements of a cs:date with form
-  -- attribute override those specified for the localized date formats
-  if context.date_part_attributes then
-    local context_attributes = context.date_part_attributes[name]
-    if context_attributes then
-      for attr, value in pairs(context_attributes) do
-        context.options[attr] = value
-      end
+function DatePart:render_day(day, engine, state, context)
+  if not day then
+    return nil
+  end
+  day = tonumber(day)
+  if day < 1 or day > 31 then
+    return nil
+  end
+  local form = self.form or "numeric"
+  if form == "ordinal" then
+    local limit_day_1 = context:get_locale_option("limit-day-ordinals-to-day-1")
+    if limit_day_1 and day > 1 then
+      form = "numeric"
     end
   end
-
-  if last_range_begin then
-    context.options["suffix"] = ""
+  if form == "numeric-leading-zeros" then
+    return string.format("%02d", day)
+  elseif form == "ordinal" then
+    -- TODO: render localed ordinal
+    return string.format("%02dth", day)
+  else  -- numeric
+    return tostring(day)
   end
+end
 
-  local date_parts_index = 1
-  if range_end then
-    date_parts_index = 2
+function DatePart:render_month(month, engine, state, context)
+  if not month then
+    return nil
   end
-
-  local res = nil
-  if name == "day" then
-    local day = date["date-parts"][date_parts_index][3]
-    if not day then
-      return nil
-    end
-    day = tonumber(day)
-    -- range open
-    if day == 0 then
-      return nil
-    end
-    local form = context.options["form"] or "numeric"
-
-    if form == "ordinal" then
-      local option = self:get_locale_option("limit-day-ordinals-to-day-1")
-      if option and option ~= "false" and day > 1 then
-        form = "numeric"
-      end
-    end
-    if form == "numeric" then
-      res = tostring(day)
-    elseif form == "numeric-leading-zeros" then
-      -- TODO: day == nil?
-      if not day then
-        return nil
-      end
-      res = string.format("%02d", day)
-    elseif form == "ordinal" then
-      res = util.to_ordinal(day)
-    end
-
-  elseif name == "month" then
-    local form = context.options["form"] or "long"
-
-    local month = date["date-parts"][date_parts_index][2]
-    if month then
-      month = tonumber(month)
-      -- range open
-      if month == 0 then
-        return nil
-      end
-    end
-
-    if form == "long" or form == "short" then
-      local term_name = nil
-      if month then
-        if month >= 1 and month <= 12 then
-          term_name = string.format("month-%02d", month)
-        elseif month >= 13 and month <= 24 then
-          local season = month % 4
-          if season == 0 then
-            season = 4
-          end
-          term_name = string.format("season-%02d", season)
-        else
-          util.warning("Invalid month value")
-          return nil
-        end
-      else
-        local season = date["season"]
-        if season then
-          season = tonumber(season)
-          term_name = string.format("season-%02d", season)
-        else
-          return nil
-        end
-      end
-      res = self:get_term(term_name, form):render(context)
-    elseif form == "numeric" then
-      res = tostring(month)
-    elseif form == "numeric-leading-zeros" then
-      -- TODO: month == nil?
-      if not month then
-        return nil
-      end
-      res = string.format("%02d", month)
-    end
-    res = self:_apply_strip_periods(res, context)
-
-  elseif name == "year" then
-    local year = date["date-parts"][date_parts_index][1]
-    if year then
-      year = tonumber(year)
-      -- range open
-      if year == 0 then
-        return nil
-      end
-      local form = context.options["form"] or "long"
-      if form == "long" then
-        year = tonumber(year)
-        if year < 0 then
-          res = tostring(-year) .. self:get_term("bc"):render(context)
-        elseif year < 1000 then
-          res = tostring(year) .. self:get_term("ad"):render(context)
-        else
-          res = tostring(year)
-        end
-      elseif form == "short" then
-        res = string.sub(tostring(year), -2)
-      end
-    end
+  month = tonumber(month)
+  if not month or month < 1 or month > 24 then
+    return nil
   end
-  res = self:_apply_case(res, context)
-  res = self:_apply_format(res, context)
-  res = self:_apply_affixes(res, context)
-  res = self:_apply_display(res, context)
-  return res
+  local form = self.form or "long"
+  local res
+  if form == "long" or form == "short" then
+    if month >= 1 and month <= 12 then
+      res = context:get_simple_term(string.format("month-%02d", month), form)
+    else
+      local season = month % 4
+      if season == 0 then
+        season = 4
+      end
+      res = context:get_simple_term(string.format("season-%02d", season))
+    end
+  elseif form == "numeric-leading-zeros" then
+    res = string.format("%02d", month)
+  else
+    res = tostring(month)
+  end
+  return self:apply_strip_periods(res)
+end
+
+function DatePart:render_year(year, engine, state, context)
+  if not year then
+    return nil
+  end
+  year = tonumber(year)
+  if year == 0 then
+    return nil
+  end
+  local form = self.form or "long"
+  if form == "long" then
+    if year < 0 then
+      return tostring(-year) .. context:get_simple_term("bc")
+    elseif year < 1000 then
+      return tostring(year) .. context:get_simple_term("ad")
+    else
+      return tostring(year)
+    end
+  elseif form == "short" then
+    return string.sub(tostring(year), -2)
+  end
 end
 
 

@@ -76,7 +76,7 @@ Locale.form_fallbacks = {
 }
 
 -- Keep in sync with Terms:from_node
-function Locale:get_simple_term(name, plural, form)
+function Locale:get_simple_term(name, form, plural)
   form = form or "long"
   for _, fallback_form in ipairs(self.form_fallbacks[form]) do
     local key = name
@@ -229,6 +229,7 @@ function Term:from_node(node)
   local o = Term:new()
 
   o.name = node:get_attribute("name")
+  o.form = node:get_attribute("form")
   if o.children then
     for _, child in ipairs(node:get_children()) do
       if child:is_element() then

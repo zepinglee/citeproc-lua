@@ -13,6 +13,7 @@ skipped_fixtures = [
     'locale_TitleCaseGarbageLangEmptyLocale.txt',
     'magic_StripPeriodsFalse.txt',
     'magic_StripPeriodsTrue.txt',
+    'punctuation_FrenchOrthography.txt',
 ]
 
 with open('./test/citeproc-test.log') as f:
@@ -34,11 +35,13 @@ paths = sorted(['./test/test-suite/processor-tests/humans/' + f
                 for f in failed_fixtures if f not in skipped_fixtures
                 # and not f.startswith('bugreports_')
                 and not f.startswith('collapse_')
-                and not f.startswith('date_')
+                # and not f.startswith('date_')
                 and not f.startswith('decorations_')
                 and not f.startswith('disambiguate_')
                 and not f.startswith('flipflop_')
                 and not f.startswith('name_')
+                and not f.startswith('number_')
+                and not f.startswith('textcase_')
                 ])
 
 for path in paths:

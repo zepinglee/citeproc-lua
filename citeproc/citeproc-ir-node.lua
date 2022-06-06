@@ -11,7 +11,7 @@ local util = require("citeproc-util")
 
 local IrNode = {
   type = "IrNode",
-  base_type = "IrNode",
+  base_class = "IrNode",
   element_name = nil,
   text = nil,
   formatting = nil,
@@ -24,7 +24,7 @@ function IrNode:new(children)
   local o = {
     type = self.type,
     children = children,
-    base_type = self.base_type,
+    base_class = self.base_class,
     group_var = "plain",
     -- element = element,
   }
@@ -36,7 +36,7 @@ end
 function IrNode:derive(type)
   local o = {
     type = type,
-    base_type = self.base_type,
+    base_class = self.base_class,
   }
   setmetatable(o, self)
   self.__index = self
@@ -55,7 +55,7 @@ end
 function IrNode:flatten_seq(format)
   local inlines_list = {}
   for _, child in ipairs(self.children) do
-    table.insert(inlines_list, child:flatten())
+    table.insert(inlines_list, child:flatten(format))
   end
 
   local inlines = format:group(inlines_list, self.delimiter, self.formatting)
@@ -82,7 +82,7 @@ function Rendered:new(inlines, element)
     inlines = inlines,
     element = element,
     type = self.type,
-    base_type = self.base_type,
+    base_class = self.base_class,
     group_var = "plain",
   }
   setmetatable(o, self)

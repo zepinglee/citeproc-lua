@@ -108,7 +108,7 @@ function Text:build_macro_ir(engine, state, context)
 end
 
 function Text:build_term_ir(engine, state, context)
-  local str = context:get_simple_term(self.term, self.plural, self.form)
+  local str = context:get_simple_term(self.term, self.form, self.plural)
   local inlines = self:render_text_inlines(str, context)
   return Rendered:new(inlines)
 end

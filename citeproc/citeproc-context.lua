@@ -102,6 +102,10 @@ function Context:get_number(name)
   end
 end
 
+function Context:get_localized_date(form)
+  return self.locale.dates[form]
+end
+
 function Context:get_macro(name)
   local res = self.style.macros[name]
   if not res then
@@ -112,7 +116,7 @@ end
 
 function Context:get_simple_term(name, form, plural)
   assert(self.locale)
-  return self.locale:get_simple_term(name, plural, form)
+  return self.locale:get_simple_term(name, form, plural)
 end
 
 function Context:get_localized_quotes()
