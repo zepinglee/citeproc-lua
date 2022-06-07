@@ -6,6 +6,7 @@
 
 local output_module = {}
 
+local unicode = require("unicode")
 local dom = require("luaxml-domobject")
 
 local util = require("citeproc-util")
@@ -547,6 +548,70 @@ end
 
 function OutputFormat:with_format(inlines, formatting)
   return self:format_list(inlines, formatting)
+end
+
+function OutputFormat:apply_text_case(inlines, text_case)
+  if not inlines or #inlines == 0 or not text_case then
+    return inlines
+  end
+  local is_uppercase = false  -- TODO
+  self:apply_text_case_inner(inlines, text_case, false, is_uppercase)
+end
+
+function OutputFormat:apply_text_case_inner(inlines, text_case, seen_one, is_uppercase)
+  for i, inline in ipairs(inlines) do
+    if inline.type == "PlainText" then
+      local is_last = (i == #inlines)
+      inline.value = self.transform_case(inline.value, text_case, seen_one, is_last, is_uppercase);
+      -- seen_one = string_contains_word(txt.as_ref()) || seen_one;
+    elseif inline.type ~= "NoCase" then
+      self:apply_text_case(inline.inlines, text_case)
+    end
+  end
+end
+
+function OutputFormat:transform_case(str, text_case, seen_one, is_last, is_uppercase)
+  local res = str
+  if text_case == "lowercase" then
+    res = self:transform_lowercase(str)
+  elseif text_case == "uppercase" then
+    res = self:transform_uppercase(str)
+  elseif text_case == "capitalize-first" then
+  elseif text_case == "capitalize-all" then
+  elseif text_case == "sentence" then
+  elseif text_case == "title" then
+    res = self:transform_title_case(str, seen_one, is_last)
+  end
+  return res
+end
+
+function OutputFormat:transform_lowercase(str)
+  return string.gsub(str, utf8.charpattern, unicode.utf8.lower)
+end
+
+function OutputFormat:transform_uppercase(str)
+  return string.gsub(str, utf8.charpattern, unicode.utf8.upper)
+end
+
+local function title_case_word(word, is_uppercase, no_stop_word)
+  if is_uppercase then
+    local lower = string.gsub(word, utf8.charpattern, unicode.utf8.lower)
+    return string.gsub(lower, utf8.charpattern, unicode.utf8.upper, 1)
+  else
+    if util.is_lower(word) then
+      return string.gsub(word, utf8.charpattern, unicode.utf8.upper, 1)
+    else
+      return word
+    end
+  end
+end
+
+function OutputFormat:transform_title_case(str, seen_one, is_last)
+  return self:transform_each_word(str, seen_one, is_last, title_case_word)
+end
+
+function OutputFormat:transform_each_word(str, seen_one, is_last, transform)
+
 end
 
 function OutputFormat:affixed_quoted(inlines, affixes, localized_quotes)

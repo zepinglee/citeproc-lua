@@ -50,7 +50,7 @@ paths = sorted(['./test/test-suite/processor-tests/humans/' + f
                 and not f.startswith('nameattr_')
                 and not f.startswith('nameorder_')
                 and not f.startswith('number_')
-                and not f.startswith('textcase_')
+                # and not f.startswith('textcase_')
                 ])
 
 for path in paths:

@@ -177,7 +177,6 @@ end
 
 function Element:render_text_inlines(str, context)
   str = self:apply_strip_periods(str)
-  str = self:apply_text_case(str)
   -- TODO: try links
 
   local output_format = context.format
@@ -187,6 +186,7 @@ function Element:render_text_inlines(str, context)
   end
 
   local inlines = InlineElement:parse(str)
+  inlines = output_format:apply_text_case(inlines, self.text_case)
   inlines = output_format:with_format(inlines, self.formatting)
   inlines = output_format:affixed_quoted(inlines, self.affixes, localized_quotes)
   return output_format:with_display(inlines, self.display)
@@ -488,11 +488,6 @@ function Element:apply_strip_periods(str)
     res = string.gsub(str, "%.", "")
   end
   return res
-end
-
-function Element:apply_text_case(str)
-  -- TODO
-  return str
 end
 
 
