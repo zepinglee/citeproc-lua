@@ -11,6 +11,14 @@ local inspect  -- only load it when debugging
 
 local util = {}
 
+function util.clone(t)
+  local res = {}
+  for key, value in pairs(t) do
+    res[key] = value
+  end
+  return res
+end
+
 function util.join(list, delimiter)
   local res = {}
   for i, item in ipairs(list) do

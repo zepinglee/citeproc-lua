@@ -664,8 +664,7 @@ function OutputFormat:with_display(nodes, display)
 end
 
 function OutputFormat:output(inlines, punctuation_in_quote)
-  -- TODO: flip-flop
-  -- inlines = self:flip_flop_inlines(inlines)
+  self:flip_flop_inlines(inlines)
 
   if punctuation_in_quote then
     self:move_punctuation(inlines)
@@ -682,8 +681,7 @@ function OutputFormat:output(inlines, punctuation_in_quote)
 end
 
 function OutputFormat:output_bibliography_entry(inlines, punctuation_in_quote)
-  -- TODO: flip-flop
-  -- inlines = self:flip_flop_inlines(inlines)
+  self:flip_flop_inlines(inlines)
   if punctuation_in_quote then
     self:move_punctuation(inlines)
   end
@@ -694,6 +692,45 @@ function OutputFormat:output_bibliography_entry(inlines, punctuation_in_quote)
   -- end
   local res = markup_writer:write_inlines(inlines)
   return string.format(markup_writer.markups["@bibliography/entry"], res)
+end
+
+function OutputFormat:flip_flop_inlines(inlines)
+  local flip_flop_state = {
+    font_style = "normal",
+    font_variant = "normal",
+    font_weight = "normal",
+    text_decoration = "none",
+    vertical_alignment = "baseline",
+    in_inner_quotes = false,
+  }
+  self:flip_flop(inlines, flip_flop_state)
+end
+
+function OutputFormat:flip_flop(inlines, state)
+  for _, inline in ipairs(inlines) do
+    if inline.type == "Formatted" then
+      local new_state = util.clone(state)
+      local formatting = inline.formatting
+
+      for _, attribute in ipairs({"font_style", "font_variant", "font_weight"}) do
+        local value = formatting[attribute]
+        if value then
+          if value == state[attribute] then
+            state[attribute] = nil
+          end
+          new_state[attribute] = value
+        end
+      end
+      self:flip_flop(inline.inlines, new_state)
+
+    elseif inline.type == "Quoted" then
+      inline.is_inner = state.in_inner_quotes
+      local new_state = util.clone(state)
+      new_state.in_inner_quotes = not new_state.in_inner_quotes
+      self:flip_flop(inline.inlines, new_state)
+
+    end
+  end
 end
 
 function OutputFormat:move_punctuation(inlines)
