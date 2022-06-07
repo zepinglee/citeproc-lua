@@ -27,10 +27,10 @@ end
 function Layout:build_ir(engine, state, context)
   local ir = self:build_children_ir(engine, state, context)
   if context.in_bibliography then
-    ir = self:apply_delimiter(ir)
+    ir.delimiter = self.delimiter
   end
-  ir = self:apply_formatting(ir)
-  ir = self:apply_affixes(ir)
+  ir.formatting = util.clone(self.formatting)
+  ir.affixes = util.clone(self.affixes)
   return ir
 end
 

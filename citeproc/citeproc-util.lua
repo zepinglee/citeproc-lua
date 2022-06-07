@@ -12,6 +12,9 @@ local inspect  -- only load it when debugging
 local util = {}
 
 function util.clone(t)
+  if not t then
+    return t
+  end
   local res = {}
   for key, value in pairs(t) do
     res[key] = value

@@ -712,11 +712,11 @@ function OutputFormat:flip_flop(inlines, state)
       local new_state = util.clone(state)
       local formatting = inline.formatting
 
-      for _, attribute in ipairs({"font_style", "font_variant", "font_weight"}) do
+      for _, attribute in ipairs({"font-style", "font-variant", "font-weight"}) do
         local value = formatting[attribute]
-        if value then
+        if value and value~= "normal" then
           if value == state[attribute] then
-            state[attribute] = nil
+            formatting[attribute] = "normal"
           end
           new_state[attribute] = value
         end

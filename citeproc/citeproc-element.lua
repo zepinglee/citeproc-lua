@@ -425,25 +425,25 @@ function Element:set_text_case_attribute(node)
   self:set_attribute(node, "text-case")
 end
 
-function Element:apply_formatting(ir)
-  local attributes = {
-    "font_style",
-    "font_variant",
-    "font_weight",
-    "text_decoration",
-    "vertical_align",
-  }
-  for _, attribute in ipairs(attributes) do
-    local value = self[attribute]
-    if value then
-      if not ir.formatting then
-        ir.formatting = {}
-      end
-      ir.formatting[attribute] = value
-    end
-  end
-  return ir
-end
+-- function Element:apply_formatting(ir)
+--   local attributes = {
+--     "font_style",
+--     "font_variant",
+--     "font_weight",
+--     "text_decoration",
+--     "vertical_align",
+--   }
+--   for _, attribute in ipairs(attributes) do
+--     local value = self[attribute]
+--     if value then
+--       if not ir.formatting then
+--         ir.formatting = {}
+--       end
+--       ir.formatting[attribute] = value
+--     end
+--   end
+--   return ir
+-- end
 
 function Element:apply_affixes(ir)
   if ir then

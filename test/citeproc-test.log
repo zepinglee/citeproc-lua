@@ -1,11 +1,11 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                3       2       4       0
-bugreports          10       8      64       0
+bugreports           9       9      64       0
 collapse             0      11      10       0
 condition            5      11       1       0
 date                79       8      14       0
-decorations          3       2       2       0
+decorations          4       1       2       0
 disambiguate         0       4      67       0
 display              0       0       5       0
 etal                 0       0       4       0
@@ -48,7 +48,7 @@ Expected:
 
 Failure → citeproc test test-suite affix_TextNodeWithMacro.txt
 Passed in:
-(string) 'OneTwo'
+(string) 'OneTwo.'
 Expected:
 (string) 'One. Two.'
 
@@ -70,13 +70,13 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_DelimiterOnLayout.txt
 Passed in:
-(string) '>>[0] Fig.(z)Fig.'
+(string) '>>[0] (Fig.)(z)(Fig.)'
 Expected:
 (string) '>>[0] (fig.1(z)fig.2)'
 
 Failure → citeproc test test-suite bugreports_DelimitersOnLocator.txt
 Passed in:
-(string) ', 32; , 32; , 32'
+(string) '[, 32]; [, 32]; [, 32]'
 Expected:
 (string) '[1, 32; 2, 32; 3, 32]'
 
@@ -104,6 +104,12 @@ Passed in:
 Expected:
 (string) 'PhD. diss.'
 
+Failure → citeproc test test-suite bugreports_TitleCase.txt
+Passed in:
+(string) 'One but Two or Three yet Four so Five for Six and Seven nor Eight a Nine an Ten the Eleven at Twelve by Thirteen from Fourteen in Fifteen into Sixteen of Seventeen on Eighteen to Nineteen with Twenty up Twenty-One down Twenty-Two as Twenty-Three via Twenty-Four till Twenty-Five onto Twenty-Six over Twenty-Seven..'
+Expected:
+(string) 'One but Two or Three yet Four so Five for Six and Seven nor Eight a Nine an Ten the Eleven at Twelve by Thirteen from Fourteen in Fifteen into Sixteen of Seventeen on Eighteen to Nineteen with Twenty up Twenty-One down Twenty-Two as Twenty-Three via Twenty-Four till Twenty-Five onto Twenty-Six over Twenty-Seven.'
+
 Failure → citeproc test test-suite collapse_CitationNumberRangesInsert.txt
 Passed in:
 (string) '..[0] [CSL STYLE ERROR: reference with no printed form.]
@@ -114,24 +120,24 @@ Expected:
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesMixed.txt
 Passed in:
-(string) ', , , , , , 
-, , , , , '
+(string) '(), (), (), (), (), (), ()
+(), (), (), (), (), ()'
 Expected:
 (string) '([1]–[7])
 ([1]–[3], [5]–[7])'
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesMixed2.txt
 Passed in:
-(string) ', , , , , , , , , , 
-, , , , , , , '
+(string) '(), (), (), (), (), (), (), (), (), (), ()
+(), (), (), (), (), (), (), ()'
 Expected:
 (string) '([1]–[11])
 ([1], [3]–[5], [7], [9]–[11])'
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesMixed3.txt
 Passed in:
-(string) ', , , , , , , 
-, , , , '
+(string) '(), (), (), (), (), (), (), ()
+(), (), (), (), ()'
 Expected:
 (string) '([1]–[8])
 ([1], [4], [6]–[8])'
@@ -139,7 +145,7 @@ Expected:
 Failure → citeproc test test-suite collapse_CitationNumberRangesOneOnly.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"></div>
+  <div class="csl-entry">.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -148,37 +154,37 @@ Expected:
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixes.txt
 Passed in:
-(string) ',,'
+(string) '(<b></b>),(<b></b>),(<b></b>)'
 Expected:
 (string) '<b>([1]–[3])</b>'
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGrouped.txt
 Passed in:
-(string) ',,'
+(string) '(<b></b>),(<b></b>),(<b></b>)'
 Expected:
 (string) '<b>([1]–[3])</b>'
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGroupedLocator.txt
 Passed in:
-(string) ',[ 23],'
+(string) '(<b></b>),(<b>[ 23]</b>),(<b></b>)'
 Expected:
 (string) '<b>([1],[2, p. 23],[3])</b>'
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesNoCollapse.txt
 Passed in:
-(string) ',,'
+(string) '(<b></b>),(<b></b>),(<b></b>)'
 Expected:
 (string) '<b>([1],[2],[3])</b>'
 
 Failure → citeproc test test-suite collapse_NumericDuplicate.txt
 Passed in:
-(string) ',,,,'
+(string) '(),(),(),(),()'
 Expected:
 (string) '(1,2,2–4)'
 
 Failure → citeproc test test-suite collapse_NumericDuplicate2.txt
 Passed in:
-(string) ',,,,,'
+(string) '(),(),(),(),(),()'
 Expected:
 (string) '(1–3,3–5)'
 
@@ -308,7 +314,7 @@ Expected:
 
 Failure → citeproc test test-suite date_SortEmptyDatesCitation.txt
 Passed in:
-(string) 'BookA; BookB 2000; BookC; BookD 1999; BookE'
+(string) 'BookA.; BookB 2000.; BookC.; BookD 1999.; BookE.'
 Expected:
 (string) 'BookD 1999; BookB 2000; BookA; BookC; BookE.'
 
@@ -320,27 +326,21 @@ Expected:
 
 Failure → citeproc test test-suite decorations_NoNormalWithoutDecoration.txt
 Passed in:
-(string) '<span style="font-style:normal;">His Anonymous Life</span>
+(string) '<span style="font-weight:normal;"><span style="font-style:normal;">His Anonymous Life</span>
 <i>His Anonymous Life</i>
-<i><span style="font-style:normal;">His Anonymous Life</span></i>'
+<i><span style="font-style:normal;">His Anonymous Life</span></i></span>'
 Expected:
 (string) 'His Anonymous Life
 <i>His Anonymous Life</i>
 <i><span style="font-style:normal;">His Anonymous Life</span></i>'
 
-Failure → citeproc test test-suite decorations_SimpleFlipFlop.txt
-Passed in:
-(string) '<i>My <i>Amazing</i> Title</i>'
-Expected:
-(string) '<i>My <span style="font-style:normal;">Amazing</span> Title</i>'
-
 Failure → citeproc test test-suite disambiguate_BasedOnSubsequentFormWithBackref2.txt
 Passed in:
-(string) '..[0] FAILED TO MATCH; FAILED TO MATCH
-..[1] FAILED TO MATCH
-..[2] FAILED TO MATCH
-..[3] FAILED TO MATCH
->>[4] FAILED TO MATCH'
+(string) '..[0] FAILED TO MATCH.; FAILED TO MATCH.
+..[1] FAILED TO MATCH.
+..[2] FAILED TO MATCH.
+..[3] FAILED TO MATCH.
+>>[4] FAILED TO MATCH.'
 Expected:
 (string) '..[0] John Doe, His Book (2000); John Doe, His Other Book (2001).
 ..[1] Jane Roe, Her Book (1998).
@@ -378,14 +378,14 @@ Expected:
 
 Failure → citeproc test test-suite flipflop_BoldfaceNodeLevelMarkup.txt
 Passed in:
-(string) 'friend'
+(string) 'Speak, <b>friend</b>, and enter.'
 Expected:
 (string) '<b>Speak, <span style="font-weight:normal;">friend</span>, and enter.</b>'
 
 Failure → citeproc test test-suite flipflop_ItalicsFlipped.txt
 Passed in:
-(string) '<i>One Two <i>Three</i> Four Five!</i>
-<i>One <i>Two <i>Three</i> Four</i> Five!</i>'
+(string) '<i>One Two <span style="font-style:normal;">Three</span> Four Five!</i>
+<i>One <span style="font-style:normal;">Two <span style="font-style:normal;">Three</span> Four</span> Five!</i>'
 Expected:
 (string) '<i>One Two <span style="font-style:normal;">Three</span> Four Five!</i>
 <i>One <span style="font-style:normal;">Two <i>Three</i> Four</span> Five!</i>'
@@ -440,7 +440,7 @@ Expected:
 
 Failure → citeproc test test-suite flipflop_QuotesInFieldNotOnNode.txt
 Passed in:
-(string) 'friend'
+(string) 'Speak, friend, and enter.'
 Expected:
 (string) 'Speak, “friend,” and enter.'
 
@@ -488,17 +488,17 @@ Expected:
 
 Failure → citeproc test test-suite integration_CitationSort.txt
 Passed in:
-(string) 'Ibid.; Ibid.; Ibid.; Ibid.'
+(string) '(Ibid.); (Ibid.); (Ibid.); (Ibid.)'
 Expected:
 (string) '(Doe; Noakes; Roe; Snoakes)'
 
 Failure → citeproc test test-suite integration_FirstReferenceNoteNumberPositionChange.txt
 Passed in:
-(string) '>>[0] Ibid.
-..[1] Ibid.
-..[2] Ibid.
-..[3] Ibid.
-..[4] Ibid.'
+(string) '>>[0] Ibid..
+..[1] Ibid..
+..[2] Ibid..
+..[3] Ibid..
+..[4] Ibid..'
 Expected:
 (string) '>>[0] Snoakes, “Life of Snoakes” (1902).
 >>[1] Doe, “Life of Doe” (1901).
@@ -508,10 +508,10 @@ Expected:
 
 Failure → citeproc test test-suite integration_IbidOnInsert.txt
 Passed in:
-(string) '..[0] Ibid.
->>[1] Ibid.
-..[2] Ibid.
-..[3] Ibid.'
+(string) '..[0] (Ibid.)
+>>[1] (Ibid.)
+..[2] (Ibid.)
+..[3] (Ibid.)'
 Expected:
 (string) '..[0] (Doe p. 12)
 >>[1] (Noakes p. 34)
@@ -520,10 +520,10 @@ Expected:
 
 Failure → citeproc test test-suite integration_IbidWithDifferentLocators.txt
 Passed in:
-(string) '..[0] huh?
-..[1] huh?
-..[2] huh?
->>[3] huh?'
+(string) '..[0] (huh?)
+..[1] (huh?)
+..[2] (huh?)
+>>[3] (huh?)'
 Expected:
 (string) '..[0] (Doe p. 12)
 ..[1] (ibid-with-locator)
@@ -532,10 +532,10 @@ Expected:
 
 Failure → citeproc test test-suite integration_SimpleFirstReferenceNoteNumber.txt
 Passed in:
-(string) '..[0] Ibid.
-..[1] Ibid.
-..[2] Ibid.
->>[3] Ibid.'
+(string) '..[0] Ibid..
+..[1] Ibid..
+..[2] Ibid..
+>>[3] Ibid..'
 Expected:
 (string) '..[0] Doe, “Life of Doe” (1901).
 ..[1] Roe, “Life of Roe” (1900).
@@ -544,16 +544,16 @@ Expected:
 
 Failure → citeproc test test-suite integration_SimpleIbid.txt
 Passed in:
-(string) '..[0] huh?; huh?
->>[1] huh?; huh?; huh?'
+(string) '..[0] (huh?); (huh?)
+>>[1] (huh?); (huh?); (huh?)'
 Expected:
 (string) '..[0] (Doe p. 12; Roe p. 23)
 >>[1] (Noakes p. 34; ibid.; Snoakes p. 45)'
 
 Failure → citeproc test test-suite integration_SubsequentWhenInterveningFootnote.txt
 Passed in:
-(string) '..[0] I am ibid or ibid-with-locator
->>[1] I am ibid or ibid-with-locator'
+(string) '..[0] (I am ibid or ibid-with-locator)
+>>[1] (I am ibid or ibid-with-locator)'
 Expected:
 (string) '..[0] (Doe)
 >>[1] (I am subsequent)'
@@ -696,7 +696,7 @@ Book With Sub Verbo, 200'
 
 Failure → citeproc test test-suite magic_ImplicitYearSuffixExplicitDelimiter.txt
 Passed in:
-(string) '1965; 1965'
+(string) '(1965); (1965)'
 Expected:
 (string) '(1965a,b)'
 
@@ -714,7 +714,7 @@ Expected:
 
 Failure → citeproc test test-suite magic_StripPeriodsTrue.txt
 Passed in:
-(string) '“An Article”, Am LJ'
+(string) '“An Article”, Am LJ.'
 Expected:
 (string) '“An Article,” Am LJ.'
 
@@ -800,8 +800,8 @@ Expected:
 
 Failure → citeproc test test-suite position_FirstTrueOnlyOnce.txt
 Passed in:
-(string) '..[0] WTF?
->>[1] WTF?'
+(string) '..[0] WTF?.
+>>[1] WTF?.'
 Expected:
 (string) '..[0] Appleton “Tom Swift and His Electric Runabout” (1910).
 >>[1] Ibid. p. 23.'
@@ -814,16 +814,16 @@ Expected:
 
 Failure → citeproc test test-suite position_IfIbidIsTrueThenSubsequentIsTrue.txt
 Passed in:
-(string) 'WTF?
-WTF?'
+(string) 'WTF?.
+WTF?.'
 Expected:
 (string) 'Appleton “Tom Swift and His Electric Runabout” (1910).
 SUBSEQUENT.'
 
 Failure → citeproc test test-suite position_IfIbidWithLocatorIsTrueThenIbidIsTrue.txt
 Passed in:
-(string) 'WTF?
-WTF?'
+(string) 'WTF?.
+WTF?.'
 Expected:
 (string) 'Appleton “Tom Swift and His Electric Runabout” (1910).
 Ibid.'
@@ -1332,8 +1332,8 @@ Expected:
 
 Failure → citeproc test test-suite sort_RangeUnaffected.txt
 Passed in:
-(string) '>>[0] [CSL STYLE ERROR: reference with no printed form.]
-..[1] ,,'
+(string) '>>[0] <sup></sup>
+..[1] <sup></sup>,<sup></sup>,<sup></sup>'
 Expected:
 (string) '>>[0] <sup>1</sup>
 >>[1] <sup>1–3</sup>'
@@ -2014,7 +2014,7 @@ Error → citeproc test test-suite group_ComplexNesting.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite group_LegalWithAuthorDate.txt
-./citeproc/citeproc-util.lua:218: bad argument #1 to 'gmatch' (string expected, got table)
+./citeproc/citeproc-util.lua:221: bad argument #1 to 'gmatch' (string expected, got table)
 
 Error → citeproc test test-suite group_SuppressWithEmptyNestedDateNode.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2071,7 +2071,7 @@ Error → citeproc test test-suite locator_SimpleLocators.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite magic_AllowRepeatDateRenderings.txt
-./citeproc/citeproc-util.lua:218: bad argument #1 to 'gmatch' (string expected, got table)
+./citeproc/citeproc-util.lua:221: bad argument #1 to 'gmatch' (string expected, got table)
 
 Error → citeproc test test-suite magic_CapitalizeFirstOccurringNameParticle.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
@@ -2830,7 +2830,7 @@ Error → citeproc test test-suite position_IbidWithSuffix.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite position_NearNoteWithPlugin.txt
-./citeproc/citeproc-util.lua:218: bad argument #1 to 'gmatch' (string expected, got table)
+./citeproc/citeproc-util.lua:221: bad argument #1 to 'gmatch' (string expected, got table)
 
 Error → citeproc test test-suite punctuation_DefaultYearSuffixDelimiter.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -3040,16 +3040,16 @@ Error → citeproc test test-suite substitute_SharedMacro.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite substitute_SubstituteOnlyOnceString.txt
-./citeproc/citeproc-util.lua:110: Invalid string.
+./citeproc/citeproc-util.lua:113: Invalid string.
 
 Error → citeproc test test-suite substitute_SubstituteOnlyOnceTerm.txt
-./citeproc/citeproc-util.lua:110: Invalid string.
+./citeproc/citeproc-util.lua:113: Invalid string.
 
 Error → citeproc test test-suite substitute_SubstituteOnlyOnceTermEmpty.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
 
 Error → citeproc test test-suite substitute_SubstituteOnlyOnceVariable.txt
-./citeproc/citeproc-util.lua:110: Invalid string.
+./citeproc/citeproc-util.lua:113: Invalid string.
 
 Error → citeproc test test-suite substitute_SuppressOrdinaryVariable.txt
 ./citeproc/citeproc-node-names.lua:609: attempt to index a nil value (field 'name')
