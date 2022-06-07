@@ -19,6 +19,7 @@ local formats = require("citeproc-formats")
 local OutputFormat = require("citeproc-output").OutputFormat
 local InlineElement = require("citeproc-output").InlineElement
 local PlainText = require("citeproc-output").PlainText
+local HtmlWriter = require("citeproc-output").HtmlWriter
 local util = require("citeproc-util")
 
 
@@ -351,7 +352,14 @@ function CiteProc:makeCitationCluster (citation_items)
 end
 
 function CiteProc:makeBibliography()
-  local params = {}
+  local output_format = OutputFormat:new()
+  local html_writer = HtmlWriter:new()
+
+  local params = {
+    -- TODO: change to other formats
+    bibstart = html_writer.markups["bibstart"],
+    bibend = html_writer.markups["bibend"],
+  }
   local res = {}
 
   if not self.style_element.bibliography then
@@ -365,23 +373,23 @@ function CiteProc:makeBibliography()
     local context = Context:new()
     context.style = self.style_element
     context.locale = self:get_locale(self.lang)
+    context.format = output_format
     context.id = id
     context.cite = nil
     context.reference = self:get_item(id)
 
-    local ir = self.style.bibliography:build_ir(self, state, context)
+    local ir = self.style_element.bibliography:build_ir(self, state, context)
 
     -- subsequent_author_substitute
 
-    local format = OutputFormat:new()
-    local flat = ir:flatten(format)
+    local flat = ir:flatten(output_format)
 
-    local str = format:output(flat)
+    local str = output_format:output_bibliography_entry(flat)
 
     table.insert(res, str)
   end
 
-  return params, res
+  return {params, res}
 end
 
 function CiteProc:get_sorted_refs()

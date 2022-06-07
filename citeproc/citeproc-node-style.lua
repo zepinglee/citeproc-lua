@@ -241,7 +241,7 @@ function Citation:render (items, context)
 end
 
 
-local Bibliography = Element:derive("citation")
+local Bibliography = Element:derive("bibliography")
 
 function Bibliography:from_node(node)
   local o = Bibliography:new()

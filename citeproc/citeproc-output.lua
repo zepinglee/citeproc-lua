@@ -380,6 +380,129 @@ function InlineElement:capitalize_first_term()
 end
 
 
+local MarkupWriter = {}
+
+function MarkupWriter:new()
+  local o = {}
+  setmetatable(o, self)
+  self.__index = self
+  return o
+end
+
+function MarkupWriter:derive()
+  local o = {}
+  setmetatable(o, self)
+  self.__index = self
+  return o
+end
+
+function MarkupWriter:write_inlines(inlines)
+  local res = ""
+  for _, node in ipairs(inlines) do
+    res = res .. self:write_inline(node)
+  end
+  return res
+end
+
+function MarkupWriter:write_inline(inline)
+  if type(inline) == "string" then
+    return self:write_escaped(inline)
+
+  elseif type(inline) == "table" then
+    -- util.debug(inline.type)
+    if inline.type == "PlainText" then
+      return self:write_escaped(inline.value)
+
+    elseif inline.type == "InlineElement" then
+      return self:write_children(inline)
+
+    elseif inline.type == "Formatted" then
+      return self:write_formatted(inline)
+
+    elseif inline.type == "Quoted" then
+      return self:write_quoted(inline)
+
+    elseif inline.type == "Div" then
+      return self:write_formatted(inline)
+
+    elseif inline.type == "Linked" then
+      return self:write_link(inline)
+
+      -- local res = ""
+      -- for _, node in ipairs(inline.inlines) do
+      --   res = res .. self:write_inline(node)
+      -- end
+      -- return res
+
+    end
+  end
+  return ""
+end
+
+function MarkupWriter:write_children(inline)
+  local res = ""
+  for _, child_inline in ipairs(inline.inlines) do
+    res = res .. self:write_inline(child_inline)
+  end
+  return res
+end
+
+function MarkupWriter:write_quoted(inline)
+  local res = self:write_children(inline)
+  local quotes = inline.quotes
+  if inline.is_inner then
+    return quotes.inner_open .. res .. quotes.inner_close
+  else
+    return quotes.outer_open .. res .. quotes.outer_close
+  end
+end
+
+
+local HtmlWriter = MarkupWriter:derive()
+
+HtmlWriter.markups = {
+  ["bibstart"] = "<div class=\"csl-bib-body\">\n",
+  ["bibend"] = "</div>",
+  ["@font-style/italic"] = "<i>%s</i>",
+  ["@font-style/oblique"] = "<em>%s</em>",
+  ["@font-style/normal"] = '<span style="font-style:normal;">%s</span>',
+  ["@font-variant/small-caps"] = '<span style="font-variant:small-caps;">%s</span>',
+  ["@font-variant/normal"] = '<span style="font-variant:normal;">%s</span>',
+  ["@font-weight/bold"] = "<b>%s</b>",
+  ["@font-weight/normal"] = '<span style="font-weight:normal;">%s</span>',
+  ["@font-weight/light"] = false,
+  ["@text-decoration/none"] = '<span style="text-decoration:none;">%s</span>',
+  ["@text-decoration/underline"] = '<span style="text-decoration:underline;">%s</span>',
+  ["@vertical-align/sup"] = "<sup>%s</sup>",
+  ["@vertical-align/sub"] = "<sub>%s</sub>",
+  ["@vertical-align/baseline"] = '<span style="baseline">%s</span>',
+  ["@cite/entry"] = "%s",
+  ["@bibliography/entry"] = "<div class=\"csl-entry\">%s</div>\n"
+}
+
+function HtmlWriter:write_escaped(str)
+  str = string.gsub(str, "%&", "&#38;")
+  str = string.gsub(str, "<", "&#60;")
+  str = string.gsub(str, ">", "&#62;")
+  for char, sub in pairs(util.superscripts) do
+    str = string.gsub(str, char, "<sup>" .. sub .. "</sup>")
+  end
+  return str
+end
+
+function HtmlWriter:write_formatted(inline)
+  local res = self:write_children(inline)
+  for key, value in pairs(inline.formatting) do
+    key = "@" .. key .. "/" .. value
+    local format_str = self.markups[key]
+    if format_str then
+      res = string.format(format_str, res)
+    end
+  end
+  return res
+end
+
+
 local OutputFormat = {}
 
 function OutputFormat:new(format_name)
@@ -459,114 +582,40 @@ function OutputFormat:output(inlines, punctuation_in_quote)
     self:move_punctuation(inlines)
   end
 
-  return self:write_inlines(inlines)
+  local markup_writer = HtmlWriter:new()
+
+  -- TODO:
+  -- if self.format == "html" then
+  -- elseif self.format == "latex" then
+  -- end
+
+  return markup_writer:write_inlines(inlines)
+end
+
+function OutputFormat:output_bibliography_entry(inlines, punctuation_in_quote)
+  -- TODO: flip-flop
+  -- inlines = self:flip_flop_inlines(inlines)
+  if punctuation_in_quote then
+    self:move_punctuation(inlines)
+  end
+  local markup_writer = HtmlWriter:new()
+  -- TODO:
+  -- if self.format == "html" then
+  -- elseif self.format == "latex" then
+  -- end
+  local res = markup_writer:write_inlines(inlines)
+  return string.format(markup_writer.markups["@bibliography/entry"], res)
 end
 
 function OutputFormat:move_punctuation(inlines)
   -- TODO
 end
 
-function OutputFormat:write_inlines(inlines)
-  local res = ""
-  for _, node in ipairs(inlines) do
-    res = res .. self:write_inline(node)
-  end
-  return res
-end
-
-function OutputFormat:write_inline(inline)
-  if type(inline) == "string" then
-    return self:write_escaped(inline)
-
-  elseif type(inline) == "table" then
-    -- util.debug(inline.type)
-    if inline.type == "PlainText" then
-      return self:write_escaped(inline.value)
-
-    elseif inline.type == "InlineElement" then
-      return self:write_children(inline)
-
-    elseif inline.type == "Formatted" then
-      return self:write_formatted(inline)
-
-    elseif inline.type == "Quoted" then
-      return self:write_quoted(inline)
-
-    elseif inline.type == "Div" then
-      return self:write_formatted(inline)
-
-    elseif inline.type == "Linked" then
-      return self:write_link(inline)
-
-      -- local res = ""
-      -- for _, node in ipairs(inline.inlines) do
-      --   res = res .. self:write_inline(node)
-      -- end
-      -- return res
-
-    end
-  end
-  return ""
-end
-
-function OutputFormat:write_children(inline)
-  local res = ""
-  for _, inline in ipairs(inline.inlines) do
-    res = res .. self:write_inline(inline)
-  end
-  return res
-end
-
-function OutputFormat:write_escaped(str)
-  str = string.gsub(str, "%&", "&#38;")
-  str = string.gsub(str, "<", "&#60;")
-  str = string.gsub(str, ">", "&#62;")
-  for char, sub in pairs(util.superscripts) do
-    str = string.gsub(str, char, "<sup>" .. sub .. "</sup>")
-  end
-  return str
-end
-
-function OutputFormat:write_formatted(inline)
-  local res = self:write_children(inline)
-  for key, value in pairs(inline.formatting) do
-    key = "@" .. key .. "/" .. value
-    local format_str = self.html[key]
-    if format_str then
-      res = string.format(format_str, res)
-    end
-  end
-  return res
-end
-
-OutputFormat.html = {
-  ["@font-style/italic"] = "<i>%s</i>",
-  ["@font-style/oblique"] = "<em>%s</em>",
-  ["@font-style/normal"] = '<span style="font-style:normal;">%s</span>',
-  ["@font-variant/small-caps"] = '<span style="font-variant:small-caps;">%s</span>',
-  ["@font-variant/normal"] = '<span style="font-variant:normal;">%s</span>',
-  ["@font-weight/bold"] = "<b>%s</b>",
-  ["@font-weight/normal"] = '<span style="font-weight:normal;">%s</span>',
-  ["@font-weight/light"] = false,
-  ["@text-decoration/none"] = '<span style="text-decoration:none;">%s</span>',
-  ["@text-decoration/underline"] = '<span style="text-decoration:underline;">%s</span>',
-  ["@vertical-align/sup"] = "<sup>%s</sup>",
-  ["@vertical-align/sub"] = "<sub>%s</sub>",
-  ["@vertical-align/baseline"] = '<span style="baseline">%s</span>',
-}
-
-function OutputFormat:write_quoted(inline)
-  local res = self:write_children(inline)
-  local quotes = inline.quotes
-  if inline.is_inner then
-    return quotes.inner_open .. res .. quotes.inner_close
-  else
-    return quotes.outer_open .. res .. quotes.outer_close
-  end
-end
 
 
 output_module.LocalizedQuotes = LocalizedQuotes
+
+output_module.HtmlWriter = HtmlWriter
 
 output_module.InlineElement = InlineElement
 output_module.PlainText = PlainText

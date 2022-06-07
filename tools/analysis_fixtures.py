@@ -7,11 +7,14 @@ import xml.etree.ElementTree as ET
 
 failed_fixtures = []
 skipped_fixtures = [
+    'affix_MovingPunctuation.txt',
     'bugreports_ApostropheOnParticle.txt',
     'bugreports_ArabicLocale.txt',
     'bugreports_FrenchApostrophe.txt',
     'bugreports_TitleCase.txt',
     'bugreports_EtAlSubsequent.txt',
+    'integration_DeleteName.txt',
+    'magic_CapitalizeFirstOccurringNameParticle.txt',
     'locale_TitleCaseEmptyLangEmptyLocale.txt',
     'locale_TitleCaseGarbageLangEmptyLocale.txt',
     'magic_StripPeriodsFalse.txt',
@@ -42,7 +45,10 @@ paths = sorted(['./test/test-suite/processor-tests/humans/' + f
                 and not f.startswith('decorations_')
                 and not f.startswith('disambiguate_')
                 and not f.startswith('flipflop_')
+                and not f.startswith('magic_Name')
                 and not f.startswith('name_')
+                and not f.startswith('nameattr_')
+                and not f.startswith('nameorder_')
                 and not f.startswith('number_')
                 and not f.startswith('textcase_')
                 ])

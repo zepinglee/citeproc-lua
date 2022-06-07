@@ -71,6 +71,13 @@ function Context:get_ordinary(name, form)
     return res
   end
 
+  if variable_name == "container-title-short" then
+    res = self.reference["journalAbbreviation"]
+    if res then
+      return res
+    end
+  end
+
   if form then
     res = self.reference[name]
     if res then
