@@ -8,6 +8,9 @@ local layout = {}
 
 local richtext = require("citeproc-richtext")
 local Element = require("citeproc-element").Element
+local Rendered = require("citeproc-ir-node").Rendered
+local SeqIr = require("citeproc-ir-node").SeqIr
+local PlainText = require("citeproc-output").PlainText
 local util = require("citeproc-util")
 
 
@@ -29,8 +32,19 @@ function Layout:build_ir(engine, state, context)
   if context.in_bibliography then
     ir.delimiter = self.delimiter
   end
-  ir.formatting = util.clone(self.formatting)
   ir.affixes = util.clone(self.affixes)
+  if self.affixes then
+    local irs = {}
+    if self.affixes.prefix then
+      table.insert(irs, Rendered:new(PlainText:new(self.affixes.prefix)))
+    end
+    table.insert(irs, ir)
+    if self.affixes.suffix then
+      table.insert(irs, Rendered:new(PlainText:new(self.affixes.suffix)))
+    end
+    ir = SeqIr:new(irs, self)
+  end
+  ir.formatting = util.clone(self.formatting)
   return ir
 end
 

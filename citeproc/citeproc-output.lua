@@ -144,21 +144,18 @@ function InlineElement:parse(str)
   -- Return a list of inlines
   local html_str = "<div>" .. str .. "</div>"
   local ok, html = pcall(dom.parse, html_str)
-  local el
+  local inlines
   if ok then
     local div = html:get_path("div")[1]
-    el = InlineElement:from_node(div)
+    local el = InlineElement:from_node(div)
+    inlines = el.inlines
   else
-    el = PlainText:new(str)
+    local el = PlainText:new(str)
+    inlines = {el}
   end
 
-  el = InlineElement:parse_quotes(el)
-
-  if el.inlines then
-    return el.inlines
-  else
-    return {el}
-  end
+  inlines = InlineElement:parse_quotes(inlines)
+  return inlines
 
 end
 
@@ -196,13 +193,11 @@ function InlineElement:from_node(node)
     end
   end
 
-  local el = InlineElement:new()
-  el.inlines = inlines
-  return el
+  return InlineElement:new(inlines)
 end
 
-function InlineElement:parse_quotes(inline)
-  local quote_fragments = InlineElement:get_quote_fragments(inline)
+function InlineElement:parse_quotes(inlines)
+  local quote_fragments = InlineElement:get_quote_fragments(inlines)
   -- util.debug(quote_fragments)
 
   local quote_stack = {}
@@ -277,21 +272,10 @@ function InlineElement:parse_quotes(inline)
     end
   end
 
-  if #elements == 1 then
-    return elements[1]
-  else
-    return InlineElement:new(elements)
-  end
-
+  return elements
 end
 
-function InlineElement:get_quote_fragments(inline)
-  local inlines
-  if inline.value then
-    inlines = {inline.value}
-  else
-    inlines = inline.inlines
-  end
+function InlineElement:get_quote_fragments(inlines)
   local fragments = {}
   for _, inline in ipairs(inlines) do
     if inline.type == "PlainText" then

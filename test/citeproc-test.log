@@ -9,7 +9,7 @@ decorations          4       1       2       0
 disambiguate         0       4      67       0
 display              0       0       5       0
 etal                 0       0       4       0
-flipflop             4      13       2       0
+flipflop             6      11       2       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
 group                1       3       3       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              172     149     533       0
+(all)              174     147     533       0
 
 Failure → citeproc test test-suite affix_MovingPunctuation.txt
 Passed in:
@@ -70,7 +70,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_DelimiterOnLayout.txt
 Passed in:
-(string) '>>[0] (Fig.)(z)(Fig.)'
+(string) '>>[0] (fig.)(z)(fig.)'
 Expected:
 (string) '>>[0] (fig.1(z)fig.2)'
 
@@ -154,25 +154,25 @@ Expected:
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixes.txt
 Passed in:
-(string) '(<b></b>),(<b></b>),(<b></b>)'
+(string) '<b>()</b>,<b>()</b>,<b>()</b>'
 Expected:
 (string) '<b>([1]–[3])</b>'
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGrouped.txt
 Passed in:
-(string) '(<b></b>),(<b></b>),(<b></b>)'
+(string) '<b>()</b>,<b>()</b>,<b>()</b>'
 Expected:
 (string) '<b>([1]–[3])</b>'
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGroupedLocator.txt
 Passed in:
-(string) '(<b></b>),(<b>[ 23]</b>),(<b></b>)'
+(string) '<b>()</b>,<b>([ 23])</b>,<b>()</b>'
 Expected:
 (string) '<b>([1],[2, p. 23],[3])</b>'
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesNoCollapse.txt
 Passed in:
-(string) '(<b></b>),(<b></b>),(<b></b>)'
+(string) '<b>()</b>,<b>()</b>,<b>()</b>'
 Expected:
 (string) '<b>([1],[2],[3])</b>'
 
@@ -372,15 +372,9 @@ Aalt02c'
 
 Failure → citeproc test test-suite flipflop_ApostropheInsideTag.txt
 Passed in:
-(string) 'l''''
+(string) ''
 Expected:
 (string) 'l’’’'
-
-Failure → citeproc test test-suite flipflop_BoldfaceNodeLevelMarkup.txt
-Passed in:
-(string) 'Speak, <b>friend</b>, and enter.'
-Expected:
-(string) '<b>Speak, <span style="font-weight:normal;">friend</span>, and enter.</b>'
 
 Failure → citeproc test test-suite flipflop_ItalicsFlipped.txt
 Passed in:
@@ -389,22 +383,6 @@ Passed in:
 Expected:
 (string) '<i>One Two <span style="font-style:normal;">Three</span> Four Five!</i>
 <i>One <span style="font-style:normal;">Two <i>Three</i> Four</span> Five!</i>'
-
-Failure → citeproc test test-suite flipflop_ItalicsSimple.txt
-Passed in:
-(string) 'One TwoA <i>Three Four</i> Five!
-<i>One TwoB</i> Three Four Five!
-One TwoC Three <i>Four Five!</i>
-<i>One TwoD</i> Three <i>Four Five!</i>
-One TwoE <i>Three</i> Four Five!
-One TwoF&#60;/i&#62; Three Four Five!'
-Expected:
-(string) 'One TwoA <i>Three Four</i> Five!
-<i>One TwoB</i> Three Four Five!
-One TwoC Three <i>Four Five!</i>
-<i>One TwoD</i> Three <i>Four Five!</i>
-<i>One TwoE <span style="font-style:normal;">Three</span> Four Five!</i>
-One TwoF&#60;/i&#62; Three Four Five!'
 
 Failure → citeproc test test-suite flipflop_ItalicsWithOk.txt
 Passed in:
@@ -440,13 +418,13 @@ Expected:
 
 Failure → citeproc test test-suite flipflop_QuotesInFieldNotOnNode.txt
 Passed in:
-(string) 'Speak, friend, and enter.'
+(string) 'Speak, “friend”, and enter.'
 Expected:
 (string) 'Speak, “friend,” and enter.'
 
 Failure → citeproc test test-suite flipflop_QuotesNodeLevelMarkup.txt
 Passed in:
-(string) 'Speak, friend of mine on this day, March 15, 1973, and enter.'
+(string) 'Speak, “friend” of mine on this day, March 15, 1973, and enter.'
 Expected:
 (string) '“Speak, ‘friend’ of mine on this day, March 15, 1973, and enter.”'
 
@@ -488,7 +466,7 @@ Expected:
 
 Failure → citeproc test test-suite integration_CitationSort.txt
 Passed in:
-(string) '(Ibid.); (Ibid.); (Ibid.); (Ibid.)'
+(string) '(ibid.); (ibid.); (ibid.); (ibid.)'
 Expected:
 (string) '(Doe; Noakes; Roe; Snoakes)'
 
@@ -508,10 +486,10 @@ Expected:
 
 Failure → citeproc test test-suite integration_IbidOnInsert.txt
 Passed in:
-(string) '..[0] (Ibid.)
->>[1] (Ibid.)
-..[2] (Ibid.)
-..[3] (Ibid.)'
+(string) '..[0] (ibid.)
+>>[1] (ibid.)
+..[2] (ibid.)
+..[3] (ibid.)'
 Expected:
 (string) '..[0] (Doe p. 12)
 >>[1] (Noakes p. 34)

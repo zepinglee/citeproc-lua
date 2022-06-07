@@ -73,8 +73,8 @@ function Group:build_ir(engine, state, context)
   -- ir = self:apply_affixes(ir)
   -- ir = self:apply_display(ir)
   ir.delimiter = self.delimiter
-  ir.formatting = self.formatting
-  ir.affixes = self.affixes
+  ir.formatting = util.clone(self.formatting)
+  ir.affixes = util.clone(self.affixes)
   ir.display = self.display
 
   return ir
