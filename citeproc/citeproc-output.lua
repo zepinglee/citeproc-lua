@@ -241,6 +241,12 @@ function InlineElement:parse_quotes(inline)
           table.insert(text_stack, {})
         end
 
+      elseif quote == util.unicode["left single quotation mark"] or
+             quote == util.unicode["left double quotation mark"] or
+             quote == util.unicode["left-pointing double angle quotation mark"] then
+        table.insert(quote_stack, quote)
+        table.insert(text_stack, {})
+
       elseif (quote == util.unicode["right single quotation mark"] and
               stack_top_quote == util.unicode["left single quotation mark"]) or
              (quote == util.unicode["right double quotation mark"] and
@@ -562,7 +568,7 @@ function OutputFormat:apply_text_case_inner(inlines, text_case, seen_one, is_upp
   for i, inline in ipairs(inlines) do
     if inline.type == "PlainText" then
       local is_last = (i == #inlines)
-      inline.value = self.transform_case(inline.value, text_case, seen_one, is_last, is_uppercase);
+      inline.value = self:transform_case(inline.value, text_case, seen_one, is_last, is_uppercase);
       -- seen_one = string_contains_word(txt.as_ref()) || seen_one;
     elseif inline.type ~= "NoCase" then
       self:apply_text_case(inline.inlines, text_case)
@@ -596,9 +602,13 @@ end
 local function title_case_word(word, is_uppercase, no_stop_word)
   if is_uppercase then
     local lower = string.gsub(word, utf8.charpattern, unicode.utf8.lower)
-    return string.gsub(lower, utf8.charpattern, unicode.utf8.upper, 1)
+    if util.stop_words[lower] then
+      return lower
+    else
+      return string.gsub(lower, utf8.charpattern, unicode.utf8.upper, 1)
+    end
   else
-    if util.is_lower(word) then
+    if util.is_lower(word) and not util.stop_words[word] then
       return string.gsub(word, utf8.charpattern, unicode.utf8.upper, 1)
     else
       return word
@@ -611,7 +621,21 @@ function OutputFormat:transform_title_case(str, seen_one, is_last)
 end
 
 function OutputFormat:transform_each_word(str, seen_one, is_last, transform)
-
+  local word_seps = {
+    " ",
+    "%-",
+    "/",
+    util.unicode["no-break space"],
+    util.unicode["en dash"],
+    util.unicode["em dash"],
+  }
+  local res = ""
+  for _, tuple in ipairs(util.split(str, word_seps, nil, true)) do
+    local word, punctuation = table.unpack(tuple)
+    res = res .. transform(word, is_uppercase)
+    res = res .. punctuation
+  end
+  return res
 end
 
 function OutputFormat:affixed_quoted(inlines, affixes, localized_quotes)
