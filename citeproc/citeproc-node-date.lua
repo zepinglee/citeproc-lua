@@ -478,7 +478,8 @@ function DatePart:build_ir(single_date, engine, state, context, suppressed_affix
 
   local inlines = {PlainText:new(text)}
   local output_format = context.format
-  output_format:apply_text_case(inlines, self.text_case)
+  local is_english = util.startswith(context.engine.lang, "en")
+  output_format:apply_text_case(inlines, self.text_case, is_english)
   inlines = output_format:with_format(inlines, self.formatting)
   if self.affixes and self.affixes.prefix and suppressed_affix ~= "prefix" then
     table.insert(inlines, 1, PlainText:new(self.affixes.prefix))

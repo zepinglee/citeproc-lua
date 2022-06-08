@@ -540,27 +540,27 @@ function OutputFormat:with_format(inlines, formatting)
   return self:format_list(inlines, formatting)
 end
 
-function OutputFormat:apply_text_case(inlines, text_case)
+function OutputFormat:apply_text_case(inlines, text_case, is_english)
   if not inlines or #inlines == 0 or not text_case then
     return inlines
   end
   local is_uppercase = false  -- TODO
-  self:apply_text_case_inner(inlines, text_case, false, is_uppercase)
+  self:apply_text_case_inner(inlines, text_case, false, is_uppercase, is_english)
 end
 
-function OutputFormat:apply_text_case_inner(inlines, text_case, seen_one, is_uppercase)
+function OutputFormat:apply_text_case_inner(inlines, text_case, seen_one, is_uppercase, is_english)
   for i, inline in ipairs(inlines) do
     if inline.type == "PlainText" then
       local is_last = (i == #inlines)
-      inline.value = self:transform_case(inline.value, text_case, seen_one, is_last, is_uppercase);
+      inline.value = self:transform_case(inline.value, text_case, seen_one, is_last, is_uppercase, is_english);
       -- seen_one = string_contains_word(txt.as_ref()) || seen_one;
     elseif inline.type ~= "NoCase" then
-      self:apply_text_case(inline.inlines, text_case)
+      self:apply_text_case(inline.inlines, text_case, is_english)
     end
   end
 end
 
-function OutputFormat:transform_case(str, text_case, seen_one, is_last, is_uppercase)
+function OutputFormat:transform_case(str, text_case, seen_one, is_last, is_uppercase, is_english)
   local res = str
   if text_case == "lowercase" then
     res = self:transform_lowercase(str)
@@ -569,7 +569,7 @@ function OutputFormat:transform_case(str, text_case, seen_one, is_last, is_upper
   elseif text_case == "capitalize-first" then
   elseif text_case == "capitalize-all" then
   elseif text_case == "sentence" then
-  elseif text_case == "title" then
+  elseif text_case == "title" and is_english then
     res = self:transform_title_case(str, seen_one, is_last)
   end
   return res

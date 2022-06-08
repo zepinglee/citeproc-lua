@@ -84,6 +84,7 @@ function CiteProc:build_cluster(citation_items)
     local state = IrState:new(self.style_element)
     cite_item.id = tostring(cite_item.id)
     local context = Context:new()
+    context.engine = self
     context.style = self.style_element
     context.locale = self:get_locale(self.lang)
     context.format = output_format
@@ -371,6 +372,7 @@ function CiteProc:makeBibliography()
 
     local state = IrState:new()
     local context = Context:new()
+    context.engine = self
     context.style = self.style_element
     context.locale = self:get_locale(self.lang)
     context.format = output_format
