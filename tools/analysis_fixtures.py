@@ -8,6 +8,7 @@ import xml.etree.ElementTree as ET
 failed_fixtures = []
 skipped_fixtures = [
     'affix_CommaAfterQuote.txt',
+    'label_EditorTranslator2.txt',
     'bugreports_ApostropheOnParticle.txt',
     'bugreports_ArabicLocale.txt',
     'bugreports_FrenchApostrophe.txt',

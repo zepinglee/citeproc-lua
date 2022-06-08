@@ -187,7 +187,7 @@ function Element:render_text_inlines(str, context)
 
   local inlines = InlineElement:parse(str)
   local is_english = util.startswith(context.engine.lang, "en")
-  output_format:apply_text_case(inlines, self.text_case, context, is_english)
+  output_format:apply_text_case(inlines, self.text_case, is_english)
   inlines = output_format:with_format(inlines, self.formatting)
   inlines = output_format:affixed_quoted(inlines, self.affixes, localized_quotes)
   return output_format:with_display(inlines, self.display)

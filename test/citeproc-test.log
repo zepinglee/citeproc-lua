@@ -15,7 +15,7 @@ fullstyles           0       0       5       0
 group                1       3       3       0
 integration          0       7       7       0
 label                3      10       6       0
-locale              14       6       3       0
+locale              16       4       3       0
 locator              2       3       1       0
 magic               12       3      25       0
 name                 0       0     111       0
@@ -33,12 +33,12 @@ sort                 2       7      57       0
 sortseparator        0       0       1       0
 substitute           0       0       7       0
 testers              0       0       2       0
-textcase             8      19       3       0
+textcase             7      20       3       0
 unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              185     135     534       0
+(all)              186     134     534       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -578,12 +578,6 @@ Passed in:
 Expected:
 (string) 'Sample Title: (weird term)'
 
-Failure → citeproc test test-suite locale_TitleCaseEmptyLangNonEnglishLocale.txt
-Passed in:
-(string) 'His Anonymous Life'
-Expected:
-(string) 'His anonymous life'
-
 Failure → citeproc test test-suite locale_TitleCaseGarbageLangEmptyLocale.txt
 Passed in:
 (string) 'His Anonymous Life; His Anonymous Life; His Anonymous Life'
@@ -591,12 +585,6 @@ Expected:
 (string) 'His anonymous life; His Anonymous Life; His anonymous life'
 
 Failure → citeproc test test-suite locale_TitleCaseGarbageLangEnglishLocale.txt
-Passed in:
-(string) 'His Anonymous Life'
-Expected:
-(string) 'His anonymous life'
-
-Failure → citeproc test test-suite locale_TitleCaseGarbageLangNonEnglishLocale.txt
 Passed in:
 (string) 'His Anonymous Life'
 Expected:
@@ -1335,6 +1323,12 @@ Passed in:
 (string) 'Review of Book by A.N. Author'
 Expected:
 (string) 'Review of book by A.N. author'
+
+Failure → citeproc test test-suite textcase_TitleCaseNonEnglish2.txt
+Passed in:
+(string) 'Review of book by A.N. author'
+Expected:
+(string) 'Review of Book by A.N. Author'
 
 Failure → citeproc test test-suite textcase_TitleCaseWithFinalNocase.txt
 Passed in:
