@@ -680,11 +680,11 @@ end
 
 function OutputFormat:flip_flop_inlines(inlines)
   local flip_flop_state = {
-    font_style = "normal",
-    font_variant = "normal",
-    font_weight = "normal",
-    text_decoration = "none",
-    vertical_alignment = "baseline",
+    ["font-style"] = "normal",
+    ["font-variant"] = "normal",
+    ["font-weight"] = "normal",
+    ["text-decoration"] = "none",
+    ["vertical-alignment"] = "baseline",
     in_inner_quotes = false,
   }
   self:flip_flop(inlines, flip_flop_state)
@@ -702,7 +702,7 @@ function OutputFormat:flip_flop(inlines, state)
           if value == state[attribute] then
             formatting[attribute] = "normal"
           end
-          new_state[attribute] = value
+          new_state[attribute] = formatting[attribute]
         end
       end
       self:flip_flop(inline.inlines, new_state)

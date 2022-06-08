@@ -9,7 +9,7 @@ decorations          4       1       2       0
 disambiguate         0       4      67       0
 display              0       0       5       0
 etal                 0       0       4       0
-flipflop             6      11       2       0
+flipflop             7      10       2       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
 group                1       3       3       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              174     147     533       0
+(all)              175     146     533       0
 
 Failure → citeproc test test-suite affix_MovingPunctuation.txt
 Passed in:
@@ -375,14 +375,6 @@ Passed in:
 (string) ''
 Expected:
 (string) 'l’’’'
-
-Failure → citeproc test test-suite flipflop_ItalicsFlipped.txt
-Passed in:
-(string) '<i>One Two <span style="font-style:normal;">Three</span> Four Five!</i>
-<i>One <span style="font-style:normal;">Two <span style="font-style:normal;">Three</span> Four</span> Five!</i>'
-Expected:
-(string) '<i>One Two <span style="font-style:normal;">Three</span> Four Five!</i>
-<i>One <span style="font-style:normal;">Two <i>Three</i> Four</span> Five!</i>'
 
 Failure → citeproc test test-suite flipflop_ItalicsWithOk.txt
 Passed in:
