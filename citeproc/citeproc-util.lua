@@ -213,6 +213,10 @@ function util.endswith (str, suffix)
   return string.sub(str, -#suffix) == suffix
 end
 
+function util.is_punct(str)
+  return string.match(str, "^%p$")
+end
+
 function util.is_numeric (str)
   if str == nil or str == "" then
     return false

@@ -713,29 +713,21 @@ function OutputFormat:flip_flop(inlines, state)
   end
 end
 
-function OutputFormat:move_punctuation(inlines, piq)
-  local idx = 1
-  local len = #inlines
-  while idx < len do
-    local new_idx = idx + 1
-    self:move_around_quote(inlines, idx, piq)
-
-    idx = new_idx
-  end
-
-  for _, inline in ipairs(inlines) do
-    if inline.type == "Quoted" or inline.type == "Formatted" or
-        inline.type == "Div" then
-      self:move_punctuation(inline.inlines)
-    end
-  end
-end
-
-local function find_right_inside(inline)
+local function find_left(inline)
   if inline.type == "PlainText" then
     return inline
   elseif inline.inlines then
-    return find_right_inside(inline.inlines[#inline.inlines])
+    return find_left(inline.inlines[1])
+  else
+    return nil
+  end
+end
+
+local function find_right(inline)
+  if inline.type == "PlainText" then
+    return inline
+  elseif inline.inlines then
+    return find_right(inline.inlines[#inline.inlines])
   else
     return nil
   end
@@ -743,7 +735,7 @@ end
 
 local function find_right_quoted(inline)
   if inline.type == "Quoted" then
-    return find_right_inside(inline.inlines[#inline.inlines])
+    return find_right(inline.inlines[#inline.inlines])
   elseif inline.inlines then
     return find_right_quoted(inline.inlines[#inline.inlines])
   else
@@ -751,17 +743,32 @@ local function find_right_quoted(inline)
   end
 end
 
-local function find_left(inline)
-  if inline.type == "PlainText" then
-    return inline
-  elseif inline.inlines then
-    return find_right_inside(inline.inlines[1])
-  else
-    return nil
+local function normalise_text_elements(inlines)
+  local idx = 1
+  local len = #inlines
+  while idx < len do
+    local first = find_right(inlines[idx])
+    if not first then
+      return nil
+    end
+
+    local second = find_left(inlines[idx+1])
+    if not second then
+      return nil
+    end
+
+    local first_char = string.sub(first.value, -1)
+    local second_char = string.sub(second.value, 1, 1)
+    if first_char == second_char and util.is_punct(first_char) then
+      second.value = string.sub(second.value, 2)
+    end
+
+    idx = idx + 1
   end
+
 end
 
-function OutputFormat:move_around_quote(slice, idx, piq)
+local function move_around_quote(slice, idx, piq)
   -- util.debug(slice)
   local first = find_right_quoted(slice[idx])
   if not first then
@@ -795,6 +802,26 @@ function OutputFormat:move_around_quote(slice, idx, piq)
   -- if util.is_punct(outside_char) then
   -- end
 
+end
+
+function OutputFormat:move_punctuation(inlines, piq)
+  normalise_text_elements(inlines)
+
+  local idx = 1
+  local len = #inlines
+  while idx < len do
+    local new_idx = idx + 1
+    move_around_quote(inlines, idx, piq)
+
+    idx = new_idx
+  end
+
+  for _, inline in ipairs(inlines) do
+    if inline.type == "Quoted" or inline.type == "Formatted" or
+        inline.type == "Div" then
+      self:move_punctuation(inline.inlines)
+    end
+  end
 end
 
 output_module.in_quote_puncts = {
