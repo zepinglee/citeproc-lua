@@ -141,6 +141,24 @@ function Context.page_first(page)
   return util.split(page_first, util.unicode["en dash"])[1]
 end
 
+-- https://docs.citationstyles.org/en/stable/specification.html#non-english-items
+function Context:is_english()
+  local language = self:get_variable("language")
+  if util.startswith(self.engine.lang, "en") then
+    if not language or util.startswith(language, "en") then
+      return true
+    else
+      return false
+    end
+  else
+    if language and util.startswith(language, "en") then
+      return true
+    else
+      return false
+    end
+  end
+end
+
 
 local IrState = {}
 
