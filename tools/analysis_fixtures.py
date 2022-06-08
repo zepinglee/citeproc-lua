@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ET
 
 failed_fixtures = []
 skipped_fixtures = [
-    'affix_MovingPunctuation.txt',
+    'affix_CommaAfterQuote.txt',
     'bugreports_ApostropheOnParticle.txt',
     'bugreports_ArabicLocale.txt',
     'bugreports_FrenchApostrophe.txt',
@@ -33,7 +33,6 @@ with open('./test/citeproc-test.log') as f:
             failure_file = line.split()[-1]
             failed_fixtures.append(failure_file)
 
-
 namespaces = {
     'cs': 'http://purl.org/net/xbiblio/csl',
 }
@@ -41,21 +40,22 @@ namespaces = {
 num_tags = dict()
 
 # paths = sorted(glob.glob('./test/test-suite/processor-tests/humans/*.txt'))
-paths = sorted(['./test/test-suite/processor-tests/humans/' + f
-                for f in failed_fixtures if f not in skipped_fixtures
-                # and not f.startswith('bugreports_')
-                and not f.startswith('collapse_')
-                # and not f.startswith('date_')
-                # and not f.startswith('decorations_')
-                and not f.startswith('disambiguate_')
-                # and not f.startswith('flipflop_')
-                # and not f.startswith('magic_Name')
-                # and not f.startswith('name_')
-                # and not f.startswith('nameattr_')
-                # and not f.startswith('nameorder_')
-                # and not f.startswith('number_')
-                # and not f.startswith('textcase_')
-                ])
+paths = sorted([
+    './test/test-suite/processor-tests/humans/' + f for f in failed_fixtures
+    if f not in skipped_fixtures
+    # and not f.startswith('bugreports_')
+    and not f.startswith('collapse_')
+    # and not f.startswith('date_')
+    # and not f.startswith('decorations_')
+    and not f.startswith('disambiguate_')
+    # and not f.startswith('flipflop_')
+    # and not f.startswith('magic_Name')
+    # and not f.startswith('name_')
+    # and not f.startswith('nameattr_')
+    # and not f.startswith('nameorder_')
+    # and not f.startswith('number_')
+    # and not f.startswith('textcase_')
+])
 
 for path in paths:
     # print(path)
@@ -85,7 +85,6 @@ for path in paths:
 
     # file = os.path.split(path)[1]
     num_tags[path] = len(count.items())
-
 
 # print(num_tags)
 

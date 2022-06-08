@@ -650,9 +650,7 @@ end
 function OutputFormat:output(inlines, punctuation_in_quote)
   self:flip_flop_inlines(inlines)
 
-  if punctuation_in_quote then
-    self:move_punctuation(inlines)
-  end
+  self:move_punctuation(inlines)
 
   local markup_writer = HtmlWriter:new()
 
@@ -666,9 +664,7 @@ end
 
 function OutputFormat:output_bibliography_entry(inlines, punctuation_in_quote)
   self:flip_flop_inlines(inlines)
-  if punctuation_in_quote then
-    self:move_punctuation(inlines)
-  end
+  self:move_punctuation(inlines)
   local markup_writer = HtmlWriter:new()
   -- TODO:
   -- if self.format == "html" then
@@ -717,10 +713,144 @@ function OutputFormat:flip_flop(inlines, state)
   end
 end
 
-function OutputFormat:move_punctuation(inlines)
-  -- TODO
+function OutputFormat:move_punctuation(inlines, piq)
+  local idx = 1
+  local len = #inlines
+  while idx < len do
+    local new_idx = idx + 1
+    self:move_around_quote(inlines, idx, piq)
+
+    idx = new_idx
+  end
+
+  for _, inline in ipairs(inlines) do
+    if inline.type == "Quoted" or inline.type == "Formatted" or
+        inline.type == "Div" then
+      self:move_punctuation(inline.inlines)
+    end
+  end
 end
 
+local function find_right_inside(inline)
+  if inline.type == "PlainText" then
+    return inline
+  elseif inline.inlines then
+    return find_right_inside(inline.inlines[#inline.inlines])
+  else
+    return nil
+  end
+end
+
+local function find_right_quoted(inline)
+  if inline.type == "Quoted" then
+    return find_right_inside(inline.inlines[#inline.inlines])
+  elseif inline.inlines then
+    return find_right_quoted(inline.inlines[#inline.inlines])
+  else
+    return nil
+  end
+end
+
+local function find_left(inline)
+  if inline.type == "PlainText" then
+    return inline
+  elseif inline.inlines then
+    return find_right_inside(inline.inlines[1])
+  else
+    return nil
+  end
+end
+
+function OutputFormat:move_around_quote(slice, idx, piq)
+  -- util.debug(slice)
+  local first = find_right_quoted(slice[idx])
+  if not first then
+    return nil
+  end
+
+  local second = find_left(slice[idx+1])
+  if not second then
+    return nil
+  end
+
+  local first_char = string.sub(first.value, -1)
+  local second_char = string.sub(second.value, 1, 1)
+
+  -- util.debug(first_char)
+  -- util.debug(second_char)
+
+  if output_module.in_quote_puncts[second_char] then
+    if output_module.quote_punctuation_map[first_char] then
+      local combined = output_module.quote_punctuation_map[first_char][second_char]
+      first.value = string.sub(first.value, 1, -2) .. combined
+      second.value = string.sub(second.value, 2)
+    else
+      first.value = first.value .. second_char
+      second.value = string.sub(second.value, 2)
+    end
+  end
+
+  -- local outside = find_left_text(inlines[idx+1])
+  -- local outside_char = string.sub(outside.value, 1, 1)
+  -- if util.is_punct(outside_char) then
+  -- end
+
+end
+
+output_module.in_quote_puncts = {
+  ["."] = true,
+  ["?"] = true,
+  [":"] = true,
+  [","] = true,
+  [";"] = true,
+}
+
+-- https://github.com/Juris-M/citeproc-js/blob/aa2683f48fe23be459f4ed3be3960e2bb56203f0/src/queue.js#L724
+-- Also merge duplicate punctuations.
+output_module.quote_punctuation_map = {
+  ["!"] = {
+    ["."] = "!",
+    ["?"] = "!?",
+    [":"] = "!",
+    [","] = "!,",
+    [";"] = "!;",
+  },
+  ["?"] = {
+    ["!"] = "?!",
+    ["."] = "?",
+    [":"] = "?",
+    [","] = "?,",
+    [";"] = "?;",
+  },
+  ["."] = {
+    ["!"] = ".!",
+    ["?"] = ".?",
+    [":"] = ".:",
+    [","] = ".,",
+    [";"] = ".;",
+  },
+  [":"] = {
+    ["!"] = "!",
+    ["?"] = "?",
+    ["."] = ":",
+    [","] = ":,",
+    [";"] = ":;",
+  },
+  [","] = {
+    ["!"] = ",!",
+    ["?"] = ",?",
+    [":"] = ",:",
+    ["."] = ",.",
+    [";"] = ",;",
+  },
+  [";"] = {
+    ["!"] = "!",
+    ["?"] = "?",
+    [":"] = ";",
+    [","] = ";,",
+    ["."] = ";",
+  }
+}
 
 
 output_module.LocalizedQuotes = LocalizedQuotes

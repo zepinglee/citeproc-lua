@@ -9,15 +9,15 @@ decorations          4       1       2       0
 disambiguate         0       4      67       0
 display              0       0       5       0
 etal                 0       0       4       0
-flipflop             7      10       2       0
+flipflop             8       9       2       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
 group                1       3       3       0
 integration          0       7       7       0
-label                4       9       6       0
-locale              11       9       3       0
+label                3      10       6       0
+locale              14       6       3       0
 locator              1       4       1       0
-magic               10       5      25       0
+magic               12       3      25       0
 name                 0       0     111       0
 nameattr             0       0      97       0
 nameorder            0       0       6       0
@@ -27,9 +27,9 @@ page                 9       0       0       0
 plural               0       1       6       0
 position             2       7       7       0
 punctuation          3       6       7       0
-quotes               0       2       2       0
+quotes               2       0       2       0
 simplespace          0       0       1       0
-sort                 2       8      56       0
+sort                 2       7      57       0
 sortseparator        0       0       1       0
 substitute           0       0       7       0
 testers              0       0       2       0
@@ -38,13 +38,13 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              175     146     533       0
+(all)              182     138     534       0
 
-Failure → citeproc test test-suite affix_MovingPunctuation.txt
+Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
-(string) '“The Title”. And “so it goes”'
+(string) '“quote,” Hello Thing'
 Expected:
-(string) '“The Title.” And “so it goes”'
+(string) '“quote”, Hello Thing'
 
 Failure → citeproc test test-suite affix_TextNodeWithMacro.txt
 Passed in:
@@ -64,7 +64,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_ContentPunctuationDuplicate1.txt
 Passed in:
-(string) '“His Anonymous Life etc”. (1965) <i>reference.</i>. blurble'
+(string) '“His Anonymous Life etc.” (1965) <i>reference.</i>. blurble'
 Expected:
 (string) '“His Anonymous Life etc.” (1965) <i>reference.</i> blurble'
 
@@ -408,12 +408,6 @@ Passed in:
 Expected:
 (string) 'Nation of "Positive Obligations " of State under the European Convention on Human Rights (1)'
 
-Failure → citeproc test test-suite flipflop_QuotesInFieldNotOnNode.txt
-Passed in:
-(string) 'Speak, “friend”, and enter.'
-Expected:
-(string) 'Speak, “friend,” and enter.'
-
 Failure → citeproc test test-suite flipflop_QuotesNodeLevelMarkup.txt
 Passed in:
 (string) 'Speak, “friend” of mine on this day, March 15, 1973, and enter.'
@@ -422,7 +416,7 @@ Expected:
 
 Failure → citeproc test test-suite flipflop_SingleBeforeColon.txt
 Passed in:
-(string) '“Nobody Knows You’Re a Dog”: As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
+(string) '“Nobody Knows You’Re a Dog:” As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
 Expected:
 (string) '“Nobody Knows You’re a Dog”: As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
 
@@ -536,6 +530,12 @@ Expected:
 (string) 'His Anonymous Life, page 327-30
 His Anonymous Life, pages 427–430'
 
+Failure → citeproc test test-suite label_EditorTranslator2.txt
+Passed in:
+(string) 'Some title, “Hello there.”'
+Expected:
+(string) 'Some title, “Hello there”.'
+
 Failure → citeproc test test-suite label_EmptyLabelVanish.txt
 Passed in:
 (string) '[start]( : 22)[end]'
@@ -584,29 +584,11 @@ Passed in:
 Expected:
 (string) 'pages 213 et 235'
 
-Failure → citeproc test test-suite locale_EmptyPlusOverrideStyleOpt.txt
-Passed in:
-(string) '“Sample Title”.'
-Expected:
-(string) '“Sample Title.”'
-
 Failure → citeproc test test-suite locale_EmptyPlusOverrideTerm.txt
 Passed in:
 (string) 'Sample Title: ()'
 Expected:
 (string) 'Sample Title: (weird term)'
-
-Failure → citeproc test test-suite locale_EmptyStyleOpt.txt
-Passed in:
-(string) '“Sample Title”.'
-Expected:
-(string) '“Sample Title.”'
-
-Failure → citeproc test test-suite locale_SpecificStyleOpt.txt
-Passed in:
-(string) '“Sample Title”.'
-Expected:
-(string) '“Sample Title.”'
 
 Failure → citeproc test test-suite locale_TitleCaseEmptyLangNonEnglishLocale.txt
 Passed in:
@@ -670,23 +652,11 @@ Passed in:
 Expected:
 (string) '(1965a,b)'
 
-Failure → citeproc test test-suite magic_PunctuationInQuoteTrueSuppressExtra.txt
+Failure → citeproc test test-suite magic_PunctuationInQuoteFalseSuppressExtra.txt
 Passed in:
-(string) '“Article A?”. Journal B'
+(string) '“Article A?,” Journal B'
 Expected:
-(string) '“Article A?” Journal B'
-
-Failure → citeproc test test-suite magic_StripPeriodsFalse.txt
-Passed in:
-(string) '“An Article”, Am. L.J.'
-Expected:
-(string) '“An Article,” Am. L.J.'
-
-Failure → citeproc test test-suite magic_StripPeriodsTrue.txt
-Passed in:
-(string) '“An Article”, Am LJ.'
-Expected:
-(string) '“An Article,” Am LJ.'
+(string) '“Article A?”, Journal B'
 
 Failure → citeproc test test-suite magic_TermCapitalizationWithPrefix.txt
 Passed in:
@@ -1039,52 +1009,52 @@ comma, comma'
 Failure → citeproc test test-suite punctuation_FullMontyQuotesIn.txt
 Passed in:
 (string) 'ENDING IN COLON
-“colon”:: colon
-“period”.: colon
-“semicolon”;: colon
+“colon:”: colon
+“period.”: colon
+“semicolon;”: colon
 “exclamation”!: colon
-“question”?: colon
-“comma”,: colon
+“question?”: colon
+“comma,”: colon
 
 ENDING IN PERIOD
-“colon”:. period
-“period”.. period
-“semicolon”;. period
+“colon:”. period
+“period.”. period
+“semicolon;”. period
 “exclamation”!. period
-“question”?. period
-“comma”,. period
+“question?”. period
+“comma,”. period
 
 ENDING IN SEMICOLON
-“colon”:; semicolon
-“period”.; semicolon
-“semicolon”;; semicolon
+“colon:”; semicolon
+“period.”; semicolon
+“semicolon;”; semicolon
 “exclamation”!; semicolon
-“question”?; semicolon
-“comma”,; semicolon
+“question?”; semicolon
+“comma,”; semicolon
 
 ENDING IN EXCLAMATION
-“colon”:! exclamation
-“period”.! exclamation
-“semicolon”;! exclamation
+“colon:”! exclamation
+“period.”! exclamation
+“semicolon;”! exclamation
 “exclamation”!! exclamation
-“question”?! exclamation
-“comma”,! exclamation
+“question?”! exclamation
+“comma,”! exclamation
 
 ENDING IN QUESTION
-“colon”:? question
-“period”.? question
-“semicolon”;? question
+“colon:”? question
+“period.”? question
+“semicolon;”? question
 “exclamation”!? question
-“question”?? question
-“comma”,? question
+“question?”? question
+“comma,”? question
 
 ENDING IN COMMA
-“colon”:, comma
-“period”., comma
-“semicolon”;, comma
+“colon:”, comma
+“period.”, comma
+“semicolon;”, comma
 “exclamation”!, comma
-“question”?, comma
-“comma”,, comma'
+“question?”, comma
+“comma,”, comma'
 Expected:
 (string) 'ENDING IN COLON
 “colon”: colon
@@ -1137,52 +1107,52 @@ ENDING IN COMMA
 Failure → citeproc test test-suite punctuation_FullMontyQuotesOut.txt
 Passed in:
 (string) 'ENDING IN COLON
-“colon”:: colon
-“period”.: colon
-“semicolon”;: colon
+“colon:”: colon
+“period.”: colon
+“semicolon;”: colon
 “exclamation”!: colon
-“question”?: colon
-“comma”,: colon
+“question?”: colon
+“comma,”: colon
 
 ENDING IN PERIOD
-“colon”:. period
-“period”.. period
-“semicolon”;. period
+“colon:”. period
+“period.”. period
+“semicolon;”. period
 “exclamation”!. period
-“question”?. period
-“comma”,. period
+“question?”. period
+“comma,”. period
 
 ENDING IN SEMICOLON
-“colon”:; semicolon
-“period”.; semicolon
-“semicolon”;; semicolon
+“colon:”; semicolon
+“period.”; semicolon
+“semicolon;”; semicolon
 “exclamation”!; semicolon
-“question”?; semicolon
-“comma”,; semicolon
+“question?”; semicolon
+“comma,”; semicolon
 
 ENDING IN EXCLAMATION
-“colon”:! exclamation
-“period”.! exclamation
-“semicolon”;! exclamation
+“colon:”! exclamation
+“period.”! exclamation
+“semicolon;”! exclamation
 “exclamation”!! exclamation
-“question”?! exclamation
-“comma”,! exclamation
+“question?”! exclamation
+“comma,”! exclamation
 
 ENDING IN QUESTION
-“colon”:? question
-“period”.? question
-“semicolon”;? question
+“colon:”? question
+“period.”? question
+“semicolon;”? question
 “exclamation”!? question
-“question”?? question
-“comma”,? question
+“question?”? question
+“comma,”? question
 
 ENDING IN COMMA
-“colon”:, comma
-“period”., comma
-“semicolon”;, comma
+“colon:”, comma
+“period.”, comma
+“semicolon;”, comma
 “exclamation”!, comma
-“question”?, comma
-“comma”,, comma'
+“question?”, comma
+“comma,”, comma'
 Expected:
 (string) 'ENDING IN COLON
 “colon”: colon
@@ -1238,26 +1208,6 @@ Passed in:
 Expected:
 (string) '“My Title.” My Publisher'
 
-Failure → citeproc test test-suite quotes_Punctuation.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">“The Book Title”,</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">“The Book Title,”</div>
-</div>'
-
-Failure → citeproc test test-suite quotes_PunctuationWithInnerQuote.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">“This is ‘The One’”.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">“This is ‘The One.’”</div>
-</div>'
-
 Failure → citeproc test test-suite sort_CaseInsensitiveCitation.txt
 Passed in:
 (string) 'Xyz - ABC - Aaa'
@@ -1300,14 +1250,6 @@ Passed in:
 Expected:
 (string) 'Book D; Book A; Book B; Book C'
 
-Failure → citeproc test test-suite sort_RangeUnaffected.txt
-Passed in:
-(string) '>>[0] <sup></sup>
-..[1] <sup></sup>,<sup></sup>,<sup></sup>'
-Expected:
-(string) '>>[0] <sup>1</sup>
->>[1] <sup>1–3</sup>'
-
 Failure → citeproc test test-suite textcase_CapitalizeAll.txt
 Passed in:
 (string) 'This IS a Pen that is a  Pencil'
@@ -1338,7 +1280,7 @@ My <sub>subscript phrase</sub> in a Title'
 
 Failure → citeproc test test-suite textcase_InQuotes.txt
 Passed in:
-(string) 'from “Distance” to “Friction”: Substituting Metaphors and Redirecting Intercultural Research for'
+(string) 'from “Distance” to “Friction:” Substituting Metaphors and Redirecting Intercultural Research for'
 Expected:
 (string) 'From “Distance” to “Friction”: Substituting Metaphors and Redirecting Intercultural Research For'
 
@@ -2969,6 +2911,9 @@ Error → citeproc test test-suite sort_OmittedBibRefNonNumericStyle.txt
 
 Error → citeproc test test-suite sort_Quotes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
+
+Error → citeproc test test-suite sort_RangeUnaffected.txt
+./citeproc/citeproc-output.lua:745: attempt to index a nil value (local 'inline')
 
 Error → citeproc test test-suite sort_SeparateAuthorsAndOthers.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
