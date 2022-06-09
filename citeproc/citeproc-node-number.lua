@@ -37,18 +37,21 @@ function Number:from_node(node)
 end
 
 function Number:build_ir(engine, state, context)
-  local value = context:get_variable(self.variable, self.form)
-  if not value then
-    return nil
+  local number = context:get_variable(self.variable, self.form)
+  if not number then
+    local ir = Rendered:new()
+    ir.group_var = "missing"
+    return ir
   end
 
-  if type(value) == "number" then
-    value = tostring(value)
+  if type(number) == "number" then
+    number = tostring(number)
+    number = self:format_number(number, self.variable, self.form, context)
+  elseif util.is_numeric(number) then
+    number = self:format_number(number, self.variable, self.form, context)
   end
 
-  -- value = self._format_number(value, self.variable, self.form)
-
-  local inlines = self:render_text_inlines(value, context)
+  local inlines = self:render_text_inlines(number, context)
   return Rendered:new(inlines, self)
 end
 

@@ -629,6 +629,94 @@ function Element:_apply_case(text, context)
   return text
 end
 
+function Element:format_number(number, variable, form, context)
+  number = string.gsub(number, util.unicode["en dash"], "-")
+  if variable == "locator" then
+    variable = context:get_variable("label")
+  end
+  form = form or "numeric"
+  local number_part_list = self:split_number_parts(number)
+  -- {
+  --   {"1", "",  " & "}
+  --   {"5", "8", ", "}
+  -- }
+  util.debug(number_part_list)
+
+  for _, number_parts in ipairs(number_part_list) do
+    if form == "roman" then
+      self:format_roman_number_parts(number_parts)
+    elseif form == "ordinal" or form == "long-ordinal" then
+      local gender = context.locale:get_number_gender(variable)
+      self:format_ordinal_number_parts(number_parts, form, gender, context)
+    else  -- form == "numeric" then
+    end
+  end
+
+  local range_delimiter = util.unicode["en dash"]
+  if variable == "page" then
+    local page_range_delimiter = context:get_simple_term("page-range-delimiter")
+    if page_range_delimiter then
+      range_delimiter = page_range_delimiter
+    end
+  end
+
+  local res = ""
+  for _, number_parts in ipairs(number_part_list) do
+    res = res .. number_parts[1]
+    if number_parts[2] ~= "" then
+      res = res .. range_delimiter
+      res = res .. number_parts[2]
+    end
+    res = res .. number_parts[3]
+  end
+  return res
+
+end
+
+function Element:split_number_parts(number)
+  local number_part_list = {}
+
+  -- util.debug(number)
+  for start, stop, spaces, delim in string.gmatch(number, "([^-,&%s]+)%s*%-?%s*([^-,&%s]*)(%s*)([,&]?)") do
+    if delim == "" then
+      delim = spaces
+    elseif delim == "," then
+      delim = ", "
+    elseif delim == "&" then
+      delim = " & "
+    end
+    table.insert(number_part_list, {start, stop, delim})
+  end
+
+  return number_part_list
+end
+
+function Element:format_roman_number_parts(number_parts)
+  for i = 1, 2 do
+    local part = number_parts[i]
+    if string.match(part, "%d+") then
+      number_parts[i] = util.convert_roman(tonumber(part))
+    end
+  end
+end
+
+function Element:format_ordinal_number_parts(number_parts, form, gender, context)
+  for i = 1, 2 do
+    local part = number_parts[i]
+    if string.match(part, "%d+") then
+      local number = tonumber(part)
+      if form == "long-ordinal" and number >= 1 and number <= 10 then
+        number_parts[i] = context:get_simple_term(string.format("long-ordinal-%02d", number))
+      else
+        local suffix = context.locale:get_ordinal_term(number, gender)
+        if suffix then
+          number_parts[i] = number_parts[i] .. suffix
+        end
+      end
+    end
+  end
+end
+
 
 element.Element = Element
 

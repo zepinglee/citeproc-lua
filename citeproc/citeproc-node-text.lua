@@ -69,7 +69,9 @@ function Text:build_ir(engine, state, context)
 end
 
 function Text:build_variable_ir(engine, state, context)
-  local text = context:get_variable(self.variable, self.form)
+  local variable = self.variable
+
+  local text = context:get_variable(variable, self.form)
 
   if not text then
     local ir = Rendered:new()
@@ -81,10 +83,15 @@ function Text:build_variable_ir(engine, state, context)
     text = tostring(text)
   end
 
-  if self.variable == "page" or self.variable == "locator" then
+  if variable == "locator" then
     text = util.strip(text)
-    text = self:_format_page(text, context)
   end
+
+  if variable == "page" or (variable == "locator" and
+      context:get_variable("label") == "page") then
+    text = self:format_number(text, variable, "numeric", context)
+  end
+  -- util.debug(text)
 
   local inlines = self:render_text_inlines(text, context)
   local ir = Rendered:new(inlines, self)

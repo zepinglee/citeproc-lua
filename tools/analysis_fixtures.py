@@ -9,21 +9,10 @@ failed_fixtures = []
 skipped_fixtures = [
     'affix_CommaAfterQuote.txt',
     'label_EditorTranslator2.txt',
-    'bugreports_ApostropheOnParticle.txt',
-    'bugreports_ArabicLocale.txt',
     'bugreports_FrenchApostrophe.txt',
-    'bugreports_TitleCase.txt',
-    'bugreports_EtAlSubsequent.txt',
     'flipflop_OrphanQuote.txt',
-    'flipflop_QuotesInFieldNotOnNode.txt',
     'flipflop_SingleBeforeColon.txt',
     'flipflop_StartingApostrophe.txt',
-    'integration_DeleteName.txt',
-    'magic_CapitalizeFirstOccurringNameParticle.txt',
-    'locale_TitleCaseEmptyLangEmptyLocale.txt',
-    'locale_TitleCaseGarbageLangEmptyLocale.txt',
-    'magic_StripPeriodsFalse.txt',
-    'magic_StripPeriodsTrue.txt',
     'punctuation_FrenchOrthography.txt',
 ]
 
@@ -51,9 +40,7 @@ paths = sorted([
     and not f.startswith('disambiguate_')
     # and not f.startswith('flipflop_')
     # and not f.startswith('magic_Name')
-    # and not f.startswith('name_')
-    # and not f.startswith('nameattr_')
-    # and not f.startswith('nameorder_')
+    and not f.startswith('name')
     # and not f.startswith('number_')
     # and not f.startswith('textcase_')
 ])

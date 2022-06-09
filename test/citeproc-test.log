@@ -22,8 +22,8 @@ name                 0       0     111       0
 nameattr             0       0      97       0
 nameorder            0       0       6       0
 namespaces           1       0       0       0
-number               9       9       2       0
-page                 9       0       0       0
+number              11       7       2       0
+page                 3       6       0       0
 plural               0       1       6       0
 position             2       7       7       0
 punctuation          3       6       7       0
@@ -33,12 +33,12 @@ sort                 2       7      57       0
 sortseparator        0       0       1       0
 substitute           0       0       7       0
 testers              0       0       2       0
-textcase             9      18       3       0
+textcase            10      17       3       0
 unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              191     129     534       0
+(all)              188     132     534       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -88,7 +88,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_NumberInMacroWithVerticalAlign.txt
 Passed in:
-(string) '<i>2</i>; <i>3-5</i>'
+(string) '<i>2</i>; <i>3–5</i>'
 Expected:
 (string) '<sup><i>2</i></sup>; <sup><i>3–5</i></sup>'
 
@@ -512,8 +512,8 @@ Expected:
 
 Failure → citeproc test test-suite label_CollapsedPageNumberPluralDetection.txt
 Passed in:
-(string) 'His Anonymous Life, 327-30
-His Anonymous Life, 427–430'
+(string) 'His Anonymous Life, 327\–30
+His Anonymous Life, 427–30'
 Expected:
 (string) 'His Anonymous Life, page 327-30
 His Anonymous Life, pages 427–430'
@@ -580,7 +580,7 @@ Expected:
 
 Failure → citeproc test test-suite locator_SingularEmbeddedLabelAfterPlural.txt
 Passed in:
-(string) 'Book One, 367–368, fig. 333'
+(string) 'Book One, 367-368, fig. 333'
 Expected:
 (string) 'Book One, pages 367–368, fig. 333'
 
@@ -640,6 +640,12 @@ Expected:
   <div class="csl-entry">14 octobre-1<sup>e</sup><sup>r</sup> novembre 2004</div>
 </div>'
 
+Failure → citeproc test test-suite number_MixedPageRange.txt
+Passed in:
+(string) '142–145 &#38; 235'
+Expected:
+(string) '142–45 &#38; 235'
+
 Failure → citeproc test test-suite number_NewOrdinalsWithGenderChange.txt
 Passed in:
 (string) 'Title 1: 1'
@@ -654,39 +660,145 @@ Expected:
 
 Failure → citeproc test test-suite number_PlainHyphenOrEnDashAlwaysPlural.txt
 Passed in:
-(string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) pages i-ix (cs:text) vs His Anonymous Life (2) pages i-ix (cs:number); His Anonymous Life (3) pages 3-B (cs:text) vs His Anonymous Life (3) pages 3-B (cs:number); His Anonymous Life (4) pages Michaelson-Morely (cs:text) vs His Anonymous Life (4) pages Michaelson-Morely (cs:number); His Anonymous Life (4) pages Michaelson-Morely (cs:text) vs His Anonymous Life (4) pages Michaelson-Morely (cs:number)'
+(string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) pages i–ix (cs:text) vs His Anonymous Life (2) pages i–ix (cs:number); His Anonymous Life (3) pages 3\–B (cs:text) vs His Anonymous Life (3) pages 3\–B (cs:number); His Anonymous Life (4) pages Michaelson–Morely (cs:text) vs His Anonymous Life (4) pages Michaelson–Morely (cs:number); His Anonymous Life (4) pages Michaelson–Morely (cs:text) vs His Anonymous Life (4) pages Michaelson–Morely (cs:number)'
 Expected:
 (string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) pages i–ix (cs:text) vs His Anonymous Life (2) pages i–ix (cs:number); His Anonymous Life (3) page 3-B (cs:text) vs His Anonymous Life (3) page 3-B (cs:number); His Anonymous Life (4) page Michaelson-Morely (cs:text) vs His Anonymous Life (4) page Michaelson-Morely (cs:number)'
 
 Failure → citeproc test test-suite number_SeparateOrdinalNamespaces.txt
 Passed in:
-(string) 'With One, 1 edition, 1 issue; With Two, 2 edition, 2 issue; With Three, 3 edition, 3 issue'
+(string) 'With One, 1.<sup>a</sup> edition, 1.<sup>a</sup> issue; With Two, 2 edition, 2 issue; With Three, 3 edition, 3 issue'
 Expected:
 (string) 'With One, 1.<sup>a</sup> edition, 1.<sup>o</sup> issue; With Two, 2.<sup>a</sup> edition, 2.<sup>o</sup><sup>o</sup> issue; With Three, 3.<sup>a</sup> edition, 3.<sup>a</sup> issue'
 
-Failure → citeproc test test-suite number_SimpleNumberOrdinalLong.txt
+Failure → citeproc test test-suite page_Chicago.txt
 Passed in:
-(string) '42
-9'
+(string) 'Example A, at 101–108
+Example B, at 3–10
+Example C, at 71–72
+Example D, at 96–117
+Example E, at 100–4
+Example F, at 600–13
+Example G, at 1100–23
+Example H, at 107–108
+Example I, at 505–17
+Example J, at 1002–1006
+Example K, at 321–325
+Example L, at 415–532
+Example M, at 1536–538
+Example N, at 11564–11568
+Example O, at 11564–11578
+Example P, at 13792–13803
+Example Q, at 1496–504
+Example R, at 2787–816'
 Expected:
-(string) '42nd
-ninth'
+(string) 'Example A, at 101–8
+Example B, at 3–10
+Example C, at 71–72
+Example D, at 96–117
+Example E, at 100–104
+Example F, at 600–613
+Example G, at 1100–1123
+Example H, at 107–8
+Example I, at 505–17
+Example J, at 1002–6
+Example K, at 321–25
+Example L, at 415–532
+Example M, at 1536–38
+Example N, at 11564–68
+Example O, at 11564–78
+Example P, at 13792–803
+Example Q, at 1496–1504
+Example R, at 2787–2816'
 
-Failure → citeproc test test-suite number_SimpleNumberOrdinalShort.txt
+Failure → citeproc test test-suite page_ChicagoWeird.txt
 Passed in:
-(string) '42'
+(string) 'Example S, at 8n11564–8n1568
+Example T, at n11564–n1568
+Example U, at n11564–1568'
 Expected:
-(string) '42nd'
+(string) 'Example S, at 8n11564–68
+Example T, at n11564–68
+Example U, at n11564-1568'
 
-Failure → citeproc test test-suite number_SimpleNumberRoman.txt
+Failure → citeproc test test-suite page_Expand.txt
 Passed in:
-(string) '42'
+(string) 'Example: minimal, at 110–5
+Example: prefix on first number only, at N110–5
+Example: same prefix on both numbers, at N110–N5
+Example: prefix on last number only, at 110–N6
+Example: different prefixes on both numbers, at N110–P5
+Example: leading number before prefix, at 123N110–N5
+Example: multiple ranges, at 123N110–N5, 456K200–99
+Example: first less than second, at 123N110–N5, 000c23–22'
 Expected:
-(string) 'xlii'
+(string) 'Example: minimal, at 110–115
+Example: prefix on first number only, at N110-5
+Example: same prefix on both numbers, at N110–N115
+Example: prefix on last number only, at 110-N6
+Example: different prefixes on both numbers, at N110-P5
+Example: leading number before prefix, at 123N110-N5
+Example: multiple ranges, at 123N110-N5, 456K200-99
+Example: first less than second, at 123N110-N5, 000c23-22'
+
+Failure → citeproc test test-suite page_ExpandWeirdComposite.txt
+Passed in:
+(string) 'Example: weird composite, at 123N110–N5, 456K200–99'
+Expected:
+(string) 'Example: weird composite, at 123N110-N5, 456K200-99'
+
+Failure → citeproc test test-suite page_Minimal.txt
+Passed in:
+(string) 'Example A, at 101–108
+Example B, at 3–10
+Example C, at 71–72
+Example D, at 96–117
+Example E, at 100–4
+Example F, at 600–13
+Example G, at 1100–23
+Example H, at 107–108
+Example I, at 505–17
+Example J, at 1002–1006
+Example K, at 321–325
+Example L, at 415–532
+Example M, at 1536–538
+Example N, at 11564–11568
+Example O, at 11564–11578
+Example P, at 13792–13803
+Example Q, at 1496–504
+Example R, at 2787–816
+Example S, at n11564–n1568
+Example T, at n11564–1568'
+Expected:
+(string) 'Example A, at 101–8
+Example B, at 3–10
+Example C, at 71–2
+Example D, at 96–117
+Example E, at 100–4
+Example F, at 600–13
+Example G, at 1100–23
+Example H, at 107–8
+Example I, at 505–17
+Example J, at 1002–6
+Example K, at 321–5
+Example L, at 415–532
+Example M, at 1536–8
+Example N, at 11564–8
+Example O, at 11564–78
+Example P, at 13792–803
+Example Q, at 1496–504
+Example R, at 2787–816
+Example S, at n11564–8
+Example T, at n11564-1568'
+
+Failure → citeproc test test-suite page_WithLocaleAndWeirdDelimiter.txt
+Passed in:
+(string) '253‑257'
+Expected:
+(string) '253‑57'
 
 Failure → citeproc test test-suite plural_LabelForced.txt
 Passed in:
-(string) '32–34'
+(string) '32-34'
 Expected:
 (string) 'p. 32–34'
 
@@ -1317,12 +1429,6 @@ Passed in:
 (string) 'Relationship of Core Self-Evaluation Traits—Self-Esteem, Generalized Self-Efficacy, Locus of Control, and Emotional Stability—with Job Satisfaction and Job Performance: a Meta-Analysis'
 Expected:
 (string) 'Relationship of Core Self-Evaluation Traits—Self-Esteem, Generalized Self-Efficacy, Locus of Control, and Emotional Stability—with Job Satisfaction and Job Performance: A Meta-Analysis'
-
-Failure → citeproc test test-suite textcase_UppercaseNumber.txt
-Passed in:
-(string) '23'
-Expected:
-(string) 'XXIII'
 
 Failure → citeproc test test-suite variables_TitleShortOnShortTitleNoTitleCondition.txt
 Passed in:

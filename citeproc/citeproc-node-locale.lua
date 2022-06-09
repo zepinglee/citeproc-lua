@@ -15,6 +15,7 @@ local Locale = Element:derive("locale")
 function Locale:new()
   local o = {
     terms = {},
+    ordinal_terms = nil,
     dates = {},
     style_options = {
       limit_day_ordinals_to_day_1 = false,
@@ -34,6 +35,7 @@ function Locale:from_node(node)
     local element_name = child.element_name
     if element_name == "terms" then
       o.terms = child.terms_map
+      o.ordinal_terms = child.ordinal_terms
     elseif element_name == "date" then
       o.dates[child.form] = child
     end
@@ -57,6 +59,15 @@ end
 function Locale:merge(other)
   for key, value in pairs(other.terms) do
     self.terms[key] = value
+  end
+  -- https://docs.citationstyles.org/en/stable/specification.html#ordinal-suffixes
+  -- The “ordinal” term, and “ordinal-00” through “ordinal-99” terms, behave
+  -- differently from other terms when it comes to Locale Fallback.
+  -- Whereas other terms can be (re)defined individually, (re)defining any of
+  -- the ordinal terms through cs:locale replaces all previously defined
+  -- ordinal terms.
+  if other.ordinal_terms then
+    self.ordinal_terms = other.ordinal_terms
   end
   for key, value in pairs(other.dates) do
     self.dates[key] = value
@@ -93,6 +104,35 @@ function Locale:get_simple_term(name, form, plural)
     end
   end
   return nil
+end
+
+function Locale:get_ordinal_term(number, gender)
+  -- TODO: match and gender
+
+  local keys = {}
+
+  if number < 100 then
+    table.insert(keys, string.format("ordinal-%02d/match-whole-number", number))
+  end
+  table.insert(keys, string.format("ordinal-%02d/match-last-two-digits", number % 100))
+  table.insert(keys, string.format("ordinal-%02d/match-last-digit", number % 10))
+
+  for _, key in ipairs(keys) do
+    local term = self.ordinal_terms[key]
+    if term then
+      return term.text
+    end
+  end
+  return nil
+end
+
+function Locale:get_number_gender(name)
+  local term = self.terms[name]
+  if term and term.gender then
+    return term.gender
+  else
+    return nil
+  end
 end
 
 function Locale:get_option(key)
@@ -194,6 +234,7 @@ function Terms:new(node)
   o.element_name = "terms"
   o.children = {}
   o.terms_map = {}
+  o.ordinal_terms = nil
   return o
 end
 
@@ -203,21 +244,37 @@ function Terms:from_node(node)
   o:process_children_nodes(node)
   for _, term in ipairs(o.children) do
     local form = term.form
+    local gender = term.gender
     local gender_form = term.gender_form
-    local match = term.match
+    local match
+    if util.startswith(term.name, "ordinal-0") then
+      match = term.match or "last-digit"
+    elseif util.startswith(term.name, "ordinal-") then
+      match = term.match or "last-two-digits"
+    end
 
     local key = term.name
     if form then
       key = key .. '/form-' .. form
     end
-    if gender_form then
-      key = key .. '/gender-' .. gender_form
-    end
     if match then
       key = key .. '/match-' .. match
     end
+    -- if gender then
+    --   key = key .. '/gender-' .. gender
+    -- end
+    if gender_form then
+      key = key .. '/gender-form' .. gender_form
+    end
 
-    o.terms_map[key] = term
+    if term.name == "ordinal" or util.startswith(term.name, "ordinal-") then
+      if not o.ordinal_terms then
+        o.ordinal_terms = {}
+      end
+      o.ordinal_terms[key] = term
+    else
+      o.terms_map[key] = term
+    end
   end
   return o
 end
@@ -230,6 +287,9 @@ function Term:from_node(node)
 
   o.name = node:get_attribute("name")
   o.form = node:get_attribute("form")
+  o.match = node:get_attribute("match")
+  o.gender = node:get_attribute("gender")
+  o.gender_form = node:get_attribute("gender-form")
   o.text = node:get_text()
   for _, child in ipairs(node:get_children()) do
     if child:is_element() then
