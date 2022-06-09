@@ -33,12 +33,12 @@ sort                 2       7      57       0
 sortseparator        0       0       1       0
 substitute           0       0       7       0
 testers              0       0       2       0
-textcase            21       6       3       0
+textcase            23       4       3       0
 unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              207     113     534       0
+(all)              209     111     534       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -1196,7 +1196,7 @@ Expected:
 
 Failure → citeproc test test-suite textcase_SkipNameParticlesInTitleCase.txt
 Passed in:
-(string) 'John von Doe: an About up Life; John van Doe? a Life; John D’Doe! a Life; John de Doe a Life'
+(string) 'John von Doe: An About up Life; John van Doe? A Life; John D’Doe! A Life; John de Doe a Life'
 Expected:
 (string) 'John von Doe: An about up Life; John van Doe? A Life; John d’Doe! A Life; John de Doe a Life'
 
@@ -1205,18 +1205,6 @@ Passed in:
 (string) 'Employee pro-Environmental Behavior'
 Expected:
 (string) 'Employee Pro-Environmental Behavior'
-
-Failure → citeproc test test-suite textcase_TitleCaseWithHyphens.txt
-Passed in:
-(string) 'Out-of-Fashion Initiatives: a Second Story'
-Expected:
-(string) 'Out-of-Fashion Initiatives: A Second Story'
-
-Failure → citeproc test test-suite textcase_TitleWithEmDash.txt
-Passed in:
-(string) 'Relationship of Core Self-Evaluation Traits—Self-Esteem, Generalized Self-Efficacy, Locus of Control, and Emotional Stability—with Job Satisfaction and Job Performance: a Meta-Analysis'
-Expected:
-(string) 'Relationship of Core Self-Evaluation Traits—Self-Esteem, Generalized Self-Efficacy, Locus of Control, and Emotional Stability—with Job Satisfaction and Job Performance: A Meta-Analysis'
 
 Failure → citeproc test test-suite variables_TitleShortOnShortTitleNoTitleCondition.txt
 Passed in:
@@ -2753,7 +2741,7 @@ Error → citeproc test test-suite sort_Quotes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_RangeUnaffected.txt
-./citeproc/citeproc-output.lua:796: attempt to index a nil value (local 'inline')
+./citeproc/citeproc-output.lua:812: attempt to index a nil value (local 'inline')
 
 Error → citeproc test test-suite sort_SeparateAuthorsAndOthers.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

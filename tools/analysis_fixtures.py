@@ -15,6 +15,8 @@ skipped_fixtures = [
     'flipflop_StartingApostrophe.txt',
     'punctuation_FrenchOrthography.txt',
     'textcase_LocaleUnicode.txt',
+    'textcase_SentenceCapitalization.txt',
+    'textcase_SkipNameParticlesInTitleCase.txt',
 ]
 
 with open('./test/citeproc-test.log') as f:

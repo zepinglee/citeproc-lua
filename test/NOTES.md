@@ -81,6 +81,11 @@ Heuristics are used to render pages label.
 Name splitting issue.
 
 
+### textcase_SentenceCapitalization.txt
+
+The in-sentence words should not be changed to lowercase.
+
+
 ## variables_ContainerTitleShort2
 
 `container-title-short` in `ntoe` field.

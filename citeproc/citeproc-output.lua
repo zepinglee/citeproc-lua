@@ -636,17 +636,31 @@ local function transform_each_word(str, seen_one, is_last, transform)
     end
   end
 
-  local immediate_before = nil
+  local immediate_before = ""
+  local last_punct = ""
   for i, segment in ipairs(segments) do
     local is_first_word = not seen_one and i == first_idx
     local is_last_word = is_last and i == last_idx
-    local no_stop_word = is_first_word or is_last_word
+    local follows_colon = (
+      last_punct == ":" or
+      last_punct == "!" or
+      last_punct == "?" or
+      last_punct == "?")
+    local no_stop_word = is_first_word or is_last_word or follows_colon
 
     if (immediate_before == "." or immediate_before == "-") and #segment[1] == 1 then
     else
       segment[1] = transform(segment[1], no_stop_word)
     end
-    immediate_before = segment[2]
+
+    if segment[1] ~= "" then
+      immediate_before = segment[1]
+      last_punct = string.match(segment[1], "(%S)%s*$") or last_punct
+    end
+    if segment[2] ~= "" then
+      immediate_before = segment[2]
+      last_punct = string.match(segment[2], "(%S)%s*$") or last_punct
+    end
   end
   local res = ""
   for _, segment in ipairs(segments) do
@@ -684,8 +698,10 @@ function OutputFormat:transform_case(str, text_case, seen_one, is_last, is_upper
   elseif text_case == "capitalize-all" then
     res = transform_each_word(str, false, false, transform_capitalize_word_if_lower)
   elseif text_case == "sentence" then
-    -- Sentence case conversion is deprecated and will be removed in a future version.
+    -- TODO: if uppercase convert all to lowercase
+    res = transform_first_word(str, transform_capitalize_word_if_lower)
   elseif text_case == "title" then
+    -- TODO: if uppercase convert all to lowercase
     res = transform_each_word(str, seen_one, is_last, title_case_word)
   end
   return res

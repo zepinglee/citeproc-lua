@@ -400,6 +400,7 @@ util.unicode = {
 }
 
 util.word_boundaries = {
+  ":",
   " ",
   "%-",
   "/",
