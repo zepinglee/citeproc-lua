@@ -150,6 +150,15 @@ function util.split(str, seps, maxsplit, include_sep)
   return res
 end
 
+-- TODO: [Unicode word boundaries](https://www.unicode.org/reports/tr29/#Word_Boundaries)
+-- Returns: {
+--   {word, boundary},
+--   {word, boundary},
+-- }
+function util.segment_words(str, maxsplit)
+  return util.split(str, util.word_boundaries, maxsplit, true)
+end
+
 function util.slice (t, start, stop)
   start = start or 1
   stop = stop or #t
@@ -388,6 +397,15 @@ util.unicode = {
   ["right-pointing double angle quotation mark"] = "\u{00BB}",
   ["horizontal ellipsis"] = "\u{2026}",
   ["narrow no-break space"] = "\u{202F}",
+}
+
+util.word_boundaries = {
+  " ",
+  "%-",
+  "/",
+  util.unicode["no-break space"],
+  util.unicode["en dash"],
+  util.unicode["em dash"],
 }
 
 

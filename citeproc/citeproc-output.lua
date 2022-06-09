@@ -181,11 +181,13 @@ function InlineElement:from_node(node)
     return Formatted:new(inlines, {["vertical-align"] = "sup"})
   elseif tag_name == "sub" then
     return Formatted:new(inlines, {["vertical-align"] = "sub"})
+  elseif tag_name == "sc" then
+    return Formatted:new(inlines, {["font-variant"] = "small-caps"})
   elseif tag_name == "span" then
     local style = node:get_attribute("style")
     local class = node:get_attribute("class")
     if style == "font-variant:small-caps;" or style == "font-variant: small-caps;" then
-      return Formatted:new(inlines, {["font-variable"] = "small-caps"})
+      return Formatted:new(inlines, {["font-variant"] = "small-caps"})
     elseif class == "nocase" then
       return NoCase:new(inlines)
     elseif class == "nodecor" then
@@ -419,6 +421,9 @@ function MarkupWriter:write_inline(inline)
     elseif inline.type == "Linked" then
       return self:write_link(inline)
 
+    elseif inline.type == "NoCase" or inline.type == "NoDecor" then
+      return self:write_inlines(inline.inlines)
+
       -- local res = ""
       -- for _, node in ipairs(inline.inlines) do
       --   res = res .. self:write_inline(node)
@@ -548,16 +553,79 @@ function OutputFormat:apply_text_case(inlines, text_case, is_english)
   self:apply_text_case_inner(inlines, text_case, false, is_uppercase, is_english)
 end
 
+local function contains_word_micro(inlines)
+  -- TODO
+  return true
+end
+
 function OutputFormat:apply_text_case_inner(inlines, text_case, seen_one, is_uppercase, is_english)
   for i, inline in ipairs(inlines) do
+    if seen_one and text_case == "capitalize-first" then
+      break
+    end
+    local is_last = (i == #inlines)
     if inline.type == "PlainText" then
-      local is_last = (i == #inlines)
-      inline.value = self:transform_case(inline.value, text_case, seen_one, is_last, is_uppercase, is_english);
-      -- seen_one = string_contains_word(txt.as_ref()) || seen_one;
-    elseif inline.type ~= "NoCase" then
-      self:apply_text_case(inline.inlines, text_case, is_english)
+      local new_text = self:transform_case(inline.value, text_case, seen_one, is_last, is_uppercase, is_english);
+      inline.value = new_text
+      if new_text ~= inline.value then
+        seen_one = true
+      end
+    elseif inline.type == "NoCase" or
+           inline.type == "NoDecor" or
+           (inline.type == "Formatted" and inline.formatting["font-variant"] == "small-caps") or
+           (inline.type == "Formatted" and inline.formatting["vertical-align"] == "sup") or
+           (inline.type == "Formatted" and inline.formatting["vertical-align"] == "sub") then
+      seen_one = seen_one or contains_word_micro(inline.inlines)
+
+    elseif inline.type == "Formatted" or inline.type == "Quoted" then
+      self:apply_text_case_inner(inline.inlines, text_case, seen_one, is_uppercase, is_english)
     end
   end
+end
+
+local function transform_first_word(str, transform)
+  -- TODO: [Unicode word boundaries](https://www.unicode.org/reports/tr29/#Word_Boundaries)
+  local segments = util.segment_words(str)
+  for _, segment in ipairs(segments) do
+    if segment[1] ~= "" then
+      segment[1] = transform(segment[1])
+      break
+    end
+  end
+  local res = ""
+  for _, segment in ipairs(segments) do
+    res = res .. segment[1] .. segment[2]
+  end
+  return res
+end
+
+local function transform_each_word(str, transform)
+  local segments = util.segment_words(str)
+  for _, segment in ipairs(segments) do
+    if segment[1] ~= "" then
+      segment[1] = transform(segment[1])
+    end
+  end
+  for _, segment in ipairs(segments) do
+    segment[1] = transform(segment[1])
+  end
+  local res = ""
+  for _, segment in ipairs(segments) do
+    res = res .. segment[1] .. segment[2]
+  end
+  return res
+end
+
+local function transform_capitalize_word_if_lower(word)
+  if util.is_lower(word) then
+    return string.gsub(word, utf8.charpattern, unicode.utf8.upper, 1)
+  else
+    return word
+  end
+end
+
+local function transform_capitalize_first(str)
+  return transform_first_word(str, transform_capitalize_word_if_lower)
 end
 
 function OutputFormat:transform_case(str, text_case, seen_one, is_last, is_uppercase, is_english)
@@ -567,8 +635,11 @@ function OutputFormat:transform_case(str, text_case, seen_one, is_last, is_upper
   elseif text_case == "uppercase" then
     res = self:transform_uppercase(str)
   elseif text_case == "capitalize-first" then
+    res = transform_first_word(str, transform_capitalize_word_if_lower)
   elseif text_case == "capitalize-all" then
+    res = transform_each_word(str, transform_capitalize_word_if_lower)
   elseif text_case == "sentence" then
+    -- Sentence case conversion is deprecated and will be removed in a future version.
   elseif text_case == "title" and is_english then
     res = self:transform_title_case(str, seen_one, is_last)
   end
@@ -601,25 +672,7 @@ local function title_case_word(word, is_uppercase, no_stop_word)
 end
 
 function OutputFormat:transform_title_case(str, seen_one, is_last)
-  return self:transform_each_word(str, seen_one, is_last, title_case_word)
-end
-
-function OutputFormat:transform_each_word(str, seen_one, is_last, transform)
-  local word_seps = {
-    " ",
-    "%-",
-    "/",
-    util.unicode["no-break space"],
-    util.unicode["en dash"],
-    util.unicode["em dash"],
-  }
-  local res = ""
-  for _, tuple in ipairs(util.split(str, word_seps, nil, true)) do
-    local word, punctuation = table.unpack(tuple)
-    res = res .. transform(word, is_uppercase)
-    res = res .. punctuation
-  end
-  return res
+  return transform_each_word(str, title_case_word)
 end
 
 function OutputFormat:affixed_quoted(inlines, affixes, localized_quotes)
