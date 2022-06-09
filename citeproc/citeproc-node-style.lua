@@ -51,6 +51,14 @@ function Style:from_node(node)
   o:set_attribute(node, "initialize-with-hyphen")
   o:set_attribute(node, "page-range-format")
 
+  if o.page_range_format == "chicago" then
+    if o.version < "1.1" then
+      o.page_range_format = "chicago-15"
+    else
+      o.page_range_format = "chicago-16"
+    end
+  end
+
   o.macros = {}
   o.locales = {}
 

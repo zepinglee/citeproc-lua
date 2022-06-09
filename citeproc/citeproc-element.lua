@@ -640,7 +640,7 @@ function Element:format_number(number, variable, form, context)
   --   {"1", "",  " & "}
   --   {"5", "8", ", "}
   -- }
-  util.debug(number_part_list)
+  -- util.debug(number_part_list)
 
   for _, number_parts in ipairs(number_part_list) do
     if form == "roman" then
@@ -648,7 +648,11 @@ function Element:format_number(number, variable, form, context)
     elseif form == "ordinal" or form == "long-ordinal" then
       local gender = context.locale:get_number_gender(variable)
       self:format_ordinal_number_parts(number_parts, form, gender, context)
-    else  -- form == "numeric" then
+    elseif number_parts[2] ~= "" and variable == "page" then
+      local page_range_format = context.style.page_range_format
+      self:format_page_range(number_parts, page_range_format)
+    else
+      self:format_numeric_number_parts(number_parts)
     end
   end
 
@@ -675,8 +679,6 @@ end
 
 function Element:split_number_parts(number)
   local number_part_list = {}
-
-  -- util.debug(number)
   for start, stop, spaces, delim in string.gmatch(number, "([^-,&%s]+)%s*%-?%s*([^-,&%s]*)(%s*)([,&]?)") do
     if delim == "" then
       delim = spaces
@@ -687,7 +689,6 @@ function Element:split_number_parts(number)
     end
     table.insert(number_part_list, {start, stop, delim})
   end
-
   return number_part_list
 end
 
@@ -717,6 +718,96 @@ function Element:format_ordinal_number_parts(number_parts, form, gender, context
   end
 end
 
+function Element:format_numeric_number_parts(number_parts)
+  if number_parts[2] ~= "" then
+    if string.match(number_parts[1], "^(.-)%d+$") == string.match(number_parts[2], "^(.-)%d+$") then
+      number_parts[1] = number_parts[1] .. "-" .. number_parts[2]
+      number_parts[2] = ""
+    end
+  end
+end
+
+-- https://docs.citationstyles.org/en/stable/specification.html#appendix-v-page-range-formats
+function Element:format_page_range(number_parts, page_range_format)
+  local start = number_parts[1]
+  local stop = number_parts[2]
+  local start_prefix, start_num  = string.match(start, "^(.-)(%d+)$")
+  local stop_prefix, stop_num = string.match(stop, "^(.-)(%d+)$")
+  if start_prefix ~= stop_prefix then
+    -- Not valid range: "n11564-1568" -> "n11564-1568"
+    -- 110-N6
+    -- N110-P5
+    number_parts[1] = start .. "-" .. stop
+    number_parts[2] = ""
+    return
+  end
+
+  if not page_range_format then
+    return
+  end
+  if page_range_format == "chicago-16" then
+    stop = self:_format_range_chicago_16(start_num, stop_num)
+  elseif page_range_format == "chicago-15" then
+    stop = self:_format_range_chicago_15(start_num, stop_num)
+  elseif page_range_format == "expanded" then
+    stop = stop_prefix .. self:_format_range_expanded(start_num, stop_num)
+  elseif page_range_format == "minimal" then
+    stop = self:_format_range_minimal(start_num, stop_num)
+  elseif page_range_format == "minimal-two" then
+    stop = self:_format_range_minimal(start_num, stop_num, 2)
+  end
+  number_parts[2] = stop
+end
+
+function Element:_format_range_chicago_16(start, stop)
+  if #start < 3 or string.sub(start, -2) == "00" then
+    return self:_format_range_expanded(start, stop)
+  elseif string.sub(start, -2, -2) == "0" then
+    return self:_format_range_minimal(start, stop)
+  else
+    return self:_format_range_minimal(start, stop, 2)
+  end
+  return stop
+end
+
+function Element:_format_range_chicago_15(start, stop)
+  if #start < 3 or string.sub(start, -2) == "00" then
+    return self:_format_range_expanded(start, stop)
+  else
+    local changed_digits = self:_format_range_minimal(start, stop)
+    if string.sub(start, -2, -2) == "0" then
+      return changed_digits
+    elseif #start == 4 and #changed_digits == 3 then
+      return self:_format_range_expanded(start, stop)
+    else
+      return self:_format_range_minimal(start, stop, 2)
+    end
+  end
+  return stop
+end
+
+function Element:_format_range_expanded(start, stop)
+  -- Expand  "1234–56" -> "1234–1256"
+  if #start <= #stop then
+    return stop
+  end
+  return string.sub(start, 1, #start - #stop) .. stop
+end
+
+function Element:_format_range_minimal(start, stop, threshold)
+  threshold = threshold or 1
+  if #start < #stop then
+    return stop
+  end
+  local offset = #start - #stop
+  for i = 1, #stop - threshold do
+    local j = i + offset
+    if string.sub(stop, i, i) ~= string.sub(start, j, j) then
+      return string.sub(stop, i)
+    end
+  end
+  return string.sub(stop, -threshold)
+end
 
 element.Element = Element
 
