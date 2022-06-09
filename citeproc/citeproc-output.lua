@@ -635,12 +635,17 @@ local function transform_each_word(str, seen_one, is_last, transform)
     end
   end
 
+  local immediate_before = nil
   for i, segment in ipairs(segments) do
     local is_first_word = not seen_one and i == first_idx
     local is_last_word = is_last and i == last_idx
     local no_stop_word = is_first_word or is_last_word
-    local new_word = transform(segment[1], no_stop_word)
-    segment[1] = new_word
+
+    if (immediate_before == "." or immediate_before == "-") and #segment[1] == 1 then
+    else
+      segment[1] = transform(segment[1], no_stop_word)
+    end
+    immediate_before = segment[2]
   end
   local res = ""
   for _, segment in ipairs(segments) do

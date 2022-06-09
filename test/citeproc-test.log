@@ -33,12 +33,12 @@ sort                 2       7      57       0
 sortseparator        0       0       1       0
 substitute           0       0       7       0
 testers              0       0       2       0
-textcase            19       8       3       0
+textcase            20       7       3       0
 unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              205     115     534       0
+(all)              206     114     534       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -1175,14 +1175,6 @@ Passed in:
 (string) 'Book A; Book C; Book D; Book B'
 Expected:
 (string) 'Book D; Book A; Book B; Book C'
-
-Failure → citeproc test test-suite textcase_LastChar.txt
-Passed in:
-(string) '07-X
-07-X Test'
-Expected:
-(string) '07-x
-07-x Test'
 
 Failure → citeproc test test-suite textcase_LocaleUnicode.txt
 Passed in:
@@ -2769,7 +2761,7 @@ Error → citeproc test test-suite sort_Quotes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_RangeUnaffected.txt
-./citeproc/citeproc-output.lua:793: attempt to index a nil value (local 'inline')
+./citeproc/citeproc-output.lua:798: attempt to index a nil value (local 'inline')
 
 Error → citeproc test test-suite sort_SeparateAuthorsAndOthers.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
