@@ -33,12 +33,12 @@ sort                 2       7      57       0
 sortseparator        0       0       1       0
 substitute           0       0       7       0
 testers              0       0       2       0
-textcase            23       4       3       0
+textcase            24       3       3       0
 unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              209     111     534       0
+(all)              210     110     534       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -1199,12 +1199,6 @@ Passed in:
 (string) 'John von Doe: An About up Life; John van Doe? A Life; John D’Doe! A Life; John de Doe a Life'
 Expected:
 (string) 'John von Doe: An about up Life; John van Doe? A Life; John d’Doe! A Life; John de Doe a Life'
-
-Failure → citeproc test test-suite textcase_TitleCaseWithHyphens.txt
-Passed in:
-(string) 'Out-Of-Fashion Initiatives: A Second Story'
-Expected:
-(string) 'Out-of-Fashion Initiatives: A Second Story'
 
 Failure → citeproc test test-suite variables_TitleShortOnShortTitleNoTitleCondition.txt
 Passed in:
