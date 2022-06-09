@@ -602,6 +602,7 @@ local function transform_lowercase(str)
 end
 
 local function transform_uppercase(str)
+  -- TODO: locale specific uppercase: textcase_LocaleUnicode.txt
   return string.gsub(str, utf8.charpattern, unicode.utf8.upper)
 end
 
@@ -662,13 +663,10 @@ local function transform_capitalize_word_if_lower(word)
   end
 end
 
-local function transform_capitalize_first(str)
-  return transform_first_word(str, transform_capitalize_word_if_lower)
-end
-
 local function title_case_word(word, no_stop_word)
-  local res
-  if (not util.stop_words[word] or no_stop_word) and util.is_lower(word) then
+  -- Entirely non-English
+  -- e.g. "β" in "β-Carotine"
+  if string.match(word, "%a") and (not util.stop_words[word] or no_stop_word) and util.is_lower(word) then
     return string.gsub(word, utf8.charpattern, unicode.utf8.upper, 1)
   else
     return word
