@@ -33,12 +33,12 @@ sort                 2       7      57       0
 sortseparator        0       0       1       0
 substitute           0       0       7       0
 testers              0       0       2       0
-textcase            18       9       3       0
+textcase            19       8       3       0
 unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              204     116     534       0
+(all)              205     115     534       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -404,7 +404,7 @@ Expected:
 
 Failure → citeproc test test-suite flipflop_SingleBeforeColon.txt
 Passed in:
-(string) '“Nobody Knows You’Re a Dog:” As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
+(string) '“Nobody Knows You’Re a Dog”: As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
 Expected:
 (string) '“Nobody Knows You’re a Dog”: As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
 
@@ -935,7 +935,7 @@ comma, comma'
 Failure → citeproc test test-suite punctuation_FullMontyQuotesIn.txt
 Passed in:
 (string) 'ENDING IN COLON
-“colon:” colon
+“colon”: colon
 “period.”: colon
 “semicolon;”: colon
 “exclamation”!: colon
@@ -943,7 +943,7 @@ Passed in:
 “comma,”: colon
 
 ENDING IN PERIOD
-“colon:”. period
+“colon”:. period
 “period.” period
 “semicolon;”. period
 “exclamation”!. period
@@ -951,7 +951,7 @@ ENDING IN PERIOD
 “comma,”. period
 
 ENDING IN SEMICOLON
-“colon:”; semicolon
+“colon”:; semicolon
 “period.”; semicolon
 “semicolon;” semicolon
 “exclamation”!; semicolon
@@ -959,7 +959,7 @@ ENDING IN SEMICOLON
 “comma,”; semicolon
 
 ENDING IN EXCLAMATION
-“colon:”! exclamation
+“colon”:! exclamation
 “period.”! exclamation
 “semicolon;”! exclamation
 “exclamation”! exclamation
@@ -967,7 +967,7 @@ ENDING IN EXCLAMATION
 “comma,”! exclamation
 
 ENDING IN QUESTION
-“colon:”? question
+“colon”:? question
 “period.”? question
 “semicolon;”? question
 “exclamation”!? question
@@ -975,7 +975,7 @@ ENDING IN QUESTION
 “comma,”? question
 
 ENDING IN COMMA
-“colon:”, comma
+“colon”:, comma
 “period.”, comma
 “semicolon;”, comma
 “exclamation”!, comma
@@ -1033,7 +1033,7 @@ ENDING IN COMMA
 Failure → citeproc test test-suite punctuation_FullMontyQuotesOut.txt
 Passed in:
 (string) 'ENDING IN COLON
-“colon:” colon
+“colon”: colon
 “period.”: colon
 “semicolon;”: colon
 “exclamation”!: colon
@@ -1041,7 +1041,7 @@ Passed in:
 “comma,”: colon
 
 ENDING IN PERIOD
-“colon:”. period
+“colon”:. period
 “period.” period
 “semicolon;”. period
 “exclamation”!. period
@@ -1049,7 +1049,7 @@ ENDING IN PERIOD
 “comma,”. period
 
 ENDING IN SEMICOLON
-“colon:”; semicolon
+“colon”:; semicolon
 “period.”; semicolon
 “semicolon;” semicolon
 “exclamation”!; semicolon
@@ -1057,7 +1057,7 @@ ENDING IN SEMICOLON
 “comma,”; semicolon
 
 ENDING IN EXCLAMATION
-“colon:”! exclamation
+“colon”:! exclamation
 “period.”! exclamation
 “semicolon;”! exclamation
 “exclamation”! exclamation
@@ -1065,7 +1065,7 @@ ENDING IN EXCLAMATION
 “comma,”! exclamation
 
 ENDING IN QUESTION
-“colon:”? question
+“colon”:? question
 “period.”? question
 “semicolon;”? question
 “exclamation”!? question
@@ -1073,7 +1073,7 @@ ENDING IN QUESTION
 “comma,”? question
 
 ENDING IN COMMA
-“colon:”, comma
+“colon”:, comma
 “period.”, comma
 “semicolon;”, comma
 “exclamation”!, comma
@@ -1175,12 +1175,6 @@ Passed in:
 (string) 'Book A; Book C; Book D; Book B'
 Expected:
 (string) 'Book D; Book A; Book B; Book C'
-
-Failure → citeproc test test-suite textcase_InQuotes.txt
-Passed in:
-(string) 'from “Distance” to “Friction:” Substituting Metaphors and Redirecting Intercultural Research for'
-Expected:
-(string) 'From “Distance” to “Friction”: Substituting Metaphors and Redirecting Intercultural Research For'
 
 Failure → citeproc test test-suite textcase_LastChar.txt
 Passed in:
@@ -2775,7 +2769,7 @@ Error → citeproc test test-suite sort_Quotes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_RangeUnaffected.txt
-./citeproc/citeproc-output.lua:780: attempt to index a nil value (local 'inline')
+./citeproc/citeproc-output.lua:793: attempt to index a nil value (local 'inline')
 
 Error → citeproc test test-suite sort_SeparateAuthorsAndOthers.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
