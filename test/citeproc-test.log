@@ -1200,11 +1200,11 @@ Passed in:
 Expected:
 (string) 'John von Doe: An about up Life; John van Doe? A Life; John d’Doe! A Life; John de Doe a Life'
 
-Failure → citeproc test test-suite textcase_StopWordBeforeHyphen.txt
+Failure → citeproc test test-suite textcase_TitleCaseWithHyphens.txt
 Passed in:
-(string) 'Employee pro-Environmental Behavior'
+(string) 'Out-Of-Fashion Initiatives: A Second Story'
 Expected:
-(string) 'Employee Pro-Environmental Behavior'
+(string) 'Out-of-Fashion Initiatives: A Second Story'
 
 Failure → citeproc test test-suite variables_TitleShortOnShortTitleNoTitleCondition.txt
 Passed in:

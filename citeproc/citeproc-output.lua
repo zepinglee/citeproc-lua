@@ -646,7 +646,7 @@ local function transform_each_word(str, seen_one, is_last, transform)
       last_punct == "!" or
       last_punct == "?" or
       last_punct == "?")
-    local no_stop_word = is_first_word or is_last_word or follows_colon
+    local no_stop_word = is_first_word or is_last_word or follows_colon or segment[2] == "-"
 
     if (immediate_before == "." or immediate_before == "-") and #segment[1] == 1 then
     else
