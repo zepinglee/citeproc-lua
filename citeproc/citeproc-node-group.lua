@@ -68,10 +68,6 @@ function Group:build_ir(engine, state, context)
   local ir = SeqIr:new(irs, self)
   ir.group_var = "important"
 
-  -- ir = self:apply_delimiter(ir)
-  -- ir = self:apply_formatting(ir)
-  -- ir = self:apply_affixes(ir)
-  -- ir = self:apply_display(ir)
   ir.delimiter = self.delimiter
   ir.formatting = util.clone(self.formatting)
   ir.affixes = util.clone(self.affixes)

@@ -11,17 +11,25 @@ local unicode = require("unicode")
 local IrNode = require("citeproc-ir-node").IrNode
 local NameIr = require("citeproc-ir-node").NameIr
 local SeqIr = require("citeproc-ir-node").SeqIr
+local Rendered = require("citeproc-ir-node").Rendered
+local InlineElement = require("citeproc-output").InlineElement
+local PlainText = require("citeproc-output").PlainText
 
 local richtext = require("citeproc-richtext")
 local Element = require("citeproc-element").Element
 local util = require("citeproc-util")
 
 
--- [Name](https://docs.citationstyles.org/en/stable/specification.html#name)
+local Names = Element:derive("names")
 local Name = Element:derive("name")
+local NamePart = Element:derive("name-part")
+local EtAl = Element:derive("et-al")
+local Substitute = Element:derive("substitute")
 
-function Name:new(node)
-  local o = Element:new("name")
+
+-- [Name](https://docs.citationstyles.org/en/stable/specification.html#name)
+function Name:new()
+  local o = Element.new(self, "name")
 
   o.delimiter = ", "
   o.delimiter_precedes_et_al = "contextual"
@@ -31,6 +39,8 @@ function Name:new(node)
   o.initialize = false
   o.sort_separator = false
 
+  o.family = NamePart:new("family")
+  o.given = NamePart:new("given")
   return o
 end
 
@@ -52,55 +62,85 @@ function Name:from_node(node)
   o:set_attribute(node, "sort-separator")
   o:set_affixes_attributes(node)
   o:set_formatting_attributes(node)
+  o:process_children_nodes()
+  for _, child in ipairs(o.children) do
+    if child.name == "family" then
+      o.family = child
+    elseif child.name == "given" then
+      o.given = child
+    end
+  end
+  if not o.family then
+    o.family = NamePart:new()
+    o.family.name = "family"
+  end
+  if not o.given then
+    o.given = NamePart:new()
+    o.family.name = "given"
+  end
   return o
 end
 
+
+-- function Name:is_as_sort_order(person_name, seen_one)
+--   if
+-- end
+
+function Name:render_person_name(person_name, seen_one)
+  -- Return: inlines
+  local name_parts = {self.given, self.family}
+  if self.form == "short" then
+    name_parts = {self.family}
+  elseif self.name_as_sort_order == "all" or
+      (self.name_as_sort_order == "first" and not seen_one) or
+      not util.has_romanesque_char(person_name.family) then
+    name_parts = {self.family, self.given}
+  end
+  local inlines = {}
+  for i, name_part in ipairs(name_parts) do
+    if i > 1 then
+      table.insert(inlines, PlainText:new(" "))
+    end
+    if name_part.name == "family" then
+      local text = person_name.family
+      for _, inline in ipairs(InlineElement:parse(text)) do
+        table.insert(inlines, inline)
+      end
+    elseif name_part.name == "given" then
+      local text = person_name.given
+      for _, inline in ipairs(InlineElement:parse(text)) do
+        table.insert(inlines, inline)
+      end
+    end
+  end
+  -- util.debug(inlines)
+  return inlines
+end
+
 function Name:build_ir(variable, et_al, label, engine, state, context)
+  -- Returns NameIR
   local name_variables = context:get_variable(variable)
   if not name_variables then
     return nil
   end
 
-  local child_irs = {}
-  -- for _, name_variable in ipairs(name_variables) do
-  --   if name_variable.family then
-  --     local text = name_variable.family
-  --     if name_variable.given then
-  --       text = text .. ", " .. name_variable.given
-  --     end
-  --     local child_ir = IrNode:new(nil, text)
-  --     table.insert(ir.children, child_ir)
-  --   elseif name_variable.literal then
-  --     local child_ir = IrNode:new(nil, name_variable.literal)
-  --     table.insert(ir.children, child_ir)
-  --   end
-  -- end
+  local irs = {}
 
-  local ir = SeqIr:new(child_irs)
+  for i, name_variable in ipairs(name_variables) do
+    local inlines = self:render_person_name(name_variable, i > 1)
 
-  ir = self:apply_formatting(ir)
-  ir = self:apply_affixes(ir)
+    local rendered = Rendered:new(inlines, self)
+    -- util.debug(rendered)
+    table.insert(irs, rendered)
+  end
+
+  local ir = NameIr:new(irs, self)
+
+  -- ir = self:apply_formatting(ir)
+  -- ir = self:apply_affixes(ir)
   return ir
 end
 
-
-Name._default_options = {
-  ["delimiter"] = ", ",
-  ["delimiter-precedes-et-al"] = "contextual",
-  ["delimiter-precedes-last"] = "contextual",
-  ["et-al-min"] = nil,
-  ["et-al-use-first"] = nil,
-  ["et-al-subsequent-min"] = nil,
-  ["et-al-subsequent-use-first "] = nil,
-  ["et-al-use-last"] = false,
-  ["form"] = "long",
-  ["initialize"] = true,
-  ["initialize-with"] = false,
-  ["name-as-sort-order"] = false,
-  ["sort-separator"] = ", ",
-  ["prefix"] = "",
-  ["suffix"] = "",
-}
 
 function Name:render (names, context)
   self:debug_info(context)
@@ -483,7 +523,11 @@ end
 
 
 -- [Name-part](https://docs.citationstyles.org/en/stable/specification.html#name-part-formatting)
-local NamePart = Element:derive("name-part")
+function NamePart:new(name)
+  local o = Element.new(self)
+  o.name = name
+  return o
+end
 
 function NamePart:from_node(node)
   local o = NamePart:new()
@@ -508,8 +552,6 @@ end
 
 
 -- [Et-al](https://docs.citationstyles.org/en/stable/specification.html#et-al)
-local EtAl = Element:derive("et-al")
-
 EtAl.term = "et-al"
 
 function EtAl:from_node(node)
@@ -532,8 +574,6 @@ EtAl.render = function (self, context)
 end
 
 
-local Substitute = Element:derive("substitute")
-
 function Substitute:render (item, context)
   self:debug_info(context)
 
@@ -555,11 +595,14 @@ end
 
 
 -- [Names](https://docs.citationstyles.org/en/stable/specification.html#names)
-local Names = Element:derive("names")
-Names.name = nil
-Names.et_al = nil
-Names.substitute = nil
-Names.label = nil
+function Names:new()
+  local o = Element.new(self)
+  o.name = nil
+  o.et_al = nil
+  o.substitute = nil
+  o.label = nil
+  return o
+end
 
 function Names:from_node(node)
   local o = Names:new()
@@ -568,6 +611,32 @@ function Names:from_node(node)
   o.et_al = nil
   o.substitute = nil
   o.label = nil
+  o.children = {}
+  o:process_children_nodes(node)
+  for _, child in ipairs(o.children) do
+    local element_name = child.element_name
+    if element_name == "name" then
+      o.name = child
+    elseif element_name == "et-al" then
+      o.et_al = child
+    elseif element_name == "substitute" then
+      o.substitute = child
+    elseif element_name == "label" then
+      o.label = child
+      if o.name then
+        child.after_name = true
+      end
+    else
+      util.warning(string.format('Unkown element "{}".', element_name))
+    end
+  end
+  if not o.name then
+    o.name = Name:new()
+  end
+  if not o.et_al then
+    o.et_al = EtAl:new()
+  end
+
   o:get_delimiter_attribute(node)
   o:set_affixes_attributes(node)
   o:set_display_attribute(node)
@@ -576,43 +645,21 @@ function Names:from_node(node)
   return o
 end
 
-function Names:process_children_nodes(node)
-  for _, child in self.children do
-    local element_name = child.element_name
-    if element_name == "name" then
-      self.name = child
-    elseif element_name == "et-al" then
-      self.et_al = child
-    elseif element_name == "substitute" then
-      self.substitute = child
-    elseif element_name == "label" then
-      self.label = child
-      if self.name then
-        child.after_name = true
-      end
-    else
-      util.warning(string.format('Unkown element "{}".', element_name))
-    end
-  end
-  if not self.name then
-    self.name = Name:new()
-  end
-  if not self.et_al then
-    self.name = EtAl:new()
-  end
-end
-
 function Names:build_ir(engine, state, context)
-  local ir = IrNode:new()
-  ir.children = {}
+  local irs = {}
+  -- util.debug(self.name)
   for _, variable in ipairs(util.split(self.variable)) do
     local name_ir = self.name:build_ir(variable, self.et_al, self.label, engine, state, context)
-    table.insert(ir.children, name_ir)
+    table.insert(irs, name_ir)
   end
-  ir = self:apply_delimiter(ir)
-  ir = self:apply_formatting(ir)
-  ir = self:apply_affixes(ir)
-  ir = self:apply_display(ir)
+
+  local ir = SeqIr:new(irs, self)
+
+  -- ir = self:apply_delimiter(ir)
+  -- ir = self:apply_formatting(ir)
+  -- ir = self:apply_affixes(ir)
+  -- ir = self:apply_display(ir)
+
   return ir
 end
 

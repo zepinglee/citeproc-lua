@@ -44,7 +44,7 @@ function IrNode:derive(type)
 end
 
 function IrNode:flatten(format)
-  if self.type == "SeqIr" then
+  if self.type == "SeqIr" or self.type == "NameIr" then
     return self:flatten_seq(format)
   else
     return self.inlines

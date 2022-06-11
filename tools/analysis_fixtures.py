@@ -8,11 +8,16 @@ import xml.etree.ElementTree as ET
 failed_fixtures = []
 skipped_fixtures = [
     'affix_CommaAfterQuote.txt',
-    'label_EditorTranslator2.txt',
+    'bugreports_ApostropheOnParticle.txt',
+    'bugreports_ArabicLocale.txt',
+    'bugreports_EtAlSubsequent.txt',
     'bugreports_FrenchApostrophe.txt',
+    'decorations_NoNormalWithoutDecoration.txt',
     'flipflop_OrphanQuote.txt',
     'flipflop_SingleBeforeColon.txt',
     'flipflop_StartingApostrophe.txt',
+    'integration_DeleteName.txt',
+    'label_EditorTranslator2.txt',
     'punctuation_FrenchOrthography.txt',
     'textcase_LocaleUnicode.txt',
     'textcase_SentenceCapitalization.txt',
@@ -42,8 +47,8 @@ paths = sorted([
     # and not f.startswith('decorations_')
     and not f.startswith('disambiguate_')
     # and not f.startswith('flipflop_')
-    # and not f.startswith('magic_Name')
-    and not f.startswith('name')
+    and not f.startswith('magic_Name')
+    # and not f.startswith('name')
     # and not f.startswith('number_')
     # and not f.startswith('textcase_')
 ])

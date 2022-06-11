@@ -229,8 +229,8 @@ end
 
 local Terms = Element:derive("terms")
 
-function Terms:new(node)
-  local o = Element:new()
+function Terms:new()
+  local o = Element.new(self)
   o.element_name = "terms"
   o.children = {}
   o.terms_map = {}

@@ -115,7 +115,7 @@ end
 local Key = Element:derive("key")
 
 function Key:new()
-  local o = Element:new("key")
+  local o = Element.new(self)
   Key.sort_direction = "ascending"
   return o
 end
