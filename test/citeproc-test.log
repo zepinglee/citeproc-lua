@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                3       5       1       0
-bugreports          12      17      53       0
+bugreports          12      18      52       0
 collapse             0      19       2       0
 condition            5      12       0       0
 date                79      14       8       0
@@ -18,7 +18,7 @@ label                4      12       3       0
 locale              19       4       0       0
 locator              2       4       0       0
 magic               20      14       6       0
-name                34      60      17       0
+name                38      57      16       0
 nameattr            48      49       0       0
 nameorder            0       6       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              311     331     212       0
+(all)              315     329     210       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -99,6 +99,12 @@ C. Grignon, C. Sentenac 2000'
 Expected:
 (string) 'C. Grignon, C. Sentenac 2000a
 C. Grignon, C. Sentenac 2000b'
+
+Failure → citeproc test test-suite bugreports_ChineseCharactersFamilyOnlyPluralLabel.txt
+Passed in:
+(string) '编者'
+Expected:
+(string) '编者ed.'
 
 Failure → citeproc test test-suite bugreports_CitationSortsWithEtAl.txt
 Passed in:
@@ -526,7 +532,7 @@ Expected:
 
 Failure → citeproc test test-suite decorations_AndTermUnaffectedByNameDecorations.txt
 Passed in:
-(string) 'John Doe, III, and Jane Roe'
+(string) 'John Doe III, and Jane Roe'
 Expected:
 (string) '<span style="font-variant:small-caps;">John</span> <span style="font-variant:small-caps;">Doe</span> III and <span style="font-variant:small-caps;">Jane</span> <span style="font-variant:small-caps;">van</span> <span style="font-variant:small-caps;">Roe</span>'
 
@@ -710,8 +716,8 @@ John Smith, Complete Works, ed. 6'
 
 Failure → citeproc test test-suite disambiguate_LastOnlyFailWithByCite.txt
 Passed in:
-(string) ' Organisation 2010
- Organisation 2010'
+(string) 'Organisation 2010
+Organisation 2010'
 Expected:
 (string) 'Organisation 2010a
 Organisation 2010b'
@@ -1258,23 +1264,11 @@ Expected:
 (string) 'DOEBUCK, Jonathan, et al.; DOE, John, Jane ROE et al.; DOE, John, Janice ROEBUCK et al.
 APPLEBY, Aloysius, and Bobby BROWN; APPLEBY, Aloysius, Bobby BROWN and Cecile CREAM; APPLEBY, Aloysius, Bobby BROWN and Enola EVERGREEN'
 
-Failure → citeproc test test-suite name_ArticularPlain.txt
+Failure → citeproc test test-suite name_ArticularWithComma.txt
 Passed in:
-(string) 'James Doe, III'
+(string) 'Jeffrey Doe Jr.'
 Expected:
-(string) 'James Doe III'
-
-Failure → citeproc test test-suite name_ArticularShortForm.txt
-Passed in:
-(string) 'Doe, III'
-Expected:
-(string) 'Doe'
-
-Failure → citeproc test test-suite name_ArticularShortFormCommaSuffix.txt
-Passed in:
-(string) 'Doe, Jr'
-Expected:
-(string) 'Doe'
+(string) 'Jeffrey Doe, Jr.'
 
 Failure → citeproc test test-suite name_AsianGlyphs.txt
 Passed in:
@@ -1364,6 +1358,12 @@ Passed in:
 Expected:
 (string) 'Gerard van DER MEER'
 
+Failure → citeproc test test-suite name_HebrewAnd.txt
+Passed in:
+(string) 'תפוח, ו  תפוז'
+Expected:
+(string) 'תפוחו תפוז'
+
 Failure → citeproc test test-suite name_HierarchicalDelimiter.txt
 Passed in:
 (string) 'John Doe, Jane Roe'
@@ -1418,23 +1418,11 @@ Passed in:
 Expected:
 (string) 'Aalto editor'
 
-Failure → citeproc test test-suite name_MultipleLiteral.txt
-Passed in:
-(string) 'JJ Doe; G Jones; B Smith;  Alfred Benzon Foundation;  James Benson Foundation;  John Candy Foundation'
-Expected:
-(string) 'JJ Doe; G Jones; B Smith; Alfred Benzon Foundation; James Benson Foundation; John Candy Foundation'
-
 Failure → citeproc test test-suite name_NonDroppingParticleDefault.txt
 Passed in:
 (string) 'Roe, Jane'
 Expected:
 (string) 'Roe, Jane van'
-
-Failure → citeproc test test-suite name_OnlyFamilyname.txt
-Passed in:
-(string) ' Prince'
-Expected:
-(string) 'Prince'
 
 Failure → citeproc test test-suite name_ParseNames.txt
 Passed in:
@@ -1758,7 +1746,7 @@ Expected:
 
 Failure → citeproc test test-suite name_namepartAffixes.txt
 Passed in:
-(string) 'Jean Fontaine, III'
+(string) 'Jean Fontaine III'
 Expected:
 (string) '[Jean] (de La Fontaine III)'
 
@@ -2174,7 +2162,7 @@ Expected:
 
 Failure → citeproc test test-suite nameorder_Long.txt
 Passed in:
-(string) 'Gérard Martinière, III'
+(string) 'Gérard Martinière III'
 Expected:
 (string) 'Gérard de la Martinière III'
 
@@ -2192,19 +2180,19 @@ Expected:
 
 Failure → citeproc test test-suite nameorder_Short.txt
 Passed in:
-(string) 'Martinière, III'
+(string) 'Martinière'
 Expected:
 (string) 'la Martinière'
 
 Failure → citeproc test test-suite nameorder_ShortDemoteDisplayAndSort.txt
 Passed in:
-(string) 'Martinière, III'
+(string) 'Martinière'
 Expected:
 (string) 'la Martinière'
 
 Failure → citeproc test test-suite nameorder_ShortNameAsSortDemoteNever.txt
 Passed in:
-(string) 'Martinière, III'
+(string) 'Martinière'
 Expected:
 (string) 'la Martinière'
 
@@ -3022,9 +3010,6 @@ Error → citeproc test test-suite bugreports_ByBy.txt
 Error → citeproc test test-suite bugreports_ChicagoAuthorDateLooping.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite bugreports_ChineseCharactersFamilyOnlyPluralLabel.txt
-./citeproc/citeproc-output.lua:148: attempt to concatenate a nil value (local 'str')
-
 Error → citeproc test test-suite bugreports_CollapseFailure.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -3399,9 +3384,6 @@ Error → citeproc test test-suite name_EditorTranslatorWithTranslatorOnlyBib.tx
 
 Error → citeproc test test-suite name_EtAlWithCombined.txt
 ./citeproc/citeproc-node-choose.lua:183: attempt to index a nil value (field 'cite')
-
-Error → citeproc test test-suite name_HebrewAnd.txt
-./citeproc/citeproc-output.lua:148: attempt to concatenate a nil value (local 'str')
 
 Error → citeproc test test-suite name_HyphenatedNonDroppingParticle1.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

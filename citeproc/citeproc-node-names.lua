@@ -131,18 +131,7 @@ end
 
 function Name:render_person_name(person_name, seen_one, context)
   -- Return: inlines
-  local name_part_tokens = {"given", "space", "family"}
-  if self.form == "short" then
-    name_part_tokens = {"family"}
-  elseif self.name_as_sort_order == "all" or
-      (self.name_as_sort_order == "first" and not seen_one) or
-      not util.has_romanesque_char(person_name.family) then
-    name_part_tokens = {"family", "sort-separator", "given"}
-  end
-  if person_name.suffix then
-    table.insert(name_part_tokens, "sort-separator")
-    table.insert(name_part_tokens, "suffix")
-  end
+  local name_part_tokens = self:get_display_order(person_name, seen_one)
   local inlines = {}
   for i, name_part_token in ipairs(name_part_tokens) do
     if name_part_token == "family" then
@@ -172,6 +161,54 @@ function Name:render_person_name(person_name, seen_one, context)
   return inlines
 end
 
+function Name:get_display_order(person_name, seen_one)
+  local name_part_tokens = {"family"}
+
+  if self.form == "short" then
+    return name_part_tokens
+  end
+
+  local as_sort_order = (self.name_as_sort_order == "all" or
+    (self.name_as_sort_order == "first" and not seen_one) or
+    not util.has_romanesque_char(person_name.family))
+
+  if person_name.given then
+    if as_sort_order then
+      name_part_tokens = {"family", "sort-separator", "given"}
+    else
+      name_part_tokens = {"given", "space", "family"}
+    end
+  end
+
+  if person_name.suffix then
+    if as_sort_order then
+      table.insert(name_part_tokens, "sort-separator")
+      table.insert(name_part_tokens, "suffix")
+    else
+      table.insert(name_part_tokens, "space")
+      table.insert(name_part_tokens, "suffix")
+    end
+  end
+
+  -- local as_sort_order = false
+  -- if self.form == "short" then
+  --   name_part_tokens = {"family"}
+  -- else
+  --   if as_sort_order then
+  --     name_part_tokens = {"given", "space", "family"}
+  --   name_part_tokens = {"family", "sort-separator", "given"}
+  --   if person_name.suffix then
+  --     if as_sort_order then
+  --       table.insert(name_part_tokens, "sort-separator")
+  --     else
+  --       table.insert(name_part_tokens, "space")
+  --     end
+  --     table.insert(name_part_tokens, "suffix")
+  --   end
+  -- end
+
+  return name_part_tokens
+end
 
 function Name:render (names, context)
   self:debug_info(context)
