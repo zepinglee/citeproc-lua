@@ -18,6 +18,7 @@ skipped_fixtures = [
     'flipflop_StartingApostrophe.txt',
     'integration_DeleteName.txt',
     'label_EditorTranslator2.txt',
+    'magic_CapitalizeFirstOccurringNameParticle.txt',
     'punctuation_FrenchOrthography.txt',
     'textcase_LocaleUnicode.txt',
     'textcase_SentenceCapitalization.txt',

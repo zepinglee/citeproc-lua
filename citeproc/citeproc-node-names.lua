@@ -36,8 +36,8 @@ function Name:new()
   o.delimiter_precedes_last = "contextual"
   o.et_al_use_last = false
   o.form = "long"
-  o.initialize = false
-  o.sort_separator = false
+  o.initialize = true
+  o.sort_separator = ", "
 
   o.family = NamePart:new("family")
   o.given = NamePart:new("given")
@@ -58,11 +58,11 @@ function Name:from_node(node)
   o:set_attribute(node, "form")
   o:set_bool_attribute(node, "initialize")
   o:set_attribute(node, "initialize-with")
-  o:set_attribute(node, "name_as_sort_order")
+  o:set_attribute(node, "name-as-sort-order")
   o:set_attribute(node, "sort-separator")
   o:set_affixes_attributes(node)
   o:set_formatting_attributes(node)
-  o:process_children_nodes()
+  o:process_children_nodes(node)
   for _, child in ipairs(o.children) do
     if child.name == "family" then
       o.family = child
@@ -86,49 +86,36 @@ end
 --   if
 -- end
 
-function Name:render_person_name(person_name, seen_one)
-  -- Return: inlines
-  local name_parts = {self.given, self.family}
-  if self.form == "short" then
-    name_parts = {self.family}
-  elseif self.name_as_sort_order == "all" or
-      (self.name_as_sort_order == "first" and not seen_one) or
-      not util.has_romanesque_char(person_name.family) then
-    name_parts = {self.family, self.given}
-  end
-  local inlines = {}
-  for i, name_part in ipairs(name_parts) do
-    if i > 1 then
-      table.insert(inlines, PlainText:new(" "))
-    end
-    if name_part.name == "family" then
-      local text = person_name.family
-      for _, inline in ipairs(InlineElement:parse(text)) do
-        table.insert(inlines, inline)
-      end
-    elseif name_part.name == "given" then
-      local text = person_name.given
-      for _, inline in ipairs(InlineElement:parse(text)) do
-        table.insert(inlines, inline)
-      end
-    end
-  end
-  -- util.debug(inlines)
-  return inlines
-end
-
 function Name:build_ir(variable, et_al, label, engine, state, context)
   -- Returns NameIR
-  local name_variables = context:get_variable(variable)
-  if not name_variables then
+  local names = context:get_variable(variable)
+  if not names then
     return nil
   end
 
   local irs = {}
 
-  for i, name_variable in ipairs(name_variables) do
-    local inlines = self:render_person_name(name_variable, i > 1)
-
+  for i, name in ipairs(names) do
+    if i > 1 then
+      if i == #names and self["and"] then
+        -- if self:_check_delimiter(delimiter_precedes_last, i, inverted) then
+        --   output = richtext.concat(output, delimiter)
+        -- else
+        --   output = output .. " "
+        -- end
+        table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
+        local and_term
+        if self["and"] == "text" then
+          and_term = context.locale:get_simple_term("and")
+        elseif context.options["and"] == "symbol" then
+          and_term = "&"
+        end
+        table.insert(irs, Rendered:new({PlainText:new(and_term .. " ")}))
+      else
+        table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
+      end
+    end
+    local inlines = self:render_person_name(name, i > 1, context)
     local rendered = Rendered:new(inlines, self)
     -- util.debug(rendered)
     table.insert(irs, rendered)
@@ -139,6 +126,42 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
   -- ir = self:apply_formatting(ir)
   -- ir = self:apply_affixes(ir)
   return ir
+end
+
+
+function Name:render_person_name(person_name, seen_one, context)
+  -- Return: inlines
+  local name_part_tokens = {"given", "space", "family"}
+  if self.form == "short" then
+    name_part_tokens = {"family"}
+  elseif self.name_as_sort_order == "all" or
+      (self.name_as_sort_order == "first" and not seen_one) or
+      not util.has_romanesque_char(person_name.family) then
+    name_part_tokens = {"family", "sort-separator", "given"}
+  end
+  local inlines = {}
+  for i, name_part_token in ipairs(name_part_tokens) do
+    if name_part_token == "family" then
+      local text = person_name.family
+      for _, inline in ipairs(InlineElement:parse(text)) do
+        table.insert(inlines, inline)
+      end
+    elseif name_part_token == "given" then
+      local text = person_name.given
+      if self.initialize_with then
+        text = self:initialize_name(text, self.initialize_with, context.style.initialize_with_hyphen)
+      end
+      for _, inline in ipairs(InlineElement:parse(text)) do
+        table.insert(inlines, inline)
+      end
+    elseif name_part_token == "space" then
+      table.insert(inlines, PlainText:new(" "))
+    elseif name_part_token == "sort-separator" then
+      table.insert(inlines, PlainText:new(self.sort_separator))
+    end
+  end
+  -- util.debug(inlines)
+  return inlines
 end
 
 
@@ -424,13 +447,12 @@ function Name:render_single_name (name, index, context)
   return res, inverted
 end
 
-function Name:initialize_name(given, terminator, context)
+function Name:initialize_name(given, with, initialize_with_hyphen)
   if not given or given == "" then
     return ""
   end
 
-  local initialize = context.options["initialize"]
-  if context.options["initialize-with-hyphen"] == false then
+  if initialize_with_hyphen == false then
     given = string.gsub(given, "-", " ")
   end
 
@@ -476,9 +498,9 @@ function Name:initialize_name(given, terminator, context)
         name_list[i-1] = name_list[i-1] .. " "
       end
     elseif is_abbreviation then
-      name_list[i] = name .. terminator
+      name_list[i] = name .. with
     else
-      if initialize then
+      if self.initialize then
         if util.is_upper(name) then
           name = first_letter
         else
@@ -498,7 +520,7 @@ function Name:initialize_name(given, terminator, context)
           end
           name = abbreviation
         end
-        name_list[i] = name .. terminator
+        name_list[i] = name .. with
       else
         name_list[i] = name .. " "
       end

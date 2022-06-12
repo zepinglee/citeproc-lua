@@ -144,6 +144,9 @@ function Element:set_bool_attribute(node, attribute)
 end
 
 function Element:process_children_nodes(node)
+  if not self.children then
+    self.children = {}
+  end
   for _, child in ipairs(node:get_children()) do
     if child:is_element() then
       local element_name = child:get_element_name()
