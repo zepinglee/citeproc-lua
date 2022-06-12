@@ -139,6 +139,10 @@ function Name:render_person_name(person_name, seen_one, context)
       not util.has_romanesque_char(person_name.family) then
     name_part_tokens = {"family", "sort-separator", "given"}
   end
+  if person_name.suffix then
+    table.insert(name_part_tokens, "sort-separator")
+    table.insert(name_part_tokens, "suffix")
+  end
   local inlines = {}
   for i, name_part_token in ipairs(name_part_tokens) do
     if name_part_token == "family" then
@@ -152,6 +156,10 @@ function Name:render_person_name(person_name, seen_one, context)
         text = self:initialize_name(text, self.initialize_with, context.style.initialize_with_hyphen)
       end
       for _, inline in ipairs(InlineElement:parse(text)) do
+        table.insert(inlines, inline)
+      end
+    elseif name_part_token == "suffix" then
+      for _, inline in ipairs(InlineElement:parse(person_name.suffix)) do
         table.insert(inlines, inline)
       end
     elseif name_part_token == "space" then

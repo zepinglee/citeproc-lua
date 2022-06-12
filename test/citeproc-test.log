@@ -18,7 +18,7 @@ label                4      12       3       0
 locale              19       4       0       0
 locator              2       4       0       0
 magic               20      14       6       0
-name                33      61      17       0
+name                34      60      17       0
 nameattr            48      49       0       0
 nameorder            0       6       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              310     332     212       0
+(all)              311     331     212       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -526,7 +526,7 @@ Expected:
 
 Failure → citeproc test test-suite decorations_AndTermUnaffectedByNameDecorations.txt
 Passed in:
-(string) 'John Doe, and Jane Roe'
+(string) 'John Doe, III, and Jane Roe'
 Expected:
 (string) '<span style="font-variant:small-caps;">John</span> <span style="font-variant:small-caps;">Doe</span> III and <span style="font-variant:small-caps;">Jane</span> <span style="font-variant:small-caps;">van</span> <span style="font-variant:small-caps;">Roe</span>'
 
@@ -1258,29 +1258,23 @@ Expected:
 (string) 'DOEBUCK, Jonathan, et al.; DOE, John, Jane ROE et al.; DOE, John, Janice ROEBUCK et al.
 APPLEBY, Aloysius, and Bobby BROWN; APPLEBY, Aloysius, Bobby BROWN and Cecile CREAM; APPLEBY, Aloysius, Bobby BROWN and Enola EVERGREEN'
 
-Failure → citeproc test test-suite name_ArticularNameAsSortOrder.txt
-Passed in:
-(string) 'Doe, James'
-Expected:
-(string) 'Doe, James, III'
-
 Failure → citeproc test test-suite name_ArticularPlain.txt
 Passed in:
-(string) 'James Doe'
+(string) 'James Doe, III'
 Expected:
 (string) 'James Doe III'
 
-Failure → citeproc test test-suite name_ArticularWithComma.txt
+Failure → citeproc test test-suite name_ArticularShortForm.txt
 Passed in:
-(string) 'Jeffrey Doe'
+(string) 'Doe, III'
 Expected:
-(string) 'Jeffrey Doe, Jr.'
+(string) 'Doe'
 
-Failure → citeproc test test-suite name_ArticularWithCommaNameAsSortOrder.txt
+Failure → citeproc test test-suite name_ArticularShortFormCommaSuffix.txt
 Passed in:
-(string) 'Doe, James'
+(string) 'Doe, Jr'
 Expected:
-(string) 'Doe, James, Jr'
+(string) 'Doe'
 
 Failure → citeproc test test-suite name_AsianGlyphs.txt
 Passed in:
@@ -1764,19 +1758,19 @@ Expected:
 
 Failure → citeproc test test-suite name_namepartAffixes.txt
 Passed in:
-(string) 'Jean Fontaine'
+(string) 'Jean Fontaine, III'
 Expected:
 (string) '[Jean] (de La Fontaine III)'
 
 Failure → citeproc test test-suite name_namepartAffixesNameAsSortOrder.txt
 Passed in:
-(string) 'Fontaine Jean'
+(string) 'Fontaine Jean III'
 Expected:
 (string) '(La Fontaine) [Jean de] III'
 
 Failure → citeproc test test-suite name_namepartAffixesNameAsSortOrderDemoteNonDroppingParticle.txt
 Passed in:
-(string) 'Fontaine Jean'
+(string) 'Fontaine Jean III'
 Expected:
 (string) '(Fontaine) [Jean de La] III'
 
@@ -2180,37 +2174,37 @@ Expected:
 
 Failure → citeproc test test-suite nameorder_Long.txt
 Passed in:
-(string) 'Gérard Martinière'
+(string) 'Gérard Martinière, III'
 Expected:
 (string) 'Gérard de la Martinière III'
 
 Failure → citeproc test test-suite nameorder_LongNameAsSortDemoteDisplayAndSort.txt
 Passed in:
-(string) 'Martinière, Gérard'
+(string) 'Martinière, Gérard, III'
 Expected:
 (string) 'Martinière, Gérard de la, III'
 
 Failure → citeproc test test-suite nameorder_LongNameAsSortDemoteNever.txt
 Passed in:
-(string) 'Martinière, Gérard'
+(string) 'Martinière, Gérard, III'
 Expected:
 (string) 'la Martinière, Gérard de, III'
 
 Failure → citeproc test test-suite nameorder_Short.txt
 Passed in:
-(string) 'Martinière'
+(string) 'Martinière, III'
 Expected:
 (string) 'la Martinière'
 
 Failure → citeproc test test-suite nameorder_ShortDemoteDisplayAndSort.txt
 Passed in:
-(string) 'Martinière'
+(string) 'Martinière, III'
 Expected:
 (string) 'la Martinière'
 
 Failure → citeproc test test-suite nameorder_ShortNameAsSortDemoteNever.txt
 Passed in:
-(string) 'Martinière'
+(string) 'Martinière, III'
 Expected:
 (string) 'la Martinière'
 
