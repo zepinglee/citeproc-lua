@@ -181,7 +181,7 @@ function Name:get_display_order(person_name, seen_one)
   end
 
   if person_name.suffix then
-    if as_sort_order then
+    if as_sort_order or person_name["comma-suffix"] then
       table.insert(name_part_tokens, "sort-separator")
       table.insert(name_part_tokens, "suffix")
     else
