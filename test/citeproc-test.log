@@ -18,7 +18,7 @@ label                4      12       3       0
 locale              19       4       0       0
 locator              2       4       0       0
 magic               20      14       6       0
-name                39      56      16       0
+name                40      55      16       0
 nameattr            48      49       0       0
 nameorder            0       6       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              316     328     210       0
+(all)              317     327     210       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -1263,12 +1263,6 @@ Appleby, Aloysius, and Bobby Brown; Appleby, Aloysius, Bobby Brown, and Cecile C
 Expected:
 (string) 'DOEBUCK, Jonathan, et al.; DOE, John, Jane ROE et al.; DOE, John, Janice ROEBUCK et al.
 APPLEBY, Aloysius, and Bobby BROWN; APPLEBY, Aloysius, Bobby BROWN and Cecile CREAM; APPLEBY, Aloysius, Bobby BROWN and Enola EVERGREEN'
-
-Failure → citeproc test test-suite name_AsianGlyphs.txt
-Passed in:
-(string) '我妻, 栄'
-Expected:
-(string) '我妻栄'
 
 Failure → citeproc test test-suite name_AuthorCount.txt
 Passed in:

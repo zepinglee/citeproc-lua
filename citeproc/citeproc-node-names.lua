@@ -168,20 +168,25 @@ function Name:get_display_order(person_name, seen_one)
     return name_part_tokens
   end
 
-  local as_sort_order = (self.name_as_sort_order == "all" or
-    (self.name_as_sort_order == "first" and not seen_one) or
-    not util.has_romanesque_char(person_name.family))
+  -- TODO: use is_romanesque
+  local is_romanesque = util.has_romanesque_char(person_name.family)
+  local is_reversed = (self.name_as_sort_order == "all" or
+    (self.name_as_sort_order == "first" and not seen_one) or not is_romanesque)
 
   if person_name.given then
-    if as_sort_order then
-      name_part_tokens = {"family", "sort-separator", "given"}
+    if is_reversed then
+      if is_romanesque then
+        name_part_tokens = {"family", "sort-separator", "given"}
+      else
+        name_part_tokens = {"family", "given"}
+      end
     else
       name_part_tokens = {"given", "space", "family"}
     end
   end
 
   if person_name.suffix then
-    if as_sort_order or person_name["comma-suffix"] then
+    if is_reversed or person_name["comma-suffix"] then
       table.insert(name_part_tokens, "sort-separator")
       table.insert(name_part_tokens, "suffix")
     else
@@ -190,7 +195,7 @@ function Name:get_display_order(person_name, seen_one)
     end
   end
 
-  -- local as_sort_order = false
+  -- local is_reversed = false
   -- if self.form == "short" then
   --   name_part_tokens = {"family"}
   -- else
