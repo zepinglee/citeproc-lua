@@ -35,6 +35,326 @@ local EtAl = Element:derive("et-al")
 local Substitute = Element:derive("substitute")
 
 
+-- [Names](https://docs.citationstyles.org/en/stable/specification.html#names)
+function Names:new()
+  local o = Element.new(self)
+  o.name = nil
+  o.et_al = nil
+  o.substitute = nil
+  o.label = nil
+  return o
+end
+
+function Names:from_node(node)
+  local o = Names:new()
+  o:set_attribute(node, "variable")
+  o.name = nil
+  o.et_al = nil
+  o.substitute = nil
+  o.label = nil
+  o.children = {}
+  o:process_children_nodes(node)
+  for _, child in ipairs(o.children) do
+    local element_name = child.element_name
+    if element_name == "name" then
+      o.name = child
+    elseif element_name == "et-al" then
+      o.et_al = child
+    elseif element_name == "substitute" then
+      o.substitute = child
+    elseif element_name == "label" then
+      o.label = child
+      if o.name then
+        child.after_name = true
+      end
+    else
+      util.warning(string.format('Unkown element "{}".', element_name))
+    end
+  end
+  if not o.name then
+    o.name = Name:new()
+  end
+  if not o.et_al then
+    o.et_al = EtAl:new()
+  end
+
+  o:get_delimiter_attribute(node)
+  o:set_affixes_attributes(node)
+  o:set_display_attribute(node)
+  o:set_formatting_attributes(node)
+  o:set_text_case_attribute(node)
+  return o
+end
+
+function Names:build_ir(engine, state, context)
+  -- local names_inheritance = state.name_override.inherited_names_options(context.names_inheritance, self)
+  local names_inheritance = Names:new()
+  names_inheritance.delimiter = context.name_inheritance.names_delimiter
+  for key, value in pairs(self) do
+    names_inheritance[key] = value
+  end
+  names_inheritance.name = util.clone(context.name_inheritance)
+  for key, value in pairs(self.name) do
+    names_inheritance.name[key] = value
+  end
+
+  local irs = {}
+  local num_names = 0
+  -- util.debug(self.name)
+  for _, variable in ipairs(util.split(self.variable)) do
+    local name_ir = names_inheritance.name:build_ir(variable, self.et_al, self.label, engine, state, context)
+    if type(name_ir) == "number" then
+      num_names = num_names + name_ir
+    end
+    table.insert(irs, name_ir)
+  end
+
+  if names_inheritance.name.form == "count" then
+    return Rendered:new({PlainText:new(tostring(num_names))})
+  end
+
+  local ir = SeqIr:new(irs, self)
+  if #irs == 0 then
+    ir.group_var = "missing"
+    return
+  end
+
+  ir.group_var = "important"
+
+  ir.delimiter = names_inheritance.delimiter
+  ir.formatting = util.clone(names_inheritance.formatting)
+  ir.affixes = util.clone(names_inheritance.affixes)
+  ir.display = names_inheritance.display
+  return ir
+end
+
+
+function Names:render (item, context)
+  self:debug_info(context)
+  context = self:process_context(context)
+
+  local names_delimiter = context.options["names-delimiter"]
+  if names_delimiter then
+    context.options["delimiter"] = names_delimiter
+  end
+
+  -- Inherit attributes of parent `names` element
+  local names_element = context.names_element
+  if names_element then
+    for key, value in pairs(names_element._attr) do
+      context.options[key] = value
+    end
+    for key, value in pairs(self._attr) do
+      context.options[key] = value
+    end
+  else
+    context.names_element = self
+    context.variable = context.options["variable"]
+  end
+
+  local name, et_al, label
+  -- The position of cs:label relative to cs:name determines the order of
+  -- the name and label in the rendered text.
+  local label_position = nil
+  for _, child in ipairs(self:get_children()) do
+    if child:is_element() then
+      local element_name = child:get_element_name()
+      if element_name == "name" then
+        name = child
+        if label then
+          label_position = "before"
+        end
+      elseif element_name == "et-al" then
+        et_al = child
+      elseif element_name == "label" then
+        label = child
+        if name then
+          label_position = "after"
+        end
+      end
+    end
+  end
+  if label_position then
+    context.label_position = label_position
+  else
+    label_position = context.label_position or "after"
+  end
+
+  -- local name = self:get_child("name")
+  if not name then
+    name = context.name_element
+  end
+  if not name then
+    name = self:create_element("name", {}, self)
+    Name:set_base_class(name)
+  end
+  context.name_element = name
+
+  -- local et_al = self:get_child("et-al")
+  if not et_al then
+    et_al = context.et_al
+  end
+  if not et_al then
+    et_al = self:create_element("et-al", {}, self)
+    EtAl:set_base_class(et_al)
+  end
+  context.et_al = et_al
+
+  -- local label = self:get_child("label")
+  if label then
+    context.label = label
+  else
+    label = context.label
+  end
+
+  local sub_str = nil
+  if context.mode == "bibliography" and not context.sorting then
+    sub_str = context.options["subsequent-author-substitute"]
+  --   if sub_str and #context.build.preceding_first_rendered_names == 0 then
+  --     context.rendered_names = {}
+  --   else
+  --     sub_str = nil
+  --     context.rendered_names = nil
+  --   end
+  end
+
+  local variable_names = context.options["variable"] or context.variable
+  local ret = nil
+
+  if variable_names then
+    local output = {}
+    local num_names = 0
+    for _, role in ipairs(util.split(variable_names)) do
+      local names = self:get_variable(item, role, context)
+
+      table.insert(context.variable_attempt, names ~= nil)
+
+      if names then
+        local res = name:render(names, context)
+        if res then
+          if type(res) == "number" then  -- name[form="count"]
+            num_names = num_names + res
+          elseif label and not context.sorting then
+            -- drop name label in sorting
+            local label_result = label:render(role, context)
+            if label_result then
+              if label_position == "before" then
+                res = richtext.concat(label_result, res)
+              else
+                res = richtext.concat(res, label_result)
+              end
+            end
+          end
+        end
+        table.insert(output, res)
+      end
+    end
+
+    if num_names > 0 then
+      ret = tostring(num_names)
+    else
+      ret = self:concat(output, context)
+      if ret and sub_str and context.build.first_rendered_names then
+        ret = self:substitute_names(ret, context)
+      end
+    end
+  end
+
+  if ret then
+    ret = self:_apply_format(ret, context)
+    ret = self:_apply_affixes(ret, context)
+    ret = self:_apply_display(ret, context)
+    return ret
+  else
+    local substitute = self:get_child("substitute")
+    if substitute then
+      ret = substitute:render(item, context)
+    end
+    if ret and sub_str then
+      ret = self:substitute_single_field(ret, context)
+    end
+    return ret
+  end
+end
+
+function Names:substitute_single_field(result, context)
+  if not result then
+    return nil
+  end
+  if context.build.first_rendered_names and #context.build.first_rendered_names == 0 then
+    context.build.first_rendered_names[1] = result
+  end
+  result = self:substitute_names(result, context)
+  return result
+end
+
+function Names:substitute_names(result, context)
+  if not context.build.first_rendered_names then
+     return result
+  end
+  local name_strings = {}
+  local match_all
+
+  if #context.build.first_rendered_names > 0 then
+    match_all = true
+  else
+    match_all = false
+  end
+  for i, text in ipairs(context.build.first_rendered_names) do
+    local str = text:render(context.engine.formatter, context)
+    name_strings[i] = str
+    if context.build.preceding_first_rendered_names and str ~= context.build.preceding_first_rendered_names[i] then
+      match_all = false
+    end
+  end
+
+  if context.build.preceding_first_rendered_names then
+    local sub_str = context.options["subsequent-author-substitute"]
+    local sub_rule = context.options["subsequent-author-substitute-rule"]
+
+    if sub_rule == "complete-all" then
+      if match_all then
+        if sub_str == "" then
+          result = nil
+        else
+          result.contents = {sub_str}
+        end
+      end
+
+    elseif sub_rule == "complete-each" then
+      -- In-place substitution
+      if match_all then
+        for _, text in ipairs(context.build.first_rendered_names) do
+          text.contents = {sub_str}
+        end
+        result = self:concat(context.build.first_rendered_names, context)
+      end
+
+    elseif sub_rule == "partial-each" then
+      for i, text in ipairs(context.build.first_rendered_names) do
+        if name_strings[i] == context.build.preceding_first_rendered_names[i] then
+          text.contents = {sub_str}
+        else
+          break
+        end
+      end
+      result = self:concat(context.build.first_rendered_names, context)
+
+    elseif sub_rule == "partial-first" then
+      if name_strings[1] == context.build.preceding_first_rendered_names[1] then
+        context.build.first_rendered_names[1].contents = {sub_str}
+      end
+      result = self:concat(context.build.first_rendered_names, context)
+    end
+  end
+
+  if #context.build.first_rendered_names > 0 then
+    context.build.first_rendered_names = nil
+  end
+  context.build.preceding_first_rendered_names = name_strings
+  return result
+end
+
 -- [Name](https://docs.citationstyles.org/en/stable/specification.html#name)
 function Name:new()
   local o = Element.new(self, "name")
@@ -703,326 +1023,6 @@ function Substitute:render (item, context)
   return nil
 end
 
-
--- [Names](https://docs.citationstyles.org/en/stable/specification.html#names)
-function Names:new()
-  local o = Element.new(self)
-  o.name = nil
-  o.et_al = nil
-  o.substitute = nil
-  o.label = nil
-  return o
-end
-
-function Names:from_node(node)
-  local o = Names:new()
-  o:set_attribute(node, "variable")
-  o.name = nil
-  o.et_al = nil
-  o.substitute = nil
-  o.label = nil
-  o.children = {}
-  o:process_children_nodes(node)
-  for _, child in ipairs(o.children) do
-    local element_name = child.element_name
-    if element_name == "name" then
-      o.name = child
-    elseif element_name == "et-al" then
-      o.et_al = child
-    elseif element_name == "substitute" then
-      o.substitute = child
-    elseif element_name == "label" then
-      o.label = child
-      if o.name then
-        child.after_name = true
-      end
-    else
-      util.warning(string.format('Unkown element "{}".', element_name))
-    end
-  end
-  if not o.name then
-    o.name = Name:new()
-  end
-  if not o.et_al then
-    o.et_al = EtAl:new()
-  end
-
-  o:get_delimiter_attribute(node)
-  o:set_affixes_attributes(node)
-  o:set_display_attribute(node)
-  o:set_formatting_attributes(node)
-  o:set_text_case_attribute(node)
-  return o
-end
-
-function Names:build_ir(engine, state, context)
-  -- local names_inheritance = state.name_override.inherited_names_options(context.names_inheritance, self)
-  local names_inheritance = Names:new()
-  names_inheritance.delimiter = context.name_inheritance.names_delimiter
-  for key, value in pairs(self) do
-    names_inheritance[key] = value
-  end
-  names_inheritance.name = util.clone(context.name_inheritance)
-  for key, value in pairs(self.name) do
-    names_inheritance.name[key] = value
-  end
-
-  local irs = {}
-  local num_names = 0
-  -- util.debug(self.name)
-  for _, variable in ipairs(util.split(self.variable)) do
-    local name_ir = names_inheritance.name:build_ir(variable, self.et_al, self.label, engine, state, context)
-    if type(name_ir) == "number" then
-      num_names = num_names + name_ir
-    end
-    table.insert(irs, name_ir)
-  end
-
-  if names_inheritance.name.form == "count" then
-    return Rendered:new({PlainText:new(tostring(num_names))})
-  end
-
-  local ir = SeqIr:new(irs, self)
-  if #irs == 0 then
-    ir.group_var = "missing"
-    return
-  end
-
-  ir.group_var = "important"
-
-  ir.delimiter = names_inheritance.delimiter
-  ir.formatting = util.clone(names_inheritance.formatting)
-  ir.affixes = util.clone(names_inheritance.affixes)
-  ir.display = names_inheritance.display
-  return ir
-end
-
-
-function Names:render (item, context)
-  self:debug_info(context)
-  context = self:process_context(context)
-
-  local names_delimiter = context.options["names-delimiter"]
-  if names_delimiter then
-    context.options["delimiter"] = names_delimiter
-  end
-
-  -- Inherit attributes of parent `names` element
-  local names_element = context.names_element
-  if names_element then
-    for key, value in pairs(names_element._attr) do
-      context.options[key] = value
-    end
-    for key, value in pairs(self._attr) do
-      context.options[key] = value
-    end
-  else
-    context.names_element = self
-    context.variable = context.options["variable"]
-  end
-
-  local name, et_al, label
-  -- The position of cs:label relative to cs:name determines the order of
-  -- the name and label in the rendered text.
-  local label_position = nil
-  for _, child in ipairs(self:get_children()) do
-    if child:is_element() then
-      local element_name = child:get_element_name()
-      if element_name == "name" then
-        name = child
-        if label then
-          label_position = "before"
-        end
-      elseif element_name == "et-al" then
-        et_al = child
-      elseif element_name == "label" then
-        label = child
-        if name then
-          label_position = "after"
-        end
-      end
-    end
-  end
-  if label_position then
-    context.label_position = label_position
-  else
-    label_position = context.label_position or "after"
-  end
-
-  -- local name = self:get_child("name")
-  if not name then
-    name = context.name_element
-  end
-  if not name then
-    name = self:create_element("name", {}, self)
-    Name:set_base_class(name)
-  end
-  context.name_element = name
-
-  -- local et_al = self:get_child("et-al")
-  if not et_al then
-    et_al = context.et_al
-  end
-  if not et_al then
-    et_al = self:create_element("et-al", {}, self)
-    EtAl:set_base_class(et_al)
-  end
-  context.et_al = et_al
-
-  -- local label = self:get_child("label")
-  if label then
-    context.label = label
-  else
-    label = context.label
-  end
-
-  local sub_str = nil
-  if context.mode == "bibliography" and not context.sorting then
-    sub_str = context.options["subsequent-author-substitute"]
-  --   if sub_str and #context.build.preceding_first_rendered_names == 0 then
-  --     context.rendered_names = {}
-  --   else
-  --     sub_str = nil
-  --     context.rendered_names = nil
-  --   end
-  end
-
-  local variable_names = context.options["variable"] or context.variable
-  local ret = nil
-
-  if variable_names then
-    local output = {}
-    local num_names = 0
-    for _, role in ipairs(util.split(variable_names)) do
-      local names = self:get_variable(item, role, context)
-
-      table.insert(context.variable_attempt, names ~= nil)
-
-      if names then
-        local res = name:render(names, context)
-        if res then
-          if type(res) == "number" then  -- name[form="count"]
-            num_names = num_names + res
-          elseif label and not context.sorting then
-            -- drop name label in sorting
-            local label_result = label:render(role, context)
-            if label_result then
-              if label_position == "before" then
-                res = richtext.concat(label_result, res)
-              else
-                res = richtext.concat(res, label_result)
-              end
-            end
-          end
-        end
-        table.insert(output, res)
-      end
-    end
-
-    if num_names > 0 then
-      ret = tostring(num_names)
-    else
-      ret = self:concat(output, context)
-      if ret and sub_str and context.build.first_rendered_names then
-        ret = self:substitute_names(ret, context)
-      end
-    end
-  end
-
-  if ret then
-    ret = self:_apply_format(ret, context)
-    ret = self:_apply_affixes(ret, context)
-    ret = self:_apply_display(ret, context)
-    return ret
-  else
-    local substitute = self:get_child("substitute")
-    if substitute then
-      ret = substitute:render(item, context)
-    end
-    if ret and sub_str then
-      ret = self:substitute_single_field(ret, context)
-    end
-    return ret
-  end
-end
-
-function Names:substitute_single_field(result, context)
-  if not result then
-    return nil
-  end
-  if context.build.first_rendered_names and #context.build.first_rendered_names == 0 then
-    context.build.first_rendered_names[1] = result
-  end
-  result = self:substitute_names(result, context)
-  return result
-end
-
-function Names:substitute_names(result, context)
-  if not context.build.first_rendered_names then
-     return result
-  end
-  local name_strings = {}
-  local match_all
-
-  if #context.build.first_rendered_names > 0 then
-    match_all = true
-  else
-    match_all = false
-  end
-  for i, text in ipairs(context.build.first_rendered_names) do
-    local str = text:render(context.engine.formatter, context)
-    name_strings[i] = str
-    if context.build.preceding_first_rendered_names and str ~= context.build.preceding_first_rendered_names[i] then
-      match_all = false
-    end
-  end
-
-  if context.build.preceding_first_rendered_names then
-    local sub_str = context.options["subsequent-author-substitute"]
-    local sub_rule = context.options["subsequent-author-substitute-rule"]
-
-    if sub_rule == "complete-all" then
-      if match_all then
-        if sub_str == "" then
-          result = nil
-        else
-          result.contents = {sub_str}
-        end
-      end
-
-    elseif sub_rule == "complete-each" then
-      -- In-place substitution
-      if match_all then
-        for _, text in ipairs(context.build.first_rendered_names) do
-          text.contents = {sub_str}
-        end
-        result = self:concat(context.build.first_rendered_names, context)
-      end
-
-    elseif sub_rule == "partial-each" then
-      for i, text in ipairs(context.build.first_rendered_names) do
-        if name_strings[i] == context.build.preceding_first_rendered_names[i] then
-          text.contents = {sub_str}
-        else
-          break
-        end
-      end
-      result = self:concat(context.build.first_rendered_names, context)
-
-    elseif sub_rule == "partial-first" then
-      if name_strings[1] == context.build.preceding_first_rendered_names[1] then
-        context.build.first_rendered_names[1].contents = {sub_str}
-      end
-      result = self:concat(context.build.first_rendered_names, context)
-    end
-  end
-
-  if #context.build.first_rendered_names > 0 then
-    context.build.first_rendered_names = nil
-  end
-  context.build.preceding_first_rendered_names = name_strings
-  return result
-end
 
 names_module.Names = Names
 names_module.Name = Name
