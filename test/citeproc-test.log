@@ -18,8 +18,8 @@ label                4      12       3       0
 locale              19       4       0       0
 locator              2       4       0       0
 magic               23      11       6       0
-name                47      50      14       0
-nameattr            64      33       0       0
+name                49      48      14       0
+nameattr            76      21       0       0
 nameorder            0       6       0       0
 namespaces           1       0       0       0
 number              12       7       1       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              347     319     188       0
+(all)              361     305     188       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -78,7 +78,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_ArabicLocale.txt
 Passed in:
-(string) 'Jonathan Chang, Sean Gerrish, Chong Wang.'
+(string) 'Jonathan Chang, وآخرون.'
 Expected:
 (string) 'Jonathan Chang وآخرون.'
 
@@ -108,7 +108,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_CitationSortsWithEtAl.txt
 Passed in:
-(string) '[Aalto, Quintuffle, and Crank, n.d.]; [Aalto, Baseballhat, and Crank, n.d.]; [Aalto, Zipgpot, and Crank, n.d.]'
+(string) '[Aalto, et al., n.d.]; [Aalto, et al., n.d.]; [Aalto, et al., n.d.]'
 Expected:
 (string) '[<i>Aalto et al.</i>, 1999, 2000, 2001]'
 
@@ -214,7 +214,7 @@ Expected:
 
 Failure → citeproc test test-suite collapse_AuthorCollapseDifferentAuthorsOneWithEtAl.txt
 Passed in:
-(string) '(Smith 1900), (Smith, Jones 2000)'
+(string) '(Smith 1900), (Smith, et al. 2000)'
 Expected:
 (string) '(Smith 1900, Smith et al. 2000)'
 
@@ -310,7 +310,7 @@ Expected:
 
 Failure → citeproc test test-suite collapse_TrailingDelimiter.txt
 Passed in:
-(string) '(Condit, Doe, Roe, &#38; Smith 2000), (Condit, Doe, Roe, &#38; Smith 1995), (Connell 1971), (Condit, Doe, Roe, &#38; Smith 1998), (Cortes, &#38; Hunziker 1971)'
+(string) '(Condit, et al. 2000), (Condit, et al. 1995), (Connell 1971), (Condit, et al. 1998), (Cortes, &#38; Hunziker 1971)'
 Expected:
 (string) '(Condit et al. 2000, 1995, 1998; Connell 1971, Cortes &#38; Hunziker 1971)'
 
@@ -554,19 +554,19 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_AddNamesFailure.txt
 Passed in:
-(string) 'Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)'
+(string) 'Smith, et al. (1980); Smith, et al. (1980)'
 Expected:
 (string) 'Smith et al. (1980); Smith et al. (1980)'
 
 Failure → citeproc test test-suite disambiguate_AddNamesFailureWithAddGivenname.txt
 Passed in:
-(string) 'Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)'
+(string) 'Smith, et al. (1980); Smith, et al. (1980)'
 Expected:
 (string) 'Smith et al. (1980); Smith et al. (1980)'
 
 Failure → citeproc test test-suite disambiguate_AddNamesSuccess.txt
 Passed in:
-(string) 'Smith, Brown, &#38; Jones (1980); Smith, Beefheart, &#38; Jones (1980)'
+(string) 'Smith, et al. (1980); Smith, et al. (1980)'
 Expected:
 (string) 'Smith, Brown, et al. (1980); Smith, Beefheart, et al. (1980)'
 
@@ -590,9 +590,9 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_AndreaEg1a.txt
 Passed in:
-(string) 'Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)
-Smith, Brown, &#38; Jones (1980); Smith, Benson, &#38; Jones (1980)
-Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)'
+(string) 'Smith, et al. (1980); Smith, et al. (1980)
+Smith, et al. (1980); Smith, et al. (1980)
+Smith, et al. (1980); Smith, et al. (1980)'
 Expected:
 (string) 'Smith, Brown, et al. (1980); Smith, Brown, et al. (1980)
 Smith, Brown, et al. (1980); Smith, Benson, et al. (1980)
@@ -600,9 +600,9 @@ Smith, Brown, et al. (1980); Smith, Brown, et al. (1980)'
 
 Failure → citeproc test test-suite disambiguate_AndreaEg1b.txt
 Passed in:
-(string) 'Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)
-Smith, Brown, &#38; Jones (1980); Smith, Benson, &#38; Jones (1980)
-Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)'
+(string) 'Smith, et al. (1980); Smith, et al. (1980)
+Smith, et al. (1980); Smith, et al. (1980)
+Smith, et al. (1980); Smith, et al. (1980)'
 Expected:
 (string) 'Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; J. Jones (1980)
 Smith, Brown &#38; J. Jones (1980); Smith, Benson, et al. (1980)
@@ -610,9 +610,9 @@ Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; A. Jones (1980)'
 
 Failure → citeproc test test-suite disambiguate_AndreaEg1c.txt
 Passed in:
-(string) 'Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)
-Smith, Brown, &#38; Jones (1980); Smith, Benson, &#38; Jones (1980)
-Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)'
+(string) 'Smith, et al. (1980); Smith, et al. (1980)
+Smith, et al. (1980); Smith, et al. (1980)
+Smith, et al. (1980); Smith, et al. (1980)'
 Expected:
 (string) 'Smith et al. (1980); Smith et al. (1980)
 Smith et al. (1980); Smith et al. (1980)
@@ -620,9 +620,9 @@ Smith et al. (1980); Smith et al. (1980)'
 
 Failure → citeproc test test-suite disambiguate_AndreaEg2.txt
 Passed in:
-(string) 'Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)
-Smith, Brown, &#38; Jones (1980); Smith, Benson, &#38; Jones (1980)
-Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)'
+(string) 'Smith, et al. (1980); Smith, et al. (1980)
+Smith, et al. (1980); Smith, et al. (1980)
+Smith, et al. (1980); Smith, et al. (1980)'
 Expected:
 (string) 'Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; J. Jones (1980)
 Smith, Brown &#38; J. Jones (1980); Smith, Benson, et al. (1980)
@@ -630,9 +630,9 @@ Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; A. Jones (1980)'
 
 Failure → citeproc test test-suite disambiguate_AndreaEg3.txt
 Passed in:
-(string) 'Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)
-Smith, Brown, &#38; Jones (1980); Smith, Benson, &#38; Jones (1980)
-Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)'
+(string) 'Smith, et al. (1980); Smith, et al. (1980)
+Smith, et al. (1980); Smith, et al. (1980)
+Smith, et al. (1980); Smith, et al. (1980)'
 Expected:
 (string) 'Smith, Brown &#38; J. Jones (1980a); Smith, Brown &#38; J. Jones (1980b)
 Smith, Brown &#38; J. Jones (1980a); Smith, Benson, et al. (1980)
@@ -640,9 +640,9 @@ Smith, Brown &#38; J. Jones (1980a); Smith, Brown &#38; A. Jones (1980)'
 
 Failure → citeproc test test-suite disambiguate_AndreaEg4.txt
 Passed in:
-(string) 'Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)
-Smith, Brown, &#38; Jones (1980); Smith, Benson, &#38; Jones (1980)
-Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)'
+(string) 'Smith, et al. (1980); Smith, et al. (1980)
+Smith, et al. (1980); Smith, et al. (1980)
+Smith, et al. (1980); Smith, et al. (1980)'
 Expected:
 (string) 'Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; J. Jones (1980)
 Smith, Brown &#38; J. Jones (1980); Smith, Benson, et al. (1980)
@@ -650,9 +650,9 @@ Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; A. Jones (1980)'
 
 Failure → citeproc test test-suite disambiguate_AndreaEg5.txt
 Passed in:
-(string) 'Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)
-Smith, Brown, &#38; Jones (1980); Smith, Benson, &#38; Jones (1980)
-Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)'
+(string) 'Smith, et al. (1980); Smith, et al. (1980)
+Smith, et al. (1980); Smith, et al. (1980)
+Smith, et al. (1980); Smith, et al. (1980)'
 Expected:
 (string) 'Smith, Brown &#38; J. Jones (1980a); Smith, Brown &#38; J. Jones (1980b)
 Smith, Brown &#38; J. Jones (1980a); Smith, Benson, et al. (1980)
@@ -660,7 +660,7 @@ Smith, Brown &#38; J. Jones (1980a); Smith, Brown &#38; A. Jones (1980)'
 
 Failure → citeproc test test-suite disambiguate_BasedOnEtAlSubsequent.txt
 Passed in:
-(string) '(Baur, Fröberg, Baur, Guggenheim, &#38; Haase 2000); (Baur, Schileyko, &#38; Baur 2000); (Doe 2000)'
+(string) '(Baur, Fröberg, Baur, et al. 2000); (Baur, Schileyko, &#38; Baur 2000); (Doe 2000)'
 Expected:
 (string) '(Baur, Fröberg, Baur, et al. 2000<i>a</i>; Baur, Schileyko &#38; Baur 2000<i>b</i>; Doe 2000)'
 
@@ -680,19 +680,19 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_ByCiteBaseNameCountOnFailureIfYearSuffixAvailable.txt
 Passed in:
-(string) 'Asthma, Bronchitis, Cold (1990); Asthma, Bronchitis, Cold (1990); Dropsy, Enteritis, Fever (2000); Dropsy, Enteritis, Fever (2000)'
+(string) 'Asthma, et al. (1990); Asthma, et al. (1990); Dropsy, et al. (2000); Dropsy, et al. (2000)'
 Expected:
 (string) 'Asthma, Bosworth Bronchitis, et al. (1990); Asthma, Beauregarde Bronchitis, et al. (1990); Dropsy, Edward Enteritis, et al. (2000); Dropsy, Ernie Enteritis, et al. (2000)'
 
 Failure → citeproc test test-suite disambiguate_ByCiteDisambiguateCondition.txt
 Passed in:
-(string) 'Doe, &#38; Roe (2000); Doe, &#38; Roe (2000)'
+(string) 'Doe, et al. (2000); Doe, et al. (2000)'
 Expected:
 (string) 'Doe et al., <i>Book A</i> (2000); Doe et al., <i>Book B</i> (2000)'
 
 Failure → citeproc test test-suite disambiguate_ByCiteGivennameExpandCrossNestedNames.txt
 Passed in:
-(string) 'J. Doe, J. Roe, R. Jones; J. Doe, J. Roe, R. Jones; J. Doe, J. Roe, R. Jones'
+(string) 'J. Doe, et al.; J. Doe, et al.; J. Doe, et al.'
 Expected:
 (string) 'J. Doe, Jane Roe, Robert Jones; J. Doe, Josephine Roe, et al.; J. Doe, Jane Roe, Richard Jones'
 
@@ -724,7 +724,7 @@ John Doe; Aloysius Doe'
 
 Failure → citeproc test test-suite disambiguate_ByCiteRetainNamesOnFailureIfYearSuffixNotAvailable.txt
 Passed in:
-(string) 'Asthma, Bronchitis, Cold (1990); Asthma, Bronchitis, Cold (1990); Dropsy, Enteritis, Fever (2000); Dropsy, Enteritis, Fever (2000)'
+(string) 'Asthma, et al. (1990); Asthma, et al. (1990); Dropsy, et al. (2000); Dropsy, et al. (2000)'
 Expected:
 (string) 'Asthma, Bosworth Bronchitis, et al. (1990); Asthma, Beauregarde Bronchitis, et al. (1990); Dropsy, Edward Enteritis, et al. (2000); Dropsy, Ernie Enteritis, et al. (2000)'
 
@@ -852,13 +852,13 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_PrimaryNameWithInitialsLimitedToPrimary.txt
 Passed in:
-(string) 'Asthma, Bronchitis, and Cold (1980); Asthma, Bronchitis, and Cold (1995); Dropsy, and Asthma (1995)'
+(string) 'Asthma, et al. (1980); Asthma, et al. (1995); Dropsy, and Asthma (1995)'
 Expected:
 (string) 'A. Asthma et al. (1980); G. Asthma et al. (1995); Dropsy and Asthma (1995)'
 
 Failure → citeproc test test-suite disambiguate_PrimaryNameWithNonDroppingParticle.txt
 Passed in:
-(string) '(Santos, Balthazar, Bouso, &#38; Hallak 2016); (Santos, Oliveira, Sonsin-Oliveira, Fagg, Barbosa, &#38; Caldas 2020)'
+(string) '(Santos, et al. 2016); (Santos, et al. 2020)'
 Expected:
 (string) '(dos Santos et al. 2016; Santos et al. 2020)'
 
@@ -890,7 +890,7 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_YearSuffixAtTwoLevels.txt
 Passed in:
-(string) 'Smith, Jones, &#38; Brown (1986); Smith, Jones, &#38; Brown (1986); Smith, Jones, Brown, &#38; Green (1986); Smith, Jones, Brown, &#38; Green (1986)'
+(string) 'Smith, et al. (1986); Smith, et al. (1986); Smith, et al. (1986); Smith, et al. (1986)'
 Expected:
 (string) 'Smith, Jones &#38; Brown (1986a); Smith, Jones &#38; Brown (1986b); Smith, Jones, Brown, et al. (1986a); Smith, Jones, Brown, et al. (1986b)'
 
@@ -944,14 +944,14 @@ Expected:
 
 Failure → citeproc test test-suite etal_ShortFormOfName.txt
 Passed in:
-(string) 'Doe, Roe, Noakes'
+(string) 'Doe, et al.'
 Expected:
 (string) 'Doe <i>et al.</i>'
 
 Failure → citeproc test test-suite etal_UseZeroFirst.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe // John Doe, Jane Roe</div>
+  <div class="csl-entry">, et al. // John Doe, et al.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1230,13 +1230,13 @@ Expected:
 
 Failure → citeproc test test-suite locale_ForceEmptyAndOthersTerm.txt
 Passed in:
-(string) 'John Doe, Jane Roe, Richard Noakes'
+(string) 'John Doe, '
 Expected:
 (string) 'John Doe'
 
 Failure → citeproc test test-suite locale_ForceEmptyEtAlTerm.txt
 Passed in:
-(string) 'John Doe, Jane Roe, Richard Noakes'
+(string) 'John Doe, '
 Expected:
 (string) 'John Doe'
 
@@ -1372,8 +1372,8 @@ Expected:
 
 Failure → citeproc test test-suite name_AfterInvertedName.txt
 Passed in:
-(string) 'Doebuck, Jonathan, Jane Roe, and Richard Snoakes; Doe, John, Jane Roe, Richard Snoakes, and Robert Noakes; Doe, John, Janice Roebuck, Richard Snoakes, and Robert Noakes
-Appleby, Aloysius, and Bobby Brown; Appleby, Aloysius, Bobby Brown, and Cecile Cream; Appleby, Aloysius, Bobby Brown, and Enola Evergreen'
+(string) 'Doebuck, Jonathan, et al.; Doe, John, et al.; Doe, John, et al.
+Appleby, Aloysius, and Bobby Brown; Appleby, Aloysius, et al.; Appleby, Aloysius, et al.'
 Expected:
 (string) 'DOEBUCK, Jonathan, et al.; DOE, John, Jane ROE et al.; DOE, John, Janice ROEBUCK et al.
 APPLEBY, Aloysius, and Bobby BROWN; APPLEBY, Aloysius, Bobby BROWN and Cecile CREAM; APPLEBY, Aloysius, Bobby BROWN and Enola EVERGREEN'
@@ -1392,7 +1392,7 @@ Expected:
 
 Failure → citeproc test test-suite name_CollapseRoleLabels.txt
 Passed in:
-(string) 'Albert Asthma, Bosworth Bronchitis, Crispin Cold, Albert Asthma, Bosworth Bronchitis, Crispin Cold'
+(string) 'Albert Asthma, et al., Albert Asthma, et al.'
 Expected:
 (string) 'Albert Asthma et al. (eds. &#38; trans.)'
 
@@ -1414,16 +1414,10 @@ Passed in:
 Expected:
 (string) 'John Doe (ed. &#38; tran.)'
 
-Failure → citeproc test test-suite name_EtAlKanji.txt
-Passed in:
-(string) 'Ziggy Zither, Yossarian Yoda, Xerxes Xylophone'
-Expected:
-(string) 'Ziggy Zither, 等'
-
 Failure → citeproc test test-suite name_EtAlUseLast.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Anderson, John Brown, John Catharsis, John Doldrums, John Evergreen, John Fugedaboutit, John Gargoyle, and John Houynym</div>
+  <div class="csl-entry">John Anderson, John Brown, John Catharsis, John Doldrums, John Evergreen, John Fugedaboutit</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1466,12 +1460,6 @@ Expected:
   <div class="csl-entry"><b>Doe</b>, <b>J.</b>-Q.</div>
 </div>'
 
-Failure → citeproc test test-suite name_InheritAttributesEtAlStyle.txt
-Passed in:
-(string) 'Doe, Roe, Noakes, Stoakes'
-Expected:
-(string) 'Doe, Roe, et al.'
-
 Failure → citeproc test test-suite name_LabelAfterPlural.txt
 Passed in:
 (string) 'John Doe, Jane Roe'
@@ -1480,7 +1468,7 @@ Expected:
 
 Failure → citeproc test test-suite name_LabelAfterPluralDecorations.txt
 Passed in:
-(string) 'John Doe, Jane Roe'
+(string) 'John Doe, et al.'
 Expected:
 (string) 'John Doe et al. (editors)'
 
@@ -1788,7 +1776,7 @@ Expected:
 
 Failure → citeproc test test-suite name_TwoRolesSameRenderingSeparateRoleLabels.txt
 Passed in:
-(string) 'Albert Asthma, Bosworth Bronchitis, Crispin Cold, Albert Asthma, Bosworth Bronchitis, Constantine Cold'
+(string) 'Albert Asthma, et al., Albert Asthma, et al.'
 Expected:
 (string) 'Albert Asthma et al. (eds.), Albert Asthma et al. (trans.)'
 
@@ -1886,69 +1874,21 @@ Expected:
   <div class="csl-entry">John Doe and Jane Roe</div>
 </div>'
 
-Failure → citeproc test test-suite nameattr_DelimiterPrecedesEtAlOnBibliographyInBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, et al.</div>
-</div>'
-
 Failure → citeproc test test-suite nameattr_DelimiterPrecedesEtAlOnBibliographyInCitation.txt
 Passed in:
-(string) 'John Doe, Jane Roe'
+(string) 'John Doe, et al.'
 Expected:
 (string) 'John Doe et al.'
 
 Failure → citeproc test test-suite nameattr_DelimiterPrecedesEtAlOnCitationInBibliography.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe</div>
+  <div class="csl-entry">John Doe, et al.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">John Doe et al.</div>
 </div>'
-
-Failure → citeproc test test-suite nameattr_DelimiterPrecedesEtAlOnCitationInCitation.txt
-Passed in:
-(string) 'John Doe, Jane Roe'
-Expected:
-(string) 'John Doe, et al.'
-
-Failure → citeproc test test-suite nameattr_DelimiterPrecedesEtAlOnNamesInBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, et al.</div>
-</div>'
-
-Failure → citeproc test test-suite nameattr_DelimiterPrecedesEtAlOnNamesInCitation.txt
-Passed in:
-(string) 'John Doe, Jane Roe'
-Expected:
-(string) 'John Doe, et al.'
-
-Failure → citeproc test test-suite nameattr_DelimiterPrecedesEtAlOnStyleInBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, et al.</div>
-</div>'
-
-Failure → citeproc test test-suite nameattr_DelimiterPrecedesEtAlOnStyleInCitation.txt
-Passed in:
-(string) 'John Doe, Jane Roe'
-Expected:
-(string) 'John Doe, et al.'
 
 Failure → citeproc test test-suite nameattr_DelimiterPrecedesLastOnBibliographyInCitation.txt
 Passed in:
@@ -1969,7 +1909,7 @@ Expected:
 Failure → citeproc test test-suite nameattr_EtAlMinOnBibliographyInBibliography.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe</div>
+  <div class="csl-entry">John Doe, et al.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1978,14 +1918,14 @@ Expected:
 
 Failure → citeproc test test-suite nameattr_EtAlMinOnCitationInCitation.txt
 Passed in:
-(string) 'John Doe, Jane Roe'
+(string) 'John Doe, et al.'
 Expected:
 (string) 'John Doe et al.'
 
 Failure → citeproc test test-suite nameattr_EtAlMinOnNamesInBibliography.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe</div>
+  <div class="csl-entry">John Doe, et al.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1994,14 +1934,14 @@ Expected:
 
 Failure → citeproc test test-suite nameattr_EtAlMinOnNamesInCitation.txt
 Passed in:
-(string) 'John Doe, Jane Roe'
+(string) 'John Doe, et al.'
 Expected:
 (string) 'John Doe et al.'
 
 Failure → citeproc test test-suite nameattr_EtAlMinOnStyleInBibliography.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe</div>
+  <div class="csl-entry">John Doe, et al.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2010,57 +1950,9 @@ Expected:
 
 Failure → citeproc test test-suite nameattr_EtAlMinOnStyleInCitation.txt
 Passed in:
-(string) 'John Doe, Jane Roe'
+(string) 'John Doe, et al.'
 Expected:
 (string) 'John Doe et al.'
-
-Failure → citeproc test test-suite nameattr_EtAlUseFirstOnBibliographyInBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe, Richard Snoakes</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe, et al.</div>
-</div>'
-
-Failure → citeproc test test-suite nameattr_EtAlUseFirstOnCitationInCitation.txt
-Passed in:
-(string) 'John Doe, Jane Roe, Richard Snoakes'
-Expected:
-(string) 'John Doe, Jane Roe, et al.'
-
-Failure → citeproc test test-suite nameattr_EtAlUseFirstOnNamesInBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe, Richard Snoakes</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe, et al.</div>
-</div>'
-
-Failure → citeproc test test-suite nameattr_EtAlUseFirstOnNamesInCitation.txt
-Passed in:
-(string) 'John Doe, Jane Roe, Richard Snoakes'
-Expected:
-(string) 'John Doe, Jane Roe, et al.'
-
-Failure → citeproc test test-suite nameattr_EtAlUseFirstOnStyleInBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe, Richard Snoakes</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe, et al.</div>
-</div>'
-
-Failure → citeproc test test-suite nameattr_EtAlUseFirstOnStyleInCitation.txt
-Passed in:
-(string) 'John Doe, Jane Roe, Richard Snoakes'
-Expected:
-(string) 'John Doe, Jane Roe, et al.'
 
 Failure → citeproc test test-suite nameattr_NameDelimiterOnStyleInBibliography.txt
 Passed in:

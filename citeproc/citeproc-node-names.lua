@@ -94,7 +94,7 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
   end
 
   local et_al_truncate = self.et_al_min and self.et_al_use_first and #names >= self.et_al_min
-  local et_al_last = self.et_al_use_last and self.et_al_use_first <= self.et_al_min - 2
+  local et_al_last = et_al_truncate and self.et_al_use_last and self.et_al_use_first <= self.et_al_min - 2
 
   if self.form == "count" then
     if et_al_truncate then
@@ -107,6 +107,23 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
   local irs = {}
 
   for i, name in ipairs(names) do
+    if et_al_truncate and i > self.et_al_use_first then
+      if et_al_last then
+        if i == #names then
+          local punctuation = self.delimiter .. util.unicode["horizontal ellipsis"] .. " "
+          table.insert(irs, Rendered:new({PlainText:new(punctuation)}))
+          local inlines = self:render_person_name(name, i > 1, context)
+          table.insert(irs, Rendered:new(inlines, self))
+        end
+      else
+        -- if not self:_check_delimiter(delimiter_precedes_et_al, i, inverted) then
+        --   delimiter = " "
+        -- end
+        table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
+        table.insert(irs, et_al:build_ir(engine, state, context))
+      end
+      break
+    end
     if i > 1 then
       if i == #names and self["and"] then
         -- if self:_check_delimiter(delimiter_precedes_last, i, inverted) then
@@ -644,16 +661,11 @@ function EtAl:from_node(node)
   return o
 end
 
-EtAl._default_options = {
-  term = "et-al",
-}
-
-EtAl.render = function (self, context)
-  self:debug_info(context)
-  context = self:process_context(context)
-  local res = self:get_term(context.options["term"]):render(context)
-  res = self:_apply_format(res, context)
-  return res
+function EtAl:build_ir(engine, state, context)
+  local term = context.locale:get_simple_term(self.term)
+  local ir = Rendered:new({PlainText:new(term)})
+  ir.formatting = util.clone(self.formatting)
+  return ir
 end
 
 
