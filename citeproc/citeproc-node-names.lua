@@ -118,7 +118,7 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
         local and_term
         if self["and"] == "text" then
           and_term = context.locale:get_simple_term("and")
-        elseif context.options["and"] == "symbol" then
+        elseif self["and"] == "symbol" then
           and_term = "&"
         end
         table.insert(irs, Rendered:new({PlainText:new(and_term .. " ")}))

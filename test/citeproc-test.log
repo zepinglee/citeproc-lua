@@ -2,23 +2,23 @@ category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                3       5       1       0
 bugreports          12      18      52       0
-collapse             0      19       2       0
+collapse             0      20       1       0
 condition            5      12       0       0
 date                79      14       8       0
 decorations          5       2       0       0
-disambiguate         4      34      33       0
+disambiguate         4      49      18       0
 display              0       0       5       0
 etal                 0       2       2       0
 flipflop             9       9       1       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
 group                1       3       3       0
-integration          0      10       4       0
+integration          1      13       0       0
 label                4      12       3       0
 locale              19       4       0       0
 locator              2       4       0       0
 magic               20      14       6       0
-name                44      51      16       0
+name                46      51      14       0
 nameattr            55      42       0       0
 nameorder            0       6       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              328     316     210       0
+(all)              331     335     188       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -308,6 +308,12 @@ Passed in:
 Expected:
 (string) '(1–3,3–5)'
 
+Failure → citeproc test test-suite collapse_TrailingDelimiter.txt
+Passed in:
+(string) '(Condit, Doe, Roe, &#38; Smith 2000), (Condit, Doe, Roe, &#38; Smith 1995), (Connell 1971), (Condit, Doe, Roe, &#38; Smith 1998), (Cortes, &#38; Hunziker 1971)'
+Expected:
+(string) '(Condit et al. 2000, 1995, 1998; Connell 1971, Cortes &#38; Hunziker 1971)'
+
 Failure → citeproc test test-suite collapse_YearSuffixCollapse.txt
 Passed in:
 (string) 'Smith 2000, Smith 2000, Smith 2000, Smith 2000, Smith 2000, Smith 2001
@@ -546,6 +552,24 @@ Expected:
 <i>His Anonymous Life</i>
 <i><span style="font-style:normal;">His Anonymous Life</span></i>'
 
+Failure → citeproc test test-suite disambiguate_AddNamesFailure.txt
+Passed in:
+(string) 'Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)'
+Expected:
+(string) 'Smith et al. (1980); Smith et al. (1980)'
+
+Failure → citeproc test test-suite disambiguate_AddNamesFailureWithAddGivenname.txt
+Passed in:
+(string) 'Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)'
+Expected:
+(string) 'Smith et al. (1980); Smith et al. (1980)'
+
+Failure → citeproc test test-suite disambiguate_AddNamesSuccess.txt
+Passed in:
+(string) 'Smith, Brown, &#38; Jones (1980); Smith, Beefheart, &#38; Jones (1980)'
+Expected:
+(string) 'Smith, Brown, et al. (1980); Smith, Beefheart, et al. (1980)'
+
 Failure → citeproc test test-suite disambiguate_AllNamesGenerally.txt
 Passed in:
 (string) 'Asthma, Bronchitis, and Cold (1980); Asthma, Bronchitis, and Cold (1995)'
@@ -563,6 +587,82 @@ Passed in:
 (string) 'Asthma, Bronchitis, and Cold (1980); Asthma, Bronchitis, and Cold (1995)'
 Expected:
 (string) 'Asthma, Bronchitis and C. Cold (1980); Asthma, Bronchitis and O. Cold (1995)'
+
+Failure → citeproc test test-suite disambiguate_AndreaEg1a.txt
+Passed in:
+(string) 'Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)
+Smith, Brown, &#38; Jones (1980); Smith, Benson, &#38; Jones (1980)
+Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)'
+Expected:
+(string) 'Smith, Brown, et al. (1980); Smith, Brown, et al. (1980)
+Smith, Brown, et al. (1980); Smith, Benson, et al. (1980)
+Smith, Brown, et al. (1980); Smith, Brown, et al. (1980)'
+
+Failure → citeproc test test-suite disambiguate_AndreaEg1b.txt
+Passed in:
+(string) 'Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)
+Smith, Brown, &#38; Jones (1980); Smith, Benson, &#38; Jones (1980)
+Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)'
+Expected:
+(string) 'Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; J. Jones (1980)
+Smith, Brown &#38; J. Jones (1980); Smith, Benson, et al. (1980)
+Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; A. Jones (1980)'
+
+Failure → citeproc test test-suite disambiguate_AndreaEg1c.txt
+Passed in:
+(string) 'Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)
+Smith, Brown, &#38; Jones (1980); Smith, Benson, &#38; Jones (1980)
+Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)'
+Expected:
+(string) 'Smith et al. (1980); Smith et al. (1980)
+Smith et al. (1980); Smith et al. (1980)
+Smith et al. (1980); Smith et al. (1980)'
+
+Failure → citeproc test test-suite disambiguate_AndreaEg2.txt
+Passed in:
+(string) 'Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)
+Smith, Brown, &#38; Jones (1980); Smith, Benson, &#38; Jones (1980)
+Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)'
+Expected:
+(string) 'Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; J. Jones (1980)
+Smith, Brown &#38; J. Jones (1980); Smith, Benson, et al. (1980)
+Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; A. Jones (1980)'
+
+Failure → citeproc test test-suite disambiguate_AndreaEg3.txt
+Passed in:
+(string) 'Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)
+Smith, Brown, &#38; Jones (1980); Smith, Benson, &#38; Jones (1980)
+Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)'
+Expected:
+(string) 'Smith, Brown &#38; J. Jones (1980a); Smith, Brown &#38; J. Jones (1980b)
+Smith, Brown &#38; J. Jones (1980a); Smith, Benson, et al. (1980)
+Smith, Brown &#38; J. Jones (1980a); Smith, Brown &#38; A. Jones (1980)'
+
+Failure → citeproc test test-suite disambiguate_AndreaEg4.txt
+Passed in:
+(string) 'Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)
+Smith, Brown, &#38; Jones (1980); Smith, Benson, &#38; Jones (1980)
+Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)'
+Expected:
+(string) 'Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; J. Jones (1980)
+Smith, Brown &#38; J. Jones (1980); Smith, Benson, et al. (1980)
+Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; A. Jones (1980)'
+
+Failure → citeproc test test-suite disambiguate_AndreaEg5.txt
+Passed in:
+(string) 'Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)
+Smith, Brown, &#38; Jones (1980); Smith, Benson, &#38; Jones (1980)
+Smith, Brown, &#38; Jones (1980); Smith, Brown, &#38; Jones (1980)'
+Expected:
+(string) 'Smith, Brown &#38; J. Jones (1980a); Smith, Brown &#38; J. Jones (1980b)
+Smith, Brown &#38; J. Jones (1980a); Smith, Benson, et al. (1980)
+Smith, Brown &#38; J. Jones (1980a); Smith, Brown &#38; A. Jones (1980)'
+
+Failure → citeproc test test-suite disambiguate_BasedOnEtAlSubsequent.txt
+Passed in:
+(string) '(Baur, Fröberg, Baur, Guggenheim, &#38; Haase 2000); (Baur, Schileyko, &#38; Baur 2000); (Doe 2000)'
+Expected:
+(string) '(Baur, Fröberg, Baur, et al. 2000<i>a</i>; Baur, Schileyko &#38; Baur 2000<i>b</i>; Doe 2000)'
 
 Failure → citeproc test test-suite disambiguate_BasedOnSubsequentFormWithBackref2.txt
 Passed in:
@@ -583,6 +683,12 @@ Passed in:
 (string) 'Asthma, Bronchitis, Cold (1990); Asthma, Bronchitis, Cold (1990); Dropsy, Enteritis, Fever (2000); Dropsy, Enteritis, Fever (2000)'
 Expected:
 (string) 'Asthma, Bosworth Bronchitis, et al. (1990); Asthma, Beauregarde Bronchitis, et al. (1990); Dropsy, Edward Enteritis, et al. (2000); Dropsy, Ernie Enteritis, et al. (2000)'
+
+Failure → citeproc test test-suite disambiguate_ByCiteDisambiguateCondition.txt
+Passed in:
+(string) 'Doe, &#38; Roe (2000); Doe, &#38; Roe (2000)'
+Expected:
+(string) 'Doe et al., <i>Book A</i> (2000); Doe et al., <i>Book B</i> (2000)'
 
 Failure → citeproc test test-suite disambiguate_ByCiteGivennameExpandCrossNestedNames.txt
 Passed in:
@@ -680,6 +786,16 @@ Expected:
 (Spivak, “Cultural Talks”)
 (Spivak, <i>Death of a Discipline</i>)'
 
+Failure → citeproc test test-suite disambiguate_DisambiguationHang.txt
+Passed in:
+(string) '..[0] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990)
+..[1] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990)
+>>[2] (Caminiti, Johnson, &#38; Urbano 1990)'
+Expected:
+(string) '>>[0] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990a)
+>>[1] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990b)
+>>[2] (Caminiti, Johnson, &#38; Urbano 1990)'
+
 Failure → citeproc test test-suite disambiguate_ExtraTextCitation.txt
 Passed in:
 (string) 'Bumke
@@ -740,6 +856,12 @@ Passed in:
 Expected:
 (string) 'A. Asthma et al. (1980); G. Asthma et al. (1995); Dropsy and Asthma (1995)'
 
+Failure → citeproc test test-suite disambiguate_PrimaryNameWithNonDroppingParticle.txt
+Passed in:
+(string) '(Santos, Balthazar, Bouso, &#38; Hallak 2016); (Santos, Oliveira, Sonsin-Oliveira, Fagg, Barbosa, &#38; Caldas 2020)'
+Expected:
+(string) '(dos Santos et al. 2016; Santos et al. 2020)'
+
 Failure → citeproc test test-suite disambiguate_ThreeNoAuthorNoTitleEntries.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -779,6 +901,12 @@ Expected:
 (string) '(Smith Co 2000a; 2000b; 2000c)
 (Smith Co 2000b)
 (Smith Co 2000c)'
+
+Failure → citeproc test test-suite disambiguate_YearSuffixAtTwoLevels.txt
+Passed in:
+(string) 'Smith, Jones, &#38; Brown (1986); Smith, Jones, &#38; Brown (1986); Smith, Jones, Brown, &#38; Green (1986); Smith, Jones, Brown, &#38; Green (1986)'
+Expected:
+(string) 'Smith, Jones &#38; Brown (1986a); Smith, Jones &#38; Brown (1986b); Smith, Jones, Brown, et al. (1986a); Smith, Jones, Brown, et al. (1986b)'
 
 Failure → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntries.txt
 Passed in:
@@ -943,6 +1071,24 @@ Passed in:
 (string) '>>[0] Doe.; Snoakes.'
 Expected:
 (string) '>>[0] Doe; Snoakes.'
+
+Failure → citeproc test test-suite integration_DisambiguateAddGivenname2.txt
+Passed in:
+(string) '>>[0] Smith, &#38; Smith (1980)'
+Expected:
+(string) '>>[0] Smith &#38; Smith (1980)'
+
+Failure → citeproc test test-suite integration_DuplicateItem.txt
+Passed in:
+(string) '>>[0] la Berge, Nagel, Dement, &#38; Zarcone (1981)'
+Expected:
+(string) '>>[0] la Berge, Nagel, Dement &#38; Zarcone (1981)'
+
+Failure → citeproc test test-suite integration_DuplicateItem2.txt
+Passed in:
+(string) '>>[0] la Berge, Nagel, Dement, &#38; Zarcone (1981)'
+Expected:
+(string) '>>[0] la Berge, Nagel, Dement &#38; Zarcone (1981)'
 
 Failure → citeproc test test-suite integration_FirstReferenceNoteNumberPositionChange.txt
 Passed in:
@@ -3048,9 +3194,6 @@ Error → citeproc test test-suite bugreports_undefinedCrash.txt
 Error → citeproc test test-suite collapse_ChicagoAfterCollapse.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite collapse_TrailingDelimiter.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
-
 Error → citeproc test test-suite date_AccessedCrash.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -3075,47 +3218,11 @@ Error → citeproc test test-suite date_SortEmptyDatesBibliography.txt
 Error → citeproc test test-suite date_String.txt
 ./citeproc/citeproc-node-date.lua:88: attempt to index a nil value (local 'ir')
 
-Error → citeproc test test-suite disambiguate_AddNamesFailure.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
-
-Error → citeproc test test-suite disambiguate_AddNamesFailureWithAddGivenname.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
-
-Error → citeproc test test-suite disambiguate_AddNamesSuccess.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
-
 Error → citeproc test test-suite disambiguate_AllNamesBaseNameCountOnFailureIfYearSuffixAvailable.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite disambiguate_AllNamesWithInitialsBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_AndreaEg1a.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
-
-Error → citeproc test test-suite disambiguate_AndreaEg1b.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
-
-Error → citeproc test test-suite disambiguate_AndreaEg1c.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
-
-Error → citeproc test test-suite disambiguate_AndreaEg2.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
-
-Error → citeproc test test-suite disambiguate_AndreaEg3.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
-
-Error → citeproc test test-suite disambiguate_AndreaEg4.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
-
-Error → citeproc test test-suite disambiguate_AndreaEg5.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
-
-Error → citeproc test test-suite disambiguate_BasedOnEtAlSubsequent.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
-
-Error → citeproc test test-suite disambiguate_ByCiteDisambiguateCondition.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite disambiguate_ByCiteIncremental1.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -3129,9 +3236,6 @@ Error → citeproc test test-suite disambiguate_ByCiteIsDefault.txt
 Error → citeproc test test-suite disambiguate_ByCiteMinimalGivennameExpandMinimalNames.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite disambiguate_DisambiguationHang.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
-
 Error → citeproc test test-suite disambiguate_FailWithYearSuffix.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -3140,9 +3244,6 @@ Error → citeproc test test-suite disambiguate_HonorFullnameInBibliography.txt
 
 Error → citeproc test test-suite disambiguate_InitializeWithButNoDisambiguation.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_PrimaryNameWithNonDroppingParticle.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite disambiguate_SetsOfNames.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -3155,9 +3256,6 @@ Error → citeproc test test-suite disambiguate_WithOriginalYear.txt
 
 Error → citeproc test test-suite disambiguate_YearSuffixAndSort.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_YearSuffixAtTwoLevels.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite disambiguate_YearSuffixMidInsert.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -3222,18 +3320,6 @@ Error → citeproc test test-suite group_LegalWithAuthorDate.txt
 Error → citeproc test test-suite group_SuppressWithEmptyNestedDateNode.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite integration_DisambiguateAddGivenname1.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
-
-Error → citeproc test test-suite integration_DisambiguateAddGivenname2.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
-
-Error → citeproc test test-suite integration_DuplicateItem.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
-
-Error → citeproc test test-suite integration_DuplicateItem2.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
-
 Error → citeproc test test-suite label_EditorTranslator1.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -3263,12 +3349,6 @@ Error → citeproc test test-suite magic_SuppressDuplicateVariableRendering.txt
 
 Error → citeproc test test-suite name_BibliographyNameFormNeverShrinks.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite name_CeltsAndToffsCrowdedInitials.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
-
-Error → citeproc test test-suite name_CeltsAndToffsSpacedInitials.txt
-./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite name_CiteGroupDelimiterWithYearCollapse.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
