@@ -113,6 +113,10 @@ function Names:build_ir(engine, state, context)
     return Rendered:new({PlainText:new(tostring(num_names))})
   end
 
+  if names_inheritance.label then
+
+  end
+
   local ir = SeqIr:new(irs, self)
   if #irs == 0 then
     ir.group_var = "missing"
@@ -463,6 +467,19 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     local rendered = Rendered:new(inlines, self)
     -- util.debug(rendered)
     table.insert(irs, rendered)
+  end
+
+  if label then
+    -- local label_ir = label:build_ir(variable, names, engine, state, context)
+    local label_term = context.locale:get_simple_term(variable, label.form, #names > 1)
+    if label_term and label_term ~= "" then
+      local label_ir = Rendered:new({PlainText:new(label_term)})
+      if label.after_name then
+        table.insert(irs, label_ir)
+      else
+        table.insert(irs, 1, label_ir)
+      end
+    end
   end
 
   local ir = NameIr:new(irs, self)

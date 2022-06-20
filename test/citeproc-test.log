@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                3       5       1       0
-bugreports          13      17      52       0
+bugreports          14      16      52       0
 collapse             0      20       1       0
 condition            5      12       0       0
 date                79      14       8       0
@@ -18,7 +18,7 @@ label                4      12       3       0
 locale              19       4       0       0
 locator              2       4       0       0
 magic               24      11       5       0
-name                54      47      10       0
+name                55      46      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              403     268     183       0
+(all)              405     266     183       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -93,12 +93,6 @@ C. Grignon, C. Sentenac 2000'
 Expected:
 (string) 'C. Grignon, C. Sentenac 2000a
 C. Grignon, C. Sentenac 2000b'
-
-Failure → citeproc test test-suite bugreports_ChineseCharactersFamilyOnlyPluralLabel.txt
-Passed in:
-(string) '编者'
-Expected:
-(string) '编者ed.'
 
 Failure → citeproc test test-suite bugreports_CitationSortsWithEtAl.txt
 Passed in:
@@ -1118,7 +1112,7 @@ Expected:
 
 Failure → citeproc test test-suite label_ImplicitForm.txt
 Passed in:
-(string) 'John Doe'
+(string) 'John Doeeditor'
 Expected:
 (string) 'John Doe (editor)'
 
@@ -1184,7 +1178,7 @@ Expected:
 
 Failure → citeproc test test-suite locale_NonExistentLocaleDef.txt
 Passed in:
-(string) 'John Doe + Jane roe'
+(string) 'John Doeedxitor + Jane roetranslator'
 Expected:
 (string) 'John Doe (edxitor) + Jane roe (translator)'
 
@@ -1334,7 +1328,7 @@ Expected:
 
 Failure → citeproc test test-suite name_CollapseRoleLabels.txt
 Passed in:
-(string) 'Albert Asthma et al., Albert Asthma et al.'
+(string) 'Albert Asthma et al.eds., Albert Asthma et al.trans.'
 Expected:
 (string) 'Albert Asthma et al. (eds. &#38; trans.)'
 
@@ -1358,13 +1352,13 @@ Expected:
 
 Failure → citeproc test test-suite name_EditorTranslatorSameEmptyTerm.txt
 Passed in:
-(string) 'John Doe, John Doe'
+(string) 'John Doeeditor, John Doetranslator'
 Expected:
 (string) 'John Doe (editor), John Doe (translator)'
 
 Failure → citeproc test test-suite name_EditorTranslatorSameWithTerm.txt
 Passed in:
-(string) 'John Doe, John Doe'
+(string) 'John Doeed., John Doetran.'
 Expected:
 (string) 'John Doe (ed. &#38; tran.)'
 
@@ -1420,15 +1414,9 @@ Passed in:
 Expected:
 (string) 'SÃO PAULO (ESTADO)'
 
-Failure → citeproc test test-suite name_LabelAfterPlural.txt
-Passed in:
-(string) 'John Doe, Jane Roe'
-Expected:
-(string) 'John Doe, Jane Roeeditors'
-
 Failure → citeproc test test-suite name_LabelAfterPluralDecorations.txt
 Passed in:
-(string) 'John Doe et al.'
+(string) 'John Doe et al.editors'
 Expected:
 (string) 'John Doe et al. (editors)'
 
@@ -1629,7 +1617,7 @@ Expected:
 Failure → citeproc test test-suite name_SubsequentAuthorSubstituteMultipleNames.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Bumke, Courtly Culture: Literature and Society in the High Middle Ages, Dunlap</div>
+  <div class="csl-entry">Bumke, Courtly Culture: Literature and Society in the High Middle Ages, Dunlaptran.</div>
   <div class="csl-entry">Bumke, Höfische</div>
 </div>'
 Expected:
@@ -1724,7 +1712,7 @@ Expected:
 
 Failure → citeproc test test-suite name_TwoRolesSameRenderingSeparateRoleLabels.txt
 Passed in:
-(string) 'Albert Asthma et al., Albert Asthma et al.'
+(string) 'Albert Asthma et al.eds., Albert Asthma et al.trans.'
 Expected:
 (string) 'Albert Asthma et al. (eds.), Albert Asthma et al. (trans.)'
 
@@ -1802,7 +1790,7 @@ Expected:
 
 Failure → citeproc test test-suite number_PreserveDelimiter.txt
 Passed in:
-(string) '. Pages 187–228 <i>in</i> C. S. Stephen and M. L. Brown Analysis and interpretation of freshwater fisheries data C. S. Stephen and M. L. Brown'
+(string) '. Pages 187–228 <i>in</i> C. S. Stephen and M. L. Browneditors Analysis and interpretation of freshwater fisheries data C. S. Stephen and M. L. Browneditors'
 Expected:
 (string) '. Pages 187–228 <i>in</i> C. S. Stephen and M. L. Brown, editors. Analysis and interpretation of freshwater fisheries data'
 
@@ -1820,37 +1808,37 @@ Expected:
 
 Failure → citeproc test test-suite plural_NameLabelAlways.txt
 Passed in:
-(string) 'Doe'
+(string) 'Doeed.'
 Expected:
 (string) 'Doe eds'
 
 Failure → citeproc test test-suite plural_NameLabelContextualPlural.txt
 Passed in:
-(string) 'Doe and Roe'
+(string) 'Doe and Roeeds.'
 Expected:
 (string) 'Doe and Roe eds'
 
 Failure → citeproc test test-suite plural_NameLabelContextualSingular.txt
 Passed in:
-(string) 'Doe'
+(string) 'Doeed.'
 Expected:
 (string) 'Doe ed'
 
 Failure → citeproc test test-suite plural_NameLabelDefaultPlural.txt
 Passed in:
-(string) 'Doe and Roe'
+(string) 'Doe and Roeeds.'
 Expected:
 (string) 'Doe and Roe eds'
 
 Failure → citeproc test test-suite plural_NameLabelDefaultSingular.txt
 Passed in:
-(string) 'Doe'
+(string) 'Doeed.'
 Expected:
 (string) 'Doe ed'
 
 Failure → citeproc test test-suite plural_NameLabelNever.txt
 Passed in:
-(string) 'Doe and Roe'
+(string) 'Doe and Roeeds.'
 Expected:
 (string) 'Doe and Roe ed'
 
@@ -2502,8 +2490,8 @@ BAD LANGUAGE CODE THAT PASSES IN NODE.JS BUT FAILS IN SOME BROWSERS'
 
 Failure → citeproc test test-suite textcase_NoSpaceBeforeApostrophe.txt
 Passed in:
-(string) 'Marcus Shafi’i, Response to Shafi’I Comment
-Marcus Shafi`i, Response to Shafi`i Comment'
+(string) 'Marcus Shafi’ied., Response to Shafi’I Comment
+Marcus Shafi`ied., Response to Shafi`i Comment'
 Expected:
 (string) 'Marcus Shafi’i (ed.), Response to Shafi’i Comment
 Marcus Shafi`i (ed.), Response to Shafi`i Comment'
