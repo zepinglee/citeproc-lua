@@ -20,7 +20,7 @@ locator              2       4       0       0
 magic               24      11       5       0
 name                54      47      10       0
 nameattr            97       0       0       0
-nameorder            4       2       0       0
+nameorder            6       0       0       0
 namespaces           1       0       0       0
 number              12       7       1       0
 page                 9       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              401     270     183       0
+(all)              403     268     183       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -1496,7 +1496,7 @@ Expected:
 
 Failure → citeproc test test-suite name_ParticleFormatting.txt
 Passed in:
-(string) 'Doe, John de la'
+(string) 'la Doe, John de'
 Expected:
 (string) 'LA DOE, John de'
 
@@ -1763,18 +1763,6 @@ Passed in:
 (string) 'Fontaine Jean de La III'
 Expected:
 (string) '(Fontaine) [Jean de La] III'
-
-Failure → citeproc test test-suite nameorder_LongNameAsSortDemoteNever.txt
-Passed in:
-(string) 'Martinière, Gérard de la, III'
-Expected:
-(string) 'la Martinière, Gérard de, III'
-
-Failure → citeproc test test-suite nameorder_ShortNameAsSortDemoteNever.txt
-Passed in:
-(string) 'Martinière'
-Expected:
-(string) 'la Martinière'
 
 Failure → citeproc test test-suite number_LeadingZeros.txt
 Passed in:

@@ -478,7 +478,10 @@ function Name:render_person_name(person_name, seen_one, context)
   local is_romanesque = util.has_romanesque_char(person_name.family)
   local is_reversed = (self.name_as_sort_order == "all" or
     (self.name_as_sort_order == "first" and not seen_one) or not is_romanesque)
-  local demote_ndp = context.style.demote_non_dropping_particle
+  -- TODO
+  local is_sort = false
+  local demote_ndp = context.style.demote_non_dropping_particle == "display-and-sort" or
+    (context.style.demote_non_dropping_particle == "sort-only" and true)
 
   local name_part_tokens = self:get_display_order(person_name, seen_one)
   local inlines = {}
