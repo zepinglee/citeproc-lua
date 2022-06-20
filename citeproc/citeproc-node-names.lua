@@ -402,10 +402,6 @@ function Name:from_node(node)
 end
 
 
--- function Name:is_as_sort_order(person_name, seen_one)
---   if
--- end
-
 function Name:build_ir(variable, et_al, label, engine, state, context)
   -- Returns NameIR
   local names = context:get_variable(variable)

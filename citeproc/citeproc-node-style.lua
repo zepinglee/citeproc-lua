@@ -53,9 +53,18 @@ local function make_name_inheritance(name, node)
   name:set_attribute(node, "initialize-with")
   name:set_attribute(node, "name-as-sort-order")
   name:set_attribute(node, "sort-separator")
-  name.delimiter = node:get_attribute("name-delimiter")
-  name.form = node:get_attribute("name-form")
-  name.names_delimiter = node:get_attribute("names-delimiter")
+  local delimiter = node:get_attribute("name-delimiter")
+  if delimiter then
+    name.delimiter = delimiter
+  end
+  local form = node:get_attribute("name-form")
+  if form then
+    name.form = form
+  end
+  local names_delimiter = node:get_attribute("names-delimiter")
+  if names_delimiter then
+    name.names_delimiter = names_delimiter
+  end
 end
 
 function Style:from_node(node)
