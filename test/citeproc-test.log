@@ -18,8 +18,8 @@ label                4      12       3       0
 locale              19       4       0       0
 locator              2       4       0       0
 magic               20      14       6       0
-name                40      55      16       0
-nameattr            48      49       0       0
+name                44      51      16       0
+nameattr            55      42       0       0
 nameorder            0       6       0       0
 namespaces           1       0       0       0
 number              12       7       1       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              317     327     210       0
+(all)              328     316     210       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -1266,33 +1266,9 @@ APPLEBY, Aloysius, and Bobby BROWN; APPLEBY, Aloysius, Bobby BROWN and Cecile CR
 
 Failure → citeproc test test-suite name_AuthorCount.txt
 Passed in:
-(string) 'Count=(John Doe, Jane Roe, Robert Brown, Tom Smith) | Count=(John Doe, Jake Doe, Robert Brown) | Count=(John Doe, Jake Doe) | Count=(John Doe) | Count=()'
+(string) 'Count=(3) | Count=(3) | Count=(2) | Count=(1) | Count=(0)'
 Expected:
 (string) 'Count=(3) | Count=(3) | Count=(2) | Count=(1) | Count=()'
-
-Failure → citeproc test test-suite name_AuthorCountWithMultipleVariables.txt
-Passed in:
-(string) 'John Doe, Jane Roe, Robert Brown, Tom SmithJohn Noakes, Richard Stoakes'
-Expected:
-(string) '5'
-
-Failure → citeproc test test-suite name_AuthorCountWithSameVarContentAndCombinedTermFail.txt
-Passed in:
-(string) 'John Noakes, Richard StoakesJohn Noakes, Richard Stoakes'
-Expected:
-(string) '4'
-
-Failure → citeproc test test-suite name_AuthorCountWithSameVarContentAndCombinedTermSucceed.txt
-Passed in:
-(string) 'John Noakes, Richard Stoakes'
-Expected:
-(string) '2'
-
-Failure → citeproc test test-suite name_AuthorEditorCount.txt
-Passed in:
-(string) 'John Doe, Jane Roe, Robert Brown, Tom SmithJoe Bloggs, Barbie Bloggs'
-Expected:
-(string) '5'
 
 Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearSuffixCollapse.txt
 Passed in:
@@ -1753,7 +1729,7 @@ Expected:
 Failure → citeproc test test-suite nameattr_AndOnBibliographyInBibliography.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe</div>
+  <div class="csl-entry">John Doe, and Jane Roe</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1762,7 +1738,7 @@ Expected:
 
 Failure → citeproc test test-suite nameattr_AndOnCitationInCitation.txt
 Passed in:
-(string) 'John Doe, Jane Roe'
+(string) 'John Doe, and Jane Roe'
 Expected:
 (string) 'John Doe and Jane Roe'
 
@@ -1785,7 +1761,7 @@ Expected:
 Failure → citeproc test test-suite nameattr_AndOnStyleInBibliography.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe</div>
+  <div class="csl-entry">John Doe, and Jane Roe</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1795,7 +1771,7 @@ Expected:
 Failure → citeproc test test-suite nameattr_AndOnStyleInCitation.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe</div>
+  <div class="csl-entry">John Doe, and Jane Roe</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1977,64 +1953,6 @@ Passed in:
 (string) 'John Doe, Jane Roe, Richard Snoakes'
 Expected:
 (string) 'John Doe, Jane Roe, et al.'
-
-Failure → citeproc test test-suite nameattr_InitializeWithOnBibliographyInBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John-Lee Doe</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">J.-L. Doe</div>
-</div>'
-
-Failure → citeproc test test-suite nameattr_InitializeWithOnCitationInCitation.txt
-Passed in:
-(string) 'John-Lee Doe'
-Expected:
-(string) 'J.-L. Doe'
-
-Failure → citeproc test test-suite nameattr_InitializeWithOnStyleInBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John-Lee Doe</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">J.-L. Doe</div>
-</div>'
-
-Failure → citeproc test test-suite nameattr_InitializeWithOnStyleInCitation.txt
-Passed in:
-(string) 'John-Lee Doe'
-Expected:
-(string) 'J.-L. Doe'
-
-Failure → citeproc test test-suite nameattr_NameAsSortOrderOnBibliographyInBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe; Jane Roe</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, John; Roe, Jane</div>
-</div>'
-
-Failure → citeproc test test-suite nameattr_NameAsSortOrderOnCitationInCitation.txt
-Passed in:
-(string) 'John Doe; Jane Roe'
-Expected:
-(string) 'Doe, John; Roe, Jane'
-
-Failure → citeproc test test-suite nameattr_NameAsSortOrderOnStyleInBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe; Jane Roe</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, John; Roe, Jane</div>
-</div>'
 
 Failure → citeproc test test-suite nameattr_NameDelimiterOnBibliographyInBibliography.txt
 Passed in:
@@ -3131,7 +3049,7 @@ Error → citeproc test test-suite collapse_ChicagoAfterCollapse.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite collapse_TrailingDelimiter.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite date_AccessedCrash.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -3158,13 +3076,13 @@ Error → citeproc test test-suite date_String.txt
 ./citeproc/citeproc-node-date.lua:88: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite disambiguate_AddNamesFailure.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite disambiguate_AddNamesFailureWithAddGivenname.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite disambiguate_AddNamesSuccess.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite disambiguate_AllNamesBaseNameCountOnFailureIfYearSuffixAvailable.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -3173,31 +3091,31 @@ Error → citeproc test test-suite disambiguate_AllNamesWithInitialsBibliography
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite disambiguate_AndreaEg1a.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite disambiguate_AndreaEg1b.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite disambiguate_AndreaEg1c.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite disambiguate_AndreaEg2.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite disambiguate_AndreaEg3.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite disambiguate_AndreaEg4.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite disambiguate_AndreaEg5.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite disambiguate_BasedOnEtAlSubsequent.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite disambiguate_ByCiteDisambiguateCondition.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite disambiguate_ByCiteIncremental1.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -3212,7 +3130,7 @@ Error → citeproc test test-suite disambiguate_ByCiteMinimalGivennameExpandMini
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite disambiguate_DisambiguationHang.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite disambiguate_FailWithYearSuffix.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -3224,7 +3142,7 @@ Error → citeproc test test-suite disambiguate_InitializeWithButNoDisambiguatio
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite disambiguate_PrimaryNameWithNonDroppingParticle.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite disambiguate_SetsOfNames.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -3239,7 +3157,7 @@ Error → citeproc test test-suite disambiguate_YearSuffixAndSort.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite disambiguate_YearSuffixAtTwoLevels.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite disambiguate_YearSuffixMidInsert.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -3299,22 +3217,22 @@ Error → citeproc test test-suite group_ComplexNesting.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite group_LegalWithAuthorDate.txt
-./citeproc/citeproc-util.lua:234: bad argument #1 to 'gmatch' (string expected, got table)
+./citeproc/citeproc-util.lua:235: bad argument #1 to 'gmatch' (string expected, got table)
 
 Error → citeproc test test-suite group_SuppressWithEmptyNestedDateNode.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite integration_DisambiguateAddGivenname1.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite integration_DisambiguateAddGivenname2.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite integration_DuplicateItem.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite integration_DuplicateItem2.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite label_EditorTranslator1.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -3326,7 +3244,7 @@ Error → citeproc test test-suite label_NameLabelThroughSubstitute.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite magic_AllowRepeatDateRenderings.txt
-./citeproc/citeproc-util.lua:234: bad argument #1 to 'gmatch' (string expected, got table)
+./citeproc/citeproc-util.lua:235: bad argument #1 to 'gmatch' (string expected, got table)
 
 Error → citeproc test test-suite magic_CitationLabelInBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -3347,10 +3265,10 @@ Error → citeproc test test-suite name_BibliographyNameFormNeverShrinks.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite name_CeltsAndToffsCrowdedInitials.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite name_CeltsAndToffsSpacedInitials.txt
-./citeproc/citeproc-node-names.lua:110: attempt to index a nil value (field 'options')
+./citeproc/citeproc-node-names.lua:121: attempt to index a nil value (field 'options')
 
 Error → citeproc test test-suite name_CiteGroupDelimiterWithYearCollapse.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -3401,7 +3319,7 @@ Error → citeproc test test-suite position_IbidWithSuffix.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite position_NearNoteWithPlugin.txt
-./citeproc/citeproc-util.lua:234: bad argument #1 to 'gmatch' (string expected, got table)
+./citeproc/citeproc-util.lua:235: bad argument #1 to 'gmatch' (string expected, got table)
 
 Error → citeproc test test-suite punctuation_DefaultYearSuffixDelimiter.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -3575,13 +3493,13 @@ Error → citeproc test test-suite substitute_SharedMacro.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite substitute_SubstituteOnlyOnceString.txt
-./citeproc/citeproc-util.lua:113: Invalid string.
+./citeproc/citeproc-util.lua:114: Invalid string.
 
 Error → citeproc test test-suite substitute_SubstituteOnlyOnceTerm.txt
-./citeproc/citeproc-util.lua:113: Invalid string.
+./citeproc/citeproc-util.lua:114: Invalid string.
 
 Error → citeproc test test-suite substitute_SubstituteOnlyOnceVariable.txt
-./citeproc/citeproc-util.lua:113: Invalid string.
+./citeproc/citeproc-util.lua:114: Invalid string.
 
 Error → citeproc test test-suite testers_FirstAutoGeneratedZoteroPluginTest.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

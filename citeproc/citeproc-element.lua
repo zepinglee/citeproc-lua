@@ -116,7 +116,7 @@ function Element:derive(element_name, default_options)
   return o
 end
 
-function Element:from_node(node)
+function Element:from_node(node, parent)
   local o = self:new()
   o.element_name = self.element_name or node:get_element_name()
   return o
@@ -133,13 +133,19 @@ end
 function Element:set_bool_attribute(node, attribute)
   local value = node:get_attribute(attribute)
   if value == "true" then
-    value = true
     local key = string.gsub(attribute, "%-" , "_")
-    self[key] = value
+    self[key] = true
   elseif value == "false" then
-    value = false
     local key = string.gsub(attribute, "%-" , "_")
-    self[key] = value
+    self[key] = false
+  end
+end
+
+function Element:set_number_attribute(node, attribute)
+  local value = node:get_attribute(attribute)
+  if value then
+    local key = string.gsub(attribute, "%-" , "_")
+    self[key] = tonumber(value)
   end
 end
 
@@ -151,7 +157,7 @@ function Element:process_children_nodes(node)
     if child:is_element() then
       local element_name = child:get_element_name()
       local element_type = self.element_type_map[element_name] or Element
-      local child_element = element_type:from_node(child)
+      local child_element = element_type:from_node(child, self)
       if child_element then
         self.children = self.children or {}
         table.insert(self.children, child_element)

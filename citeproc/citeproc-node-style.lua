@@ -4,7 +4,7 @@
 -- Repository: https://github.com/zepinglee/citeproc-lua
 --
 
-local style = {}
+local style_module = {}
 
 local dom = require("luaxml-domobject")
 
@@ -40,16 +40,41 @@ function Style:parse(xml_str)
   return Style:from_node(style_node)
 end
 
+local function make_name_inheritance(name, node)
+  name:set_attribute(node, "and")
+  name:set_attribute(node, "delimiter-precedes-et-al")
+  name:set_attribute(node, "delimiter-precedes-last")
+  name:set_number_attribute(node, "et-al-min")
+  name:set_number_attribute(node, "et-al-use-first")
+  name:set_number_attribute(node, "et-al-subsequent-min")
+  name:set_number_attribute(node, "et-al-subsequent-use-first")
+  name:set_bool_attribute(node, "et-al-use-last")
+  name:set_bool_attribute(node, "initialize")
+  name:set_attribute(node, "initialize-with")
+  name:set_attribute(node, "name-as-sort-order")
+  name:set_attribute(node, "sort-separator")
+  name.delimiter = node:get_attribute("name-delimiter")
+  name.form = node:get_attribute("name-form")
+  name.names_delimiter = node:get_attribute("names-delimiter")
+end
+
 function Style:from_node(node)
   local o = Style:new()
-  o.children = {}
 
   o:set_attribute(node, "class")
   o:set_attribute(node, "default-locale")
   o:set_attribute(node, "version")
 
-  o:set_attribute(node, "initialize-with-hyphen")
+  -- Global Options
+  o.initialize_with_hyphen = true
+  o:set_bool_attribute(node, "initialize-with-hyphen")
   o:set_attribute(node, "page-range-format")
+  o:set_attribute(node, "demote-non-dropping-particle")
+
+  -- Inheritable Name Options
+  -- https://docs.citationstyles.org/en/stable/specification.html#inheritable-name-options
+  o.name_inheritance = require("citeproc-node-names").Name:new()
+  make_name_inheritance(o.name_inheritance, node)
 
   if o.page_range_format == "chicago" then
     if o.version < "1.1" then
@@ -62,6 +87,7 @@ function Style:from_node(node)
   o.macros = {}
   o.locales = {}
 
+  o.children = {}
   o:process_children_nodes(node)
 
   for _, child in ipairs(o.children) do
@@ -79,10 +105,6 @@ function Style:from_node(node)
       o.locales[xml_lang] = child
     end
   end
-
-  -- Global Options
-  o:set_bool_attribute(node, "initialize-with-hyphen")
-  o:set_attribute(node, "demote-non-dropping-particle")
 
   return o
 end
@@ -184,7 +206,8 @@ end
 
 local Citation = Element:derive("citation")
 
-function Citation:from_node(node)
+function Citation:from_node(node, style)
+
   local o = Citation:new()
   o.children = {}
 
@@ -218,9 +241,14 @@ function Citation:from_node(node)
   -- Note Distance
   o:set_bool_attribute(node, "disambiguate-add-names")
 
-  -- Inheritable Name Options
-  -- o.name_inheritance = nil
-  -- o.names_delimiter = nil
+  local name_inheritance = require("citeproc-node-names").Name:new()
+  for key, value in pairs(style.name_inheritance) do
+    if value ~= nil then
+      name_inheritance[key] = value
+    end
+  end
+  make_name_inheritance(name_inheritance, node)
+  o.name_inheritance = name_inheritance
 
   return o
 end
@@ -251,7 +279,7 @@ end
 
 local Bibliography = Element:derive("bibliography")
 
-function Bibliography:from_node(node)
+function Bibliography:from_node(node, style)
   local o = Bibliography:new()
   o.children = {}
 
@@ -277,6 +305,15 @@ function Bibliography:from_node(node)
   -- Reference Grouping
   o:set_attribute(node, "subsequent-author-substitute")
   o:set_attribute(node, "subsequent-author-substitute-rule")
+
+  local name_inheritance = require("citeproc-node-names").Name:new()
+  for key, value in pairs(style.name_inheritance) do
+    if value ~= nil then
+      name_inheritance[key] = value
+    end
+  end
+  make_name_inheritance(name_inheritance, node)
+  o.name_inheritance = name_inheritance
 
   return o
 end
@@ -345,9 +382,9 @@ function Macro:from_node(node)
 end
 
 
-style.Style = Style
-style.Citation = Citation
-style.Bibliography = Bibliography
+style_module.Style = Style
+style_module.Citation = Citation
+style_module.Bibliography = Bibliography
 
 
-return style
+return style_module

@@ -50,10 +50,10 @@ function Name:from_node(node)
   o:get_delimiter_attribute(node)
   o:set_attribute(node, "delimiter-precedes-et-al")
   o:set_attribute(node, "delimiter-precedes-last")
-  o:set_attribute(node, "et-al-min")
-  o:set_attribute(node, "et-al-use-first")
-  o:set_attribute(node, "et-al-subsequent-min")
-  o:set_attribute(node, "et-al-subsequent-use-first")
+  o:set_number_attribute(node, "et-al-min")
+  o:set_number_attribute(node, "et-al-use-first")
+  o:set_number_attribute(node, "et-al-subsequent-min")
+  o:set_number_attribute(node, "et-al-subsequent-use-first")
   o:set_bool_attribute(node, "et-al-use-last")
   o:set_attribute(node, "form")
   o:set_bool_attribute(node, "initialize")
@@ -91,6 +91,17 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
   local names = context:get_variable(variable)
   if not names then
     return nil
+  end
+
+  local et_al_truncate = self.et_al_min and self.et_al_use_first and #names >= self.et_al_min
+  local et_al_last = self.et_al_use_last and self.et_al_use_first <= self.et_al_min - 2
+
+  if self.form == "count" then
+    if et_al_truncate then
+      return self.et_al_use_first
+    else
+      return #names
+    end
   end
 
   local irs = {}
@@ -718,20 +729,34 @@ function Names:from_node(node)
 end
 
 function Names:build_ir(engine, state, context)
+  -- local names_inheritance = state.name_override.inherited_names_options(context.names_inheritance, self)
+  local names_inheritance = util.clone(self)
+  -- TODO: names_delimiter
+  names_inheritance.name = util.clone(context.name_inheritance)
+  for key, value in pairs(self.name) do
+    names_inheritance.name[key] = value
+  end
+
   local irs = {}
+  local num_names = 0
   -- util.debug(self.name)
   for _, variable in ipairs(util.split(self.variable)) do
-    local name_ir = self.name:build_ir(variable, self.et_al, self.label, engine, state, context)
+    local name_ir = names_inheritance.name:build_ir(variable, self.et_al, self.label, engine, state, context)
+    if type(name_ir) == "number" then
+      num_names = num_names + name_ir
+    end
     table.insert(irs, name_ir)
   end
 
-  local ir = SeqIr:new(irs, self)
+  if names_inheritance.name.form == "count" then
+    return Rendered:new({PlainText:new(tostring(num_names))})
+  end
 
+  local ir = SeqIr:new(irs, self)
   -- ir = self:apply_delimiter(ir)
   -- ir = self:apply_formatting(ir)
   -- ir = self:apply_affixes(ir)
   -- ir = self:apply_display(ir)
-
   return ir
 end
 

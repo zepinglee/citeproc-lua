@@ -19,6 +19,7 @@ function util.clone(t)
   for key, value in pairs(t) do
     res[key] = value
   end
+  setmetatable(res, getmetatable(t))
   return res
 end
 
