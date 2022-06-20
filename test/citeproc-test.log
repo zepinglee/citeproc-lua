@@ -17,8 +17,8 @@ integration          1      13       0       0
 label                4      12       3       0
 locale              19       4       0       0
 locator              2       4       0       0
-magic               23      11       6       0
-name                49      48      14       0
+magic               23      12       5       0
+name                50      50      11       0
 nameattr            76      21       0       0
 nameorder            0       6       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              361     305     188       0
+(all)              362     308     184       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -1358,6 +1358,12 @@ Expected:
   <div class="csl-entry">Book Y (2002)</div>
 </div>'
 
+Failure → citeproc test test-suite magic_SuppressDuplicateVariableRendering.txt
+Passed in:
+(string) 'Should print this: Book A … and this: Book ABlob'
+Expected:
+(string) 'Should print this: Book A … and this: Book A … but this only once: Blob'
+
 Failure → citeproc test test-suite magic_TermCapitalizationWithPrefix.txt
 Passed in:
 (string) '..[0] Ibid.
@@ -1401,6 +1407,18 @@ Passed in:
 (string) 'John Doe; Jane Roe OR  Doe Inc.;  Doe Inc.;  Noakes Inc.'
 Expected:
 (string) 'John Doe; Jane Roe OR Doe Inc.; Doe Inc.; Noakes Inc.'
+
+Failure → citeproc test test-suite name_DelimiterAfterInverted.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Australian Government Productivity Commission, &#38; New Zealand Productivity Commission</div>
+  <div class="csl-entry">Weinstock, R., Leong, G. B., &#38; Silva, J. A.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Australian Government Productivity Commission &#38; New Zealand Productivity Commission</div>
+  <div class="csl-entry">Weinstock, R., Leong, G. B., &#38; Silva, J. A.</div>
+</div>'
 
 Failure → citeproc test test-suite name_EditorTranslatorSameEmptyTerm.txt
 Passed in:
@@ -1459,6 +1477,12 @@ Expected:
   <div class="csl-entry"><b>Doe</b>, <b>J.</b> Q.</div>
   <div class="csl-entry"><b>Doe</b>, <b>J.</b>-Q.</div>
 </div>'
+
+Failure → citeproc test test-suite name_InstitutionDecoration.txt
+Passed in:
+(string) 'São Paulo (Estado)'
+Expected:
+(string) 'SÃO PAULO (ESTADO)'
 
 Failure → citeproc test test-suite name_LabelAfterPlural.txt
 Passed in:
@@ -3112,9 +3136,6 @@ Error → citeproc test test-suite magic_StripPeriodsTrueShortForm.txt
 Error → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite magic_SuppressDuplicateVariableRendering.txt
-./citeproc/citeproc-output.lua:148: attempt to concatenate a nil value (local 'str')
-
 Error → citeproc test test-suite name_BibliographyNameFormNeverShrinks.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -3126,9 +3147,6 @@ Error → citeproc test test-suite name_CiteGroupDelimiterWithYearSuffixCollapse
 
 Error → citeproc test test-suite name_CiteGroupDelimiterWithYearSuffixCollapse3.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite name_DelimiterAfterInverted.txt
-./citeproc/citeproc-output.lua:148: attempt to concatenate a nil value (local 'str')
 
 Error → citeproc test test-suite name_EditorTranslatorBoth.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -3145,17 +3163,11 @@ Error → citeproc test test-suite name_HyphenatedNonDroppingParticle1.txt
 Error → citeproc test test-suite name_HyphenatedNonDroppingParticle2.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite name_Institution.txt
-./citeproc/citeproc-output.lua:148: attempt to concatenate a nil value (local 'str')
-
-Error → citeproc test test-suite name_InstitutionDecoration.txt
-./citeproc/citeproc-output.lua:148: attempt to concatenate a nil value (local 'str')
-
 Error → citeproc test test-suite name_LiteralWithComma.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite name_OnlyGivenname.txt
-./citeproc/citeproc-output.lua:148: attempt to concatenate a nil value (local 'str')
+./citeproc/citeproc-node-names.lua:201: Invalid name
 
 Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

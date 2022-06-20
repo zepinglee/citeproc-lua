@@ -179,6 +179,10 @@ function Name:render_person_name(person_name, seen_one, context)
       for _, inline in ipairs(InlineElement:parse(person_name.suffix)) do
         table.insert(inlines, inline)
       end
+    elseif name_part_token == "literal" then
+      for _, inline in ipairs(InlineElement:parse(person_name.literal)) do
+        table.insert(inlines, inline)
+      end
     elseif name_part_token == "space" then
       table.insert(inlines, PlainText:new(" "))
     elseif name_part_token == "sort-separator" then
@@ -190,6 +194,13 @@ function Name:render_person_name(person_name, seen_one, context)
 end
 
 function Name:get_display_order(person_name, seen_one)
+  if not person_name.family then
+    if person_name.literal then
+      return {"literal"}
+    else
+      util.error("Invalid name")
+    end
+  end
   local name_part_tokens = {"family"}
 
   if self.form == "short" then

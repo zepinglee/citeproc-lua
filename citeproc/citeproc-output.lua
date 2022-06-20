@@ -142,7 +142,7 @@ end
 
 function InlineElement:parse(str)
   -- Return a list of inlines
-  -- if not type(str) ~= "string" then
+  -- if type(str) ~= "string" then
   --   print(debug.traceback())
   -- end
   local html_str = "<div>" .. str .. "</div>"
