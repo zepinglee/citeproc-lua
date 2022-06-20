@@ -6,7 +6,7 @@ collapse             0      20       1       0
 condition            5      12       0       0
 date                79      14       8       0
 decorations          5       2       0       0
-disambiguate         4      49      18       0
+disambiguate         5      48      18       0
 display              0       0       5       0
 etal                 0       2       2       0
 flipflop             9       9       1       0
@@ -17,9 +17,9 @@ integration          1      13       0       0
 label                4      12       3       0
 locale              19       4       0       0
 locator              2       4       0       0
-magic               20      14       6       0
-name                46      51      14       0
-nameattr            55      42       0       0
+magic               23      11       6       0
+name                47      50      14       0
+nameattr            64      33       0       0
 nameorder            0       6       0       0
 namespaces           1       0       0       0
 number              12       7       1       0
@@ -29,16 +29,16 @@ position             2      11       3       0
 punctuation          3      10       3       0
 quotes               2       0       2       0
 simplespace          0       0       1       0
-sort                 4      12      50       0
+sort                 5      11      50       0
 sortseparator        1       0       0       0
-substitute           1       2       4       0
+substitute           2       1       4       0
 testers              0       0       2       0
 textcase            24       5       1       0
 unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              331     335     188       0
+(all)              347     319     188       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -178,8 +178,8 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_UndefinedInName3.txt
 Passed in:
-(string) 'B-X Kim, and A-Y Kim, , in , , , , ,  ( , , ), p. .
-B-X Kim, and A-Y Kim, , in , , , , ,  ( , , ), p. .'
+(string) 'B-X Kim, and A-Y Kim, , in , , , ,  ( , , ), p. .
+B-X Kim, and A-Y Kim, , in , , , ,  ( , , ), p. .'
 Expected:
 (string) 'B-X Kim and A-Y Kim.
 Kim and Kim, 23.'
@@ -220,13 +220,13 @@ Expected:
 
 Failure → citeproc test test-suite collapse_AuthorCollapseNoDate.txt
 Passed in:
-(string) '(), (Smith 1900), (Smith 2000)'
+(string) '(Smith), (Smith 1900), (Smith 2000)'
 Expected:
 (string) '(Smith, 1900, 2000)'
 
 Failure → citeproc test test-suite collapse_AuthorCollapseNoDateSorted.txt
 Passed in:
-(string) '(Smith 325AD), (Smith 2000), ()'
+(string) '(Smith 325AD), (Smith 2000), (Smith)'
 Expected:
 (string) '(Smith 325AD, 2000)'
 
@@ -862,20 +862,6 @@ Passed in:
 Expected:
 (string) '(dos Santos et al. 2016; Santos et al. 2020)'
 
-Failure → citeproc test test-suite disambiguate_ThreeNoAuthorNoTitleEntries.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">, BleagleA, 2000</div>
-  <div class="csl-entry">, BleagleB, 2000</div>
-  <div class="csl-entry">, BleagleC, 2000</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">BleagleA, 2000</div>
-  <div class="csl-entry">BleagleB, 2000</div>
-  <div class="csl-entry">BleagleC, 2000</div>
-</div>'
-
 Failure → citeproc test test-suite disambiguate_ToInitialOnly.txt
 Passed in:
 (string) 'Smith; Smith; Muggins; Muggins'
@@ -1316,12 +1302,6 @@ Passed in:
 Expected:
 (string) 'John Doe, Jr.'
 
-Failure → citeproc test test-suite magic_PunctuationInQuoteDefaultEnglishSuffix.txt
-Passed in:
-(string) 'Doe“Book A,” 1900.'
-Expected:
-(string) 'Doe, “Book A,” 1900.'
-
 Failure → citeproc test test-suite magic_PunctuationInQuoteFalse.txt
 Passed in:
 (string) 'Doe, “Book A,” 1900.'
@@ -1333,18 +1313,6 @@ Passed in:
 (string) '“Article A?,” Journal B'
 Expected:
 (string) '“Article A?”, Journal B'
-
-Failure → citeproc test test-suite magic_PunctuationInQuoteNested.txt
-Passed in:
-(string) 'Doe<i>“Book A.”</i> 1900.'
-Expected:
-(string) 'Doe. <i>“Book A.”</i> 1900.'
-
-Failure → citeproc test test-suite magic_PunctuationInQuoteSuffixTrue.txt
-Passed in:
-(string) 'Doe“Book A,” 1900.'
-Expected:
-(string) 'Doe, “Book A,” 1900.'
 
 Failure → citeproc test test-suite magic_SecondFieldAlign.txt
 Passed in:
@@ -1381,7 +1349,7 @@ Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Warren Smith (2000)</div>
   <div class="csl-entry">Warren Smith (2001)</div>
-  <div class="csl-entry"> (2002)</div>
+  <div class="csl-entry">(2002)</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1424,7 +1392,7 @@ Expected:
 
 Failure → citeproc test test-suite name_CollapseRoleLabels.txt
 Passed in:
-(string) 'Albert Asthma, Bosworth Bronchitis, Crispin ColdAlbert Asthma, Bosworth Bronchitis, Crispin Cold'
+(string) 'Albert Asthma, Bosworth Bronchitis, Crispin Cold, Albert Asthma, Bosworth Bronchitis, Crispin Cold'
 Expected:
 (string) 'Albert Asthma et al. (eds. &#38; trans.)'
 
@@ -1436,13 +1404,13 @@ Expected:
 
 Failure → citeproc test test-suite name_EditorTranslatorSameEmptyTerm.txt
 Passed in:
-(string) 'John DoeJohn Doe'
+(string) 'John Doe, John Doe'
 Expected:
 (string) 'John Doe (editor), John Doe (translator)'
 
 Failure → citeproc test test-suite name_EditorTranslatorSameWithTerm.txt
 Passed in:
-(string) 'John DoeJohn Doe'
+(string) 'John Doe, John Doe'
 Expected:
 (string) 'John Doe (ed. &#38; tran.)'
 
@@ -1473,12 +1441,6 @@ Passed in:
 (string) 'תפוח, ו  תפוז'
 Expected:
 (string) 'תפוחו תפוז'
-
-Failure → citeproc test test-suite name_HierarchicalDelimiter.txt
-Passed in:
-(string) 'John Doe, Jane Roe'
-Expected:
-(string) 'John Doe; Jane Roe'
 
 Failure → citeproc test test-suite name_InTextMarkupInitialize.txt
 Passed in:
@@ -1732,7 +1694,7 @@ Failure → citeproc test test-suite name_SubsequentAuthorSubstituteMultipleName
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Bumke, Courtly Culture: Literature and Society in the High Middle Ages, Dunlap</div>
-  <div class="csl-entry">Bumke, Höfische, </div>
+  <div class="csl-entry">Bumke, Höfische</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1754,7 +1716,7 @@ Expected:
 
 Failure → citeproc test test-suite name_SubstituteInheritLabel.txt
 Passed in:
-(string) '[]; [John Doe]'
+(string) '[]; [X]John Doe]'
 Expected:
 (string) '[[X]Jane Roe (<i>ed.</i>); [X]John Doe]'
 
@@ -1826,7 +1788,7 @@ Expected:
 
 Failure → citeproc test test-suite name_TwoRolesSameRenderingSeparateRoleLabels.txt
 Passed in:
-(string) 'Albert Asthma, Bosworth Bronchitis, Crispin ColdAlbert Asthma, Bosworth Bronchitis, Constantine Cold'
+(string) 'Albert Asthma, Bosworth Bronchitis, Crispin Cold, Albert Asthma, Bosworth Bronchitis, Constantine Cold'
 Expected:
 (string) 'Albert Asthma et al. (eds.), Albert Asthma et al. (trans.)'
 
@@ -2100,22 +2062,6 @@ Passed in:
 Expected:
 (string) 'John Doe, Jane Roe, et al.'
 
-Failure → citeproc test test-suite nameattr_NameDelimiterOnBibliographyInBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe; Jane Roe</div>
-</div>'
-
-Failure → citeproc test test-suite nameattr_NameDelimiterOnCitationInCitation.txt
-Passed in:
-(string) 'John Doe, Jane Roe'
-Expected:
-(string) 'John Doe; Jane Roe'
-
 Failure → citeproc test test-suite nameattr_NameDelimiterOnStyleInBibliography.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -2132,22 +2078,6 @@ Passed in:
 Expected:
 (string) 'John Doe; Jane Roe'
 
-Failure → citeproc test test-suite nameattr_NameFormOnBibliographyInBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe</div>
-</div>'
-
-Failure → citeproc test test-suite nameattr_NameFormOnCitationInCitation.txt
-Passed in:
-(string) 'John Doe'
-Expected:
-(string) 'Doe'
-
 Failure → citeproc test test-suite nameattr_NameFormOnStyleInBibliography.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -2163,48 +2093,6 @@ Passed in:
 (string) 'John Doe'
 Expected:
 (string) 'Doe'
-
-Failure → citeproc test test-suite nameattr_NamesDelimiterOnBibliographyInBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John DoeJane Roe</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe AND ALSO THE EDITOR Jane Roe</div>
-</div>'
-
-Failure → citeproc test test-suite nameattr_NamesDelimiterOnCitationInCitation.txt
-Passed in:
-(string) 'John DoeJane Roe'
-Expected:
-(string) 'John Doe AND ALSO THE EDITOR Jane Roe'
-
-Failure → citeproc test test-suite nameattr_NamesDelimiterOnNamesInBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John DoeJane Roe</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe AND ALSO THE EDITOR Jane Roe</div>
-</div>'
-
-Failure → citeproc test test-suite nameattr_NamesDelimiterOnNamesInCitation.txt
-Passed in:
-(string) 'John DoeJane Roe'
-Expected:
-(string) 'John Doe AND ALSO THE EDITOR Jane Roe'
-
-Failure → citeproc test test-suite nameattr_NamesDelimiterOnStyleInBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John DoeJane Roe</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe AND ALSO THE EDITOR Jane Roe</div>
-</div>'
 
 Failure → citeproc test test-suite nameattr_NamesDelimiterOnStyleInCitation.txt
 Passed in:
@@ -2958,24 +2846,12 @@ Passed in:
 Expected:
 (string) 'Book D; Book A; Book B; Book C'
 
-Failure → citeproc test test-suite sort_TestInheritance.txt
-Passed in:
-(string) 'Alan Aalto; Brad Bottom'
-Expected:
-(string) 'Aalto; Bottom'
-
-Failure → citeproc test test-suite substitute_SubstituteOnlyOnceTermEmpty.txt
-Passed in:
-(string) 'Content: '
-Expected:
-(string) 'Content:'
-
 Failure → citeproc test test-suite substitute_SuppressOrdinaryVariable.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">. <i>The Title</i>. The Publisher.</div>
-  <div class="csl-entry">. <i>The Title</i>. The Publisher.</div>
-  <div class="csl-entry">. <i>The Title</i>. The Organization.</div>
+  <div class="csl-entry"><i>The Title</i>. The Publisher.</div>
+  <div class="csl-entry"><i>The Title</i>. The Publisher.</div>
+  <div class="csl-entry"><i>The Title</i>. The Organization.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">

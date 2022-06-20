@@ -21,7 +21,15 @@ local util = require("citeproc-util")
 
 
 local Names = Element:derive("names")
-local Name = Element:derive("name")
+local Name = Element:derive("name", {
+  delimiter = ", ",
+  delimiter_precedes_et_al = "contextual",
+  delimiter_precedes_last = "contextual",
+  et_al_use_last = false,
+  form = "long",
+  initialize = true,
+  sort_separator = ", ",
+})
 local NamePart = Element:derive("name-part")
 local EtAl = Element:derive("et-al")
 local Substitute = Element:derive("substitute")
@@ -30,14 +38,6 @@ local Substitute = Element:derive("substitute")
 -- [Name](https://docs.citationstyles.org/en/stable/specification.html#name)
 function Name:new()
   local o = Element.new(self, "name")
-
-  o.delimiter = ", "
-  o.delimiter_precedes_et_al = "contextual"
-  o.delimiter_precedes_last = "contextual"
-  o.et_al_use_last = false
-  o.form = "long"
-  o.initialize = true
-  o.sort_separator = ", "
 
   o.family = NamePart:new("family")
   o.given = NamePart:new("given")
@@ -730,8 +730,11 @@ end
 
 function Names:build_ir(engine, state, context)
   -- local names_inheritance = state.name_override.inherited_names_options(context.names_inheritance, self)
-  local names_inheritance = util.clone(self)
-  -- TODO: names_delimiter
+  local names_inheritance = Names:new()
+  names_inheritance.delimiter = context.name_inheritance.names_delimiter
+  for key, value in pairs(self) do
+    names_inheritance[key] = value
+  end
   names_inheritance.name = util.clone(context.name_inheritance)
   for key, value in pairs(self.name) do
     names_inheritance.name[key] = value
@@ -753,10 +756,17 @@ function Names:build_ir(engine, state, context)
   end
 
   local ir = SeqIr:new(irs, self)
-  -- ir = self:apply_delimiter(ir)
-  -- ir = self:apply_formatting(ir)
-  -- ir = self:apply_affixes(ir)
-  -- ir = self:apply_display(ir)
+  if #irs == 0 then
+    ir.group_var = "missing"
+    return
+  end
+
+  ir.group_var = "important"
+
+  ir.delimiter = names_inheritance.delimiter
+  ir.formatting = util.clone(names_inheritance.formatting)
+  ir.affixes = util.clone(names_inheritance.affixes)
+  ir.display = names_inheritance.display
   return ir
 end
 
