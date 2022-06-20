@@ -17,10 +17,10 @@ integration          1      13       0       0
 label                4      12       3       0
 locale              19       4       0       0
 locator              2       4       0       0
-magic               23      12       5       0
-name                50      50      11       0
+magic               24      11       5       0
+name                52      48      11       0
 nameattr            76      21       0       0
-nameorder            0       6       0       0
+nameorder            4       2       0       0
 namespaces           1       0       0       0
 number              12       7       1       0
 page                 9       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              362     308     184       0
+(all)              369     301     184       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -72,7 +72,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_ApostropheOnParticle.txt
 Passed in:
-(string) 'John Jones'
+(string) 'John d' Jones'
 Expected:
 (string) 'John d’Jones'
 
@@ -538,7 +538,7 @@ Expected:
 
 Failure → citeproc test test-suite decorations_AndTermUnaffectedByNameDecorations.txt
 Passed in:
-(string) 'John Doe III, and Jane Roe'
+(string) 'John Doe III, and Jane van Roe'
 Expected:
 (string) '<span style="font-variant:small-caps;">John</span> <span style="font-variant:small-caps;">Doe</span> III and <span style="font-variant:small-caps;">Jane</span> <span style="font-variant:small-caps;">van</span> <span style="font-variant:small-caps;">Roe</span>'
 
@@ -858,7 +858,7 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_PrimaryNameWithNonDroppingParticle.txt
 Passed in:
-(string) '(Santos, et al. 2016); (Santos, et al. 2020)'
+(string) '(dos Santos, et al. 2016); (Santos, et al. 2020)'
 Expected:
 (string) '(dos Santos et al. 2016; Santos et al. 2020)'
 
@@ -1284,12 +1284,6 @@ Passed in:
 Expected:
 (string) '(1965a,b)'
 
-Failure → citeproc test test-suite magic_NameParticle.txt
-Passed in:
-(string) 'Doe, John'
-Expected:
-(string) 'Doe, John von'
-
 Failure → citeproc test test-suite magic_NameSuffixNoComma.txt
 Passed in:
 (string) 'John, III Doe'
@@ -1444,7 +1438,7 @@ Expected:
 
 Failure → citeproc test test-suite name_FormattingOfParticles.txt
 Passed in:
-(string) 'Gerard Meer'
+(string) 'Gerard van der Meer'
 Expected:
 (string) 'Gerard van DER MEER'
 
@@ -1501,12 +1495,6 @@ Passed in:
 (string) '[CSL STYLE ERROR: reference with no printed form.]'
 Expected:
 (string) 'Aalto editor'
-
-Failure → citeproc test test-suite name_NonDroppingParticleDefault.txt
-Passed in:
-(string) 'Roe, Jane'
-Expected:
-(string) 'Roe, Jane van'
 
 Failure → citeproc test test-suite name_ParseNames.txt
 Passed in:
@@ -1566,7 +1554,7 @@ Expected:
 
 Failure → citeproc test test-suite name_ParticleFormatting.txt
 Passed in:
-(string) 'Doe, John'
+(string) 'Doe, John de la'
 Expected:
 (string) 'LA DOE, John de'
 
@@ -1804,12 +1792,6 @@ Passed in:
 Expected:
 (string) 'Albert Asthma et al. (eds.), Albert Asthma et al. (trans.)'
 
-Failure → citeproc test test-suite name_WesternArticularLowercase.txt
-Passed in:
-(string) 'Jacques Doe'
-Expected:
-(string) 'Jacques van Doe'
-
 Failure → citeproc test test-suite name_WesternPrimaryFontStyle.txt
 Passed in:
 (string) 'John Doe'
@@ -1830,19 +1812,19 @@ Expected:
 
 Failure → citeproc test test-suite name_namepartAffixes.txt
 Passed in:
-(string) 'Jean Fontaine III'
+(string) 'Jean de La Fontaine III'
 Expected:
 (string) '[Jean] (de La Fontaine III)'
 
 Failure → citeproc test test-suite name_namepartAffixesNameAsSortOrder.txt
 Passed in:
-(string) 'Fontaine Jean III'
+(string) 'Fontaine Jean de La III'
 Expected:
 (string) '(La Fontaine) [Jean de] III'
 
 Failure → citeproc test test-suite name_namepartAffixesNameAsSortOrderDemoteNonDroppingParticle.txt
 Passed in:
-(string) 'Fontaine Jean III'
+(string) 'Fontaine Jean de La III'
 Expected:
 (string) '(Fontaine) [Jean de La] III'
 
@@ -2016,35 +1998,11 @@ Passed in:
 Expected:
 (string) 'John Doe AND ALSO THE EDITOR Jane Roe'
 
-Failure → citeproc test test-suite nameorder_Long.txt
-Passed in:
-(string) 'Gérard Martinière III'
-Expected:
-(string) 'Gérard de la Martinière III'
-
-Failure → citeproc test test-suite nameorder_LongNameAsSortDemoteDisplayAndSort.txt
-Passed in:
-(string) 'Martinière, Gérard, III'
-Expected:
-(string) 'Martinière, Gérard de la, III'
-
 Failure → citeproc test test-suite nameorder_LongNameAsSortDemoteNever.txt
 Passed in:
-(string) 'Martinière, Gérard, III'
+(string) 'Martinière, Gérard de la, III'
 Expected:
 (string) 'la Martinière, Gérard de, III'
-
-Failure → citeproc test test-suite nameorder_Short.txt
-Passed in:
-(string) 'Martinière'
-Expected:
-(string) 'la Martinière'
-
-Failure → citeproc test test-suite nameorder_ShortDemoteDisplayAndSort.txt
-Passed in:
-(string) 'Martinière'
-Expected:
-(string) 'la Martinière'
 
 Failure → citeproc test test-suite nameorder_ShortNameAsSortDemoteNever.txt
 Passed in:
@@ -3167,7 +3125,7 @@ Error → citeproc test test-suite name_LiteralWithComma.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite name_OnlyGivenname.txt
-./citeproc/citeproc-node-names.lua:201: Invalid name
+./citeproc/citeproc-node-names.lua:215: Invalid name
 
 Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
