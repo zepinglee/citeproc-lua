@@ -18,7 +18,7 @@ label                4      12       3       0
 locale              19       4       0       0
 locator              2       4       0       0
 magic               24      11       5       0
-name                52      48      11       0
+name                53      48      10       0
 nameattr            76      21       0       0
 nameorder            4       2       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              369     301     184       0
+(all)              370     301     183       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -3123,9 +3123,6 @@ Error → citeproc test test-suite name_HyphenatedNonDroppingParticle2.txt
 
 Error → citeproc test test-suite name_LiteralWithComma.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite name_OnlyGivenname.txt
-./citeproc/citeproc-node-names.lua:215: Invalid name
 
 Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

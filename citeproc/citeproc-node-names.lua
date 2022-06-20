@@ -208,13 +208,20 @@ function Name:render_person_name(person_name, seen_one, context)
 end
 
 function Name:get_display_order(person_name, seen_one)
-  if not person_name.family then
+  if not person_name.family and not person_name.given then
     if person_name.literal then
       return {"literal"}
     else
       util.error("Invalid name")
     end
   end
+  if not person_name.family then
+    -- name_OnlyGivenname.txt
+    person_name.family = person_name.given
+    person_name.given = nil
+    return {"family"}
+  end
+
   local name_part_tokens = {"family"}
 
   if self.form == "short" then
