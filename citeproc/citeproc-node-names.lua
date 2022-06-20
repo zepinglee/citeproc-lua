@@ -436,22 +436,22 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
           table.insert(irs, Rendered:new(inlines, self))
         end
       else
-        -- if not self:_check_delimiter(delimiter_precedes_et_al, i, inverted) then
-        --   delimiter = " "
-        -- end
-        table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
+        if self:_check_delimiter(self.delimiter_precedes_et_al, i) then
+          table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
+        else
+          table.insert(irs, Rendered:new({PlainText:new(" ")}))
+        end
         table.insert(irs, et_al:build_ir(engine, state, context))
       end
       break
     end
     if i > 1 then
       if i == #names and self["and"] then
-        -- if self:_check_delimiter(delimiter_precedes_last, i, inverted) then
-        --   output = richtext.concat(output, delimiter)
-        -- else
-        --   output = output .. " "
-        -- end
-        table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
+        if self:_check_delimiter(self.delimiter_precedes_last, i) then
+          table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
+        else
+          table.insert(irs, Rendered:new({PlainText:new(" ")}))
+        end
         local and_term
         if self["and"] == "text" then
           and_term = context.locale:get_simple_term("and")
@@ -681,7 +681,7 @@ function Name:render (names, context)
   return ret
 end
 
-function Name:_check_delimiter (delimiter_attribute, index, inverted)
+function Name:_check_delimiter(delimiter_attribute, index, inverted)
   -- `delimiter-precedes-et-al` and `delimiter-precedes-last`
   if delimiter_attribute == "always" then
     return true
@@ -694,6 +694,7 @@ function Name:_check_delimiter (delimiter_attribute, index, inverted)
       return false
     end
   elseif delimiter_attribute == "after-inverted-name" then
+    inverted = self.name_as_sort_order == "all" or (self.name_as_sort_order == "first" and index == 2)
     if inverted then
       return true
     else
