@@ -2,8 +2,8 @@ category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                5       3       1       0
 bugreports          17      13      52       0
-collapse             0      20       1       0
-condition            5      12       0       0
+collapse             0      18       3       0
+condition            5      11       1       0
 date                81      14       6       0
 decorations          6       1       0       0
 disambiguate        10      43      18       0
@@ -13,18 +13,18 @@ flipflop             9       9       1       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
 group                1       3       3       0
-integration          4      10       0       0
-label               11       5       3       0
+integration          4       9       1       0
+label               10       6       3       0
 locale              20       3       0       0
-locator              1       5       0       0
+locator              2       4       0       0
 magic               24      11       5       0
 name                65      36      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
 number              12       7       1       0
-page                 9       0       0       0
-plural               0       7       0       0
+page                 5       4       0       0
+plural               1       6       0       0
 position             2      11       3       0
 punctuation          3      10       3       0
 quotes               2       0       2       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              432     241     181       0
+(all)              429     240     185       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -228,18 +228,6 @@ Passed in:
 Expected:
 (string) '<b>([1]–[3])</b>'
 
-Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGrouped.txt
-Passed in:
-(string) '<b>()</b>,<b>()</b>,<b>()</b>'
-Expected:
-(string) '<b>([1]–[3])</b>'
-
-Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGroupedLocator.txt
-Passed in:
-(string) '<b>()</b>,<b>([P. 23])</b>,<b>()</b>'
-Expected:
-(string) '<b>([1],[2, p. 23],[3])</b>'
-
 Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesNoCollapse.txt
 Passed in:
 (string) '<b>()</b>,<b>()</b>,<b>()</b>'
@@ -339,24 +327,6 @@ Passed in:
 (string) 'FALSE'
 Expected:
 (string) 'TRUE'
-
-Failure → citeproc test test-suite condition_RefTypeBranching.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Work 1, John Doe, 2000.</div>
-  <div class="csl-entry">Work 2, John Doe, 2000.</div>
-  <div class="csl-entry">Work 3, John Doe, 2000.</div>
-  <div class="csl-entry">Work 4, John Doe, 2000.</div>
-  <div class="csl-entry">Work 5, John Doe, 2000.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><i>Work 1</i> (John Doe), 2000.</div>
-  <div class="csl-entry">John Doe, 2000. Work 2.</div>
-  <div class="csl-entry">2000. Work 3, John Doe.</div>
-  <div class="csl-entry">Work 4 (2000), John Doe.</div>
-  <div class="csl-entry">Work 5, John Doe, 2000.</div>
-</div>'
 
 Failure → citeproc test test-suite condition_SingletonIfMatchNone.txt
 Passed in:
@@ -948,14 +918,6 @@ Passed in:
 Expected:
 (string) '(Doe; Noakes; Roe; Snoakes)'
 
-Failure → citeproc test test-suite integration_CitationSortTwice.txt
-Passed in:
-(string) '(Doe); (Roe)
-(Noakes); (Snoakes); (Doe); (Roe)'
-Expected:
-(string) '(Doe; Roe)
-(Doe; Noakes; Roe; Snoakes)'
-
 Failure → citeproc test test-suite integration_DeleteName.txt
 Passed in:
 (string) '>>[0] Doe.; Snoakes.'
@@ -1034,6 +996,14 @@ Passed in:
 Expected:
 (string) '>>[0] Smith (1986a); Smith (1986b); Smith (1986c); Smith (1986d)'
 
+Failure → citeproc test test-suite label_CollapsedPageNumberPluralDetection.txt
+Passed in:
+(string) 'His Anonymous Life, page 327-30-
+His Anonymous Life, pages 427–430'
+Expected:
+(string) 'His Anonymous Life, page 327-30
+His Anonymous Life, pages 427–430'
+
 Failure → citeproc test test-suite label_CompactNamesAfterFullNames.txt
 Passed in:
 (string) '[CSL STYLE ERROR: reference with no printed form.]'
@@ -1084,15 +1054,9 @@ Expected:
 
 Failure → citeproc test test-suite locator_SimpleLocators.txt
 Passed in:
-(string) 'Doe, Book A, 2000, pp. 100–103.; Roe, Book B, 2001, chaps. 200 - 201.'
+(string) 'Doe, Book A, 2000, pp. 100 - 103.; Roe, Book B, 2001, chaps. 200 - 201.'
 Expected:
 (string) 'Doe, Book A, 2000, pp. 100–103; Roe, Book B, 2001, chaps. 200–201.'
-
-Failure → citeproc test test-suite locator_SingularEmbeddedLabelAfterPlural.txt
-Passed in:
-(string) 'Book One, pages 367-368, fig. 333'
-Expected:
-(string) 'Book One, pages 367–368, fig. 333'
 
 Failure → citeproc test test-suite locator_TrickyEntryForPlurals.txt
 Passed in:
@@ -1630,7 +1594,7 @@ Expected:
 
 Failure → citeproc test test-suite number_PlainHyphenOrEnDashAlwaysPlural.txt
 Passed in:
-(string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) pages i–ix (cs:text) vs His Anonymous Life (2) pages i–ix (cs:number); His Anonymous Life (3) page 3-B (cs:text) vs His Anonymous Life (3) page 3-B (cs:number); His Anonymous Life (4) pages Michaelson–Morely (cs:text) vs His Anonymous Life (4) pages Michaelson–Morely (cs:number); His Anonymous Life (4) pages Michaelson–Morely (cs:text) vs His Anonymous Life (4) pages Michaelson–Morely (cs:number)'
+(string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) pages i-ix (cs:text) vs His Anonymous Life (2) pages i-ix (cs:number); His Anonymous Life (3) page 3-B- (cs:text) vs His Anonymous Life (3) page 3-B- (cs:number); His Anonymous Life (4) pages Michaelson-Morely (cs:text) vs His Anonymous Life (4) pages Michaelson-Morely (cs:number); His Anonymous Life (4) pages Michaelson-Morely (cs:text) vs His Anonymous Life (4) pages Michaelson-Morely (cs:number)'
 Expected:
 (string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) pages i–ix (cs:text) vs His Anonymous Life (2) pages i–ix (cs:number); His Anonymous Life (3) page 3-B (cs:text) vs His Anonymous Life (3) page 3-B (cs:number); His Anonymous Life (4) page Michaelson-Morely (cs:text) vs His Anonymous Life (4) page Michaelson-Morely (cs:number)'
 
@@ -1646,11 +1610,85 @@ Passed in:
 Expected:
 (string) 'With One, 1.<sup>a</sup> edition, 1.<sup>o</sup> issue; With Two, 2.<sup>a</sup> edition, 2.<sup>o</sup><sup>o</sup> issue; With Three, 3.<sup>a</sup> edition, 3.<sup>a</sup> issue'
 
-Failure → citeproc test test-suite plural_LabelForced.txt
+Failure → citeproc test test-suite page_ChicagoWeird.txt
 Passed in:
-(string) 'p. 32-34'
+(string) 'Example S, at 8n11564-8n1568
+Example T, at n11564–68
+Example U, at n11564-1568'
 Expected:
-(string) 'p. 32–34'
+(string) 'Example S, at 8n11564–68
+Example T, at n11564–68
+Example U, at n11564-1568'
+
+Failure → citeproc test test-suite page_Expand.txt
+Passed in:
+(string) 'Example: minimal, at 110–115
+Example: prefix on first number only, at N110 - 5
+Example: same prefix on both numbers, at N110 - N5
+Example: prefix on last number only, at 110 - N6
+Example: different prefixes on both numbers, at N110 - P5
+Example: leading number before prefix, at 123N110 - N5
+Example: multiple ranges, at 123N110 - N5, 456K200 - 99
+Example: first less than second, at 123N110 - N5, 000c23 - 22'
+Expected:
+(string) 'Example: minimal, at 110–115
+Example: prefix on first number only, at N110-5
+Example: same prefix on both numbers, at N110–N115
+Example: prefix on last number only, at 110-N6
+Example: different prefixes on both numbers, at N110-P5
+Example: leading number before prefix, at 123N110-N5
+Example: multiple ranges, at 123N110-N5, 456K200-99
+Example: first less than second, at 123N110-N5, 000c23-22'
+
+Failure → citeproc test test-suite page_ExpandWeirdComposite.txt
+Passed in:
+(string) 'Example: weird composite, at 123N110 - N5, 456K200 - 99'
+Expected:
+(string) 'Example: weird composite, at 123N110-N5, 456K200-99'
+
+Failure → citeproc test test-suite page_Minimal.txt
+Passed in:
+(string) 'Example A, at 101–8
+Example B, at 3–10
+Example C, at 71–2
+Example D, at 96–117
+Example E, at 100–4
+Example F, at 600–13
+Example G, at 1100–23
+Example H, at 107–8
+Example I, at 505–17
+Example J, at 1002–6
+Example K, at 321–5
+Example L, at 415–532
+Example M, at 1536–8
+Example N, at 11564–8
+Example O, at 11564–78
+Example P, at 13792–803
+Example Q, at 1496–504
+Example R, at 2787–816
+Example S, at n11564 - n1568
+Example T, at n11564 - 1568'
+Expected:
+(string) 'Example A, at 101–8
+Example B, at 3–10
+Example C, at 71–2
+Example D, at 96–117
+Example E, at 100–4
+Example F, at 600–13
+Example G, at 1100–23
+Example H, at 107–8
+Example I, at 505–17
+Example J, at 1002–6
+Example K, at 321–5
+Example L, at 415–532
+Example M, at 1536–8
+Example N, at 11564–8
+Example O, at 11564–78
+Example P, at 13792–803
+Example Q, at 1496–504
+Example R, at 2787–816
+Example S, at n11564–8
+Example T, at n11564-1568'
 
 Failure → citeproc test test-suite plural_NameLabelAlways.txt
 Passed in:
@@ -2419,7 +2457,7 @@ Error → citeproc test test-suite bugreports_DuplicateSpaces2.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite bugreports_DuplicateSpaces3.txt
-./citeproc/citeproc-node-choose.lua:183: attempt to index a nil value (field 'cite')
+./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
 
 Error → citeproc test test-suite bugreports_DuplicateTerminalPunctuationInBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2525,6 +2563,15 @@ Error → citeproc test test-suite bugreports_undefinedCrash.txt
 
 Error → citeproc test test-suite collapse_ChicagoAfterCollapse.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
+
+Error → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGrouped.txt
+./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
+
+Error → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGroupedLocator.txt
+./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
+
+Error → citeproc test test-suite condition_RefTypeBranching.txt
+./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
 
 Error → citeproc test test-suite date_AccessedCrash.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2645,6 +2692,9 @@ Error → citeproc test test-suite group_LegalWithAuthorDate.txt
 
 Error → citeproc test test-suite group_SuppressWithEmptyNestedDateNode.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
+
+Error → citeproc test test-suite integration_CitationSortTwice.txt
+./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
 
 Error → citeproc test test-suite label_EditorTranslator1.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2854,7 +2904,7 @@ Error → citeproc test test-suite sort_Quotes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_RangeUnaffected.txt
-./citeproc/citeproc-output.lua:815: attempt to index a nil value (local 'inline')
+./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
 
 Error → citeproc test test-suite sort_SeparateAuthorsAndOthers.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

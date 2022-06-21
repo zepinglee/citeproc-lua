@@ -208,13 +208,13 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
     if item_data then
       -- Create a wrapper of the orignal item from registry so that
       -- it may hold different `locator` or `position` values for cites.
-      local item = setmetatable({}, {__index = function (_, key)
-        if cite_item[key] then
-          return cite_item[key]
-        else
-          return item_data[key]
-        end
-      end})
+      local item = setmetatable(cite_item, {__index = item_data})
+
+      -- Use "page" as locator label if missing
+      -- label_PluralWithAmpersand.txt
+      if item.locator and not item.label then
+        item.label = "page"
+      end
 
       if not item.position and position_first then
         item.position = util.position_map["first"]
@@ -317,13 +317,13 @@ function CiteProc:makeCitationCluster (citation_items)
 
     -- Create a wrapper of the orignal item from registry so that
     -- it may hold different `locator` or `position` values for cites.
-    local item = setmetatable({}, {__index = function (_, key)
-      if cite_item[key] then
-        return cite_item[key]
-      else
-        return item_data[key]
-      end
-    end})
+    local item = setmetatable(cite_item, {__index = item_data})
+
+    -- Use "page" as locator label if missing
+    -- label_PluralWithAmpersand.txt
+    if item.locator and not item.label then
+      item.label = "page"
+    end
 
     if not item.position and position_first then
       item.position = util.position_map["first"]

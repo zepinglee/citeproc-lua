@@ -255,7 +255,7 @@ function util.is_numeric (str)
   end
   local res = true
   for w in string.gmatch(str, "%w+") do
-    if string.match(w, "^[a-zA-Z]*%d+[a-zA-Z]*$") == nil then
+    if string.match(w, "^%a*%d+%a*$") == nil then
       res = false
       break
     end

@@ -686,22 +686,34 @@ function Element:format_number(number, variable, form, context)
 end
 
 function Element:split_number_parts(number)
-  number = string.gsub(number, util.unicode["en dash"], "-")
+  -- number = string.gsub(number, util.unicode["en dash"], "-")
   local number_part_list = {}
-  for start, stop, spaces, delim in string.gmatch(number, "([^-,&%s]+)%s*%-?%s*([^-,&%s]*)(%s*)([,&]?)") do
-    if delim == "" then
-      delim = spaces
-    elseif delim == "," then
+  for _, tuple in ipairs(util.split(number, "%s*[,&]%s*", nil, true)) do
+    local single_number, delim = table.unpack(tuple)
+    delim = util.strip(delim)
+    if delim == "," then
       delim = ", "
     elseif delim == "&" then
       delim = " & "
     end
-    if util.endswith(start, "\\") then
-      start = string.sub(start, 1, -2)
-      start = start .. "-" .. stop
-      stop = ""
+    local start = single_number
+    local stop = ""
+    local splits = util.split(start, "%-")
+    if #splits == 2 then
+      start, stop = table.unpack(splits)
+      if util.endswith(start, "\\") then
+        start = string.sub(start, 1, -2)
+        start = start .. "-" .. stop
+        stop = ""
+      end
+      if string.match(start, "^%a*%d+%a*$") and string.match(stop, "^%a*%d+%a*$") then
+        table.insert(number_part_list, {start, stop, delim})
+      else
+        table.insert(number_part_list, {start .. "-" .. stop, "", delim})
+      end
+    else
+      table.insert(number_part_list, {start, stop, delim})
     end
-    table.insert(number_part_list, {start, stop, delim})
   end
   return number_part_list
 end
