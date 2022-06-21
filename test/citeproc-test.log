@@ -5,7 +5,7 @@ bugreports          17      13      52       0
 collapse             0      20       1       0
 condition            5      12       0       0
 date                81      14       6       0
-decorations          5       2       0       0
+decorations          6       1       0       0
 disambiguate        10      43      18       0
 display              0       0       5       0
 etal                 0       2       2       0
@@ -18,7 +18,7 @@ label                4      12       3       0
 locale              19       4       0       0
 locator              2       4       0       0
 magic               24      11       5       0
-name                55      46      10       0
+name                62      39      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -33,12 +33,12 @@ sort                 5      11      50       0
 sortseparator        1       0       0       0
 substitute           2       1       4       0
 testers              0       0       2       0
-textcase            24       5       1       0
+textcase            25       4       1       0
 unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              412     261     181       0
+(all)              421     252     181       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -485,12 +485,6 @@ Passed in:
 (string) '(John Doe n.d. [Accessed:  June 1, 1965]); (John Doe n.d. [Accessed:  June 1, 2065])'
 Expected:
 (string) '(John Doe n.d.-a [Accessed: June 1, 1965]; John Doe n.d.-b [Accessed: June 1, 2065])'
-
-Failure → citeproc test test-suite decorations_AndTermUnaffectedByNameDecorations.txt
-Passed in:
-(string) 'John Doe III and Jane van Roe'
-Expected:
-(string) '<span style="font-variant:small-caps;">John</span> <span style="font-variant:small-caps;">Doe</span> III and <span style="font-variant:small-caps;">Jane</span> <span style="font-variant:small-caps;">van</span> <span style="font-variant:small-caps;">Roe</span>'
 
 Failure → citeproc test test-suite decorations_NoNormalWithoutDecoration.txt
 Passed in:
@@ -1270,8 +1264,8 @@ Expected:
 
 Failure → citeproc test test-suite name_AfterInvertedName.txt
 Passed in:
-(string) 'Doebuck, Jonathan, et al.; Doe, John, et al.; Doe, John, et al.
-Appleby, Aloysius, and Bobby Brown; Appleby, Aloysius, et al.; Appleby, Aloysius, et al.'
+(string) 'DOEBUCK, Jonathan, et al.; DOE, John, et al.; DOE, John, et al.
+APPLEBY, Aloysius, and Bobby BROWN; APPLEBY, Aloysius, et al.; APPLEBY, Aloysius, et al.'
 Expected:
 (string) 'DOEBUCK, Jonathan, et al.; DOE, John, Jane ROE et al.; DOE, John, Janice ROEBUCK et al.
 APPLEBY, Aloysius, and Bobby BROWN; APPLEBY, Aloysius, Bobby BROWN and Cecile CREAM; APPLEBY, Aloysius, Bobby BROWN and Enola EVERGREEN'
@@ -1334,12 +1328,6 @@ Expected:
   <div class="csl-entry">John Anderson, John Brown, John Catharsis, John Doldrums, John Evergreen, John Fugedaboutit, … John Houynym</div>
 </div>'
 
-Failure → citeproc test test-suite name_FormattingOfParticles.txt
-Passed in:
-(string) 'Gerard van der Meer'
-Expected:
-(string) 'Gerard van DER MEER'
-
 Failure → citeproc test test-suite name_HebrewAnd.txt
 Passed in:
 (string) 'תפוח ו  תפוז'
@@ -1396,39 +1384,21 @@ Expected:
 
 Failure → citeproc test test-suite name_ParsedCommaDelimitedDroppingParticleSortOrderingWithoutAffixes.txt
 Passed in:
-(string) 'Aubignac, François Hédelin, abbé d''
+(string) 'AUBIGNAC, François Hédelin, abbé d''
 Expected:
 (string) 'AUBIGNAC, François Hédelin, abbé d’'
 
-Failure → citeproc test test-suite name_ParsedDroppingParticleWithAffixes.txt
-Passed in:
-(string) 'La Fontaine Jean de'
-Expected:
-(string) '<span style="font-variant:small-caps;">La Fontaine</span> (Jean de)'
-
 Failure → citeproc test test-suite name_ParsedDroppingParticleWithApostrophe.txt
 Passed in:
-(string) 'François Hédelin d' Aubignac'
+(string) 'François Hédelin d' (Aubignac)'
 Expected:
 (string) 'François Hédelin (d’Aubignac)'
 
-Failure → citeproc test test-suite name_ParsedNonDroppingParticleWithAffixes.txt
-Passed in:
-(string) 'La Fontaine Jean de'
-Expected:
-(string) '(<span style="font-variant:small-caps;">La Fontaine</span>) Jean de'
-
 Failure → citeproc test test-suite name_ParsedNonDroppingParticleWithApostrophe.txt
 Passed in:
-(string) 'd’Aubignac François Hédelin'
+(string) '<span style="font-variant:small-caps;">d’Aubignac</span> (François Hédelin)'
 Expected:
 (string) '<span style="font-variant:small-caps;">Aubignac</span> (François Hédelin <span style="font-variant:small-caps;">d’</span>)'
-
-Failure → citeproc test test-suite name_ParsedUpperCaseNonDroppingParticle.txt
-Passed in:
-(string) 'La Fontaine Jean de'
-Expected:
-(string) '<span style="font-variant:small-caps;">La Fontaine</span> (Jean de)'
 
 Failure → citeproc test test-suite name_ParticleCaps3.txt
 Passed in:
@@ -1444,75 +1414,69 @@ Expected:
   <div class="csl-entry">Dick Van Dyke</div>
 </div>'
 
-Failure → citeproc test test-suite name_ParticleFormatting.txt
-Passed in:
-(string) 'la Doe, John de'
-Expected:
-(string) 'LA DOE, John de'
-
 Failure → citeproc test test-suite name_ParticlesDemoteNonDroppingNever.txt
 Passed in:
-(string) 'Familyname, Givenname al
-Familyname, Givenname dos
-Familyname, Givenname el
-Las Familyname, Givenname de
-Familyname, Givenname lo
-Familyname, Givenname les
-Familyname, Givenname il
-del Familyname, Givenname
-Familyname, Givenname dela
-Familyname, Givenname della
-Familyname, Givenname dello
-Di Familyname, Givenname
-Da Familyname, Givenname
-Do Familyname, Givenname
-Des Familyname, Givenname
-Lou Familyname, Givenname
-Pietro Familyname, Givenname
-de Familyname, Givenname
-La Familyname, Givenname de
-Familyname, Givenname du
-Familyname, Givenname d'
-Le Familyname, Givenname
-La Familyname, Givenname
-L’Familyname, Givenname
-Saint Familyname, Givenname
-Sainte Familyname, Givenname
-St. Familyname, Givenname
-Ste. Familyname, Givenname
-van Familyname, Givenname
-van de Familyname, Givenname
-van der Familyname, Givenname
-van den Familyname, Givenname
-vander Familyname, Givenname
-v.d. Familyname, Givenname
-vd Familyname, Givenname
-van het Familyname, Givenname
-ver Familyname, Givenname
-ten Familyname, Givenname
-ter Familyname, Givenname
-te Familyname, Givenname
-Familyname, Givenname op de
-in de Familyname, Givenname
-in 't Familyname, Givenname
-'t Familyname, Givenname
-in het Familyname, Givenname
-uit de Familyname, Givenname
-uit den Familyname, Givenname
-Familyname, Givenname von
-Familyname, Givenname von der
-Familyname, Givenname von dem
-Familyname, Givenname von zu
-v. Familyname, Givenname
-v Familyname, Givenname
-Familyname, Givenname vom
-Familyname, Givenname das
-Familyname, Givenname zum
-Familyname, Givenname zur
-Familyname, Givenname den
-Familyname, Givenname der
-Familyname, Givenname des
-Familyname, Givenname auf den'
+(string) '<b>Familyname</b>, <i>Givenname al</i>
+<b>Familyname</b>, <i>Givenname dos</i>
+<b>Familyname</b>, <i>Givenname el</i>
+<b>Las Familyname</b>, <i>Givenname de</i>
+<b>Familyname</b>, <i>Givenname lo</i>
+<b>Familyname</b>, <i>Givenname les</i>
+<b>Familyname</b>, <i>Givenname il</i>
+<b>del Familyname</b>, <i>Givenname</i>
+<b>Familyname</b>, <i>Givenname dela</i>
+<b>Familyname</b>, <i>Givenname della</i>
+<b>Familyname</b>, <i>Givenname dello</i>
+<b>Di Familyname</b>, <i>Givenname</i>
+<b>Da Familyname</b>, <i>Givenname</i>
+<b>Do Familyname</b>, <i>Givenname</i>
+<b>Des Familyname</b>, <i>Givenname</i>
+<b>Lou Familyname</b>, <i>Givenname</i>
+<b>Pietro Familyname</b>, <i>Givenname</i>
+<b>de Familyname</b>, <i>Givenname</i>
+<b>La Familyname</b>, <i>Givenname de</i>
+<b>Familyname</b>, <i>Givenname du</i>
+<b>Familyname</b>, <i>Givenname d'</i>
+<b>Le Familyname</b>, <i>Givenname</i>
+<b>La Familyname</b>, <i>Givenname</i>
+<b>L’Familyname</b>, <i>Givenname</i>
+<b>Saint Familyname</b>, <i>Givenname</i>
+<b>Sainte Familyname</b>, <i>Givenname</i>
+<b>St. Familyname</b>, <i>Givenname</i>
+<b>Ste. Familyname</b>, <i>Givenname</i>
+<b>van Familyname</b>, <i>Givenname</i>
+<b>van de Familyname</b>, <i>Givenname</i>
+<b>van der Familyname</b>, <i>Givenname</i>
+<b>van den Familyname</b>, <i>Givenname</i>
+<b>vander Familyname</b>, <i>Givenname</i>
+<b>v.d. Familyname</b>, <i>Givenname</i>
+<b>vd Familyname</b>, <i>Givenname</i>
+<b>van het Familyname</b>, <i>Givenname</i>
+<b>ver Familyname</b>, <i>Givenname</i>
+<b>ten Familyname</b>, <i>Givenname</i>
+<b>ter Familyname</b>, <i>Givenname</i>
+<b>te Familyname</b>, <i>Givenname</i>
+<b>Familyname</b>, <i>Givenname op de</i>
+<b>in de Familyname</b>, <i>Givenname</i>
+<b>in 't Familyname</b>, <i>Givenname</i>
+<b>'t Familyname</b>, <i>Givenname</i>
+<b>in het Familyname</b>, <i>Givenname</i>
+<b>uit de Familyname</b>, <i>Givenname</i>
+<b>uit den Familyname</b>, <i>Givenname</i>
+<b>Familyname</b>, <i>Givenname von</i>
+<b>Familyname</b>, <i>Givenname von der</i>
+<b>Familyname</b>, <i>Givenname von dem</i>
+<b>Familyname</b>, <i>Givenname von zu</i>
+<b>v. Familyname</b>, <i>Givenname</i>
+<b>v Familyname</b>, <i>Givenname</i>
+<b>Familyname</b>, <i>Givenname vom</i>
+<b>Familyname</b>, <i>Givenname das</i>
+<b>Familyname</b>, <i>Givenname zum</i>
+<b>Familyname</b>, <i>Givenname zur</i>
+<b>Familyname</b>, <i>Givenname den</i>
+<b>Familyname</b>, <i>Givenname der</i>
+<b>Familyname</b>, <i>Givenname des</i>
+<b>Familyname</b>, <i>Givenname auf den</i>'
 Expected:
 (string) '<b>Familyname</b>, <i>Givenname</i> <i>al</i>
 <b>Familyname</b>, <i>Givenname</i> <i>dos</i>
@@ -1678,39 +1642,27 @@ Passed in:
 Expected:
 (string) 'Albert Asthma et al. (eds.), Albert Asthma et al. (trans.)'
 
-Failure → citeproc test test-suite name_WesternPrimaryFontStyle.txt
-Passed in:
-(string) 'John Doe'
-Expected:
-(string) 'John <i>Doe</i>'
-
-Failure → citeproc test test-suite name_WesternPrimaryFontStyleTwoAuthors.txt
-Passed in:
-(string) 'John Doe; Jane Roe'
-Expected:
-(string) 'John <b>Doe</b>; Jane <b>Roe</b>'
-
 Failure → citeproc test test-suite name_WithNonBreakingSpace.txt
 Passed in:
-(string) 'John Doe'
+(string) 'John  Doe'
 Expected:
 (string) 'John Doe'
 
 Failure → citeproc test test-suite name_namepartAffixes.txt
 Passed in:
-(string) 'Jean de La Fontaine III'
+(string) '[Jean] [de] (La) (Fontaine) III'
 Expected:
 (string) '[Jean] (de La Fontaine III)'
 
 Failure → citeproc test test-suite name_namepartAffixesNameAsSortOrder.txt
 Passed in:
-(string) 'Fontaine Jean de La III'
+(string) '(Fontaine) [Jean] [de] [La] III'
 Expected:
 (string) '(La Fontaine) [Jean de] III'
 
 Failure → citeproc test test-suite name_namepartAffixesNameAsSortOrderDemoteNonDroppingParticle.txt
 Passed in:
-(string) 'Fontaine Jean de La III'
+(string) '(Fontaine) [Jean] [de] [La] III'
 Expected:
 (string) '(Fontaine) [Jean de La] III'
 
@@ -2470,12 +2422,6 @@ Passed in:
 Expected:
 (string) 'John von Doe: An about up Life; John van Doe? A Life; John d’Doe! A Life; John de Doe a Life'
 
-Failure → citeproc test test-suite textcase_Uppercase.txt
-Passed in:
-(string) 'Smith, John: THIS IS A PEN THAT IS A Smith PENCIL'
-Expected:
-(string) 'SMITH, John: THIS IS A PEN THAT IS A Smith PENCIL'
-
 Failure → citeproc test test-suite variables_TitleShortOnShortTitleNoTitleCondition.txt
 Passed in:
 (string) 'My Long Title 1 does not have title-short
@@ -2763,7 +2709,7 @@ Error → citeproc test test-suite group_ComplexNesting.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite group_LegalWithAuthorDate.txt
-./citeproc/citeproc-util.lua:235: bad argument #1 to 'gmatch' (string expected, got table)
+./citeproc/citeproc-util.lua:257: bad argument #1 to 'gmatch' (string expected, got table)
 
 Error → citeproc test test-suite group_SuppressWithEmptyNestedDateNode.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2778,7 +2724,7 @@ Error → citeproc test test-suite label_NameLabelThroughSubstitute.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite magic_AllowRepeatDateRenderings.txt
-./citeproc/citeproc-util.lua:235: bad argument #1 to 'gmatch' (string expected, got table)
+./citeproc/citeproc-util.lua:257: bad argument #1 to 'gmatch' (string expected, got table)
 
 Error → citeproc test test-suite magic_CitationLabelInBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2832,7 +2778,7 @@ Error → citeproc test test-suite position_IbidWithSuffix.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite position_NearNoteWithPlugin.txt
-./citeproc/citeproc-util.lua:235: bad argument #1 to 'gmatch' (string expected, got table)
+./citeproc/citeproc-util.lua:257: bad argument #1 to 'gmatch' (string expected, got table)
 
 Error → citeproc test test-suite punctuation_DefaultYearSuffixDelimiter.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

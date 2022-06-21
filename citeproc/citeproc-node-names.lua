@@ -505,36 +505,41 @@ function Name:render_person_name(person_name, seen_one, context)
   for i, name_part_token in ipairs(name_part_tokens) do
     if name_part_token == "family" then
       local text = person_name.family
+      local family_inlines = self.family:render_text_inlines(text, context)
       if person_name["non-dropping-particle"] and is_romanesque and not (is_reversed and demote_ndp) then
-        text = person_name["non-dropping-particle"] .. " " .. text
+        local ndp_inlines = self.family:render_text_inlines(person_name["non-dropping-particle"], context)
+        table.insert(ndp_inlines, PlainText:new(" "))
+        family_inlines = util.extend(ndp_inlines, family_inlines)
       end
-      for _, inline in ipairs(InlineElement:parse(text)) do
-        table.insert(inlines, inline)
-      end
+      util.extend(inlines, family_inlines)
+
     elseif name_part_token == "given" then
       local text = person_name.given
       if self.initialize_with then
         text = self:initialize_name(text, self.initialize_with, context.style.initialize_with_hyphen)
       end
+      local given_inlines = self.given:render_text_inlines(text, context)
       if person_name["dropping-particle"] then
-        text = text .. " " .. person_name["dropping-particle"]
+        local dp_inlines = self.given:render_text_inlines(person_name["dropping-particle"], context)
+        table.insert(given_inlines, PlainText:new(" "))
+        util.extend(given_inlines, dp_inlines)
       end
       if person_name["non-dropping-particle"] and is_romanesque and (is_reversed and demote_ndp) then
-        text = text .. " " .. person_name["non-dropping-particle"]
+        local ndp_inlines = self.given:render_text_inlines(person_name["non-dropping-particle"], context)
+        table.insert(given_inlines, PlainText:new(" "))
+        util.extend(given_inlines, ndp_inlines)
       end
-      for _, inline in ipairs(InlineElement:parse(text)) do
-        table.insert(inlines, inline)
-      end
+      util.extend(inlines, given_inlines)
+
     elseif name_part_token == "suffix" then
-      for _, inline in ipairs(InlineElement:parse(person_name.suffix)) do
-        table.insert(inlines, inline)
-      end
+      util.extend(inlines, InlineElement:parse(person_name.suffix))
+
     elseif name_part_token == "literal" then
-      for _, inline in ipairs(InlineElement:parse(person_name.literal)) do
-        table.insert(inlines, inline)
-      end
+      util.extend(inlines, InlineElement:parse(person_name.literal))
+
     elseif name_part_token == "space" then
       table.insert(inlines, PlainText:new(" "))
+
     elseif name_part_token == "sort-separator" then
       table.insert(inlines, PlainText:new(self.sort_separator))
     end
@@ -984,8 +989,9 @@ end
 function NamePart:from_node(node)
   local o = NamePart:new()
   o:set_attribute(node, "name")
-  o:set_affixes_attributes(node)
+  o:set_formatting_attributes(node)
   o:set_text_case_attribute(node)
+  o:set_affixes_attributes(node)
   return o
 end
 

@@ -195,6 +195,28 @@ function util.concat (list, sep)
   return res
 end
 
+-- Python list.extend()
+function util.extend(first, second)
+  local l = #first
+  for i, element in ipairs(second) do
+    first[l + i] = element
+  end
+  return first
+end
+
+-- Concat two lists in place
+function util.concat_list(first, second)
+  local res
+  for i, element in ipairs(first) do
+    res[i] = element
+  end
+  local i = #res
+  for j, element in ipairs(second) do
+    res[i + j] = element
+  end
+  return res
+end
+
 function util.lstrip (str)
   if not str then
     return nil
