@@ -510,6 +510,8 @@ function Name:render_person_name(person_name, seen_one, context)
   local demote_ndp = context.style.demote_non_dropping_particle == "display-and-sort" or
     (context.style.demote_non_dropping_particle == "sort-only" and true)
 
+  self:parse_name_particle(person_name)
+
   local name_part_tokens = self:get_display_order(person_name, seen_one)
   local inlines = {}
   for i, name_part_token in ipairs(name_part_tokens) do
@@ -536,6 +538,24 @@ function Name:render_person_name(person_name, seen_one, context)
   end
   -- util.debug(inlines)
   return inlines
+end
+
+function Name:parse_name_particle(person_name)
+  -- name_ParsedDroppingParticleWithApostrophe.txt
+  -- "François Hédelin d'" => "François Hédelin"
+  if person_name["non-dropping-particle"] or not person_name.given or person_name.given == "" then
+    return
+  end
+  local words = util.split(person_name.given)
+  if #words < 2 then
+    return
+  end
+  local last_word = words[#words]
+  if util.endswith(last_word, "'") or util.endswith(last_word, util.unicode["apostrophe"]) then
+    person_name["non-dropping-particle"] = last_word
+    local given = table.concat(util.slice(words, 1, -2), " ")
+    person_name.given = given
+  end
 end
 
 function Name:get_display_order(person_name, seen_one)
@@ -591,12 +611,16 @@ end
 
 function Name:render_family(person_name, is_romanesque, is_reversed, demote_ndp, context)
   local text = person_name.family
-  local family_inlines = self.family:render_text_inlines(text, context)
+  local family_inlines = self.family:format_text_case(text, context)
   if person_name["non-dropping-particle"] and is_romanesque and not (is_reversed and demote_ndp) then
-    local ndp_inlines = self.family:render_text_inlines(person_name["non-dropping-particle"], context)
-    table.insert(ndp_inlines, PlainText:new(" "))
+    local ndp_inlines = self.family:format_text_case(person_name["non-dropping-particle"], context)
+    local ndp = person_name["non-dropping-particle"]
+    if not util.endswith(ndp, "'") and not util.endswith(ndp, util.unicode["apostrophe"]) then
+      table.insert(ndp_inlines, PlainText:new(" "))
+    end
     family_inlines = util.extend(ndp_inlines, family_inlines)
   end
+  family_inlines = self.family:affixed(family_inlines)
   return family_inlines
 end
 
@@ -605,17 +629,18 @@ function Name:render_given(person_name, is_romanesque, is_reversed, demote_ndp, 
   if self.initialize_with then
     text = self:initialize_name(text, self.initialize_with, context.style.initialize_with_hyphen)
   end
-  local given_inlines = self.given:render_text_inlines(text, context)
+  local given_inlines = self.given:format_text_case(text, context)
   if person_name["dropping-particle"] then
-    local dp_inlines = self.given:render_text_inlines(person_name["dropping-particle"], context)
+    local dp_inlines = self.given:format_text_case(person_name["dropping-particle"], context)
     table.insert(given_inlines, PlainText:new(" "))
     util.extend(given_inlines, dp_inlines)
   end
   if person_name["non-dropping-particle"] and is_romanesque and (is_reversed and demote_ndp) then
-    local ndp_inlines = self.given:render_text_inlines(person_name["non-dropping-particle"], context)
+    local ndp_inlines = self.given:format_text_case(person_name["non-dropping-particle"], context)
     table.insert(given_inlines, PlainText:new(" "))
     util.extend(given_inlines, ndp_inlines)
   end
+  given_inlines = self.given:affixed(given_inlines)
   return given_inlines
 end
 
@@ -1015,17 +1040,26 @@ function NamePart:from_node(node)
   return o
 end
 
-function NamePart:format_name_part(name_part, context)
-  context = self:process_context(context)
-  local res = self:_apply_case(name_part, context)
-  res = self:_apply_format(res, context)
-  return res
+function NamePart:format_text_case(text, context)
+  local output_format = context.format
+  local inlines = InlineElement:parse(text, context)
+  local is_english = context:is_english()
+  output_format:apply_text_case(inlines, self.text_case, is_english)
+
+  inlines = output_format:with_format(inlines, self.formatting)
+  return inlines
 end
 
-function NamePart:wrap_name_part(name_part, context)
-  context = self:process_context(context)
-  local res = self:_apply_affixes(name_part, context)
-  return res
+function NamePart:affixed(inlines)
+  if self.affixes then
+    if self.affixes.prefix then
+      table.insert(inlines, 1, PlainText:new(self.affixes.prefix))
+    end
+    if self.affixes.suffix then
+      table.insert(inlines, PlainText:new(self.affixes.suffix))
+    end
+  end
+  return inlines
 end
 
 

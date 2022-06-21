@@ -18,7 +18,7 @@ label               11       5       3       0
 locale              21       2       0       0
 locator              2       4       0       0
 magic               26       9       5       0
-name                69      32      10       0
+name                70      31      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              442     227     185       0
+(all)              443     226     185       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -1230,11 +1230,11 @@ Passed in:
 Expected:
 (string) 'van Gogh, Vincent; Humboldt, Alexander von; van der Vlist, Eric'
 
-Failure → citeproc test test-suite name_ParsedDroppingParticleWithApostrophe.txt
+Failure → citeproc test test-suite name_ParsedCommaDelimitedDroppingParticleSortOrderingWithoutAffixes.txt
 Passed in:
-(string) 'François Hédelin d’ (Aubignac)'
+(string) 'D’AUBIGNAC, François Hédelin, abbé'
 Expected:
-(string) 'François Hédelin (d’Aubignac)'
+(string) 'AUBIGNAC, François Hédelin, abbé d’'
 
 Failure → citeproc test test-suite name_ParsedNonDroppingParticleWithApostrophe.txt
 Passed in:
@@ -1278,7 +1278,7 @@ Passed in:
 <b>de Familyname</b>, <i>Givenname</i>
 <b>La Familyname</b>, <i>Givenname de</i>
 <b>Familyname</b>, <i>Givenname du</i>
-<b>Familyname</b>, <i>Givenname d’</i>
+<b>d’</b><b>Familyname</b>, <i>Givenname</i>
 <b>Le Familyname</b>, <i>Givenname</i>
 <b>La Familyname</b>, <i>Givenname</i>
 <b>L’Familyname</b>, <i>Givenname</i>
@@ -1486,21 +1486,15 @@ Expected:
 
 Failure → citeproc test test-suite name_namepartAffixes.txt
 Passed in:
-(string) '[Jean] [de] (La) (Fontaine) III'
+(string) '[Jean de] (La Fontaine) III'
 Expected:
 (string) '[Jean] (de La Fontaine III)'
 
 Failure → citeproc test test-suite name_namepartAffixesNameAsSortOrder.txt
 Passed in:
-(string) '(Fontaine) [Jean] [de] [La] III'
+(string) '(Fontaine) [Jean de La] III'
 Expected:
 (string) '(La Fontaine) [Jean de] III'
-
-Failure → citeproc test test-suite name_namepartAffixesNameAsSortOrderDemoteNonDroppingParticle.txt
-Passed in:
-(string) '(Fontaine) [Jean] [de] [La] III'
-Expected:
-(string) '(Fontaine) [Jean de La] III'
 
 Failure → citeproc test test-suite number_LeadingZeros.txt
 Passed in:
