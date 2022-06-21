@@ -18,7 +18,7 @@ label               11       5       3       0
 locale              21       2       0       0
 locator              2       4       0       0
 magic               26       9       5       0
-name                66      35      10       0
+name                67      34      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              438     231     185       0
+(all)              439     230     185       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -1169,12 +1169,6 @@ Passed in:
 (string) 'Albert Asthma et al. (eds.), Albert Asthma et al. (trans.)'
 Expected:
 (string) 'Albert Asthma et al. (eds. &#38; trans.)'
-
-Failure → citeproc test test-suite name_Delimiter.txt
-Passed in:
-(string) 'John Doe; Jane Roe OR  Doe Inc.;  Doe Inc.;  Noakes Inc.'
-Expected:
-(string) 'John Doe; Jane Roe OR Doe Inc.; Doe Inc.; Noakes Inc.'
 
 Failure → citeproc test test-suite name_DelimiterAfterInverted.txt
 Passed in:

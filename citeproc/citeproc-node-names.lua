@@ -581,7 +581,7 @@ function Name:get_display_order(person_name, seen_one)
   local is_reversed = (self.name_as_sort_order == "all" or
     (self.name_as_sort_order == "first" and not seen_one) or not is_romanesque)
 
-  if person_name.given then
+  if person_name.given and person_name.given ~= "" then
     if is_reversed then
       if is_romanesque then
         name_part_tokens = {"family", "sort-separator", "given"}
