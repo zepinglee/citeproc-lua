@@ -131,9 +131,9 @@ function Context:get_localized_quotes()
     self:get_simple_term("open-quote"),
     self:get_simple_term("close-quote"),
     self:get_simple_term("open-inner-quote"),
-    self:get_simple_term("close-inner-quote")
+    self:get_simple_term("close-inner-quote"),
+    self.locale.style_options.punctuation_in_quote
   )
-  -- punctuation-in-quote?
 end
 
 function Context.page_first(page)

@@ -15,9 +15,9 @@ fullstyles           0       0       5       0
 group                1       3       3       0
 integration          4       9       1       0
 label               11       5       3       0
-locale              20       3       0       0
+locale              19       4       0       0
 locator              2       4       0       0
-magic               24      11       5       0
+magic               26       9       5       0
 name                65      36      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              434     235     185       0
+(all)              435     234     185       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -98,9 +98,9 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_EnvAndUrb.txt
 Passed in:
-(string) '..[0] Baines, T S, O Benedettini and J M Kay, ‘Title One.’; Baines, T S, F Gump and J M Kay, ‘Title Two.’
-..[1] Baines, T S, O Benedettini and J M Kay, ‘Title One.’
->>[2] Baines, T S, F Gump and J M Kay, ‘Title Two.’'
+(string) '..[0] Baines, T S, O Benedettini and J M Kay, ‘Title One’.; Baines, T S, F Gump and J M Kay, ‘Title Two’.
+..[1] Baines, T S, O Benedettini and J M Kay, ‘Title One’.
+>>[2] Baines, T S, F Gump and J M Kay, ‘Title Two’.'
 Expected:
 (string) '>>[0] Baines, T S, O Benedettini and J M Kay, ‘Title One’; Baines, T S, F Gump and J M Kay, ‘Title Two’.
 ..[1] See reference 1, Baines et al.
@@ -1026,6 +1026,12 @@ Passed in:
 Expected:
 (string) 'pages 213 AMPERSAND 235'
 
+Failure → citeproc test test-suite locale_EmptyPlusOverrideStyleOpt.txt
+Passed in:
+(string) '“Sample Title”.'
+Expected:
+(string) '“Sample Title.”'
+
 Failure → citeproc test test-suite locale_EmptyPlusOverrideTerm.txt
 Passed in:
 (string) 'Sample Title: ()'
@@ -1093,18 +1099,6 @@ Passed in:
 (string) 'John,! Jr. Doe'
 Expected:
 (string) 'John Doe, Jr.'
-
-Failure → citeproc test test-suite magic_PunctuationInQuoteFalse.txt
-Passed in:
-(string) 'Doe, “Book A,” 1900.'
-Expected:
-(string) 'Doe, “Book A”, 1900.'
-
-Failure → citeproc test test-suite magic_PunctuationInQuoteFalseSuppressExtra.txt
-Passed in:
-(string) '“Article A?,” Journal B'
-Expected:
-(string) '“Article A?”, Journal B'
 
 Failure → citeproc test test-suite magic_SecondFieldAlign.txt
 Passed in:
@@ -2092,51 +2086,51 @@ Failure → citeproc test test-suite punctuation_FullMontyQuotesOut.txt
 Passed in:
 (string) 'ENDING IN COLON
 “colon”: colon
-“period.”: colon
-“semicolon;”: colon
+“period”.: colon
+“semicolon”;: colon
 “exclamation”!: colon
-“question?”: colon
-“comma,”: colon
+“question”?: colon
+“comma”,: colon
 
 ENDING IN PERIOD
 “colon”:. period
-“period.” period
-“semicolon;”. period
+“period”. period
+“semicolon”;. period
 “exclamation”!. period
-“question?”. period
-“comma,”. period
+“question”?. period
+“comma”,. period
 
 ENDING IN SEMICOLON
 “colon”:; semicolon
-“period.”; semicolon
-“semicolon;” semicolon
+“period”.; semicolon
+“semicolon”; semicolon
 “exclamation”!; semicolon
-“question?”; semicolon
-“comma,”; semicolon
+“question”?; semicolon
+“comma”,; semicolon
 
 ENDING IN EXCLAMATION
 “colon”:! exclamation
-“period.”! exclamation
-“semicolon;”! exclamation
+“period”.! exclamation
+“semicolon”;! exclamation
 “exclamation”! exclamation
-“question?”! exclamation
-“comma,”! exclamation
+“question”?! exclamation
+“comma”,! exclamation
 
 ENDING IN QUESTION
 “colon”:? question
-“period.”? question
-“semicolon;”? question
+“period”.? question
+“semicolon”;? question
 “exclamation”!? question
-“question?” question
-“comma,”? question
+“question”? question
+“comma”,? question
 
 ENDING IN COMMA
 “colon”:, comma
-“period.”, comma
-“semicolon;”, comma
+“period”., comma
+“semicolon”;, comma
 “exclamation”!, comma
-“question?”, comma
-“comma,” comma'
+“question”?, comma
+“comma”, comma'
 Expected:
 (string) 'ENDING IN COLON
 “colon”: colon
@@ -2558,16 +2552,16 @@ Error → citeproc test test-suite disambiguate_YearSuffixWithMixedCreatorTypes.
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite display_AuthorAsHeading.txt
-./citeproc/citeproc-output.lua:494: bad argument #1 to 'for iterator' (table expected, got nil)
+./citeproc/citeproc-output.lua:495: bad argument #1 to 'for iterator' (table expected, got nil)
 
 Error → citeproc test test-suite display_DisplayBlock.txt
-./citeproc/citeproc-output.lua:494: bad argument #1 to 'for iterator' (table expected, got nil)
+./citeproc/citeproc-output.lua:495: bad argument #1 to 'for iterator' (table expected, got nil)
 
 Error → citeproc test test-suite display_LostSuffix.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite display_SecondFieldAlignClone.txt
-./citeproc/citeproc-output.lua:494: bad argument #1 to 'for iterator' (table expected, got nil)
+./citeproc/citeproc-output.lua:495: bad argument #1 to 'for iterator' (table expected, got nil)
 
 Error → citeproc test test-suite display_SecondFieldAlignMigratePunctuation.txt
 ./citeproc/citeproc-node-choose.lua:183: attempt to index a nil value (field 'cite')
@@ -2612,7 +2606,7 @@ Error → citeproc test test-suite label_EditorTranslator1.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite label_MissingReturnsEmpty.txt
-./citeproc/citeproc-output.lua:148: attempt to concatenate a nil value (local 'str')
+./citeproc/citeproc-output.lua:149: attempt to concatenate a nil value (local 'str')
 
 Error → citeproc test test-suite label_NameLabelThroughSubstitute.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

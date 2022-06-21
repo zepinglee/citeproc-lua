@@ -17,15 +17,16 @@ local LocalizedQuotes = {
   outer_close = util.unicode['right double quotation mark'],
   inner_open = util.unicode['left single quotation mark'],
   inner_close = util.unicode['right single quotation mark'],
+  punctuation_in_quote = true,
 }
 
-function LocalizedQuotes:new(outer_open, outer_close, inner_open, inner_close)
+function LocalizedQuotes:new(outer_open, outer_close, inner_open, inner_close, punctuation_in_quote)
   local o = {
     outer_open = outer_open or util.unicode['left double quotation mark'],
     outer_close = outer_close or util.unicode['right double quotation mark'],
     inner_open = inner_open or util.unicode['left single quotation mark'],
     inner_close = inner_close or util.unicode['right single quotation mark'],
-    -- punctuation-in-quote?
+    punctuation_in_quote = punctuation_in_quote
   }
   setmetatable(o, self)
   self.__index = self
@@ -823,6 +824,9 @@ end
 
 local function find_right_quoted(inline)
   if inline.type == "Quoted" then
+    if inline.quotes.punctuation_in_quote == false then
+      return nil
+    end
     return find_right(inline.inlines[#inline.inlines])
   elseif inline.inlines then
     return find_right_quoted(inline.inlines[#inline.inlines])
