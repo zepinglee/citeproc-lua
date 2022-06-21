@@ -209,9 +209,6 @@ function InlineElement:parse_quotes(inlines, context)
   local quote_stack = {}
   local text_stack = {{}}
 
-  if not context then
-    print(debug.traceback())
-  end
   local localized_quotes = context:get_localized_quotes()
 
   for _, fragment in ipairs(quote_fragments) do
@@ -276,6 +273,9 @@ function InlineElement:parse_quotes(inlines, context)
   if #text_stack > 1 then
     assert(#text_stack == #quote_stack + 1)
     for i, quote in ipairs(quote_stack) do
+      if quote == "'" then
+        quote = util.unicode["apostrophe"]
+      end
       table.insert(elements, PlainText:new(quote))
       for _, el in ipairs(text_stack[i + 1]) do
         table.insert(elements, el)

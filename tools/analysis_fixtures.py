@@ -93,6 +93,6 @@ for path in paths:
 # print(num_tags)
 
 for path in list(sorted(paths, key=lambda x: num_tags[x]))[:10]:
-    print(f'{num_tags[path]:<4}{os.path.split(path)[1]:50}{path}')
+    print(f'{num_tags[path]:<3} {os.path.split(path)[1]:50} {path}')
 
 # print(len(failed_fixtures))

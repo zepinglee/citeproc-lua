@@ -514,31 +514,11 @@ function Name:render_person_name(person_name, seen_one, context)
   local inlines = {}
   for i, name_part_token in ipairs(name_part_tokens) do
     if name_part_token == "family" then
-      local text = person_name.family
-      local family_inlines = self.family:render_text_inlines(text, context)
-      if person_name["non-dropping-particle"] and is_romanesque and not (is_reversed and demote_ndp) then
-        local ndp_inlines = self.family:render_text_inlines(person_name["non-dropping-particle"], context)
-        table.insert(ndp_inlines, PlainText:new(" "))
-        family_inlines = util.extend(ndp_inlines, family_inlines)
-      end
+      local family_inlines = self:render_family(person_name, is_romanesque, is_reversed, demote_ndp, context)
       util.extend(inlines, family_inlines)
 
     elseif name_part_token == "given" then
-      local text = person_name.given
-      if self.initialize_with then
-        text = self:initialize_name(text, self.initialize_with, context.style.initialize_with_hyphen)
-      end
-      local given_inlines = self.given:render_text_inlines(text, context)
-      if person_name["dropping-particle"] then
-        local dp_inlines = self.given:render_text_inlines(person_name["dropping-particle"], context)
-        table.insert(given_inlines, PlainText:new(" "))
-        util.extend(given_inlines, dp_inlines)
-      end
-      if person_name["non-dropping-particle"] and is_romanesque and (is_reversed and demote_ndp) then
-        local ndp_inlines = self.given:render_text_inlines(person_name["non-dropping-particle"], context)
-        table.insert(given_inlines, PlainText:new(" "))
-        util.extend(given_inlines, ndp_inlines)
-      end
+      local given_inlines = self:render_given(person_name, is_romanesque, is_reversed, demote_ndp, context)
       util.extend(inlines, given_inlines)
 
     elseif name_part_token == "suffix" then
@@ -607,6 +587,36 @@ function Name:get_display_order(person_name, seen_one)
   end
 
   return name_part_tokens
+end
+
+function Name:render_family(person_name, is_romanesque, is_reversed, demote_ndp, context)
+  local text = person_name.family
+  local family_inlines = self.family:render_text_inlines(text, context)
+  if person_name["non-dropping-particle"] and is_romanesque and not (is_reversed and demote_ndp) then
+    local ndp_inlines = self.family:render_text_inlines(person_name["non-dropping-particle"], context)
+    table.insert(ndp_inlines, PlainText:new(" "))
+    family_inlines = util.extend(ndp_inlines, family_inlines)
+  end
+  return family_inlines
+end
+
+function Name:render_given(person_name, is_romanesque, is_reversed, demote_ndp, context)
+  local text = person_name.given
+  if self.initialize_with then
+    text = self:initialize_name(text, self.initialize_with, context.style.initialize_with_hyphen)
+  end
+  local given_inlines = self.given:render_text_inlines(text, context)
+  if person_name["dropping-particle"] then
+    local dp_inlines = self.given:render_text_inlines(person_name["dropping-particle"], context)
+    table.insert(given_inlines, PlainText:new(" "))
+    util.extend(given_inlines, dp_inlines)
+  end
+  if person_name["non-dropping-particle"] and is_romanesque and (is_reversed and demote_ndp) then
+    local ndp_inlines = self.given:render_text_inlines(person_name["non-dropping-particle"], context)
+    table.insert(given_inlines, PlainText:new(" "))
+    util.extend(given_inlines, ndp_inlines)
+  end
+  return given_inlines
 end
 
 function Name:render (names, context)

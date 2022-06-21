@@ -9,7 +9,7 @@ decorations          6       1       0       0
 disambiguate        10      43      18       0
 display              0       0       5       0
 etal                 1       1       2       0
-flipflop             9       9       1       0
+flipflop            10       8       1       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
 group                1       3       3       0
@@ -18,7 +18,7 @@ label               11       5       3       0
 locale              21       2       0       0
 locator              2       4       0       0
 magic               26       9       5       0
-name                68      33      10       0
+name                69      32      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              440     229     185       0
+(all)              442     227     185       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -60,7 +60,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_ApostropheOnParticle.txt
 Passed in:
-(string) 'John d' Jones'
+(string) 'John d’ Jones'
 Expected:
 (string) 'John d’Jones'
 
@@ -888,12 +888,6 @@ Passed in:
 Expected:
 (string) '“Nobody Knows You’re a Dog”: As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
 
-Failure → citeproc test test-suite flipflop_StartingApostrophe.txt
-Passed in:
-(string) 'IEEE Conference on Emerging Technologies and Factory Automation (ETFA '09)'
-Expected:
-(string) 'IEEE Conference on Emerging Technologies and Factory Automation (ETFA ’09)'
-
 Failure → citeproc test test-suite group_SuppressTermInMacro.txt
 Passed in:
 (string) 'His Anonymous Life, '
@@ -1236,15 +1230,9 @@ Passed in:
 Expected:
 (string) 'van Gogh, Vincent; Humboldt, Alexander von; van der Vlist, Eric'
 
-Failure → citeproc test test-suite name_ParsedCommaDelimitedDroppingParticleSortOrderingWithoutAffixes.txt
-Passed in:
-(string) 'AUBIGNAC, François Hédelin, abbé d''
-Expected:
-(string) 'AUBIGNAC, François Hédelin, abbé d’'
-
 Failure → citeproc test test-suite name_ParsedDroppingParticleWithApostrophe.txt
 Passed in:
-(string) 'François Hédelin d' (Aubignac)'
+(string) 'François Hédelin d’ (Aubignac)'
 Expected:
 (string) 'François Hédelin (d’Aubignac)'
 
@@ -1290,7 +1278,7 @@ Passed in:
 <b>de Familyname</b>, <i>Givenname</i>
 <b>La Familyname</b>, <i>Givenname de</i>
 <b>Familyname</b>, <i>Givenname du</i>
-<b>Familyname</b>, <i>Givenname d'</i>
+<b>Familyname</b>, <i>Givenname d’</i>
 <b>Le Familyname</b>, <i>Givenname</i>
 <b>La Familyname</b>, <i>Givenname</i>
 <b>L’Familyname</b>, <i>Givenname</i>
@@ -1312,8 +1300,8 @@ Passed in:
 <b>te Familyname</b>, <i>Givenname</i>
 <b>Familyname</b>, <i>Givenname op de</i>
 <b>in de Familyname</b>, <i>Givenname</i>
-<b>in 't Familyname</b>, <i>Givenname</i>
-<b>'t Familyname</b>, <i>Givenname</i>
+<b>in ’t Familyname</b>, <i>Givenname</i>
+<b>’t Familyname</b>, <i>Givenname</i>
 <b>in het Familyname</b>, <i>Givenname</i>
 <b>uit de Familyname</b>, <i>Givenname</i>
 <b>uit den Familyname</b>, <i>Givenname</i>
