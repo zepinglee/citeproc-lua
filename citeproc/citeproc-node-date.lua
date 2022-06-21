@@ -85,6 +85,13 @@ function Date:build_ir(engine, state, context)
 
   end
 
+  if not ir then
+    -- date_LiteralFailGracefullyIfNoValue.txt
+    ir = Rendered:new()
+    ir.group_var = "missing"
+    return ir
+  end
+
   ir.affixes = self.affixes
 
   return ir

@@ -13,6 +13,7 @@ skipped_fixtures = [
     'bugreports_BadCitationUpdate.txt',
     'bugreports_EtAlSubsequent.txt',
     'bugreports_FrenchApostrophe.txt',
+    'date_IgnoreNonexistentSort.txt',
     'decorations_NoNormalWithoutDecoration.txt',
     'flipflop_OrphanQuote.txt',
     'flipflop_SingleBeforeColon.txt',
