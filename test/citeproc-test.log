@@ -15,7 +15,7 @@ fullstyles           0       0       5       0
 group                1       3       3       0
 integration          4       9       1       0
 label               11       5       3       0
-locale              19       4       0       0
+locale              21       2       0       0
 locator              2       4       0       0
 magic               26       9       5       0
 name                65      36      10       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              435     234     185       0
+(all)              437     232     185       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -116,7 +116,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_FrenchApostrophe.txt
 Passed in:
-(string) '« Life‘s ’Little’ Surprises »'
+(string) '« Life“s ”Little’ Surprises »'
 Expected:
 (string) '« Life’s “Little” Surprises »'
 
@@ -1025,18 +1025,6 @@ Passed in:
 (string) 'pages 213 &#38; 235'
 Expected:
 (string) 'pages 213 AMPERSAND 235'
-
-Failure → citeproc test test-suite locale_EmptyPlusOverrideStyleOpt.txt
-Passed in:
-(string) '“Sample Title”.'
-Expected:
-(string) '“Sample Title.”'
-
-Failure → citeproc test test-suite locale_EmptyPlusOverrideTerm.txt
-Passed in:
-(string) 'Sample Title: ()'
-Expected:
-(string) 'Sample Title: (weird term)'
 
 Failure → citeproc test test-suite locale_ForceEmptyAndOthersTerm.txt
 Passed in:
@@ -2363,7 +2351,7 @@ Error → citeproc test test-suite bugreports_DuplicateSpaces2.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite bugreports_DuplicateSpaces3.txt
-./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
+./citeproc/citeproc-node-locale.lua:99: attempt to concatenate a nil value (local 'key')
 
 Error → citeproc test test-suite bugreports_DuplicateTerminalPunctuationInBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2471,13 +2459,13 @@ Error → citeproc test test-suite collapse_ChicagoAfterCollapse.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGrouped.txt
-./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
+./citeproc/citeproc-node-locale.lua:99: attempt to concatenate a nil value (local 'key')
 
 Error → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGroupedLocator.txt
-./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
+./citeproc/citeproc-node-locale.lua:99: attempt to concatenate a nil value (local 'key')
 
 Error → citeproc test test-suite condition_RefTypeBranching.txt
-./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
+./citeproc/citeproc-node-locale.lua:99: attempt to concatenate a nil value (local 'key')
 
 Error → citeproc test test-suite date_AccessedCrash.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2552,16 +2540,16 @@ Error → citeproc test test-suite disambiguate_YearSuffixWithMixedCreatorTypes.
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite display_AuthorAsHeading.txt
-./citeproc/citeproc-output.lua:495: bad argument #1 to 'for iterator' (table expected, got nil)
+./citeproc/citeproc-output.lua:500: bad argument #1 to 'for iterator' (table expected, got nil)
 
 Error → citeproc test test-suite display_DisplayBlock.txt
-./citeproc/citeproc-output.lua:495: bad argument #1 to 'for iterator' (table expected, got nil)
+./citeproc/citeproc-output.lua:500: bad argument #1 to 'for iterator' (table expected, got nil)
 
 Error → citeproc test test-suite display_LostSuffix.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite display_SecondFieldAlignClone.txt
-./citeproc/citeproc-output.lua:495: bad argument #1 to 'for iterator' (table expected, got nil)
+./citeproc/citeproc-output.lua:500: bad argument #1 to 'for iterator' (table expected, got nil)
 
 Error → citeproc test test-suite display_SecondFieldAlignMigratePunctuation.txt
 ./citeproc/citeproc-node-choose.lua:183: attempt to index a nil value (field 'cite')
@@ -2600,7 +2588,7 @@ Error → citeproc test test-suite group_SuppressWithEmptyNestedDateNode.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite integration_CitationSortTwice.txt
-./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
+./citeproc/citeproc-node-locale.lua:99: attempt to concatenate a nil value (local 'key')
 
 Error → citeproc test test-suite label_EditorTranslator1.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2810,7 +2798,7 @@ Error → citeproc test test-suite sort_Quotes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_RangeUnaffected.txt
-./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
+./citeproc/citeproc-node-locale.lua:99: attempt to concatenate a nil value (local 'key')
 
 Error → citeproc test test-suite sort_SeparateAuthorsAndOthers.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

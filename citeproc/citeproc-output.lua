@@ -17,7 +17,7 @@ local LocalizedQuotes = {
   outer_close = util.unicode['right double quotation mark'],
   inner_open = util.unicode['left single quotation mark'],
   inner_close = util.unicode['right single quotation mark'],
-  punctuation_in_quote = true,
+  punctuation_in_quote = false,
 }
 
 function LocalizedQuotes:new(outer_open, outer_close, inner_open, inner_close, punctuation_in_quote)
@@ -26,7 +26,7 @@ function LocalizedQuotes:new(outer_open, outer_close, inner_open, inner_close, p
     outer_close = outer_close or util.unicode['right double quotation mark'],
     inner_open = inner_open or util.unicode['left single quotation mark'],
     inner_close = inner_close or util.unicode['right single quotation mark'],
-    punctuation_in_quote = punctuation_in_quote
+    punctuation_in_quote = punctuation_in_quote,
   }
   setmetatable(o, self)
   self.__index = self
@@ -141,7 +141,7 @@ function Div:new(inlines, display)
 end
 
 
-function InlineElement:parse(str)
+function InlineElement:parse(str, context)
   -- Return a list of inlines
   -- if type(str) ~= "string" then
   --   print(debug.traceback())
@@ -158,7 +158,7 @@ function InlineElement:parse(str)
     inlines = {el}
   end
 
-  inlines = InlineElement:parse_quotes(inlines)
+  inlines = InlineElement:parse_quotes(inlines, context)
   return inlines
 
 end
@@ -202,12 +202,17 @@ function InlineElement:from_node(node)
   return InlineElement:new(inlines)
 end
 
-function InlineElement:parse_quotes(inlines)
+function InlineElement:parse_quotes(inlines, context)
   local quote_fragments = InlineElement:get_quote_fragments(inlines)
   -- util.debug(quote_fragments)
 
   local quote_stack = {}
   local text_stack = {{}}
+
+  if not context then
+    print(debug.traceback())
+  end
+  local localized_quotes = context:get_localized_quotes()
 
   for _, fragment in ipairs(quote_fragments) do
     if type(fragment) == "table" then
@@ -223,7 +228,7 @@ function InlineElement:parse_quotes(inlines)
       if quote == "'" then
         if stack_top_quote == "'" then
           table.remove(quote_stack, #quote_stack)
-          local quoted = Quoted:new(text_stack[#text_stack])
+          local quoted = Quoted:new(text_stack[#text_stack], localized_quotes)
           table.remove(text_stack, #text_stack)
           table.insert(text_stack[#text_stack], quoted)
         else
@@ -234,7 +239,7 @@ function InlineElement:parse_quotes(inlines)
       elseif quote == '"' then
         if stack_top_quote == '"' then
           table.remove(quote_stack, #quote_stack)
-          local quoted = Quoted:new(text_stack[#text_stack])
+          local quoted = Quoted:new(text_stack[#text_stack], localized_quotes)
           table.remove(text_stack, #text_stack)
           table.insert(text_stack[#text_stack], quoted)
         else
@@ -255,7 +260,7 @@ function InlineElement:parse_quotes(inlines)
              (quote == util.unicode["right-pointing double angle quotation mark"] and
               stack_top_quote == util.unicode["left-pointing double angle quotation mark"]) then
           table.remove(quote_stack, #quote_stack)
-          local quoted = Quoted:new(text_stack[#text_stack])
+          local quoted = Quoted:new(text_stack[#text_stack], localized_quotes)
           table.remove(text_stack, #text_stack)
           table.insert(text_stack[#text_stack], quoted)
 

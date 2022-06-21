@@ -534,10 +534,10 @@ function Name:render_person_name(person_name, seen_one, context)
       util.extend(inlines, given_inlines)
 
     elseif name_part_token == "suffix" then
-      util.extend(inlines, InlineElement:parse(person_name.suffix))
+      util.extend(inlines, InlineElement:parse(person_name.suffix, context))
 
     elseif name_part_token == "literal" then
-      util.extend(inlines, InlineElement:parse(person_name.literal))
+      util.extend(inlines, InlineElement:parse(person_name.literal, context))
 
     elseif name_part_token == "space" then
       table.insert(inlines, PlainText:new(" "))
@@ -1023,7 +1023,7 @@ end
 
 function EtAl:build_ir(engine, state, context)
   local term = context.locale:get_simple_term(self.term)
-  local inlines= InlineElement:parse(term)
+  local inlines= InlineElement:parse(term, context)
   inlines = context.format:with_format(inlines, self.formatting)
   local ir = Rendered:new(inlines)
   return ir

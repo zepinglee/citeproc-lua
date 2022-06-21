@@ -194,7 +194,7 @@ function Element:render_text_inlines(str, context)
     localized_quotes = context:get_localized_quotes()
   end
 
-  local inlines = InlineElement:parse(str)
+  local inlines = InlineElement:parse(str, context)
   local is_english = context:is_english()
   output_format:apply_text_case(inlines, self.text_case, is_english)
   inlines = output_format:with_format(inlines, self.formatting)

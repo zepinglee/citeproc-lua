@@ -118,14 +118,22 @@ function CiteProc:build_cluster(citation_items)
   local citation_delimiter = self.style_element.citation.layout.delimiter
   local citation_stream = {}
 
+  local context = Context:new()
+  context.engine = self
+  context.style = self.style_element
+  context.locale = self:get_locale(self.lang)
+  context.name_inheritance = self.style_element.citation.name_inheritance
+  context.format = output_format
+
   for i, ir in ipairs(irs) do
     local cite_prefix = citation_items[i].prefix
     local cite_suffix = citation_items[i].suffix
     if citation_delimiter and i > 1 and not (cite_prefix and util.startswith(cite_prefix, ",")) then
       table.insert(citation_stream, PlainText:new(citation_delimiter))
     end
+
     if cite_prefix then
-      for _, inline in ipairs(InlineElement:parse(cite_prefix)) do
+      for _, inline in ipairs(InlineElement:parse(cite_prefix, context)) do
         table.insert(citation_stream, inline)
       end
     end
@@ -135,7 +143,7 @@ function CiteProc:build_cluster(citation_items)
     end
 
     if cite_suffix then
-      for _, inline in ipairs(InlineElement:parse(cite_suffix)) do
+      for _, inline in ipairs(InlineElement:parse(cite_suffix, context)) do
         table.insert(citation_stream, inline)
       end
     end

@@ -14,12 +14,13 @@ local Locale = Element:derive("locale")
 
 function Locale:new()
   local o = {
+    xml_lang = nil,
     terms = {},
     ordinal_terms = nil,
     dates = {},
     style_options = {
-      limit_day_ordinals_to_day_1 = false,
-      punctuation_in_quote = false,
+      -- limit_day_ordinals_to_day_1 = false,
+      -- punctuation_in_quote = false,
     },
   }
   setmetatable(o, self)
@@ -29,6 +30,7 @@ end
 
 function Locale:from_node(node)
   local o = Locale:new()
+  o.xml_lang = node:get_attribute("xml:lang")
   o:process_children_nodes(node)
 
   for _, child in ipairs(o.children) do
@@ -46,10 +48,10 @@ function Locale:from_node(node)
       local style_options = child
       o.style_options.limit_day_ordinals_to_day_1 = util.to_boolean(
         style_options:get_attribute("limit-day-ordinals-to-day-1")
-      ) or false
+      )
       o.style_options.punctuation_in_quote = util.to_boolean(
         style_options:get_attribute("punctuation-in-quote")
-      ) or false
+      )
     end
   end
 
@@ -73,7 +75,9 @@ function Locale:merge(other)
     self.dates[key] = value
   end
   for key, value in pairs(other.style_options) do
-    self.style_options[key] = value
+    if value ~= nil then
+      self.style_options[key] = value
+    end
   end
   return self
 end
