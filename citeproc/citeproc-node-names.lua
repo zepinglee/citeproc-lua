@@ -546,6 +546,10 @@ function Name:parse_name_particle(person_name)
   if person_name["non-dropping-particle"] or not person_name.given or person_name.given == "" then
     return
   end
+  if string.match(person_name.given, ",") then
+    -- name_ParsedCommaDelimitedDroppingParticleSortOrderingWithoutAffixes.txt
+    return
+  end
   local words = util.split(person_name.given)
   if #words < 2 then
     return
