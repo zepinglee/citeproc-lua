@@ -2,8 +2,8 @@ category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                5       3       1       0
 bugreports          17      13      52       0
-collapse             0      18       3       0
-condition            5      11       1       0
+collapse             0      20       1       0
+condition            5      12       0       0
 date                81      14       6       0
 decorations          6       1       0       0
 disambiguate        10      43      18       0
@@ -13,10 +13,10 @@ flipflop             9       9       1       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
 group                1       3       3       0
-integration          4       9       1       0
-label                6      10       3       0
+integration          4      10       0       0
+label               11       5       3       0
 locale              20       3       0       0
-locator              2       3       1       0
+locator              1       5       0       0
 magic               24      11       5       0
 name                65      36      10       0
 nameattr            97       0       0       0
@@ -24,7 +24,7 @@ nameorder            6       0       0       0
 namespaces           1       0       0       0
 number              12       7       1       0
 page                 9       0       0       0
-plural               0       6       1       0
+plural               0       7       0       0
 position             2      11       3       0
 punctuation          3      10       3       0
 quotes               2       0       2       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              428     239     187       0
+(all)              432     241     181       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -228,6 +228,18 @@ Passed in:
 Expected:
 (string) '<b>([1]–[3])</b>'
 
+Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGrouped.txt
+Passed in:
+(string) '<b>()</b>,<b>()</b>,<b>()</b>'
+Expected:
+(string) '<b>([1]–[3])</b>'
+
+Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGroupedLocator.txt
+Passed in:
+(string) '<b>()</b>,<b>([P. 23])</b>,<b>()</b>'
+Expected:
+(string) '<b>([1],[2, p. 23],[3])</b>'
+
 Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesNoCollapse.txt
 Passed in:
 (string) '<b>()</b>,<b>()</b>,<b>()</b>'
@@ -327,6 +339,24 @@ Passed in:
 (string) 'FALSE'
 Expected:
 (string) 'TRUE'
+
+Failure → citeproc test test-suite condition_RefTypeBranching.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Work 1, John Doe, 2000.</div>
+  <div class="csl-entry">Work 2, John Doe, 2000.</div>
+  <div class="csl-entry">Work 3, John Doe, 2000.</div>
+  <div class="csl-entry">Work 4, John Doe, 2000.</div>
+  <div class="csl-entry">Work 5, John Doe, 2000.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"><i>Work 1</i> (John Doe), 2000.</div>
+  <div class="csl-entry">John Doe, 2000. Work 2.</div>
+  <div class="csl-entry">2000. Work 3, John Doe.</div>
+  <div class="csl-entry">Work 4 (2000), John Doe.</div>
+  <div class="csl-entry">Work 5, John Doe, 2000.</div>
+</div>'
 
 Failure → citeproc test test-suite condition_SingletonIfMatchNone.txt
 Passed in:
@@ -918,6 +948,14 @@ Passed in:
 Expected:
 (string) '(Doe; Noakes; Roe; Snoakes)'
 
+Failure → citeproc test test-suite integration_CitationSortTwice.txt
+Passed in:
+(string) '(Doe); (Roe)
+(Noakes); (Snoakes); (Doe); (Roe)'
+Expected:
+(string) '(Doe; Roe)
+(Doe; Noakes; Roe; Snoakes)'
+
 Failure → citeproc test test-suite integration_DeleteName.txt
 Passed in:
 (string) '>>[0] Doe.; Snoakes.'
@@ -1020,41 +1058,11 @@ Passed in:
 Expected:
 (string) 'n.d.'
 
-Failure → citeproc test test-suite label_PluralWithAmpersand.txt
-Passed in:
-(string) '213 &#38; 235'
-Expected:
-(string) 'pages 213 &#38; 235'
-
-Failure → citeproc test test-suite label_PluralWithAnd.txt
-Passed in:
-(string) '213 and 235'
-Expected:
-(string) 'pages 213 and 235'
-
-Failure → citeproc test test-suite label_PluralWithCommaAnd.txt
-Passed in:
-(string) '213, and 235'
-Expected:
-(string) 'pages 213, and 235'
-
-Failure → citeproc test test-suite label_PluralWithCommaLocalizedAnd.txt
-Passed in:
-(string) '213, et 235'
-Expected:
-(string) 'pages 213, et 235'
-
 Failure → citeproc test test-suite label_PluralWithLocalizedAmpersand.txt
 Passed in:
-(string) '213 &#38; 235'
+(string) 'pages 213 &#38; 235'
 Expected:
 (string) 'pages 213 AMPERSAND 235'
-
-Failure → citeproc test test-suite label_PluralWithLocalizedAnd.txt
-Passed in:
-(string) '213 et 235'
-Expected:
-(string) 'pages 213 et 235'
 
 Failure → citeproc test test-suite locale_EmptyPlusOverrideTerm.txt
 Passed in:
@@ -1082,9 +1090,21 @@ Expected:
 
 Failure → citeproc test test-suite locator_SingularEmbeddedLabelAfterPlural.txt
 Passed in:
-(string) 'Book One, 367-368, fig. 333'
+(string) 'Book One, pages 367-368, fig. 333'
 Expected:
 (string) 'Book One, pages 367–368, fig. 333'
+
+Failure → citeproc test test-suite locator_TrickyEntryForPlurals.txt
+Passed in:
+(string) 'Book Title, pp. vol. 1, fol. 186, 8 April 1544'
+Expected:
+(string) 'Book Title, vol. 1, fol. 186, 8 April 1544'
+
+Failure → citeproc test test-suite locator_WithLeadingSpace.txt
+Passed in:
+(string) 'Hello Title:page:666'
+Expected:
+(string) 'Hello Title:666'
 
 Failure → citeproc test test-suite locator_WorkaroundTestForSubVerbo.txt
 Passed in:
@@ -1625,6 +1645,12 @@ Passed in:
 (string) 'With One, 1.<sup>a</sup> edition, 1.<sup>a</sup> issue; With Two, 2 edition, 2 issue; With Three, 3 edition, 3 issue'
 Expected:
 (string) 'With One, 1.<sup>a</sup> edition, 1.<sup>o</sup> issue; With Two, 2.<sup>a</sup> edition, 2.<sup>o</sup><sup>o</sup> issue; With Three, 3.<sup>a</sup> edition, 3.<sup>a</sup> issue'
+
+Failure → citeproc test test-suite plural_LabelForced.txt
+Passed in:
+(string) 'p. 32-34'
+Expected:
+(string) 'p. 32–34'
 
 Failure → citeproc test test-suite plural_NameLabelAlways.txt
 Passed in:
@@ -2393,7 +2419,7 @@ Error → citeproc test test-suite bugreports_DuplicateSpaces2.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite bugreports_DuplicateSpaces3.txt
-./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
+./citeproc/citeproc-node-choose.lua:183: attempt to index a nil value (field 'cite')
 
 Error → citeproc test test-suite bugreports_DuplicateTerminalPunctuationInBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2499,15 +2525,6 @@ Error → citeproc test test-suite bugreports_undefinedCrash.txt
 
 Error → citeproc test test-suite collapse_ChicagoAfterCollapse.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGrouped.txt
-./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
-
-Error → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGroupedLocator.txt
-./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
-
-Error → citeproc test test-suite condition_RefTypeBranching.txt
-./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
 
 Error → citeproc test test-suite date_AccessedCrash.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2629,9 +2646,6 @@ Error → citeproc test test-suite group_LegalWithAuthorDate.txt
 Error → citeproc test test-suite group_SuppressWithEmptyNestedDateNode.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite integration_CitationSortTwice.txt
-./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
-
 Error → citeproc test test-suite label_EditorTranslator1.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -2640,9 +2654,6 @@ Error → citeproc test test-suite label_MissingReturnsEmpty.txt
 
 Error → citeproc test test-suite label_NameLabelThroughSubstitute.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite locator_TrickyEntryForPlurals.txt
-./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
 
 Error → citeproc test test-suite magic_AllowRepeatDateRenderings.txt
 ./citeproc/citeproc-util.lua:257: bad argument #1 to 'gmatch' (string expected, got table)
@@ -2691,9 +2702,6 @@ Error → citeproc test test-suite name_LiteralWithComma.txt
 
 Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite plural_LabelForced.txt
-./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
 
 Error → citeproc test test-suite position_FalseInBibliography.txt
 ./citeproc/citeproc-node-choose.lua:183: attempt to index a nil value (field 'cite')
@@ -2846,7 +2854,7 @@ Error → citeproc test test-suite sort_Quotes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_RangeUnaffected.txt
-./citeproc/citeproc-node-locale.lua:95: attempt to concatenate a nil value (local 'key')
+./citeproc/citeproc-output.lua:815: attempt to index a nil value (local 'inline')
 
 Error → citeproc test test-suite sort_SeparateAuthorsAndOthers.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

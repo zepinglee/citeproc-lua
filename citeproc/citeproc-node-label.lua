@@ -45,7 +45,9 @@ function Label:build_ir(engine, state, context)
 
   local variable = self.variable
   if variable == "locator" then
-    variable = context:get_variable("label")
+    -- Use "page" as locator label if missing
+    -- label_PluralWithAmpersand.txt
+    variable = context:get_variable("label") or "page"
   end
   local text = context:get_simple_term(variable, self.form, is_plural)
   if not text then
