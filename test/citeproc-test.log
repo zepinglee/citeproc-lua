@@ -14,11 +14,11 @@ form                 3       0       0       0
 fullstyles           0       0       5       0
 group                1       3       3       0
 integration          4       9       1       0
-label                5      11       3       0
-locale              19       4       0       0
+label                6      10       3       0
+locale              20       3       0       0
 locator              2       3       1       0
 magic               24      11       5       0
-name                62      39      10       0
+name                65      36      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              423     244     187       0
+(all)              428     239     187       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -1014,12 +1014,6 @@ Passed in:
 Expected:
 (string) '[start](22)[end]'
 
-Failure → citeproc test test-suite label_ImplicitForm.txt
-Passed in:
-(string) 'John Doeeditor'
-Expected:
-(string) 'John Doe (editor)'
-
 Failure → citeproc test test-suite label_NoFirstCharCapWithInTextClass.txt
 Passed in:
 (string) 'N.d.'
@@ -1079,12 +1073,6 @@ Passed in:
 (string) 'John Doe '
 Expected:
 (string) 'John Doe'
-
-Failure → citeproc test test-suite locale_NonExistentLocaleDef.txt
-Passed in:
-(string) 'John Doeedxitor + Jane roetranslator'
-Expected:
-(string) 'John Doe (edxitor) + Jane roe (translator)'
 
 Failure → citeproc test test-suite locator_SimpleLocators.txt
 Passed in:
@@ -1226,7 +1214,7 @@ Expected:
 
 Failure → citeproc test test-suite name_CollapseRoleLabels.txt
 Passed in:
-(string) 'Albert Asthma et al.eds., Albert Asthma et al.trans.'
+(string) 'Albert Asthma et al. (eds.), Albert Asthma et al. (trans.)'
 Expected:
 (string) 'Albert Asthma et al. (eds. &#38; trans.)'
 
@@ -1248,15 +1236,9 @@ Expected:
   <div class="csl-entry">Weinstock, R., Leong, G. B., &#38; Silva, J. A.</div>
 </div>'
 
-Failure → citeproc test test-suite name_EditorTranslatorSameEmptyTerm.txt
-Passed in:
-(string) 'John Doeeditor, John Doetranslator'
-Expected:
-(string) 'John Doe (editor), John Doe (translator)'
-
 Failure → citeproc test test-suite name_EditorTranslatorSameWithTerm.txt
 Passed in:
-(string) 'John Doeed., John Doetran.'
+(string) 'John Doe (ed.), John Doe (tran.)'
 Expected:
 (string) 'John Doe (ed. &#38; tran.)'
 
@@ -1305,12 +1287,6 @@ Passed in:
 (string) 'São Paulo (Estado)'
 Expected:
 (string) 'SÃO PAULO (ESTADO)'
-
-Failure → citeproc test test-suite name_LabelAfterPluralDecorations.txt
-Passed in:
-(string) 'John Doe et al.editors'
-Expected:
-(string) 'John Doe et al. (editors)'
 
 Failure → citeproc test test-suite name_LabelFormatBug.txt
 Passed in:
@@ -1485,7 +1461,7 @@ Expected:
 Failure → citeproc test test-suite name_SubsequentAuthorSubstituteMultipleNames.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Bumke, Courtly Culture: Literature and Society in the High Middle Ages, Dunlaptran.</div>
+  <div class="csl-entry">Bumke, Courtly Culture: Literature and Society in the High Middle Ages, Dunlap tran.</div>
   <div class="csl-entry">Bumke, Höfische</div>
 </div>'
 Expected:
@@ -1578,12 +1554,6 @@ Expected:
   <div class="csl-entry">---</div>
 </div>'
 
-Failure → citeproc test test-suite name_TwoRolesSameRenderingSeparateRoleLabels.txt
-Passed in:
-(string) 'Albert Asthma et al.eds., Albert Asthma et al.trans.'
-Expected:
-(string) 'Albert Asthma et al. (eds.), Albert Asthma et al. (trans.)'
-
 Failure → citeproc test test-suite name_WithNonBreakingSpace.txt
 Passed in:
 (string) 'John  Doe'
@@ -1646,7 +1616,7 @@ Expected:
 
 Failure → citeproc test test-suite number_PreserveDelimiter.txt
 Passed in:
-(string) '. Pages 187–228 <i>in</i> C. S. Stephen and M. L. Browneditors Analysis and interpretation of freshwater fisheries data C. S. Stephen and M. L. Browneditors'
+(string) '. Pages 187–228 <i>in</i> C. S. Stephen and M. L. Brown, editors. Analysis and interpretation of freshwater fisheries data C. S. Stephen and M. L. Brown, editors'
 Expected:
 (string) '. Pages 187–228 <i>in</i> C. S. Stephen and M. L. Brown, editors. Analysis and interpretation of freshwater fisheries data'
 
@@ -1658,37 +1628,37 @@ Expected:
 
 Failure → citeproc test test-suite plural_NameLabelAlways.txt
 Passed in:
-(string) 'Doeed.'
+(string) 'Doeed'
 Expected:
 (string) 'Doe eds'
 
 Failure → citeproc test test-suite plural_NameLabelContextualPlural.txt
 Passed in:
-(string) 'Doe and Roeeds.'
+(string) 'Doe and Roeeds'
 Expected:
 (string) 'Doe and Roe eds'
 
 Failure → citeproc test test-suite plural_NameLabelContextualSingular.txt
 Passed in:
-(string) 'Doeed.'
+(string) 'Doeed'
 Expected:
 (string) 'Doe ed'
 
 Failure → citeproc test test-suite plural_NameLabelDefaultPlural.txt
 Passed in:
-(string) 'Doe and Roeeds.'
+(string) 'Doe and Roeeds'
 Expected:
 (string) 'Doe and Roe eds'
 
 Failure → citeproc test test-suite plural_NameLabelDefaultSingular.txt
 Passed in:
-(string) 'Doeed.'
+(string) 'Doeed'
 Expected:
 (string) 'Doe ed'
 
 Failure → citeproc test test-suite plural_NameLabelNever.txt
 Passed in:
-(string) 'Doe and Roeeds.'
+(string) 'Doe and Roeeds'
 Expected:
 (string) 'Doe and Roe ed'
 
@@ -2340,8 +2310,8 @@ BAD LANGUAGE CODE THAT PASSES IN NODE.JS BUT FAILS IN SOME BROWSERS'
 
 Failure → citeproc test test-suite textcase_NoSpaceBeforeApostrophe.txt
 Passed in:
-(string) 'Marcus Shafi’ied., Response to Shafi’I Comment
-Marcus Shafi`ied., Response to Shafi`i Comment'
+(string) 'Marcus Shafi’i (ed.), Response to Shafi’I Comment
+Marcus Shafi`i (ed.), Response to Shafi`i Comment'
 Expected:
 (string) 'Marcus Shafi’i (ed.), Response to Shafi’i Comment
 Marcus Shafi`i (ed.), Response to Shafi`i Comment'

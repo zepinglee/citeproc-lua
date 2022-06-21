@@ -473,7 +473,9 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     -- local label_ir = label:build_ir(variable, names, engine, state, context)
     local label_term = context.locale:get_simple_term(variable, label.form, #names > 1)
     if label_term and label_term ~= "" then
-      local label_ir = Rendered:new({PlainText:new(label_term)})
+      -- local label_ir = Rendered:new({PlainText:new(label_term)})
+      local inlines = label:render_text_inlines(label_term, context)
+      local label_ir = Rendered:new(inlines)
       if label.after_name then
         table.insert(irs, label_ir)
       else
