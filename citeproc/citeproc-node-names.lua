@@ -110,7 +110,12 @@ function Names:build_ir(engine, state, context)
   end
 
   if names_inheritance.name.form == "count" then
-    return Rendered:new({PlainText:new(tostring(num_names))})
+    if num_names > 0 then
+      return Rendered:new({PlainText:new(tostring(num_names))})
+    else
+      -- name_AuthorCount.txt
+      return nil
+    end
   end
 
   if names_inheritance.label then
