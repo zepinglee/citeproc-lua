@@ -728,12 +728,14 @@ function Element:format_ordinal_number_parts(number_parts, form, gender, context
 end
 
 function Element:format_numeric_number_parts(number_parts)
-  if number_parts[2] ~= "" then
-    if string.match(number_parts[1], "^(.-)%d+$") == string.match(number_parts[2], "^(.-)%d+$") then
-      number_parts[1] = number_parts[1] .. "-" .. number_parts[2]
-      number_parts[2] = ""
-    end
-  end
+  -- if number_parts[2] ~= "" then
+  --   local first_prefix = string.match(number_parts[1], "^(.-)%d+")
+  --   local second_prefix = string.match(number_parts[2], "^(.-)%d+")
+  --   if first_prefix == second_prefix then
+  --     number_parts[1] = number_parts[1] .. "-" .. number_parts[2]
+  --     number_parts[2] = ""
+  --   end
+  -- end
 end
 
 -- https://docs.citationstyles.org/en/stable/specification.html#appendix-v-page-range-formats

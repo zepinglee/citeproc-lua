@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
-affix                3       5       1       0
-bugreports          14      16      52       0
+affix                5       3       1       0
+bugreports          17      13      52       0
 collapse             0      20       1       0
 condition            5      12       0       0
 date                79      14       8       0
@@ -38,19 +38,13 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              405     266     183       0
+(all)              410     261     183       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
 (string) '“quote,” Hello Thing'
 Expected:
 (string) '“quote”, Hello Thing'
-
-Failure → citeproc test test-suite affix_InterveningEmpty.txt
-Passed in:
-(string) 'John DoeHis Anonymous Life1965.'
-Expected:
-(string) 'John Doe. His Anonymous Life. 1965.'
 
 Failure → citeproc test test-suite affix_PrefixFullCitationTextOnly.txt
 Passed in:
@@ -64,27 +58,11 @@ Passed in:
 Expected:
 (string) '(<span style="font-variant:small-caps;">See</span> Smith 2000)'
 
-Failure → citeproc test test-suite affix_TextNodeWithMacro.txt
-Passed in:
-(string) 'OneTwo.'
-Expected:
-(string) 'One. Two.'
-
 Failure → citeproc test test-suite bugreports_ApostropheOnParticle.txt
 Passed in:
 (string) 'John d' Jones'
 Expected:
 (string) 'John d’Jones'
-
-Failure → citeproc test test-suite bugreports_AsaSpacing.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">“His Anonymous Chapter” Some text string</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">“His Anonymous Chapter.” Some text string</div>
-</div>'
 
 Failure → citeproc test test-suite bugreports_BadCitationUpdate.txt
 Passed in:
@@ -96,7 +74,7 @@ C. Grignon, C. Sentenac 2000b'
 
 Failure → citeproc test test-suite bugreports_CitationSortsWithEtAl.txt
 Passed in:
-(string) '[Aalto et al., n.d.]; [Aalto et al., n.d.]; [Aalto et al., n.d.]'
+(string) '[<i>Aalto et al.</i>, n.d.]; [<i>Aalto et al.</i>, n.d.]; [<i>Aalto et al.</i>, n.d.]'
 Expected:
 (string) '[<i>Aalto et al.</i>, 1999, 2000, 2001]'
 
@@ -152,12 +130,6 @@ Expected:
   <div class="csl-entry"><i>Arrêté du 23 mars 1992 relatif au programme des études conduisant au diplôme d’État d’infirmier</i>, 1992. </div>
 </div>'
 
-Failure → citeproc test test-suite bugreports_NumberInMacroWithVerticalAlign.txt
-Passed in:
-(string) '<i>2</i>; <i>3-5</i>'
-Expected:
-(string) '<sup><i>2</i></sup>; <sup><i>3–5</i></sup>'
-
 Failure → citeproc test test-suite bugreports_SingletonIfMatchNoneFail.txt
 Passed in:
 (string) '[CSL STYLE ERROR: reference with no printed form.]'
@@ -166,21 +138,11 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_UndefinedInName3.txt
 Passed in:
-(string) 'B-X Kim and A-Y Kim, , in , , , ,  ( , , ), p. .
-B-X Kim and A-Y Kim, , in , , , ,  ( , , ), p. .'
+(string) 'B-X Kim and A-Y Kim, , in , , , ,  ( , , ), , p. .
+B-X Kim and A-Y Kim, , in , , , ,  ( , , ), , p. .'
 Expected:
 (string) 'B-X Kim and A-Y Kim.
 Kim and Kim, 23.'
-
-Failure → citeproc test test-suite bugreports_UnisaHarvardInitialization.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, JQn.d.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, JQ n.d., </div>
-</div>'
 
 Failure → citeproc test test-suite bugreports_parseName.txt
 Passed in:
@@ -458,7 +420,7 @@ Expected:
 
 Failure → citeproc test test-suite date_NegativeDateSortViaMacroOnYearMonthOnly.txt
 Passed in:
-(string) 'BookY 100BC713, BookX 100BC714, BookB 68AD315, BookA 68AD316'
+(string) 'BookY (100BC713), BookX (100BC714), BookB (68AD315), BookA (68AD316)'
 Expected:
 (string) 'BookX (100BC-7-14), BookY (100BC-7-13), BookA (68AD-3-16), BookB (68AD-3-15)'
 
@@ -1988,7 +1950,7 @@ Expected:
 
 Failure → citeproc test test-suite punctuation_FieldDuplicates.txt
 Passed in:
-(string) 'Doe, J.1965'
+(string) 'Doe, J. 1965'
 Expected:
 (string) '<span style="font-variant:small-caps;">Doe, J.</span> 1965'
 
@@ -2392,7 +2354,7 @@ ENDING IN COMMA
 
 Failure → citeproc test test-suite punctuation_OnMacro.txt
 Passed in:
-(string) 'My TitleMy Publisher'
+(string) 'My Title. My Publisher'
 Expected:
 (string) '“My Title.” My Publisher'
 
