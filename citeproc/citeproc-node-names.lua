@@ -441,15 +441,15 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     truncated_names = util.slice(names, 1, self.et_al_use_first)
   end
 
-  local irs = {}
+  local inlines = {}
 
   for i, name in ipairs(truncated_names) do
     if i > 1 then
       if i == #names and self["and"] then
         if self:_check_delimiter(self.delimiter_precedes_last, i) then
-          table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
+          table.insert(inlines, PlainText:new(self.delimiter))
         else
-          table.insert(irs, Rendered:new({PlainText:new(" ")}))
+          table.insert(inlines, PlainText:new(" "))
         end
         local and_term
         if self["and"] == "text" then
@@ -457,38 +457,39 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
         elseif self["and"] == "symbol" then
           and_term = "&"
         end
-        table.insert(irs, Rendered:new({PlainText:new(and_term .. " ")}))
+        table.insert(inlines, PlainText:new(and_term .. " "))
       else
-        table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
+        table.insert(inlines, PlainText:new(self.delimiter))
       end
     end
-    local inlines = self:render_person_name(name, i > 1, context)
-    local rendered = Rendered:new(inlines, self)
-    -- util.debug(rendered)
-    table.insert(irs, rendered)
+    util.extend(inlines, self:render_person_name(name, i > 1, context))
   end
 
   if et_al_truncate then
     if et_al_last then
       local punctuation = self.delimiter .. util.unicode["horizontal ellipsis"] .. " "
-      table.insert(irs, Rendered:new({PlainText:new(punctuation)}))
-      local inlines = self:render_person_name(names[#names], self.et_al_use_first > 1, context)
-      table.insert(irs, Rendered:new(inlines, self))
+      table.insert(inlines, PlainText:new(punctuation))
+      util.extend(inlines, self:render_person_name(names[#names], self.et_al_use_first > 1, context))
     else
       if self:_check_delimiter(self.delimiter_precedes_et_al, self.et_al_use_first + 1) then
-        table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
+        table.insert(inlines, PlainText:new(self.delimiter))
       else
-        table.insert(irs, Rendered:new({PlainText:new(" ")}))
+        table.insert(inlines, PlainText:new(" "))
       end
-      table.insert(irs, et_al:build_ir(engine, state, context))
+      util.extend(inlines, et_al:render_term(context))
     end
   end
 
+  local output_format = context.format
+  inlines = output_format:with_format(inlines, self.formatting)
+  inlines = output_format:affixed(inlines, self.affixes)
+
+  local irs = {Rendered:new(inlines)}
+
   if label then
-    -- local label_ir = label:build_ir(variable, names, engine, state, context)
-    local label_term = context.locale:get_simple_term(variable, label.form, #names > 1)
+    local is_plural = (label.plural == "always" or (label.plural == "contextual" and #names > 1))
+    local label_term = context.locale:get_simple_term(variable, label.form, is_plural)
     if label_term and label_term ~= "" then
-      -- local label_ir = Rendered:new({PlainText:new(label_term)})
       local inlines = label:render_text_inlines(label_term, context)
       local label_ir = Rendered:new(inlines)
       if label.after_name then
@@ -1084,14 +1085,12 @@ function EtAl:from_node(node)
   return o
 end
 
-function EtAl:build_ir(engine, state, context)
+function EtAl:render_term(context)
   local term = context.locale:get_simple_term(self.term)
   local inlines= InlineElement:parse(term, context)
   inlines = context.format:with_format(inlines, self.formatting)
-  local ir = Rendered:new(inlines)
-  return ir
+  return inlines
 end
-
 
 function Substitute:from_node(node)
   local o = Substitute:new()

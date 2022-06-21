@@ -716,6 +716,16 @@ function OutputFormat:transform_case(str, text_case, seen_one, is_last, is_upper
   return res
 end
 
+function OutputFormat:affixed(inlines, affixes)
+  if affixes and affixes.prefix then
+    table.insert(inlines, 1, PlainText:new(affixes.prefix))
+  end
+  if affixes and affixes.suffix then
+    table.insert(inlines, PlainText:new(affixes.suffix))
+  end
+  return inlines
+end
+
 function OutputFormat:affixed_quoted(inlines, affixes, localized_quotes)
   if localized_quotes then
     inlines = self:quoted(inlines, localized_quotes)

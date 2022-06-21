@@ -18,15 +18,15 @@ label               11       5       3       0
 locale              21       2       0       0
 locator              2       4       0       0
 magic               26       9       5       0
-name                76      25      10       0
+name                77      24      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
 number              12       7       1       0
 page                 9       0       0       0
-plural               1       6       0       0
+plural               7       0       0       0
 position             2      11       3       0
-punctuation          3      10       3       0
+punctuation          4       9       3       0
 quotes               2       0       2       0
 simplespace          0       0       1       0
 sort                 5      11      50       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              448     221     185       0
+(all)              456     213     185       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -1430,12 +1430,6 @@ Passed in:
 Expected:
 (string) 'His Anonymous Life (this should appear)'
 
-Failure → citeproc test test-suite name_SubstituteOnNamesSpanGroupSpanFail.txt
-Passed in:
-(string) 'John Doe'
-Expected:
-(string) '(John Doe)'
-
 Failure → citeproc test test-suite name_SubstitutePartialEach.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -1507,42 +1501,6 @@ Passed in:
 (string) 'With One, 1.<sup>a</sup> edition, 1.<sup>a</sup> issue; With Two, 2 edition, 2 issue; With Three, 3 edition, 3 issue'
 Expected:
 (string) 'With One, 1.<sup>a</sup> edition, 1.<sup>o</sup> issue; With Two, 2.<sup>a</sup> edition, 2.<sup>o</sup><sup>o</sup> issue; With Three, 3.<sup>a</sup> edition, 3.<sup>a</sup> issue'
-
-Failure → citeproc test test-suite plural_NameLabelAlways.txt
-Passed in:
-(string) 'Doeed'
-Expected:
-(string) 'Doe eds'
-
-Failure → citeproc test test-suite plural_NameLabelContextualPlural.txt
-Passed in:
-(string) 'Doe and Roeeds'
-Expected:
-(string) 'Doe and Roe eds'
-
-Failure → citeproc test test-suite plural_NameLabelContextualSingular.txt
-Passed in:
-(string) 'Doeed'
-Expected:
-(string) 'Doe ed'
-
-Failure → citeproc test test-suite plural_NameLabelDefaultPlural.txt
-Passed in:
-(string) 'Doe and Roeeds'
-Expected:
-(string) 'Doe and Roe eds'
-
-Failure → citeproc test test-suite plural_NameLabelDefaultSingular.txt
-Passed in:
-(string) 'Doeed'
-Expected:
-(string) 'Doe ed'
-
-Failure → citeproc test test-suite plural_NameLabelNever.txt
-Passed in:
-(string) 'Doe and Roeeds'
-Expected:
-(string) 'Doe and Roe ed'
 
 Failure → citeproc test test-suite position_FirstTrueOnlyOnce.txt
 Passed in:
@@ -1687,12 +1645,6 @@ Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">J Doe, J Roe and R Noakes eds. Book Title</div>
 </div>'
-
-Failure → citeproc test test-suite punctuation_FieldDuplicates.txt
-Passed in:
-(string) 'Doe, J. 1965'
-Expected:
-(string) '<span style="font-variant:small-caps;">Doe, J.</span> 1965'
 
 Failure → citeproc test test-suite punctuation_FrenchOrthography.txt
 Passed in:
