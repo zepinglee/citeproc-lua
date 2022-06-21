@@ -81,7 +81,10 @@ function Date:build_ir(engine, state, context)
     ir = Rendered:new(inlines, self)
     ir.group_var = "important"
 
-  else -- TODO: raw
+  elseif variable["raw"] then
+    local inlines = self:render_text_inlines(variable["raw"], context)
+    ir = Rendered:new(inlines, self)
+    ir.group_var = "important"
 
   end
 

@@ -4,7 +4,7 @@ affix                5       3       1       0
 bugreports          17      13      52       0
 collapse             0      20       1       0
 condition            5      12       0       0
-date                80      15       6       0
+date                81      14       6       0
 decorations          5       2       0       0
 disambiguate        10      43      18       0
 display              0       0       5       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              411     262     181       0
+(all)              412     261     181       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -455,12 +455,6 @@ Passed in:
 (string) 'BookA.; BookB 2000.; BookC.; BookD 1999.; BookE.'
 Expected:
 (string) 'BookD 1999; BookB 2000; BookA; BookC; BookE.'
-
-Failure → citeproc test test-suite date_String.txt
-Passed in:
-(string) '[CSL STYLE ERROR: reference with no printed form.]'
-Expected:
-(string) 'date: Bogus Date'
 
 Failure → citeproc test test-suite date_Uncertain.txt
 Passed in:
@@ -2658,7 +2652,7 @@ Error → citeproc test test-suite date_AccessedCrash.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite date_DayOrdinalDayOneOnly.txt
-./citeproc/citeproc-node-date.lua:510: attempt to call a nil value (method 'get_locale_option')
+./citeproc/citeproc-node-date.lua:513: attempt to call a nil value (method 'get_locale_option')
 
 Error → citeproc test test-suite date_DisappearingBug.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
