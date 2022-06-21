@@ -429,27 +429,14 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     end
   end
 
+  local truncated_names = names
+  if et_al_truncate then
+    truncated_names = util.slice(names, 1, self.et_al_use_first)
+  end
+
   local irs = {}
 
-  for i, name in ipairs(names) do
-    if et_al_truncate and i > self.et_al_use_first then
-      if et_al_last then
-        if i == #names then
-          local punctuation = self.delimiter .. util.unicode["horizontal ellipsis"] .. " "
-          table.insert(irs, Rendered:new({PlainText:new(punctuation)}))
-          local inlines = self:render_person_name(name, i > 1, context)
-          table.insert(irs, Rendered:new(inlines, self))
-        end
-      else
-        if self:_check_delimiter(self.delimiter_precedes_et_al, i) then
-          table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
-        else
-          table.insert(irs, Rendered:new({PlainText:new(" ")}))
-        end
-        table.insert(irs, et_al:build_ir(engine, state, context))
-      end
-      break
-    end
+  for i, name in ipairs(truncated_names) do
     if i > 1 then
       if i == #names and self["and"] then
         if self:_check_delimiter(self.delimiter_precedes_last, i) then
@@ -472,6 +459,22 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     local rendered = Rendered:new(inlines, self)
     -- util.debug(rendered)
     table.insert(irs, rendered)
+  end
+
+  if et_al_truncate then
+    if et_al_last then
+      local punctuation = self.delimiter .. util.unicode["horizontal ellipsis"] .. " "
+      table.insert(irs, Rendered:new({PlainText:new(punctuation)}))
+      local inlines = self:render_person_name(names[#names], self.et_al_use_first > 1, context)
+      table.insert(irs, Rendered:new(inlines, self))
+    else
+      if self:_check_delimiter(self.delimiter_precedes_et_al, self.et_al_use_first + 1) then
+        table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
+      else
+        table.insert(irs, Rendered:new({PlainText:new(" ")}))
+      end
+      table.insert(irs, et_al:build_ir(engine, state, context))
+    end
   end
 
   if label then

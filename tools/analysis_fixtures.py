@@ -23,6 +23,7 @@ skipped_fixtures = [
     'label_EditorTranslator2.txt',
     'magic_CapitalizeFirstOccurringNameParticle.txt',
     'name_AfterInvertedName.txt',
+    'name_EditorTranslatorSameWithTerm.txt',
     'punctuation_FrenchOrthography.txt',
     'punctuation_FullMontyField.txt',
     'punctuation_FullMontyPlain.txt',
