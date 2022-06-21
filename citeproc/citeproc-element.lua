@@ -639,7 +639,6 @@ function Element:_apply_case(text, context)
 end
 
 function Element:format_number(number, variable, form, context)
-  number = string.gsub(number, util.unicode["en dash"], "-")
   if variable == "locator" then
     variable = context:get_variable("label")
   end
@@ -687,6 +686,7 @@ function Element:format_number(number, variable, form, context)
 end
 
 function Element:split_number_parts(number)
+  number = string.gsub(number, util.unicode["en dash"], "-")
   local number_part_list = {}
   for start, stop, spaces, delim in string.gmatch(number, "([^-,&%s]+)%s*%-?%s*([^-,&%s]*)(%s*)([,&]?)") do
     if delim == "" then
@@ -695,6 +695,11 @@ function Element:split_number_parts(number)
       delim = ", "
     elseif delim == "&" then
       delim = " & "
+    end
+    if util.endswith(start, "\\") then
+      start = string.sub(start, 1, -2)
+      start = start .. "-" .. stop
+      stop = ""
     end
     table.insert(number_part_list, {start, stop, delim})
   end

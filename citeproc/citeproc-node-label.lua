@@ -43,7 +43,11 @@ function Label:build_ir(engine, state, context)
     is_plural = self:_is_variable_plural(self.variable, context)
   end
 
-  local text = context:get_simple_term(self.variable, self.form, is_plural)
+  local variable = self.variable
+  if variable == "locator" then
+    variable = context:get_variable("label")
+  end
+  local text = context:get_simple_term(variable, self.form, is_plural)
   if not text then
     return nil
   end
@@ -63,12 +67,20 @@ function Label:_is_variable_plural(variable, context)
   elseif variable_type == "number" then
     if util.startswith(variable, "number-of-") then
       return tonumber(value) > 1
-    elseif string.match(value, "[,&-]") then
-      return true
-    elseif string.match(value, "%Wand%W") then
-      return true
-    elseif string.match(value, "%Wet%W") then
-      return true
+    else
+      value = tostring(value)
+      -- label_CollapsedPageNumberPluralDetection.txt
+      -- 327\-30 => single
+      value = string.gsub(value, "\\%-", "")
+      if string.match(value, "[,&-]") then
+        return true
+      elseif string.match(value, util.unicode["en dash"]) then
+        return true
+      elseif string.match(value, "%Wand%W") then
+        return true
+      elseif string.match(value, "%Wet%W") then
+        return true
+      end
     end
   end
   return false
