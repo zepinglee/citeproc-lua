@@ -698,7 +698,7 @@ function Element:split_number_parts(number)
     end
     local start = single_number
     local stop = ""
-    local splits = util.split(start, "%-")
+    local splits = util.split(start, "%s*%-%s*")
     if #splits == 2 then
       start, stop = table.unpack(splits)
       if util.endswith(start, "\\") then
@@ -706,11 +706,12 @@ function Element:split_number_parts(number)
         start = start .. "-" .. stop
         stop = ""
       end
-      if string.match(start, "^%a*%d+%a*$") and string.match(stop, "^%a*%d+%a*$") then
+      -- if string.match(start, "^%a*%d+%a*$") and string.match(stop, "^%a*%d+%a*$") then
+      --   if s
         table.insert(number_part_list, {start, stop, delim})
-      else
-        table.insert(number_part_list, {start .. "-" .. stop, "", delim})
-      end
+      -- else
+        -- table.insert(number_part_list, {start .. "-" .. stop, "", delim})
+      -- end
     else
       table.insert(number_part_list, {start, stop, delim})
     end
