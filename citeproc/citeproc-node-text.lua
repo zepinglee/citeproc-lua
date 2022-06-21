@@ -102,6 +102,9 @@ function Text:build_macro_ir(engine, state, context)
     ir.affixes = util.clone(self.affixes)
     ir.display = self.display
     ir.formatting = util.clone(self.formatting)
+    if self.quotes then
+      ir.quotes = context:get_localized_quotes()
+    end
   end
   return ir
 end

@@ -9,7 +9,7 @@ decorations          6       1       0       0
 disambiguate        10      43      18       0
 display              0       0       5       0
 etal                 1       1       2       0
-flipflop            10       8       1       0
+flipflop            11       7       1       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
 group                1       3       3       0
@@ -26,7 +26,7 @@ number              12       7       1       0
 page                 9       0       0       0
 plural               7       0       0       0
 position             2      11       3       0
-punctuation          4       9       3       0
+punctuation          5       8       3       0
 quotes               2       0       2       0
 simplespace          0       0       1       0
 sort                 5      11      50       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              456     213     185       0
+(all)              458     211     185       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -875,12 +875,6 @@ Passed in:
 (string) 'Nation of “Positive Obligations ” of State under the European Convention on Human Rights (1)'
 Expected:
 (string) 'Nation of "Positive Obligations " of State under the European Convention on Human Rights (1)'
-
-Failure → citeproc test test-suite flipflop_QuotesNodeLevelMarkup.txt
-Passed in:
-(string) 'Speak, “friend” of mine on this day, March 15, 1973, and enter.'
-Expected:
-(string) '“Speak, ‘friend’ of mine on this day, March 15, 1973, and enter.”'
 
 Failure → citeproc test test-suite flipflop_SingleBeforeColon.txt
 Passed in:
@@ -2043,12 +2037,6 @@ ENDING IN COMMA
 “exclamation”!, comma
 “question”?, comma
 “comma”, comma'
-
-Failure → citeproc test test-suite punctuation_OnMacro.txt
-Passed in:
-(string) 'My Title. My Publisher'
-Expected:
-(string) '“My Title.” My Publisher'
 
 Failure → citeproc test test-suite sort_CaseInsensitiveCitation.txt
 Passed in:

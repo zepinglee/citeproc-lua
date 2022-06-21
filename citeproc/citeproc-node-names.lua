@@ -129,7 +129,6 @@ function Names:build_ir(engine, state, context)
   end
 
   if self.substitute then
-    util.debug(self.substitute.children)
     for _, element in ipairs(self.substitute.children) do
       local ir = element:build_ir(engine, state, context)
       if ir then
