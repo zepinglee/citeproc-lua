@@ -118,23 +118,30 @@ function Names:build_ir(engine, state, context)
     end
   end
 
-  if names_inheritance.label then
-
+  if #irs > 0 then
+    local ir = SeqIr:new(irs, self)
+    ir.group_var = "important"
+    ir.delimiter = names_inheritance.delimiter
+    ir.formatting = util.clone(names_inheritance.formatting)
+    ir.affixes = util.clone(names_inheritance.affixes)
+    ir.display = names_inheritance.display
+    return ir
   end
 
-  local ir = SeqIr:new(irs, self)
-  if #irs == 0 then
-    ir.group_var = "missing"
-    return
+  if self.substitute then
+    util.debug(self.substitute.children)
+    for _, element in ipairs(self.substitute.children) do
+      local ir = element:build_ir(engine, state, context)
+      if ir then
+        return ir
+      end
+    end
   end
 
-  ir.group_var = "important"
-
-  ir.delimiter = names_inheritance.delimiter
-  ir.formatting = util.clone(names_inheritance.formatting)
-  ir.affixes = util.clone(names_inheritance.affixes)
-  ir.display = names_inheritance.display
+  local ir = Rendered:new()
+  ir.group_var = "missing"
   return ir
+
 end
 
 
@@ -1086,23 +1093,10 @@ function EtAl:build_ir(engine, state, context)
 end
 
 
-function Substitute:render (item, context)
-  self:debug_info(context)
-
-  if context.suppressed_variables then
-    -- true in layout, not in sort
-    context.suppress_subsequent_variables = true
-  end
-
-  for i, child in ipairs(self:get_children()) do
-    if child:is_element() then
-      local result = child:render(item, context)
-      if result and result ~= "" then
-        return result
-      end
-    end
-  end
-  return nil
+function Substitute:from_node(node)
+  local o = Substitute:new()
+  o:process_children_nodes(node)
+  return o
 end
 
 

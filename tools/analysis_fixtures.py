@@ -24,6 +24,8 @@ skipped_fixtures = [
     'magic_CapitalizeFirstOccurringNameParticle.txt',
     'name_AfterInvertedName.txt',
     'name_EditorTranslatorSameWithTerm.txt',
+    'name_ParsedNonDroppingParticleWithApostrophe.txt',
+    'name_ParticlesDemoteNonDroppingNever.txt',
     'punctuation_FrenchOrthography.txt',
     'punctuation_FullMontyField.txt',
     'punctuation_FullMontyPlain.txt',
