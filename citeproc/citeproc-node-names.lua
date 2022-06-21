@@ -1021,8 +1021,9 @@ end
 
 function EtAl:build_ir(engine, state, context)
   local term = context.locale:get_simple_term(self.term)
-  local ir = Rendered:new({PlainText:new(term)})
-  ir.formatting = util.clone(self.formatting)
+  local inlines= InlineElement:parse(term)
+  inlines = context.format:with_format(inlines, self.formatting)
+  local ir = Rendered:new(inlines)
   return ir
 end
 

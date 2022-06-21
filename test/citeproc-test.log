@@ -8,7 +8,7 @@ date                81      14       6       0
 decorations          6       1       0       0
 disambiguate        10      43      18       0
 display              0       0       5       0
-etal                 0       2       2       0
+etal                 1       1       2       0
 flipflop             9       9       1       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              421     252     181       0
+(all)              422     251     181       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -851,12 +851,6 @@ Expected:
 (string) '(Smith 2000a; 2000b; 2000c)
 (Smith 2000b)
 (Smith 2000c)'
-
-Failure → citeproc test test-suite etal_ShortFormOfName.txt
-Passed in:
-(string) 'Doe et al.'
-Expected:
-(string) 'Doe <i>et al.</i>'
 
 Failure → citeproc test test-suite etal_UseZeroFirst.txt
 Passed in:
