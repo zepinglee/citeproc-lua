@@ -515,7 +515,7 @@ function Name:render_person_name(person_name, seen_one, context)
   -- TODO
   local is_sort = false
   local demote_ndp = context.style.demote_non_dropping_particle == "display-and-sort" or
-    (context.style.demote_non_dropping_particle == "sort-only" and true)
+    (context.style.demote_non_dropping_particle == "sort-only" and is_sort)
 
   self:parse_name_particle(person_name)
 

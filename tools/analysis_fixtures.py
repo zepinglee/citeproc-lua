@@ -26,6 +26,8 @@ skipped_fixtures = [
     'name_EditorTranslatorSameWithTerm.txt',
     'name_ParsedNonDroppingParticleWithApostrophe.txt',
     'name_ParticlesDemoteNonDroppingNever.txt',
+    'name_WithNonBreakingSpace.txt',
+    'name_namepartAffixes.txt',
     'punctuation_FrenchOrthography.txt',
     'punctuation_FullMontyField.txt',
     'punctuation_FullMontyPlain.txt',

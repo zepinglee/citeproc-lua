@@ -18,7 +18,7 @@ label               11       5       3       0
 locale              21       2       0       0
 locator              2       4       0       0
 magic               26       9       5       0
-name                75      26      10       0
+name                76      25      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              447     222     185       0
+(all)              448     221     185       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -1459,12 +1459,6 @@ Passed in:
 (string) '[Jean de] (La Fontaine) III'
 Expected:
 (string) '[Jean] (de La Fontaine III)'
-
-Failure → citeproc test test-suite name_namepartAffixesNameAsSortOrder.txt
-Passed in:
-(string) '(Fontaine) [Jean de La] III'
-Expected:
-(string) '(La Fontaine) [Jean de] III'
 
 Failure → citeproc test test-suite number_LeadingZeros.txt
 Passed in:
