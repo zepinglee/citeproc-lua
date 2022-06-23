@@ -550,13 +550,29 @@ function Name:render_person_name(person_name, seen_one, context)
 end
 
 function Name:parse_name_particle(person_name)
-  -- name_ParsedDroppingParticleWithApostrophe.txt
-  -- "François Hédelin d'" => "François Hédelin"
-  if person_name["non-dropping-particle"] or not person_name.given or person_name.given == "" then
+  if person_name.given == "" then
+    person_name.given = nil
+  end
+  if not person_name.given then
     return
   end
+
   if string.match(person_name.given, ",") then
     -- name_ParsedCommaDelimitedDroppingParticleSortOrderingWithoutAffixes.txt
+    -- Split name suffix: magic_NameSuffixNoComma.txt
+    -- "John, III" => given: "John", suffix: "III"
+    if person_name.suffix then
+      return
+    end
+
+    local words = util.split(person_name.given, ",%s*")
+    person_name.suffix = words[#words]
+    person_name.given = table.concat(util.slice(words, 1, -2), ", ")
+  end
+
+  -- name_ParsedDroppingParticleWithApostrophe.txt
+  -- "François Hédelin d'" => "François Hédelin"
+  if person_name["non-dropping-particle"] then
     return
   end
   local words = util.split(person_name.given)

@@ -13,6 +13,7 @@ skipped_fixtures = [
     'bugreports_BadCitationUpdate.txt',
     'bugreports_EtAlSubsequent.txt',
     'bugreports_FrenchApostrophe.txt',
+    'condition_EmptyDate.txt',
     'date_IgnoreNonexistentSort.txt',
     'date_NonexistentSortReverseCitation.txt',
     'decorations_NoNormalWithoutDecoration.txt',
@@ -61,7 +62,7 @@ paths = sorted([
     # and not f.startswith('decorations_')
     and not f.startswith('disambiguate_')
     # and not f.startswith('flipflop_')
-    and not f.startswith('magic_Name')
+    # and not f.startswith('magic_Name')
     # and not f.startswith('name')
     # and not f.startswith('number_')
     and not f.startswith('sort_')
