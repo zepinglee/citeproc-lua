@@ -213,7 +213,10 @@ function Info:from_node(node)
 end
 
 
-local Citation = Element:derive("citation")
+local Citation = Element:derive("citation", {
+  cite_group_delimiter = ", ",
+  near_note_distance = 5,
+})
 
 function Citation:from_node(node, style)
 
@@ -248,7 +251,7 @@ function Citation:from_node(node, style)
   o:set_attribute(node, "after-collapse-delimiter")
 
   -- Note Distance
-  o:set_bool_attribute(node, "disambiguate-add-names")
+  o:set_number_attribute(node, "near-note-distance")
 
   local name_inheritance = require("citeproc-node-names").Name:new()
   for key, value in pairs(style.name_inheritance) do

@@ -78,7 +78,7 @@ function If:from_node(node)
   o:add_conditions(node, "is-numeric")
   o:add_conditions(node, "is-uncertain-date")
   o:add_conditions(node, "locator")
-  o:add_conditions(node, "postition")
+  o:add_conditions(node, "position")
   o:add_conditions(node, "type")
   o:add_conditions(node, "variable")
 
@@ -116,6 +116,7 @@ end
 
 function If:evaluate_conditions(engine, state, context)
   local res = false
+  -- util.debug(self.conditions)
   for _, condition in ipairs(self.conditions) do
     if self:evaluate_condition(condition, state, context) then
       if self.match == "any" then
@@ -137,6 +138,7 @@ function If:evaluate_conditions(engine, state, context)
 end
 
 function If:evaluate_condition(condition, state, context)
+  -- util.debug(condition)
   if condition.condition == "is-numeric" then
     local variable = context:get_variable(condition.value)
     return util.is_numeric(variable)
@@ -152,7 +154,7 @@ function If:evaluate_condition(condition, state, context)
     end
     return locator_label == condition.value
 
-  elseif condition.condition == "locator" then
+  elseif condition.condition == "position" then
     if context.in_bibliography then
       return false
     end
@@ -160,11 +162,17 @@ function If:evaluate_condition(condition, state, context)
     local position = condition.value
     if context.mode == "citation" then
       if position == "first" then
-        res = (context.item.position == util.position_map["first"])
+        res = (context.cite.position == util.position_map["first"])
       elseif position == "near-note" then
-        res = context.item["near-note"] ~= nil and context.item["near-note"] ~= false
+        util.debug(context.cite)
+        local near_note = context.cite["near-note"]
+        if near_note ~= nil then
+          return near_note
+        end
+        local note_distance = context.cite.note_number - context.cite.last_reference_note_number
+        return note_distance >= 0 and note_distance <= context.area.near_note_distance
       else
-        res = (context.item.position >= util.position_map[position])
+        res = (context.cite.position >= util.position_map[position])
       end
     end
     return res

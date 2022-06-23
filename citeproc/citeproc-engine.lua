@@ -229,19 +229,25 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
       end
 
       local first_reference_note_number = nil
+      local last_reference_note_number = nil
       for _, pre_citation in ipairs(citationsPre) do
         pre_citation = self.registry.citations[pre_citation[1]]
         for _, pre_cite_item in ipairs(pre_citation.citationItems) do
           if pre_cite_item.id == cite_item.id then
-            first_reference_note_number = pre_citation.properties.noteIndex
+            if not first_reference_note_number then
+              first_reference_note_number = pre_citation.properties.noteIndex
+            end
+            last_reference_note_number = pre_citation.properties.noteIndex
+            break
           end
-          break
-        end
-        if first_reference_note_number then
-          break
         end
       end
       item["first-reference-note-number"] = first_reference_note_number
+      item.last_reference_note_number = last_reference_note_number
+      item.note_number = citation.properties.noteIndex
+      if type(item.note_number) ~= "number" then
+        item.note_number = 0
+      end
 
       table.insert(items, item)
     end
