@@ -37,7 +37,10 @@ function Number:from_node(node)
 end
 
 function Number:build_ir(engine, state, context)
-  local number = context:get_variable(self.variable, self.form)
+  local number
+  if not state.suppressed[self.variable] then
+    number = context:get_variable(self.variable, self.form)
+  end
   if not number then
     local ir = Rendered:new()
     ir.group_var = "missing"
@@ -52,7 +55,14 @@ function Number:build_ir(engine, state, context)
   end
 
   local inlines = self:render_text_inlines(number, context)
-  return Rendered:new(inlines, self)
+  local ir = Rendered:new(inlines, self)
+  ir.group_var = "important"
+
+  -- Suppress substituted name variable
+  if state.name_override then
+    state.suppressed[self.variable] = true
+  end
+  return ir
 end
 
 

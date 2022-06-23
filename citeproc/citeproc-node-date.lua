@@ -41,7 +41,10 @@ function Date:from_node(node)
 end
 
 function Date:build_ir(engine, state, context)
-  local variable = context:get_variable(self.variable)
+  local variable
+  if not state.suppressed[variable] then
+    variable = context:get_variable(self.variable)
+  end
 
   if not variable then
     local ir = Rendered:new()
@@ -97,6 +100,13 @@ function Date:build_ir(engine, state, context)
     ir = Rendered:new()
     ir.group_var = "missing"
     return ir
+  end
+
+  if ir.group_var == "important" then
+    -- Suppress substituted name variable
+    if state.name_override then
+      state.suppressed[self.variable] = true
+    end
   end
 
   ir.affixes = self.affixes

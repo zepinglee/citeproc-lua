@@ -69,7 +69,10 @@ end
 
 function Text:build_variable_ir(engine, state, context)
   local variable = self.variable
-  local text = context:get_variable(variable, self.form)
+  local text
+  if not state.suppressed[variable] then
+    text = context:get_variable(variable, self.form)
+  end
   if not text then
     local ir = Rendered:new()
     ir.group_var = "missing"
@@ -89,6 +92,12 @@ function Text:build_variable_ir(engine, state, context)
   local inlines = self:render_text_inlines(text, context)
   local ir = Rendered:new(inlines, self)
   ir.group_var = "important"
+
+  -- Suppress substituted name variable
+  if state.name_override then
+    state.suppressed[variable] = true
+  end
+
   return ir
 end
 

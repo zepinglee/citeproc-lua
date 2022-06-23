@@ -18,7 +18,7 @@ label               12       4       3       0
 locale              21       2       0       0
 locator              3       3       0       0
 magic               29       7       4       0
-name                81      20      10       0
+name                82      19      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       0       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              493     179     182       0
+(all)              494     178     182       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -1239,12 +1239,6 @@ Expected:
 <b>Familyname</b>, <i>Givenname</i> <i>des</i>
 <b>Familyname</b>, <i>Givenname</i> <i>auf den</i>'
 
-Failure → citeproc test test-suite name_QuashOrdinaryVariableRenderedViaSubstitute.txt
-Passed in:
-(string) 'Case NameCase Name'
-Expected:
-(string) 'Case Name'
-
 Failure → citeproc test test-suite name_SubsequentAuthorSubstituteMultipleNames.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -1950,7 +1944,7 @@ Expected:
 (string) 'John von Doe: An about up Life; John van Doe? A Life; John d’Doe! A Life; John de Doe a Life'
 
 Error → citeproc test test-suite affix_InterveningEmpty.txt
-./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite affix_WithCommas.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2046,7 +2040,7 @@ Error → citeproc test test-suite bugreports_SelfLink.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite bugreports_SingleQuote.txt
-./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite bugreports_SingleQuoteXml.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2079,10 +2073,10 @@ Error → citeproc test test-suite bugreports_UndefinedInName2.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite bugreports_UndefinedInName3.txt
-./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite bugreports_UndefinedNotString.txt
-./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite bugreports_YearSuffixInHarvard1.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2121,7 +2115,7 @@ Error → citeproc test test-suite date_AccessedCrash.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite date_DayOrdinalDayOneOnly.txt
-./citeproc/citeproc-node-date.lua:517: attempt to call a nil value (method 'get_locale_option')
+./citeproc/citeproc-node-date.lua:527: attempt to call a nil value (method 'get_locale_option')
 
 Error → citeproc test test-suite date_DisappearingBug.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2280,7 +2274,7 @@ Error → citeproc test test-suite name_EditorTranslatorWithTranslatorOnlyBib.tx
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite name_EtAlWithCombined.txt
-./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite name_HyphenatedNonDroppingParticle1.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2298,7 +2292,7 @@ Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite number_PreserveDelimiter.txt
-./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite position_IbidWithLocator.txt
 ./citeproc/citeproc-node-locale.lua:99: attempt to concatenate a nil value (local 'key')
@@ -2478,7 +2472,7 @@ Error → citeproc test test-suite substitute_SharedMacro.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite substitute_SuppressOrdinaryVariable.txt
-./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite testers_FirstAutoGeneratedZoteroPluginTest.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2490,7 +2484,7 @@ Error → citeproc test test-suite textcase_RepeatedTitleBug.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite variables_ContainerTitleShort.txt
-./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite variables_ContainerTitleShort2.txt
-./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
