@@ -558,9 +558,10 @@ function Name:parse_name_particle(person_name)
   end
 
   if string.match(person_name.given, ",") then
-    -- name_ParsedCommaDelimitedDroppingParticleSortOrderingWithoutAffixes.txt
+    -- name_ParsedCommaDelimitedDroppingParticleSortOrderingWithoutAffixes.txt?
     -- Split name suffix: magic_NameSuffixNoComma.txt
     -- "John, III" => given: "John", suffix: "III"
+    -- magic_NameSuffixWithComma.txt?
     if person_name.suffix then
       return
     end

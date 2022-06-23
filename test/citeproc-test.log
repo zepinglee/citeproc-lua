@@ -1,31 +1,31 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                4       3       2       0
-bugreports          19      10      53       0
+bugreports          19      14      49       0
 collapse             0      17       4       0
-condition            6      10       1       0
+condition            8       8       1       0
 date                81      14       6       0
 decorations          6       1       0       0
 disambiguate        10      43      18       0
-display              0       0       5       0
+display              0       1       4       0
 etal                 1       1       2       0
 flipflop            11       7       1       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
-group                1       2       4       0
+group                1       3       3       0
 integration          4       9       1       0
 label               11       5       3       0
 locale              21       2       0       0
 locator              2       4       0       0
-magic               27       8       5       0
+magic               27       9       4       0
 name                77      24      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
-number              12       6       2       0
+number              12       5       3       0
 page                 9       0       0       0
 plural               7       0       0       0
-position             2      11       3       0
+position             3      11       2       0
 punctuation          5       8       3       0
 quotes               2       0       2       0
 simplespace          0       0       1       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            2       1       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              464     202     188       0
+(all)              467     206     181       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -63,6 +63,23 @@ Passed in:
 (string) 'John d’ Jones'
 Expected:
 (string) 'John d’Jones'
+
+Failure → citeproc test test-suite bugreports_AutomaticallyDeleteItemsFails.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"> J. Doe, <i>Book A</i>, 2000.</div>
+  <div class="csl-entry"> J. Doe, <i>Book B</i>, 2000.</div>
+  <div class="csl-entry"> R. Snoakes, <i>Book C</i>, 2000.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Doe, <i>Book A</i>, 2000.</div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> J. Doe, <i>Book B</i>, 2000.</div>
+  </div>
+</div>'
 
 Failure → citeproc test test-suite bugreports_BadCitationUpdate.txt
 Passed in:
@@ -90,6 +107,18 @@ Passed in:
 Expected:
 (string) '[1, 32; 2, 32; 3, 32]'
 
+Failure → citeproc test test-suite bugreports_DuplicateSpaces.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>,  New York: Routledge, 2006.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, New York: Routledge, 2006.</div>
+  </div>
+</div>'
+
 Failure → citeproc test test-suite bugreports_EnvAndUrb.txt
 Passed in:
 (string) '..[0] Baines, T S, O Benedettini and J M Kay, ‘Title One’.; Baines, T S, F Gump and J M Kay, ‘Title Two’.
@@ -114,6 +143,18 @@ Passed in:
 Expected:
 (string) '« Life’s “Little” Surprises »'
 
+Failure → citeproc test test-suite bugreports_IeeePunctuation.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"> P.G. Zimbardo, <i>Does Psychology make a significant difference in our lives?</i>, 2004.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> P.G. Zimbardo, “Does Psychology make a significant difference in our lives?,” <i>American Psychologist</i>, vol. 59, Jan. 2004, pp. 339–351.</div>
+  </div>
+</div>'
+
 Failure → citeproc test test-suite bugreports_LegislationCrash.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -122,6 +163,18 @@ Passed in:
 Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry"><i>Arrêté du 23 mars 1992 relatif au programme des études conduisant au diplôme d’État d’infirmier</i>, 1992. </div>
+</div>'
+
+Failure → citeproc test test-suite bugreports_UndefinedStr.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"> FamilyName G. The Title. n.d.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> FamilyName G. n.d.</div>
+  </div>
 </div>'
 
 Failure → citeproc test test-suite bugreports_parseName.txt
@@ -264,21 +317,9 @@ Have date, will travel'
 
 Failure → citeproc test test-suite condition_LocatorIsFalse.txt
 Passed in:
-(string) 'Book One: (1) Locator false (2) Locator false; Book Two: (1) Locator false (2) Locator false'
+(string) 'Book One: (1) Locator false (2) Locator true; Book Two: (1) Locator false (2) Locator true'
 Expected:
 (string) 'Book One: (1) Locator true (2) Locator true; Book Two: (1) Locator false (2) Locator false'
-
-Failure → citeproc test test-suite condition_MatchAll.txt
-Passed in:
-(string) 'Some Title or Otherviewed1 June 1965'
-Expected:
-(string) 'Some Title or Other'
-
-Failure → citeproc test test-suite condition_NameAndTextVars.txt
-Passed in:
-(string) 'should not be this'
-Expected:
-(string) 'should be this!'
 
 Failure → citeproc test test-suite condition_NumberIsNumeric.txt
 Passed in:
@@ -300,8 +341,8 @@ Expected:
 
 Failure → citeproc test test-suite condition_VariableAll.txt
 Passed in:
-(string) 'TRUE
-TRUE'
+(string) 'FALSE
+FALSE'
 Expected:
 (string) 'TRUE
 FALSE'
@@ -316,8 +357,8 @@ FALSE'
 
 Failure → citeproc test test-suite condition_VariableNone.txt
 Passed in:
-(string) 'TRUE
-TRUE'
+(string) 'FALSE
+FALSE'
 Expected:
 (string) 'TRUE
 FALSE'
@@ -786,6 +827,22 @@ Expected:
 (Smith 2000b)
 (Smith 2000c)'
 
+Failure → citeproc test test-suite display_SecondFieldAlignMigratePunctuation.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005.</div>
+  <div class="csl-entry"> F.G. Bennett Jr., <i>Getting Property Right: ’Informal’ Mortgages in the Japanese Courts</i>, 2009.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005.</div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> F.G. Bennett Jr., “Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>, vol. 18, Aug. 2009, pp. 463–509.</div>
+  </div>
+</div>'
+
 Failure → citeproc test test-suite etal_UseZeroFirst.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -845,6 +902,12 @@ Passed in:
 (string) '“Nobody Knows You’Re a Dog”: As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
 Expected:
 (string) '“Nobody Knows You’re a Dog”: As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
+
+Failure → citeproc test test-suite group_LegalWithAuthorDate.txt
+Passed in:
+(string) '>>[0] (2000); (Pineapple Case: 2000)'
+Expected:
+(string) '>>[0] (Álvarez: 2000; Pineapple Case: 2000)'
 
 Failure → citeproc test test-suite group_SuppressTermWhenNoOutputFromPartialDate.txt
 Passed in:
@@ -1004,11 +1067,19 @@ Expected:
 
 Failure → citeproc test test-suite locator_WorkaroundTestForSubVerbo.txt
 Passed in:
-(string) 'Book With Opus, 100
-Book With Sub Verbo, 200'
+(string) 'Book With Opus, op. 100
+Book With Sub Verbo 200'
 Expected:
 (string) 'Book With Opus, op. 100
 Book With Sub Verbo, 200'
+
+Failure → citeproc test test-suite magic_AllowRepeatDateRenderings.txt
+Passed in:
+(string) '(2006).
+(2007).'
+Expected:
+(string) '(2006).
+(2007, February 15).'
 
 Failure → citeproc test test-suite magic_ImplicitYearSuffixDelimiter.txt
 Passed in:
@@ -1424,17 +1495,21 @@ Passed in:
 Expected:
 (string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) pages i–ix (cs:text) vs His Anonymous Life (2) pages i–ix (cs:number); His Anonymous Life (3) page 3-B (cs:text) vs His Anonymous Life (3) page 3-B (cs:number); His Anonymous Life (4) page Michaelson-Morely (cs:text) vs His Anonymous Life (4) page Michaelson-Morely (cs:number)'
 
-Failure → citeproc test test-suite number_PreserveDelimiter.txt
-Passed in:
-(string) '. Pages 187–228 <i>in</i> C. S. Stephen and M. L. Brown, editors. Analysis and interpretation of freshwater fisheries data C. S. Stephen and M. L. Brown, editors'
-Expected:
-(string) '. Pages 187–228 <i>in</i> C. S. Stephen and M. L. Brown, editors. Analysis and interpretation of freshwater fisheries data'
-
 Failure → citeproc test test-suite number_SeparateOrdinalNamespaces.txt
 Passed in:
 (string) 'With One, 1.<sup>a</sup> edition, 1.<sup>a</sup> issue; With Two, 2 edition, 2 issue; With Three, 3 edition, 3 issue'
 Expected:
 (string) 'With One, 1.<sup>a</sup> edition, 1.<sup>o</sup> issue; With Two, 2.<sup>a</sup> edition, 2.<sup>o</sup><sup>o</sup> issue; With Three, 3.<sup>a</sup> edition, 3.<sup>a</sup> issue'
+
+Failure → citeproc test test-suite position_FalseInBibliography.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">I am weak, and I have failed.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">His Anonymous Life</div>
+</div>'
 
 Failure → citeproc test test-suite position_FirstTrueOnlyOnce.txt
 Passed in:
@@ -1516,9 +1591,9 @@ Ibid.'
 
 Failure → citeproc test test-suite position_NearNoteSameNote.txt
 Passed in:
-(string) '..[0] Near+Ibid:Book-A; Near+Ibid:Book-A
-..[1] Near+Ibid:Book-B
->>[2] Near+Ibid:Book-B; Near+Ibid:Book-A'
+(string) '..[0] Plain+Vanilla:Book-A; Plain+Vanilla:Book-A
+..[1] Plain+Vanilla:Book-B
+>>[2] Plain+Vanilla:Book-B; Plain+Vanilla:Book-A'
 Expected:
 (string) '..[0] Plain+Vanilla:Book-A; Near+Ibid:Book-A
 ..[1] Plain+Vanilla:Book-B
@@ -1543,12 +1618,6 @@ Expected:
 ..[5] Book A, n 1 (note 3)
 ..[6] Book C, n 1 (note 4)
 >>[7] Book A, n 1 (note 5)'
-
-Failure → citeproc test test-suite position_TrueInCitation.txt
-Passed in:
-(string) 'His Anonymous Life'
-Expected:
-(string) 'I am weak, and I have failed.'
 
 Failure → citeproc test test-suite punctuation_DelimiterWithStripPeriodsAndSubstitute1.txt
 Passed in:
@@ -2113,9 +2182,6 @@ Error → citeproc test test-suite bugreports_AuthorPosition.txt
 Error → citeproc test test-suite bugreports_AuthorYear.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite bugreports_AutomaticallyDeleteItemsFails.txt
-./citeproc/citeproc-node-choose.lua:172: attempt to index a nil value (field 'cite')
-
 Error → citeproc test test-suite bugreports_BadDelimiterBeforeCollapse.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -2143,9 +2209,6 @@ Error → citeproc test test-suite bugreports_DisambiguationAddNamesBibliography
 Error → citeproc test test-suite bugreports_DoubleEncodedAngleBraces.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite bugreports_DuplicateSpaces.txt
-./citeproc/citeproc-node-choose.lua:172: attempt to index a nil value (field 'cite')
-
 Error → citeproc test test-suite bugreports_DuplicateSpaces2.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -2163,9 +2226,6 @@ Error → citeproc test test-suite bugreports_GreekStyleProblems.txt
 
 Error → citeproc test test-suite bugreports_GreekStyleTwoEditors.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_IeeePunctuation.txt
-./citeproc/citeproc-node-choose.lua:172: attempt to index a nil value (field 'cite')
 
 Error → citeproc test test-suite bugreports_LabelsOutOfPlace.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2235,9 +2295,6 @@ Error → citeproc test test-suite bugreports_UndefinedInName3.txt
 
 Error → citeproc test test-suite bugreports_UndefinedNotString.txt
 ./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')
-
-Error → citeproc test test-suite bugreports_UndefinedStr.txt
-./citeproc/citeproc-node-choose.lua:172: attempt to index a nil value (field 'cite')
 
 Error → citeproc test test-suite bugreports_YearSuffixInHarvard1.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2356,9 +2413,6 @@ Error → citeproc test test-suite display_LostSuffix.txt
 Error → citeproc test test-suite display_SecondFieldAlignClone.txt
 ./citeproc/citeproc-output.lua:500: bad argument #1 to 'for iterator' (table expected, got nil)
 
-Error → citeproc test test-suite display_SecondFieldAlignMigratePunctuation.txt
-./citeproc/citeproc-node-choose.lua:172: attempt to index a nil value (field 'cite')
-
 Error → citeproc test test-suite etal_CitationAndBibliographyDecorationsInBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -2386,9 +2440,6 @@ Error → citeproc test test-suite fullstyles_ChicagoNoteWithBibliographyWithPub
 Error → citeproc test test-suite group_ComplexNesting.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite group_LegalWithAuthorDate.txt
-./citeproc/citeproc-util.lua:258: bad argument #1 to 'gmatch' (string expected, got table)
-
 Error → citeproc test test-suite group_SuppressTermInMacro.txt
 ./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')
 
@@ -2406,9 +2457,6 @@ Error → citeproc test test-suite label_MissingReturnsEmpty.txt
 
 Error → citeproc test test-suite label_NameLabelThroughSubstitute.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite magic_AllowRepeatDateRenderings.txt
-./citeproc/citeproc-util.lua:258: bad argument #1 to 'gmatch' (string expected, got table)
 
 Error → citeproc test test-suite magic_CitationLabelInBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2458,14 +2506,14 @@ Error → citeproc test test-suite number_LimitOrdinalsToDayOne.txt
 Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite position_FalseInBibliography.txt
-./citeproc/citeproc-node-choose.lua:172: attempt to index a nil value (field 'cite')
+Error → citeproc test test-suite number_PreserveDelimiter.txt
+./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite position_IbidWithSuffix.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite position_NearNoteWithPlugin.txt
-./citeproc/citeproc-util.lua:258: bad argument #1 to 'gmatch' (string expected, got table)
+./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite punctuation_DefaultYearSuffixDelimiter.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2600,10 +2648,10 @@ Error → citeproc test test-suite sort_NumberOfAuthorsAsKey.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_OmittedBibRefMixedNumericStyle.txt
-./citeproc/citeproc-node-choose.lua:172: attempt to index a nil value (field 'cite')
+./citeproc/citeproc-engine.lua:397: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_OmittedBibRefNonNumericStyle.txt
-./citeproc/citeproc-node-choose.lua:172: attempt to index a nil value (field 'cite')
+./citeproc/citeproc-engine.lua:397: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_Quotes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2651,7 +2699,7 @@ Error → citeproc test test-suite textcase_RepeatedTitleBug.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite variables_ContainerTitleShort.txt
-./citeproc/citeproc-node-choose.lua:172: attempt to index a nil value (field 'cite')
+./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite variables_ContainerTitleShort2.txt
-./citeproc/citeproc-node-choose.lua:172: attempt to index a nil value (field 'cite')
+./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')

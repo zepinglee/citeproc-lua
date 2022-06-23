@@ -75,7 +75,7 @@ function If:from_node(node)
   o:add_conditions(node, "type")
   o:add_conditions(node, "variable")
 
-  o.match = util.to_list(node:get_attribute("match"))
+  o.match = node:get_attribute("match")
 
   o:process_children_nodes(node)
 

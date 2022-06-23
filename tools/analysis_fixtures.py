@@ -23,6 +23,7 @@ skipped_fixtures = [
     'integration_DeleteName.txt',
     'label_EditorTranslator2.txt',
     'magic_CapitalizeFirstOccurringNameParticle.txt',
+    'magic_NameSuffixWithComma.txt',
     'name_AfterInvertedName.txt',
     'name_EditorTranslatorSameWithTerm.txt',
     'name_ParsedNonDroppingParticleWithApostrophe.txt',
