@@ -33,21 +33,6 @@ function Choose:build_ir(engine, state, context)
 end
 
 
-function Choose:render (item, context)
-  self:debug_info(context)
-  context = self:process_context(context)
-  for i, child in ipairs(self:get_children()) do
-    if child:is_element() then
-      local result, status = child:render(item, context)
-      if status then
-        return result
-      end
-    end
-  end
-  return nil
-end
-
-
 local Condition = {
   condition = nil,
   value = nil,
@@ -109,13 +94,17 @@ function If:add_conditions(node, attribute)
 end
 
 function If:build_ir(engine, state, context)
-  if self:evaluate_conditions(engine, state, context) then
-    local ir = self:build_children_ir(engine, state, context)
-    ir.should_inherit_delim = true
-    return ir
-  else
+  if not self:evaluate_conditions(engine, state, context) then
     return nil
   end
+
+  local ir = self:build_children_ir(engine, state, context)
+  if not ir then
+    return nil
+  end
+
+  ir.should_inherit_delim = true
+  return ir
 end
 
 function If:evaluate_conditions(engine, state, context)

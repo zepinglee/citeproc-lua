@@ -181,6 +181,9 @@ function Element:build_children_ir(engine, state, context)
       end
     end
   end
+  if #child_irs == 0 then
+    return nil
+  end
   return SeqIr:new(child_irs, self)
 end
 

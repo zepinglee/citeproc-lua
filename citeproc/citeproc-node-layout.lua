@@ -29,6 +29,9 @@ end
 
 function Layout:build_ir(engine, state, context)
   local ir = self:build_children_ir(engine, state, context)
+  if not ir then
+    return nil
+  end
   if context.in_bibliography then
     ir.delimiter = self.delimiter
   end
