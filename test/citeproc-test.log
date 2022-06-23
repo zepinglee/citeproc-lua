@@ -14,11 +14,11 @@ form                 3       0       0       0
 fullstyles           0       0       5       0
 group                2       3       2       0
 integration          4       8       2       0
-label               11       5       3       0
+label               12       4       3       0
 locale              21       2       0       0
 locator              3       3       0       0
 magic               28       8       4       0
-name                77      24      10       0
+name                81      20      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -26,7 +26,7 @@ number              13       4       3       0
 page                 9       0       0       0
 plural               7       0       0       0
 position             1      13       2       0
-punctuation          5       8       3       0
+punctuation          8       5       3       0
 quotes               2       0       2       0
 simplespace          0       0       1       0
 sort                 5      11      50       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       0       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              484     188     182       0
+(all)              492     180     182       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -885,12 +885,6 @@ Passed in:
 Expected:
 (string) '>>[0] Smith (1986a); Smith (1986b); Smith (1986c); Smith (1986d)'
 
-Failure → citeproc test test-suite label_CompactNamesAfterFullNames.txt
-Passed in:
-(string) '[CSL STYLE ERROR: reference with no printed form.]'
-Expected:
-(string) 'Alan Aalto, editor'
-
 Failure → citeproc test test-suite label_EditorTranslator2.txt
 Passed in:
 (string) 'Some title, “Hello there.”'
@@ -1009,7 +1003,7 @@ Expected:
 
 Failure → citeproc test test-suite magic_SuppressDuplicateVariableRendering.txt
 Passed in:
-(string) 'Should print this: Book A … and this: Book ABlobBlob'
+(string) 'Should print this: Book A … and this: Book A … but this only once: Blob … but this only once: Blob'
 Expected:
 (string) 'Should print this: Book A … and this: Book A … but this only once: Blob'
 
@@ -1098,12 +1092,6 @@ Passed in:
 (string) 'São Paulo (Estado)'
 Expected:
 (string) 'SÃO PAULO (ESTADO)'
-
-Failure → citeproc test test-suite name_LabelFormatBug.txt
-Passed in:
-(string) 'Alan Aalto'
-Expected:
-(string) 'Aalto editor'
 
 Failure → citeproc test test-suite name_ParseNames.txt
 Passed in:
@@ -1289,27 +1277,9 @@ Expected:
 
 Failure → citeproc test test-suite name_SubstituteInheritLabel.txt
 Passed in:
-(string) '[Jane Roe]; [[X]John Doe]'
+(string) '[[X]Jane Roe (<i>ed.</i>)]; [[X]John Doe]'
 Expected:
 (string) '[[X]Jane Roe (<i>ed.</i>); [X]John Doe]'
-
-Failure → citeproc test test-suite name_SubstituteMacroInheritDecorations.txt
-Passed in:
-(string) '[CSL STYLE ERROR: reference with no printed form.]'
-Expected:
-(string) '[I AM A BLOB]'
-
-Failure → citeproc test test-suite name_SubstituteOnDateGroupSpanFail.txt
-Passed in:
-(string) '[CSL STYLE ERROR: reference with no printed form.]'
-Expected:
-(string) '2000'
-
-Failure → citeproc test test-suite name_SubstituteOnGroupSpanGroupSpanFail.txt
-Passed in:
-(string) '[CSL STYLE ERROR: reference with no printed form.]'
-Expected:
-(string) 'His Anonymous Life (this should appear)'
 
 Failure → citeproc test test-suite name_SubstitutePartialEach.txt
 Passed in:
@@ -1482,36 +1452,6 @@ Passed in:
 (string) 'His Anonymous Life'
 Expected:
 (string) 'I am weak, and I have failed.'
-
-Failure → citeproc test test-suite punctuation_DelimiterWithStripPeriodsAndSubstitute1.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe, Richard Noakes. Book Title. http://example.com/</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">J Doe, J Roe and R Noakes eds. Book Title. http://example.com/</div>
-</div>'
-
-Failure → citeproc test test-suite punctuation_DelimiterWithStripPeriodsAndSubstitute2.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe, Richard Noakes. Book Title</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">J Doe, J Roe and R Noakes eds. Book Title</div>
-</div>'
-
-Failure → citeproc test test-suite punctuation_DelimiterWithStripPeriodsAndSubstitute3.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe, Jane Roe, Richard Noakes. Book Title</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">J Doe, J Roe and R Noakes eds. Book Title</div>
-</div>'
 
 Failure → citeproc test test-suite punctuation_FrenchOrthography.txt
 Passed in:

@@ -11,16 +11,16 @@ local inspect  -- only load it when debugging
 
 local util = {}
 
-function util.clone(t)
-  if not t then
-    return t
+function util.clone(obj)
+  if type(obj) == "table" then
+    local res = {}
+    for key, value in pairs(obj) do
+      res[key] = value
+    end
+    return setmetatable(res, getmetatable(obj))
+  else
+    return obj
   end
-  local res = {}
-  for key, value in pairs(t) do
-    res[key] = value
-  end
-  setmetatable(res, getmetatable(t))
-  return res
 end
 
 function util.join(list, delimiter)

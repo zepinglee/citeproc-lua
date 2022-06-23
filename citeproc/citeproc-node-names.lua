@@ -90,20 +90,35 @@ function Names:build_ir(engine, state, context)
   -- local names_inheritance = state.name_override.inherited_names_options(context.names_inheritance, self)
   local names_inheritance = Names:new()
   names_inheritance.delimiter = context.name_inheritance.names_delimiter
-  for key, value in pairs(self) do
-    names_inheritance[key] = value
-  end
   names_inheritance.name = util.clone(context.name_inheritance)
-  for key, value in pairs(self.name) do
-    names_inheritance.name[key] = value
+  if state.name_override then
+    for key, value in pairs(state.name_override) do
+      if key == "name" and not self.name then
+        for k, v in pairs(state.name_override.name) do
+          names_inheritance.name[k] = util.clone(v)
+        end
+      else
+        names_inheritance[key] = util.clone(value)
+      end
+    end
   end
+  for key, value in pairs(self) do
+    if key == "name" then
+      for k, v in pairs(self.name) do
+        names_inheritance.name[k] = util.clone(v)
+      end
+    else
+      names_inheritance[key] = util.clone(value)
+    end
+  end
+  -- util.debug(names_inheritance)
 
   local irs = {}
   local num_names = 0
   -- util.debug(self.name)
   if self.variable then
     for _, variable in ipairs(util.split(self.variable)) do
-      local name_ir = names_inheritance.name:build_ir(variable, self.et_al, self.label, engine, state, context)
+      local name_ir = names_inheritance.name:build_ir(variable, names_inheritance.et_al, names_inheritance.label, engine, state, context)
       if type(name_ir) == "number" then
         num_names = num_names + name_ir
       end
@@ -131,12 +146,14 @@ function Names:build_ir(engine, state, context)
   end
 
   if self.substitute then
+    state.name_override = names_inheritance
     for _, element in ipairs(self.substitute.children) do
       local ir = element:build_ir(engine, state, context)
-      if ir then
+      if ir and ir.group_var ~= "missing" then
         return ir
       end
     end
+    state.name_override = nil
   end
 
   local ir = Rendered:new()
