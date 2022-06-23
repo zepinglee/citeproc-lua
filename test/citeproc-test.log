@@ -3,29 +3,29 @@ category       success failure   error pending
 affix                4       3       2       0
 bugreports          19      14      49       0
 collapse             0      17       4       0
-condition            8       8       1       0
-date                81      14       6       0
+condition           16       0       1       0
+date                81      13       7       0
 decorations          6       1       0       0
-disambiguate        10      43      18       0
+disambiguate        13      40      18       0
 display              0       1       4       0
 etal                 1       1       2       0
 flipflop            11       7       1       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
-group                1       3       3       0
-integration          4       9       1       0
+group                1       4       2       0
+integration          4       8       2       0
 label               11       5       3       0
 locale              21       2       0       0
-locator              2       4       0       0
-magic               27       9       4       0
+locator              3       3       0       0
+magic               28       8       4       0
 name                77      24      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
-number              12       5       3       0
+number              13       4       3       0
 page                 9       0       0       0
 plural               7       0       0       0
-position             3      11       2       0
+position             1      13       2       0
 punctuation          5       8       3       0
 quotes               2       0       2       0
 simplespace          0       0       1       0
@@ -35,10 +35,10 @@ substitute           4       1       2       0
 testers              0       0       2       0
 textcase            25       4       1       0
 unicode              1       0       0       0
-variables            2       1       2       0
+variables            3       0       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              467     206     181       0
+(all)              480     192     182       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -91,7 +91,7 @@ C. Grignon, C. Sentenac 2000b'
 
 Failure → citeproc test test-suite bugreports_CitationSortsWithEtAl.txt
 Passed in:
-(string) '[<i>Aalto et al.</i>, n.d.]; [<i>Aalto et al.</i>, n.d.]; [<i>Aalto et al.</i>, n.d.]'
+(string) '[<i>Aalto et al.</i>, 2001]; [<i>Aalto et al.</i>, 1999]; [<i>Aalto et al.</i>, 2000]'
 Expected:
 (string) '[<i>Aalto et al.</i>, 1999, 2000, 2001]'
 
@@ -146,7 +146,7 @@ Expected:
 Failure → citeproc test test-suite bugreports_IeeePunctuation.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"> P.G. Zimbardo, <i>Does Psychology make a significant difference in our lives?</i>, 2004.</div>
+  <div class="csl-entry"> P.G. Zimbardo, “Does Psychology make a significant difference in our lives?,” <i>American Psychologist</i>,  vol. 59, Jan. 2004, pp. 339–351.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -168,7 +168,7 @@ Expected:
 Failure → citeproc test test-suite bugreports_UndefinedStr.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"> FamilyName G. The Title. n.d.</div>
+  <div class="csl-entry"> FamilyName G. n.d.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -307,62 +307,6 @@ Expected:
 (string) 'Smith 2000a–e;2001
 Smith 2000a;c–e;2001'
 
-Failure → citeproc test test-suite condition_EmptyDate.txt
-Passed in:
-(string) 'No date here
-No date here'
-Expected:
-(string) 'No date here
-Have date, will travel'
-
-Failure → citeproc test test-suite condition_LocatorIsFalse.txt
-Passed in:
-(string) 'Book One: (1) Locator false (2) Locator true; Book Two: (1) Locator false (2) Locator true'
-Expected:
-(string) 'Book One: (1) Locator true (2) Locator true; Book Two: (1) Locator false (2) Locator false'
-
-Failure → citeproc test test-suite condition_NumberIsNumeric.txt
-Passed in:
-(string) 'FALSE'
-Expected:
-(string) 'TRUE'
-
-Failure → citeproc test test-suite condition_NumeralIsNumeric.txt
-Passed in:
-(string) 'FALSE'
-Expected:
-(string) 'TRUE'
-
-Failure → citeproc test test-suite condition_NumeralWithTextIsNumeric.txt
-Passed in:
-(string) 'FALSE'
-Expected:
-(string) 'TRUE'
-
-Failure → citeproc test test-suite condition_VariableAll.txt
-Passed in:
-(string) 'FALSE
-FALSE'
-Expected:
-(string) 'TRUE
-FALSE'
-
-Failure → citeproc test test-suite condition_VariableAny.txt
-Passed in:
-(string) 'TRUE
-TRUE'
-Expected:
-(string) 'TRUE
-FALSE'
-
-Failure → citeproc test test-suite condition_VariableNone.txt
-Passed in:
-(string) 'FALSE
-FALSE'
-Expected:
-(string) 'TRUE
-FALSE'
-
 Failure → citeproc test test-suite date_IgnoreNonexistentSort.txt
 Passed in:
 (string) 'Item 1; Item 2; Item 3; Item 4'
@@ -408,12 +352,12 @@ Expected:
 Failure → citeproc test test-suite date_RangeDelimiter.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Year, Month, Day, with repeated month and year</div>
-  <div class="csl-entry">Year, Month, Day, with differing month</div>
-  <div class="csl-entry">Year, Month, Day, with differing year</div>
-  <div class="csl-entry">Year, Month, with repeated year</div>
-  <div class="csl-entry">Year, Month, with differing year</div>
-  <div class="csl-entry">Year, with differing year</div>
+  <div class="csl-entry">Year, Month, Day, with repeated month and year: 2_[DRD]_4January1999</div>
+  <div class="csl-entry">Year, Month, Day, with differing month: 2January_[MRD]_4March1999</div>
+  <div class="csl-entry">Year, Month, Day, with differing year: 2January1999_[YRD]_4January2000</div>
+  <div class="csl-entry">Year, Month, with repeated year: January_[MRD]_March1999</div>
+  <div class="csl-entry">Year, Month, with differing year: January1999_[YRD]_March2000</div>
+  <div class="csl-entry">Year, with differing year: 1999_[YRD]_2000</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -430,12 +374,6 @@ Passed in:
 (string) 'BookA.; BookB 2000.; BookC.; BookD 1999.; BookE.'
 Expected:
 (string) 'BookD 1999; BookB 2000; BookA; BookC; BookE.'
-
-Failure → citeproc test test-suite date_Uncertain.txt
-Passed in:
-(string) '15 December 2005; 20 December 2005'
-Expected:
-(string) 'circa 15 December 2005; 20 December 2005'
 
 Failure → citeproc test test-suite date_YearSuffixDelimiter.txt
 Passed in:
@@ -563,11 +501,11 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_BasedOnSubsequentFormWithBackref2.txt
 Passed in:
-(string) '..[0] FAILED TO MATCH.; FAILED TO MATCH.
-..[1] FAILED TO MATCH.
-..[2] FAILED TO MATCH.
-..[3] FAILED TO MATCH.
->>[4] FAILED TO MATCH.'
+(string) '..[0] John Doe, His Book (2000).; John Doe, His Other Book (2001).
+..[1] Jane Roe, Her Book (1998).
+..[2] Jane Roe, Her Book (1998).
+..[3] John Doe, His Book (2000).
+>>[4] Jane Roe, Her Book (1998).'
 Expected:
 (string) '..[0] John Doe, His Book (2000); John Doe, His Other Book (2001).
 ..[1] Jane Roe, Her Book (1998).
@@ -580,12 +518,6 @@ Passed in:
 (string) 'Asthma et al. (1990); Asthma et al. (1990); Dropsy et al. (2000); Dropsy et al. (2000)'
 Expected:
 (string) 'Asthma, Bosworth Bronchitis, et al. (1990); Asthma, Beauregarde Bronchitis, et al. (1990); Dropsy, Edward Enteritis, et al. (2000); Dropsy, Ernie Enteritis, et al. (2000)'
-
-Failure → citeproc test test-suite disambiguate_ByCiteDisambiguateCondition.txt
-Passed in:
-(string) 'Doe et al. (2000); Doe et al. (2000)'
-Expected:
-(string) 'Doe et al., <i>Book A</i> (2000); Doe et al., <i>Book B</i> (2000)'
 
 Failure → citeproc test test-suite disambiguate_ByCiteGivennameExpandCrossNestedNames.txt
 Passed in:
@@ -637,12 +569,20 @@ Passed in:
 Expected:
 (string) 'SpiffLabel1900a; SpiffLabel1900b; Bron00; BrCh98; DEFG26'
 
+Failure → citeproc test test-suite disambiguate_DisambiguateTrueAndYearSuffixOne.txt
+Passed in:
+(string) 'Pollock, Title One, 1979
+Pollock, Title Two, 1980'
+Expected:
+(string) 'Pollock, 1979
+Pollock, 1980'
+
 Failure → citeproc test test-suite disambiguate_DisambiguateTrueReflectedInBibliography.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Smith</div>
-  <div class="csl-entry">Smith</div>
-  <div class="csl-entry">Brown</div>
+  <div class="csl-entry">Smith, Book One</div>
+  <div class="csl-entry">Smith, Book Two</div>
+  <div class="csl-entry">Brown, Book the X</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -650,26 +590,6 @@ Expected:
   <div class="csl-entry">Smith, Book Two</div>
   <div class="csl-entry">Brown</div>
 </div>'
-
-Failure → citeproc test test-suite disambiguate_DisambiguateWithThree.txt
-Passed in:
-(string) '(Aalto)
-(Aalto)
-(Aalto)'
-Expected:
-(string) '(Aalto, <i>Book A</i>)
-(Aalto, <i>Book B</i>)
-(Aalto, <i>Book C</i>)'
-
-Failure → citeproc test test-suite disambiguate_DisambiguateWithThree2.txt
-Passed in:
-(string) '(Spivak)
-(Spivak)
-(Spivak)'
-Expected:
-(string) '(Spivak, <i>A Critique</i>)
-(Spivak, “Cultural Talks”)
-(Spivak, <i>Death of a Discipline</i>)'
 
 Failure → citeproc test test-suite disambiguate_DisambiguationHang.txt
 Passed in:
@@ -680,14 +600,6 @@ Expected:
 (string) '>>[0] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990a)
 >>[1] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990b)
 >>[2] (Caminiti, Johnson, &#38; Urbano 1990)'
-
-Failure → citeproc test test-suite disambiguate_ExtraTextCitation.txt
-Passed in:
-(string) 'Bumke
-Bumke'
-Expected:
-(string) 'Bumke, Courtly Culture: Literature and Society in the High Middle Ages
-Bumke, Höfische'
 
 Failure → citeproc test test-suite disambiguate_ImplicitYearSuffixOnceOnly.txt
 Passed in:
@@ -703,11 +615,11 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_IncrementalExtraText.txt
 Passed in:
-(string) 'Yost Trisk
-John Smith
-John Smith
-John Smith
-John Smith'
+(string) 'Yost Trisk, Book One
+John Smith, Book One, ed. 3
+John Smith, Book Two, ed. 4
+John Smith, Complete Works, ed. 5
+John Smith, Complete Works, ed. 6'
 Expected:
 (string) 'Yost Trisk
 John Smith, Book One
@@ -831,7 +743,7 @@ Failure → citeproc test test-suite display_SecondFieldAlignMigratePunctuation.
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005.</div>
-  <div class="csl-entry"> F.G. Bennett Jr., <i>Getting Property Right: ’Informal’ Mortgages in the Japanese Courts</i>, 2009.</div>
+  <div class="csl-entry"> F.G. Bennett Jr., “Getting Property Right: ’Informal’ Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>,  vol. 18, Aug. 2009, pp. 463–509.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -905,9 +817,15 @@ Expected:
 
 Failure → citeproc test test-suite group_LegalWithAuthorDate.txt
 Passed in:
-(string) '>>[0] (2000); (Pineapple Case: 2000)'
+(string) '>>[0] (Álvarez: 2000); (Pineapple Case: 2000)'
 Expected:
 (string) '>>[0] (Álvarez: 2000; Pineapple Case: 2000)'
+
+Failure → citeproc test test-suite group_SuppressTermInMacro.txt
+Passed in:
+(string) 'His Anonymous Life, in '
+Expected:
+(string) 'His Anonymous Life'
 
 Failure → citeproc test test-suite group_SuppressTermWhenNoOutputFromPartialDate.txt
 Passed in:
@@ -921,11 +839,13 @@ Passed in:
 Expected:
 (string) 'His Anonymous Life'
 
-Failure → citeproc test test-suite integration_CitationSort.txt
+Failure → citeproc test test-suite integration_CitationSortTwice.txt
 Passed in:
-(string) '(ibid.); (ibid.); (ibid.); (ibid.)'
+(string) '(ibid.); (ibid.)
+(ibid.); (ibid.); (ibid.); (ibid.)'
 Expected:
-(string) '(Doe; Noakes; Roe; Snoakes)'
+(string) '(Doe; Roe)
+(Doe; Noakes; Roe; Snoakes)'
 
 Failure → citeproc test test-suite integration_DeleteName.txt
 Passed in:
@@ -935,11 +855,11 @@ Expected:
 
 Failure → citeproc test test-suite integration_FirstReferenceNoteNumberPositionChange.txt
 Passed in:
-(string) '>>[0] Ibid.
-..[1] Ibid.
-..[2] Ibid.
-..[3] Ibid.
-..[4] Ibid.'
+(string) '>>[0] Snoakes, “Life of Snoakes” (1902).
+..[1] Doe, “Life of Doe” (1901).
+..[2] Roe, “Life of Roe” (1900).
+..[3] Doe, “Life of Doe” (1901).
+..[4] Roe, “Life of Roe” (1900).'
 Expected:
 (string) '>>[0] Snoakes, “Life of Snoakes” (1902).
 >>[1] Doe, “Life of Doe” (1901).
@@ -949,10 +869,10 @@ Expected:
 
 Failure → citeproc test test-suite integration_IbidOnInsert.txt
 Passed in:
-(string) '..[0] (ibid.)
->>[1] (ibid.)
-..[2] (ibid.)
-..[3] (ibid.)'
+(string) '..[0] (Doe p. 12)
+>>[1] (Noakes p. 34)
+..[2] (Noakes p. 34)
+..[3] (Snoakes p. 45)'
 Expected:
 (string) '..[0] (Doe p. 12)
 >>[1] (Noakes p. 34)
@@ -961,10 +881,10 @@ Expected:
 
 Failure → citeproc test test-suite integration_IbidWithDifferentLocators.txt
 Passed in:
-(string) '..[0] (huh?)
-..[1] (huh?)
-..[2] (huh?)
->>[3] (huh?)'
+(string) '..[0] (Doe p. 12)
+..[1] (Doe bk. 12)
+..[2] (Roe bk. 20)
+>>[3] (Roe chap. 20)'
 Expected:
 (string) '..[0] (Doe p. 12)
 ..[1] (ibid-with-locator)
@@ -973,10 +893,10 @@ Expected:
 
 Failure → citeproc test test-suite integration_SimpleFirstReferenceNoteNumber.txt
 Passed in:
-(string) '..[0] Ibid.
-..[1] Ibid.
-..[2] Ibid.
->>[3] Ibid.'
+(string) '..[0] Doe, “Life of Doe” (1901).
+..[1] Roe, “Life of Roe” (1900).
+..[2] Doe, “Life of Doe” (1901).
+>>[3] Roe, “Life of Roe” (1900).'
 Expected:
 (string) '..[0] Doe, “Life of Doe” (1901).
 ..[1] Roe, “Life of Roe” (1900).
@@ -985,19 +905,11 @@ Expected:
 
 Failure → citeproc test test-suite integration_SimpleIbid.txt
 Passed in:
-(string) '..[0] (huh?); (huh?)
->>[1] (huh?); (huh?); (huh?)'
+(string) '..[0] (Doe p. 12); (Roe p. 23)
+>>[1] (Noakes p. 34); (Noakes p. 34); (Snoakes p. 45)'
 Expected:
 (string) '..[0] (Doe p. 12; Roe p. 23)
 >>[1] (Noakes p. 34; ibid.; Snoakes p. 45)'
-
-Failure → citeproc test test-suite integration_SubsequentWhenInterveningFootnote.txt
-Passed in:
-(string) '..[0] (I am ibid or ibid-with-locator)
->>[1] (I am ibid or ibid-with-locator)'
-Expected:
-(string) '..[0] (Doe)
->>[1] (I am subsequent)'
 
 Failure → citeproc test test-suite integration_YearSuffixOnOffOn.txt
 Passed in:
@@ -1064,22 +976,6 @@ Passed in:
 (string) 'Hello Title:page:666'
 Expected:
 (string) 'Hello Title:666'
-
-Failure → citeproc test test-suite locator_WorkaroundTestForSubVerbo.txt
-Passed in:
-(string) 'Book With Opus, op. 100
-Book With Sub Verbo 200'
-Expected:
-(string) 'Book With Opus, op. 100
-Book With Sub Verbo, 200'
-
-Failure → citeproc test test-suite magic_AllowRepeatDateRenderings.txt
-Passed in:
-(string) '(2006).
-(2007).'
-Expected:
-(string) '(2006).
-(2007, February 15).'
 
 Failure → citeproc test test-suite magic_ImplicitYearSuffixDelimiter.txt
 Passed in:
@@ -1151,10 +1047,10 @@ Expected:
 
 Failure → citeproc test test-suite magic_TermCapitalizationWithPrefix.txt
 Passed in:
-(string) '..[0] Ibid.
-..[1] See ibid.
-..[2] This has been said. Ibid.
->>[3] Ibid.'
+(string) '..[0] Doe (1965)
+..[1] See Doe (1965)
+..[2] This has been said. Doe (1965)
+>>[3] Doe (1965)'
 Expected:
 (string) '..[0] Doe (1965)
 ..[1] See ibid.
@@ -1471,12 +1367,6 @@ Passed in:
 Expected:
 (string) '[Jean] (de La Fontaine III)'
 
-Failure → citeproc test test-suite number_LeadingZeros.txt
-Passed in:
-(string) '01790 (non-numeric)'
-Expected:
-(string) '01790 (is-numeric)'
-
 Failure → citeproc test test-suite number_NewOrdinalsWithGenderChange.txt
 Passed in:
 (string) 'Title 1: 1'
@@ -1501,29 +1391,19 @@ Passed in:
 Expected:
 (string) 'With One, 1.<sup>a</sup> edition, 1.<sup>o</sup> issue; With Two, 2.<sup>a</sup> edition, 2.<sup>o</sup><sup>o</sup> issue; With Three, 3.<sup>a</sup> edition, 3.<sup>a</sup> issue'
 
-Failure → citeproc test test-suite position_FalseInBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">I am weak, and I have failed.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">His Anonymous Life</div>
-</div>'
-
 Failure → citeproc test test-suite position_FirstTrueOnlyOnce.txt
 Passed in:
-(string) '..[0] WTF?.
->>[1] WTF?.'
+(string) '..[0] Appleton “Tom Swift and His Electric Runabout” (1910).
+>>[1] Appleton “Tom Swift and His Electric Runabout” (1910).'
 Expected:
 (string) '..[0] Appleton “Tom Swift and His Electric Runabout” (1910).
 >>[1] Ibid. p. 23.'
 
 Failure → citeproc test test-suite position_IbidInText.txt
 Passed in:
-(string) '..[0] Appleton “Tom Swift and His Electric Runabout” (1910).
-..[1] Bloggs “A Very Short Book Indeed” (2012).
->>[2] Appleton “Tom Swift and His Electric Runabout” (1910).'
+(string) '..[0] Ibid.
+..[1] Ibid.
+>>[2] Ibid.'
 Expected:
 (string) '..[0] Appleton “Tom Swift and His Electric Runabout” (1910).
 ..[1] Bloggs “A Very Short Book Indeed” (2012).
@@ -1531,13 +1411,13 @@ Expected:
 
 Failure → citeproc test test-suite position_IbidSeparateCiteSameNote.txt
 Passed in:
-(string) '..[0] [citation1-item1-note1] Appleton “Tom Swift and His Electric Runabout” (1910).
-..[1] [citation2-item1-note2] Appleton “Tom Swift and His Electric Runabout” (1910).
-..[2] [citation3-item1-note2] Appleton “Tom Swift and His Electric Runabout” (1910).
-..[3] [citation4-item2-note3] Bloggs “A Very Short Book Indeed” (2012).; [citation4-item1-note3] Appleton “Tom Swift and His Electric Runabout” (1910).
-..[4] [citation5-item1-note4] Appleton “Tom Swift and His Electric Runabout” (1910).
-..[5] [citation6-item1-note4] Appleton “Tom Swift and His Electric Runabout” (1910).
->>[6] [citation7-item1-note4] Appleton “Tom Swift and His Electric Runabout” (1910).'
+(string) '..[0] [citation1-item1-note1] ibid.
+..[1] [citation2-item1-note2] ibid.
+..[2] [citation3-item1-note2] ibid. page 33.
+..[3] [citation4-item2-note3] ibid.; [citation4-item1-note3] ibid.
+..[4] [citation5-item1-note4] ibid. page 99.
+..[5] [citation6-item1-note4] ibid.
+>>[6] [citation7-item1-note4] ibid.'
 Expected:
 (string) '..[0] [citation1-item1-note1] Appleton “Tom Swift and His Electric Runabout” (1910).
 ..[1] [citation2-item1-note2] ibid.
@@ -1547,20 +1427,12 @@ Expected:
 ..[5] [citation6-item1-note4] Appleton supra note 1.
 >>[6] [citation7-item1-note4] ibid.'
 
-Failure → citeproc test test-suite position_IbidWithLocator.txt
-Passed in:
-(string) 'Appleton “Tom Swift and His Electric Runabout” (1910).
-Appleton “Tom Swift and His Electric Runabout” (1910).'
-Expected:
-(string) 'Appleton “Tom Swift and His Electric Runabout” (1910).
-Ibid. p. 23.'
-
 Failure → citeproc test test-suite position_IbidWithMultipleSoloCitesInBackref.txt
 Passed in:
-(string) '..[0] Aalto
-..[1] Álvarez
-..[2] Álvarez
->>[3] Álvarez'
+(string) '..[0] Ibid.
+..[1] Ibid.
+..[2] Ibid.
+>>[3] Ibid.'
 Expected:
 (string) '..[0] Aalto
 ..[1] Álvarez
@@ -1569,46 +1441,64 @@ Expected:
 
 Failure → citeproc test test-suite position_IbidWithPrefixFullStop.txt
 Passed in:
-(string) '>>[0] Book A; . He said “Please work.” Book A'
+(string) '>>[0] Ibid.; . He said “Please work.” ibid.'
 Expected:
 (string) '>>[0] Book A. He said “Please work.” Ibid.'
 
 Failure → citeproc test test-suite position_IfIbidIsTrueThenSubsequentIsTrue.txt
 Passed in:
-(string) 'WTF?.
-WTF?.'
+(string) 'Appleton “Tom Swift and His Electric Runabout” (1910).
+Appleton “Tom Swift and His Electric Runabout” (1910).'
 Expected:
 (string) 'Appleton “Tom Swift and His Electric Runabout” (1910).
 SUBSEQUENT.'
 
 Failure → citeproc test test-suite position_IfIbidWithLocatorIsTrueThenIbidIsTrue.txt
 Passed in:
-(string) 'WTF?.
-WTF?.'
+(string) 'Appleton “Tom Swift and His Electric Runabout” (1910).
+Appleton “Tom Swift and His Electric Runabout” (1910).'
 Expected:
 (string) 'Appleton “Tom Swift and His Electric Runabout” (1910).
 Ibid.'
 
+Failure → citeproc test test-suite position_NearNoteFalse.txt
+Passed in:
+(string) 'Note is near!'
+Expected:
+(string) 'Note is not near.'
+
 Failure → citeproc test test-suite position_NearNoteSameNote.txt
 Passed in:
-(string) '..[0] Plain+Vanilla:Book-A; Plain+Vanilla:Book-A
-..[1] Plain+Vanilla:Book-B
->>[2] Plain+Vanilla:Book-B; Plain+Vanilla:Book-A'
+(string) '..[0] Near+Ibid:Book-A; Near+Ibid:Book-A
+..[1] Near+Ibid:Book-B
+>>[2] Near+Ibid:Book-B; Near+Ibid:Book-A'
 Expected:
 (string) '..[0] Plain+Vanilla:Book-A; Near+Ibid:Book-A
 ..[1] Plain+Vanilla:Book-B
 >>[2] Plain+Vanilla:Book-B; Plain+Vanilla:Book-A'
 
+Failure → citeproc test test-suite position_NearNoteUnsupported.txt
+Passed in:
+(string) 'Note is near!'
+Expected:
+(string) 'Note is not near.'
+
+Failure → citeproc test test-suite position_NearNoteWithPlugin.txt
+Passed in:
+(string) '<i>People v. Taylor</i>, 73 N.Y.2d 683.'
+Expected:
+(string) 'People v. Taylor, 73 N.Y.2d 683 (1989).'
+
 Failure → citeproc test test-suite position_ResetNoteNumbers.txt
 Passed in:
-(string) '..[0] Book A (note 1)
-..[1] Book C (note 1)
-..[2] Book A (note 2)
-..[3] Book A (note 2)
-..[4] Book C (note 3)
-..[5] Book A (note 3)
-..[6] Book C (note 4)
->>[7] Book A (note 5)'
+(string) '..[0] ibid (note 1)
+..[1] ibid (note 1)
+..[2] ibid (note 2)
+..[3] ibid (note 2)
+..[4] ibid (note 3)
+..[5] ibid (note 3)
+..[6] ibid (note 4)
+>>[7] ibid (note 5)'
 Expected:
 (string) '..[0] Book A (note 1)
 ..[1] Book C (note 1)
@@ -1618,6 +1508,12 @@ Expected:
 ..[5] Book A, n 1 (note 3)
 ..[6] Book C, n 1 (note 4)
 >>[7] Book A, n 1 (note 5)'
+
+Failure → citeproc test test-suite position_TrueInCitation.txt
+Passed in:
+(string) 'His Anonymous Life'
+Expected:
+(string) 'I am weak, and I have failed.'
 
 Failure → citeproc test test-suite punctuation_DelimiterWithStripPeriodsAndSubstitute1.txt
 Passed in:
@@ -2151,16 +2047,6 @@ Passed in:
 Expected:
 (string) 'John von Doe: An about up Life; John van Doe? A Life; John d’Doe! A Life; John de Doe a Life'
 
-Failure → citeproc test test-suite variables_TitleShortOnShortTitleNoTitleCondition.txt
-Passed in:
-(string) 'My Long Title 1 does not have title-short
-My Long Title 2 does not have title-short
-does not have title-short'
-Expected:
-(string) 'My Long Title 1 has title-short
-My Long Title 2 does not have title-short
-does not have title-short'
-
 Error → citeproc test test-suite affix_InterveningEmpty.txt
 ./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')
 
@@ -2347,6 +2233,9 @@ Error → citeproc test test-suite date_NonexistentSortReverseBibliography.txt
 Error → citeproc test test-suite date_SortEmptyDatesBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
+Error → citeproc test test-suite date_Uncertain.txt
+./citeproc/citeproc-util.lua:258: bad argument #1 to 'gmatch' (string expected, got table)
+
 Error → citeproc test test-suite disambiguate_AllNamesBaseNameCountOnFailureIfYearSuffixAvailable.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -2440,13 +2329,13 @@ Error → citeproc test test-suite fullstyles_ChicagoNoteWithBibliographyWithPub
 Error → citeproc test test-suite group_ComplexNesting.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite group_SuppressTermInMacro.txt
-./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')
-
 Error → citeproc test test-suite group_SuppressWithEmptyNestedDateNode.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite integration_CitationSortTwice.txt
+Error → citeproc test test-suite integration_CitationSort.txt
+./citeproc/citeproc-node-locale.lua:99: attempt to concatenate a nil value (local 'key')
+
+Error → citeproc test test-suite integration_SubsequentWhenInterveningFootnote.txt
 ./citeproc/citeproc-node-locale.lua:99: attempt to concatenate a nil value (local 'key')
 
 Error → citeproc test test-suite label_EditorTranslator1.txt
@@ -2509,11 +2398,11 @@ Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 Error → citeproc test test-suite number_PreserveDelimiter.txt
 ./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')
 
+Error → citeproc test test-suite position_IbidWithLocator.txt
+./citeproc/citeproc-node-locale.lua:99: attempt to concatenate a nil value (local 'key')
+
 Error → citeproc test test-suite position_IbidWithSuffix.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite position_NearNoteWithPlugin.txt
-./citeproc/citeproc-node-text.lua:100: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite punctuation_DefaultYearSuffixDelimiter.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

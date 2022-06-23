@@ -52,9 +52,16 @@ end
 
 
 local If = Element:derive("if", {
-  conditions = {},
+  conditions = nil,
   match = "all"
 })
+
+function If:new()
+  local o = Element.new(self)
+  o.conditions = {}
+  o.match = "all"
+  return o
+end
 
 function If:from_node(node)
   local o = If:new()
@@ -177,88 +184,6 @@ function If:evaluate_condition(condition, state, context)
   end
 end
 
-If.render = function (self, item, context)
-  self:debug_info(context)
-  context = self:process_context(context)
-  local results = {}
-
-  local variable_names = context.options["is-numeric"]
-  if variable_names then
-    for _, variable_name in ipairs(util.split(variable_names)) do
-      local variable = self:get_variable(item, variable_name, context)
-      table.insert(results, util.is_numeric(variable))
-    end
-  end
-
-  variable_names = context.options["is-uncertain-date"]
-  if variable_names then
-    for _, variable_name in ipairs(util.split(variable_names)) do
-      local variable = self:get_variable(item, variable_name, context)
-      table.insert(results, util.is_uncertain_date(variable))
-    end
-  end
-
-  local locator_types = context.options["locator"]
-  if locator_types then
-    for _, locator_type in ipairs(util.split(locator_types)) do
-      local locator_label = item.label or "page"
-      local res = locator_label == locator_type
-      if locator_type == "sub-verbo" then
-        res = locator_label == "sub-verbo" or locator_label == "sub verbo"
-      end
-      table.insert(results, res)
-    end
-  end
-
-  local positions = context.options["position"]
-  if positions then
-    for _, position in ipairs(util.split(positions)) do
-      local res = false
-      if context.mode == "citation" then
-        if position == "first" then
-          res = (item.position == util.position_map["first"])
-        elseif position == "near-note" then
-          res = item["near-note"] ~= nil and item["near-note"] ~= false
-        else
-          res = (item.position >= util.position_map[position])
-        end
-      end
-      table.insert(results, res)
-    end
-  end
-
-  local type_names = context.options["type"]
-  if type_names then
-    for _, type_name in ipairs(util.split(type_names)) do
-      table.insert(results, item["type"] == type_name)
-    end
-  end
-
-  variable_names = context.options["variable"]
-  if variable_names then
-    for _, variable_name in ipairs(util.split(variable_names)) do
-      local variable = self:get_variable(item, variable_name, context)
-      local res = (variable ~= nil and variable ~= "")
-      table.insert(results, res)
-    end
-  end
-
-  local match = context.options["match"] or "all"
-  local status = false
-  if match == "any" then
-    status = util.any(results)
-  elseif match == "none" then
-    status = not util.any(results)
-  else
-    status = util.all(results)
-  end
-  if status then
-    return self:render_children(item, context), status
-  else
-    return nil, false
-  end
-end
-
 
 local ElseIf = If:derive("else-if")
 
@@ -273,12 +198,6 @@ end
 
 function Else:build_ir(engine, state, context)
   return self:build_children_ir(engine, state, context)
-end
-
-Else.render = function (self, item, context)
-  self:debug_info(context)
-  context = self:process_context(context)
-  return self:render_children(item, context), true
 end
 
 
