@@ -756,6 +756,8 @@ function OutputFormat:output(inlines, punctuation_in_quote)
 
   self:move_punctuation(inlines)
 
+  -- util.debug(inlines)
+
   local markup_writer = HtmlWriter:new()
 
   -- TODO:
@@ -866,7 +868,7 @@ local function normalise_text_elements(inlines)
 
     local first_char = string.sub(first.value, -1)
     local second_char = string.sub(second.value, 1, 1)
-    if first_char == second_char and util.is_punct(first_char) then
+    if first_char == second_char and (first_char == "," or first_char == ".") then
       second.value = string.sub(second.value, 2)
     end
 

@@ -4,7 +4,7 @@ affix                4       3       2       0
 bugreports          19      14      49       0
 collapse             0      17       4       0
 condition           16       0       1       0
-date                81      13       7       0
+date                82      12       7       0
 decorations          6       1       0       0
 disambiguate        13      40      18       0
 display              0       1       4       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       0       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              480     192     182       0
+(all)              481     191     182       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -312,12 +312,6 @@ Passed in:
 (string) 'Item 1; Item 2; Item 3; Item 4'
 Expected:
 (string) 'Item 4; Item 2; Item 1; Item 3'
-
-Failure → citeproc test test-suite date_InPress.txt
-Passed in:
-(string) '(John Doe (in press)'
-Expected:
-(string) '(John Doe (in press))'
 
 Failure → citeproc test test-suite date_LopsidedDataYearSuffixCollapse.txt
 Passed in:
@@ -1321,7 +1315,7 @@ Expected:
 
 Failure → citeproc test test-suite name_SubstituteInheritLabel.txt
 Passed in:
-(string) '[Jane Roe]; [X]John Doe]'
+(string) '[Jane Roe]; [[X]John Doe]'
 Expected:
 (string) '[[X]Jane Roe (<i>ed.</i>); [X]John Doe]'
 
@@ -1554,7 +1548,7 @@ Expected:
 Failure → citeproc test test-suite punctuation_FullMontyField.txt
 Passed in:
 (string) 'ENDING IN COLON
-colon: colon
+colon:: colon
 period.: colon
 semicolon;: colon
 exclamation!: colon
@@ -1572,7 +1566,7 @@ comma,. period
 ENDING IN SEMICOLON
 colon:; semicolon
 period.; semicolon
-semicolon; semicolon
+semicolon;; semicolon
 exclamation!; semicolon
 question?; semicolon
 comma,; semicolon
@@ -1581,7 +1575,7 @@ ENDING IN EXCLAMATION
 colon:! exclamation
 period.! exclamation
 semicolon;! exclamation
-exclamation! exclamation
+exclamation!! exclamation
 question?! exclamation
 comma,! exclamation
 
@@ -1590,7 +1584,7 @@ colon:? question
 period.? question
 semicolon;? question
 exclamation!? question
-question? question
+question?? question
 comma,? question
 
 ENDING IN COMMA
@@ -1652,7 +1646,7 @@ comma, comma'
 Failure → citeproc test test-suite punctuation_FullMontyPlain.txt
 Passed in:
 (string) 'ENDING IN COLON
-colon: colon
+colon:: colon
 period.: colon
 semicolon;: colon
 exclamation!: colon
@@ -1670,7 +1664,7 @@ comma,. period
 ENDING IN SEMICOLON
 colon:; semicolon
 period.; semicolon
-semicolon; semicolon
+semicolon;; semicolon
 exclamation!; semicolon
 question?; semicolon
 comma,; semicolon
@@ -1679,7 +1673,7 @@ ENDING IN EXCLAMATION
 colon:! exclamation
 period.! exclamation
 semicolon;! exclamation
-exclamation! exclamation
+exclamation!! exclamation
 question?! exclamation
 comma,! exclamation
 
@@ -1688,7 +1682,7 @@ colon:? question
 period.? question
 semicolon;? question
 exclamation!? question
-question? question
+question?? question
 comma,? question
 
 ENDING IN COMMA
@@ -1750,7 +1744,7 @@ comma, comma'
 Failure → citeproc test test-suite punctuation_FullMontyQuotesIn.txt
 Passed in:
 (string) 'ENDING IN COLON
-“colon”: colon
+“colon”:: colon
 “period.”: colon
 “semicolon;”: colon
 “exclamation”!: colon
@@ -1768,7 +1762,7 @@ ENDING IN PERIOD
 ENDING IN SEMICOLON
 “colon”:; semicolon
 “period.”; semicolon
-“semicolon;” semicolon
+“semicolon;”; semicolon
 “exclamation”!; semicolon
 “question?”; semicolon
 “comma,”; semicolon
@@ -1777,7 +1771,7 @@ ENDING IN EXCLAMATION
 “colon”:! exclamation
 “period.”! exclamation
 “semicolon;”! exclamation
-“exclamation”! exclamation
+“exclamation”!! exclamation
 “question?”! exclamation
 “comma,”! exclamation
 
@@ -1786,7 +1780,7 @@ ENDING IN QUESTION
 “period.”? question
 “semicolon;”? question
 “exclamation”!? question
-“question?” question
+“question?”? question
 “comma,”? question
 
 ENDING IN COMMA
@@ -1848,7 +1842,7 @@ ENDING IN COMMA
 Failure → citeproc test test-suite punctuation_FullMontyQuotesOut.txt
 Passed in:
 (string) 'ENDING IN COLON
-“colon”: colon
+“colon”:: colon
 “period”.: colon
 “semicolon”;: colon
 “exclamation”!: colon
@@ -1866,7 +1860,7 @@ ENDING IN PERIOD
 ENDING IN SEMICOLON
 “colon”:; semicolon
 “period”.; semicolon
-“semicolon”; semicolon
+“semicolon”;; semicolon
 “exclamation”!; semicolon
 “question”?; semicolon
 “comma”,; semicolon
@@ -1875,7 +1869,7 @@ ENDING IN EXCLAMATION
 “colon”:! exclamation
 “period”.! exclamation
 “semicolon”;! exclamation
-“exclamation”! exclamation
+“exclamation”!! exclamation
 “question”?! exclamation
 “comma”,! exclamation
 
@@ -1884,7 +1878,7 @@ ENDING IN QUESTION
 “period”.? question
 “semicolon”;? question
 “exclamation”!? question
-“question”? question
+“question”?? question
 “comma”,? question
 
 ENDING IN COMMA
