@@ -36,6 +36,7 @@ function Group:build_ir(engine, state, context)
   local group_var = "plain"
   for _, child_element in ipairs(self.children) do
     local child_ir = child_element:build_ir(engine, state, context)
+    -- util.debug(child_ir.group_var)
 
     if child_ir then  -- TODO: should be removed
       -- cs:group and its child elements are suppressed if

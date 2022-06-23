@@ -74,7 +74,11 @@ function Date:build_ir(engine, state, context)
     else
       ir = self:build_independent_date_ir(variable, engine, state, context)
     end
-    ir.group_var = "important"
+    if #ir.children == 0 then
+      ir.group_var = "missing"
+    else
+      ir.group_var = "important"
+    end
 
   elseif variable["literal"] then
     local inlines = self:render_text_inlines(variable["literal"], context)
