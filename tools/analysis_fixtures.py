@@ -2,6 +2,7 @@ import glob
 from collections import Counter
 import os
 import re
+from telnetlib import theNULL
 from unicodedata import name
 import xml.etree.ElementTree as ET
 
@@ -50,25 +51,13 @@ namespaces = {
     'cs': 'http://purl.org/net/xbiblio/csl',
 }
 
-num_tags = dict()
-
 # paths = sorted(glob.glob('./test/test-suite/processor-tests/humans/*.txt'))
 paths = sorted([
     './test/test-suite/processor-tests/humans/' + f for f in failed_fixtures
     if f not in skipped_fixtures
-    # and not f.startswith('bugreports_')
-    and not f.startswith('collapse_')
-    # and not f.startswith('date_')
-    # and not f.startswith('decorations_')
-    and not f.startswith('disambiguate_')
-    # and not f.startswith('flipflop_')
-    # and not f.startswith('magic_Name')
-    # and not f.startswith('name')
-    # and not f.startswith('number_')
-    and not f.startswith('sort_')
-    # and not f.startswith('textcase_')
 ])
 
+fixtures = []
 for path in paths:
     # print(path)
 
@@ -86,21 +75,48 @@ for path in paths:
             xml += line
 
     root = ET.fromstring(xml)
-    tags = []
+    tags = set()
+    attrs = set()
 
     for el in root.iter():
         tag = el.tag.split("}")[1]
-        tags.append(tag)
+        tags.add(tag)
+        for attr in el.attrib.keys():
+            attrs.add(attr)
 
     # root = root.getroot()
-    count = Counter(tags)
+    count = len(tags)
 
-    # file = os.path.split(path)[1]
-    num_tags[path] = len(count.items())
+    fixture = {
+        'path': path,
+        'count': count,
+        'tags': tags,
+        'attrs': attrs,
+    }
+    fixtures.append(fixture)
 
-# print(num_tags)
+skip_tags = [
+    'sort',
+]
+skip_attrs = [
+    'disambiguate-add-givenname',
+    'disambiguate-add-names',
+    'disambiguate',
+    'disambiguate-add-year-suffix',
+    'collapse'
+]
+def skip_fixture(fixture):
+    for tag in skip_tags:
+        if tag in fixture['tags']:
+            return True
+    for attr in skip_attrs:
+        if attr in fixture['attrs']:
+            return True
+    return False
 
-for path in list(sorted(paths, key=lambda x: num_tags[x]))[:10]:
-    print(f'{num_tags[path]:<3} {os.path.split(path)[1]:50} {path}')
+fixtures = [fixture for fixture in fixtures if not skip_fixture(fixture)]
+
+for fixture in list(sorted(fixtures, key=lambda x: x['count']))[:10]:
+    print(f'{fixture["count"]:<3} {os.path.split(fixture["path"])[1]:50} {fixture["path"]}')
 
 # print(len(failed_fixtures))

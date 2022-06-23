@@ -9,7 +9,7 @@ decorations          6       1       0       0
 disambiguate        13      40      18       0
 display              0       1       4       0
 etal                 1       1       2       0
-flipflop            11       7       1       0
+flipflop            13       5       1       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
 group                1       4       2       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       0       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              481     191     182       0
+(all)              483     189     182       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -764,26 +764,6 @@ Passed in:
 (string) 'l''''
 Expected:
 (string) 'l’’’'
-
-Failure → citeproc test test-suite flipflop_ItalicsWithOk.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><i>Lessard v. Schmidt</i>. 1972. 349 F. Supp. 1078 (E.D. Wisc.).</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><i>Lessard <span style="font-style:normal;">v.</span> Schmidt</i>. 1972. 349 F. Supp. 1078 (E.D. Wisc.).</div>
-</div>'
-
-Failure → citeproc test test-suite flipflop_ItalicsWithOkAndTextcase.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><span style="font-variant:small-caps;">Lessard v. Schmidt</span>. 1972. 349 F. Supp. 1078 (E.D. Wisc.).</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><span style="font-variant:small-caps;">Lessard <span style="font-variant:normal;">v.</span> Schmidt</span>. 1972. 349 F. Supp. 1078 (E.D. Wisc.).</div>
-</div>'
 
 Failure → citeproc test test-suite flipflop_LeadingMarkupWithApostrophe.txt
 Passed in:

@@ -793,7 +793,7 @@ function OutputFormat:flip_flop_inlines(inlines)
 end
 
 function OutputFormat:flip_flop(inlines, state)
-  for _, inline in ipairs(inlines) do
+  for i, inline in ipairs(inlines) do
     if inline.type == "Formatted" then
       local new_state = util.clone(state)
       local formatting = inline.formatting
@@ -815,6 +815,23 @@ function OutputFormat:flip_flop(inlines, state)
       new_state.in_inner_quotes = not new_state.in_inner_quotes
       self:flip_flop(inline.inlines, new_state)
 
+    elseif inline.type == "NoDecor" then
+      local new_state = {
+        ["font-style"] = "normal",
+        ["font-variant"] = "normal",
+        ["font-weight"] = "normal",
+        ["text-decoration"] = "none",
+      }
+      self:flip_flop(inline.inlines, new_state)
+      for attr, value in pairs(new_state) do
+        if value and state[attr] ~= value then
+          if not inline.formatting then
+            inline.type = "Formatted"
+            inline.formatting = {}
+          end
+          inline.formatting[attr] = value
+        end
+      end
     end
   end
 end
