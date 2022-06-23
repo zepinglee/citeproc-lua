@@ -17,7 +17,7 @@ integration          4       8       2       0
 label               12       4       3       0
 locale              21       2       0       0
 locator              3       3       0       0
-magic               28       8       4       0
+magic               29       7       4       0
 name                81      20      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       0       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              492     180     182       0
+(all)              493     179     182       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -1000,12 +1000,6 @@ Expected:
   <div class="csl-entry">----- (2001)</div>
   <div class="csl-entry">Book Y (2002)</div>
 </div>'
-
-Failure → citeproc test test-suite magic_SuppressDuplicateVariableRendering.txt
-Passed in:
-(string) 'Should print this: Book A … and this: Book A … but this only once: Blob … but this only once: Blob'
-Expected:
-(string) 'Should print this: Book A … and this: Book A … but this only once: Blob'
 
 Failure → citeproc test test-suite magic_TermCapitalizationWithPrefix.txt
 Passed in:

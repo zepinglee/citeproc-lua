@@ -23,6 +23,7 @@ skipped_fixtures = [
     'flipflop_LeadingMarkupWithApostrophe.txt',
     'integration_DeleteName.txt',
     'label_EditorTranslator2.txt',
+    'label_NoFirstCharCapWithInTextClass.txt',
     'magic_CapitalizeFirstOccurringNameParticle.txt',
     'magic_NameSuffixWithComma.txt',
     'name_AfterInvertedName.txt',

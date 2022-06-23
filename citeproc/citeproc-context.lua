@@ -165,6 +165,7 @@ local IrState = {}
 function IrState:new(style, cite_id, cite, reference)
   local o = {
     macro_stack = {},
+    suppressed = {},
   }
   setmetatable(o, self)
   self.__index = self

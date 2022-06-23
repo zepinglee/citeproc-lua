@@ -71,13 +71,6 @@ function Names:from_node(node)
       util.warning(string.format('Unkown element "{}".', element_name))
     end
   end
-  if not o.name then
-    o.name = Name:new()
-  end
-  if not o.et_al then
-    o.et_al = EtAl:new()
-  end
-
   o:get_delimiter_attribute(node)
   o:set_affixes_attributes(node)
   o:set_display_attribute(node)
@@ -101,7 +94,15 @@ function Names:build_ir(engine, state, context)
         names_inheritance[key] = util.clone(value)
       end
     end
+  else
+    if not self.name then
+      self.name = Name:new()
+    end
+    if not self.et_al then
+      self.et_al = EtAl:new()
+    end
   end
+
   for key, value in pairs(self) do
     if key == "name" then
       for k, v in pairs(self.name) do
@@ -147,8 +148,8 @@ function Names:build_ir(engine, state, context)
 
   if self.substitute then
     state.name_override = names_inheritance
-    for _, element in ipairs(self.substitute.children) do
-      local ir = element:build_ir(engine, state, context)
+    for _, substitute_names in ipairs(self.substitute.children) do
+      local ir = substitute_names:build_ir(engine, state, context)
       if ir and ir.group_var ~= "missing" then
         return ir
       end
@@ -438,7 +439,10 @@ end
 
 function Name:build_ir(variable, et_al, label, engine, state, context)
   -- Returns NameIR
-  local names = context:get_variable(variable)
+  local names
+  if not state.suppressed[variable] then
+    names = context:get_variable(variable)
+  end
   if not names then
     return nil
   end
@@ -519,6 +523,11 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
   end
 
   local ir = NameIr:new(irs, self)
+
+  -- Suppress substituted name variable
+  if state.name_override then
+    state.suppressed[variable] = true
+  end
 
   -- ir = self:apply_formatting(ir)
   -- ir = self:apply_affixes(ir)
