@@ -101,20 +101,22 @@ function Names:build_ir(engine, state, context)
   local irs = {}
   local num_names = 0
   -- util.debug(self.name)
-  for _, variable in ipairs(util.split(self.variable)) do
-    local name_ir = names_inheritance.name:build_ir(variable, self.et_al, self.label, engine, state, context)
-    if type(name_ir) == "number" then
-      num_names = num_names + name_ir
+  if self.variable then
+    for _, variable in ipairs(util.split(self.variable)) do
+      local name_ir = names_inheritance.name:build_ir(variable, self.et_al, self.label, engine, state, context)
+      if type(name_ir) == "number" then
+        num_names = num_names + name_ir
+      end
+      table.insert(irs, name_ir)
     end
-    table.insert(irs, name_ir)
-  end
 
-  if names_inheritance.name.form == "count" then
-    if num_names > 0 then
-      return Rendered:new({PlainText:new(tostring(num_names))})
-    else
-      -- name_AuthorCount.txt
-      return nil
+    if names_inheritance.name.form == "count" then
+      if num_names > 0 then
+        return Rendered:new({PlainText:new(tostring(num_names))})
+      else
+        -- name_AuthorCount.txt
+        return nil
+      end
     end
   end
 

@@ -64,6 +64,7 @@ paths = sorted([
     and not f.startswith('magic_Name')
     # and not f.startswith('name')
     # and not f.startswith('number_')
+    and not f.startswith('sort_')
     # and not f.startswith('textcase_')
 ])
 
