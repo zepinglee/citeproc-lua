@@ -14,7 +14,7 @@ form                 3       0       0       0
 fullstyles           0       0       5       0
 group                3       2       2       0
 integration          5       6       3       0
-label               12       4       3       0
+label               13       3       3       0
 locale              23       0       0       0
 locator              3       3       0       0
 magic               30       6       4       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              516     165     173       0
+(all)              517     164     173       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -874,12 +874,6 @@ Passed in:
 (string) 'Some title, “Hello there.”'
 Expected:
 (string) 'Some title, “Hello there”.'
-
-Failure → citeproc test test-suite label_EmptyLabelVanish.txt
-Passed in:
-(string) '[start]( : 22)[end]'
-Expected:
-(string) '[start](22)[end]'
 
 Failure → citeproc test test-suite label_NoFirstCharCapWithInTextClass.txt
 Passed in:
