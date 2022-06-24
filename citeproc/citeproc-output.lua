@@ -143,9 +143,9 @@ end
 
 function InlineElement:parse(str, context)
   -- Return a list of inlines
-  -- if type(str) ~= "string" then
-  --   print(debug.traceback())
-  -- end
+  if type(str) ~= "string" then
+    print(debug.traceback())
+  end
   local html_str = "<div>" .. str .. "</div>"
   local ok, html = pcall(dom.parse, html_str)
   local inlines

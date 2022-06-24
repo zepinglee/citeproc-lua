@@ -120,6 +120,9 @@ end
 
 function Text:build_term_ir(engine, state, context)
   local str = context:get_simple_term(self.term, self.form, self.plural)
+  if not str then
+    return nil
+  end
   local inlines = self:render_text_inlines(str, context)
   return Rendered:new(inlines, self)
 end
