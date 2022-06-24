@@ -18,7 +18,7 @@ label               12       4       3       0
 locale              23       0       0       0
 locator              3       3       0       0
 magic               30       6       4       0
-name                82      19      10       0
+name                83      18      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       0       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              509     162     183       0
+(all)              510     161     183       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -168,7 +168,7 @@ Expected:
 Failure → citeproc test test-suite bugreports_parseName.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">“van Happel,” Eduard 2008</div>
+  <div class="csl-entry">van Happel, Eduard 2008</div>
   <div class="csl-entry">von Hoppel, Gustav 2008</div>
 </div>'
 Expected:
@@ -1038,20 +1038,6 @@ Passed in:
 (string) '<span style="font-variant:small-caps;">d’Aubignac</span> (François Hédelin)'
 Expected:
 (string) '<span style="font-variant:small-caps;">Aubignac</span> (François Hédelin <span style="font-variant:small-caps;">d’</span>)'
-
-Failure → citeproc test test-suite name_ParticleCaps3.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Onename van One, Twoname van Two</div>
-  <div class="csl-entry">Threename van Three, Fourname Van Four</div>
-  <div class="csl-entry">Dick “Van Dyke”</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Onename van One, Twoname van Two</div>
-  <div class="csl-entry">Threename van Three, Fourname Van Four</div>
-  <div class="csl-entry">Dick Van Dyke</div>
-</div>'
 
 Failure → citeproc test test-suite name_ParticlesDemoteNonDroppingNever.txt
 Passed in:

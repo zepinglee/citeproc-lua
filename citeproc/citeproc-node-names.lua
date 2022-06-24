@@ -677,6 +677,8 @@ end
 
 function Name:render_family(person_name, is_romanesque, is_reversed, demote_ndp, context)
   local text = person_name.family
+  -- Remove double quotes: name_ParticleCaps3.txt
+  text = string.gsub(text, '"', "")
   local family_inlines = self.family:format_text_case(text, context)
   if person_name["non-dropping-particle"] and is_romanesque and not (is_reversed and demote_ndp) then
     local ndp_inlines = self.family:format_text_case(person_name["non-dropping-particle"], context)
