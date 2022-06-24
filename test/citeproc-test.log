@@ -4,7 +4,7 @@ affix                6       1       2       0
 bugreports          19      14      49       0
 collapse             0      17       4       0
 condition           16       0       1       0
-date                82      12       7       0
+date                83      12       6       0
 decorations          6       1       0       0
 disambiguate        13      40      18       0
 display              0       1       4       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       0       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              504     166     184       0
+(all)              505     166     183       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -2039,9 +2039,6 @@ Error → citeproc test test-suite date_NonexistentSortReverseBibliography.txt
 Error → citeproc test test-suite date_SortEmptyDatesBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite date_Uncertain.txt
-./citeproc/citeproc-util.lua:258: bad argument #1 to 'gmatch' (string expected, got table)
-
 Error → citeproc test test-suite disambiguate_AllNamesBaseNameCountOnFailureIfYearSuffixAvailable.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -2208,7 +2205,7 @@ Error → citeproc test test-suite number_PreserveDelimiter.txt
 ./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite position_FalseInBibliography.txt
-./citeproc/citeproc-node-choose.lua:166: attempt to index a nil value (field 'cite')
+./citeproc/citeproc-node-choose.lua:190: attempt to index a nil value (field 'cite')
 
 Error → citeproc test test-suite position_IbidWithSuffix.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

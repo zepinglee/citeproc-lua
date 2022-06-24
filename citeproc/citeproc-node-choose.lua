@@ -147,7 +147,7 @@ function If:evaluate_condition(condition, state, context)
   elseif condition.condition == "is-uncertain-date" then
     local variable = context:get_variable(condition.value)
     -- TODO
-    return util.is_numeric(variable)
+    return self:is_uncertain_date(variable)
 
   elseif condition.condition == "locator" then
     local locator_label = context:get_variable("label")
@@ -157,25 +157,7 @@ function If:evaluate_condition(condition, state, context)
     return locator_label == condition.value
 
   elseif condition.condition == "position" then
-    if context.in_bibliography then
-      return false
-    end
-    local res = false
-    local position = condition.value
-    if position == "first" then
-      res = (context.cite.position == util.position_map["first"])
-    elseif position == "near-note" then
-      local near_note = context.cite["near-note"]
-      if near_note ~= nil then
-        res = near_note
-      elseif context.cite.note_distance then
-        res = context.cite.note_distance <= context.area.near_note_distance
-      end
-    else
-      res = (context.cite.position >= util.position_map[position])
-    end
-    -- util.debug(res)
-    return res
+    return self:check_position(condition.value, context)
 
   elseif condition.condition == "type" then
     local item_type = context:get_variable("type")
@@ -189,6 +171,32 @@ function If:evaluate_condition(condition, state, context)
       local res = context.reference[var] ~= nil
       return res
     end
+  end
+end
+
+function If:is_uncertain_date(variable)
+  if variable == nil then
+    return false
+  end
+  local circa = variable["circa"]
+  return circa and circa ~= ""
+end
+
+function If:check_position(position, context)
+  if context.in_bibliography then
+    return false
+  end
+  if position == "first" then
+    return (context.cite.position == util.position_map["first"])
+  elseif position == "near-note" then
+    local near_note = context.cite["near-note"]
+    if near_note ~= nil then
+      return near_note
+    elseif context.cite.note_distance then
+      return context.cite.note_distance <= context.area.near_note_distance
+    end
+  else
+    return (context.cite.position >= util.position_map[position])
   end
 end
 

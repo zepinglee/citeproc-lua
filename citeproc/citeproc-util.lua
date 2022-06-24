@@ -270,14 +270,6 @@ function util.is_numeric (str)
   return res
 end
 
-function util.is_uncertain_date (variable)
-  if variable == nil then
-    return false
-  end
-  local value = variable["circa"]
-  return value ~= nil and value ~= ""
-end
-
 util.variable_types = {}
 
 -- schema/schemas/styles/csl-variables.rnc
