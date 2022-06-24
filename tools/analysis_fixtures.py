@@ -56,7 +56,7 @@ namespaces = {
 # paths = sorted(glob.glob('./test/test-suite/processor-tests/humans/*.txt'))
 paths = sorted([
     './test/test-suite/processor-tests/humans/' + f for f in failed_fixtures
-    if f not in skipped_fixtures
+    if f not in skipped_fixtures and not f.startswith('punctuation_')
 ])
 
 fixtures = []

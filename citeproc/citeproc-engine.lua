@@ -18,6 +18,7 @@ local IrState = require("citeproc-context").IrState
 local formats = require("citeproc-formats")
 local OutputFormat = require("citeproc-output").OutputFormat
 local InlineElement = require("citeproc-output").InlineElement
+local Formatted = require("citeproc-output").Formatted
 local PlainText = require("citeproc-output").PlainText
 local HtmlWriter = require("citeproc-output").HtmlWriter
 local util = require("citeproc-util")
@@ -148,6 +149,20 @@ function CiteProc:build_cluster(citation_items)
       for _, inline in ipairs(InlineElement:parse(cite_suffix, context)) do
         table.insert(citation_stream, inline)
       end
+    end
+
+    if context.area.layout.affixes then
+      local affixes = context.area.layout.affixes
+      if affixes.prefix then
+        table.insert(citation_stream, 1, PlainText:new(affixes.prefix))
+      end
+      if affixes.suffix then
+        table.insert(citation_stream, PlainText:new(affixes.suffix))
+      end
+    end
+
+    if context.area.layout.formatting then
+      citation_stream = {Formatted:new(citation_stream, context.area.layout.formatting)}
     end
   end
 
