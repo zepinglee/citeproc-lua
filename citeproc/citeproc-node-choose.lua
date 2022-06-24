@@ -138,6 +138,7 @@ function If:evaluate_conditions(engine, state, context)
 end
 
 function If:evaluate_condition(condition, state, context)
+  -- util.debug(context.cite)
   -- util.debug(condition)
   if condition.condition == "is-numeric" then
     local variable = context:get_variable(condition.value)
@@ -145,6 +146,7 @@ function If:evaluate_condition(condition, state, context)
 
   elseif condition.condition == "is-uncertain-date" then
     local variable = context:get_variable(condition.value)
+    -- TODO
     return util.is_numeric(variable)
 
   elseif condition.condition == "locator" then
@@ -160,21 +162,19 @@ function If:evaluate_condition(condition, state, context)
     end
     local res = false
     local position = condition.value
-    if context.mode == "citation" then
-      if position == "first" then
-        res = (context.cite.position == util.position_map["first"])
-      elseif position == "near-note" then
-        util.debug(context.cite)
-        local near_note = context.cite["near-note"]
-        if near_note ~= nil then
-          return near_note
-        end
-        local note_distance = context.cite.note_number - context.cite.last_reference_note_number
-        return note_distance >= 0 and note_distance <= context.area.near_note_distance
-      else
-        res = (context.cite.position >= util.position_map[position])
+    if position == "first" then
+      res = (context.cite.position == util.position_map["first"])
+    elseif position == "near-note" then
+      local near_note = context.cite["near-note"]
+      if near_note ~= nil then
+        res = near_note
+      elseif context.cite.note_distance then
+        res = context.cite.note_distance <= context.area.near_note_distance
       end
+    else
+      res = (context.cite.position >= util.position_map[position])
     end
+    -- util.debug(res)
     return res
 
   elseif condition.condition == "type" then

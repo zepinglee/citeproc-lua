@@ -86,6 +86,7 @@ function CiteProc:build_cluster(citation_items)
     local context = Context:new()
     context.engine = self
     context.style = self.style_element
+    context.area = self.style_element.citation
     context.locale = self:get_locale(self.lang)
     context.name_inheritance = self.style_element.citation.name_inheritance
     context.format = output_format
@@ -121,6 +122,7 @@ function CiteProc:build_cluster(citation_items)
   local context = Context:new()
   context.engine = self
   context.style = self.style_element
+  context.area = self.style_element.citation
   context.locale = self:get_locale(self.lang)
   context.name_inheritance = self.style_element.citation.name_inheritance
   context.format = output_format
@@ -178,40 +180,32 @@ function CiteProc:updateUncitedItems(ids)
 end
 
 function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
-  -- citation = {
-  --   citationID = "CITATION-3",
-  --   citationItems = {
-  --     { id = "ITEM-1" },
-  --     { id = "ITEM-2" },
-  --   },
-  --   properties = {
-  --     noteIndex = 3,
-  --   },
-  -- }
-  -- citationsPre = {
-  --   {"CITATION-1", 1},
-  --   {"CITATION-2", 2},
-  -- }
-  -- citationsPost = {
-  --   {"CITATION-4", 4},
-  -- }
-  -- returns = {
-  --   {
-  --     bibchange = true,
-  --     citation_errors = {},
-  --   },
-  --   {
-  --     { 2, "[1,2]", "CITATION-3" }
-  --   }
-  -- }
   self.registry.citations[citation.citationID] = citation
 
   local items = {}
 
-  for _, cite_item in ipairs(citation.citationItems) do
+  local cite_first_note_numbers = {}
+  local cite_last_note_numbers = {}
+  local previous_citation = nil
+  for _, citation_pre in ipairs(citationsPre) do
+    local pre_citation = self.registry.citations[citation_pre[1]]
+    for _, cite_item in ipairs(pre_citation.citationItems) do
+      if not cite_first_note_numbers[cite_item.id] then
+        cite_first_note_numbers[cite_item.id] = pre_citation.properties.noteIndex
+      end
+      cite_last_note_numbers[cite_item.id] = pre_citation.properties.noteIndex
+    end
+    previous_citation = pre_citation
+  end
+
+  for i, cite_item in ipairs(citation.citationItems) do
     cite_item.id = tostring(cite_item.id)
-    local position_first = (self.registry.registry[cite_item.id] == nil)
     local item_data = self:get_item(cite_item.id)
+
+    local previous_cite
+    if i > 1 then
+      previous_cite = citation.citationItems[i-1]
+    end
 
     if item_data then
       -- Create a wrapper of the orignal item from registry so that
@@ -224,39 +218,10 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
         item.label = "page"
       end
 
-      if not item.position and position_first then
-        item.position = util.position_map["first"]
-      end
-
-      local first_reference_note_number = nil
-      local last_reference_note_number = nil
-      for _, pre_citation in ipairs(citationsPre) do
-        pre_citation = self.registry.citations[pre_citation[1]]
-        for _, pre_cite_item in ipairs(pre_citation.citationItems) do
-          if pre_cite_item.id == cite_item.id then
-            if not first_reference_note_number then
-              first_reference_note_number = pre_citation.properties.noteIndex
-            end
-            last_reference_note_number = pre_citation.properties.noteIndex
-            break
-          end
-        end
-      end
-      item["first-reference-note-number"] = first_reference_note_number
-      item.last_reference_note_number = last_reference_note_number
-      item.note_number = citation.properties.noteIndex
-      if type(item.note_number) ~= "number" then
-        item.note_number = 0
-      end
+      self:set_cite_position(item, citation.properties.noteIndex, cite_first_note_numbers, cite_last_note_numbers, previous_cite, previous_citation)
 
       table.insert(items, item)
     end
-  end
-
-  if #citationsPre > 0 then
-    local previous_citation_id = citationsPre[#citationsPre][1]
-    local previous_citation = self.registry.citations[previous_citation_id]
-    self.registry.previous_citation = previous_citation
   end
 
   if self.registry.requires_sorting then
@@ -320,6 +285,61 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
   end
 
   return {params, output}
+end
+
+function CiteProc:set_cite_position(item, note_number, cite_first_note_numbers, cite_last_note_numbers, previous_cite, previous_citation)
+  if type(note_number) ~= "number" then
+    note_number = tonumber(note_number)
+  end
+
+  item.note_number = note_number
+  if cite_first_note_numbers[item.id] then
+    item.position = util.position_map["subsequent"]
+    item["first-reference-note-number"] = cite_first_note_numbers[item.id]
+    item.note_distance = note_number - cite_last_note_numbers[item.id]
+  else
+    item.position = util.position_map["first"]
+    item["first-reference-note-number"] = note_number
+    cite_first_note_numbers[item.id] = note_number
+    item.note_distance = 0
+  end
+  cite_last_note_numbers[item.id] = note_number
+
+  -- Find the preceding cite referencing the same item
+  local preceding_cite
+  if previous_cite then
+    -- a. the current cite immediately follows on another cite, within the same
+    -- citation, that references the same item
+    if item.id == previous_cite.id then
+      preceding_cite = previous_cite
+    end
+  elseif previous_citation then
+    -- b. the current cite is the first cite in the citation, and the previous
+    -- citation consists of a single cite referencing the same item
+    if #previous_citation.citationItems == 1 and previous_citation.citationItems[1].id == item.id then
+      preceding_cite = previous_citation.citationItems[1]
+    end
+  end
+
+  if preceding_cite then
+    if preceding_cite.locator then
+      if item.locator then
+        if item.locator == preceding_cite.locator then
+          item.position = util.position_map["ibid"]
+        else
+          item.position = util.position_map["ibid-with-locator"]
+        end
+      else
+        item.position = util.position_map["subsequent"]
+      end
+    else
+      if item.locator then
+        item.position = util.position_map["ibid-with-locator"]
+      else
+        item.position = util.position_map["ibid"]
+      end
+    end
+  end
 end
 
 function CiteProc:makeCitationCluster (citation_items)
@@ -389,6 +409,7 @@ function CiteProc:makeBibliography()
     local context = Context:new()
     context.engine = self
     context.style = self.style_element
+    context.area = self.style_element.bibliography
     context.locale = self:get_locale(self.lang)
     context.name_inheritance = self.style_element.bibliography.name_inheritance
     context.format = output_format

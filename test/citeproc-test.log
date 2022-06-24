@@ -13,11 +13,11 @@ flipflop            13       5       1       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
 group                2       3       2       0
-integration          4       9       1       0
+integration          4       7       3       0
 label               12       4       3       0
 locale              21       2       0       0
 locator              3       3       0       0
-magic               29       7       4       0
+magic               30       6       4       0
 name                82      19      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
@@ -25,7 +25,7 @@ namespaces           1       0       0       0
 number              13       4       3       0
 page                 9       0       0       0
 plural               7       0       0       0
-position             3      11       2       0
+position             8       5       3       0
 punctuation          8       5       3       0
 quotes               2       0       2       0
 simplespace          0       0       1       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       0       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              496     177     181       0
+(all)              502     168     184       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -495,11 +495,11 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_BasedOnSubsequentFormWithBackref2.txt
 Passed in:
-(string) '..[0] FAILED TO MATCH.; FAILED TO MATCH.
-..[1] FAILED TO MATCH.
-..[2] FAILED TO MATCH.
-..[3] FAILED TO MATCH.
->>[4] FAILED TO MATCH.'
+(string) '..[0] John Doe, His Book (2000).; John Doe, His Other Book (2001).
+..[1] Jane Roe, Her Book (1998).
+..[2] Roe, Her Book, supra note .
+..[3] Doe, His Book, supra note .
+>>[4] Roe, Her Book, supra note .'
 Expected:
 (string) '..[0] John Doe, His Book (2000); John Doe, His Other Book (2001).
 ..[1] Jane Roe, Her Book (1998).
@@ -807,12 +807,6 @@ Passed in:
 Expected:
 (string) 'His Anonymous Life'
 
-Failure → citeproc test test-suite integration_CitationSort.txt
-Passed in:
-(string) '(ibid.); (ibid.); (ibid.); (ibid.)'
-Expected:
-(string) '(Doe; Noakes; Roe; Snoakes)'
-
 Failure → citeproc test test-suite integration_DeleteName.txt
 Passed in:
 (string) '>>[0] Doe.; Snoakes.'
@@ -821,11 +815,11 @@ Expected:
 
 Failure → citeproc test test-suite integration_FirstReferenceNoteNumberPositionChange.txt
 Passed in:
-(string) '>>[0] Ibid.
-..[1] Ibid.
-..[2] Ibid.
-..[3] Ibid.
-..[4] Ibid.'
+(string) '>>[0] Snoakes, “Life of Snoakes” (1902).
+..[1] Doe, “Life of Doe” (1901).
+..[2] Roe, “Life of Roe” (1900).
+..[3] Doe, supra.
+..[4] Roe, supra.'
 Expected:
 (string) '>>[0] Snoakes, “Life of Snoakes” (1902).
 >>[1] Doe, “Life of Doe” (1901).
@@ -835,10 +829,10 @@ Expected:
 
 Failure → citeproc test test-suite integration_IbidOnInsert.txt
 Passed in:
-(string) '..[0] (ibid.)
->>[1] (ibid.)
-..[2] (ibid.)
-..[3] (ibid.)'
+(string) '..[0] (Doe p. 12)
+>>[1] (Noakes p. 34)
+..[2] (Noakes p. 34)
+..[3] (Snoakes p. 45)'
 Expected:
 (string) '..[0] (Doe p. 12)
 >>[1] (Noakes p. 34)
@@ -847,10 +841,10 @@ Expected:
 
 Failure → citeproc test test-suite integration_IbidWithDifferentLocators.txt
 Passed in:
-(string) '..[0] (huh?)
-..[1] (huh?)
-..[2] (huh?)
->>[3] (huh?)'
+(string) '..[0] (Doe p. 12)
+..[1] (ibid.)
+..[2] (Roe bk. 20)
+>>[3] (ibid.)'
 Expected:
 (string) '..[0] (Doe p. 12)
 ..[1] (ibid-with-locator)
@@ -859,10 +853,10 @@ Expected:
 
 Failure → citeproc test test-suite integration_SimpleFirstReferenceNoteNumber.txt
 Passed in:
-(string) '..[0] Ibid.
-..[1] Ibid.
-..[2] Ibid.
->>[3] Ibid.'
+(string) '..[0] Doe, “Life of Doe” (1901).
+..[1] Roe, “Life of Roe” (1900).
+..[2] Doe, supra.
+>>[3] Roe, supra.'
 Expected:
 (string) '..[0] Doe, “Life of Doe” (1901).
 ..[1] Roe, “Life of Roe” (1900).
@@ -871,19 +865,11 @@ Expected:
 
 Failure → citeproc test test-suite integration_SimpleIbid.txt
 Passed in:
-(string) '..[0] (huh?); (huh?)
->>[1] (huh?); (huh?); (huh?)'
+(string) '..[0] (Doe p. 12); (Roe p. 23)
+>>[1] (Noakes p. 34); (ibid.); (Snoakes p. 45)'
 Expected:
 (string) '..[0] (Doe p. 12; Roe p. 23)
 >>[1] (Noakes p. 34; ibid.; Snoakes p. 45)'
-
-Failure → citeproc test test-suite integration_SubsequentWhenInterveningFootnote.txt
-Passed in:
-(string) '..[0] (I am ibid or ibid-with-locator)
->>[1] (I am ibid or ibid-with-locator)'
-Expected:
-(string) '..[0] (Doe)
->>[1] (I am subsequent)'
 
 Failure → citeproc test test-suite integration_YearSuffixOnOffOn.txt
 Passed in:
@@ -1006,18 +992,6 @@ Expected:
   <div class="csl-entry">----- (2001)</div>
   <div class="csl-entry">Book Y (2002)</div>
 </div>'
-
-Failure → citeproc test test-suite magic_TermCapitalizationWithPrefix.txt
-Passed in:
-(string) '..[0] Ibid.
-..[1] See ibid.
-..[2] This has been said. Ibid.
->>[3] Ibid.'
-Expected:
-(string) '..[0] Doe (1965)
-..[1] See ibid.
-..[2] This has been said. Ibid.
->>[3] Ibid.'
 
 Failure → citeproc test test-suite name_AfterInvertedName.txt
 Passed in:
@@ -1323,14 +1297,6 @@ Passed in:
 Expected:
 (string) 'With One, 1.<sup>a</sup> edition, 1.<sup>o</sup> issue; With Two, 2.<sup>a</sup> edition, 2.<sup>o</sup><sup>o</sup> issue; With Three, 3.<sup>a</sup> edition, 3.<sup>a</sup> issue'
 
-Failure → citeproc test test-suite position_FirstTrueOnlyOnce.txt
-Passed in:
-(string) '..[0] WTF?.
->>[1] WTF?.'
-Expected:
-(string) '..[0] Appleton “Tom Swift and His Electric Runabout” (1910).
->>[1] Ibid. p. 23.'
-
 Failure → citeproc test test-suite position_IbidInText.txt
 Passed in:
 (string) '..[0] Appleton “Tom Swift and His Electric Runabout” (1910).
@@ -1344,12 +1310,12 @@ Expected:
 Failure → citeproc test test-suite position_IbidSeparateCiteSameNote.txt
 Passed in:
 (string) '..[0] [citation1-item1-note1] Appleton “Tom Swift and His Electric Runabout” (1910).
-..[1] [citation2-item1-note2] Appleton “Tom Swift and His Electric Runabout” (1910).
-..[2] [citation3-item1-note2] Appleton “Tom Swift and His Electric Runabout” (1910).
-..[3] [citation4-item2-note3] Bloggs “A Very Short Book Indeed” (2012).; [citation4-item1-note3] Appleton “Tom Swift and His Electric Runabout” (1910).
-..[4] [citation5-item1-note4] Appleton “Tom Swift and His Electric Runabout” (1910).
-..[5] [citation6-item1-note4] Appleton “Tom Swift and His Electric Runabout” (1910).
->>[6] [citation7-item1-note4] Appleton “Tom Swift and His Electric Runabout” (1910).'
+..[1] [citation2-item1-note2] ibid.
+..[2] [citation3-item1-note2] ibid. page 33.
+..[3] [citation4-item2-note3] Bloggs “A Very Short Book Indeed” (2012).; [citation4-item1-note3] Appleton supra.
+..[4] [citation5-item1-note4] Appleton supra page 99.
+..[5] [citation6-item1-note4] Appleton supra.
+>>[6] [citation7-item1-note4] ibid.'
 Expected:
 (string) '..[0] [citation1-item1-note1] Appleton “Tom Swift and His Electric Runabout” (1910).
 ..[1] [citation2-item1-note2] ibid.
@@ -1359,20 +1325,12 @@ Expected:
 ..[5] [citation6-item1-note4] Appleton supra note 1.
 >>[6] [citation7-item1-note4] ibid.'
 
-Failure → citeproc test test-suite position_IbidWithLocator.txt
-Passed in:
-(string) 'Appleton “Tom Swift and His Electric Runabout” (1910).
-Appleton “Tom Swift and His Electric Runabout” (1910).'
-Expected:
-(string) 'Appleton “Tom Swift and His Electric Runabout” (1910).
-Ibid. p. 23.'
-
 Failure → citeproc test test-suite position_IbidWithMultipleSoloCitesInBackref.txt
 Passed in:
 (string) '..[0] Aalto
 ..[1] Álvarez
-..[2] Álvarez
->>[3] Álvarez'
+..[2] Ibid.
+>>[3] Ibid.'
 Expected:
 (string) '..[0] Aalto
 ..[1] Álvarez
@@ -1381,41 +1339,15 @@ Expected:
 
 Failure → citeproc test test-suite position_IbidWithPrefixFullStop.txt
 Passed in:
-(string) '>>[0] Book A; . He said “Please work.” Book A'
+(string) '>>[0] Book A; . He said “Please work.” ibid.'
 Expected:
 (string) '>>[0] Book A. He said “Please work.” Ibid.'
-
-Failure → citeproc test test-suite position_IfIbidIsTrueThenSubsequentIsTrue.txt
-Passed in:
-(string) 'WTF?.
-WTF?.'
-Expected:
-(string) 'Appleton “Tom Swift and His Electric Runabout” (1910).
-SUBSEQUENT.'
-
-Failure → citeproc test test-suite position_IfIbidWithLocatorIsTrueThenIbidIsTrue.txt
-Passed in:
-(string) 'WTF?.
-WTF?.'
-Expected:
-(string) 'Appleton “Tom Swift and His Electric Runabout” (1910).
-Ibid.'
-
-Failure → citeproc test test-suite position_NearNoteSameNote.txt
-Passed in:
-(string) '..[0] Plain+Vanilla:Book-A; Plain+Vanilla:Book-A
-..[1] Plain+Vanilla:Book-B
->>[2] Plain+Vanilla:Book-B; Plain+Vanilla:Book-A'
-Expected:
-(string) '..[0] Plain+Vanilla:Book-A; Near+Ibid:Book-A
-..[1] Plain+Vanilla:Book-B
->>[2] Plain+Vanilla:Book-B; Plain+Vanilla:Book-A'
 
 Failure → citeproc test test-suite position_ResetNoteNumbers.txt
 Passed in:
 (string) '..[0] Book A (note 1)
 ..[1] Book C (note 1)
-..[2] Book A (note 2)
+..[2] ibid (note 2)
 ..[3] Book A (note 2)
 ..[4] Book C (note 3)
 ..[5] Book A (note 3)
@@ -1430,12 +1362,6 @@ Expected:
 ..[5] Book A, n 1 (note 3)
 ..[6] Book C, n 1 (note 4)
 >>[7] Book A, n 1 (note 5)'
-
-Failure → citeproc test test-suite position_TrueInCitation.txt
-Passed in:
-(string) 'His Anonymous Life'
-Expected:
-(string) 'I am weak, and I have failed.'
 
 Failure → citeproc test test-suite punctuation_FrenchOrthography.txt
 Passed in:
@@ -2096,7 +2022,7 @@ Error → citeproc test test-suite collapse_ChicagoAfterCollapse.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite collapse_CitationNumberRangesOneOnly.txt
-./citeproc/citeproc-engine.lua:403: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:424: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGrouped.txt
 ./citeproc/citeproc-node-locale.lua:99: attempt to concatenate a nil value (local 'key')
@@ -2224,7 +2150,13 @@ Error → citeproc test test-suite group_ComplexNesting.txt
 Error → citeproc test test-suite group_SuppressWithEmptyNestedDateNode.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
+Error → citeproc test test-suite integration_CitationSort.txt
+./citeproc/citeproc-node-locale.lua:99: attempt to concatenate a nil value (local 'key')
+
 Error → citeproc test test-suite integration_CitationSortTwice.txt
+./citeproc/citeproc-node-locale.lua:99: attempt to concatenate a nil value (local 'key')
+
+Error → citeproc test test-suite integration_SubsequentWhenInterveningFootnote.txt
 ./citeproc/citeproc-node-locale.lua:99: attempt to concatenate a nil value (local 'key')
 
 Error → citeproc test test-suite label_EditorTranslator1.txt
@@ -2279,13 +2211,16 @@ Error → citeproc test test-suite name_LiteralWithComma.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite number_LimitOrdinalsToDayOne.txt
-./citeproc/citeproc-engine.lua:403: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:424: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite number_PreserveDelimiter.txt
 ./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
+
+Error → citeproc test test-suite position_FalseInBibliography.txt
+./citeproc/citeproc-node-choose.lua:166: attempt to index a nil value (field 'cite')
 
 Error → citeproc test test-suite position_IbidWithSuffix.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2351,25 +2286,25 @@ Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaMacroBi
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
-./citeproc/citeproc-engine.lua:247: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:221: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaVariableBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:247: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:221: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroCitation.txt
-./citeproc/citeproc-engine.lua:247: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:221: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaVariableBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:247: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:221: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaMacroBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2381,7 +2316,7 @@ Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaVaria
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:247: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:221: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_ConditionalMacroDates.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2426,10 +2361,10 @@ Error → citeproc test test-suite sort_NumberOfAuthorsAsKey.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_OmittedBibRefMixedNumericStyle.txt
-./citeproc/citeproc-engine.lua:403: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:424: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_OmittedBibRefNonNumericStyle.txt
-./citeproc/citeproc-engine.lua:403: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:424: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_Quotes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
