@@ -12,7 +12,7 @@ etal                 2       0       2       0
 flipflop            13       5       1       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
-group                2       3       2       0
+group                3       2       2       0
 integration          4       7       3       0
 label               12       4       3       0
 locale              21       2       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       0       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              506     165     183       0
+(all)              507     164     183       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -776,12 +776,6 @@ Expected:
 Failure → citeproc test test-suite group_SuppressTermInMacro.txt
 Passed in:
 (string) 'His Anonymous Life, in '
-Expected:
-(string) 'His Anonymous Life'
-
-Failure → citeproc test test-suite group_SuppressValueWithEmptySubgroup.txt
-Passed in:
-(string) 'His Anonymous Life,  Disponible sur : '
 Expected:
 (string) 'His Anonymous Life'
 

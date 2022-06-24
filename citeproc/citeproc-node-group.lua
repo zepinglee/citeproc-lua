@@ -61,7 +61,9 @@ function Group:build_ir(engine, state, context)
   end
 
   if #irs == 0 or group_var == "missing" then
-    return nil
+    local ir = SeqIr:new()
+    ir.group_var = "missing"
+    return ir
   end
 
   -- A non-empty nested cs:group is treated as a non-empty variable for the
