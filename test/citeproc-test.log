@@ -15,7 +15,7 @@ fullstyles           0       0       5       0
 group                3       2       2       0
 integration          4       7       3       0
 label               12       4       3       0
-locale              21       2       0       0
+locale              23       0       0       0
 locator              3       3       0       0
 magic               30       6       4       0
 name                82      19      10       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       0       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              507     164     183       0
+(all)              509     162     183       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -872,18 +872,6 @@ Passed in:
 (string) 'pages 213 &#38; 235'
 Expected:
 (string) 'pages 213 AMPERSAND 235'
-
-Failure → citeproc test test-suite locale_ForceEmptyAndOthersTerm.txt
-Passed in:
-(string) 'John Doe '
-Expected:
-(string) 'John Doe'
-
-Failure → citeproc test test-suite locale_ForceEmptyEtAlTerm.txt
-Passed in:
-(string) 'John Doe '
-Expected:
-(string) 'John Doe'
 
 Failure → citeproc test test-suite locator_SimpleLocators.txt
 Passed in:

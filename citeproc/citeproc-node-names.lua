@@ -493,12 +493,15 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
       table.insert(inlines, PlainText:new(punctuation))
       util.extend(inlines, self:render_person_name(names[#names], self.et_al_use_first > 1, context))
     elseif self.et_al_use_first > 0 then
-      if self:_check_delimiter(self.delimiter_precedes_et_al, self.et_al_use_first + 1) then
-        table.insert(inlines, PlainText:new(self.delimiter))
-      else
-        table.insert(inlines, PlainText:new(" "))
+      local et_al_inlines = et_al:render_term(context)
+      if #et_al_inlines > 0 then
+        if self:_check_delimiter(self.delimiter_precedes_et_al, self.et_al_use_first + 1) then
+          table.insert(inlines, PlainText:new(self.delimiter))
+        else
+          table.insert(inlines, PlainText:new(" "))
+        end
+        util.extend(inlines, et_al:render_term(context))
       end
-      util.extend(inlines, et_al:render_term(context))
     end
   end
 
