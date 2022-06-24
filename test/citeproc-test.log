@@ -25,7 +25,7 @@ namespaces           1       0       0       0
 number              13       4       3       0
 page                 9       0       0       0
 plural               7       0       0       0
-position             8       5       3       0
+position             9       5       2       0
 punctuation          8       5       3       0
 quotes               2       0       2       0
 simplespace          0       0       1       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       0       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              510     161     183       0
+(all)              511     161     182       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -55,9 +55,9 @@ Expected:
 Failure → citeproc test test-suite bugreports_AutomaticallyDeleteItemsFails.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"> J. Doe, <i>Book A</i>, 2000</div>
-  <div class="csl-entry"> J. Doe, <i>Book B</i>, 2000</div>
-  <div class="csl-entry"> R. Snoakes, <i>Book C</i>, 2000</div>
+  <div class="csl-entry"> J. Doe, <i>Book A</i>, 2000.</div>
+  <div class="csl-entry"> J. Doe, <i>Book B</i>, 2000.</div>
+  <div class="csl-entry"> R. Snoakes, <i>Book C</i>, 2000.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -98,7 +98,7 @@ Expected:
 Failure → citeproc test test-suite bugreports_DuplicateSpaces.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>,  New York: Routledge, 2006</div>
+  <div class="csl-entry"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>,  New York: Routledge, 2006.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -134,7 +134,7 @@ Expected:
 Failure → citeproc test test-suite bugreports_IeeePunctuation.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"> P.G. Zimbardo, “Does Psychology make a significant difference in our lives?,” <i>American Psychologist</i>,  vol. 59, Jan. 2004, pp. 339–351</div>
+  <div class="csl-entry"> P.G. Zimbardo, “Does Psychology make a significant difference in our lives?,” <i>American Psychologist</i>,  vol. 59, Jan. 2004, pp. 339–351.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -724,8 +724,8 @@ Expected:
 Failure → citeproc test test-suite display_SecondFieldAlignMigratePunctuation.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005</div>
-  <div class="csl-entry"> F.G. Bennett Jr., “Getting Property Right: ’Informal’ Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>,  vol. 18, Aug. 2009, pp. 463–509</div>
+  <div class="csl-entry"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005.</div>
+  <div class="csl-entry"> F.G. Bennett Jr., “Getting Property Right: ’Informal’ Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>,  vol. 18, Aug. 2009, pp. 463–509.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1180,8 +1180,8 @@ Expected:
 Failure → citeproc test test-suite name_SubsequentAuthorSubstituteSingleField.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Yomiuri Shinbun</div>
-  <div class="csl-entry">Yomiuri Shinbun</div>
+  <div class="csl-entry">Yomiuri Shinbun.</div>
+  <div class="csl-entry">Yomiuri Shinbun.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1968,7 +1968,7 @@ Error → citeproc test test-suite collapse_ChicagoAfterCollapse.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite collapse_CitationNumberRangesOneOnly.txt
-./citeproc/citeproc-engine.lua:439: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGrouped.txt
 ./citeproc/citeproc-node-locale.lua:99: attempt to concatenate a nil value (local 'key')
@@ -2154,16 +2154,13 @@ Error → citeproc test test-suite name_LiteralWithComma.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite number_LimitOrdinalsToDayOne.txt
-./citeproc/citeproc-engine.lua:439: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite number_PreserveDelimiter.txt
 ./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
-
-Error → citeproc test test-suite position_FalseInBibliography.txt
-./citeproc/citeproc-node-choose.lua:190: attempt to index a nil value (field 'cite')
 
 Error → citeproc test test-suite position_IbidWithSuffix.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2229,25 +2226,25 @@ Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaMacroBi
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
-./citeproc/citeproc-engine.lua:236: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaVariableBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:236: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroCitation.txt
-./citeproc/citeproc-engine.lua:236: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaVariableBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:236: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaMacroBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2259,7 +2256,7 @@ Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaVaria
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:236: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_ConditionalMacroDates.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2304,10 +2301,10 @@ Error → citeproc test test-suite sort_NumberOfAuthorsAsKey.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_OmittedBibRefMixedNumericStyle.txt
-./citeproc/citeproc-engine.lua:439: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_OmittedBibRefNonNumericStyle.txt
-./citeproc/citeproc-engine.lua:439: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_Quotes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

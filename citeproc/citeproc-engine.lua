@@ -124,6 +124,7 @@ function CiteProc:build_cluster(citation_items)
   context.engine = self
   context.style = self.style_element
   context.area = self.style_element.citation
+  context.in_bibliography = false
   context.locale = self:get_locale(self.lang)
   context.name_inheritance = self.style_element.citation.name_inheritance
   context.format = output_format
@@ -425,6 +426,7 @@ function CiteProc:makeBibliography()
     context.engine = self
     context.style = self.style_element
     context.area = self.style_element.bibliography
+    context.in_bibliography = true
     context.locale = self:get_locale(self.lang)
     context.name_inheritance = self.style_element.bibliography.name_inheritance
     context.format = output_format
