@@ -16,7 +16,7 @@ group                3       2       2       0
 integration          5       6       3       0
 label               15       2       2       0
 locale              23       0       0       0
-locator              3       3       0       0
+locator              4       1       0       0
 magic               30       6       4       0
 name                83      18      10       0
 nameattr            97       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              519     163     172       0
+(all)              520     161     172       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -886,18 +886,6 @@ Passed in:
 (string) 'Doe, Book A, 2000, pp. 100–103.; Roe, Book B, 2001, chaps. 200 - 201.'
 Expected:
 (string) 'Doe, Book A, 2000, pp. 100–103; Roe, Book B, 2001, chaps. 200–201.'
-
-Failure → citeproc test test-suite locator_TrickyEntryForPlurals.txt
-Passed in:
-(string) 'Book Title, pp. vol. 1, fol. 186, 8 April 1544'
-Expected:
-(string) 'Book Title, vol. 1, fol. 186, 8 April 1544'
-
-Failure → citeproc test test-suite locator_WithLeadingSpace.txt
-Passed in:
-(string) 'Hello Title:page:666'
-Expected:
-(string) 'Hello Title:666'
 
 Failure → citeproc test test-suite magic_ImplicitYearSuffixDelimiter.txt
 Passed in:
@@ -2164,7 +2152,7 @@ Error → citeproc test test-suite name_EditorTranslatorWithTranslatorOnlyBib.tx
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite name_EtAlWithCombined.txt
-./citeproc/citeproc-node-choose.lua:169: attempt to index a nil value (field 'cite')
+./citeproc/citeproc-node-choose.lua:168: attempt to index a nil value (field 'cite')
 
 Error → citeproc test test-suite name_HyphenatedNonDroppingParticle1.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

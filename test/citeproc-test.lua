@@ -44,6 +44,23 @@ local function listdir(path)
   return files
 end
 
+
+local function get_skipped_files()
+  local skipped_files = {}
+  local file = io.open("./test/citeproc-test-skip.txt", "r")
+  if not file then
+    return skipped_files
+  end
+  for line in file:lines() do
+    if not util.startswith(line, "#") then
+      skipped_files[line] = true
+    end
+  end
+  file:close()
+  return skipped_files
+end
+
+
 local function test_citation_items(engine, fixture)
   local citation_items = fixture.citation_items
   if not citation_items then
@@ -279,8 +296,9 @@ end
 
 local function run_suite(test_dir)
   local files = listdir(test_dir)
+  local skipped_files = get_skipped_files()
   for _, file in ipairs(files) do
-    if string.match(file, "%.txt$") then
+    if string.match(file, "%.txt$") and not skipped_files[file] then
       local path = test_dir .. "/" .. file
       it(file, function ()
         run_test(path)

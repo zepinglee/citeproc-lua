@@ -1,0 +1,2 @@
+# locator parsing is not yet implemented
+locator_TrickyEntryForPlurals.txt

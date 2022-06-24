@@ -24,12 +24,11 @@ end
 
 function Choose:build_ir(engine, state, context)
   for _, child in ipairs(self.children) do
-    local ir = child:build_ir(engine, state, context)
-    if ir then
+    if child:evaluate_conditions(engine, state, context) then
+      local ir = child:build_ir(engine, state, context)
       return ir
     end
   end
-  return nil
 end
 
 
@@ -211,6 +210,10 @@ function Else:from_node(node)
   local o = Else:new()
   o:process_children_nodes(node)
   return o
+end
+
+function Else:evaluate_conditions(engine, state, context)
+  return true
 end
 
 function Else:build_ir(engine, state, context)
