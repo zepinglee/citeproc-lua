@@ -646,7 +646,7 @@ function Element:format_number(number, variable, form, context)
     variable = context:get_variable("label")
   end
   form = form or "numeric"
-  local number_part_list = self:split_number_parts(number)
+  local number_part_list = self:split_number_parts(number, context)
   -- {
   --   {"1", "",  " & "}
   --   {"5", "8", ", "}
@@ -688,8 +688,13 @@ function Element:format_number(number, variable, form, context)
 
 end
 
-function Element:split_number_parts(number)
+function Element:split_number_parts(number, context)
   -- number = string.gsub(number, util.unicode["en dash"], "-")
+  local and_symbol
+  and_symbol = context.locale:get_simple_term("and", "symbol")
+  if and_symbol then
+    and_symbol = " " .. and_symbol .. " "
+  end
   local number_part_list = {}
   for _, tuple in ipairs(util.split(number, "%s*[,&]%s*", nil, true)) do
     local single_number, delim = table.unpack(tuple)
@@ -697,7 +702,7 @@ function Element:split_number_parts(number)
     if delim == "," then
       delim = ", "
     elseif delim == "&" then
-      delim = " & "
+      delim = and_symbol or " & "
     end
     local start = single_number
     local stop = ""

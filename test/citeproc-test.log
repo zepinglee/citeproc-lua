@@ -14,7 +14,7 @@ form                 3       0       0       0
 fullstyles           0       0       5       0
 group                3       2       2       0
 integration          5       6       3       0
-label               14       3       2       0
+label               15       2       2       0
 locale              23       0       0       0
 locator              3       3       0       0
 magic               30       6       4       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              518     164     172       0
+(all)              519     163     172       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -880,12 +880,6 @@ Passed in:
 (string) 'N.d.'
 Expected:
 (string) 'n.d.'
-
-Failure → citeproc test test-suite label_PluralWithLocalizedAmpersand.txt
-Passed in:
-(string) 'pages 213 &#38; 235'
-Expected:
-(string) 'pages 213 AMPERSAND 235'
 
 Failure → citeproc test test-suite locator_SimpleLocators.txt
 Passed in:
