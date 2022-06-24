@@ -492,7 +492,7 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
       local punctuation = self.delimiter .. util.unicode["horizontal ellipsis"] .. " "
       table.insert(inlines, PlainText:new(punctuation))
       util.extend(inlines, self:render_person_name(names[#names], self.et_al_use_first > 1, context))
-    else
+    elseif self.et_al_use_first > 0 then
       if self:_check_delimiter(self.delimiter_precedes_et_al, self.et_al_use_first + 1) then
         table.insert(inlines, PlainText:new(self.delimiter))
       else
@@ -500,6 +500,13 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
       end
       util.extend(inlines, et_al:render_term(context))
     end
+  end
+
+  if #inlines == 0 then
+    -- local ir = Rendered:new()
+    -- ir.group_var = "missing"
+    -- return ir
+    return nil
   end
 
   local output_format = context.format

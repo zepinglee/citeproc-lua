@@ -8,7 +8,7 @@ date                83      12       6       0
 decorations          6       1       0       0
 disambiguate        13      40      18       0
 display              0       1       4       0
-etal                 1       1       2       0
+etal                 2       0       2       0
 flipflop            13       5       1       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       0       2       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              505     166     183       0
+(all)              506     165     183       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -735,16 +735,6 @@ Expected:
   <div class="csl-entry">
     <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> F.G. Bennett Jr., “Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>, vol. 18, Aug. 2009, pp. 463–509.</div>
   </div>
-</div>'
-
-Failure → citeproc test test-suite etal_UseZeroFirst.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"> et al. // John Doe et al.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe et al.</div>
 </div>'
 
 Failure → citeproc test test-suite flipflop_ApostropheInsideTag.txt
