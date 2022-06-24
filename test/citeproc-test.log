@@ -4,7 +4,7 @@ affix                7       1       1       0
 bugreports          19      17      46       0
 collapse             0      17       4       0
 condition           16       0       1       0
-date                83      12       6       0
+date                84      12       5       0
 decorations          6       1       0       0
 disambiguate        13      40      18       0
 display              0       1       4       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              515     165     174       0
+(all)              516     165     173       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -2021,9 +2021,6 @@ Error → citeproc test test-suite condition_RefTypeBranching.txt
 
 Error → citeproc test test-suite date_AccessedCrash.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite date_DayOrdinalDayOneOnly.txt
-./citeproc/citeproc-node-date.lua:527: attempt to call a nil value (method 'get_locale_option')
 
 Error → citeproc test test-suite date_DisappearingBug.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

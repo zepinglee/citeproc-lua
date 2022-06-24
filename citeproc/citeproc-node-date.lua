@@ -493,7 +493,7 @@ function DatePart:build_ir(single_date, engine, state, context, suppressed_affix
   elseif self.name == "month" then
     text = self:render_month(single_date[2], engine, state, context)
   elseif self.name == "day" then
-    text = self:render_day(single_date[3], engine, state, context)
+    text = self:render_day(single_date[3], single_date[2], engine, state, context)
   end
 
   if not text then
@@ -514,7 +514,7 @@ function DatePart:build_ir(single_date, engine, state, context, suppressed_affix
   return Rendered:new(inlines, self)
 end
 
-function DatePart:render_day(day, engine, state, context)
+function DatePart:render_day(day, month, engine, state, context)
   if not day or day == "" then
     return nil
   end
@@ -524,7 +524,7 @@ function DatePart:render_day(day, engine, state, context)
   end
   local form = self.form or "numeric"
   if form == "ordinal" then
-    local limit_day_1 = context:get_locale_option("limit-day-ordinals-to-day-1")
+    local limit_day_1 = context.locale.style_options.limit_day_ordinals_to_day_1
     if limit_day_1 and day > 1 then
       form = "numeric"
     end
@@ -532,8 +532,11 @@ function DatePart:render_day(day, engine, state, context)
   if form == "numeric-leading-zeros" then
     return string.format("%02d", day)
   elseif form == "ordinal" then
-    -- TODO: render localed ordinal
-    return string.format("%02dth", day)
+    -- When the “day” date-part is rendered in the “ordinal” form, the ordinal
+    -- gender is matched against that of the month term.
+    local gender = context.locale:get_number_gender(string.format("month-%02d", month))
+    local suffix = context.locale:get_ordinal_term(day, gender)
+    return tostring(day) .. suffix
   else  -- numeric
     return tostring(day)
   end
