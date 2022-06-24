@@ -183,6 +183,7 @@ function If:is_uncertain_date(variable)
 end
 
 function If:check_position(position, context)
+  -- util.debug(context.cite)
   if context.in_bibliography then
     return false
   end

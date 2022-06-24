@@ -315,7 +315,6 @@ function CiteProc:set_cite_position(item, note_number, cite_first_note_numbers, 
     item.note_distance = note_number - cite_last_note_numbers[item.id]
   else
     item.position = util.position_map["first"]
-    item["first-reference-note-number"] = note_number
     cite_first_note_numbers[item.id] = note_number
     item.note_distance = 0
   end

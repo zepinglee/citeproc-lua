@@ -37,6 +37,7 @@ skipped_fixtures = [
     'name_namepartAffixes.txt',
     'number_OrdinalSpacing.txt',
     'number_PlainHyphenOrEnDashAlwaysPlural.txt',
+    'position_ResetNoteNumbers.txt',
     'punctuation_FrenchOrthography.txt',
     'punctuation_FullMontyField.txt',
     'punctuation_FullMontyPlain.txt',

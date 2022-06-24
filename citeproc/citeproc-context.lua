@@ -96,12 +96,10 @@ end
 function Context:get_number(name)
   if name == "locator" then
     return self.cite.locator
-  elseif name == "first-reference-note-number" then
-    return self.first_reference_note_number
   elseif name == "citation-number" then
     return self.bib_number
   elseif name == "first-reference-note-number" then
-    return self.cite.first_reference_note_number
+    return self.cite["first-reference-note-number"]
   elseif name == "page-first" then
     return self.page_first(self.reference.page)
   else

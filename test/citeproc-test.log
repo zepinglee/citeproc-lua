@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
-affix                6       1       2       0
-bugreports          19      14      49       0
+affix                7       1       1       0
+bugreports          19      17      46       0
 collapse             0      17       4       0
 condition           16       0       1       0
 date                83      12       6       0
@@ -13,7 +13,7 @@ flipflop            13       5       1       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
 group                3       2       2       0
-integration          4       7       3       0
+integration          5       6       3       0
 label               12       4       3       0
 locale              23       0       0       0
 locator              3       3       0       0
@@ -22,7 +22,7 @@ name                83      18      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
-number              13       4       3       0
+number              14       4       2       0
 page                 9       0       0       0
 plural               7       0       0       0
 position             9       5       2       0
@@ -31,14 +31,14 @@ quotes               2       0       2       0
 simplespace          0       0       1       0
 sort                 5      11      50       0
 sortseparator        1       0       0       0
-substitute           4       1       2       0
+substitute           5       1       1       0
 testers              0       0       2       0
 textcase            25       4       1       0
 unicode              1       0       0       0
-variables            3       0       2       0
+variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              511     161     182       0
+(all)              515     165     174       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -110,8 +110,8 @@ Expected:
 Failure → citeproc test test-suite bugreports_EnvAndUrb.txt
 Passed in:
 (string) '..[0] Baines, T S, O Benedettini and J M Kay, ‘Title One’.; Baines, T S, F Gump and J M Kay, ‘Title Two’.
-..[1] Baines, T S, O Benedettini and J M Kay, ‘Title One’.
->>[2] Baines, T S, F Gump and J M Kay, ‘Title Two’.'
+..[1] See reference 1, Baines et al., ‘Title One’.
+>>[2] See reference 1, Baines et al., ‘Title Two’.'
 Expected:
 (string) '>>[0] Baines, T S, O Benedettini and J M Kay, ‘Title One’; Baines, T S, F Gump and J M Kay, ‘Title Two’.
 ..[1] See reference 1, Baines et al.
@@ -151,6 +151,38 @@ Passed in:
 Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry"><i>Arrêté du 23 mars 1992 relatif au programme des études conduisant au diplôme d’État d’infirmier</i>, 1992. </div>
+</div>'
+
+Failure → citeproc test test-suite bugreports_SingleQuote.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">“production d ’ eau glacée à condensation à eau avec récupération de chaleur . Modélisation simplifiée dans l ’ optique d ’ un calcul des consommations d ’ énergie d ’ une insta.”</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline">“production d ’ eau glacée à condensation à eau avec récupération de chaleur . Modélisation simplifiée dans l ’ optique d ’ un calcul des consommations d ’ énergie d ’ une insta.”</div>
+  </div>
+</div>'
+
+Failure → citeproc test test-suite bugreports_UndefinedInName3.txt
+Passed in:
+(string) 'B-X Kim and A-Y Kim, p. .
+Kim and Kim, 23.'
+Expected:
+(string) 'B-X Kim and A-Y Kim.
+Kim and Kim, 23.'
+
+Failure → citeproc test test-suite bugreports_UndefinedNotString.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"><i>FOO BAR</i> <b>n.d.</b></div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"><i>FOO BAR</i> <b>n.d.</b></div>
+  </div>
 </div>'
 
 Failure → citeproc test test-suite bugreports_UndefinedStr.txt
@@ -485,9 +517,9 @@ Failure → citeproc test test-suite disambiguate_BasedOnSubsequentFormWithBackr
 Passed in:
 (string) '..[0] John Doe, His Book (2000).; John Doe, His Other Book (2001).
 ..[1] Jane Roe, Her Book (1998).
-..[2] Roe, Her Book, supra note .
-..[3] Doe, His Book, supra note .
->>[4] Roe, Her Book, supra note .'
+..[2] Roe, Her Book, supra note 2.
+..[3] Doe, His Book, supra note 1.
+>>[4] Roe, Her Book, supra note 2.'
 Expected:
 (string) '..[0] John Doe, His Book (2000); John Doe, His Other Book (2001).
 ..[1] Jane Roe, Her Book (1998).
@@ -790,8 +822,8 @@ Passed in:
 (string) '>>[0] Snoakes, “Life of Snoakes” (1902).
 ..[1] Doe, “Life of Doe” (1901).
 ..[2] Roe, “Life of Roe” (1900).
-..[3] Doe, supra.
-..[4] Roe, supra.'
+..[3] Doe, supra note 1.
+..[4] Roe, supra note 2.'
 Expected:
 (string) '>>[0] Snoakes, “Life of Snoakes” (1902).
 >>[1] Doe, “Life of Doe” (1901).
@@ -822,18 +854,6 @@ Expected:
 ..[1] (ibid-with-locator)
 ..[2] (Roe bk. 20)
 >>[3] (ibid-with-locator)'
-
-Failure → citeproc test test-suite integration_SimpleFirstReferenceNoteNumber.txt
-Passed in:
-(string) '..[0] Doe, “Life of Doe” (1901).
-..[1] Roe, “Life of Roe” (1900).
-..[2] Doe, supra.
->>[3] Roe, supra.'
-Expected:
-(string) '..[0] Doe, “Life of Doe” (1901).
-..[1] Roe, “Life of Roe” (1900).
-..[2] Doe, supra note 1.
->>[3] Roe, supra note 2.'
 
 Failure → citeproc test test-suite integration_SimpleIbid.txt
 Passed in:
@@ -1258,9 +1278,9 @@ Passed in:
 (string) '..[0] [citation1-item1-note1] Appleton “Tom Swift and His Electric Runabout” (1910).
 ..[1] [citation2-item1-note2] ibid.
 ..[2] [citation3-item1-note2] ibid. page 33.
-..[3] [citation4-item2-note3] Bloggs “A Very Short Book Indeed” (2012).; [citation4-item1-note3] Appleton supra.
-..[4] [citation5-item1-note4] Appleton supra page 99.
-..[5] [citation6-item1-note4] Appleton supra.
+..[3] [citation4-item2-note3] Bloggs “A Very Short Book Indeed” (2012).; [citation4-item1-note3] Appleton supra note 1.
+..[4] [citation5-item1-note4] Appleton supra note 1 page 99.
+..[5] [citation6-item1-note4] Appleton supra note 1.
 >>[6] [citation7-item1-note4] ibid.'
 Expected:
 (string) '..[0] [citation1-item1-note1] Appleton “Tom Swift and His Electric Runabout” (1910).
@@ -1294,11 +1314,11 @@ Passed in:
 (string) '..[0] Book A (note 1)
 ..[1] Book C (note 1)
 ..[2] ibid (note 2)
-..[3] Book A (note 2)
+..[3] Book A, n 1 (note 2)
 ..[4] Book C (note 3)
-..[5] Book A (note 3)
-..[6] Book C (note 4)
->>[7] Book A (note 5)'
+..[5] Book A, n 1 (note 3)
+..[6] Book C, n 1 (note 4)
+>>[7] Book A, n 1 (note 5)'
 Expected:
 (string) '..[0] Book A (note 1)
 ..[1] Book C (note 1)
@@ -1811,8 +1831,37 @@ Passed in:
 Expected:
 (string) 'John von Doe: An about up Life; John van Doe? A Life; John d’Doe! A Life; John de Doe a Life'
 
-Error → citeproc test test-suite affix_InterveningEmpty.txt
-./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
+Failure → citeproc test test-suite variables_ContainerTitleShort.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Campbell DT, Fiske DW. Main title. In: Container: a title. (Series: a title). </div>
+  <div class="csl-entry">Campbell DT, Fiske DW. Main title. Container. </div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">1. </div><div class="csl-right-inline">Campbell DT, Fiske DW. Main title. In: Container: a title. (Series: a title).</div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. Main title. Container.</div>
+  </div>
+</div>'
+
+Failure → citeproc test test-suite variables_ContainerTitleShort2.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. In  p. 25. </div>
+  <div class="csl-entry">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. :25. </div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">1. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. In: Container: a title. p. 25. (Series: a title).</div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. Container. :25.</div>
+  </div>
+</div>'
 
 Error → citeproc test test-suite affix_WithCommas.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -1907,9 +1956,6 @@ Error → citeproc test test-suite bugreports_ProcessorHang1.txt
 Error → citeproc test test-suite bugreports_SelfLink.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite bugreports_SingleQuote.txt
-./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
-
 Error → citeproc test test-suite bugreports_SingleQuoteXml.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -1940,12 +1986,6 @@ Error → citeproc test test-suite bugreports_UndefinedInName.txt
 Error → citeproc test test-suite bugreports_UndefinedInName2.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite bugreports_UndefinedInName3.txt
-./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
-
-Error → citeproc test test-suite bugreports_UndefinedNotString.txt
-./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
-
 Error → citeproc test test-suite bugreports_YearSuffixInHarvard1.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -1968,7 +2008,7 @@ Error → citeproc test test-suite collapse_ChicagoAfterCollapse.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite collapse_CitationNumberRangesOneOnly.txt
-./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:440: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGrouped.txt
 ./citeproc/citeproc-node-locale.lua:99: attempt to concatenate a nil value (local 'key')
@@ -2142,7 +2182,7 @@ Error → citeproc test test-suite name_EditorTranslatorWithTranslatorOnlyBib.tx
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite name_EtAlWithCombined.txt
-./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-node-choose.lua:169: attempt to index a nil value (field 'cite')
 
 Error → citeproc test test-suite name_HyphenatedNonDroppingParticle1.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2154,13 +2194,10 @@ Error → citeproc test test-suite name_LiteralWithComma.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite number_LimitOrdinalsToDayOne.txt
-./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:440: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite number_PreserveDelimiter.txt
-./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite position_IbidWithSuffix.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2301,10 +2338,10 @@ Error → citeproc test test-suite sort_NumberOfAuthorsAsKey.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_OmittedBibRefMixedNumericStyle.txt
-./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:440: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_OmittedBibRefNonNumericStyle.txt
-./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:440: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_Quotes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2339,9 +2376,6 @@ Error → citeproc test test-suite sort_WithAndInOneEntry.txt
 Error → citeproc test test-suite substitute_SharedMacro.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite substitute_SuppressOrdinaryVariable.txt
-./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
-
 Error → citeproc test test-suite testers_FirstAutoGeneratedZoteroPluginTest.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -2350,9 +2384,3 @@ Error → citeproc test test-suite testers_SecondAutoGeneratedZoteroPluginTest.t
 
 Error → citeproc test test-suite textcase_RepeatedTitleBug.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite variables_ContainerTitleShort.txt
-./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
-
-Error → citeproc test test-suite variables_ContainerTitleShort2.txt
-./citeproc/citeproc-node-text.lua:109: attempt to index a nil value (local 'ir')
