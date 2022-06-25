@@ -110,7 +110,9 @@ skip_attrs = [
     'disambiguate-add-names',
     'disambiguate',
     'disambiguate-add-year-suffix',
-    'collapse'
+    'collapse',
+    'subsequent-author-substitute',
+    'subsequent-author-substitute-rule',
 ]
 def skip_fixture(fixture):
     for tag in skip_tags:

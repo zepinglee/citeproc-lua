@@ -22,7 +22,7 @@ name                83      18      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
-number              14       4       2       0
+number              15       3       2       0
 page                 9       0       0       0
 plural               7       0       0       0
 position             9       5       2       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              520     161     172       0
+(all)              521     160     172       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -1215,12 +1215,6 @@ Passed in:
 Expected:
 (string) '[Jean] (de La Fontaine III)'
 
-Failure → citeproc test test-suite number_NewOrdinalsWithGenderChange.txt
-Passed in:
-(string) 'Title 1: 1'
-Expected:
-(string) 'Title 1: 1<sup>r</sup><sup>e</sup>femmie'
-
 Failure → citeproc test test-suite number_OrdinalSpacing.txt
 Passed in:
 (string) 'Blah blah. 7, p. 3-8DD<i>ed</i>'
@@ -1235,7 +1229,7 @@ Expected:
 
 Failure → citeproc test test-suite number_SeparateOrdinalNamespaces.txt
 Passed in:
-(string) 'With One, 1.<sup>a</sup> edition, 1.<sup>a</sup> issue; With Two, 2 edition, 2 issue; With Three, 3 edition, 3 issue'
+(string) 'With One, 1.<sup>a</sup> edition, 1.<sup>o</sup> issue; With Two, 2 edition, 2.<sup>o</sup><sup>o</sup> issue; With Three, 3 edition, 3 issue'
 Expected:
 (string) 'With One, 1.<sup>a</sup> edition, 1.<sup>o</sup> issue; With Two, 2.<sup>a</sup> edition, 2.<sup>o</sup><sup>o</sup> issue; With Three, 3.<sup>a</sup> edition, 3.<sup>a</sup> issue'
 

@@ -115,6 +115,14 @@ function Locale:get_ordinal_term(number, gender)
 
   local keys = {}
 
+  if gender then
+    if number < 100 then
+      table.insert(keys, string.format("ordinal-%02d/gender-form-%s/match-whole-number", number, gender))
+    end
+    table.insert(keys, string.format("ordinal-%02d/gender-form-%s/match-last-two-digits", number % 100, gender))
+    table.insert(keys, string.format("ordinal-%02d/gender-form-%s/match-last-digit", number % 10, gender))
+  end
+
   if number < 100 then
     table.insert(keys, string.format("ordinal-%02d/match-whole-number", number))
   end
@@ -261,14 +269,14 @@ function Terms:from_node(node)
     if form then
       key = key .. '/form-' .. form
     end
-    if match then
-      key = key .. '/match-' .. match
-    end
     -- if gender then
     --   key = key .. '/gender-' .. gender
     -- end
     if gender_form then
-      key = key .. '/gender-form' .. gender_form
+      key = key .. '/gender-form-' .. gender_form
+    end
+    if match then
+      key = key .. '/match-' .. match
     end
 
     if term.name == "ordinal" or util.startswith(term.name, "ordinal-") then
