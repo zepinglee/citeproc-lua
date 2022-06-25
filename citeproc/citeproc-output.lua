@@ -425,7 +425,7 @@ function MarkupWriter:write_inline(inline)
       return self:write_quoted(inline)
 
     elseif inline.type == "Div" then
-      return self:write_formatted(inline)
+      return self:write_display(inline)
 
     elseif inline.type == "Linked" then
       return self:write_link(inline)
@@ -482,7 +482,11 @@ HtmlWriter.markups = {
   ["@vertical-align/sub"] = "<sub>%s</sub>",
   ["@vertical-align/baseline"] = '<span style="baseline">%s</span>',
   ["@cite/entry"] = "%s",
-  ["@bibliography/entry"] = "<div class=\"csl-entry\">%s</div>\n"
+  ["@bibliography/entry"] = "<div class=\"csl-entry\">%s</div>\n",
+  ["@display/block"] = '\n\n    <div class="csl-block">%s</div>\n',
+  ["@display/left-margin"] = '\n    <div class="csl-left-margin">%s</div>',
+  ["@display/right-inline"] = '<div class="csl-right-inline">%s</div>\n  ',
+  ["@display/indent"] = '<div class="csl-indent">%s</div>\n  ',
 }
 
 function HtmlWriter:write_escaped(str)
@@ -504,6 +508,14 @@ function HtmlWriter:write_formatted(inline)
       res = string.format(format_str, res)
     end
   end
+  return res
+end
+
+function HtmlWriter:write_display(inline)
+  local res = self:write_children(inline)
+  local key = string.format("@display/%s", inline.div)
+  local format_str = self.markups[key]
+  res = string.format(format_str, res)
   return res
 end
 
