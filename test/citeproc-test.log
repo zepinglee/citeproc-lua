@@ -4,7 +4,7 @@ affix                7       1       1       0
 bugreports          25      12      45       0
 collapse             4      16       1       0
 condition           17       0       0       0
-date                84      12       5       0
+date                85      11       5       0
 decorations          6       1       0       0
 disambiguate        14      39      18       0
 display              2       2       1       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              548     146     157       0
+(all)              549     145     157       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -318,26 +318,6 @@ Passed in:
 (string) 'Item 1; Item 2; Item 3; Item 4'
 Expected:
 (string) 'Item 2; Item 4; Item 1; Item 3'
-
-Failure → citeproc test test-suite date_RangeDelimiter.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Year, Month, Day, with repeated month and year: 2_[DRD]_4January1999</div>
-  <div class="csl-entry">Year, Month, Day, with differing month: 2January_[MRD]_4March1999</div>
-  <div class="csl-entry">Year, Month, Day, with differing year: 2January1999_[YRD]_4January2000</div>
-  <div class="csl-entry">Year, Month, with repeated year: January_[MRD]_March1999</div>
-  <div class="csl-entry">Year, Month, with differing year: January1999_[YRD]_March2000</div>
-  <div class="csl-entry">Year, with differing year: 1999_[YRD]_2000</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Year, Month, Day, with repeated month and year: 2_[DRD]_4 January 1999</div>
-  <div class="csl-entry">Year, Month, Day, with differing month: 2 January_[MRD]_4 March 1999</div>
-  <div class="csl-entry">Year, Month, Day, with differing year: 2 January 1999_[YRD]_4 January 2000</div>
-  <div class="csl-entry">Year, Month, with repeated year: January_[MRD]_March 1999</div>
-  <div class="csl-entry">Year, Month, with differing year: January 1999_[YRD]_March 2000</div>
-  <div class="csl-entry">Year, with differing year: 1999_[YRD]_2000</div>
-</div>'
 
 Failure → citeproc test test-suite date_SortEmptyDatesCitation.txt
 Passed in:
