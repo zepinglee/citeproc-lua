@@ -96,6 +96,7 @@ function Locale:get_simple_term(name, form, plural)
   for _, fallback_form in ipairs(self.form_fallbacks[form]) do
     local key = name
     if form ~= "long" then
+      if not key then print(debug.traceback()) end
       key = key .. "/form-" .. fallback_form
     end
     local term = self.terms[key]
