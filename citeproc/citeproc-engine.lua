@@ -108,15 +108,10 @@ function CiteProc:build_cluster(citation_items)
   -- Capitalize first
   for i, ir in ipairs(irs) do
     local prefix = citation_items[i].prefix
-    if prefix then
-      if string.match(prefix, "%.%s*$") and #util.split(util.strip(prefix)) > 1 then
-        ir:capitalize_first_term()
-      end
-    else
-      local layout_affixes = self.style_element.citation.layout.affixes
-      if not layout_affixes or not layout_affixes.prefix then
-        ir:capitalize_first_term()
-      end
+    if prefix and string.match(prefix, "%.%s*$") and
+        #util.split(util.strip(prefix)) > 1 or not prefix then
+      -- util.debug(ir)
+      ir:capitalize_first_term()
     end
   end
 
@@ -209,16 +204,53 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
   local cite_last_note_numbers = {}
   local previous_citation = nil
   for _, citation_pre in ipairs(citationsPre) do
-    local pre_citation = self.registry.citations[citation_pre[1]]
+    -- An array citationID/note-number pairs preceding the target citation
+    local citation_id = citation_pre[1]
+    local note_number = citation_pre[2]
+    local pre_citation = self.registry.citations[citation_id]
     for _, cite_item in ipairs(pre_citation.citationItems) do
       if not cite_first_note_numbers[cite_item.id] then
-        cite_first_note_numbers[cite_item.id] = pre_citation.properties.noteIndex
+        cite_first_note_numbers[cite_item.id] = note_number
       end
-      cite_last_note_numbers[cite_item.id] = pre_citation.properties.noteIndex
+      cite_last_note_numbers[cite_item.id] = note_number
     end
     previous_citation = pre_citation
   end
 
+  local note_number = 0
+  if citation.properties and citation.properties.noteIndex then
+    note_number = citation.properties.noteIndex
+  end
+  local citations_to_build = {{citation.citationID, note_number}}
+  util.extend(citations_to_build, citationsPost)
+
+  local params = {
+    bibchange = false,
+    citation_errors = {},
+  }
+  local output = {}
+
+  for citation_index, tuple in ipairs(citations_to_build) do
+    local citation_id, note_number = table.unpack(tuple)
+    local citation_ = self.registry.citations[citation_id]
+    citation_index = citation_index + #citationsPre - 1
+
+    local citation_str = self:build_citation_str(citation_, note_number, cite_first_note_numbers, cite_last_note_numbers, previous_citation)
+
+    if citation_str ~= self.registry.citation_strings[citation_id] then
+      params.bibchange = true
+      table.insert(output, {citation_index, citation_str, citation_id})
+      self.registry.citation_strings[citation_.citationID] = citation_str
+    end
+
+    previous_citation = citation_
+  end
+
+  return {params, output}
+end
+
+function CiteProc:build_citation_str(citation, note_number, cite_first_note_numbers, cite_last_note_numbers, previous_citation)
+  local items = {}
   for i, cite_item in ipairs(citation.citationItems) do
     cite_item.id = tostring(cite_item.id)
     local item_data = self:get_item(cite_item.id)
@@ -239,7 +271,7 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
         item.label = "page"
       end
 
-      self:set_cite_position(item, citation.properties.noteIndex, cite_first_note_numbers, cite_last_note_numbers, previous_cite, previous_citation)
+      self:set_cite_position(item, note_number, cite_first_note_numbers, cite_last_note_numbers, previous_cite, previous_citation)
 
       table.insert(items, item)
     end
@@ -249,63 +281,8 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
     self:sort_bibliography()
   end
 
-  local params = {
-    bibchange = false,
-    citation_errors = {},
-  }
-
-  local citation_id_note_list = {}
-  for _, citation_id_note in ipairs(citationsPre) do
-    table.insert(citation_id_note_list, citation_id_note)
-  end
-  local note_index = 0
-  if citation.properties and citation.properties.noteIndex then
-    note_index = citation.properties.noteIndex
-  end
-  table.insert(citation_id_note_list, {citation.citationID, note_index})
-  for _, citation_id_note in ipairs(citationsPost) do
-    table.insert(citation_id_note_list, citation_id_note)
-  end
-
-  local citation_id_cited = {}
-  for _, citation_id_note in ipairs(citation_id_note_list) do
-    citation_id_cited[citation_id_note[1]] = true
-  end
-  for citation_id, _ in pairs(self.registry.citations) do
-    if not citation_id_cited[citation_id] then
-      self.registry.citations[citation_id] = nil
-      self.registry.citation_strings[citation_id] = nil
-    end
-  end
-
-  local output = {}
-
-  for i, citation_id_note in ipairs(citation_id_note_list) do
-    local citation_id = citation_id_note[1]
-    -- local note_index = citation_id_note[2]
-    if citation_id == citation.citationID then
-      -- local context = {
-      --   build = {},
-      --   engine = self,
-      -- }
-      -- local citation_str = self.style:render_citation(items, context)
-      local citation_str = self:build_cluster(items)
-
-      self.registry.citation_strings[citation_id] = citation_str
-      table.insert(output, {i - 1, citation_str, citation_id})
-    else
-      -- TODO: correct note_index
-      -- TODO: update other citations after disambiguation
-      local citation_str = self.registry.citation_strings[citation_id]
-      if self.registry.citation_strings[citation_id] ~= citation_str then
-        params.bibchange = true
-        self.registry.citation_strings[citation_id] = citation_str
-        table.insert(output, {i - 1, citation_str, citation_id})
-      end
-    end
-  end
-
-  return {params, output}
+  local citation_str = self:build_cluster(items)
+  return citation_str
 end
 
 function CiteProc:set_cite_position(item, note_number, cite_first_note_numbers, cite_last_note_numbers, previous_cite, previous_citation)
