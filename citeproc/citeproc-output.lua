@@ -204,7 +204,6 @@ end
 
 function InlineElement:parse_quotes(inlines, context)
   local quote_fragments = InlineElement:get_quote_fragments(inlines)
-  -- util.debug(quote_fragments)
 
   local quote_stack = {}
   local text_stack = {{}}
@@ -213,7 +212,11 @@ function InlineElement:parse_quotes(inlines, context)
 
   for _, fragment in ipairs(quote_fragments) do
     if type(fragment) == "table" then
+      if fragment.inlines then
+        fragment.inlines = self:parse_quotes(fragment.inlines, context)
+      end
       table.insert(text_stack[#text_stack], fragment)
+
     elseif type(fragment) == "string" then
 
       local quote = fragment
@@ -223,7 +226,7 @@ function InlineElement:parse_quotes(inlines, context)
       end
 
       if quote == "'" then
-        if stack_top_quote == "'" then
+        if stack_top_quote == "'" and #text_stack[#text_stack] > 0 then
           table.remove(quote_stack, #quote_stack)
           local quoted = Quoted:new(text_stack[#text_stack], localized_quotes)
           table.remove(text_stack, #text_stack)
