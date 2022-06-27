@@ -22,7 +22,7 @@ name                85      16      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
-number              15       3       2       0
+number              16       2       2       0
 page                 9       0       0       0
 plural               7       0       0       0
 position            10       4       2       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              537     148     168       0
+(all)              538     147     168       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -1199,12 +1199,6 @@ Passed in:
 (string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) pages i–ix (cs:text) vs His Anonymous Life (2) pages i–ix (cs:number); His Anonymous Life (3) page 3-B (cs:text) vs His Anonymous Life (3) page 3-B (cs:number); His Anonymous Life (4) pages Michaelson–Morely (cs:text) vs His Anonymous Life (4) pages Michaelson–Morely (cs:number); His Anonymous Life (4) pages Michaelson–Morely (cs:text) vs His Anonymous Life (4) pages Michaelson–Morely (cs:number)'
 Expected:
 (string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) pages i–ix (cs:text) vs His Anonymous Life (2) pages i–ix (cs:number); His Anonymous Life (3) page 3-B (cs:text) vs His Anonymous Life (3) page 3-B (cs:number); His Anonymous Life (4) page Michaelson-Morely (cs:text) vs His Anonymous Life (4) page Michaelson-Morely (cs:number)'
-
-Failure → citeproc test test-suite number_SeparateOrdinalNamespaces.txt
-Passed in:
-(string) 'With One, 1.<sup>a</sup> edition, 1.<sup>o</sup> issue; With Two, 2 edition, 2.<sup>o</sup><sup>o</sup> issue; With Three, 3 edition, 3 issue'
-Expected:
-(string) 'With One, 1.<sup>a</sup> edition, 1.<sup>o</sup> issue; With Two, 2.<sup>a</sup> edition, 2.<sup>o</sup><sup>o</sup> issue; With Three, 3.<sup>a</sup> edition, 3.<sup>a</sup> issue'
 
 Failure → citeproc test test-suite position_IbidInText.txt
 Passed in:

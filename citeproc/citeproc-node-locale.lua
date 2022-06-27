@@ -128,6 +128,7 @@ function Locale:get_ordinal_term(number, gender)
   end
   table.insert(keys, string.format("ordinal-%02d/match-last-two-digits", number % 100))
   table.insert(keys, string.format("ordinal-%02d/match-last-digit", number % 10))
+  table.insert(keys, "ordinal")
 
   for _, key in ipairs(keys) do
     local term = self.ordinal_terms[key]
