@@ -437,6 +437,7 @@ function CiteProc:makeBibliography()
 
     -- subsequent_author_substitute
 
+    -- util.debug(ir)
     local flat = ir:flatten(output_format)
 
     local str = output_format:output_bibliography_entry(flat)

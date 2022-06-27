@@ -10,6 +10,7 @@ local dom = require("luaxml-domobject")
 
 local Element = require("citeproc-element").Element
 local IrNode = require("citeproc-ir-node").IrNode
+local SeqIr = require("citeproc-ir-node").SeqIr
 local util = require("citeproc-util")
 
 
@@ -334,7 +335,15 @@ function Bibliography:build_ir(engine, state, context)
   if not self.layout then
     util.error("Missing citation layout.")
   end
-  return self.layout:build_ir(engine, state, context)
+  local ir = self.layout:build_ir(engine, state, context)
+  -- util.debug(ir)
+  if self.second_field_align == "flush" and #ir.children >= 2 then
+    ir.children[1].display = "left-margin"
+    local right_inline_ir = SeqIr:new(util.slice(ir.children, 2), self)
+    right_inline_ir.display = "right-inline"
+    ir.children = {ir.children[1], right_inline_ir}
+  end
+  return ir
 end
 
 Bibliography._default_options = {

@@ -1,13 +1,13 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                7       1       1       0
-bugreports          19      17      46       0
-collapse             0      17       4       0
+bugreports          22      14      46       0
+collapse             1      17       3       0
 condition           16       0       1       0
-date                84      12       5       0
+date                83      13       5       0
 decorations          6       1       0       0
 disambiguate        13      40      18       0
-display              1       3       1       0
+display              2       2       1       0
 etal                 2       0       2       0
 flipflop            13       5       1       0
 form                 3       0       0       0
@@ -17,7 +17,7 @@ integration          5       6       3       0
 label               15       2       2       0
 locale              23       0       0       0
 locator              4       1       0       0
-magic               30       6       4       0
+magic               31       5       4       0
 name                83      18      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              522     162     169       0
+(all)              527     158     168       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -55,9 +55,15 @@ Expected:
 Failure → citeproc test test-suite bugreports_AutomaticallyDeleteItemsFails.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"> J. Doe, <i>Book A</i>, 2000.</div>
-  <div class="csl-entry"> J. Doe, <i>Book B</i>, 2000.</div>
-  <div class="csl-entry"> R. Snoakes, <i>Book C</i>, 2000.</div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Doe, <i>Book A</i>, 2000</div>
+    .</div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> J. Doe, <i>Book B</i>, 2000</div>
+    .</div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[3]</div><div class="csl-right-inline"> R. Snoakes, <i>Book C</i>, 2000</div>
+    .</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -85,20 +91,22 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_DelimiterOnLayout.txt
 Passed in:
-(string) '>>[0] ((Fig.)(z)Fig.)'
+(string) '>>[0] ((Fig.1)(z)Fig.2)'
 Expected:
 (string) '>>[0] (fig.1(z)fig.2)'
 
 Failure → citeproc test test-suite bugreports_DelimitersOnLocator.txt
 Passed in:
-(string) '[[[, 32]; , 32]; , 32]'
+(string) '[[[1, 32]; 2, 32]; 3, 32]'
 Expected:
 (string) '[1, 32; 2, 32; 3, 32]'
 
 Failure → citeproc test test-suite bugreports_DuplicateSpaces.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>,  New York: Routledge, 2006.</div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>,  New York: Routledge, 2006</div>
+    .</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -134,7 +142,9 @@ Expected:
 Failure → citeproc test test-suite bugreports_IeeePunctuation.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"> P.G. Zimbardo, “Does Psychology make a significant difference in our lives?,” <i>American Psychologist</i>,  vol. 59, Jan. 2004, pp. 339–351.</div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> P.G. Zimbardo, “Does Psychology make a significant difference in our lives?,” <i>American Psychologist</i>,  vol. 59, Jan. 2004, pp. 339–351</div>
+    .</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -153,18 +163,6 @@ Expected:
   <div class="csl-entry"><i>Arrêté du 23 mars 1992 relatif au programme des études conduisant au diplôme d’État d’infirmier</i>, 1992. </div>
 </div>'
 
-Failure → citeproc test test-suite bugreports_SingleQuote.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">“production d ’ eau glacée à condensation à eau avec récupération de chaleur . Modélisation simplifiée dans l ’ optique d ’ un calcul des consommations d ’ énergie d ’ une insta.”</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline">“production d ’ eau glacée à condensation à eau avec récupération de chaleur . Modélisation simplifiée dans l ’ optique d ’ un calcul des consommations d ’ énergie d ’ une insta.”</div>
-  </div>
-</div>'
-
 Failure → citeproc test test-suite bugreports_UndefinedInName3.txt
 Passed in:
 (string) 'B-X Kim and A-Y Kim, p. .
@@ -172,30 +170,6 @@ Kim and Kim, 23.'
 Expected:
 (string) 'B-X Kim and A-Y Kim.
 Kim and Kim, 23.'
-
-Failure → citeproc test test-suite bugreports_UndefinedNotString.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><i>FOO BAR</i> <b>n.d.</b></div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"><i>FOO BAR</i> <b>n.d.</b></div>
-  </div>
-</div>'
-
-Failure → citeproc test test-suite bugreports_UndefinedStr.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"> FamilyName G. n.d.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> FamilyName G. n.d.</div>
-  </div>
-</div>'
 
 Failure → citeproc test test-suite bugreports_parseName.txt
 Passed in:
@@ -235,57 +209,57 @@ Expected:
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesInsert.txt
 Passed in:
-(string) '..[0] [CSL STYLE ERROR: reference with no printed form.]
->>[1] [CSL STYLE ERROR: reference with no printed form.]'
+(string) '..[0] [4]
+>>[1] [1], [2], [3], [4]'
 Expected:
 (string) '..[0] [1]
 >>[1] [1]–[4]'
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesMixed.txt
 Passed in:
-(string) '[CSL STYLE ERROR: reference with no printed form.]
-[CSL STYLE ERROR: reference with no printed form.]'
+(string) '((((((([1]), [2]), [3]), [4]), [5]), [6]), [7])
+(((((([1]), [2]), [3]), [5]), [6]), [7])'
 Expected:
 (string) '([1]–[7])
 ([1]–[3], [5]–[7])'
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesMixed2.txt
 Passed in:
-(string) '[CSL STYLE ERROR: reference with no printed form.]
-[CSL STYLE ERROR: reference with no printed form.]'
+(string) '((((((((((([1]), [2]), [3]), [4]), [5]), [6]), [7]), [8]), [9]), [10]), [11])
+(((((((([1]), [3]), [4]), [5]), [7]), [9]), [10]), [11])'
 Expected:
 (string) '([1]–[11])
 ([1], [3]–[5], [7], [9]–[11])'
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesMixed3.txt
 Passed in:
-(string) '[CSL STYLE ERROR: reference with no printed form.]
-[CSL STYLE ERROR: reference with no printed form.]'
+(string) '(((((((([1]), [2]), [3]), [4]), [5]), [6]), [7]), [8])
+((((([1]), [4]), [6]), [7]), [8])'
 Expected:
 (string) '([1]–[8])
 ([1], [4], [6]–[8])'
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixes.txt
 Passed in:
-(string) '[CSL STYLE ERROR: reference with no printed form.]'
+(string) '<span style="font-weight:normal;">(<span style="font-weight:normal;">(<span style="font-weight:normal;">([1])</span>,[2])</span>,[3])</span>'
 Expected:
 (string) '<b>([1]–[3])</b>'
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesNoCollapse.txt
 Passed in:
-(string) '[CSL STYLE ERROR: reference with no printed form.]'
+(string) '<span style="font-weight:normal;">(<span style="font-weight:normal;">(<span style="font-weight:normal;">([1])</span>,[2])</span>,[3])</span>'
 Expected:
 (string) '<b>([1],[2],[3])</b>'
 
 Failure → citeproc test test-suite collapse_NumericDuplicate.txt
 Passed in:
-(string) '[CSL STYLE ERROR: reference with no printed form.]'
+(string) '(((((1),2),2),3),4)'
 Expected:
 (string) '(1,2,2–4)'
 
 Failure → citeproc test test-suite collapse_NumericDuplicate2.txt
 Passed in:
-(string) '[CSL STYLE ERROR: reference with no printed form.]'
+(string) '((((((1),2),3),3),4),5)'
 Expected:
 (string) '(1–3,3–5)'
 
@@ -362,6 +336,12 @@ Passed in:
 (string) 'Item 1; Item 2; Item 3; Item 4'
 Expected:
 (string) 'Item 2; Item 4; Item 1; Item 3'
+
+Failure → citeproc test test-suite date_OtherAlone.txt
+Passed in:
+(string) '((maybe around 2000bc sometime?))'
+Expected:
+(string) '(maybe around 2000bc sometime?)'
 
 Failure → citeproc test test-suite date_RangeDelimiter.txt
 Passed in:
@@ -812,29 +792,15 @@ Expected:
   </div>
 </div>'
 
-Failure → citeproc test test-suite display_SecondFieldAlignClone.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><div class="csl-right-inline"> John Aloysius Doe, “John’s Book” (1999)</div>
-  </div>
-  <div class="csl-entry"><div class="csl-right-inline"> Jane Henrietta Roe, “Jane’s Book” (2000)</div>
-  </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> John Aloysius Doe, “John’s Book” (1999)</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> Jane Henrietta Roe, “Jane’s Book” (2000)</div>
-  </div>
-</div>'
-
 Failure → citeproc test test-suite display_SecondFieldAlignMigratePunctuation.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005.</div>
-  <div class="csl-entry"> F.G. Bennett Jr., “Getting Property Right: ’Informal’ Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>,  vol. 18, Aug. 2009, pp. 463–509.</div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005</div>
+    .</div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> F.G. Bennett Jr., “Getting Property Right: ’Informal’ Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>,  vol. 18, Aug. 2009, pp. 463–509</div>
+    .</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -981,22 +947,6 @@ Passed in:
 (string) 'John Doe ! Jr.'
 Expected:
 (string) 'John Doe, Jr.'
-
-Failure → citeproc test test-suite magic_SecondFieldAlign.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Smith, Book A (2000)</div>
-  <div class="csl-entry">Robert Jones, Book B (2001)</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline">John Smith, Book A (2000)</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline">Robert Jones, Book B (2001)</div>
-  </div>
-</div>'
 
 Failure → citeproc test test-suite magic_SubsequentAuthorSubstitute.txt
 Passed in:
@@ -1881,8 +1831,12 @@ Expected:
 Failure → citeproc test test-suite variables_ContainerTitleShort.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Campbell DT, Fiske DW. Main title. In: Container: a title. (Series: a title). </div>
-  <div class="csl-entry">Campbell DT, Fiske DW. Main title. Container. </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">1. </div><div class="csl-right-inline">Campbell DT, Fiske DW. Main title. In: Container: a title. (Series: a title). </div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. Main title. Container. </div>
+  </div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1897,8 +1851,12 @@ Expected:
 Failure → citeproc test test-suite variables_ContainerTitleShort2.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. In  p. 25. </div>
-  <div class="csl-entry">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. :25. </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">1. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. In  p. 25. </div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. :25. </div>
+  </div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2053,9 +2011,6 @@ Error → citeproc test test-suite bugreports_undefinedCrash.txt
 
 Error → citeproc test test-suite collapse_ChicagoAfterCollapse.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite collapse_CitationNumberRangesOneOnly.txt
-./citeproc/citeproc-engine.lua:440: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGrouped.txt
 ./citeproc/citeproc-node-locale.lua:99: attempt to concatenate a nil value (local 'key')
@@ -2226,7 +2181,7 @@ Error → citeproc test test-suite name_LiteralWithComma.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite number_LimitOrdinalsToDayOne.txt
-./citeproc/citeproc-engine.lua:440: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2370,10 +2325,10 @@ Error → citeproc test test-suite sort_NumberOfAuthorsAsKey.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_OmittedBibRefMixedNumericStyle.txt
-./citeproc/citeproc-engine.lua:440: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_OmittedBibRefNonNumericStyle.txt
-./citeproc/citeproc-engine.lua:440: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_Quotes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

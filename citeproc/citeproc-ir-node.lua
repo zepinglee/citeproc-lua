@@ -47,7 +47,8 @@ function IrNode:flatten(format)
   if self.type == "SeqIr" or self.type == "NameIr" then
     return self:flatten_seq(format)
   else
-    return self.inlines
+    local inlines = format:affixed_quoted(self.inlines, self.affixes, self.quotes);
+    return format:with_display(inlines, self.display);
   end
 
 end

@@ -97,7 +97,8 @@ function Context:get_number(name)
   if name == "locator" then
     return self.cite.locator
   elseif name == "citation-number" then
-    return self.bib_number
+    -- return self.bib_number
+    return self.reference["citation-number"]
   elseif name == "first-reference-note-number" then
     return self.cite["first-reference-note-number"]
   elseif name == "page-first" then
