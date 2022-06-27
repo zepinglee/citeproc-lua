@@ -38,6 +38,7 @@ skipped_fixtures = [
     'name_ParticlesDemoteNonDroppingNever.txt',
     'name_WithNonBreakingSpace.txt',
     'name_namepartAffixes.txt',
+    'name_CollapseRoleLabels.txt',
     'number_OrdinalSpacing.txt',
     'number_PlainHyphenOrEnDashAlwaysPlural.txt',
     'position_IbidWithPrefixFullStop.txt',

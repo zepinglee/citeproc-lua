@@ -468,7 +468,8 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
   for i, name in ipairs(truncated_names) do
     if i > 1 then
       if i == #names and self["and"] then
-        if self:_check_delimiter(self.delimiter_precedes_last, i) then
+        local inverted = self:check_inverted(names, i-1)
+        if self:_check_delimiter(self.delimiter_precedes_last, i, inverted) then
           table.insert(inlines, PlainText:new(self.delimiter))
         else
           table.insert(inlines, PlainText:new(" "))
@@ -816,6 +817,22 @@ function Name:render (names, context)
   return ret
 end
 
+function Name:check_inverted(names, index)
+  if index < 1 then
+    return false
+  end
+  if not names[index].family then
+    return false
+  end
+  if self.name_as_sort_order == "all" then
+    return true
+  elseif self.name_as_sort_order == "first" and index == 1 then
+    return true
+  else
+    return false
+  end
+end
+
 function Name:_check_delimiter(delimiter_attribute, index, inverted)
   -- `delimiter-precedes-et-al` and `delimiter-precedes-last`
   if delimiter_attribute == "always" then
@@ -829,7 +846,6 @@ function Name:_check_delimiter(delimiter_attribute, index, inverted)
       return false
     end
   elseif delimiter_attribute == "after-inverted-name" then
-    inverted = self.name_as_sort_order == "all" or (self.name_as_sort_order == "first" and index == 2)
     if inverted then
       return true
     else

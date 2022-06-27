@@ -18,7 +18,7 @@ label               15       2       2       0
 locale              23       0       0       0
 locator              4       1       0       0
 magic               31       5       4       0
-name                85      16      10       0
+name                86      15      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              538     147     168       0
+(all)              539     146     168       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -936,8 +936,8 @@ Expected:
 
 Failure → citeproc test test-suite name_AfterInvertedName.txt
 Passed in:
-(string) 'DOEBUCK, Jonathan, et al.; DOE, John, et al.; DOE, John, et al.
-APPLEBY, Aloysius, and Bobby BROWN; APPLEBY, Aloysius, et al.; APPLEBY, Aloysius, et al.'
+(string) 'DOEBUCK, Jonathan et al.; DOE, John et al.; DOE, John et al.
+APPLEBY, Aloysius, and Bobby BROWN; APPLEBY, Aloysius et al.; APPLEBY, Aloysius et al.'
 Expected:
 (string) 'DOEBUCK, Jonathan, et al.; DOE, John, Jane ROE et al.; DOE, John, Janice ROEBUCK et al.
 APPLEBY, Aloysius, and Bobby BROWN; APPLEBY, Aloysius, Bobby BROWN and Cecile CREAM; APPLEBY, Aloysius, Bobby BROWN and Enola EVERGREEN'
@@ -953,18 +953,6 @@ Passed in:
 (string) 'Albert Asthma et al. (eds.), Albert Asthma et al. (trans.)'
 Expected:
 (string) 'Albert Asthma et al. (eds. &#38; trans.)'
-
-Failure → citeproc test test-suite name_DelimiterAfterInverted.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Australian Government Productivity Commission, &#38; New Zealand Productivity Commission</div>
-  <div class="csl-entry">Weinstock, R., Leong, G. B., &#38; Silva, J. A.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Australian Government Productivity Commission &#38; New Zealand Productivity Commission</div>
-  <div class="csl-entry">Weinstock, R., Leong, G. B., &#38; Silva, J. A.</div>
-</div>'
 
 Failure → citeproc test test-suite name_EditorTranslatorSameWithTerm.txt
 Passed in:
