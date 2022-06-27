@@ -377,6 +377,7 @@ function InlineElement:get_right_most_string()
 end
 
 function InlineElement:capitalize_first_term()
+  -- util.debug(self)
   if self.type == "PlainText" then
     self.value = util.capitalize(self.value)
   elseif self.inlines[1] then

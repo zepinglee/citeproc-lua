@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                7       1       1       0
-bugreports          23      13      46       0
+bugreports          24      12      46       0
 collapse             3      15       3       0
 condition           16       0       1       0
 date                84      12       5       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              541     143     168       0
+(all)              542     142     168       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -88,12 +88,6 @@ Passed in:
 (string) '[<i>Aalto et al.</i>, 2001; <i>Aalto et al.</i>, 1999; <i>Aalto et al.</i>, 2000]'
 Expected:
 (string) '[<i>Aalto et al.</i>, 1999, 2000, 2001]'
-
-Failure → citeproc test test-suite bugreports_DelimiterOnLayout.txt
-Passed in:
-(string) '>>[0] (Fig.1(z)Fig.2)'
-Expected:
-(string) '>>[0] (fig.1(z)fig.2)'
 
 Failure → citeproc test test-suite bugreports_DuplicateSpaces.txt
 Passed in:
@@ -832,13 +826,17 @@ Expected:
 >>[3] Doe, supra note 2.
 >>[4] Roe, supra note 3.'
 
-Failure → citeproc test test-suite integration_SimpleIbid.txt
+Failure → citeproc test test-suite integration_IbidOnInsert.txt
 Passed in:
-(string) '..[0] (Doe p. 12; Roe p. 23)
->>[1] (Noakes p. 34; Ibid.; Snoakes p. 45)'
+(string) '..[0] (Doe p. 12)
+>>[1] (Noakes p. 34)
+>>[2] (ibid.)
+..[3] (Snoakes p. 45)'
 Expected:
-(string) '..[0] (Doe p. 12; Roe p. 23)
->>[1] (Noakes p. 34; ibid.; Snoakes p. 45)'
+(string) '..[0] (Doe p. 12)
+>>[1] (Noakes p. 34)
+>>[2] (Ibid.)
+..[3] (Snoakes p. 45)'
 
 Failure → citeproc test test-suite integration_YearSuffixOnOffOn.txt
 Passed in:
@@ -1178,8 +1176,8 @@ Failure → citeproc test test-suite position_IbidWithMultipleSoloCitesInBackref
 Passed in:
 (string) '..[0] Aalto
 ..[1] Álvarez
-..[2] Ibid.
->>[3] Ibid.'
+..[2] ibid.
+>>[3] ibid.'
 Expected:
 (string) '..[0] Aalto
 ..[1] Álvarez
@@ -2061,7 +2059,7 @@ Error → citeproc test test-suite name_LiteralWithComma.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite number_LimitOrdinalsToDayOne.txt
-./citeproc/citeproc-engine.lua:424: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:433: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2205,10 +2203,10 @@ Error → citeproc test test-suite sort_NumberOfAuthorsAsKey.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_OmittedBibRefMixedNumericStyle.txt
-./citeproc/citeproc-engine.lua:424: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:433: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_OmittedBibRefNonNumericStyle.txt
-./citeproc/citeproc-engine.lua:424: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:433: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_Quotes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

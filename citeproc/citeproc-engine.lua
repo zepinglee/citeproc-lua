@@ -108,10 +108,19 @@ function CiteProc:build_cluster(citation_items)
   -- Capitalize first
   for i, ir in ipairs(irs) do
     local prefix = citation_items[i].prefix
-    if prefix and string.match(prefix, "%.%s*$") and
-        #util.split(util.strip(prefix)) > 1 or not prefix then
-      -- util.debug(ir)
-      ir:capitalize_first_term()
+    if prefix then
+      if string.match(prefix, "[.!?]%s*$") and #util.split(util.strip(prefix)) > 1 then
+        ir:capitalize_first_term()
+      end
+    else
+      local delimiter = self.style_element.citation.layout.delimiter
+      if delimiter then
+        if string.match(delimiter, "[.!?]%s*$") then
+          ir:capitalize_first_term()
+        end
+      else
+        ir:capitalize_first_term()
+      end
     end
   end
 
