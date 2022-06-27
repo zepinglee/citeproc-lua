@@ -1,31 +1,31 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                7       1       1       0
-bugreports          22      14      46       0
-collapse             1      17       3       0
+bugreports          23      13      46       0
+collapse             3      15       3       0
 condition           16       0       1       0
 date                84      12       5       0
 decorations          6       1       0       0
-disambiguate        13      40      18       0
+disambiguate        14      39      18       0
 display              2       2       1       0
 etal                 2       0       2       0
 flipflop            13       5       1       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
-group                3       2       2       0
-integration          5       6       3       0
+group                4       1       2       0
+integration          6       5       3       0
 label               15       2       2       0
 locale              23       0       0       0
 locator              4       1       0       0
 magic               31       5       4       0
-name                84      17      10       0
+name                85      16      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
 number              15       3       2       0
 page                 9       0       0       0
 plural               7       0       0       0
-position             9       5       2       0
+position            10       4       2       0
 punctuation          8       5       3       0
 quotes               2       0       2       0
 simplespace          0       0       1       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              529     156     168       0
+(all)              537     148     168       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -85,21 +85,15 @@ C. Grignon, C. Sentenac 2000b'
 
 Failure → citeproc test test-suite bugreports_CitationSortsWithEtAl.txt
 Passed in:
-(string) '[[[<i>Aalto et al.</i>, 2001]; <i>Aalto et al.</i>, 1999]; <i>Aalto et al.</i>, 2000]'
+(string) '[<i>Aalto et al.</i>, 2001; <i>Aalto et al.</i>, 1999; <i>Aalto et al.</i>, 2000]'
 Expected:
 (string) '[<i>Aalto et al.</i>, 1999, 2000, 2001]'
 
 Failure → citeproc test test-suite bugreports_DelimiterOnLayout.txt
 Passed in:
-(string) '>>[0] ((Fig.1)(z)Fig.2)'
+(string) '>>[0] (Fig.1(z)Fig.2)'
 Expected:
 (string) '>>[0] (fig.1(z)fig.2)'
-
-Failure → citeproc test test-suite bugreports_DelimitersOnLocator.txt
-Passed in:
-(string) '[[[1, 32]; 2, 32]; 3, 32]'
-Expected:
-(string) '[1, 32; 2, 32; 3, 32]'
 
 Failure → citeproc test test-suite bugreports_DuplicateSpaces.txt
 Passed in:
@@ -117,7 +111,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_EnvAndUrb.txt
 Passed in:
-(string) '..[0] Baines, T S, O Benedettini and J M Kay, ‘Title One’.; Baines, T S, F Gump and J M Kay, ‘Title Two’.
+(string) '..[0] Baines, T S, O Benedettini and J M Kay, ‘Title One’; Baines, T S, F Gump and J M Kay, ‘Title Two’.
 ..[1] See reference 1, Baines et al., ‘Title One’.
 >>[2] See reference 1, Baines et al., ‘Title Two’.'
 Expected:
@@ -185,25 +179,19 @@ Expected:
 
 Failure → citeproc test test-suite collapse_AuthorCollapse.txt
 Passed in:
-(string) '((Smith 1900), Smith 2000)'
+(string) '(Smith 1900, Smith 2000)'
 Expected:
 (string) '(Smith 1900, 2000)'
 
-Failure → citeproc test test-suite collapse_AuthorCollapseDifferentAuthorsOneWithEtAl.txt
-Passed in:
-(string) '((Smith 1900), Smith et al. 2000)'
-Expected:
-(string) '(Smith 1900, Smith et al. 2000)'
-
 Failure → citeproc test test-suite collapse_AuthorCollapseNoDate.txt
 Passed in:
-(string) '(((Smith), Smith 1900), Smith 2000)'
+(string) '(Smith, Smith 1900, Smith 2000)'
 Expected:
 (string) '(Smith, 1900, 2000)'
 
 Failure → citeproc test test-suite collapse_AuthorCollapseNoDateSorted.txt
 Passed in:
-(string) '(((Smith 325AD), Smith 2000), Smith)'
+(string) '(Smith 325AD, Smith 2000, Smith)'
 Expected:
 (string) '(Smith 325AD, 2000)'
 
@@ -217,55 +205,49 @@ Expected:
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesMixed.txt
 Passed in:
-(string) '((((((([1]), [2]), [3]), [4]), [5]), [6]), [7])
-(((((([1]), [2]), [3]), [5]), [6]), [7])'
+(string) '([1], [2], [3], [4], [5], [6], [7])
+([1], [2], [3], [5], [6], [7])'
 Expected:
 (string) '([1]–[7])
 ([1]–[3], [5]–[7])'
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesMixed2.txt
 Passed in:
-(string) '((((((((((([1]), [2]), [3]), [4]), [5]), [6]), [7]), [8]), [9]), [10]), [11])
-(((((((([1]), [3]), [4]), [5]), [7]), [9]), [10]), [11])'
+(string) '([1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11])
+([1], [3], [4], [5], [7], [9], [10], [11])'
 Expected:
 (string) '([1]–[11])
 ([1], [3]–[5], [7], [9]–[11])'
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesMixed3.txt
 Passed in:
-(string) '(((((((([1]), [2]), [3]), [4]), [5]), [6]), [7]), [8])
-((((([1]), [4]), [6]), [7]), [8])'
+(string) '([1], [2], [3], [4], [5], [6], [7], [8])
+([1], [4], [6], [7], [8])'
 Expected:
 (string) '([1]–[8])
 ([1], [4], [6]–[8])'
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixes.txt
 Passed in:
-(string) '<span style="font-weight:normal;">(<span style="font-weight:normal;">(<span style="font-weight:normal;">([1])</span>,[2])</span>,[3])</span>'
+(string) '<b>([1],[2],[3])</b>'
 Expected:
 (string) '<b>([1]–[3])</b>'
 
-Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesNoCollapse.txt
-Passed in:
-(string) '<span style="font-weight:normal;">(<span style="font-weight:normal;">(<span style="font-weight:normal;">([1])</span>,[2])</span>,[3])</span>'
-Expected:
-(string) '<b>([1],[2],[3])</b>'
-
 Failure → citeproc test test-suite collapse_NumericDuplicate.txt
 Passed in:
-(string) '(((((1),2),2),3),4)'
+(string) '(1,2,2,3,4)'
 Expected:
 (string) '(1,2,2–4)'
 
 Failure → citeproc test test-suite collapse_NumericDuplicate2.txt
 Passed in:
-(string) '((((((1),2),3),3),4),5)'
+(string) '(1,2,3,3,4,5)'
 Expected:
 (string) '(1–3,3–5)'
 
 Failure → citeproc test test-suite collapse_TrailingDelimiter.txt
 Passed in:
-(string) '(((((Condit et al. 2000), Condit et al. 1995), Connell 1971), Condit et al. 1998), Cortes &#38; Hunziker 1971)'
+(string) '(Condit et al. 2000, Condit et al. 1995, Connell 1971, Condit et al. 1998, Cortes &#38; Hunziker 1971)'
 Expected:
 (string) '(Condit et al. 2000, 1995, 1998; Connell 1971, Cortes &#38; Hunziker 1971)'
 
@@ -309,7 +291,7 @@ Expected:
 
 Failure → citeproc test test-suite date_LopsidedDataYearSuffixCollapse.txt
 Passed in:
-(string) '((Smith 1982), Smith 1982)'
+(string) '(Smith 1982, Smith 1982)'
 Expected:
 (string) '(Smith 1982a,b)'
 
@@ -359,7 +341,7 @@ Expected:
 
 Failure → citeproc test test-suite date_SortEmptyDatesCitation.txt
 Passed in:
-(string) 'BookA.; BookB 2000.; BookC.; BookD 1999.; BookE.'
+(string) 'BookA; BookB 2000; BookC; BookD 1999; BookE.'
 Expected:
 (string) 'BookD 1999; BookB 2000; BookA; BookC; BookE.'
 
@@ -371,7 +353,7 @@ Expected:
 
 Failure → citeproc test test-suite date_YearSuffixImplicitWithNoDate.txt
 Passed in:
-(string) '((John Doe n.d. [Accessed:  June 1, 1965]); John Doe n.d. [Accessed:  June 1, 2065])'
+(string) '(John Doe n.d. [Accessed:  June 1, 1965]; John Doe n.d. [Accessed:  June 1, 2065])'
 Expected:
 (string) '(John Doe n.d.-a [Accessed: June 1, 1965]; John Doe n.d.-b [Accessed: June 1, 2065])'
 
@@ -383,7 +365,7 @@ Expected:
 
 Failure → citeproc test test-suite date_YearSuffixWithNoDate.txt
 Passed in:
-(string) '((John Doe n.d. [Accessed:  June 1, 1965]); John Doe n.d. [Accessed:  June 1, 2065])'
+(string) '(John Doe n.d. [Accessed:  June 1, 1965]; John Doe n.d. [Accessed:  June 1, 2065])'
 Expected:
 (string) '(John Doe n.d.-a [Accessed: June 1, 1965]; John Doe n.d.-b [Accessed: June 1, 2065])'
 
@@ -411,7 +393,7 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_AllNamesSimpleSequence.txt
 Passed in:
-(string) '((Malone 2001); Malone 1951)'
+(string) '(Malone 2001; Malone 1951)'
 Expected:
 (string) '(Nolan J. Malone 2001; Kemp Malone 1951)'
 
@@ -483,13 +465,13 @@ Smith, Brown &#38; J. Jones (1980a); Smith, Brown &#38; A. Jones (1980)'
 
 Failure → citeproc test test-suite disambiguate_BasedOnEtAlSubsequent.txt
 Passed in:
-(string) '(((Baur, Fröberg, Baur, et al. 2000); Baur, Schileyko &#38; Baur, et al. 2000); Doe 2000)'
+(string) '(Baur, Fröberg, Baur, et al. 2000; Baur, Schileyko &#38; Baur, et al. 2000; Doe 2000)'
 Expected:
 (string) '(Baur, Fröberg, Baur, et al. 2000<i>a</i>; Baur, Schileyko &#38; Baur 2000<i>b</i>; Doe 2000)'
 
 Failure → citeproc test test-suite disambiguate_BasedOnSubsequentFormWithBackref2.txt
 Passed in:
-(string) '..[0] John Doe, His Book (2000).; John Doe, His Other Book (2001).
+(string) '..[0] John Doe, His Book (2000); John Doe, His Other Book (2001).
 ..[1] Jane Roe, Her Book (1998).
 ..[2] Roe, Her Book, supra note 2.
 ..[3] Doe, His Book, supra note 1.
@@ -641,12 +623,6 @@ Passed in:
 Expected:
 (string) 'A. Asthma et al. (1980); G. Asthma et al. (1995); Dropsy and Asthma (1995)'
 
-Failure → citeproc test test-suite disambiguate_PrimaryNameWithNonDroppingParticle.txt
-Passed in:
-(string) '((dos Santos et al. 2016); Santos et al. 2020)'
-Expected:
-(string) '(dos Santos et al. 2016; Santos et al. 2020)'
-
 Failure → citeproc test test-suite disambiguate_ToInitialOnly.txt
 Passed in:
 (string) 'Smith; Smith; Muggins; Muggins'
@@ -665,7 +641,7 @@ Aalt02c'
 
 Failure → citeproc test test-suite disambiguate_YearCollapseWithInstitution.txt
 Passed in:
-(string) '(((Smith Co 2000); Smith Co 2000); Smith Co 2000)
+(string) '(Smith Co 2000; Smith Co 2000; Smith Co 2000)
 (Smith Co 2000)
 (Smith Co 2000)'
 Expected:
@@ -681,7 +657,7 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntries.txt
 Passed in:
-(string) '..[0] (((((((((((((((((((((((((((((((((((((((((((((((((((Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986)
+(string) '..[0] (Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986)
 >>[1] (Smith 1986)'
 Expected:
 (string) '..[0] (Smith 1986a; Smith 1986b; Smith 1986c; Smith 1986d; Smith 1986e; Smith 1986f; Smith 1986g; Smith 1986h; Smith 1986i; Smith 1986j; Smith 1986k; Smith 1986l; Smith 1986m; Smith 1986n; Smith 1986o; Smith 1986p; Smith 1986q; Smith 1986r; Smith 1986s; Smith 1986t; Smith 1986u; Smith 1986v; Smith 1986w; Smith 1986x; Smith 1986y; Smith 1986z; Smith 1986aa; Smith 1986ab; Smith 1986ac; Smith 1986ad; Smith 1986ae; Smith 1986af; Smith 1986ag; Smith 1986ah; Smith 1986ai; Smith 1986aj; Smith 1986ak; Smith 1986al; Smith 1986am; Smith 1986an; Smith 1986ao; Smith 1986ap; Smith 1986aq; Smith 1986ar; Smith 1986as; Smith 1986at; Smith 1986au; Smith 1986av; Smith 1986aw; Smith 1986ax; Smith 1986ay)
@@ -689,7 +665,7 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntriesByCite.txt
 Passed in:
-(string) '..[0] (((((((((((((((((((((((((((((((((((((((((((((((((((Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986); Smith 1986)
+(string) '..[0] (Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986; Smith 1986)
 >>[1] (Smith 1986)'
 Expected:
 (string) '..[0] (Smith 1986a; Smith 1986b; Smith 1986c; Smith 1986d; Smith 1986e; Smith 1986f; Smith 1986g; Smith 1986h; Smith 1986i; Smith 1986j; Smith 1986k; Smith 1986l; Smith 1986m; Smith 1986n; Smith 1986o; Smith 1986p; Smith 1986q; Smith 1986r; Smith 1986s; Smith 1986t; Smith 1986u; Smith 1986v; Smith 1986w; Smith 1986x; Smith 1986y; Smith 1986z; Smith 1986aa; Smith 1986ab; Smith 1986ac; Smith 1986ad; Smith 1986ae; Smith 1986af; Smith 1986ag; Smith 1986ah; Smith 1986ai; Smith 1986aj; Smith 1986ak; Smith 1986al; Smith 1986am; Smith 1986an; Smith 1986ao; Smith 1986ap; Smith 1986aq; Smith 1986ar; Smith 1986as; Smith 1986at; Smith 1986au; Smith 1986av; Smith 1986aw; Smith 1986ax; Smith 1986ay)
@@ -713,13 +689,13 @@ B Smith 2001'
 
 Failure → citeproc test test-suite disambiguate_YearSuffixMixedDates.txt
 Passed in:
-(string) '(((A Ylinen, 1995); A Ylinen, 1995); A Ylinen, 1995)'
+(string) '(A Ylinen, 1995; A Ylinen, 1995; A Ylinen, 1995)'
 Expected:
 (string) '(A Ylinen, 1995a; b; c)'
 
 Failure → citeproc test test-suite disambiguate_YearSuffixWithEtAlSubequent.txt
 Passed in:
-(string) '(((Smith 2000); Smith 2000); Smith 2000)
+(string) '(Smith 2000; Smith 2000; Smith 2000)
 (Smith 2000)
 (Smith 2000)'
 Expected:
@@ -836,23 +812,11 @@ Passed in:
 Expected:
 (string) '“Nobody Knows You’re a Dog”: As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
 
-Failure → citeproc test test-suite group_LegalWithAuthorDate.txt
-Passed in:
-(string) '>>[0] ((Álvarez: 2000); Pineapple Case: 2000)'
-Expected:
-(string) '>>[0] (Álvarez: 2000; Pineapple Case: 2000)'
-
 Failure → citeproc test test-suite group_SuppressTermInMacro.txt
 Passed in:
 (string) 'His Anonymous Life, in '
 Expected:
 (string) 'His Anonymous Life'
-
-Failure → citeproc test test-suite integration_DeleteName.txt
-Passed in:
-(string) '>>[0] Doe.; Snoakes.'
-Expected:
-(string) '>>[0] Doe; Snoakes.'
 
 Failure → citeproc test test-suite integration_FirstReferenceNoteNumberPositionChange.txt
 Passed in:
@@ -894,8 +858,8 @@ Expected:
 
 Failure → citeproc test test-suite integration_SimpleIbid.txt
 Passed in:
-(string) '..[0] ((Doe p. 12); Roe p. 23)
->>[1] (((Noakes p. 34); Ibid.); Snoakes p. 45)'
+(string) '..[0] (Doe p. 12; Roe p. 23)
+>>[1] (Noakes p. 34; Ibid.; Snoakes p. 45)'
 Expected:
 (string) '..[0] (Doe p. 12; Roe p. 23)
 >>[1] (Noakes p. 34; ibid.; Snoakes p. 45)'
@@ -920,7 +884,7 @@ Expected:
 
 Failure → citeproc test test-suite locator_SimpleLocators.txt
 Passed in:
-(string) 'Doe, Book A, 2000, pp. 100–103.; Roe, Book B, 2001, chaps. 200 - 201.'
+(string) 'Doe, Book A, 2000, pp. 100–103; Roe, Book B, 2001, chaps. 200 - 201.'
 Expected:
 (string) 'Doe, Book A, 2000, pp. 100–103; Roe, Book B, 2001, chaps. 200–201.'
 
@@ -932,7 +896,7 @@ Expected:
 
 Failure → citeproc test test-suite magic_ImplicitYearSuffixExplicitDelimiter.txt
 Passed in:
-(string) '((1965); 1965)'
+(string) '(1965; 1965)'
 Expected:
 (string) '(1965a,b)'
 
@@ -980,7 +944,7 @@ APPLEBY, Aloysius, and Bobby BROWN; APPLEBY, Aloysius, Bobby BROWN and Cecile CR
 
 Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearSuffixCollapse.txt
 Passed in:
-(string) '((Aalto 2015); Aalto 2015)'
+(string) '(Aalto 2015; Aalto 2015)'
 Expected:
 (string) '(Aalto 2015a, b)'
 
@@ -1200,12 +1164,6 @@ Expected:
   <div class="csl-entry">———.</div>
 </div>'
 
-Failure → citeproc test test-suite name_SubstituteInheritLabel.txt
-Passed in:
-(string) '[[[X]Jane Roe (<i>ed.</i>)]; [X]John Doe]'
-Expected:
-(string) '[[X]Jane Roe (<i>ed.</i>); [X]John Doe]'
-
 Failure → citeproc test test-suite name_SubstitutePartialEach.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -1257,24 +1215,6 @@ Expected:
 (string) '..[0] Appleton “Tom Swift and His Electric Runabout” (1910).
 ..[1] Bloggs “A Very Short Book Indeed” (2012).
 >>[2] Ibid.'
-
-Failure → citeproc test test-suite position_IbidSeparateCiteSameNote.txt
-Passed in:
-(string) '..[0] [citation1-item1-note1] Appleton “Tom Swift and His Electric Runabout” (1910).
-..[1] [citation2-item1-note2] ibid.
-..[2] [citation3-item1-note2] ibid. page 33.
-..[3] [citation4-item2-note3] Bloggs “A Very Short Book Indeed” (2012).; [citation4-item1-note3] Appleton supra note 1.
-..[4] [citation5-item1-note4] Appleton supra note 1 page 99.
-..[5] [citation6-item1-note4] Appleton supra note 1.
->>[6] [citation7-item1-note4] ibid.'
-Expected:
-(string) '..[0] [citation1-item1-note1] Appleton “Tom Swift and His Electric Runabout” (1910).
-..[1] [citation2-item1-note2] ibid.
-..[2] [citation3-item1-note2] ibid. page 33.
-..[3] [citation4-item2-note3] Bloggs “A Very Short Book Indeed” (2012); [citation4-item1-note3] Appleton supra note 1.
-..[4] [citation5-item1-note4] Appleton supra note 1 page 99.
-..[5] [citation6-item1-note4] Appleton supra note 1.
->>[6] [citation7-item1-note4] ibid.'
 
 Failure → citeproc test test-suite position_IbidWithMultipleSoloCitesInBackref.txt
 Passed in:
@@ -2169,7 +2109,7 @@ Error → citeproc test test-suite name_LiteralWithComma.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite number_LimitOrdinalsToDayOne.txt
-./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:440: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2238,25 +2178,25 @@ Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaMacroBi
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
-./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:236: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaVariableBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:236: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroCitation.txt
-./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:236: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaVariableBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:236: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaMacroBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2268,7 +2208,7 @@ Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaVaria
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:236: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_ConditionalMacroDates.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2313,10 +2253,10 @@ Error → citeproc test test-suite sort_NumberOfAuthorsAsKey.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_OmittedBibRefMixedNumericStyle.txt
-./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:440: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_OmittedBibRefNonNumericStyle.txt
-./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:440: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_Quotes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

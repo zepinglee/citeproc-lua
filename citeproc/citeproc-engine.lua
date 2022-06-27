@@ -151,6 +151,7 @@ function CiteProc:build_cluster(citation_items)
         table.insert(citation_stream, inline)
       end
     end
+  end
 
     if context.area.layout.affixes then
       local affixes = context.area.layout.affixes
@@ -165,8 +166,6 @@ function CiteProc:build_cluster(citation_items)
     if context.area.layout.formatting then
       citation_stream = {Formatted:new(citation_stream, context.area.layout.formatting)}
     end
-  end
-
   -- util.debug(citation_stream)
 
   if #citation_stream == 0 then
