@@ -151,7 +151,6 @@ function Names:build_ir(engine, state, context)
     for _, substitute_names in ipairs(self.substitute.children) do
       local ir = substitute_names:build_ir(engine, state, context)
       if ir and ir.group_var ~= "missing" then
-        util.debug(ir)
         return ir
       end
     end

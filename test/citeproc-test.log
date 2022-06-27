@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                7       1       1       0
-bugreports          23      13      46       0
+bugreports          24      12      46       0
 collapse             3      15       3       0
 condition           16       0       1       0
 date                84      12       5       0
@@ -13,7 +13,7 @@ flipflop            13       5       1       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
 group                4       1       2       0
-integration          6       5       3       0
+integration          7       4       3       0
 label               15       2       2       0
 locale              23       0       0       0
 locator              4       1       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              539     146     168       0
+(all)              541     144     168       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -88,12 +88,6 @@ Passed in:
 (string) '[<i>Aalto et al.</i>, 2001; <i>Aalto et al.</i>, 1999; <i>Aalto et al.</i>, 2000]'
 Expected:
 (string) '[<i>Aalto et al.</i>, 1999, 2000, 2001]'
-
-Failure → citeproc test test-suite bugreports_DelimiterOnLayout.txt
-Passed in:
-(string) '>>[0] (Fig.1(z)Fig.2)'
-Expected:
-(string) '>>[0] (fig.1(z)fig.2)'
 
 Failure → citeproc test test-suite bugreports_DuplicateSpaces.txt
 Passed in:
@@ -847,22 +841,14 @@ Expected:
 Failure → citeproc test test-suite integration_IbidWithDifferentLocators.txt
 Passed in:
 (string) '..[0] (Doe p. 12)
-..[1] (Ibid.)
+..[1] (ibid.)
 ..[2] (Roe bk. 20)
->>[3] (Ibid.)'
+>>[3] (ibid.)'
 Expected:
 (string) '..[0] (Doe p. 12)
 ..[1] (ibid-with-locator)
 ..[2] (Roe bk. 20)
 >>[3] (ibid-with-locator)'
-
-Failure → citeproc test test-suite integration_SimpleIbid.txt
-Passed in:
-(string) '..[0] (Doe p. 12; Roe p. 23)
->>[1] (Noakes p. 34; Ibid.; Snoakes p. 45)'
-Expected:
-(string) '..[0] (Doe p. 12; Roe p. 23)
->>[1] (Noakes p. 34; ibid.; Snoakes p. 45)'
 
 Failure → citeproc test test-suite integration_YearSuffixOnOffOn.txt
 Passed in:
@@ -2097,7 +2083,7 @@ Error → citeproc test test-suite name_LiteralWithComma.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite number_LimitOrdinalsToDayOne.txt
-./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:446: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2166,25 +2152,25 @@ Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaMacroBi
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
-./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:242: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaVariableBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:242: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroCitation.txt
-./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:242: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaVariableBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:242: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaMacroBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2196,7 +2182,7 @@ Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaVaria
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:242: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_ConditionalMacroDates.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2241,10 +2227,10 @@ Error → citeproc test test-suite sort_NumberOfAuthorsAsKey.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_OmittedBibRefMixedNumericStyle.txt
-./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:446: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_OmittedBibRefNonNumericStyle.txt
-./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:446: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_Quotes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

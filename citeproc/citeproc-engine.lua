@@ -105,13 +105,18 @@ function CiteProc:build_cluster(citation_items)
 
   -- TODO: collapsing
 
-  -- TODO: Capitalize first
+  -- Capitalize first
   for i, ir in ipairs(irs) do
     local prefix = citation_items[i].prefix
-    if prefix and string.match(prefix, "%.%s*$") and
-        #util.split(util.strip(prefix)) > 1 or not prefix then
-      -- util.debug(ir)
-      ir:capitalize_first_term()
+    if prefix then
+      if string.match(prefix, "%.%s*$") and #util.split(util.strip(prefix)) > 1 then
+        ir:capitalize_first_term()
+      end
+    else
+      local layout_affixes = self.style_element.citation.layout.affixes
+      if not layout_affixes or not layout_affixes.prefix then
+        ir:capitalize_first_term()
+      end
     end
   end
 
