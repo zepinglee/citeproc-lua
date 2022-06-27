@@ -322,7 +322,7 @@ function CiteProc:set_cite_position(item, note_number, cite_first_note_numbers, 
   if preceding_cite then
     if preceding_cite.locator then
       if item.locator then
-        if item.locator == preceding_cite.locator then
+        if item.locator == preceding_cite.locator and item.label == preceding_cite.label then
           item.position = util.position_map["ibid"]
         else
           item.position = util.position_map["ibid-with-locator"]

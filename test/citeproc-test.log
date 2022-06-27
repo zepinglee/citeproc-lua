@@ -13,7 +13,7 @@ flipflop            14       3       1       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
 group                4       1       2       0
-integration          5       6       3       0
+integration          6       5       3       0
 label               15       2       2       0
 locale              23       0       0       0
 locator              4       1       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              540     144     168       0
+(all)              541     143     168       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -831,18 +831,6 @@ Expected:
 >>[2] Roe, “Life of Roe” (1900).
 >>[3] Doe, supra note 2.
 >>[4] Roe, supra note 3.'
-
-Failure → citeproc test test-suite integration_IbidWithDifferentLocators.txt
-Passed in:
-(string) '..[0] (Doe p. 12)
-..[1] (Ibid.)
-..[2] (Roe bk. 20)
->>[3] (Ibid.)'
-Expected:
-(string) '..[0] (Doe p. 12)
-..[1] (ibid-with-locator)
-..[2] (Roe bk. 20)
->>[3] (ibid-with-locator)'
 
 Failure → citeproc test test-suite integration_SimpleIbid.txt
 Passed in:

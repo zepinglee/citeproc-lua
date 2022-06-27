@@ -24,6 +24,7 @@ skipped_fixtures = [
     'flipflop_SingleBeforeColon.txt',
     'flipflop_StartingApostrophe.txt',
     'integration_DeleteName.txt',
+    'integration_FirstReferenceNoteNumberPositionChange.txt',
     'label_EditorTranslator2.txt',
     'label_NoFirstCharCapWithInTextClass.txt',
     'locator_SimpleLocators.txt',
