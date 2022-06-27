@@ -173,6 +173,7 @@ function CiteProc:build_cluster(citation_items)
   end
 
   local str = output_format:output(citation_stream)
+  str = util.strip(str)
 
   return str
 end

@@ -31,14 +31,14 @@ quotes               2       0       2       0
 simplespace          0       0       1       0
 sort                 5      11      50       0
 sortseparator        1       0       0       0
-substitute           5       1       1       0
+substitute           6       0       1       0
 testers              0       0       2       0
 textcase            25       4       1       0
 unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              538     147     168       0
+(all)              539     146     168       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -814,7 +814,7 @@ Expected:
 
 Failure → citeproc test test-suite group_SuppressTermInMacro.txt
 Passed in:
-(string) 'His Anonymous Life, in '
+(string) 'His Anonymous Life, in'
 Expected:
 (string) 'His Anonymous Life'
 
@@ -1712,12 +1712,6 @@ Passed in:
 Expected:
 (string) 'Book D; Book A; Book B; Book C'
 
-Failure → citeproc test test-suite substitute_SubstituteOnlyOnceTermEmpty.txt
-Passed in:
-(string) 'Content: '
-Expected:
-(string) 'Content:'
-
 Failure → citeproc test test-suite textcase_LocaleUnicode.txt
 Passed in:
 (string) 'IA AND IB EN
@@ -2103,7 +2097,7 @@ Error → citeproc test test-suite name_LiteralWithComma.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite number_LimitOrdinalsToDayOne.txt
-./citeproc/citeproc-engine.lua:440: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2172,25 +2166,25 @@ Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaMacroBi
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
-./citeproc/citeproc-engine.lua:236: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaVariableBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:236: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroCitation.txt
-./citeproc/citeproc-engine.lua:236: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaVariableBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:236: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaMacroBibliography.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2202,7 +2196,7 @@ Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaVaria
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:236: attempt to index a nil value (field 'properties')
+./citeproc/citeproc-engine.lua:237: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_ConditionalMacroDates.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2247,10 +2241,10 @@ Error → citeproc test test-suite sort_NumberOfAuthorsAsKey.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_OmittedBibRefMixedNumericStyle.txt
-./citeproc/citeproc-engine.lua:440: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_OmittedBibRefNonNumericStyle.txt
-./citeproc/citeproc-engine.lua:440: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:441: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_Quotes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
