@@ -572,7 +572,8 @@ function Name:render_person_name(person_name, seen_one, context)
       util.extend(inlines, InlineElement:parse(person_name.suffix, context))
 
     elseif name_part_token == "literal" then
-      util.extend(inlines, InlineElement:parse(person_name.literal, context))
+    local literal_inlines = self.family:format_text_case(person_name.literal, context)
+      util.extend(inlines, literal_inlines)
 
     elseif name_part_token == "space" then
       table.insert(inlines, PlainText:new(" "))

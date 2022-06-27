@@ -18,7 +18,7 @@ label               15       2       2       0
 locale              23       0       0       0
 locator              4       1       0       0
 magic               31       5       4       0
-name                83      18      10       0
+name                84      17      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              528     157     168       0
+(all)              529     156     168       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -1037,12 +1037,6 @@ Expected:
   <div class="csl-entry"><b>Doe</b>, <b>J.</b> Q.</div>
   <div class="csl-entry"><b>Doe</b>, <b>J.</b>-Q.</div>
 </div>'
-
-Failure → citeproc test test-suite name_InstitutionDecoration.txt
-Passed in:
-(string) 'São Paulo (Estado)'
-Expected:
-(string) 'SÃO PAULO (ESTADO)'
 
 Failure → citeproc test test-suite name_ParseNames.txt
 Passed in:
