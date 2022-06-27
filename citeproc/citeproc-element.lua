@@ -173,18 +173,24 @@ end
 
 function Element:build_children_ir(engine, state, context)
   local child_irs = {}
+  local group_var = "plain"
   if self.children then
     for _, child_element in ipairs(self.children) do
       local child_ir = child_element:build_ir(engine, state, context)
       if child_ir and child_ir.group_var ~= "missing" then
         table.insert(child_irs, child_ir)
+        if child_ir.group_var == "important" then
+          group_var = "important"
+        end
       end
     end
   end
   if #child_irs == 0 then
     return nil
   end
-  return SeqIr:new(child_irs, self)
+  local ir = SeqIr:new(child_irs, self)
+  ir.group_var = group_var
+  return ir
 end
 
 function Element:render_text_inlines(str, context)
