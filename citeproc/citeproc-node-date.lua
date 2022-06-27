@@ -42,7 +42,7 @@ end
 
 function Date:build_ir(engine, state, context)
   local variable
-  if not state.suppressed[variable] then
+  if not state.suppressed[self.variable] then
     variable = context:get_variable(self.variable)
   end
 
@@ -77,7 +77,7 @@ function Date:build_ir(engine, state, context)
     else
       ir = self:build_independent_date_ir(variable, engine, state, context)
     end
-    if #ir.children == 0 then
+    if #ir.inlines == 0 then
       ir.group_var = "missing"
     else
       ir.group_var = "important"
@@ -161,12 +161,14 @@ function Date:build_date_parts(date_parts, variable, engine, state, context)
 end
 
 function Date:build_single_date(date_parts, single_date, engine, state, context)
-  local irs = {}
-  for _, date_part in ipairs(date_parts) do
-    local ir = date_part:build_ir(single_date, engine, state, context)
-    table.insert(irs, ir)
+  local inlines = {}
+  for i, date_part in ipairs(date_parts) do
+    if self.delimiter and i > 1 then
+      table.insert(inlines, PlainText:new(self.delimiter))
+    end
+    util.extend(inlines, date_part:render_date(single_date, engine, state, context))
   end
-  return SeqIr:new(irs)
+  return Rendered:new(inlines)
 end
 
 local date_part_index = {
@@ -186,10 +188,10 @@ function Date:build_date_range(date_parts, variable, engine, state, context)
       end
     end
   end
-  local irs = {}
+  local inlines = {}
   local range_part_queue = {}
   local range_delimiter
-  for _, date_part in ipairs(date_parts) do
+  for i, date_part in ipairs(date_parts) do
     local part_index = date_part_index[date_part.name]
     if part_index == diff_level then
       range_delimiter = date_part.range_delimiter or util.unicode["en dash"]
@@ -199,44 +201,49 @@ function Date:build_date_range(date_parts, variable, engine, state, context)
         table.insert(range_part_queue, date_part)
       else
         if #range_part_queue > 0 then
-          for _, ir in ipairs(self:build_date_range_irs(range_part_queue, variable,
-              engine, state, context, range_delimiter)) do
-            table.insert(irs, ir)
-          end
+          util.extend(inlines, self:render_date_range(range_part_queue, variable,
+              engine, state, context, range_delimiter))
           range_part_queue = {}
         end
-        table.insert(irs, date_part:build_ir(first, engine, state, context))
+        if self.delimiter and i > 1 then
+          table.insert(inlines, PlainText:new(self.delimiter))
+        end
+        util.extend(inlines, date_part:render_date(first, engine, state, context))
       end
     end
   end
   if #range_part_queue > 0 then
-    for _, ir in ipairs(self:build_date_range_irs(range_part_queue, variable,
-        engine, state, context, range_delimiter)) do
-      table.insert(irs, ir)
-    end
+    util.extend(inlines, self:render_date_range(range_part_queue, variable,
+    engine, state, context, range_delimiter))
   end
-  return SeqIr:new(irs)
+  return Rendered:new(inlines, self)
 end
 
-function Date:build_date_range_irs(range_part_queue, variable, engine, state, context, range_delimiter)
+function Date:render_date_range(range_part_queue, variable, engine, state, context, range_delimiter)
   local first, second = variable[1], variable[2]
-  local irs = {}
+  local inlines = {}
   for i, diff_part in ipairs(range_part_queue) do
+    if self.delimiter and i > 1 then
+      table.insert(inlines, PlainText:new(self.delimiter))
+    end
     if i == #range_part_queue then
-      table.insert(irs, diff_part:build_ir(first, engine, state, context, "suffix"))
+      util.extend(inlines, diff_part:render_date(first, engine, state, context, "suffix"))
     else
-      table.insert(irs, diff_part:build_ir(first, engine, state, context))
+      util.extend(inlines, diff_part:render_date(first, engine, state, context))
     end
   end
-  table.insert(irs, Rendered:new({PlainText:new(range_delimiter)}, self))
+  table.insert(inlines, PlainText:new(range_delimiter))
   for i, diff_part in ipairs(range_part_queue) do
+    if self.delimiter and i > 1 then
+      table.insert(inlines, PlainText:new(self.delimiter))
+    end
     if i == 1 then
-      table.insert(irs, diff_part:build_ir(second, engine, state, context, "prefix"))
+      util.extend(inlines, diff_part:render_date(second, engine, state, context, "prefix"))
     else
-      table.insert(irs, diff_part:build_ir(second, engine, state, context))
+      util.extend(inlines, diff_part:render_date(second, engine, state, context))
     end
   end
-  return irs
+  return inlines
 end
 
 function Date:render (item, context)
@@ -485,7 +492,7 @@ function DatePart:from_node(node)
   return o
 end
 
-function DatePart:build_ir(single_date, engine, state, context, suppressed_affix)
+function DatePart:render_date(single_date, engine, state, context, suppressed_affix)
   local text
   if self.name == "year" then
     text = self:render_year(single_date[1], engine, state, context)
@@ -496,7 +503,7 @@ function DatePart:build_ir(single_date, engine, state, context, suppressed_affix
   end
 
   if not text then
-    return nil
+    return {}
   end
 
   local inlines = {PlainText:new(text)}
@@ -510,7 +517,7 @@ function DatePart:build_ir(single_date, engine, state, context, suppressed_affix
   if self.affixes and self.affixes.suffix and suppressed_affix ~= "suffix" then
     table.insert(inlines, PlainText:new(self.affixes.suffix))
   end
-  return Rendered:new(inlines, self)
+  return inlines
 end
 
 function DatePart:render_day(day, month, engine, state, context)

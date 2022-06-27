@@ -51,6 +51,7 @@ skipped_fixtures = [
     'textcase_LocaleUnicode.txt',
     'textcase_SentenceCapitalization.txt',
     'textcase_SkipNameParticlesInTitleCase.txt',
+    'textcase_NoSpaceBeforeApostrophe.txt',
 ]
 
 with open('./test/citeproc-test.log') as f:

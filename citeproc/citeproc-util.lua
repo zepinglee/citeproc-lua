@@ -198,6 +198,9 @@ end
 
 -- Python list.extend()
 function util.extend(first, second)
+  if not second then
+    print(debug.traceback())
+  end
   local l = #first
   for i, element in ipairs(second) do
     first[l + i] = element
@@ -275,6 +278,79 @@ util.variable_types = {}
 -- schema/schemas/styles/csl-variables.rnc
 util.variables = {}
 
+-- -- Standard variables
+-- util.variables.standard = {
+--   "abstract",
+--   "annote",
+--   "archive",
+--   "archive_collection",
+--   "archive_location",
+--   "archive-place",
+--   "authority",
+--   "call-number",
+--   "citation-key",
+--   "citation-label",
+--   "collection-title",
+--   "container-title",
+--   "container-title-short",
+--   "dimensions",
+--   "division",
+--   "DOI",
+--   "event",
+--   "event-title",
+--   "event-place",
+--   "genre",
+--   "ISBN",
+--   "ISSN",
+--   "jurisdiction",
+--   "keyword",
+--   "language",
+--   "license",
+--   "medium",
+--   "note",
+--   "original-publisher",
+--   "original-publisher-place",
+--   "original-title",
+--   "part-title",
+--   "PMCID",
+--   "PMID",
+--   "publisher",
+--   "publisher-place",
+--   "references",
+--   "reviewed-genre",
+--   "reviewed-title",
+--   "scale",
+--   "source",
+--   "status",
+--   "title",
+--   "title-short",
+--   "URL",
+--   "volume-title",
+--   "year-suffix",
+-- }
+
+-- Number variables
+util.variables.number = {
+  "chapter-number",
+  "citation-number",
+  "collection-number",
+  "edition",
+  "first-reference-note-number",
+  "issue",
+  "locator",
+  "number",
+  "number-of-pages",
+  "number-of-volumes",
+  "page",
+  "page-first",
+  "part-number",
+  "printing-number",
+  "section",
+  "supplement-number",
+  "version",
+  "volume",
+}
+
 -- Date variables
 util.variables.date = {
   "accessed",
@@ -314,28 +390,6 @@ util.variables.name = {
   "script-writer",
   "series-creator",
   "translator",
-}
-
--- Number variables
-util.variables.number = {
-  "chapter-number",
-  "citation-number",
-  "collection-number",
-  "edition",
-  "first-reference-note-number",
-  "issue",
-  "locator",
-  "number",
-  "number-of-pages",
-  "number-of-volumes",
-  "page",
-  "page-first",
-  "part-number",
-  "printing-number",
-  "section",
-  "supplement-number",
-  "version",
-  "volume",
 }
 
 util.variable_types = {}
@@ -886,6 +940,37 @@ function util.read_file(path)
   local content = file:read("*a")
   file:close()
   return content
+end
+
+
+function util.parse_iso_date(str)
+  local date
+  local date_parts = util.split(str, "/")
+  if #date_parts <= 2 then
+    date = {["date-parts"] = {}}
+    for _, date_part in ipairs(date_parts) do
+      table.insert(date["date-parts"], util.split(date_part, "%-"))
+    end
+  end
+  if not date then
+    date = {literal = str}
+  end
+  return date
+end
+
+
+function util.parse_extra_name(str)
+  local name
+  local name_parts = util.split(str, "%s*||%s*")
+  if #name_parts == 2 then
+    name = {
+      family = name_parts[1],
+      given = name_parts[2],
+    }
+  else
+    name = {literal = str}
+  end
+  return name
 end
 
 

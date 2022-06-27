@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                7       1       1       0
-bugreports          24      13      45       0
+bugreports          25      12      45       0
 collapse             4      16       1       0
 condition           17       0       0       0
 date                84      12       5       0
@@ -22,14 +22,14 @@ name                86      15      10       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
-number              16       2       2       0
+number              17       2       1       0
 page                 9       0       0       0
 plural               7       0       0       0
-position            11       4       1       0
+position            11       3       1       0
 punctuation          8       5       3       0
 quotes               2       0       2       0
 simplespace          0       0       1       0
-sort                 5      12      49       0
+sort                 5      14      47       0
 sortseparator        1       0       0       0
 substitute           6       0       1       0
 testers              0       0       2       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              546     146     160       0
+(all)              548     146     157       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -149,16 +149,6 @@ Expected:
   <div class="csl-entry">
     <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> P.G. Zimbardo, “Does Psychology make a significant difference in our lives?,” <i>American Psychologist</i>, vol. 59, Jan. 2004, pp. 339–351.</div>
   </div>
-</div>'
-
-Failure → citeproc test test-suite bugreports_LegislationCrash.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><i>Arrêté du 23 mars 1992 relatif au programme des études conduisant au diplôme d’État d’infirmier</i>, 1992. 23 mars 1992</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><i>Arrêté du 23 mars 1992 relatif au programme des études conduisant au diplôme d’État d’infirmier</i>, 1992. </div>
 </div>'
 
 Failure → citeproc test test-suite bugreports_UndefinedInName3.txt
@@ -307,19 +297,19 @@ Expected:
 
 Failure → citeproc test test-suite date_NegativeDateSort.txt
 Passed in:
-(string) '100BC713, 54AD1013, 44BC315, 68AD611'
+(string) '100BC-7-13, 54AD-10-13, 44BC-3-15, 68AD-6-11'
 Expected:
 (string) '100BC-7-13, 44BC-3-15, 54AD-10-13, 68AD-6-11'
 
 Failure → citeproc test test-suite date_NegativeDateSortViaMacro.txt
 Passed in:
-(string) '100BC713, 54AD1013, 44BC315, 68AD611'
+(string) '100BC-7-13, 54AD-10-13, 44BC-3-15, 68AD-6-11'
 Expected:
 (string) '100BC-7-13, 44BC-3-15, 54AD-10-13, 68AD-6-11'
 
 Failure → citeproc test test-suite date_NegativeDateSortViaMacroOnYearMonthOnly.txt
 Passed in:
-(string) 'BookY (100BC713), BookX (100BC714), BookB (68AD315), BookA (68AD316)'
+(string) 'BookY (100BC-7-13), BookX (100BC-7-14), BookB (68AD-3-15), BookA (68AD-3-16)'
 Expected:
 (string) 'BookX (100BC-7-14), BookY (100BC-7-13), BookA (68AD-3-16), BookB (68AD-3-15)'
 
@@ -1184,16 +1174,6 @@ Passed in:
 Expected:
 (string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) pages i–ix (cs:text) vs His Anonymous Life (2) pages i–ix (cs:number); His Anonymous Life (3) page 3-B (cs:text) vs His Anonymous Life (3) page 3-B (cs:number); His Anonymous Life (4) page Michaelson-Morely (cs:text) vs His Anonymous Life (4) page Michaelson-Morely (cs:number)'
 
-Failure → citeproc test test-suite position_IbidInText.txt
-Passed in:
-(string) '..[0] Appleton “Tom Swift and His Electric Runabout” (1910).
-..[1] Bloggs “A Very Short Book Indeed” (2012).
->>[2] Appleton “Tom Swift and His Electric Runabout” (1910).'
-Expected:
-(string) '..[0] Appleton “Tom Swift and His Electric Runabout” (1910).
-..[1] Bloggs “A Very Short Book Indeed” (2012).
->>[2] Ibid.'
-
 Failure → citeproc test test-suite position_IbidWithMultipleSoloCitesInBackref.txt
 Passed in:
 (string) '..[0] Aalto
@@ -1696,6 +1676,33 @@ Passed in:
 Expected:
 (string) 'Book D; Book A; Book B; Book C'
 
+Failure → citeproc test test-suite sort_OmittedBibRefMixedNumericStyle.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">1. Anderson, Book One</div>
+  <div class="csl-entry"></div>
+  <div class="csl-entry">3. Crane, Book Two</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">1. Anderson, Book One</div>
+  <div class="csl-entry">2. [CSL STYLE ERROR: reference with no printed form.]</div>
+  <div class="csl-entry">3. Crane, Book Two</div>
+</div>'
+
+Failure → citeproc test test-suite sort_OmittedBibRefNonNumericStyle.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Anderson, Book One</div>
+  <div class="csl-entry"></div>
+  <div class="csl-entry">Crane, Book Two</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Anderson, Book One</div>
+  <div class="csl-entry">Crane, Book Two</div>
+</div>'
+
 Failure → citeproc test test-suite sort_RangeUnaffected.txt
 Passed in:
 (string) '>>[0] <sup>3</sup>
@@ -1763,7 +1770,7 @@ Passed in:
     <div class="csl-left-margin">1. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. In  p. 25. </div>
   </div>
   <div class="csl-entry">
-    <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. :25. </div>
+    <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. Container. :25. </div>
   </div>
 </div>'
 Expected:
@@ -2070,9 +2077,6 @@ Error → citeproc test test-suite name_HyphenatedNonDroppingParticle2.txt
 Error → citeproc test test-suite name_LiteralWithComma.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
-Error → citeproc test test-suite number_LimitOrdinalsToDayOne.txt
-./citeproc/citeproc-engine.lua:433: attempt to index a nil value (local 'ir')
-
 Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
@@ -2210,12 +2214,6 @@ Error → citeproc test test-suite sort_NamesUseLast.txt
 
 Error → citeproc test test-suite sort_NumberOfAuthorsAsKey.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_OmittedBibRefMixedNumericStyle.txt
-./citeproc/citeproc-engine.lua:433: attempt to index a nil value (local 'ir')
-
-Error → citeproc test test-suite sort_OmittedBibRefNonNumericStyle.txt
-./citeproc/citeproc-engine.lua:433: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_Quotes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

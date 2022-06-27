@@ -505,6 +505,7 @@ function CiteProc:get_item (id)
     if not item then
       return nil
     end
+    item = self:process_extra_note(item)
     table.insert(self.registry.reflist, id)
     item["citation-number"] = #self.registry.reflist
     self.registry.registry[id] = item
@@ -540,21 +541,36 @@ function CiteProc:_retrieve_item (id)
   return res
 end
 
-function CiteProc.normalize_string (str)
-  if not str or str == "" then
-    return str
+function CiteProc:process_extra_note(item)
+  if item.note then
+    local note_fields = {}
+    for _, line in ipairs(util.split(item.note, "%s*\r?\n%s*")) do
+      local splits = util.split(line, ":%s+", 1)
+      if #splits == 2 then
+        local field, value = table.unpack(splits)
+
+        local variable_type = util.variable_types[field]
+        if not item[field] or field == "type" or variable_type == "date" then
+          if variable_type == "number" then
+            item[field] = value
+          elseif variable_type == "date" then
+            item[field] = util.parse_iso_date(value)
+          elseif variable_type == "name" then
+            if not note_fields[field] then
+              note_fields[field] = {}
+            end
+            table.insert(note_fields[field], util.parse_extra_name(value))
+          else
+            item[field] = value
+          end
+        end
+      end
+    end
+    for field, value in pairs(note_fields) do
+      item[field] = value
+    end
   end
-  -- French punctuation spacing
-  if type(str) == "string" then
-    str = string.gsub(str, " ;", util.unicode["narrow no-break space"] .. ";")
-    str = string.gsub(str, " %?", util.unicode["narrow no-break space"] .. "?")
-    str = string.gsub(str, " !", util.unicode["narrow no-break space"] .. "!")
-    str = string.gsub(str, " »", util.unicode["narrow no-break space"] .. "»")
-    str = string.gsub(str, "« ", "«" .. util.unicode["narrow no-break space"])
-  end
-  -- local text = str
-  local text = richtext.new(str)
-  return text
+  return item
 end
 
 function CiteProc:sort_bibliography()

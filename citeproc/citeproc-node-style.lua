@@ -10,7 +10,9 @@ local dom = require("luaxml-domobject")
 
 local Element = require("citeproc-element").Element
 local IrNode = require("citeproc-ir-node").IrNode
+local Rendered = require("citeproc-ir-node").Rendered
 local SeqIr = require("citeproc-ir-node").SeqIr
+local PlainText = require("citeproc-output").PlainText
 local util = require("citeproc-util")
 
 
@@ -317,7 +319,7 @@ end
 
 function Bibliography:build_ir(engine, state, context)
   if not self.layout then
-    util.error("Missing citation layout.")
+    util.error("Missing bibliography layout.")
   end
   local ir = self.layout:build_ir(engine, state, context)
   -- util.debug(ir)
@@ -326,6 +328,9 @@ function Bibliography:build_ir(engine, state, context)
     local right_inline_ir = SeqIr:new(util.slice(ir.children, 2), self)
     right_inline_ir.display = "right-inline"
     ir.children = {ir.children[1], right_inline_ir}
+  end
+  if not ir then
+    ir = Rendered:new(PlainText:new("[CSL STYLE ERROR: reference with no printed form.]"))
   end
   return ir
 end
