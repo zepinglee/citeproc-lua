@@ -82,6 +82,7 @@ function Date:build_ir(engine, state, context)
     else
       ir.group_var = "important"
     end
+    ir.affixes = self.affixes
 
   elseif variable["literal"] then
     local inlines = self:render_text_inlines(variable["literal"], context)
@@ -108,8 +109,6 @@ function Date:build_ir(engine, state, context)
       state.suppressed[self.variable] = true
     end
   end
-
-  ir.affixes = self.affixes
 
   return ir
 end

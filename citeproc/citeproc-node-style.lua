@@ -273,22 +273,6 @@ function Citation:build_ir(engine, state, context)
   return self.layout:build_ir(engine, state, context)
 end
 
-function Citation:render (items, context)
-  self:debug_info(context)
-  context = self:process_context(context)
-
-  context.mode = "citation"
-  context.citation = self
-
-  local sort = self:get_child("sort")
-  if sort then
-    sort:sort(items, context)
-  end
-
-  local layout = self:get_child("layout")
-  return layout:render(items, context)
-end
-
 
 local Bibliography = Element:derive("bibliography")
 
@@ -344,51 +328,6 @@ function Bibliography:build_ir(engine, state, context)
     ir.children = {ir.children[1], right_inline_ir}
   end
   return ir
-end
-
-Bibliography._default_options = {
-  ["hanging-indent"] = false,
-  ["second-field-align"] = nil,
-  ["line-spacing"] = 1,
-  ["entry-spacing"] = 1,
-  ["subsequent-author-substitute"] = nil,
-  ["subsequent-author-substitute-rule"] = "complete-all",
-}
-
-function Bibliography:render (items, context)
-  self:debug_info(context)
-  context = self:process_context(context)
-  -- util.debug(context)
-
-  context.mode = "bibliography"
-  context.bibliography = self
-
-  -- Already sorted in CiteProc:sort_bibliography()
-
-  local layout = self:get_child("layout")
-  local res = layout:render(items, context)
-
-  local params = res[1]
-
-  params.entryspacing = context.options["entry-spacing"]
-  params.linespacing = context.options["line-spacing"]
-  params.hangingindent = context.options["hanging-indent"]
-  params["second-field-align"] = context.options["second-field-align"]
-  for _, key in ipairs({"bibstart", "bibend"}) do
-    local value = context.engine.formatter[key]
-    if type(value) == "function" then
-      value = value(context)
-    end
-    params[key] = value
-  end
-
-  params.bibliography_errors = {}
-  params.entry_ids = {}
-  for _, item in ipairs(items) do
-    table.insert(params.entry_ids, item.id)
-  end
-
-  return res
 end
 
 

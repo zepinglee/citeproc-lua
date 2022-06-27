@@ -4,7 +4,7 @@ affix                7       1       1       0
 bugreports          22      14      46       0
 collapse             1      17       3       0
 condition           16       0       1       0
-date                83      13       5       0
+date                84      12       5       0
 decorations          6       1       0       0
 disambiguate        13      40      18       0
 display              2       2       1       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              527     158     168       0
+(all)              528     157     168       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -336,12 +336,6 @@ Passed in:
 (string) 'Item 1; Item 2; Item 3; Item 4'
 Expected:
 (string) 'Item 2; Item 4; Item 1; Item 3'
-
-Failure → citeproc test test-suite date_OtherAlone.txt
-Passed in:
-(string) '((maybe around 2000bc sometime?))'
-Expected:
-(string) '(maybe around 2000bc sometime?)'
 
 Failure → citeproc test test-suite date_RangeDelimiter.txt
 Passed in:
