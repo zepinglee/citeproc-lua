@@ -9,7 +9,7 @@ decorations          6       1       0       0
 disambiguate        14      39      18       0
 display              2       2       1       0
 etal                 2       0       2       0
-flipflop            14       4       1       0
+flipflop            14       3       1       0
 form                 3       0       0       0
 fullstyles           0       0       5       0
 group                4       1       2       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              540     145     168       0
+(all)              540     144     168       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -787,12 +787,6 @@ Passed in:
 (string) '<i>Insha’Allah</i> is an Arabic phrase meaning “God willing.” Another Arabic word is <i>bukra</i>. Aalto'
 Expected:
 (string) '<i>Insha’Allah</i> is an Arabic phrase meaning ‘God willing’. Another Arabic word is <i>bukra</i>. Aalto'
-
-Failure → citeproc test test-suite flipflop_NumericField.txt
-Passed in:
-(string) '1<sup>er</sup>'
-Expected:
-(string) '1&#60;sup&#62;er&#60;/sup&#62;'
 
 Failure → citeproc test test-suite flipflop_OrphanQuote.txt
 Passed in:
@@ -2079,7 +2073,7 @@ Error → citeproc test test-suite name_LiteralWithComma.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite number_LimitOrdinalsToDayOne.txt
-./citeproc/citeproc-engine.lua:423: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:424: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite number_NewOrdinalsEdition.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
@@ -2223,10 +2217,10 @@ Error → citeproc test test-suite sort_NumberOfAuthorsAsKey.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_OmittedBibRefMixedNumericStyle.txt
-./citeproc/citeproc-engine.lua:423: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:424: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_OmittedBibRefNonNumericStyle.txt
-./citeproc/citeproc-engine.lua:423: attempt to index a nil value (local 'ir')
+./citeproc/citeproc-engine.lua:424: attempt to index a nil value (local 'ir')
 
 Error → citeproc test test-suite sort_Quotes.txt
 ./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)

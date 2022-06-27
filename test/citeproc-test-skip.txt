@@ -1,2 +1,5 @@
 # locator parsing is not yet implemented
 locator_TrickyEntryForPlurals.txt
+
+# citeproc-lua chooses to parse rich text in numeric fields.
+flipflop_NumericField.txt

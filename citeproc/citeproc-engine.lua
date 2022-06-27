@@ -241,6 +241,7 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
       params.bibchange = true
       table.insert(output, {citation_index, citation_str, citation_id})
       self.registry.citation_strings[citation_.citationID] = citation_str
+      self.registry.citations[citation_id].properties.noteIndex = note_number
     end
 
     previous_citation = citation_
