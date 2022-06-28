@@ -158,10 +158,7 @@ function Element:process_children_nodes(node)
       local element_name = child:get_element_name()
       local element_type = self.element_type_map[element_name] or Element
       local child_element = element_type:from_node(child, self)
-      if child_element then
-        self.children = self.children or {}
-        table.insert(self.children, child_element)
-      end
+      table.insert(self.children, child_element)
     end
   end
 

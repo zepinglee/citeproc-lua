@@ -81,6 +81,7 @@ end
 function CiteProc:build_cluster(citation_items)
   local output_format = OutputFormat:new()
   local irs = {}
+  citation_items = self:sorted_citation_items(citation_items)
   for _, cite_item in ipairs(citation_items) do
     local state = IrState:new(self.style_element)
     cite_item.id = tostring(cite_item.id)
@@ -185,6 +186,29 @@ function CiteProc:build_cluster(citation_items)
   str = util.strip(str)
 
   return str
+end
+
+function CiteProc:sorted_citation_items(items)
+  local citation_sort = self.style_element.citation.sort
+  if not citation_sort then
+    return items
+  end
+
+  local state = IrState:new()
+  local context = Context:new()
+  context.engine = self
+  context.style = self.style_element
+  context.area = self.style_element.citation
+  context.in_bibliography = false
+  context.locale = self:get_locale(self.lang)
+  context.name_inheritance = self.style_element.citation.name_inheritance
+  -- context.format = output_format
+  -- context.id = id
+  context.cite = nil
+  -- context.reference = self:get_item(id)
+
+  items = citation_sort:sort(items, state, context)
+  return items
 end
 
 function CiteProc:updateItems (ids)
@@ -576,7 +600,10 @@ end
 function CiteProc:sort_bibliography()
   -- Sort the items in registry according to the `sort` in `bibliography.`
   -- This will update the `citation-number` of each item.
-  local bibliography_sort = self.style:get_path("style bibliography sort")[1]
+  local bibliography_sort = nil
+  if self.style_element.bibliography and self.style_element.bibliography.sort then
+    bibliography_sort = self.style_element.bibliography.sort
+  end
   if not bibliography_sort then
     return
   end
@@ -585,15 +612,20 @@ function CiteProc:sort_bibliography()
     table.insert(items, self.registry.registry[id])
   end
 
-  local context = {
-    engine = self,
-    style = self.style,
-    mode = "bibliography",
-  }
-  context = self.style:process_context(context)
-  context = self.style:get_path("style bibliography")[1]:process_context(context)
+  local state = IrState:new()
+  local context = Context:new()
+  context.engine = self
+  context.style = self.style_element
+  context.area = self.style_element.bibliography
+  context.in_bibliography = true
+  context.locale = self:get_locale(self.lang)
+  context.name_inheritance = self.style_element.bibliography.name_inheritance
+  -- context.format = output_format
+  -- context.id = id
+  context.cite = nil
+  -- context.reference = self:get_item(id)
 
-  bibliography_sort:sort(items, context)
+  bibliography_sort:sort(items, state, context)
   self.registry.reflist = {}
   for i, item in ipairs(items) do
     item["citation-number"] = i

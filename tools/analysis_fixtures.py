@@ -10,28 +10,20 @@ failed_fixtures = []
 skipped_fixtures = [
     'affix_CommaAfterQuote.txt',
     'bugreports_ApostropheOnParticle.txt',
-    'bugreports_ArabicLocale.txt',
-    'bugreports_BadCitationUpdate.txt',
     'bugreports_EtAlSubsequent.txt',
     'bugreports_FrenchApostrophe.txt',
     'bugreports_parseName.txt',
-    'bugreports_DelimiterOnLayout.txt',
-    'date_IgnoreNonexistentSort.txt',
-    'date_NonexistentSortReverseCitation.txt',
     'decorations_NoNormalWithoutDecoration.txt',
     'flipflop_LeadingMarkupWithApostrophe.txt',
     'flipflop_OrphanQuote.txt',
     'flipflop_SingleBeforeColon.txt',
-    'flipflop_StartingApostrophe.txt',
-    'integration_DeleteName.txt',
     'integration_FirstReferenceNoteNumberPositionChange.txt',
     'integration_IbidOnInsert.txt',
     'label_EditorTranslator2.txt',
     'label_NoFirstCharCapWithInTextClass.txt',
     'locator_SimpleLocators.txt',
-    'magic_CapitalizeFirstOccurringNameParticle.txt',
     'magic_NameSuffixWithComma.txt',
-    'name_AfterInvertedName.txt',
+    'name_CollapseRoleLabels.txt',
     'name_EditorTranslatorSameWithTerm.txt',
     'name_HebrewAnd.txt',
     'name_InTextMarkupInitialize.txt',
@@ -40,18 +32,14 @@ skipped_fixtures = [
     'name_ParticlesDemoteNonDroppingNever.txt',
     'name_WithNonBreakingSpace.txt',
     'name_namepartAffixes.txt',
-    'name_CollapseRoleLabels.txt',
     'number_OrdinalSpacing.txt',
     'number_PlainHyphenOrEnDashAlwaysPlural.txt',
     'position_IbidWithPrefixFullStop.txt',
     'position_ResetNoteNumbers.txt',
-    'punctuation_FrenchOrthography.txt',
-    'punctuation_FullMontyField.txt',
-    'punctuation_FullMontyPlain.txt',
     'textcase_LocaleUnicode.txt',
+    'textcase_NoSpaceBeforeApostrophe.txt',
     'textcase_SentenceCapitalization.txt',
     'textcase_SkipNameParticlesInTitleCase.txt',
-    'textcase_NoSpaceBeforeApostrophe.txt',
 ]
 
 with open('./test/citeproc-test.log') as f:
@@ -110,7 +98,6 @@ for path in paths:
     fixtures.append(fixture)
 
 skip_tags = [
-    'sort',
 ]
 skip_attrs = [
     'disambiguate-add-givenname',

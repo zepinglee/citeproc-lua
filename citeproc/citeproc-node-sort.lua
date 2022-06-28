@@ -10,14 +10,26 @@ local unicode = require("unicode")
 
 local Element = require("citeproc-element").Element
 local names = require("citeproc-node-names")
-local date = require("citeproc-node-date")
 local util = require("citeproc-util")
 
 
 -- [Sorting](https://docs.citationstyles.org/en/stable/specification.html#sorting)
 local Sort = Element:derive("sort")
 
-function Sort:sort (items, context)
+function Sort:from_node(node)
+  local o = Sort:new()
+  o.children = {}
+
+  o:process_children_nodes(node)
+  self.sort_directions = {}
+  for i, key in ipairs(o.children) do
+    self.sort_directions[i] = (key.sort ~= "descending")
+  end
+
+  return o
+end
+
+function Sort:sort(items, state, context)
   -- key_map = {
   --   id1 = {key1, key2, ...},
   --   id2 = {key1, key2, ...},
@@ -26,41 +38,41 @@ function Sort:sort (items, context)
   context.variable_attempt = {}
 
   local key_map = {}
-  local sort_directions = {}
+  local sort_directions = self.sort_directions
   -- true: ascending
   -- false: descending
 
-  if not Sort.collator_obj then
-    local lang = context.style.lang
+  if not Sort.collator then
+    local lang = context.engine.lang
     local language = string.sub(lang, 1, 2)
     -- It's 6 seconds slower to run the whole test-suite if these package
     -- loading statements are put in the header.
     local ducet = require("lua-uca.lua-uca-ducet")
     local collator = require("lua-uca.lua-uca-collator")
-    Sort.collator_obj = collator.new(ducet)
+    Sort.collator = collator.new(ducet)
     if language ~= "en" then
       local languages = require("lua-uca.lua-uca-languages")
       if languages[language] then
-        Sort.collator_obj = languages[language](Sort.collator_obj)
+        Sort.collator = languages[language](Sort.collator)
       else
         util.warning(string.format('Locale "%s" is not provided by lua-uca. The sorting order may be incorrect.', lang))
       end
     end
   end
 
+  -- TODO: optimize: use cached values for fixed keys
   for _, item in ipairs(items) do
-    if not key_map[item.id] then
-      key_map[item.id] = {}
+    key_map[item.id] = {}
 
-      context.item = item
-      for i, key in ipairs(self:query_selector("key")) do
-        if sort_directions[i] == nil then
-          local direction = (key:get_attribute("sort") ~= "descending")
-          sort_directions[i] = direction
-        end
-        local value = key:render(item, context)
-        table.insert(key_map[item.id], value)
-      end
+    context.id = item.id
+    context.cite = item
+    context.reference = context.engine.registry.registry[item.id]
+
+    for i, key in ipairs(self.children) do
+      context.sort_key = key
+
+      local key_str = key:render(context)
+      key_map[item.id][i] = key_str
     end
   end
 
@@ -83,8 +95,8 @@ function Sort.compare(value1, value2)
 end
 
 function Sort.compare_strings(str1, str2)
-  if Sort.collator_obj then
-    return Sort.collator_obj:compare_strings(str1, str2)
+  if Sort.collator then
+    return Sort.collator:compare_strings(str1, str2)
   else
     return str1 < str2
   end
@@ -116,14 +128,14 @@ local Key = Element:derive("key")
 
 function Key:new()
   local o = Element.new(self)
-  Key.sort_direction = "ascending"
+  Key.sort = "ascending"
   return o
 end
 
 function Key:from_node(node)
   local o = Key:new()
+  o:set_attribute(node, "sort")
   o:set_attribute(node, "variable")
-  o:set_attribute(node, "macro")
   o:set_attribute(node, "macro")
   o:set_attribute(node, "names-min")
   o:set_attribute(node, "names-use-first")
@@ -131,42 +143,43 @@ function Key:from_node(node)
   return o
 end
 
-function Key:render (item, context)
-  context = self:process_context(context)
-  context.options["name-as-sort-order"] = "all"
-  context.sorting = true
-  local variable = self:get_attribute("variable")
+function Key:render(context)
+  -- context = self:process_context(context)
+  -- context.options["name-as-sort-order"] = "all"
+  -- context.sorting = true
   local res = nil
-  if variable then
-    context.variable = variable
-    local variable_type = util.variable_types[variable]
+  if self.variable then
+    -- context.variable = variable
+    local variable_type = util.variable_types[self.variable]
     if variable_type == "name" then
-      res = self:_render_name(item, context)
+      -- res = self:_render_name(item, context)
     elseif variable_type == "date" then
-      res = self:_render_date(item, context)
+      res = self:_render_date(context)
     elseif variable_type == "number" then
-      res = item[variable]
+      local value = context:get_variable(self.variable)
+      if type(value) == "string" and string.match(value, "%s+") then
+        value = tonumber(value)
+      end
+      res = value
     else
-      res = item[variable]
+      res = context:get_variable(self.variable)
     end
-  else
-    local macro = self:get_attribute("macro")
-    if macro then
-      res = self:get_macro(macro):render(item, context)
-    end
+  -- else
+  --   local macro = self:get_attribute("macro")
+  --   if macro then
+  --     res = self:get_macro(macro):render(item, context)
+  --   end
   end
   if res == nil then
     res = false
-  elseif type(res) == "table" and res._type == "RichText" then
-    res = res:render(nil, context)
   end
-  if type(res) == "string" then
-    res = self._normalize_string(res)
-  end
+  -- if type(res) == "string" then
+  --   res = self._normalize_string(res)
+  -- end
   return res
 end
 
-function Key:_render_name (item, context)
+function Key:_render_name(context)
   if not self.names then
     self.names = self:create_element("names", {}, self)
     names.Names:set_base_class(self.names)
@@ -177,30 +190,50 @@ function Key:_render_name (item, context)
   return res
 end
 
-function Key:_render_date (item, context)
-  if not self.date then
-    self.date = self:create_element("date", {}, self)
-    date.Date:set_base_class(self.date)
-    self.date:set_attribute("variable", context.options["variable"])
-    self.date:set_attribute("form", "numeric")
+function Key:_render_date(context)
+  local date = context:get_variable(self.variable)
+  if not date then
+    return false
   end
-  local res = self.date:render(item, context)
+  if not date["date-parts"] then
+    return date.literal or date.raw
+  end
+  local res = ""
+  for _, date_parts in ipairs(date["date-parts"]) do
+    for i, date_part in ipairs(date_parts) do
+      local value = date_parts[i]
+      if type(value) == "string" then
+        value = tonumber(value)
+      end
+      if i == 1 then -- year
+        res = res .. string.format("%05d", value + 10000)
+      elseif i == 2 then  -- month
+        if value < 1 or value > 12 then
+          value = 0
+        end
+        res = res .. string.format("%02d", value)
+      else  -- month
+        res = res .. string.format("%02d", value)
+      end
+    end
+  end
   return res
 end
-function Key._normalize_string(str)
-  str = unicode.utf8.lower(str)
-  str = string.gsub(str, "[%[%]]", "")
-  local words = {}
-  for _, word in ipairs(util.split(str, " ")) do
-    -- TODO: strip leading prepositions
-    -- remove leading apostrophe on name particle
-    word = string.gsub(word, "^" .. util.unicode["apostrophe"], "")
-    table.insert(words, word)
-  end
-  str = table.concat(words, " ")
-  str = string.gsub(str, util.unicode["apostrophe"], "'")
-  return str
-end
+
+-- function Key._normalize_string(str)
+--   str = unicode.utf8.lower(str)
+--   str = string.gsub(str, "[%[%]]", "")
+--   local words = {}
+--   for _, word in ipairs(util.split(str, " ")) do
+--     -- TODO: strip leading prepositions
+--     -- remove leading apostrophe on name particle
+--     word = string.gsub(word, "^" .. util.unicode["apostrophe"], "")
+--     table.insert(words, word)
+--   end
+--   str = table.concat(words, " ")
+--   str = string.gsub(str, util.unicode["apostrophe"], "'")
+--   return str
+-- end
 
 
 sort.Sort = Sort

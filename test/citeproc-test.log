@@ -1,44 +1,44 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
-affix                7       1       1       0
-bugreports          25      12      45       0
-collapse             4      16       1       0
+affix                7       2       0       0
+bugreports          42      40       0       0
+collapse             4      17       0       0
 condition           17       0       0       0
-date                85      11       5       0
+date                95       6       0       0
 decorations          6       1       0       0
-disambiguate        14      39      18       0
-display              2       2       1       0
-etal                 2       0       2       0
-flipflop            14       3       1       0
+disambiguate        17      54       0       0
+display              2       3       0       0
+etal                 4       0       0       0
+flipflop            14       4       0       0
 form                 3       0       0       0
-fullstyles           0       0       5       0
-group                5       0       2       0
+fullstyles           2       3       0       0
+group                6       1       0       0
 integration          7       6       1       0
-label               15       2       2       0
+label               15       4       0       0
 locale              23       0       0       0
 locator              4       1       0       0
-magic               31       5       4       0
-name                86      15      10       0
+magic               32       8       0       0
+name                88      22       1       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
-number              17       2       1       0
+number              18       2       0       0
 page                 9       0       0       0
 plural               7       0       0       0
-position            11       3       1       0
-punctuation          8       5       3       0
-quotes               2       0       2       0
-simplespace          0       0       1       0
-sort                 5      14      47       0
+position            11       4       0       0
+punctuation          9       7       0       0
+quotes               3       1       0       0
+simplespace          0       1       0       0
+sort                17      44       5       0
 sortseparator        1       0       0       0
-substitute           6       0       1       0
-testers              0       0       2       0
-textcase            25       4       1       0
+substitute           6       1       0       0
+testers              1       1       0       0
+textcase            25       5       0       0
 unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              550     144     157       0
+(all)              604     240       7       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -46,11 +46,51 @@ Passed in:
 Expected:
 (string) '“quote”, Hello Thing'
 
+Failure → citeproc test test-suite affix_WithCommas.txt
+Passed in:
+(string) '..[0] John Smith, <i>Book C</i>, 2000, and David Jones, <i>Book D</i>, 2000.
+..[1] Smith, <i>Book C</i> is one source,; Jones, <i>Book D</i> is another.
+>>[2] Smith, <i>Book C</i>, 23 is one source,; Jones, <i>Book D</i> is another.'
+Expected:
+(string) '..[0] John Smith, <i>Book C</i>, 2000, and David Jones, <i>Book D</i>, 2000.
+..[1] Smith, <i>Book C</i> is one source, Jones, <i>Book D</i> is another.
+>>[2] Smith, <i>Book C</i>, 23 is one source, Jones, <i>Book D</i> is another.'
+
+Failure → citeproc test test-suite bugreports_AccidentalAllCaps.txt
+Passed in:
+(string) '<span style="font-variant:normal;">J. Doe</span>, <i>His Anonymous Life</i>, , 1965.'
+Expected:
+(string) 'J. Doe, <i>His Anonymous Life</i>, , 1965.'
+
 Failure → citeproc test test-suite bugreports_ApostropheOnParticle.txt
 Passed in:
 (string) 'John d’ Jones'
 Expected:
 (string) 'John d’Jones'
+
+Failure → citeproc test test-suite bugreports_AsmJournals.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">1. </div><div class="csl-right-inline"><b>Doe Co.</b> 1965. His Collectively Anonymous Life</div>
+    .</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">1. </div><div class="csl-right-inline"><b>Doe Co.</b> 1965. His Collectively Anonymous Life.</div>
+  </div>
+</div>'
+
+Failure → citeproc test test-suite bugreports_AuthorPosition.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">A00, A., A01, B., A02, C., A03, D., A04, E., A05, F., … A50, K.  (2010). Modelling the Species Distribution of Flat-Headed Cats (<i>Prionailurus planiceps</i>), an Endangered South-East Asian Small Felid. <i>PLoS ONE</i>, <i>5</i>(3), e9612. doi:10.1371/journal.pone.0009612</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">A00, A., A01, B., A02, C., A03, D., A04, E., A05, F., … A50, K. (2010). Modelling the Species Distribution of Flat-Headed Cats (<i>Prionailurus planiceps</i>), an Endangered South-East Asian Small Felid. <i>PLoS ONE</i>, <i>5</i>(3), e9612. doi:10.1371/journal.pone.0009612</div>
+</div>'
 
 Failure → citeproc test test-suite bugreports_AutomaticallyDeleteItemsFails.txt
 Passed in:
@@ -83,11 +123,57 @@ Expected:
 (string) 'C. Grignon, C. Sentenac 2000a
 C. Grignon, C. Sentenac 2000b'
 
+Failure → citeproc test test-suite bugreports_BadDelimiterBeforeCollapse.txt
+Passed in:
+(string) '(Smith 2000; Smith 2000; Jones 2000)'
+Expected:
+(string) '(Jones 2000; Smith 2000a,b)'
+
+Failure → citeproc test test-suite bugreports_ByBy.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Review of <i>My Title</i>, by Burtle, Beaver. n.d.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Review of <i>My Title</i>, by Beaver Burtle. n.d.</div>
+</div>'
+
+Failure → citeproc test test-suite bugreports_ChicagoAuthorDateLooping.txt
+Passed in:
+(string) '(Manstein 1982; Anon.; Anon.)'
+Expected:
+(string) '(Anon.; Anon.; Manstein 1982)'
+
 Failure → citeproc test test-suite bugreports_CitationSortsWithEtAl.txt
 Passed in:
 (string) '[<i>Aalto et al.</i>, 2001; <i>Aalto et al.</i>, 1999; <i>Aalto et al.</i>, 2000]'
 Expected:
 (string) '[<i>Aalto et al.</i>, 1999, 2000, 2001]'
+
+Failure → citeproc test test-suite bugreports_CollapseFailure.txt
+Passed in:
+(string) '(Doe et al. 1965; Doe et al. 1965; Doe et al. 1970)'
+Expected:
+(string) '(Doe et al. 1965a, 1965b, 1970)'
+
+Failure → citeproc test test-suite bugreports_DisambiguationAddNames.txt
+Passed in:
+(string) '(Roe et al., 1995; Roe et al., 1995)'
+Expected:
+(string) '(Roe et al., 1995a, 1995b)'
+
+Failure → citeproc test test-suite bugreports_DisambiguationAddNamesBibliography.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Roe, J., Doe, J. and Smith, J.:, 1995.</div>
+  <div class="csl-entry">Roe, J., Noakes, R. and Brown, B.:, 1995.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Roe, J., Doe, J. and Smith, J.:, 1995a.</div>
+  <div class="csl-entry">Roe, J., Noakes, R. and Brown, B.:, 1995b.</div>
+</div>'
 
 Failure → citeproc test test-suite bugreports_DuplicateSpaces.txt
 Passed in:
@@ -101,6 +187,16 @@ Expected:
   <div class="csl-entry">
     <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, New York: Routledge, 2006.</div>
   </div>
+</div>'
+
+Failure → citeproc test test-suite bugreports_DuplicateSpaces2.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Smith, John, “Some Title.”  <i>Container Title</i>.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Smith, John, “Some Title.” <i>Container Title</i>.</div>
 </div>'
 
 Failure → citeproc test test-suite bugreports_DuplicateSpaces3.txt
@@ -131,6 +227,14 @@ Expected:
 (string) '..[0] John Doe, Jane Roe, Katie Harper, Emmanuel Clutterbuck
 >>[1] John Doe et al.'
 
+Failure → citeproc test test-suite bugreports_FourAndFour.txt
+Passed in:
+(string) 'Anne Tyler et al., <i>Ladder of his’ Years</i>, vol. 2003 (New York: Ivy Books, 1997).
+Anne Tyler et al., <i>Ladder of his’ Years</i>, vol. 2003 (New York: Ivy Books, 1997).'
+Expected:
+(string) 'Anne Tyler, George Smith, John Brown, and Cat Garfield, <i>Ladder of his’ Years</i>, vol. 2003 (New York: Ivy Books, 1997).
+Anne Tyler, George Smith, John Brown, and Cat Felix, <i>Ladder of his’ Years</i>, vol. 2003 (New York: Ivy Books, 1997).'
+
 Failure → citeproc test test-suite bugreports_FrenchApostrophe.txt
 Passed in:
 (string) '« Life“s ”Little’ Surprises »'
@@ -151,6 +255,175 @@ Expected:
   </div>
 </div>'
 
+Failure → citeproc test test-suite bugreports_LabelsOutOfPlace.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Jones, Colin. <i>Bourgeois Revolution Revivified: 1789 and Social Change</i>.  Edited by Colin Lucas. Oxford: Clarendon Press, 1991.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Jones, Colin. <i>Bourgeois Revolution Revivified: 1789 and Social Change</i>. Edited by Colin Lucas. Oxford: Clarendon Press, 1991.</div>
+</div>'
+
+Failure → citeproc test test-suite bugreports_MatchedAuthorAndDate.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Brown, J. 2006, August. <i><b>Tijdschrift voor praktijkondersteuning</b></i>. http://dx.doi.org/10.1007/bf03074904.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <i><b>Huisarts en Wetenschap</b></i>. http://dx.doi.org/10.1007/bf03084836.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Brown, J. 2006a, August. <b><i>Tijdschrift voor praktijkondersteuning</i></b>. http://dx.doi.org/10.1007/bf03074904.</div>
+  <div class="csl-entry">Brown, J. 2006b, August. <b><i>Huisarts en Wetenschap</i></b>. http://dx.doi.org/10.1007/bf03084836.</div>
+</div>'
+
+Failure → citeproc test test-suite bugreports_MovePunctuationInsideQuotesForLocator.txt
+Passed in:
+(string) 'Jennifer J. Davis, “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830” (Ph.D. diss., Pennsylvania State University, History, 2004), “gargoyle.”'
+Expected:
+(string) 'Jennifer J. Davis, “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830” (Ph.D. diss., Pennsylvania State University, History, 2004), s.v. “gargoyle.”'
+
+Failure → citeproc test test-suite bugreports_NoCaseEscape.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+
+    <div class="csl-block">Aalto, Alan</div>
+
+    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">““PIAAC-Longitudinal (PIAAC-L) 2015.””</div>
+  </div>
+  <div class="csl-entry">
+
+    <div class="csl-block">Aalto, Alan</div>
+
+    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">“PIAAC-Longitudinal (PIAAC-Lx) 2015.”</div>
+  </div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+
+    <div class="csl-block">Aalto, Alan</div>
+
+    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">“‘PIAAC-Longitudinal (PIAAC-L) 2015.’”</div>
+  </div>
+  <div class="csl-entry"> 
+    <div class="csl-left-margin">N.d.</div><div class="csl-right-inline">“PIAAC-Longitudinal (PIAAC-Lx) 2015.”</div>
+  </div>
+</div>'
+
+Failure → citeproc test test-suite bugreports_NoTitle.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Family01, G. (n.d.). XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.</div>
+  <div class="csl-entry">ecs. (n.d.). .</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">ecs. (n.d.). .</div>
+  <div class="csl-entry">Family01, G. (n.d.). XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.</div>
+</div>'
+
+Failure → citeproc test test-suite bugreports_OldMhraDisambiguationFailure.txt
+Passed in:
+(string) '..[0] John Doe, <i>Book A</i>, 2000, p. , p. ; John Doe, <i>Book B</i>, 2000, p. , p. .
+>>[1] Doe, Book A, p. , p. ; Doe, Book B, p. , p. .'
+Expected:
+(string) '>>[0] John Doe, <i>Book A</i>, 2000; John Doe, <i>Book B</i>, 2000.
+>>[1] Doe, Book A; Doe, Book B.'
+
+Failure → citeproc test test-suite bugreports_ProcessorHang1.txt
+Passed in:
+(string) '(Philpott et al. 2008)
+(Philpott et al. 2008)
+(Philpott et al. 2008)'
+Expected:
+(string) '(Philpott, Arendt, et al. 2008)
+(Philpott, Perfecto, et al. 2008<i>a</i>)
+(Philpott, Perfecto, et al. 2008<i>b</i>)'
+
+Failure → citeproc test test-suite bugreports_SingleQuoteXml.txt
+Passed in:
+(string) '[O A. "hello" <i>Book Title</i> ; Cite with a composer]'
+Expected:
+(string) '[Cite with a composer ; O A. "hello" <i>Book Title</i>]'
+
+Failure → citeproc test test-suite bugreports_SmallCapsEscape.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+
+    <div class="csl-block">Aalto, Alan</div>
+
+    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline"><span style="font-variant:small-caps;">Here</span></div>
+    .</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+
+    <div class="csl-block">Aalto, Alan</div>
+
+    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline"><span style="font-variant:small-caps;">Here</span>.</div>
+  </div>
+</div>'
+
+Failure → citeproc test test-suite bugreports_SortSecondaryKey.txt
+Passed in:
+(string) '(Roe, 1996; Roe, 1995)'
+Expected:
+(string) '(Roe, 1995, 1996)'
+
+Failure → citeproc test test-suite bugreports_SortSecondaryKeyBibliography.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Roe, J.:, 1996.</div>
+  <div class="csl-entry">Roe, J.:, 1995.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Roe, J.:, 1995.</div>
+  <div class="csl-entry">Roe, J.:, 1996.</div>
+</div>'
+
+Failure → citeproc test test-suite bugreports_SortedIeeeItalicsFail.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Roe, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965</div>
+    .</div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> J. Doe, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965</div>
+    .</div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[3]</div><div class="csl-right-inline"> G. Everhardt, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965</div>
+    .</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Doe, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965.</div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> G. Everhardt, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965.</div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[3]</div><div class="csl-right-inline"> J. Roe, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965.</div>
+  </div>
+</div>'
+
+Failure → citeproc test test-suite bugreports_StyleError001.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"><i>Anonymous Journal</i>, p. .</div>
+  <div class="csl-entry"><i>Anonymous Journal One</i>. p. .</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"><i>Anonymous Journal</i>.</div>
+  <div class="csl-entry"><i>Anonymous Journal One</i>.</div>
+</div>'
+
 Failure → citeproc test test-suite bugreports_UndefinedInName3.txt
 Passed in:
 (string) 'B-X Kim and A-Y Kim, p. .
@@ -158,6 +431,48 @@ Kim and Kim, 23.'
 Expected:
 (string) 'B-X Kim and A-Y Kim.
 Kim and Kim, 23.'
+
+Failure → citeproc test test-suite bugreports_YearSuffixInHarvard1.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Africa News, 2006. Burkina Faso: Journalist Case Puts Spotlight On Justice System. <i>Africa News</i>.</div>
+  <div class="csl-entry">Africa News, 2010. Niger: Who Really Ousted Tandja, And Why?. <i>Africa News</i>.</div>
+  <div class="csl-entry">Africa News, 2007. Uganda: Police Protect Besigye Rally. <i>Africa News</i>.</div>
+  <div class="csl-entry">Africa News, 2006. Uganda: UK, US Deploy Observers. <i>Africa News</i>.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Africa News, 2006a. Burkina Faso: Journalist Case Puts Spotlight On Justice System. <i>Africa News</i>.</div>
+  <div class="csl-entry">Africa News, 2010. Niger: Who Really Ousted Tandja, And Why? <i>Africa News</i>.</div>
+  <div class="csl-entry">Africa News, 2007. Uganda: Police Protect Besigye Rally. <i>Africa News</i>.</div>
+  <div class="csl-entry">Africa News, 2006b. Uganda: UK, US Deploy Observers. <i>Africa News</i>.</div>
+</div>'
+
+Failure → citeproc test test-suite bugreports_YearSuffixLingers.txt
+Passed in:
+(string) 'Smith 1990
+Smith 1990
+Jones 1990'
+Expected:
+(string) 'Smith 1990a
+Smith 1990b
+Jones 1990'
+
+Failure → citeproc test test-suite bugreports_ikeyOne.txt
+Passed in:
+(string) '..[0] (Smith, <i>Book B</i>)'
+Expected:
+(string) '>>[0] (Smith)'
+
+Failure → citeproc test test-suite bugreports_parenthesis.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">  (2006): 1–7.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"> (2006): 1–7.</div>
+</div>'
 
 Failure → citeproc test test-suite bugreports_parseName.txt
 Passed in:
@@ -188,6 +503,16 @@ Passed in:
 (string) '(Smith 325AD, Smith 2000, Smith)'
 Expected:
 (string) '(Smith 325AD, 2000)'
+
+Failure → citeproc test test-suite collapse_ChicagoAfterCollapse.txt
+Passed in:
+(string) '(Whittaker 1967, Whittaker 1975, Wiens 1989, Wiens 1989)
+(Wong 1999, 328, Wong 2000, 475, Garcia 1998, 67)
+(Whittaker 1967, Wiens 1989)'
+Expected:
+(string) '(Whittaker 1967, 1975; Wiens 1989a, 1989b)
+(Wong 1999, 328; 2000, 475; Garcia 1998, 67)
+(Whittaker 1967; Wiens 1989b)'
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesInsert.txt
 Passed in:
@@ -247,7 +572,7 @@ Expected:
 
 Failure → citeproc test test-suite collapse_TrailingDelimiter.txt
 Passed in:
-(string) '(Condit et al. 2000, Condit et al. 1995, Connell 1971, Condit et al. 1998, Cortes &#38; Hunziker 1971)'
+(string) '(Condit et al. 2000, Condit et al. 1998, Connell 1971, Condit et al. 1995, Cortes &#38; Hunziker 1971)'
 Expected:
 (string) '(Condit et al. 2000, 1995, 1998; Connell 1971, Cortes &#38; Hunziker 1971)'
 
@@ -283,47 +608,17 @@ Expected:
 (string) 'Smith 2000a–e;2001
 Smith 2000a;c–e;2001'
 
-Failure → citeproc test test-suite date_IgnoreNonexistentSort.txt
-Passed in:
-(string) 'Item 1; Item 2; Item 3; Item 4'
-Expected:
-(string) 'Item 4; Item 2; Item 1; Item 3'
-
 Failure → citeproc test test-suite date_LopsidedDataYearSuffixCollapse.txt
 Passed in:
 (string) '(Smith 1982, Smith 1982)'
 Expected:
 (string) '(Smith 1982a,b)'
 
-Failure → citeproc test test-suite date_NegativeDateSort.txt
-Passed in:
-(string) '100BC-7-13, 54AD-10-13, 44BC-3-15, 68AD-6-11'
-Expected:
-(string) '100BC-7-13, 44BC-3-15, 54AD-10-13, 68AD-6-11'
-
-Failure → citeproc test test-suite date_NegativeDateSortViaMacro.txt
-Passed in:
-(string) '100BC-7-13, 54AD-10-13, 44BC-3-15, 68AD-6-11'
-Expected:
-(string) '100BC-7-13, 44BC-3-15, 54AD-10-13, 68AD-6-11'
-
 Failure → citeproc test test-suite date_NegativeDateSortViaMacroOnYearMonthOnly.txt
 Passed in:
-(string) 'BookY (100BC-7-13), BookX (100BC-7-14), BookB (68AD-3-15), BookA (68AD-3-16)'
+(string) 'BookA (68AD-3-16), BookB (68AD-3-15), BookX (100BC-7-14), BookY (100BC-7-13)'
 Expected:
 (string) 'BookX (100BC-7-14), BookY (100BC-7-13), BookA (68AD-3-16), BookB (68AD-3-15)'
-
-Failure → citeproc test test-suite date_NonexistentSortReverseCitation.txt
-Passed in:
-(string) 'Item 1; Item 2; Item 3; Item 4'
-Expected:
-(string) 'Item 2; Item 4; Item 1; Item 3'
-
-Failure → citeproc test test-suite date_SortEmptyDatesCitation.txt
-Passed in:
-(string) 'BookA; BookB 2000; BookC; BookD 1999; BookE.'
-Expected:
-(string) 'BookD 1999; BookB 2000; BookA; BookC; BookE.'
 
 Failure → citeproc test test-suite date_YearSuffixDelimiter.txt
 Passed in:
@@ -364,6 +659,12 @@ Passed in:
 (string) 'Smith et al. (1980); Smith et al. (1980)'
 Expected:
 (string) 'Smith, Brown, et al. (1980); Smith, Beefheart, et al. (1980)'
+
+Failure → citeproc test test-suite disambiguate_AllNamesBaseNameCountOnFailureIfYearSuffixAvailable.txt
+Passed in:
+(string) 'Asthma et al. (1990); Asthma et al. (1990); Dropsy et al. (2000); Dropsy et al. (2000)'
+Expected:
+(string) 'Asthma et al. (1990a); Asthma et al. (1990b); Dropsy, Edward Enteritis, et al. (2000); Dropsy, Ernie Enteritis, et al. (2000)'
 
 Failure → citeproc test test-suite disambiguate_AllNamesGenerally.txt
 Passed in:
@@ -501,6 +802,28 @@ Expected:
 (string) 'Roe
 John Doe; Aloysius Doe'
 
+Failure → citeproc test test-suite disambiguate_ByCiteIncremental1.txt
+Passed in:
+(string) '(Baines et al., 2009)
+(Baines et al., 2009)
+(Grubic et al., 2009)'
+Expected:
+(string) '(Baines, Lightfoot, Benedettini, et al., 2009)
+(Baines, Lightfoot and Kay, 2009)
+(Grubic et al., 2009)'
+
+Failure → citeproc test test-suite disambiguate_ByCiteIncremental2.txt
+Passed in:
+(string) '(Baines et al., 2009; Baines et al., 2009)'
+Expected:
+(string) '(Baines, Lightfoot, Benedettini, et al., 2009; Baines, Lightfoot and Kay, 2009)'
+
+Failure → citeproc test test-suite disambiguate_ByCiteMinimalGivennameExpandMinimalNames.txt
+Passed in:
+(string) 'A. Asthma et al.; A. Asthma et al.'
+Expected:
+(string) 'A. Asthma, Brandon Bronchitis, et al.; A. Asthma, Biff Bronchitis, et al.'
+
 Failure → citeproc test test-suite disambiguate_ByCiteRetainNamesOnFailureIfYearSuffixNotAvailable.txt
 Passed in:
 (string) 'Asthma et al. (1990); Asthma et al. (1990); Dropsy et al. (2000); Dropsy et al. (2000)'
@@ -551,6 +874,28 @@ Expected:
 >>[1] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990b)
 >>[2] (Caminiti, Johnson, &#38; Urbano 1990)'
 
+Failure → citeproc test test-suite disambiguate_FailWithYearSuffix.txt
+Passed in:
+(string) '(Caritas Europa et al. 2004)
+(Caritas Europa et al. 2004)'
+Expected:
+(string) '(Caritas Europa et al. 2004a)
+(Caritas Europa et al. 2004b)'
+
+Failure → citeproc test test-suite disambiguate_HonorFullnameInBibliography.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Alan Aalto</div>
+  <div class="csl-entry">Old Blevins</div>
+  <div class="csl-entry">Richard Aalto</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Alan Aalto</div>
+  <div class="csl-entry">Richard Aalto</div>
+  <div class="csl-entry">Old Blevins</div>
+</div>'
+
 Failure → citeproc test test-suite disambiguate_ImplicitYearSuffixOnceOnly.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -576,6 +921,12 @@ John Smith, Book One
 John Smith, Book Two
 John Smith, Complete Works, ed. 5
 John Smith, Complete Works, ed. 6'
+
+Failure → citeproc test test-suite disambiguate_InitializeWithButNoDisambiguation.txt
+Passed in:
+(string) '(Doe, 1965; Doe, 1965)'
+Expected:
+(string) '(Doe, 1965a, 1965b)'
 
 Failure → citeproc test test-suite disambiguate_LastOnlyFailWithByCite.txt
 Passed in:
@@ -603,6 +954,24 @@ Passed in:
 Expected:
 (string) 'A. Asthma et al. (1980); G. Asthma et al. (1995); Dropsy and Asthma (1995)'
 
+Failure → citeproc test test-suite disambiguate_SetsOfNames.txt
+Passed in:
+(string) '(Ely et al. 2001; Ely et al. 2001; Ely et al. 2001)'
+Expected:
+(string) '(Ely, Gautam, et al. 2001; Ely, Inouye, et al. 2001; Ely, Margolin, et al. 2001)'
+
+Failure → citeproc test test-suite disambiguate_SkipAccessedYearSuffix.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"><b>Doe J</b>. His Anonymous Life.  http://example.com (accessed 15 December 2000). 1965</div>
+  <div class="csl-entry"><b>Doe J</b>. His Anonymous Life.  http://example.com (accessed 15 December 2000). 1965</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"><b>Doe J</b>. His Anonymous Life. http://example.com (accessed 15 December 2000). 1965a</div>
+  <div class="csl-entry"><b>Doe J</b>. His Anonymous Life. http://example.com (accessed 15 December 2000). 1965b</div>
+</div>'
+
 Failure → citeproc test test-suite disambiguate_ToInitialOnly.txt
 Passed in:
 (string) 'Smith; Smith; Muggins; Muggins'
@@ -628,6 +997,12 @@ Expected:
 (string) '(Smith Co 2000a; 2000b; 2000c)
 (Smith Co 2000b)
 (Smith Co 2000c)'
+
+Failure → citeproc test test-suite disambiguate_YearSuffixAndSort.txt
+Passed in:
+(string) '1990; 1990; 1990; 1990; 1990; 1990; 1990; 1990; 1990; 1990; 1990; 1990; 1990'
+Expected:
+(string) '1990m!; 1990l!; 1990k!; 1990j!; 1990i!; 1990h!; 1990g!; 1990f!; 1990e!; 1990d!; 1990c!; 1990b!; 1990a!'
 
 Failure → citeproc test test-suite disambiguate_YearSuffixAtTwoLevels.txt
 Passed in:
@@ -667,11 +1042,69 @@ Expected:
 (string) 'A Smith 2001
 B Smith 2001'
 
+Failure → citeproc test test-suite disambiguate_YearSuffixMidInsert.txt
+Passed in:
+(string) '(UN DESA 2011)
+(UN DESA 2011)
+(UN DESA 2011)'
+Expected:
+(string) '(UN DESA 2011b)
+(UN DESA 2011c)
+(UN DESA 2011a)'
+
 Failure → citeproc test test-suite disambiguate_YearSuffixMixedDates.txt
 Passed in:
 (string) '(A Ylinen, 1995; A Ylinen, 1995; A Ylinen, 1995)'
 Expected:
 (string) '(A Ylinen, 1995a; b; c)'
+
+Failure → citeproc test test-suite disambiguate_YearSuffixTwoPairsBibliography.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">J. Doe and S. Jones, 1999</div>
+  <div class="csl-entry">J. Doe and S. Smith, 1999</div>
+  <div class="csl-entry">J. Doe and S. Jones, 1999</div>
+  <div class="csl-entry">J. Doe and S. Smith, 1999</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">J. Doe and S. Jones, 1999a</div>
+  <div class="csl-entry">J. Doe and S. Jones, 1999b</div>
+  <div class="csl-entry">J. Doe and S. Smith, 1999a</div>
+  <div class="csl-entry">J. Doe and S. Smith, 1999b</div>
+</div>'
+
+Failure → citeproc test test-suite disambiguate_YearSuffixTwoPairsFirstNameBibliography.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">J. Doe and S. Jones, 1999</div>
+  <div class="csl-entry">J. Doe and S. Smith, 1999</div>
+  <div class="csl-entry">J. Doe and S. Jones, 1999</div>
+  <div class="csl-entry">J. Doe and S. Smith, 1999</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">J. Doe and S. Jones, 1999a</div>
+  <div class="csl-entry">J. Doe and S. Jones, 1999b</div>
+  <div class="csl-entry">J. Doe and S. Smith, 1999a</div>
+  <div class="csl-entry">J. Doe and S. Smith, 1999b</div>
+</div>'
+
+Failure → citeproc test test-suite disambiguate_YearSuffixTwoPairsFullNamesBibliography.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">J. Doe and S. Jones, 1999</div>
+  <div class="csl-entry">J. Doe and S. Smith, 1999</div>
+  <div class="csl-entry">J. Doe and S. Jones, 1999</div>
+  <div class="csl-entry">J. Doe and S. Smith, 1999</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">J. Doe and S. Jones, 1999</div>
+  <div class="csl-entry">J. Doe and S. Jones, 1999</div>
+  <div class="csl-entry">J. Doe and S. Smith, 1999</div>
+  <div class="csl-entry">J. Doe and S. Smith, 1999</div>
+</div>'
 
 Failure → citeproc test test-suite disambiguate_YearSuffixWithEtAlSubequent.txt
 Passed in:
@@ -682,6 +1115,14 @@ Expected:
 (string) '(Smith 2000a; 2000b; 2000c)
 (Smith 2000b)
 (Smith 2000c)'
+
+Failure → citeproc test test-suite disambiguate_YearSuffixWithMixedCreatorTypes.txt
+Passed in:
+(string) '(Asthma 1990)
+(Asthma 1990)'
+Expected:
+(string) '(Asthma 1990a)
+(Asthma 1990b)'
 
 Failure → citeproc test test-suite display_AuthorAsHeading.txt
 Passed in:
@@ -742,6 +1183,16 @@ Expected:
   </div>
 </div>'
 
+Failure → citeproc test test-suite display_LostSuffix.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Book One,  (zitiert als: <i>Aalto</i>, Chapter One).</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Book One, (zitiert als: <i>Aalto</i>, Chapter One).</div>
+</div>'
+
 Failure → citeproc test test-suite display_SecondFieldAlignMigratePunctuation.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -762,6 +1213,12 @@ Expected:
   </div>
 </div>'
 
+Failure → citeproc test test-suite flipflop_Apostrophes.txt
+Passed in:
+(string) '“Supplément Aux Annales Du Service Des Antiquités de L’Égypte, Cahier” (Cairo: Conseil Suprême des Antiquités de l’Égypte [formerly Imprimerie de l’Institut français d’archéologie orientale], n.d.).'
+Expected:
+(string) '“Supplément Aux Annales Du Service Des Antiquités de l’Égypte, Cahier” (Cairo: Conseil Suprême des Antiquités de l’Égypte [formerly Imprimerie de l’Institut français d’archéologie orientale], n.d.).'
+
 Failure → citeproc test test-suite flipflop_LeadingMarkupWithApostrophe.txt
 Passed in:
 (string) '<i>Insha’Allah</i> is an Arabic phrase meaning “God willing.” Another Arabic word is <i>bukra</i>. Aalto'
@@ -780,9 +1237,57 @@ Passed in:
 Expected:
 (string) '“Nobody Knows You’re a Dog”: As Iconic Internet Cartoon Turns 20, Creator Peter Steiner Knows the Joke Rings as Relevant as Ever'
 
+Failure → citeproc test test-suite fullstyles_ABdNT.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">COLE, S. J.; MOORE, R. Hydrological modelling using raingauge- and radar-based estimators of areal rainfall. <b>Journal of Hydrology</b>, v. 358, n. 3-4, p. 159–181, 2008. </div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">COLE, S. J.; MOORE, R. Hydrological modelling using raingauge- and radar-based estimators of areal rainfall. <b>Journal of Hydrology</b>, v. 358, n. 3–4, p. 159–181, 2008. </div>
+</div>'
+
+Failure → citeproc test test-suite fullstyles_ChicagoArticleTitleQuestion.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe, John. 1994. An article is it?. <i>New Thinker</i> 10: 5.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe, John. 1994. An article is it? <i>New Thinker</i> 10: 5.</div>
+</div>'
+
+Failure → citeproc test test-suite fullstyles_ChicagoAuthorDateSimple.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe, John. 1990. <i>Book A</i>. Brobdingnag: Zardoz Press.</div>
+  <div class="csl-entry">Doe, John, and Jane Roe. 1991. <i>Book B</i>.</div>
+  <div class="csl-entry">Doe, John, Jane Roe, and Alvin Asthma. 1992. <i>Book C</i>.</div>
+  <div class="csl-entry">Doe, John, Jane Roe, Alvin Asthma, Bob Bronchitis, Chris Cold, Don Dropsy, Ernie Enteritis, et al. 1993. <i>Book D</i>.</div>
+  <div class="csl-entry">Doe, John, Jane Roe, Alvin Asthma, Bob Bronchitis, Chris Cold, Don Dropsy, Ernie Enteritis, et al. 1994. <i>Book E</i>.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe, John. 1990. <i>Book A</i>. Brobdingnag: Zardoz Press.</div>
+  <div class="csl-entry">Doe, John, and Jane Roe. 1991. <i>Book B</i>.</div>
+  <div class="csl-entry">Doe, John, Jane Roe, and Alvin Asthma. 1992. <i>Book C</i>.</div>
+  <div class="csl-entry">Doe, John, Jane Roe, Alvin Asthma, Bob Bronchitis, Chris Cold, Don Dropsy, Ernie Enteritis, et al. 1993. <i>Book D</i>.</div>
+  <div class="csl-entry">---. 1994. <i>Book E</i>.</div>
+</div>'
+
+Failure → citeproc test test-suite group_ComplexNesting.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe Inc.. Retrieved June 1, 1965, from http://example.com/</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe Inc. (n.d.). Retrieved June 1, 1965, from http://example.com/</div>
+</div>'
+
 Failure → citeproc test test-suite integration_CitationSort.txt
 Passed in:
-(string) '(Noakes; Snoakes; Doe; Roe)'
+(string) '(Noakes; Doe; Snoakes; Roe)'
 Expected:
 (string) '(Doe; Noakes; Roe; Snoakes)'
 
@@ -830,11 +1335,32 @@ Passed in:
 Expected:
 (string) '>>[0] Smith (1986a); Smith (1986b); Smith (1986c); Smith (1986d)'
 
+Failure → citeproc test test-suite label_EditorTranslator1.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">1.	Иванов И.И. 
+    . Пример оформления книги с редактором и переводчиком в одном лице : вид издания : in 5 vols. Vol. 2 / И.И. Иванов, П.П. Петров, С.С. Сидоров;  ed. Р.Р. Романов;  tran. Р.Р. Романов Дополнительно. –  Тюмень: Дом, 2013. – 10. – 100 p..</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">1.	Иванов И.И. Пример оформления книги с редактором и переводчиком в одном лице : вид издания : in 5 vols. Vol. 2 / И.И. Иванов, П.П. Петров, С.С. Сидоров; ed &#38; trans. Р.Р. Романов Дополнительно. – Тюмень: Дом, 2013. – 10. – 100 p.</div>
+</div>'
+
 Failure → citeproc test test-suite label_EditorTranslator2.txt
 Passed in:
 (string) 'Some title, “Hello there.”'
 Expected:
 (string) 'Some title, “Hello there”.'
+
+Failure → citeproc test test-suite label_NameLabelThroughSubstitute.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Wolf, K. S.  (2005). The future for Deaf individuals is not that bleak [Peer commentary, <i>Decrease of Deaf potential in a mainstreamed environment</i>, by W. C. Hall]. Retrieved from http://www.personalityresearch.org/papers/hall.html</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Wolf, K. S. (2005). The future for Deaf individuals is not that bleak [Peer commentary, <i>Decrease of Deaf potential in a mainstreamed environment</i>, by W. C. Hall]. Retrieved from http://www.personalityresearch.org/papers/hall.html</div>
+</div>'
 
 Failure → citeproc test test-suite label_NoFirstCharCapWithInTextClass.txt
 Passed in:
@@ -847,6 +1373,38 @@ Passed in:
 (string) 'Doe, Book A, 2000, pp. 100–103; Roe, Book B, 2001, chaps. 200 - 201.'
 Expected:
 (string) 'Doe, Book A, 2000, pp. 100–103; Roe, Book B, 2001, chaps. 200–201.'
+
+Failure → citeproc test test-suite magic_CitationLabelInBibliography.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">Roe, J. and Noakes, R.:</div><div class="csl-right-inline"> Book A., 1978.</div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">Doe, J.:</div><div class="csl-right-inline"> Book A., 1965.</div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">Roe, J. and Noakes, R.:</div><div class="csl-right-inline"> Book A., 1978.</div>
+  </div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">[Doe65]</div><div class="csl-right-inline">Doe, J.: Book A., 1965.</div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[RoNo78a]</div><div class="csl-right-inline">Roe, J. and Noakes, R.: Book A., 1978.</div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">[RoNo78b]</div><div class="csl-right-inline">Roe, J. and Noakes, R.: Book A., 1978.</div>
+  </div>
+</div>'
+
+Failure → citeproc test test-suite magic_CitationLabelInCitation.txt
+Passed in:
+(string) '[]'
+Expected:
+(string) '[Doe65, RoNo78a, RoNo78b]'
 
 Failure → citeproc test test-suite magic_ImplicitYearSuffixDelimiter.txt
 Passed in:
@@ -880,6 +1438,20 @@ Expected:
   <div class="csl-entry">John Smith, Book C (2002)</div>
 </div>'
 
+Failure → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Silverstein, Theodore, tran.. “Sir Gawain and the Green Knight.” In . Chicago: University of Chicago Press, 1974.</div>
+  <div class="csl-entry">“The Chicago Manual of Style.” In . Chicago: University of Chicago Press, 1993.</div>
+  <div class="csl-entry">Soltes, Ori A., ed.. “Georgia: Art and Civilization through the Ages.” In . London: Philip Wilson, 1999.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Silverstein, Theodore, tran. “Sir Gawain and the Green Knight.” Chicago: University of Chicago Press, 1974.</div>
+  <div class="csl-entry">Soltes, Ori A., ed. “Georgia: Art and Civilization through the Ages.” London: Philip Wilson, 1999.</div>
+  <div class="csl-entry">“The Chicago Manual of Style.” Chicago: University of Chicago Press, 1993.</div>
+</div>'
+
 Failure → citeproc test test-suite magic_SubsequentAuthorSubstituteOfTitleField.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -902,11 +1474,41 @@ Expected:
 (string) 'DOEBUCK, Jonathan, et al.; DOE, John, Jane ROE et al.; DOE, John, Janice ROEBUCK et al.
 APPLEBY, Aloysius, and Bobby BROWN; APPLEBY, Aloysius, Bobby BROWN and Cecile CREAM; APPLEBY, Aloysius, Bobby BROWN and Enola EVERGREEN'
 
+Failure → citeproc test test-suite name_BibliographyNameFormNeverShrinks.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"><i>Smith, Reggie</i></div>
+  <div class="csl-entry"><i>Smith, Jimmie</i></div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"><i>Smith, Jimmie</i></div>
+  <div class="csl-entry"><i>Smith, Reggie</i></div>
+</div>'
+
+Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearCollapse.txt
+Passed in:
+(string) '(Aalto 2015; Aalto 2015)'
+Expected:
+(string) '(Aalto 2015a 2015b)'
+
 Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearSuffixCollapse.txt
 Passed in:
 (string) '(Aalto 2015; Aalto 2015)'
 Expected:
 (string) '(Aalto 2015a, b)'
+
+Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearSuffixCollapse2.txt
+Passed in:
+(string) '(Aalto 2015; Aalto 2015; Bartleby 2010; Aalto 2015; Aalto 2015; Aalto 2015)'
+Expected:
+(string) '(Aalto 2015a,b; Bartleby 2010; Aalto 2015c–e)'
+
+Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearSuffixCollapse3.txt
+Passed in:
+(string) '(Aalto 2015; Aalto 2015; Bartleby 2010)'
+Expected:
+(string) '(Aalto 2015a,b; Bartleby 2010)'
 
 Failure → citeproc test test-suite name_CollapseRoleLabels.txt
 Passed in:
@@ -925,6 +1527,34 @@ Passed in:
 (string) 'תפוח ו  תפוז'
 Expected:
 (string) 'תפוחו תפוז'
+
+Failure → citeproc test test-suite name_HyphenatedNonDroppingParticle1.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">al-One, Alan</div>
+  <div class="csl-entry">Marple, Mary</div>
+  <div class="csl-entry">Participle, Paul</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Marple, Mary</div>
+  <div class="csl-entry">One, Alan al-</div>
+  <div class="csl-entry">Participle, Paul</div>
+</div>'
+
+Failure → citeproc test test-suite name_HyphenatedNonDroppingParticle2.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Alan al-One</div>
+  <div class="csl-entry">Mary Marple</div>
+  <div class="csl-entry">Paul Participle</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Mary Marple</div>
+  <div class="csl-entry">Alan al-One</div>
+  <div class="csl-entry">Paul Participle</div>
+</div>'
 
 Failure → citeproc test test-suite name_InTextMarkupInitialize.txt
 Passed in:
@@ -948,6 +1578,18 @@ Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry"><b>Doe</b>, <b>J.</b> Q.</div>
   <div class="csl-entry"><b>Doe</b>, <b>J.</b>-Q.</div>
+</div>'
+
+Failure → citeproc test test-suite name_LiteralWithComma.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Smith, John</div>
+  <div class="csl-entry">Klark Kent</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Klark Kent</div>
+  <div class="csl-entry">Smith, John</div>
 </div>'
 
 Failure → citeproc test test-suite name_ParseNames.txt
@@ -1166,6 +1808,22 @@ Passed in:
 Expected:
 (string) '>>[0] Book A. He said “Please work.” Ibid.'
 
+Failure → citeproc test test-suite position_IbidWithSuffix.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Al-Khatib Organization</div>
+  <div class="csl-entry">Beatrice Butterfield</div>
+  <div class="csl-entry">Alan Aberdeen</div>
+  <div class="csl-entry">Sergei Kaspersky</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Alan Aberdeen</div>
+  <div class="csl-entry">Al-Khatib Organization</div>
+  <div class="csl-entry">Beatrice Butterfield</div>
+  <div class="csl-entry">Sergei Kaspersky</div>
+</div>'
+
 Failure → citeproc test test-suite position_ResetNoteNumbers.txt
 Passed in:
 (string) '..[0] Book A (note 1)
@@ -1185,6 +1843,12 @@ Expected:
 ..[5] Book A, n 1 (note 3)
 ..[6] Book C, n 1 (note 4)
 >>[7] Book A, n 1 (note 5)'
+
+Failure → citeproc test test-suite punctuation_DefaultYearSuffixDelimiter.txt
+Passed in:
+(string) '(Aalto 2000; Aalto 2000; Aalto 2000)'
+Expected:
+(string) '(Aalto 2000a; b; c)'
 
 Failure → citeproc test test-suite punctuation_FrenchOrthography.txt
 Passed in:
@@ -1584,17 +2248,251 @@ ENDING IN COMMA
 “question”?, comma
 “comma”, comma'
 
-Failure → citeproc test test-suite sort_CaseInsensitiveCitation.txt
+Failure → citeproc test test-suite punctuation_SuppressPrefixPeriodForDelimiterSemicolon.txt
 Passed in:
-(string) 'Xyz - ABC - Aaa'
+(string) '..[0] John Doe, “His Anonymous Life,” 1965; Jane Roe, “Her Anonymous Life,” 1965.
+>>[1] Doe, “His Anonymous Life;” Roe, “Her Anonymous Life.”'
 Expected:
-(string) 'Aaa - ABC - Xyz'
+(string) '..[0] John Doe, “His Anonymous Life,” 1965; Jane Roe, “Her Anonymous Life,” 1965.
+>>[1] Doe, “His Anonymous Life”; Roe, “Her Anonymous Life.”'
+
+Failure → citeproc test test-suite quotes_QuotesUnderQuotesFalse.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"> 'Title with ’quotes’ in it',.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry"> 'Title with ‘quotes’ in it',.</div>
+</div>'
+
+Failure → citeproc test test-suite simplespace_case1.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe, J., 1992. In <i>Some title</i>.  Vintage, pp. 250–300.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe, J., 1992. In <i>Some title</i>. Vintage, pp. 250–300.</div>
+</div>'
+
+Failure → citeproc test test-suite sort_AguStyle.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Smith, A. (1989)</div>
+  <div class="csl-entry">Smith, A. (1989)</div>
+  <div class="csl-entry">Smith, A. and B. Frank (1995)</div>
+  <div class="csl-entry">Smith, A., L. Roberts, and T. Jones (1993)</div>
+  <div class="csl-entry">Smith, A. and B. Frank (1997)</div>
+  <div class="csl-entry">Smith, A. (1991)</div>
+  <div class="csl-entry">Smith, A. and C. Allen (1992)</div>
+  <div class="csl-entry">Smith, A., T. Jones, and L. Roberts (1997)</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Smith, A. (1989a)</div>
+  <div class="csl-entry">Smith, A. (1989b)</div>
+  <div class="csl-entry">Smith, A. (1991)</div>
+  <div class="csl-entry">Smith, A. and C. Allen (1992)</div>
+  <div class="csl-entry">Smith, A. and B. Frank (1995)</div>
+  <div class="csl-entry">Smith, A. and B. Frank (1997)</div>
+  <div class="csl-entry">Smith, A., L. Roberts, and T. Jones (1993)</div>
+  <div class="csl-entry">Smith, A., T. Jones, and L. Roberts (1997)</div>
+</div>'
+
+Failure → citeproc test test-suite sort_AguStyleReverseGroups.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Smith, A. (1989)</div>
+  <div class="csl-entry">Smith, A. and B. Frank (1995)</div>
+  <div class="csl-entry">Smith, A. and B. Frank (1997)</div>
+  <div class="csl-entry">Smith, A., L. Roberts, and T. Jones (1993)</div>
+  <div class="csl-entry">Smith, A. and C. Allen (2000)</div>
+  <div class="csl-entry">Smith, A. (1989)</div>
+  <div class="csl-entry">Smith, A. (1991)</div>
+  <div class="csl-entry">Smith, A., T. Jones, and L. Roberts (1997)</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Smith, A., L. Roberts, and T. Jones (1993)</div>
+  <div class="csl-entry">Smith, A., T. Jones, and L. Roberts (1997)</div>
+  <div class="csl-entry">Smith, A. and C. Allen (2000)</div>
+  <div class="csl-entry">Smith, A. and B. Frank (1995)</div>
+  <div class="csl-entry">Smith, A. and B. Frank (1997)</div>
+  <div class="csl-entry">Smith, A. (1989a)</div>
+  <div class="csl-entry">Smith, A. (1989b)</div>
+  <div class="csl-entry">Smith, A. (1991)</div>
+</div>'
+
+Failure → citeproc test test-suite sort_AuthorDateWithYearSuffix.txt
+Passed in:
+(string) '>>[0] (Day and Fitzpatrick, 2005; Mian et al., 2005; Day and Fitzpatrick, 2005)'
+Expected:
+(string) '>>[0] (Day and Fitzpatrick, 2005a, 2005b; Mian et al., 2005)'
+
+Failure → citeproc test test-suite sort_BibliographyCitationNumberDescendingViaCompositeMacro.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">[1] Aaaa</div>
+  <div class="csl-entry">[2] Bbbb</div>
+  <div class="csl-entry">[3] Xxxx</div>
+  <div class="csl-entry">[4] Zzzz</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">[4] Aaaa</div>
+  <div class="csl-entry">[3] Bbbb</div>
+  <div class="csl-entry">[2] Xxxx</div>
+  <div class="csl-entry">[1] Zzzz</div>
+</div>'
+
+Failure → citeproc test test-suite sort_BibliographyCitationNumberDescendingViaMacro.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">[1] Book One</div>
+  <div class="csl-entry">[2] Book Two</div>
+  <div class="csl-entry">[3] Book Five</div>
+  <div class="csl-entry">[4] Book Seven</div>
+  <div class="csl-entry">[5] Book Six</div>
+  <div class="csl-entry">[6] Book Three</div>
+  <div class="csl-entry">[7] Book Four</div>
+  <div class="csl-entry">[8] Book Eight</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">[8] Book One</div>
+  <div class="csl-entry">[7] Book Three</div>
+  <div class="csl-entry">[6] Book Four</div>
+  <div class="csl-entry">[5] Book Six</div>
+  <div class="csl-entry">[4] Book Two</div>
+  <div class="csl-entry">[3] Book Five</div>
+  <div class="csl-entry">[2] Book Seven</div>
+  <div class="csl-entry">[1] Book Eight</div>
+</div>'
+
+Failure → citeproc test test-suite sort_BibliographyResortOnUpdate.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Effinger</div>
+  <div class="csl-entry">Jamey</div>
+  <div class="csl-entry">Ging</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Effinger</div>
+  <div class="csl-entry">Ging</div>
+  <div class="csl-entry">Jamey</div>
+</div>'
+
+Failure → citeproc test test-suite sort_CaseInsensitiveBibliography.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">ABC</div>
+  <div class="csl-entry">Aaa</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Aaa</div>
+  <div class="csl-entry">ABC</div>
+</div>'
+
+Failure → citeproc test test-suite sort_ChangeInNameSort.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">De Quincey</div>
+  <div class="csl-entry">Noakes</div>
+  <div class="csl-entry">Carter</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Carter</div>
+  <div class="csl-entry">De Quincey</div>
+  <div class="csl-entry">Noakes</div>
+</div>'
+
+Failure → citeproc test test-suite sort_ChicagoYearSuffix1.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Beijing Zoo. 1974. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
+  <div class="csl-entry">Beijing Zoo. 1974. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Beijing Zoo. 1974a. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
+  <div class="csl-entry">---. 1974b. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
+</div>'
+
+Failure → citeproc test test-suite sort_ChicagoYearSuffix2.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Beijing Zoo. 1974. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
+  <div class="csl-entry">Beijing Zoo. 1974. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Beijing Zoo. 1974a. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
+  <div class="csl-entry">---. 1974b. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
+</div>'
 
 Failure → citeproc test test-suite sort_Citation.txt
 Passed in:
 (string) 'Roe; Doe'
 Expected:
 (string) 'Doe; Roe'
+
+Failure → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaMacroBibliography.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">[1] Aaaa (first-cited)</div>
+  <div class="csl-entry">[2] Zzzz (third-cited)</div>
+  <div class="csl-entry">[3] Bbbb (second-cited)</div>
+  <div class="csl-entry">[4] Xxxx (fourth-cited)</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">[1] Aaaa (first-cited)</div>
+  <div class="csl-entry">[2] Bbbb (second-cited)</div>
+  <div class="csl-entry">[3] Zzzz (third-cited)</div>
+  <div class="csl-entry">[4] Xxxx (fourth-cited)</div>
+</div>'
+
+Failure → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroBibliography.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">[1] Aaaa (first-cited)</div>
+  <div class="csl-entry">[2] Zzzz (third-cited)</div>
+  <div class="csl-entry">[3] Bbbb (second-cited)</div>
+  <div class="csl-entry">[4] Xxxx (fourth-cited)</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">[4] Xxxx (fourth-cited)</div>
+  <div class="csl-entry">[3] Zzzz (third-cited)</div>
+  <div class="csl-entry">[2] Bbbb (second-cited)</div>
+  <div class="csl-entry">[1] Aaaa (first-cited)</div>
+</div>'
+
+Failure → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaVariableBibliography.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">[1] Xxxx (fourth-cited)</div>
+  <div class="csl-entry">[2] Zzzz (third-cited)</div>
+  <div class="csl-entry">[3] Bbbb (second-cited)</div>
+  <div class="csl-entry">[4] Aaaa (first-cited)</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">[4] Xxxx (fourth-cited)</div>
+  <div class="csl-entry">[3] Zzzz (third-cited)</div>
+  <div class="csl-entry">[2] Bbbb (second-cited)</div>
+  <div class="csl-entry">[1] Aaaa (first-cited)</div>
+</div>'
+
+Failure → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaMacroCitation.txt
+Passed in:
+(string) '[4] Aaaa (first-cited); [1] Zzzz (third-cited); [3] Bbbb (second-cited); [2] Xxxx (fourth-cited)'
+Expected:
+(string) '[1] Zzzz (third-cited); [2] Xxxx (fourth-cited); [3] Bbbb (second-cited); [4] Aaaa (first-cited)'
 
 Failure → citeproc test test-suite sort_CitationSecondaryKey.txt
 Passed in:
@@ -1604,51 +2502,233 @@ Expected:
 
 Failure → citeproc test test-suite sort_CiteGroupDelimiter.txt
 Passed in:
-(string) 'Aalto 2001; Banda 1999; Aalto 2000'
+(string) 'Banda 1999; Aalto 2000; Aalto 2001'
 Expected:
 (string) 'Banda 1999; Aalto 2000, Aalto 2001'
 
-Failure → citeproc test test-suite sort_DateVariable.txt
+Failure → citeproc test test-suite sort_ConditionalMacroDates.txt
 Passed in:
-(string) 'Book A; Book B'
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Title 2</div>
+  <div class="csl-entry">Title 3</div>
+  <div class="csl-entry">Title 1</div>
+</div>'
 Expected:
-(string) 'Book B; Book A'
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Title 3</div>
+  <div class="csl-entry">Title 1</div>
+  <div class="csl-entry">Title 2</div>
+</div>'
 
-Failure → citeproc test test-suite sort_DateVariableMixedElementsAscendingA.txt
+Failure → citeproc test test-suite sort_DaleDalebout.txt
 Passed in:
-(string) 'Book A; Book B'
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Dale</div>
+  <div class="csl-entry">Allabout</div>
+  <div class="csl-entry">Dalebout</div>
+</div>'
 Expected:
-(string) 'Book B; Book A'
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Allabout</div>
+  <div class="csl-entry">Dale</div>
+  <div class="csl-entry">Dalebout</div>
+</div>'
 
-Failure → citeproc test test-suite sort_DateVariableMixedElementsDescendingB.txt
+Failure → citeproc test test-suite sort_DateMacroSortWithSecondFieldAlign.txt
 Passed in:
-(string) 'Book A; Book B'
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">John Doe</div><div class="csl-right-inline">His Anonymous Life (1965)</div>
+    .</div>
+</div>'
 Expected:
-(string) 'Book B; Book A'
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">John Doe</div><div class="csl-right-inline">His Anonymous Life (1965).</div>
+  </div>
+</div>'
 
-Failure → citeproc test test-suite sort_DateVariableRange.txt
+Failure → citeproc test test-suite sort_DropNameLabelInSort.txt
 Passed in:
-(string) 'Book A; Book B'
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe, John ed. <i>Hello</i>.</div>
+  <div class="csl-entry">Doe, John Eamon. <i>Hello</i>.</div>
+  <div class="csl-entry">Doe, John. <i>Hello</i>.</div>
+  <div class="csl-entry">Doe, John Egbert. <i>Hello</i>.</div>
+</div>'
 Expected:
-(string) 'Book B; Book A'
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe, John ed. <i>Hello</i>.</div>
+  <div class="csl-entry">---. <i>Hello</i>.</div>
+  <div class="csl-entry">Doe, John Eamon. <i>Hello</i>.</div>
+  <div class="csl-entry">Doe, John Egbert. <i>Hello</i>.</div>
+</div>'
 
-Failure → citeproc test test-suite sort_DateVariableRangeMixed.txt
+Failure → citeproc test test-suite sort_EtAlUseLast.txt
 Passed in:
-(string) 'Book A; Book B'
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Roe, Doe, … Gogh, Book A</div>
+  <div class="csl-entry">Roe, Doe, … Bogh, Book A</div>
+  <div class="csl-entry">Roe, Doe, … Aogh, Book A</div>
+</div>'
 Expected:
-(string) 'Book B; Book A'
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Roe, Doe, … Aogh, Book A</div>
+  <div class="csl-entry">Roe, Doe, … Bogh, Book A</div>
+  <div class="csl-entry">Roe, Doe, … Gogh, Book A</div>
+</div>'
+
+Failure → citeproc test test-suite sort_FamilyOnly.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">ANZ Group</div>
+  <div class="csl-entry">Aardvaark</div>
+  <div class="csl-entry">Edelweis</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Aardvaark</div>
+  <div class="csl-entry">ANZ Group</div>
+  <div class="csl-entry">Edelweis</div>
+</div>'
 
 Failure → citeproc test test-suite sort_GroupedByAuthorstring.txt
 Passed in:
-(string) '>>[0] Smith 2010; Jones 2005; Smith 2003'
+(string) '>>[0] Smith 2003; Jones 2005; Smith 2010'
 Expected:
 (string) '>>[0] Smith 2003, 2010; Jones 2005'
 
+Failure → citeproc test test-suite sort_LeadingA.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">“A er det første bogstav i alfabetet”. Television broadcast. DR, 2011.</div>
+  <div class="csl-entry">B Gjengen. <i>Alfabeta</i>. Kbh, 2009.</div>
+  <div class="csl-entry">A Hansen, Martin. <i>Alfabetiseringsproblemer</i>. København: Gyldendal, 2012.</div>
+  <div class="csl-entry">Ab Delrahman, Hussein. <i>Det danske alfabet er sært</i>. Kbh: Politiken, 2012.</div>
+  <div class="csl-entry">Juul Jensen, Uffe, Carsten Hædersdal, og Mogens Kim Skadborg. “Etablering af klinisk etiske komitéer i Danmark: en praksis-filosofisk tilgang til klinisk etik fra bibliotek.dk”. <i>Bibliotek for læger</i> 206, nr. 1 (2014): 44–61.</div>
+  <div class="csl-entry">A kasernes fællesvirke. <i>Problemer med alfabetet</i>. Kbh: Dafolo, 2015.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">“A er det første bogstav i alfabetet”. Television broadcast. DR, 2011.</div>
+  <div class="csl-entry">A Hansen, Martin. <i>Alfabetiseringsproblemer</i>. København: Gyldendal, 2012.</div>
+  <div class="csl-entry">A kasernes fællesvirke. <i>Problemer med alfabetet</i>. Kbh: Dafolo, 2015.</div>
+  <div class="csl-entry">Ab Delrahman, Hussein. <i>Det danske alfabet er sært</i>. Kbh: Politiken, 2012.</div>
+  <div class="csl-entry">B Gjengen. <i>Alfabeta</i>. Kbh, 2009.</div>
+  <div class="csl-entry">Juul Jensen, Uffe, Carsten Hædersdal, og Mogens Kim Skadborg. “Etablering af klinisk etiske komitéer i Danmark: en praksis-filosofisk tilgang til klinisk etik fra bibliotek.dk”. <i>Bibliotek for læger</i> 206, nr. 1 (2014): 44–61.</div>
+</div>'
+
+Failure → citeproc test test-suite sort_LeadingApostropheOnNameParticle.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">’t Horvath, P A A</div>
+  <div class="csl-entry">de’ Frinkle, B</div>
+  <div class="csl-entry">Klabdaggit, M</div>
+  <div class="csl-entry">Vooz, B</div>
+  <div class="csl-entry">in ’t Horvath, P A D</div>
+  <div class="csl-entry">in ’t Horvath, P A B</div>
+  <div class="csl-entry">’t Horvath, P A C</div>
+  <div class="csl-entry">d’Wander, W</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">d’Wander, W</div>
+  <div class="csl-entry">de’ Frinkle, B</div>
+  <div class="csl-entry">in ’t Horvath, P A B</div>
+  <div class="csl-entry">in ’t Horvath, P A D</div>
+  <div class="csl-entry">Klabdaggit, M</div>
+  <div class="csl-entry">’t Horvath, P A A</div>
+  <div class="csl-entry">’t Horvath, P A C</div>
+  <div class="csl-entry">Vooz, B</div>
+</div>'
+
 Failure → citeproc test test-suite sort_LocalizedDateLimitedParts.txt
 Passed in:
-(string) 'Book A; Book C; Book D; Book B'
+(string) 'Book A; Book B; Book C; Book D'
 Expected:
 (string) 'Book D; Book A; Book B; Book C'
+
+Failure → citeproc test test-suite sort_NameImplicitSortOrderAndForm.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Roe, Book A</div>
+  <div class="csl-entry">Doe, Book C</div>
+  <div class="csl-entry">Doe, Book B</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe, Book C</div>
+  <div class="csl-entry">Doe, Book B</div>
+  <div class="csl-entry">Roe, Book A</div>
+</div>'
+
+Failure → citeproc test test-suite sort_NameParticleInNameSortFalse.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Jane van Roe</div>
+  <div class="csl-entry">John di Noakes</div>
+  <div class="csl-entry">John von Doe</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">John von Doe</div>
+  <div class="csl-entry">John di Noakes</div>
+  <div class="csl-entry">Jane van Roe</div>
+</div>'
+
+Failure → citeproc test test-suite sort_NameParticleInNameSortTrue.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Jane van Roe</div>
+  <div class="csl-entry">John di Noakes</div>
+  <div class="csl-entry">John von Doe</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">John di Noakes</div>
+  <div class="csl-entry">Jane van Roe</div>
+  <div class="csl-entry">John von Doe</div>
+</div>'
+
+Failure → citeproc test test-suite sort_NameVariable.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Jane Roe</div>
+  <div class="csl-entry">John Doe</div>
+  <div class="csl-entry">Jacob [F]linders</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">John Doe</div>
+  <div class="csl-entry">Jacob [F]linders</div>
+  <div class="csl-entry">Jane Roe</div>
+</div>'
+
+Failure → citeproc test test-suite sort_NamesUseLast.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">John Doe, Alvin Anderson, et al. Book Two 1999</div>
+  <div class="csl-entry">John Doe, Xavier Xerxes, et al. Book One 2000</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">John Doe, Xavier Xerxes, et al. Book One 2000</div>
+  <div class="csl-entry">John Doe, Alvin Anderson, et al. Book Two 1999</div>
+</div>'
+
+Failure → citeproc test test-suite sort_NumberOfAuthorsAsKey.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Book One</div>
+  <div class="csl-entry">Book Three</div>
+  <div class="csl-entry">Book Two</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Book One</div>
+  <div class="csl-entry">Book Two</div>
+  <div class="csl-entry">Book Three</div>
+</div>'
 
 Failure → citeproc test test-suite sort_OmittedBibRefMixedNumericStyle.txt
 Passed in:
@@ -1677,6 +2757,20 @@ Expected:
   <div class="csl-entry">Crane, Book Two</div>
 </div>'
 
+Failure → citeproc test test-suite sort_Quotes.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Simple ’title’ here C</div>
+  <div class="csl-entry">Simple title, here A</div>
+  <div class="csl-entry">“Simple title here B”</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Simple title, here A</div>
+  <div class="csl-entry">“Simple title here B”</div>
+  <div class="csl-entry">Simple “title” here C</div>
+</div>'
+
 Failure → citeproc test test-suite sort_RangeUnaffected.txt
 Passed in:
 (string) '>>[0] <sup>3</sup>
@@ -1684,6 +2778,118 @@ Passed in:
 Expected:
 (string) '>>[0] <sup>1</sup>
 >>[1] <sup>1–3</sup>'
+
+Failure → citeproc test test-suite sort_SeparateAuthorsAndOthers.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe, John ed. <i>Hello 1</i>.</div>
+  <div class="csl-entry">Doe, John Barbitol. <i>Hello 2</i>.</div>
+  <div class="csl-entry">Doe, John Egbert. <i>Hello 3</i>.</div>
+  <div class="csl-entry">Doe, John. <i>Hello 4</i>.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe, John. <i>Hello 4</i>.</div>
+  <div class="csl-entry">--- ed. <i>Hello 1</i>.</div>
+  <div class="csl-entry">Doe, John Barbitol. <i>Hello 2</i>.</div>
+  <div class="csl-entry">Doe, John Egbert. <i>Hello 3</i>.</div>
+</div>'
+
+Failure → citeproc test test-suite sort_StripMarkup.txt
+Passed in:
+(string) 'Roe, Doe'
+Expected:
+(string) 'Doe, Roe'
+
+Failure → citeproc test test-suite sort_SubstituteTitle.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Brooker, C. (2011, July 31). Let’s think outside the box here: maybe blue-sky thinking is nonsense. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/31/blue-sky-thinking</div>
+  <div class="csl-entry">Brooker, C. (2011, July 24). The news coverage of the Norway mass-killings was fact-free conjecture. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/24/charlie-brooker-norway-mass-killings</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Brooker, C. (2011, July 24). The news coverage of the Norway mass-killings was fact-free conjecture. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/24/charlie-brooker-norway-mass-killings</div>
+  <div class="csl-entry">Brooker, C. (2011, July 31). Let’s think outside the box here: maybe blue-sky thinking is nonsense. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/31/blue-sky-thinking</div>
+</div>'
+
+Failure → citeproc test test-suite sort_VariousNameMacros1.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
+  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
+  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
+  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
+  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
+</div>'
+
+Failure → citeproc test test-suite sort_VariousNameMacros2.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
+  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
+  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
+  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
+  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
+</div>'
+
+Failure → citeproc test test-suite sort_VariousNameMacros3.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
+  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
+  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
+  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
+  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
+</div>'
+
+Failure → citeproc test test-suite sort_WithAndInOneEntry.txt
+Passed in:
+(string) '(Beck 1991; Colaresi and Thompson 2002; Colaresi, Rasler, and Thompson 2007; Gochman 1993; Gochman and Leng 1983; Colaresi 2006; Beck, Katz, and Tucker 1998; Beck, King, and Zeng 2000; Beck and Katz 2001; Beck and Katz 2011; Gochman and Maoz 1984)'
+Expected:
+(string) '(Beck 1991; Beck and Katz 2001, 2011; Beck, Katz, and Tucker 1998; Beck, King, and Zeng 2000; Colaresi 2006; Colaresi, Rasler, and Thompson 2007; Colaresi and Thompson 2002; Gochman 1993; Gochman and Leng 1983; Gochman and Maoz 1984)'
+
+Failure → citeproc test test-suite substitute_SharedMacro.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Alto, Alan: Book One.</div>
+  <div class="csl-entry">Alan Alto Inc.: Book Three.</div>
+  <div class="csl-entry">Alto, Alan: Book Two.</div>
+  <div class="csl-entry">Alan Alto Inc.: Book Four.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Alan Alto Inc.: Book Three.</div>
+  <div class="csl-entry">---: Book Four.</div>
+  <div class="csl-entry">Alto, Alan: Book One.</div>
+  <div class="csl-entry">---: Book Two.</div>
+</div>'
+
+Failure → citeproc test test-suite testers_SecondAutoGeneratedZoteroPluginTest.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Smith, Steven. <i>Book A</i>, 2000.</div>
+  <div class="csl-entry">Smith, John. <i>Book A</i>, 2000.</div>
+  <div class="csl-entry">Center <sup>for</sup> History <sub>and</sub> New Media. “<b>Zotero</b> … ‘Quick Start’ &#38; <span style="font-variant:small-caps;">Guide</span> 日本語.” http://zotero.org/support/quick_start_guide.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Center <sup>for</sup> History <sub>and</sub> New Media. “<b>Zotero</b> … ‘Quick Start’ &#38; <span style="font-variant:small-caps;">Guide</span> 日本語.” http://zotero.org/support/quick_start_guide.</div>
+  <div class="csl-entry">Smith, John. <i>Book A</i>, 2000.</div>
+  <div class="csl-entry">Smith, Steven. <i>Book A</i>, 2000.</div>
+</div>'
 
 Failure → citeproc test test-suite textcase_LocaleUnicode.txt
 Passed in:
@@ -1704,6 +2910,16 @@ Marcus Shafi`i (ed.), Response to Shafi`i Comment'
 Expected:
 (string) 'Marcus Shafi’i (ed.), Response to Shafi’i Comment
 Marcus Shafi`i (ed.), Response to Shafi`i Comment'
+
+Failure → citeproc test test-suite textcase_RepeatedTitleBug.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Jenrich, R. I., &#38; Bentler, P. M.  (2012). Exploratory bi-factor analysis: The oblique case. <i>Psychometrika</i>, <i>77</i>(3), 442–454. https://doi.org/https://doi.org/10.1007/s11336-012-9269-1</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Jenrich, R. I., &#38; Bentler, P. M. (2012). Exploratory bi-factor analysis: The oblique case. <i>Psychometrika</i>, <i>77</i>(3), 442–454. https://doi.org/https://doi.org/10.1007/s11336-012-9269-1</div>
+</div>'
 
 Failure → citeproc test test-suite textcase_SentenceCapitalization.txt
 Passed in:
@@ -1757,473 +2973,23 @@ Expected:
   </div>
 </div>'
 
-Error → citeproc test test-suite affix_WithCommas.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_AccidentalAllCaps.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_AllCapsLeakage.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_AsmJournals.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_AuthorPosition.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_AuthorYear.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_BadDelimiterBeforeCollapse.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_ByBy.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_ChicagoAuthorDateLooping.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_CollapseFailure.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_CreepingAddNames.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_DemoPageFullCiteCruftOnSubsequent.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_DisambiguationAddNames.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_DisambiguationAddNamesBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_DoubleEncodedAngleBraces.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_DuplicateSpaces2.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_DuplicateTerminalPunctuationInBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_FourAndFour.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_GreekStyleProblems.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_GreekStyleTwoEditors.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_LabelsOutOfPlace.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_MatchedAuthorAndDate.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_MissingItemInJoin.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_MovePunctuationInsideQuotesForLocator.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_NoCaseEscape.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_NoEventInNestedMacroWithOldProcessor.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_NoTitle.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_OldMhraDisambiguationFailure.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_ProcessorHang1.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_SelfLink.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_SingleQuoteXml.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_SmallCapsEscape.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_SortSecondaryKey.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_SortSecondaryKeyBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_SortedIeeeItalicsFail.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_StyleError001.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_ThesisUniversityAppearsTwice.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_UndefinedBeforeVal.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_UndefinedInName.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_UndefinedInName2.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_YearSuffixInHarvard1.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_YearSuffixLingers.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_disambiguate.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_ikeyOne.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_parenthesis.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite bugreports_undefinedCrash.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite collapse_ChicagoAfterCollapse.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite date_AccessedCrash.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite date_DisappearingBug.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite date_KeyVariable.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite date_NonexistentSortReverseBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite date_SortEmptyDatesBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_AllNamesBaseNameCountOnFailureIfYearSuffixAvailable.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_AllNamesWithInitialsBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_ByCiteIncremental1.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_ByCiteIncremental2.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_ByCiteIsDefault.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_ByCiteMinimalGivennameExpandMinimalNames.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_FailWithYearSuffix.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_HonorFullnameInBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_InitializeWithButNoDisambiguation.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_SetsOfNames.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_SkipAccessedYearSuffix.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_WithOriginalYear.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_YearSuffixAndSort.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_YearSuffixMidInsert.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_YearSuffixTwoPairsBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_YearSuffixTwoPairsFirstNameBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_YearSuffixTwoPairsFullNamesBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite disambiguate_YearSuffixWithMixedCreatorTypes.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite display_LostSuffix.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite etal_CitationAndBibliographyDecorationsInBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite etal_CitationAndBibliographyDecorationsInCitation.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite flipflop_Apostrophes.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite fullstyles_ABdNT.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite fullstyles_APA.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite fullstyles_ChicagoArticleTitleQuestion.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite fullstyles_ChicagoAuthorDateSimple.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite fullstyles_ChicagoNoteWithBibliographyWithPublisher.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite group_ComplexNesting.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite group_SuppressWithEmptyNestedDateNode.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
 Error → citeproc test test-suite integration_CitationSortTwice.txt
 ./citeproc/citeproc-node-choose.lua:199: attempt to compare number with nil
-
-Error → citeproc test test-suite label_EditorTranslator1.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite label_NameLabelThroughSubstitute.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite magic_CitationLabelInBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite magic_CitationLabelInCitation.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite magic_StripPeriodsTrueShortForm.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite name_BibliographyNameFormNeverShrinks.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite name_CiteGroupDelimiterWithYearCollapse.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite name_CiteGroupDelimiterWithYearSuffixCollapse2.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite name_CiteGroupDelimiterWithYearSuffixCollapse3.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite name_EditorTranslatorBoth.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite name_EditorTranslatorWithTranslatorOnlyBib.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
 
 Error → citeproc test test-suite name_EtAlWithCombined.txt
 ./citeproc/citeproc-node-choose.lua:168: attempt to index a nil value (field 'cite')
 
-Error → citeproc test test-suite name_HyphenatedNonDroppingParticle1.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite name_HyphenatedNonDroppingParticle2.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite name_LiteralWithComma.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite number_NewOrdinalsEdition.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite position_IbidWithSuffix.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite punctuation_DefaultYearSuffixDelimiter.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite punctuation_SemicolonDelimiter.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite punctuation_SuppressPrefixPeriodForDelimiterSemicolon.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite quotes_PunctuationNasty.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite quotes_QuotesUnderQuotesFalse.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite simplespace_case1.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_AguStyle.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_AguStyleReverseGroups.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_AuthorDateWithYearSuffix.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_BibliographyCitationNumberDescending.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_BibliographyCitationNumberDescendingSecondary.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_BibliographyCitationNumberDescendingViaCompositeMacro.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_BibliographyCitationNumberDescendingViaMacro.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_BibliographyResortOnUpdate.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_CaseInsensitiveBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_ChangeInNameSort.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_ChicagoYearSuffix1.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_ChicagoYearSuffix2.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaMacroBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
 Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaVariableBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
+./citeproc/citeproc-engine.lua:277: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaVariableCitation.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
+./citeproc/citeproc-engine.lua:277: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroCitation.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaVariableBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
+./citeproc/citeproc-engine.lua:277: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaVariableCitation.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaMacroBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaMacroCitation.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaVariableBibliography.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
+./citeproc/citeproc-engine.lua:277: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaVariableCitation.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_ConditionalMacroDates.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_DaleDalebout.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_DateMacroSortWithSecondFieldAlign.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_DropNameLabelInSort.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_EtAlUseLast.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_FamilyOnly.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_LeadingA.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_LeadingApostropheOnNameParticle.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_NameImplicitSortOrderAndForm.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_NameParticleInNameSortFalse.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_NameParticleInNameSortTrue.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_NameVariable.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_NamesUseLast.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_NumberOfAuthorsAsKey.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_Quotes.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_SeparateAuthorsAndOthers.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_StatusFieldAscending.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_StatusFieldDescending.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_SubstituteTitle.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_VariousNameMacros1.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_VariousNameMacros2.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_VariousNameMacros3.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite sort_WithAndInOneEntry.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite substitute_SharedMacro.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite testers_FirstAutoGeneratedZoteroPluginTest.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite testers_SecondAutoGeneratedZoteroPluginTest.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
-
-Error → citeproc test test-suite textcase_RepeatedTitleBug.txt
-./citeproc/citeproc-node-sort.lua:35: bad argument #1 to 'sub' (string expected, got nil)
+./citeproc/citeproc-engine.lua:277: attempt to index a nil value (field 'properties')
