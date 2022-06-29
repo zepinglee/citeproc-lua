@@ -177,6 +177,7 @@ function Key:render(engine, state, context)
     state:pop_macro(self.macro)
     local output_format = context.format
     local inlines = ir:flatten(output_format)
+    -- util.debug(inlines)
     local str = output_format:output(inlines)
     return str
   end

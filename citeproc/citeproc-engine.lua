@@ -18,7 +18,7 @@ local IrState = require("citeproc-context").IrState
 local formats = require("citeproc-formats")
 -- local OutputFormat = require("citeproc-output").OutputFormat
 local HtmlWriter = require("citeproc-output").HtmlWriter
-local PlainTextWriter = require("citeproc-output").PlainTextWriter
+local SortStringFormat = require("citeproc-output").SortStringFormat
 local InlineElement = require("citeproc-output").InlineElement
 local Formatted = require("citeproc-output").Formatted
 local PlainText = require("citeproc-output").PlainText
@@ -203,7 +203,7 @@ function CiteProc:sorted_citation_items(items)
   context.in_bibliography = false
   context.locale = self:get_locale(self.lang)
   context.name_inheritance = self.style_element.citation.name_inheritance
-  context.format = PlainTextWriter:new()
+  context.format = SortStringFormat:new()
   -- context.id = id
   context.cite = nil
   -- context.reference = self:get_item(id)
@@ -624,7 +624,7 @@ function CiteProc:sort_bibliography()
   context.in_bibliography = true
   context.locale = self:get_locale(self.lang)
   context.name_inheritance = self.style_element.bibliography.name_inheritance
-  context.format = PlainTextWriter:new()
+  context.format = SortStringFormat:new()
   -- context.id = id
   context.cite = nil
   -- context.reference = self:get_item(id)

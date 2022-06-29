@@ -349,7 +349,7 @@ function InlineElement:get_quote_fragments(inlines)
         -- TODO: consider utf-8
         if not left or string.match(left, "%s$") or string.match(left, "%p$") then
           fragments[i] = "'"
-        elseif not right or string.match(right, "%s$") or string.match(right, "^%p") then
+        elseif not right or string.match(right, "^%s") or string.match(right, "^%p") then
           fragments[i] = "'"
         else
           fragments[i] = PlainText:new(util.unicode['apostrophe'])
@@ -820,18 +820,33 @@ function OutputFormat:move_punctuation(inlines, piq)
   end
 end
 
-
-local MarkupWriter = OutputFormat:new()
-
-function MarkupWriter:write_inlines(inlines)
+function OutputFormat:write_inlines(inlines)
   local res = ""
-  for _, node in ipairs(inlines) do
-    res = res .. self:write_inline(node)
+  for _, inline in ipairs(inlines) do
+    res = res .. self:write_inline(inline)
   end
   return res
 end
 
-function MarkupWriter:write_inline(inline)
+function OutputFormat:write_inline(inline)
+  if inline.value then
+    return self:write_escaped(inline.value)
+  elseif inline.inlines then
+    return self:write_inlines(inline.inlines)
+  end
+  return ""
+end
+
+function OutputFormat:write_escaped(str)
+  return str
+end
+
+
+
+local Markup = OutputFormat:new()
+
+function Markup:write_inline(inline)
+  -- Should be deprecated code
   if type(inline) == "string" then
     return self:write_escaped(inline)
 
@@ -869,7 +884,7 @@ function MarkupWriter:write_inline(inline)
   return ""
 end
 
-function MarkupWriter:write_children(inline)
+function Markup:write_children(inline)
   local res = ""
   for _, child_inline in ipairs(inline.inlines) do
     res = res .. self:write_inline(child_inline)
@@ -877,7 +892,7 @@ function MarkupWriter:write_children(inline)
   return res
 end
 
-function MarkupWriter:write_quoted(inline)
+function Markup:write_quoted(inline)
   local res = self:write_children(inline)
   local quotes = inline.quotes
   if inline.is_inner then
@@ -888,7 +903,7 @@ function MarkupWriter:write_quoted(inline)
 end
 
 
-local HtmlWriter = MarkupWriter:new()
+local HtmlWriter = Markup:new()
 
 HtmlWriter.markups = {
   ["bibstart"] = "<div class=\"csl-bib-body\">\n",
@@ -945,7 +960,7 @@ function HtmlWriter:write_display(inline)
 end
 
 
-local PlainTextWriter = MarkupWriter:new()
+local PlainTextWriter = Markup:new()
 
 PlainTextWriter.markups = {}
 
@@ -959,6 +974,20 @@ end
 
 function PlainTextWriter:write_display(inline)
   return self:write_children(inline)
+end
+
+
+local SortStringFormat = OutputFormat:new()
+
+function SortStringFormat:output(inlines)
+  -- self:flip_flop_inlines(inlines)
+  self:move_punctuation(inlines)
+  return self:write_inlines(inlines)
+end
+
+function SortStringFormat:write_escaped(str)
+  str = string.gsub(str, ",", "")
+  return str
 end
 
 
@@ -1031,8 +1060,10 @@ output_module.NoDecor = NoDecor
 
 output_module.OutputFormat = OutputFormat
 
-output_module.MarkupWriter = MarkupWriter
+output_module.Markup = Markup
 output_module.HtmlWriter = HtmlWriter
 output_module.PlainTextWriter = PlainTextWriter
+
+output_module.SortStringFormat = SortStringFormat
 
 return output_module

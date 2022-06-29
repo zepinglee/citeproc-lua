@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                7       2       0       0
-bugreports          45      34       3       0
+bugreports          46      33       3       0
 collapse             4      17       0       0
 condition           17       0       0       0
 date                95       5       1       0
@@ -29,7 +29,7 @@ position            12       3       0       0
 punctuation          9       7       0       0
 quotes               3       0       1       0
 simplespace          0       1       0       0
-sort                42      19       5       0
+sort                43      18       5       0
 sortseparator        1       0       0       0
 substitute           6       0       1       0
 testers              2       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              641     193      17       0
+(all)              643     191      17       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -234,12 +234,6 @@ Anne Tyler et al., <i>Ladder of his’ Years</i>, vol. 2003 (New York: Ivy Books
 Expected:
 (string) 'Anne Tyler, George Smith, John Brown, and Cat Garfield, <i>Ladder of his’ Years</i>, vol. 2003 (New York: Ivy Books, 1997).
 Anne Tyler, George Smith, John Brown, and Cat Felix, <i>Ladder of his’ Years</i>, vol. 2003 (New York: Ivy Books, 1997).'
-
-Failure → citeproc test test-suite bugreports_FrenchApostrophe.txt
-Passed in:
-(string) '« Life“s ”Little’ Surprises »'
-Expected:
-(string) '« Life’s “Little” Surprises »'
 
 Failure → citeproc test test-suite bugreports_IeeePunctuation.txt
 Passed in:
@@ -1094,7 +1088,7 @@ Passed in:
     <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005</div>
     .</div>
   <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> F.G. Bennett Jr., “Getting Property Right: ’Informal’ Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>,  vol. 18, Aug. 2009, pp. 463–509</div>
+    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> F.G. Bennett Jr., “Getting Property Right: “Informal” Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>,  vol. 18, Aug. 2009, pp. 463–509</div>
     .</div>
 </div>'
 Expected:
@@ -2247,20 +2241,6 @@ Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Anderson, Book One</div>
   <div class="csl-entry">Crane, Book Two</div>
-</div>'
-
-Failure → citeproc test test-suite sort_Quotes.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">“Simple title here B”</div>
-  <div class="csl-entry">Simple ’title’ here C</div>
-  <div class="csl-entry">Simple title, here A</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Simple title, here A</div>
-  <div class="csl-entry">“Simple title here B”</div>
-  <div class="csl-entry">Simple “title” here C</div>
 </div>'
 
 Failure → citeproc test test-suite sort_RangeUnaffected.txt
