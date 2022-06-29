@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                7       2       0       0
-bugreports          48      31       3       0
+bugreports          47      32       3       0
 collapse             4      17       0       0
 condition           17       0       0       0
 date                95       5       1       0
@@ -13,7 +13,7 @@ flipflop            14       4       0       0
 form                 3       0       0       0
 fullstyles           2       3       0       0
 group                6       0       1       0
-integration          9       4       1       0
+integration         10       4       0       0
 label               16       3       0       0
 locale              23       0       0       0
 locator              4       1       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              649     183      19       0
+(all)              649     184      18       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -142,6 +142,12 @@ Passed in:
 (string) '(Doe et al. 1965; Doe et al. 1965; Doe et al. 1970)'
 Expected:
 (string) '(Doe et al. 1965a, 1965b, 1970)'
+
+Failure → citeproc test test-suite bugreports_DemoPageFullCiteCruftOnSubsequent.txt
+Passed in:
+(string) 'Nolan J. Malone, U.S. Bureau of the Census, <i>Evaluating Components of International Migration: Consistency of 2000 Nativity Data</i> (New York: Routledge, 2001).'
+Expected:
+(string) 'Malone and U.S. Bureau of the Census, <i>Evaluating Components of International Migration: Consistency of 2000 Nativity Data</i>.'
 
 Failure → citeproc test test-suite bugreports_DisambiguationAddNames.txt
 Passed in:
@@ -2255,16 +2261,13 @@ Error → citeproc test test-suite disambiguate_AllNamesBaseNameCountOnFailureIf
 ./citeproc/citeproc-node-names.lua:452: attempt to compare string with number
 
 Error → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntries.txt
-./citeproc/citeproc-engine.lua:379: attempt to get length of a nil value (local 'previous_note_citations')
+./citeproc/citeproc-engine.lua:378: attempt to get length of a nil value (local 'previous_note_citations')
 
 Error → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntriesByCite.txt
-./citeproc/citeproc-engine.lua:379: attempt to get length of a nil value (local 'previous_note_citations')
+./citeproc/citeproc-engine.lua:378: attempt to get length of a nil value (local 'previous_note_citations')
 
 Error → citeproc test test-suite group_ComplexNesting.txt
 ./citeproc/citeproc-ir-node.lua:58: attempt to index a nil value
-
-Error → citeproc test test-suite integration_CitationSortTwice.txt
-./citeproc/citeproc-node-choose.lua:199: attempt to compare number with nil
 
 Error → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
 ./citeproc/citeproc-ir-node.lua:58: attempt to index a nil value

@@ -304,7 +304,6 @@ function CiteProc:build_citation_str(citation, note_number, note_citation_map, c
   if note_number > 1 then
     previous_note_citations = note_citation_map[note_number - 1]
   end
-  local note_has_previous_citation = false
   if not note_citation_map[note_number] then
     note_citation_map[note_number] = {}
   end
@@ -385,29 +384,34 @@ function CiteProc:set_cite_position(item, note_number, cite_first_note_numbers, 
   end
 
   if preceding_cite then
-    if preceding_cite.locator then
-      if item.locator then
-        if item.locator == preceding_cite.locator and item.label == preceding_cite.label then
-          item.position = util.position_map["ibid"]
-        else
-          item.position = util.position_map["ibid-with-locator"]
-        end
+    item.position = self:_get_cite_position(item, preceding_cite)
+  end
+
+end
+
+function CiteProc:_get_cite_position(item, preceding_cite)
+  if preceding_cite.locator then
+    if item.locator then
+      if item.locator == preceding_cite.locator and item.label == preceding_cite.label then
+        return util.position_map["ibid"]
       else
-        item.position = util.position_map["subsequent"]
+        return util.position_map["ibid-with-locator"]
       end
     else
-      if item.locator then
-        item.position = util.position_map["ibid-with-locator"]
-      else
-        item.position = util.position_map["ibid"]
-      end
+      return util.position_map["subsequent"]
+    end
+  else
+    if item.locator then
+      return util.position_map["ibid-with-locator"]
+    else
+      return util.position_map["ibid"]
     end
   end
 end
 
-function CiteProc:makeCitationCluster (citation_items)
+function CiteProc:makeCitationCluster(citation_items)
   local items = {}
-  for _, cite_item in ipairs(citation_items) do
+  for i, cite_item in ipairs(citation_items) do
     cite_item.id = tostring(cite_item.id)
     local position_first = (self.registry.registry[cite_item.id] == nil)
     local item_data = self:get_item(cite_item.id)
@@ -422,9 +426,27 @@ function CiteProc:makeCitationCluster (citation_items)
       item.label = "page"
     end
 
-    if not item.position and position_first then
+    if position_first then
       item.position = util.position_map["first"]
+    else
+      item.position = util.position_map["subsequent"]
     end
+    local preceding_cite
+    if i == 1 then
+      local previous_citation = self.registry.previous_citation
+      if previous_citation then
+        if #previous_citation.citationItems == 1 and previous_citation.citationItems[1].id == item.id then
+          preceding_cite = previous_citation.citationItems[1]
+        end
+      end
+    elseif citation_items[i - 1].id == item.id then
+      preceding_cite = citation_items[i - 1]
+    end
+
+    if preceding_cite then
+      item.position = self:_get_cite_position(item, preceding_cite)
+    end
+
     table.insert(items, item)
   end
 
