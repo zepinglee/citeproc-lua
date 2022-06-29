@@ -39,6 +39,7 @@ skipped_fixtures = [
     'sort_BibliographyCitationNumberDescendingViaCompositeMacro.txt',
     'sort_BibliographyCitationNumberDescendingViaMacro.txt',
     'sort_CitationNumberPrimaryDescendingViaMacroBibliography.txt',
+    'sort_CitationNumberPrimaryDescendingViaMacroCitation.txt',
     'sort_CitationNumberPrimaryDescendingViaVariableBibliography.txt',
     'sort_CitationNumberSecondaryAscendingViaVariableCitation.txt',
     'textcase_LocaleUnicode.txt',

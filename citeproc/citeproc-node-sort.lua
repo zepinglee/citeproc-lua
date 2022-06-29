@@ -22,9 +22,9 @@ function Sort:from_node(node)
   o.children = {}
 
   o:process_children_nodes(node)
-  self.sort_directions = {}
+  o.sort_directions = {}
   for i, key in ipairs(o.children) do
-    self.sort_directions[i] = (key.sort ~= "descending")
+    o.sort_directions[i] = (key.sort ~= "descending")
   end
 
   return o
