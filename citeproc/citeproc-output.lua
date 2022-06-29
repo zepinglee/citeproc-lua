@@ -386,144 +386,6 @@ function InlineElement:capitalize_first_term()
 end
 
 
-local MarkupWriter = {}
-
-function MarkupWriter:new()
-  local o = {}
-  setmetatable(o, self)
-  self.__index = self
-  return o
-end
-
-function MarkupWriter:derive()
-  local o = {}
-  setmetatable(o, self)
-  self.__index = self
-  return o
-end
-
-function MarkupWriter:write_inlines(inlines)
-  local res = ""
-  for _, node in ipairs(inlines) do
-    res = res .. self:write_inline(node)
-  end
-  return res
-end
-
-function MarkupWriter:write_inline(inline)
-  if type(inline) == "string" then
-    return self:write_escaped(inline)
-
-  elseif type(inline) == "table" then
-    -- util.debug(inline.type)
-    if inline.type == "PlainText" then
-      return self:write_escaped(inline.value)
-
-    elseif inline.type == "InlineElement" then
-      return self:write_children(inline)
-
-    elseif inline.type == "Formatted" then
-      return self:write_formatted(inline)
-
-    elseif inline.type == "Quoted" then
-      return self:write_quoted(inline)
-
-    elseif inline.type == "Div" then
-      return self:write_display(inline)
-
-    elseif inline.type == "Linked" then
-      return self:write_link(inline)
-
-    elseif inline.type == "NoCase" or inline.type == "NoDecor" then
-      return self:write_inlines(inline.inlines)
-
-      -- local res = ""
-      -- for _, node in ipairs(inline.inlines) do
-      --   res = res .. self:write_inline(node)
-      -- end
-      -- return res
-
-    end
-  end
-  return ""
-end
-
-function MarkupWriter:write_children(inline)
-  local res = ""
-  for _, child_inline in ipairs(inline.inlines) do
-    res = res .. self:write_inline(child_inline)
-  end
-  return res
-end
-
-function MarkupWriter:write_quoted(inline)
-  local res = self:write_children(inline)
-  local quotes = inline.quotes
-  if inline.is_inner then
-    return quotes.inner_open .. res .. quotes.inner_close
-  else
-    return quotes.outer_open .. res .. quotes.outer_close
-  end
-end
-
-
-local HtmlWriter = MarkupWriter:derive()
-
-HtmlWriter.markups = {
-  ["bibstart"] = "<div class=\"csl-bib-body\">\n",
-  ["bibend"] = "</div>",
-  ["@font-style/italic"] = "<i>%s</i>",
-  ["@font-style/oblique"] = "<em>%s</em>",
-  ["@font-style/normal"] = '<span style="font-style:normal;">%s</span>',
-  ["@font-variant/small-caps"] = '<span style="font-variant:small-caps;">%s</span>',
-  ["@font-variant/normal"] = '<span style="font-variant:normal;">%s</span>',
-  ["@font-weight/bold"] = "<b>%s</b>",
-  ["@font-weight/normal"] = '<span style="font-weight:normal;">%s</span>',
-  ["@font-weight/light"] = false,
-  ["@text-decoration/none"] = '<span style="text-decoration:none;">%s</span>',
-  ["@text-decoration/underline"] = '<span style="text-decoration:underline;">%s</span>',
-  ["@vertical-align/sup"] = "<sup>%s</sup>",
-  ["@vertical-align/sub"] = "<sub>%s</sub>",
-  ["@vertical-align/baseline"] = '<span style="baseline">%s</span>',
-  ["@cite/entry"] = "%s",
-  ["@bibliography/entry"] = "<div class=\"csl-entry\">%s</div>\n",
-  ["@display/block"] = '\n\n    <div class="csl-block">%s</div>\n',
-  ["@display/left-margin"] = '\n    <div class="csl-left-margin">%s</div>',
-  ["@display/right-inline"] = '<div class="csl-right-inline">%s</div>\n  ',
-  ["@display/indent"] = '<div class="csl-indent">%s</div>\n  ',
-}
-
-function HtmlWriter:write_escaped(str)
-  str = string.gsub(str, "%&", "&#38;")
-  str = string.gsub(str, "<", "&#60;")
-  str = string.gsub(str, ">", "&#62;")
-  for char, sub in pairs(util.superscripts) do
-    str = string.gsub(str, char, "<sup>" .. sub .. "</sup>")
-  end
-  return str
-end
-
-function HtmlWriter:write_formatted(inline)
-  local res = self:write_children(inline)
-  for key, value in pairs(inline.formatting) do
-    key = "@" .. key .. "/" .. value
-    local format_str = self.markups[key]
-    if format_str then
-      res = string.format(format_str, res)
-    end
-  end
-  return res
-end
-
-function HtmlWriter:write_display(inline)
-  local res = self:write_children(inline)
-  local key = string.format("@display/%s", inline.div)
-  local format_str = self.markups[key]
-  res = string.format(format_str, res)
-  return res
-end
-
-
 local OutputFormat = {}
 
 function OutputFormat:new(format_name)
@@ -774,26 +636,18 @@ function OutputFormat:output(inlines, punctuation_in_quote)
 
   -- util.debug(inlines)
 
-  local markup_writer = HtmlWriter:new()
-
-  -- TODO:
-  -- if self.format == "html" then
-  -- elseif self.format == "latex" then
-  -- end
-
-  return markup_writer:write_inlines(inlines)
+  return self:write_inlines(inlines)
 end
 
 function OutputFormat:output_bibliography_entry(inlines, punctuation_in_quote)
   self:flip_flop_inlines(inlines)
   self:move_punctuation(inlines)
-  local markup_writer = HtmlWriter:new()
   -- TODO:
   -- if self.format == "html" then
   -- elseif self.format == "latex" then
   -- end
-  local res = markup_writer:write_inlines(inlines)
-  return string.format(markup_writer.markups["@bibliography/entry"], res)
+  local res = self:write_inlines(inlines)
+  return string.format(self.markups["@bibliography/entry"], res)
 end
 
 function OutputFormat:flip_flop_inlines(inlines)
@@ -966,6 +820,148 @@ function OutputFormat:move_punctuation(inlines, piq)
   end
 end
 
+
+local MarkupWriter = OutputFormat:new()
+
+function MarkupWriter:write_inlines(inlines)
+  local res = ""
+  for _, node in ipairs(inlines) do
+    res = res .. self:write_inline(node)
+  end
+  return res
+end
+
+function MarkupWriter:write_inline(inline)
+  if type(inline) == "string" then
+    return self:write_escaped(inline)
+
+  elseif type(inline) == "table" then
+    -- util.debug(inline.type)
+    if inline.type == "PlainText" then
+      return self:write_escaped(inline.value)
+
+    elseif inline.type == "InlineElement" then
+      return self:write_children(inline)
+
+    elseif inline.type == "Formatted" then
+      return self:write_formatted(inline)
+
+    elseif inline.type == "Quoted" then
+      return self:write_quoted(inline)
+
+    elseif inline.type == "Div" then
+      return self:write_display(inline)
+
+    elseif inline.type == "Linked" then
+      return self:write_link(inline)
+
+    elseif inline.type == "NoCase" or inline.type == "NoDecor" then
+      return self:write_inlines(inline.inlines)
+
+      -- local res = ""
+      -- for _, node in ipairs(inline.inlines) do
+      --   res = res .. self:write_inline(node)
+      -- end
+      -- return res
+
+    end
+  end
+  return ""
+end
+
+function MarkupWriter:write_children(inline)
+  local res = ""
+  for _, child_inline in ipairs(inline.inlines) do
+    res = res .. self:write_inline(child_inline)
+  end
+  return res
+end
+
+function MarkupWriter:write_quoted(inline)
+  local res = self:write_children(inline)
+  local quotes = inline.quotes
+  if inline.is_inner then
+    return quotes.inner_open .. res .. quotes.inner_close
+  else
+    return quotes.outer_open .. res .. quotes.outer_close
+  end
+end
+
+
+local HtmlWriter = MarkupWriter:new()
+
+HtmlWriter.markups = {
+  ["bibstart"] = "<div class=\"csl-bib-body\">\n",
+  ["bibend"] = "</div>",
+  ["@font-style/italic"] = "<i>%s</i>",
+  ["@font-style/oblique"] = "<em>%s</em>",
+  ["@font-style/normal"] = '<span style="font-style:normal;">%s</span>',
+  ["@font-variant/small-caps"] = '<span style="font-variant:small-caps;">%s</span>',
+  ["@font-variant/normal"] = '<span style="font-variant:normal;">%s</span>',
+  ["@font-weight/bold"] = "<b>%s</b>",
+  ["@font-weight/normal"] = '<span style="font-weight:normal;">%s</span>',
+  ["@font-weight/light"] = false,
+  ["@text-decoration/none"] = '<span style="text-decoration:none;">%s</span>',
+  ["@text-decoration/underline"] = '<span style="text-decoration:underline;">%s</span>',
+  ["@vertical-align/sup"] = "<sup>%s</sup>",
+  ["@vertical-align/sub"] = "<sub>%s</sub>",
+  ["@vertical-align/baseline"] = '<span style="baseline">%s</span>',
+  ["@cite/entry"] = "%s",
+  ["@bibliography/entry"] = "<div class=\"csl-entry\">%s</div>\n",
+  ["@display/block"] = '\n\n    <div class="csl-block">%s</div>\n',
+  ["@display/left-margin"] = '\n    <div class="csl-left-margin">%s</div>',
+  ["@display/right-inline"] = '<div class="csl-right-inline">%s</div>\n  ',
+  ["@display/indent"] = '<div class="csl-indent">%s</div>\n  ',
+}
+
+function HtmlWriter:write_escaped(str)
+  str = string.gsub(str, "%&", "&#38;")
+  str = string.gsub(str, "<", "&#60;")
+  str = string.gsub(str, ">", "&#62;")
+  for char, sub in pairs(util.superscripts) do
+    str = string.gsub(str, char, "<sup>" .. sub .. "</sup>")
+  end
+  return str
+end
+
+function HtmlWriter:write_formatted(inline)
+  local res = self:write_children(inline)
+  for key, value in pairs(inline.formatting) do
+    key = "@" .. key .. "/" .. value
+    local format_str = self.markups[key]
+    if format_str then
+      res = string.format(format_str, res)
+    end
+  end
+  return res
+end
+
+function HtmlWriter:write_display(inline)
+  local res = self:write_children(inline)
+  local key = string.format("@display/%s", inline.div)
+  local format_str = self.markups[key]
+  res = string.format(format_str, res)
+  return res
+end
+
+
+local PlainTextWriter = MarkupWriter:new()
+
+PlainTextWriter.markups = {}
+
+function PlainTextWriter:write_escaped(str)
+  return str
+end
+
+function PlainTextWriter:write_formatted(inline)
+  return self:write_children(inline)
+end
+
+function PlainTextWriter:write_display(inline)
+  return self:write_children(inline)
+end
+
+
 output_module.in_quote_puncts = {
   ["."] = true,
   ["?"] = true,
@@ -1024,8 +1020,6 @@ output_module.quote_punctuation_map = {
 
 output_module.LocalizedQuotes = LocalizedQuotes
 
-output_module.HtmlWriter = HtmlWriter
-
 output_module.InlineElement = InlineElement
 output_module.PlainText = PlainText
 output_module.Formatted = Formatted
@@ -1036,5 +1030,9 @@ output_module.NoCase = NoCase
 output_module.NoDecor = NoDecor
 
 output_module.OutputFormat = OutputFormat
+
+output_module.MarkupWriter = MarkupWriter
+output_module.HtmlWriter = HtmlWriter
+output_module.PlainTextWriter = PlainTextWriter
 
 return output_module

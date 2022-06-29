@@ -16,11 +16,12 @@ local Locale = require("citeproc-node-locale").Locale
 local Context = require("citeproc-context").Context
 local IrState = require("citeproc-context").IrState
 local formats = require("citeproc-formats")
-local OutputFormat = require("citeproc-output").OutputFormat
+-- local OutputFormat = require("citeproc-output").OutputFormat
+local HtmlWriter = require("citeproc-output").HtmlWriter
+local PlainTextWriter = require("citeproc-output").PlainTextWriter
 local InlineElement = require("citeproc-output").InlineElement
 local Formatted = require("citeproc-output").Formatted
 local PlainText = require("citeproc-output").PlainText
-local HtmlWriter = require("citeproc-output").HtmlWriter
 local util = require("citeproc-util")
 
 
@@ -79,7 +80,7 @@ function CiteProc.new (sys, style, lang, force_lang)
 end
 
 function CiteProc:build_cluster(citation_items)
-  local output_format = OutputFormat:new()
+  local output_format = HtmlWriter:new()
   local irs = {}
   citation_items = self:sorted_citation_items(citation_items)
   for _, cite_item in ipairs(citation_items) do
@@ -202,7 +203,7 @@ function CiteProc:sorted_citation_items(items)
   context.in_bibliography = false
   context.locale = self:get_locale(self.lang)
   context.name_inheritance = self.style_element.citation.name_inheritance
-  -- context.format = output_format
+  context.format = PlainTextWriter:new()
   -- context.id = id
   context.cite = nil
   -- context.reference = self:get_item(id)
@@ -419,7 +420,7 @@ function CiteProc:makeCitationCluster (citation_items)
 end
 
 function CiteProc:makeBibliography()
-  local output_format = OutputFormat:new()
+  local output_format = HtmlWriter:new()
   local html_writer = HtmlWriter:new()
 
   local params = {
@@ -620,7 +621,7 @@ function CiteProc:sort_bibliography()
   context.in_bibliography = true
   context.locale = self:get_locale(self.lang)
   context.name_inheritance = self.style_element.bibliography.name_inheritance
-  -- context.format = output_format
+  context.format = PlainTextWriter:new()
   -- context.id = id
   context.cite = nil
   -- context.reference = self:get_item(id)

@@ -80,7 +80,9 @@ function Names:from_node(node)
 end
 
 function Names:build_ir(engine, state, context)
-  -- local names_inheritance = state.name_override.inherited_names_options(context.names_inheritance, self)
+  -- names_inheritance: names and name attributes inherited from cs:style
+  --   and cs:citaiton or cs:bibliography
+  -- name_override: names, name, et-al, label elements inherited in substitute element
   local names_inheritance = Names:new()
   names_inheritance.delimiter = context.name_inheritance.names_delimiter
   names_inheritance.name = util.clone(context.name_inheritance)
@@ -552,9 +554,9 @@ function Name:render_person_name(person_name, seen_one, context)
   local is_reversed = (self.name_as_sort_order == "all" or
     (self.name_as_sort_order == "first" and not seen_one) or not is_romanesque)
   -- TODO
-  local is_sort = false
-  local demote_ndp = context.style.demote_non_dropping_particle == "display-and-sort" or
-    (context.style.demote_non_dropping_particle == "sort-only" and is_sort)
+  local is_sort = context.sort_key
+  local demote_ndp = (context.style.demote_non_dropping_particle == "display-and-sort" or
+    (is_sort and context.style.demote_non_dropping_particle == "sort-only"))
 
   self:parse_name_particle(person_name)
 
@@ -1129,6 +1131,9 @@ function NamePart:format_text_case(text, context)
   local output_format = context.format
   local inlines = InlineElement:parse(text, context)
   local is_english = context:is_english()
+  if not output_format then
+    print(debug.traceback())
+  end
   output_format:apply_text_case(inlines, self.text_case, is_english)
 
   inlines = output_format:with_format(inlines, self.formatting)

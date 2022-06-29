@@ -47,13 +47,13 @@ function Sort:sort(items, state, context)
     local language = string.sub(lang, 1, 2)
     -- It's 6 seconds slower to run the whole test-suite if these package
     -- loading statements are put in the header.
-    local ducet = require("lua-uca.lua-uca-ducet")
-    local collator = require("lua-uca.lua-uca-collator")
-    Sort.collator = collator.new(ducet)
+    local uca_ducet = require("lua-uca.lua-uca-ducet")
+    local uca_collator = require("lua-uca.lua-uca-collator")
+    Sort.collator = uca_collator.new(uca_ducet)
     if language ~= "en" then
-      local languages = require("lua-uca.lua-uca-languages")
-      if languages[language] then
-        Sort.collator = languages[language](Sort.collator)
+      local uca_languages = require("lua-uca.lua-uca-languages")
+      if uca_languages[language] then
+        Sort.collator = uca_languages[language](Sort.collator)
       else
         util.warning(string.format('Locale "%s" is not provided by lua-uca. The sorting order may be incorrect.', lang))
       end
@@ -71,7 +71,7 @@ function Sort:sort(items, state, context)
     for i, key in ipairs(self.children) do
       context.sort_key = key
 
-      local key_str = key:render(context)
+      local key_str = key:render(context.engine, state, context)
       key_map[item.id][i] = key_str
     end
   end
@@ -143,16 +143,12 @@ function Key:from_node(node)
   return o
 end
 
-function Key:render(context)
-  -- context = self:process_context(context)
-  -- context.options["name-as-sort-order"] = "all"
-  -- context.sorting = true
-  local res = nil
+function Key:render(engine, state, context)
+  local res
   if self.variable then
-    -- context.variable = variable
     local variable_type = util.variable_types[self.variable]
     if variable_type == "name" then
-      -- res = self:_render_name(item, context)
+      res = self:_render_name(engine, state, context)
     elseif variable_type == "date" then
       res = self:_render_date(context)
     elseif variable_type == "number" then
@@ -179,15 +175,32 @@ function Key:render(context)
   return res
 end
 
-function Key:_render_name(context)
-  if not self.names then
-    self.names = self:create_element("names", {}, self)
-    names.Names:set_base_class(self.names)
-    self.names:set_attribute("variable", context.options["variable"])
-    self.names:set_attribute("form", "long")
+function Key:_render_name(engine, state, context)
+  if not self.name_inheritance then
+    self.name_inheritance = util.clone(context.name_inheritance)
+    self.name_inheritance.name_as_sort_order = "all"
+    self.name_inheritance.delimiter = "   "
+    if self.names_min then
+      self.name_inheritance.et_al_min = self.names_min
+    end
+    if self.names_use_first then
+      self.name_inheritance.et_al_use_first = self.names_use_first
+    end
+    if self.names_use_last then
+      self.name_inheritance.et_al_use_last = self.names_use_last
+    end
   end
-  local res = self.names:render(item, context)
-  return res
+  local name = context:get_variable(self.variable)
+  if not name then
+    return false
+  end
+  local ir = self.name_inheritance:build_ir(self.variable, nil, nil, engine, state, context)
+  local output_format = context.format
+  local inlines = ir:flatten(output_format)
+
+  local str = output_format:output(inlines)
+
+  return str
 end
 
 function Key:_render_date(context)

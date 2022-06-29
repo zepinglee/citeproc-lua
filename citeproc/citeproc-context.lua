@@ -46,12 +46,27 @@ function Context:get_variable(name, form)
   local variable_type = util.variable_types[name]
   if variable_type == "number" then
     return self:get_number(name)
-  -- elseif variable_type == "name" then
-  --   return self:get_name(name)
   -- elseif variable_type == "date" then
   --   return self:get_date(name)
+  elseif variable_type == "name" then
+    return self:get_name(name)
   else
     return self:get_ordinary(name, form)
+  end
+end
+
+function Context:get_number(name)
+  if name == "locator" then
+    return self.cite.locator
+  elseif name == "citation-number" then
+    -- return self.bib_number
+    return self.reference["citation-number"]
+  elseif name == "first-reference-note-number" then
+    return self.cite["first-reference-note-number"]
+  elseif name == "page-first" then
+    return self.page_first(self.reference.page)
+  else
+    return self.reference[name]
   end
 end
 
@@ -93,18 +108,77 @@ function Context:get_ordinary(name, form)
   return res
 end
 
-function Context:get_number(name)
-  if name == "locator" then
-    return self.cite.locator
-  elseif name == "citation-number" then
-    -- return self.bib_number
-    return self.reference["citation-number"]
-  elseif name == "first-reference-note-number" then
-    return self.cite["first-reference-note-number"]
-  elseif name == "page-first" then
-    return self.page_first(self.reference.page)
-  else
-    return self.reference[name]
+-- TODO: Process only once
+function Context:get_name(variable_name)
+  local names = self.reference[variable_name]
+  if names then
+    for _, name in ipairs(names) do
+      self:split_ndp_family(name)
+      self:split_given_dp(name)
+    end
+  end
+  return names
+end
+
+function Context:split_ndp_family(name)
+  if name["non-dropping-particle"] or not name.family then
+    return
+  end
+  local ndp_parts = {}
+  local family_parts = {}
+  local parts = util.split(name.family)
+  for i, part in ipairs(parts) do
+    local ndp, family
+    if i == #parts or not string.match(part, "^%l") then
+      for j = i, #parts do
+        table.insert(family_parts, parts[j])
+      end
+      break
+    end
+    ndp, family = string.match(part, "^(%l')(.+)$")
+    if ndp and family then
+      table.insert(ndp_parts, ndp)
+      table.insert(family_parts, family)
+    else
+      ndp, family = string.match(part, "^(%l’)(.+)$")
+      if ndp and family then
+        table.insert(ndp_parts, ndp)
+        table.insert(family_parts, family)
+      else
+        if string.match(part, "^%l+$") then
+          table.insert(ndp_parts, part)
+        end
+      end
+    end
+  end
+  if #ndp_parts > 0 then
+    name["non-dropping-particle"] = table.concat(ndp_parts, " ")
+    name.family = table.concat(family_parts, " ")
+  end
+end
+
+function Context:split_given_dp(name)
+  if name["dropping_particle"] or not name.given then
+    return
+  end
+  local dp_parts = {}
+  local given_parts = {}
+  local parts = util.split(name.given)
+  for i = #parts, 1, -1 do
+    local part = parts[i]
+    if i == 1 or not string.match(part, "^%l") then
+      for j = 1, i do
+        table.insert(given_parts, parts[j])
+      end
+      break
+    end
+    if string.match(part, "^%l+$") then
+      table.insert(dp_parts, part)
+    end
+  end
+  if #dp_parts > 0 then
+    name["dropping-particle"] = table.concat(dp_parts, " ")
+    name.given = table.concat(given_parts, " ")
   end
 end
 
