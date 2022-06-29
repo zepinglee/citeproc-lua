@@ -36,6 +36,8 @@ skipped_fixtures = [
     'number_PlainHyphenOrEnDashAlwaysPlural.txt',
     'position_IbidWithPrefixFullStop.txt',
     'position_ResetNoteNumbers.txt',
+    'sort_BibliographyCitationNumberDescendingViaMacro.txt',
+    'sort_BibliographyCitationNumberDescendingViaCompositeMacro.txt',
     'textcase_LocaleUnicode.txt',
     'textcase_NoSpaceBeforeApostrophe.txt',
     'textcase_SentenceCapitalization.txt',

@@ -165,11 +165,19 @@ function Key:render(engine, state, context)
         res = context.format:output(inlines)
       end
     end
-  -- else
-  --   local macro = self:get_attribute("macro")
-  --   if macro then
-  --     res = self:get_macro(macro):render(item, context)
-  --   end
+  elseif self.macro then
+    local macro = context:get_macro(self.macro)
+    state:push_macro(self.macro)
+    local ir = macro:build_ir(engine, state, context)
+    state:pop_macro(self.macro)
+    local output_format = context.format
+    local inlines = ir:flatten(output_format)
+    local str = output_format:output(inlines)
+    return str
+  end
+  if res == nil then
+    -- make table.insert(_, nil) work
+    res = false
   end
   return res
 end

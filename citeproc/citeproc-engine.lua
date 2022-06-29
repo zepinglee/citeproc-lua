@@ -275,6 +275,9 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
       params.bibchange = true
       table.insert(output, {citation_index, citation_str, citation_id})
       self.registry.citation_strings[citation_.citationID] = citation_str
+      if not self.registry.citations[citation_id].properties then
+        self.registry.citations[citation_id].properties = {}  -- TODO: store somewhere else
+      end
       self.registry.citations[citation_id].properties.noteIndex = note_number
     end
 
@@ -630,7 +633,7 @@ function CiteProc:sort_bibliography()
   self.registry.reflist = {}
   for i, item in ipairs(items) do
     item["citation-number"] = i
-    table.insert(self.registry.reflist, item.id)
+    self.registry.reflist[i] = item.id
   end
   self.registry.requires_sorting = false
 end

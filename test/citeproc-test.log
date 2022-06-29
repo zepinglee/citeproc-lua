@@ -1,44 +1,44 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                7       2       0       0
-bugreports          43      39       0       0
+bugreports          45      34       3       0
 collapse             4      17       0       0
 condition           17       0       0       0
-date                95       6       0       0
+date                95       5       1       0
 decorations          6       1       0       0
-disambiguate        18      52       1       0
+disambiguate        19      51       1       0
 display              2       3       0       0
 etal                 4       0       0       0
 flipflop            14       4       0       0
 form                 3       0       0       0
 fullstyles           2       3       0       0
-group                6       1       0       0
+group                6       0       1       0
 integration          8       5       1       0
 label               15       4       0       0
 locale              23       0       0       0
 locator              4       1       0       0
-magic               32       8       0       0
-name                90      20       1       0
+magic               32       7       1       0
+name                91      19       1       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
-number              18       2       0       0
+number              17       2       1       0
 page                 9       0       0       0
 plural               7       0       0       0
 position            11       4       0       0
 punctuation          9       7       0       0
-quotes               3       1       0       0
+quotes               3       0       1       0
 simplespace          0       1       0       0
-sort                23      38       5       0
+sort                37      24       5       0
 sortseparator        1       0       0       0
-substitute           6       1       0       0
+substitute           6       0       1       0
 testers              2       0       0       0
 textcase            25       5       0       0
 unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              616     227       8       0
+(all)              633     201      17       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -125,7 +125,7 @@ C. Grignon, C. Sentenac 2000b'
 
 Failure → citeproc test test-suite bugreports_BadDelimiterBeforeCollapse.txt
 Passed in:
-(string) '(Smith 2000; Smith 2000; Jones 2000)'
+(string) '(Jones 2000; Smith 2000; Smith 2000)'
 Expected:
 (string) '(Jones 2000; Smith 2000a,b)'
 
@@ -147,7 +147,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_CitationSortsWithEtAl.txt
 Passed in:
-(string) '[<i>Aalto et al.</i>, 2001; <i>Aalto et al.</i>, 1999; <i>Aalto et al.</i>, 2000]'
+(string) '[<i>Aalto et al.</i>, 1999; <i>Aalto et al.</i>, 2000; <i>Aalto et al.</i>, 2001]'
 Expected:
 (string) '[<i>Aalto et al.</i>, 1999, 2000, 2001]'
 
@@ -312,18 +312,6 @@ Expected:
   </div>
 </div>'
 
-Failure → citeproc test test-suite bugreports_NoTitle.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Family01, G. (n.d.). XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.</div>
-  <div class="csl-entry">ecs. (n.d.). .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">ecs. (n.d.). .</div>
-  <div class="csl-entry">Family01, G. (n.d.). XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.</div>
-</div>'
-
 Failure → citeproc test test-suite bugreports_OldMhraDisambiguationFailure.txt
 Passed in:
 (string) '..[0] John Doe, <i>Book A</i>, 2000, p. , p. ; John Doe, <i>Book B</i>, 2000, p. , p. .
@@ -341,12 +329,6 @@ Expected:
 (string) '(Philpott, Arendt, et al. 2008)
 (Philpott, Perfecto, et al. 2008<i>a</i>)
 (Philpott, Perfecto, et al. 2008<i>b</i>)'
-
-Failure → citeproc test test-suite bugreports_SingleQuoteXml.txt
-Passed in:
-(string) '[O A. "hello" <i>Book Title</i> ; Cite with a composer]'
-Expected:
-(string) '[Cite with a composer ; O A. "hello" <i>Book Title</i>]'
 
 Failure → citeproc test test-suite bugreports_SmallCapsEscape.txt
 Passed in:
@@ -370,33 +352,21 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_SortSecondaryKey.txt
 Passed in:
-(string) '(Roe, 1996; Roe, 1995)'
+(string) '(Roe, 1995; Roe, 1996)'
 Expected:
 (string) '(Roe, 1995, 1996)'
-
-Failure → citeproc test test-suite bugreports_SortSecondaryKeyBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Roe, J.:, 1996.</div>
-  <div class="csl-entry">Roe, J.:, 1995.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Roe, J.:, 1995.</div>
-  <div class="csl-entry">Roe, J.:, 1996.</div>
-</div>'
 
 Failure → citeproc test test-suite bugreports_SortedIeeeItalicsFail.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Roe, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965</div>
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> G. Everhardt, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965</div>
     .</div>
   <div class="csl-entry">
     <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> J. Doe, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965</div>
     .</div>
   <div class="csl-entry">
-    <div class="csl-left-margin">[3]</div><div class="csl-right-inline"> G. Everhardt, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965</div>
+    <div class="csl-left-margin">[3]</div><div class="csl-right-inline"> J. Roe, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965</div>
     .</div>
 </div>'
 Expected:
@@ -412,18 +382,6 @@ Expected:
   </div>
 </div>'
 
-Failure → citeproc test test-suite bugreports_StyleError001.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><i>Anonymous Journal</i>, p. .</div>
-  <div class="csl-entry"><i>Anonymous Journal One</i>. p. .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><i>Anonymous Journal</i>.</div>
-  <div class="csl-entry"><i>Anonymous Journal One</i>.</div>
-</div>'
-
 Failure → citeproc test test-suite bugreports_UndefinedInName3.txt
 Passed in:
 (string) 'B-X Kim and A-Y Kim, p. .
@@ -436,8 +394,8 @@ Failure → citeproc test test-suite bugreports_YearSuffixInHarvard1.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Africa News, 2006. Burkina Faso: Journalist Case Puts Spotlight On Justice System. <i>Africa News</i>.</div>
-  <div class="csl-entry">Africa News, 2007. Uganda: Police Protect Besigye Rally. <i>Africa News</i>.</div>
   <div class="csl-entry">Africa News, 2010. Niger: Who Really Ousted Tandja, And Why?. <i>Africa News</i>.</div>
+  <div class="csl-entry">Africa News, 2007. Uganda: Police Protect Besigye Rally. <i>Africa News</i>.</div>
   <div class="csl-entry">Africa News, 2006. Uganda: UK, US Deploy Observers. <i>Africa News</i>.</div>
 </div>'
 Expected:
@@ -463,16 +421,6 @@ Passed in:
 (string) '..[0] (Smith, <i>Book B</i>)'
 Expected:
 (string) '>>[0] (Smith)'
-
-Failure → citeproc test test-suite bugreports_parenthesis.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">  (2006): 1–7.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"> (2006): 1–7.</div>
-</div>'
 
 Failure → citeproc test test-suite collapse_AuthorCollapse.txt
 Passed in:
@@ -560,7 +508,7 @@ Expected:
 
 Failure → citeproc test test-suite collapse_TrailingDelimiter.txt
 Passed in:
-(string) '(Condit et al. 2000, Condit et al. 1998, Connell 1971, Condit et al. 1995, Cortes &#38; Hunziker 1971)'
+(string) '(Condit et al. 2000, Condit et al. 1995, Condit et al. 1998, Connell 1971, Cortes &#38; Hunziker 1971)'
 Expected:
 (string) '(Condit et al. 2000, 1995, 1998; Connell 1971, Cortes &#38; Hunziker 1971)'
 
@@ -601,12 +549,6 @@ Passed in:
 (string) '(Smith 1982, Smith 1982)'
 Expected:
 (string) '(Smith 1982a,b)'
-
-Failure → citeproc test test-suite date_NegativeDateSortViaMacroOnYearMonthOnly.txt
-Passed in:
-(string) 'BookY (100BC-7-13), BookB (68AD-3-15), BookX (100BC-7-14), BookA (68AD-3-16)'
-Expected:
-(string) 'BookX (100BC-7-14), BookY (100BC-7-13), BookA (68AD-3-16), BookB (68AD-3-15)'
 
 Failure → citeproc test test-suite date_YearSuffixDelimiter.txt
 Passed in:
@@ -1030,8 +972,8 @@ Failure → citeproc test test-suite disambiguate_YearSuffixTwoPairsBibliography
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">J. Doe and S. Jones, 1999</div>
-  <div class="csl-entry">J. Doe and S. Smith, 1999</div>
   <div class="csl-entry">J. Doe and S. Jones, 1999</div>
+  <div class="csl-entry">J. Doe and S. Smith, 1999</div>
   <div class="csl-entry">J. Doe and S. Smith, 1999</div>
 </div>'
 Expected:
@@ -1046,8 +988,8 @@ Failure → citeproc test test-suite disambiguate_YearSuffixTwoPairsFirstNameBib
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">J. Doe and S. Jones, 1999</div>
-  <div class="csl-entry">J. Doe and S. Smith, 1999</div>
   <div class="csl-entry">J. Doe and S. Jones, 1999</div>
+  <div class="csl-entry">J. Doe and S. Smith, 1999</div>
   <div class="csl-entry">J. Doe and S. Smith, 1999</div>
 </div>'
 Expected:
@@ -1056,22 +998,6 @@ Expected:
   <div class="csl-entry">J. Doe and S. Jones, 1999b</div>
   <div class="csl-entry">J. Doe and S. Smith, 1999a</div>
   <div class="csl-entry">J. Doe and S. Smith, 1999b</div>
-</div>'
-
-Failure → citeproc test test-suite disambiguate_YearSuffixTwoPairsFullNamesBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">J. Doe and S. Jones, 1999</div>
-  <div class="csl-entry">J. Doe and S. Smith, 1999</div>
-  <div class="csl-entry">J. Doe and S. Jones, 1999</div>
-  <div class="csl-entry">J. Doe and S. Smith, 1999</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">J. Doe and S. Jones, 1999</div>
-  <div class="csl-entry">J. Doe and S. Jones, 1999</div>
-  <div class="csl-entry">J. Doe and S. Smith, 1999</div>
-  <div class="csl-entry">J. Doe and S. Smith, 1999</div>
 </div>'
 
 Failure → citeproc test test-suite disambiguate_YearSuffixWithEtAlSubequent.txt
@@ -1229,10 +1155,10 @@ Failure → citeproc test test-suite fullstyles_ChicagoAuthorDateSimple.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Doe, John. 1990. <i>Book A</i>. Brobdingnag: Zardoz Press.</div>
-  <div class="csl-entry">Doe, John, Jane Roe, Alvin Asthma, Bob Bronchitis, Chris Cold, Don Dropsy, Ernie Enteritis, et al. 1993. <i>Book D</i>.</div>
-  <div class="csl-entry">Doe, John, Jane Roe, and Alvin Asthma. 1992. <i>Book C</i>.</div>
   <div class="csl-entry">Doe, John, and Jane Roe. 1991. <i>Book B</i>.</div>
+  <div class="csl-entry">Doe, John, Jane Roe, Alvin Asthma, Bob Bronchitis, Chris Cold, Don Dropsy, Ernie Enteritis, et al. 1993. <i>Book D</i>.</div>
   <div class="csl-entry">Doe, John, Jane Roe, Alvin Asthma, Bob Bronchitis, Chris Cold, Don Dropsy, Ernie Enteritis, et al. 1994. <i>Book E</i>.</div>
+  <div class="csl-entry">Doe, John, Jane Roe, and Alvin Asthma. 1992. <i>Book C</i>.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1241,16 +1167,6 @@ Expected:
   <div class="csl-entry">Doe, John, Jane Roe, and Alvin Asthma. 1992. <i>Book C</i>.</div>
   <div class="csl-entry">Doe, John, Jane Roe, Alvin Asthma, Bob Bronchitis, Chris Cold, Don Dropsy, Ernie Enteritis, et al. 1993. <i>Book D</i>.</div>
   <div class="csl-entry">---. 1994. <i>Book E</i>.</div>
-</div>'
-
-Failure → citeproc test test-suite group_ComplexNesting.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe Inc.. Retrieved June 1, 1965, from http://example.com/</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe Inc. (n.d.). Retrieved June 1, 1965, from http://example.com/</div>
 </div>'
 
 Failure → citeproc test test-suite integration_DuplicateItem.txt
@@ -1400,20 +1316,6 @@ Expected:
   <div class="csl-entry">John Smith, Book C (2002)</div>
 </div>'
 
-Failure → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Silverstein, Theodore, tran.. “Sir Gawain and the Green Knight.” In . Chicago: University of Chicago Press, 1974.</div>
-  <div class="csl-entry">Soltes, Ori A., ed.. “Georgia: Art and Civilization through the Ages.” In . London: Philip Wilson, 1999.</div>
-  <div class="csl-entry">“The Chicago Manual of Style.” In . Chicago: University of Chicago Press, 1993.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Silverstein, Theodore, tran. “Sir Gawain and the Green Knight.” Chicago: University of Chicago Press, 1974.</div>
-  <div class="csl-entry">Soltes, Ori A., ed. “Georgia: Art and Civilization through the Ages.” London: Philip Wilson, 1999.</div>
-  <div class="csl-entry">“The Chicago Manual of Style.” Chicago: University of Chicago Press, 1993.</div>
-</div>'
-
 Failure → citeproc test test-suite magic_SubsequentAuthorSubstituteOfTitleField.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -1435,18 +1337,6 @@ APPLEBY, Aloysius, and Bobby BROWN; APPLEBY, Aloysius et al.; APPLEBY, Aloysius 
 Expected:
 (string) 'DOEBUCK, Jonathan, et al.; DOE, John, Jane ROE et al.; DOE, John, Janice ROEBUCK et al.
 APPLEBY, Aloysius, and Bobby BROWN; APPLEBY, Aloysius, Bobby BROWN and Cecile CREAM; APPLEBY, Aloysius, Bobby BROWN and Enola EVERGREEN'
-
-Failure → citeproc test test-suite name_BibliographyNameFormNeverShrinks.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><i>Smith, Reggie</i></div>
-  <div class="csl-entry"><i>Smith, Jimmie</i></div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><i>Smith, Jimmie</i></div>
-  <div class="csl-entry"><i>Smith, Reggie</i></div>
-</div>'
 
 Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearCollapse.txt
 Passed in:
@@ -1756,8 +1646,8 @@ Failure → citeproc test test-suite position_IbidWithSuffix.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Al-Khatib Organization</div>
-  <div class="csl-entry">Beatrice Butterfield</div>
   <div class="csl-entry">Alan Aberdeen</div>
+  <div class="csl-entry">Beatrice Butterfield</div>
   <div class="csl-entry">Sergei Kaspersky</div>
 </div>'
 Expected:
@@ -2200,16 +2090,6 @@ Expected:
 (string) '..[0] John Doe, “His Anonymous Life,” 1965; Jane Roe, “Her Anonymous Life,” 1965.
 >>[1] Doe, “His Anonymous Life”; Roe, “Her Anonymous Life.”'
 
-Failure → citeproc test test-suite quotes_QuotesUnderQuotesFalse.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"> 'Title with ’quotes’ in it',.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"> 'Title with ‘quotes’ in it',.</div>
-</div>'
-
 Failure → citeproc test test-suite simplespace_case1.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -2218,54 +2098,6 @@ Passed in:
 Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Doe, J., 1992. In <i>Some title</i>. Vintage, pp. 250–300.</div>
-</div>'
-
-Failure → citeproc test test-suite sort_AguStyle.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Smith, A. (1989)</div>
-  <div class="csl-entry">Smith, A. (1989)</div>
-  <div class="csl-entry">Smith, A. and B. Frank (1995)</div>
-  <div class="csl-entry">Smith, A., L. Roberts, and T. Jones (1993)</div>
-  <div class="csl-entry">Smith, A. and B. Frank (1997)</div>
-  <div class="csl-entry">Smith, A. (1991)</div>
-  <div class="csl-entry">Smith, A. and C. Allen (1992)</div>
-  <div class="csl-entry">Smith, A., T. Jones, and L. Roberts (1997)</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Smith, A. (1989a)</div>
-  <div class="csl-entry">Smith, A. (1989b)</div>
-  <div class="csl-entry">Smith, A. (1991)</div>
-  <div class="csl-entry">Smith, A. and C. Allen (1992)</div>
-  <div class="csl-entry">Smith, A. and B. Frank (1995)</div>
-  <div class="csl-entry">Smith, A. and B. Frank (1997)</div>
-  <div class="csl-entry">Smith, A., L. Roberts, and T. Jones (1993)</div>
-  <div class="csl-entry">Smith, A., T. Jones, and L. Roberts (1997)</div>
-</div>'
-
-Failure → citeproc test test-suite sort_AguStyleReverseGroups.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Smith, A. (1989)</div>
-  <div class="csl-entry">Smith, A. and B. Frank (1995)</div>
-  <div class="csl-entry">Smith, A. and B. Frank (1997)</div>
-  <div class="csl-entry">Smith, A., L. Roberts, and T. Jones (1993)</div>
-  <div class="csl-entry">Smith, A. and C. Allen (2000)</div>
-  <div class="csl-entry">Smith, A. (1989)</div>
-  <div class="csl-entry">Smith, A. (1991)</div>
-  <div class="csl-entry">Smith, A., T. Jones, and L. Roberts (1997)</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Smith, A., L. Roberts, and T. Jones (1993)</div>
-  <div class="csl-entry">Smith, A., T. Jones, and L. Roberts (1997)</div>
-  <div class="csl-entry">Smith, A. and C. Allen (2000)</div>
-  <div class="csl-entry">Smith, A. and B. Frank (1995)</div>
-  <div class="csl-entry">Smith, A. and B. Frank (1997)</div>
-  <div class="csl-entry">Smith, A. (1989a)</div>
-  <div class="csl-entry">Smith, A. (1989b)</div>
-  <div class="csl-entry">Smith, A. (1991)</div>
 </div>'
 
 Failure → citeproc test test-suite sort_AuthorDateWithYearSuffix.txt
@@ -2294,12 +2126,12 @@ Failure → citeproc test test-suite sort_BibliographyCitationNumberDescendingVi
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">[1] Book One</div>
-  <div class="csl-entry">[2] Book Two</div>
-  <div class="csl-entry">[3] Book Five</div>
-  <div class="csl-entry">[4] Book Seven</div>
-  <div class="csl-entry">[5] Book Six</div>
-  <div class="csl-entry">[6] Book Three</div>
-  <div class="csl-entry">[7] Book Four</div>
+  <div class="csl-entry">[2] Book Three</div>
+  <div class="csl-entry">[3] Book Four</div>
+  <div class="csl-entry">[4] Book Six</div>
+  <div class="csl-entry">[5] Book Two</div>
+  <div class="csl-entry">[6] Book Five</div>
+  <div class="csl-entry">[7] Book Seven</div>
   <div class="csl-entry">[8] Book Eight</div>
 </div>'
 Expected:
@@ -2312,32 +2144,6 @@ Expected:
   <div class="csl-entry">[3] Book Five</div>
   <div class="csl-entry">[2] Book Seven</div>
   <div class="csl-entry">[1] Book Eight</div>
-</div>'
-
-Failure → citeproc test test-suite sort_BibliographyResortOnUpdate.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Effinger</div>
-  <div class="csl-entry">Jamey</div>
-  <div class="csl-entry">Ging</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Effinger</div>
-  <div class="csl-entry">Ging</div>
-  <div class="csl-entry">Jamey</div>
-</div>'
-
-Failure → citeproc test test-suite sort_CaseInsensitiveBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">ABC</div>
-  <div class="csl-entry">Aaa</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Aaa</div>
-  <div class="csl-entry">ABC</div>
 </div>'
 
 Failure → citeproc test test-suite sort_ChicagoYearSuffix1.txt
@@ -2355,8 +2161,8 @@ Expected:
 Failure → citeproc test test-suite sort_ChicagoYearSuffix2.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Beijing Zoo. 1974. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
   <div class="csl-entry">Beijing Zoo. 1974. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
+  <div class="csl-entry">Beijing Zoo. 1974. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2364,35 +2170,13 @@ Expected:
   <div class="csl-entry">---. 1974b. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
 </div>'
 
-Failure → citeproc test test-suite sort_Citation.txt
-Passed in:
-(string) 'Roe; Doe'
-Expected:
-(string) 'Doe; Roe'
-
-Failure → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaMacroBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">[1] Aaaa (first-cited)</div>
-  <div class="csl-entry">[2] Zzzz (third-cited)</div>
-  <div class="csl-entry">[3] Bbbb (second-cited)</div>
-  <div class="csl-entry">[4] Xxxx (fourth-cited)</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">[1] Aaaa (first-cited)</div>
-  <div class="csl-entry">[2] Bbbb (second-cited)</div>
-  <div class="csl-entry">[3] Zzzz (third-cited)</div>
-  <div class="csl-entry">[4] Xxxx (fourth-cited)</div>
-</div>'
-
 Failure → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroBibliography.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">[1] Aaaa (first-cited)</div>
+  <div class="csl-entry">[1] Xxxx (fourth-cited)</div>
   <div class="csl-entry">[2] Zzzz (third-cited)</div>
   <div class="csl-entry">[3] Bbbb (second-cited)</div>
-  <div class="csl-entry">[4] Xxxx (fourth-cited)</div>
+  <div class="csl-entry">[4] Aaaa (first-cited)</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2401,6 +2185,12 @@ Expected:
   <div class="csl-entry">[2] Bbbb (second-cited)</div>
   <div class="csl-entry">[1] Aaaa (first-cited)</div>
 </div>'
+
+Failure → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroCitation.txt
+Passed in:
+(string) '>>[0] [4] Aaaa (first-cited); [3] Bbbb (second-cited); [2] Zzzz (third-cited); [1] Xxxx (fourth-cited)'
+Expected:
+(string) '>>[0] [1] Aaaa (first-cited); [2] Bbbb (second-cited); [3] Zzzz (third-cited); [4] Xxxx (fourth-cited)'
 
 Failure → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaVariableBibliography.txt
 Passed in:
@@ -2418,17 +2208,23 @@ Expected:
   <div class="csl-entry">[1] Aaaa (first-cited)</div>
 </div>'
 
+Failure → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaVariableCitation.txt
+Passed in:
+(string) '>>[0] [4] Aaaa (first-cited); [3] Bbbb (second-cited); [2] Zzzz (third-cited); [1] Xxxx (fourth-cited)'
+Expected:
+(string) '>>[0] [1] Aaaa (first-cited); [2] Bbbb (second-cited); [3] Zzzz (third-cited); [4] Xxxx (fourth-cited)'
+
 Failure → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaMacroCitation.txt
 Passed in:
-(string) '[4] Aaaa (first-cited); [1] Zzzz (third-cited); [3] Bbbb (second-cited); [2] Xxxx (fourth-cited)'
+(string) '[4] Aaaa (first-cited); [3] Bbbb (second-cited); [2] Xxxx (fourth-cited); [1] Zzzz (third-cited)'
 Expected:
 (string) '[1] Zzzz (third-cited); [2] Xxxx (fourth-cited); [3] Bbbb (second-cited); [4] Aaaa (first-cited)'
 
-Failure → citeproc test test-suite sort_CitationSecondaryKey.txt
+Failure → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaVariableCitation.txt
 Passed in:
-(string) 'Roe 1995; Doe 1995'
+(string) '>>[0] [4] Aaaa (first-cited); [3] Bbbb (second-cited); [2] Xxxx (fourth-cited); [1] Zzzz (third-cited)'
 Expected:
-(string) 'Doe 1995; Roe 1995'
+(string) '>>[0] [1] Zzzz (third-cited); [2] Xxxx (fourth-cited); [3] Bbbb (second-cited); [4] Aaaa (first-cited)'
 
 Failure → citeproc test test-suite sort_CiteGroupDelimiter.txt
 Passed in:
@@ -2439,9 +2235,9 @@ Expected:
 Failure → citeproc test test-suite sort_ConditionalMacroDates.txt
 Passed in:
 (string) '<div class="csl-bib-body">
+  <div class="csl-entry">Title 1</div>
   <div class="csl-entry">Title 2</div>
   <div class="csl-entry">Title 3</div>
-  <div class="csl-entry">Title 1</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2464,61 +2260,11 @@ Expected:
   </div>
 </div>'
 
-Failure → citeproc test test-suite sort_DropNameLabelInSort.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, John ed. <i>Hello</i>.</div>
-  <div class="csl-entry">Doe, John Eamon. <i>Hello</i>.</div>
-  <div class="csl-entry">Doe, John. <i>Hello</i>.</div>
-  <div class="csl-entry">Doe, John Egbert. <i>Hello</i>.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, John ed. <i>Hello</i>.</div>
-  <div class="csl-entry">---. <i>Hello</i>.</div>
-  <div class="csl-entry">Doe, John Eamon. <i>Hello</i>.</div>
-  <div class="csl-entry">Doe, John Egbert. <i>Hello</i>.</div>
-</div>'
-
-Failure → citeproc test test-suite sort_EtAlUseLast.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Roe, Doe, … Gogh, Book A</div>
-  <div class="csl-entry">Roe, Doe, … Bogh, Book A</div>
-  <div class="csl-entry">Roe, Doe, … Aogh, Book A</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Roe, Doe, … Aogh, Book A</div>
-  <div class="csl-entry">Roe, Doe, … Bogh, Book A</div>
-  <div class="csl-entry">Roe, Doe, … Gogh, Book A</div>
-</div>'
-
 Failure → citeproc test test-suite sort_GroupedByAuthorstring.txt
 Passed in:
 (string) '>>[0] Smith 2003; Jones 2005; Smith 2010'
 Expected:
 (string) '>>[0] Smith 2003, 2010; Jones 2005'
-
-Failure → citeproc test test-suite sort_LeadingA.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Ab Delrahman, Hussein. <i>Det danske alfabet er sært</i>. Kbh: Politiken, 2012.</div>
-  <div class="csl-entry">B Gjengen. <i>Alfabeta</i>. Kbh, 2009.</div>
-  <div class="csl-entry">Juul Jensen, Uffe, Carsten Hædersdal, og Mogens Kim Skadborg. “Etablering af klinisk etiske komitéer i Danmark: en praksis-filosofisk tilgang til klinisk etik fra bibliotek.dk”. <i>Bibliotek for læger</i> 206, nr. 1 (2014): 44–61.</div>
-  <div class="csl-entry">A kasernes fællesvirke. <i>Problemer med alfabetet</i>. Kbh: Dafolo, 2015.</div>
-  <div class="csl-entry">A Hansen, Martin. <i>Alfabetiseringsproblemer</i>. København: Gyldendal, 2012.</div>
-  <div class="csl-entry">“A er det første bogstav i alfabetet”. Television broadcast. DR, 2011.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">“A er det første bogstav i alfabetet”. Television broadcast. DR, 2011.</div>
-  <div class="csl-entry">A Hansen, Martin. <i>Alfabetiseringsproblemer</i>. København: Gyldendal, 2012.</div>
-  <div class="csl-entry">A kasernes fællesvirke. <i>Problemer med alfabetet</i>. Kbh: Dafolo, 2015.</div>
-  <div class="csl-entry">Ab Delrahman, Hussein. <i>Det danske alfabet er sært</i>. Kbh: Politiken, 2012.</div>
-  <div class="csl-entry">B Gjengen. <i>Alfabeta</i>. Kbh, 2009.</div>
-  <div class="csl-entry">Juul Jensen, Uffe, Carsten Hædersdal, og Mogens Kim Skadborg. “Etablering af klinisk etiske komitéer i Danmark: en praksis-filosofisk tilgang til klinisk etik fra bibliotek.dk”. <i>Bibliotek for læger</i> 206, nr. 1 (2014): 44–61.</div>
-</div>'
 
 Failure → citeproc test test-suite sort_LeadingApostropheOnNameParticle.txt
 Passed in:
@@ -2544,18 +2290,12 @@ Expected:
   <div class="csl-entry">Vooz, B</div>
 </div>'
 
-Failure → citeproc test test-suite sort_LocalizedDateLimitedParts.txt
-Passed in:
-(string) 'Book A; Book D; Book C; Book B'
-Expected:
-(string) 'Book D; Book A; Book B; Book C'
-
 Failure → citeproc test test-suite sort_NameImplicitSortOrderAndForm.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Roe, Book A</div>
-  <div class="csl-entry">Doe, Book C</div>
   <div class="csl-entry">Doe, Book B</div>
+  <div class="csl-entry">Doe, Book C</div>
+  <div class="csl-entry">Roe, Book A</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2590,20 +2330,6 @@ Expected:
   <div class="csl-entry">John Doe, Alvin Anderson, et al. Book Two 1999</div>
 </div>'
 
-Failure → citeproc test test-suite sort_NumberOfAuthorsAsKey.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Book One</div>
-  <div class="csl-entry">Book Three</div>
-  <div class="csl-entry">Book Two</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Book One</div>
-  <div class="csl-entry">Book Two</div>
-  <div class="csl-entry">Book Three</div>
-</div>'
-
 Failure → citeproc test test-suite sort_OmittedBibRefMixedNumericStyle.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -2634,9 +2360,9 @@ Expected:
 Failure → citeproc test test-suite sort_Quotes.txt
 Passed in:
 (string) '<div class="csl-bib-body">
+  <div class="csl-entry">“Simple title here B”</div>
   <div class="csl-entry">Simple ’title’ here C</div>
   <div class="csl-entry">Simple title, here A</div>
-  <div class="csl-entry">“Simple title here B”</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2653,97 +2379,11 @@ Expected:
 (string) '>>[0] <sup>1</sup>
 >>[1] <sup>1–3</sup>'
 
-Failure → citeproc test test-suite sort_SeparateAuthorsAndOthers.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, John ed. <i>Hello 1</i>.</div>
-  <div class="csl-entry">Doe, John Barbitol. <i>Hello 2</i>.</div>
-  <div class="csl-entry">Doe, John. <i>Hello 4</i>.</div>
-  <div class="csl-entry">Doe, John Egbert. <i>Hello 3</i>.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, John. <i>Hello 4</i>.</div>
-  <div class="csl-entry">--- ed. <i>Hello 1</i>.</div>
-  <div class="csl-entry">Doe, John Barbitol. <i>Hello 2</i>.</div>
-  <div class="csl-entry">Doe, John Egbert. <i>Hello 3</i>.</div>
-</div>'
-
-Failure → citeproc test test-suite sort_SubstituteTitle.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brooker, C. (2011, July 31). Let’s think outside the box here: maybe blue-sky thinking is nonsense. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/31/blue-sky-thinking</div>
-  <div class="csl-entry">Brooker, C. (2011, July 24). The news coverage of the Norway mass-killings was fact-free conjecture. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/24/charlie-brooker-norway-mass-killings</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brooker, C. (2011, July 24). The news coverage of the Norway mass-killings was fact-free conjecture. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/24/charlie-brooker-norway-mass-killings</div>
-  <div class="csl-entry">Brooker, C. (2011, July 31). Let’s think outside the box here: maybe blue-sky thinking is nonsense. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/31/blue-sky-thinking</div>
-</div>'
-
-Failure → citeproc test test-suite sort_VariousNameMacros1.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
-  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
-  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
-  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
-  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
-</div>'
-
-Failure → citeproc test test-suite sort_VariousNameMacros2.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
-  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
-  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
-  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
-  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
-</div>'
-
-Failure → citeproc test test-suite sort_VariousNameMacros3.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
-  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
-  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
-  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
-  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
-</div>'
-
 Failure → citeproc test test-suite sort_WithAndInOneEntry.txt
 Passed in:
-(string) '(Beck 1991; Colaresi and Thompson 2002; Colaresi, Rasler, and Thompson 2007; Gochman 1993; Gochman and Leng 1983; Colaresi 2006; Beck, Katz, and Tucker 1998; Beck, King, and Zeng 2000; Beck and Katz 2001; Beck and Katz 2011; Gochman and Maoz 1984)'
+(string) '(Beck 1991; Beck and Katz 2001; Beck and Katz 2011; Beck, Katz, and Tucker 1998; Beck, King, and Zeng 2000; Colaresi 2006; Colaresi and Thompson 2002; Colaresi, Rasler, and Thompson 2007; Gochman 1993; Gochman and Leng 1983; Gochman and Maoz 1984)'
 Expected:
 (string) '(Beck 1991; Beck and Katz 2001, 2011; Beck, Katz, and Tucker 1998; Beck, King, and Zeng 2000; Colaresi 2006; Colaresi, Rasler, and Thompson 2007; Colaresi and Thompson 2002; Gochman 1993; Gochman and Leng 1983; Gochman and Maoz 1984)'
-
-Failure → citeproc test test-suite substitute_SharedMacro.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Alto, Alan: Book One.</div>
-  <div class="csl-entry">Alan Alto Inc.: Book Three.</div>
-  <div class="csl-entry">Alto, Alan: Book Two.</div>
-  <div class="csl-entry">Alan Alto Inc.: Book Four.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Alan Alto Inc.: Book Three.</div>
-  <div class="csl-entry">---: Book Four.</div>
-  <div class="csl-entry">Alto, Alan: Book One.</div>
-  <div class="csl-entry">---: Book Two.</div>
-</div>'
 
 Failure → citeproc test test-suite textcase_LocaleUnicode.txt
 Passed in:
@@ -2827,26 +2467,53 @@ Expected:
   </div>
 </div>'
 
+Error → citeproc test test-suite bugreports_StyleError001.txt
+./citeproc/citeproc-ir-node.lua:58: attempt to index a nil value
+
+Error → citeproc test test-suite bugreports_UndefinedBeforeVal.txt
+./citeproc/citeproc-ir-node.lua:58: attempt to index a nil value
+
+Error → citeproc test test-suite bugreports_parenthesis.txt
+./citeproc/citeproc-ir-node.lua:58: attempt to index a nil value
+
+Error → citeproc test test-suite date_AccessedCrash.txt
+./citeproc/citeproc-ir-node.lua:58: attempt to index a nil value
+
 Error → citeproc test test-suite disambiguate_AllNamesBaseNameCountOnFailureIfYearSuffixAvailable.txt
 ./citeproc/citeproc-node-names.lua:452: attempt to compare string with number
+
+Error → citeproc test test-suite group_ComplexNesting.txt
+./citeproc/citeproc-ir-node.lua:58: attempt to index a nil value
 
 Error → citeproc test test-suite integration_CitationSortTwice.txt
 ./citeproc/citeproc-node-choose.lua:199: attempt to compare number with nil
 
+Error → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
+./citeproc/citeproc-ir-node.lua:58: attempt to index a nil value
+
 Error → citeproc test test-suite name_EtAlWithCombined.txt
 ./citeproc/citeproc-node-choose.lua:168: attempt to index a nil value (field 'cite')
 
-Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
-./citeproc/citeproc-engine.lua:278: attempt to index a nil value (field 'properties')
+Error → citeproc test test-suite number_NewOrdinalsEdition.txt
+./citeproc/citeproc-ir-node.lua:58: attempt to index a nil value
 
-Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:278: attempt to index a nil value (field 'properties')
+Error → citeproc test test-suite quotes_QuotesUnderQuotesFalse.txt
+./citeproc/citeproc-ir-node.lua:58: attempt to index a nil value
 
-Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroCitation.txt
-./citeproc/citeproc-engine.lua:278: attempt to index a nil value (field 'properties')
+Error → citeproc test test-suite sort_AguStyle.txt
+./citeproc/citeproc-ir-node.lua:58: attempt to index a nil value
 
-Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:278: attempt to index a nil value (field 'properties')
+Error → citeproc test test-suite sort_AguStyleReverseGroups.txt
+./citeproc/citeproc-ir-node.lua:58: attempt to index a nil value
 
-Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:278: attempt to index a nil value (field 'properties')
+Error → citeproc test test-suite sort_DropNameLabelInSort.txt
+./citeproc/citeproc-ir-node.lua:58: attempt to index a nil value
+
+Error → citeproc test test-suite sort_NumberOfAuthorsAsKey.txt
+./citeproc/citeproc-ir-node.lua:58: attempt to index a nil value
+
+Error → citeproc test test-suite sort_SeparateAuthorsAndOthers.txt
+./citeproc/citeproc-ir-node.lua:58: attempt to index a nil value
+
+Error → citeproc test test-suite substitute_SharedMacro.txt
+./citeproc/citeproc-ir-node.lua:58: attempt to index a nil value
