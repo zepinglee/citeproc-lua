@@ -29,7 +29,7 @@ position            11       4       0       0
 punctuation          9       7       0       0
 quotes               3       0       1       0
 simplespace          0       1       0       0
-sort                37      24       5       0
+sort                38      23       5       0
 sortseparator        1       0       0       0
 substitute           6       0       1       0
 testers              2       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              633     201      17       0
+(all)              634     200      17       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -268,8 +268,8 @@ Expected:
 Failure → citeproc test test-suite bugreports_MatchedAuthorAndDate.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brown, J. 2006, August. <i><b>Tijdschrift voor praktijkondersteuning</b></i>. http://dx.doi.org/10.1007/bf03074904.</div>
-  <div class="csl-entry">Brown, J. 2006, August. <i><b>Huisarts en Wetenschap</b></i>. http://dx.doi.org/10.1007/bf03084836.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <b><i>Tijdschrift voor praktijkondersteuning</i></b>. http://dx.doi.org/10.1007/bf03074904.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <b><i>Huisarts en Wetenschap</i></b>. http://dx.doi.org/10.1007/bf03084836.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2302,20 +2302,6 @@ Expected:
   <div class="csl-entry">Doe, Book C</div>
   <div class="csl-entry">Doe, Book B</div>
   <div class="csl-entry">Roe, Book A</div>
-</div>'
-
-Failure → citeproc test test-suite sort_NameVariable.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Jacob [F]linders</div>
-  <div class="csl-entry">John Doe</div>
-  <div class="csl-entry">Jane Roe</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">John Doe</div>
-  <div class="csl-entry">Jacob [F]linders</div>
-  <div class="csl-entry">Jane Roe</div>
 </div>'
 
 Failure → citeproc test test-suite sort_NamesUseLast.txt

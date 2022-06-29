@@ -683,6 +683,10 @@ function Name:render_family(person_name, is_romanesque, is_reversed, demote_ndp,
   local text = person_name.family
   -- Remove double quotes: name_ParticleCaps3.txt
   text = string.gsub(text, '"', "")
+  -- Remove brackets for sorting: sort_NameVariable.txt
+  if context.sort_key then
+    text = string.gsub(text, "[%[%]]", "")
+  end
   local family_inlines = self.family:format_text_case(text, context)
   if person_name["non-dropping-particle"] and is_romanesque and not (is_reversed and demote_ndp) then
     local ndp_inlines = self.family:format_text_case(person_name["non-dropping-particle"], context)
@@ -698,6 +702,10 @@ end
 
 function Name:render_given(person_name, is_romanesque, is_reversed, demote_ndp, context)
   local text = person_name.given
+  -- Remove brackets for sorting: sort_NameVariable.txt
+  if context.sort_key then
+    text = string.gsub(text, "[%[%]]", "")
+  end
   if self.initialize_with then
     text = self:initialize_name(text, self.initialize_with, context.style.initialize_with_hyphen)
   end
