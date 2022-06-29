@@ -18,14 +18,14 @@ label               15       4       0       0
 locale              23       0       0       0
 locator              4       1       0       0
 magic               32       7       1       0
-name                92      18       1       0
+name                93      17       1       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
 number              17       2       1       0
 page                 9       0       0       0
 plural               7       0       0       0
-position            11       4       0       0
+position            12       3       0       0
 punctuation          9       7       0       0
 quotes               3       0       1       0
 simplespace          0       1       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              635     199      17       0
+(all)              637     197      17       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -360,10 +360,10 @@ Failure → citeproc test test-suite bugreports_SortedIeeeItalicsFail.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> G. Everhardt, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965</div>
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Doe, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965</div>
     .</div>
   <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> J. Doe, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965</div>
+    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> G. Everhardt, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965</div>
     .</div>
   <div class="csl-entry">
     <div class="csl-left-margin">[3]</div><div class="csl-right-inline"> J. Roe, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965</div>
@@ -1156,9 +1156,9 @@ Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Doe, John. 1990. <i>Book A</i>. Brobdingnag: Zardoz Press.</div>
   <div class="csl-entry">Doe, John, and Jane Roe. 1991. <i>Book B</i>.</div>
+  <div class="csl-entry">Doe, John, Jane Roe, and Alvin Asthma. 1992. <i>Book C</i>.</div>
   <div class="csl-entry">Doe, John, Jane Roe, Alvin Asthma, Bob Bronchitis, Chris Cold, Don Dropsy, Ernie Enteritis, et al. 1993. <i>Book D</i>.</div>
   <div class="csl-entry">Doe, John, Jane Roe, Alvin Asthma, Bob Bronchitis, Chris Cold, Don Dropsy, Ernie Enteritis, et al. 1994. <i>Book E</i>.</div>
-  <div class="csl-entry">Doe, John, Jane Roe, and Alvin Asthma. 1992. <i>Book C</i>.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1379,20 +1379,6 @@ Passed in:
 (string) 'תפוח ו  תפוז'
 Expected:
 (string) 'תפוחו תפוז'
-
-Failure → citeproc test test-suite name_HyphenatedNonDroppingParticle2.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Alan al-One</div>
-  <div class="csl-entry">Mary Marple</div>
-  <div class="csl-entry">Paul Participle</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Mary Marple</div>
-  <div class="csl-entry">Alan al-One</div>
-  <div class="csl-entry">Paul Participle</div>
-</div>'
 
 Failure → citeproc test test-suite name_InTextMarkupInitialize.txt
 Passed in:
@@ -1627,22 +1613,6 @@ Passed in:
 (string) '>>[0] Book A; . He said “Please work.” ibid.'
 Expected:
 (string) '>>[0] Book A. He said “Please work.” Ibid.'
-
-Failure → citeproc test test-suite position_IbidWithSuffix.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Al-Khatib Organization</div>
-  <div class="csl-entry">Alan Aberdeen</div>
-  <div class="csl-entry">Beatrice Butterfield</div>
-  <div class="csl-entry">Sergei Kaspersky</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Alan Aberdeen</div>
-  <div class="csl-entry">Al-Khatib Organization</div>
-  <div class="csl-entry">Beatrice Butterfield</div>
-  <div class="csl-entry">Sergei Kaspersky</div>
-</div>'
 
 Failure → citeproc test test-suite position_ResetNoteNumbers.txt
 Passed in:

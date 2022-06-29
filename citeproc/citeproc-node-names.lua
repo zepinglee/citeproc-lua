@@ -465,6 +465,12 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     truncated_names = util.slice(names, 1, self.et_al_use_first)
   end
 
+  if context.sort_key then
+    self.name_as_sort_order = "all"
+    et_al = nil
+    label = nil
+  end
+
   local inlines = {}
 
   for i, name in ipairs(truncated_names) do
@@ -495,7 +501,7 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
       local punctuation = self.delimiter .. util.unicode["horizontal ellipsis"] .. " "
       table.insert(inlines, PlainText:new(punctuation))
       util.extend(inlines, self:render_person_name(names[#names], self.et_al_use_first > 1, context))
-    elseif self.et_al_use_first > 0 then
+    elseif self.et_al_use_first > 0 and et_al then
       local et_al_inlines = et_al:render_term(context)
       if #et_al_inlines > 0 then
         if self:_check_delimiter(self.delimiter_precedes_et_al, self.et_al_use_first + 1) then
