@@ -116,11 +116,7 @@ function CiteProc:build_cluster(citation_items)
       end
     else
       local delimiter = self.style_element.citation.layout.delimiter
-      if delimiter then
-        if string.match(delimiter, "[.!?]%s*$") then
-          ir:capitalize_first_term()
-        end
-      else
+      if i == 1 or not delimiter or string.match(delimiter, "[.!?]%s*$") then
         ir:capitalize_first_term()
       end
     end
@@ -233,6 +229,11 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
   self.registry.citations[citation.citationID] = citation
 
   local items = {}
+  local note_citation_map = {}
+  -- {
+  --   1 = {"citation-1", "citation-2"},
+  --   2 = {"citation-2"},
+  -- }
 
   local cite_first_note_numbers = {}
   local cite_last_note_numbers = {}
@@ -241,6 +242,12 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
     -- An array citationID/note-number pairs preceding the target citation
     local citation_id = citation_pre[1]
     local note_number = citation_pre[2]
+    if note_number > 0 then
+      if not note_citation_map[note_number] then
+        note_citation_map[note_number] = {}
+      end
+      table.insert(note_citation_map[note_number], citation_id)
+    end
     local pre_citation = self.registry.citations[citation_id]
     for _, cite_item in ipairs(pre_citation.citationItems) do
       if not cite_first_note_numbers[cite_item.id] then
@@ -269,7 +276,7 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
     local citation_ = self.registry.citations[citation_id]
     citation_index = citation_index + #citationsPre - 1
 
-    local citation_str = self:build_citation_str(citation_, note_number, cite_first_note_numbers, cite_last_note_numbers, previous_citation)
+    local citation_str = self:build_citation_str(citation_, note_number, note_citation_map, cite_first_note_numbers, cite_last_note_numbers, previous_citation)
 
     if citation_str ~= self.registry.citation_strings[citation_id] then
       params.bibchange = true
@@ -287,7 +294,17 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
   return {params, output}
 end
 
-function CiteProc:build_citation_str(citation, note_number, cite_first_note_numbers, cite_last_note_numbers, previous_citation)
+function CiteProc:build_citation_str(citation, note_number, note_citation_map, cite_first_note_numbers, cite_last_note_numbers, previous_citation)
+  local previous_note_citations
+  if note_number > 1 then
+    previous_note_citations = note_citation_map[note_number - 1]
+  end
+  local note_has_previous_citation = false
+  if not note_citation_map[note_number] then
+    note_citation_map[note_number] = {}
+  end
+  table.insert(note_citation_map[note_number], citation.citationId)
+
   local items = {}
   for i, cite_item in ipairs(citation.citationItems) do
     cite_item.id = tostring(cite_item.id)
@@ -309,7 +326,7 @@ function CiteProc:build_citation_str(citation, note_number, cite_first_note_numb
         item.label = "page"
       end
 
-      self:set_cite_position(item, note_number, cite_first_note_numbers, cite_last_note_numbers, previous_cite, previous_citation)
+      self:set_cite_position(item, note_number, cite_first_note_numbers, cite_last_note_numbers, previous_cite, previous_citation, previous_note_citations)
 
       table.insert(items, item)
     end
@@ -323,10 +340,7 @@ function CiteProc:build_citation_str(citation, note_number, cite_first_note_numb
   return citation_str
 end
 
-function CiteProc:set_cite_position(item, note_number, cite_first_note_numbers, cite_last_note_numbers, previous_cite, previous_citation)
-  if type(note_number) ~= "number" then
-    note_number = tonumber(note_number)
-  end
+function CiteProc:set_cite_position(item, note_number, cite_first_note_numbers, cite_last_note_numbers, previous_cite, previous_citation, previous_note_citations)
 
   item.note_number = note_number
   if cite_first_note_numbers[item.id] then
@@ -349,10 +363,19 @@ function CiteProc:set_cite_position(item, note_number, cite_first_note_numbers, 
       preceding_cite = previous_cite
     end
   elseif previous_citation then
+    -- (hidden) The previous note, if containing in the previous citation,
+    -- should has exactly one citation.
+    -- See also
+    --   https://github.com/citation-style-language/documentation/issues/121
+    --   position_IbidWithMultipleSoloCitesInBackref.txt
     -- b. the current cite is the first cite in the citation, and the previous
     -- citation consists of a single cite referencing the same item
-    if #previous_citation.citationItems == 1 and previous_citation.citationItems[1].id == item.id then
-      preceding_cite = previous_citation.citationItems[1]
+    local previous_note_number = previous_citation.properties.noteIndex
+    if (previous_note_number == note_number - 1 and #previous_note_citations == 1)
+        or previous_note_number == note_number then
+      if #previous_citation.citationItems == 1 and previous_citation.citationItems[1].id == item.id then
+        preceding_cite = previous_citation.citationItems[1]
+      end
     end
   end
 
