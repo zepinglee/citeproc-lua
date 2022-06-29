@@ -689,9 +689,12 @@ function Name:render_family(person_name, is_romanesque, is_reversed, demote_ndp,
   local text = person_name.family
   -- Remove double quotes: name_ParticleCaps3.txt
   text = string.gsub(text, '"', "")
-  -- Remove brackets for sorting: sort_NameVariable.txt
   if context.sort_key then
+    -- Remove brackets for sorting: sort_NameVariable.txt
     text = string.gsub(text, "[%[%]]", "")
+    -- Remove leading apostrophe: sort_LeadingApostropheOnNameParticle.txt
+    text = string.gsub(text, "^'", "")
+    text = string.gsub(text, "^’", "")
   end
   local family_inlines = self.family:format_text_case(text, context)
   if person_name["non-dropping-particle"] and is_romanesque and not (is_reversed and demote_ndp) then

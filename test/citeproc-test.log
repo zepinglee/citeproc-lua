@@ -29,7 +29,7 @@ position            12       3       0       0
 punctuation          9       7       0       0
 quotes               3       0       1       0
 simplespace          0       1       0       0
-sort                40      21       5       0
+sort                41      20       5       0
 sortseparator        1       0       0       0
 substitute           6       0       1       0
 testers              2       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              639     195      17       0
+(all)              640     194      17       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -2209,30 +2209,6 @@ Passed in:
 (string) '>>[0] Smith 2003; Jones 2005; Smith 2010'
 Expected:
 (string) '>>[0] Smith 2003, 2010; Jones 2005'
-
-Failure → citeproc test test-suite sort_LeadingApostropheOnNameParticle.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">’t Horvath, P A A</div>
-  <div class="csl-entry">’t Horvath, P A C</div>
-  <div class="csl-entry">d’Wander, W</div>
-  <div class="csl-entry">de’ Frinkle, B</div>
-  <div class="csl-entry">in ’t Horvath, P A B</div>
-  <div class="csl-entry">in ’t Horvath, P A D</div>
-  <div class="csl-entry">Klabdaggit, M</div>
-  <div class="csl-entry">Vooz, B</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">d’Wander, W</div>
-  <div class="csl-entry">de’ Frinkle, B</div>
-  <div class="csl-entry">in ’t Horvath, P A B</div>
-  <div class="csl-entry">in ’t Horvath, P A D</div>
-  <div class="csl-entry">Klabdaggit, M</div>
-  <div class="csl-entry">’t Horvath, P A A</div>
-  <div class="csl-entry">’t Horvath, P A C</div>
-  <div class="csl-entry">Vooz, B</div>
-</div>'
 
 Failure → citeproc test test-suite sort_NameImplicitSortOrderAndForm.txt
 Passed in:
