@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                7       2       0       0
-bugreports          46      33       3       0
+bugreports          48      31       3       0
 collapse             4      17       0       0
 condition           17       0       0       0
 date                95       5       1       0
@@ -29,7 +29,7 @@ position            13       2       0       0
 punctuation          9       7       0       0
 quotes               3       0       1       0
 simplespace          0       1       0       0
-sort                43      18       5       0
+sort                44      17       5       0
 sortseparator        1       0       0       0
 substitute           6       0       1       0
 testers              2       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              646     186      19       0
+(all)              649     183      19       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -68,20 +68,6 @@ Passed in:
 Expected:
 (string) 'John d’Jones'
 
-Failure → citeproc test test-suite bugreports_AsmJournals.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">1. </div><div class="csl-right-inline"><b>Doe Co.</b> 1965. His Collectively Anonymous Life</div>
-    .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">1. </div><div class="csl-right-inline"><b>Doe Co.</b> 1965. His Collectively Anonymous Life.</div>
-  </div>
-</div>'
-
 Failure → citeproc test test-suite bugreports_AuthorPosition.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -96,14 +82,14 @@ Failure → citeproc test test-suite bugreports_AutomaticallyDeleteItemsFails.tx
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Doe, <i>Book A</i>, 2000</div>
-    .</div>
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Doe, <i>Book A</i>, 2000.</div>
+  </div>
   <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> J. Doe, <i>Book B</i>, 2000</div>
-    .</div>
+    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> J. Doe, <i>Book B</i>, 2000.</div>
+  </div>
   <div class="csl-entry">
-    <div class="csl-left-margin">[3]</div><div class="csl-right-inline"> R. Snoakes, <i>Book C</i>, 2000</div>
-    .</div>
+    <div class="csl-left-margin">[3]</div><div class="csl-right-inline"> R. Snoakes, <i>Book C</i>, 2000.</div>
+  </div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -179,8 +165,8 @@ Failure → citeproc test test-suite bugreports_DuplicateSpaces.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>,  New York: Routledge, 2006</div>
-    .</div>
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>,  New York: Routledge, 2006.</div>
+  </div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -239,8 +225,8 @@ Failure → citeproc test test-suite bugreports_IeeePunctuation.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> P.G. Zimbardo, “Does Psychology make a significant difference in our lives?,” <i>American Psychologist</i>,  vol. 59, Jan. 2004, pp. 339–351</div>
-    .</div>
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> P.G. Zimbardo, “Does Psychology make a significant difference in our lives?,” <i>American Psychologist</i>,  vol. 59, Jan. 2004, pp. 339–351.</div>
+  </div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -349,32 +335,6 @@ Passed in:
 (string) '(Roe, 1995; Roe, 1996)'
 Expected:
 (string) '(Roe, 1995, 1996)'
-
-Failure → citeproc test test-suite bugreports_SortedIeeeItalicsFail.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Doe, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965</div>
-    .</div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> G. Everhardt, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965</div>
-    .</div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[3]</div><div class="csl-right-inline"> J. Roe, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965</div>
-    .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Doe, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> G. Everhardt, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[3]</div><div class="csl-right-inline"> J. Roe, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965.</div>
-  </div>
-</div>'
 
 Failure → citeproc test test-suite bugreports_UndefinedInName3.txt
 Passed in:
@@ -1069,11 +1029,11 @@ Failure → citeproc test test-suite display_SecondFieldAlignMigratePunctuation.
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005</div>
-    .</div>
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005.</div>
+  </div>
   <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> F.G. Bennett Jr., “Getting Property Right: “Informal” Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>,  vol. 18, Aug. 2009, pp. 463–509</div>
-    .</div>
+    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> F.G. Bennett Jr., “Getting Property Right: “Informal” Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>,  vol. 18, Aug. 2009, pp. 463–509.</div>
+  </div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2136,20 +2096,6 @@ Expected:
   <div class="csl-entry">Title 3</div>
   <div class="csl-entry">Title 1</div>
   <div class="csl-entry">Title 2</div>
-</div>'
-
-Failure → citeproc test test-suite sort_DateMacroSortWithSecondFieldAlign.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">John Doe</div><div class="csl-right-inline">His Anonymous Life (1965)</div>
-    .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">John Doe</div><div class="csl-right-inline">His Anonymous Life (1965).</div>
-  </div>
 </div>'
 
 Failure → citeproc test test-suite sort_GroupedByAuthorstring.txt
