@@ -108,7 +108,7 @@ function Context:get_ordinary(name, form)
   return res
 end
 
--- TODO: Process only once
+-- TODO: optimize: process only once
 function Context:get_name(variable_name)
   local names = self.reference[variable_name]
   if names then

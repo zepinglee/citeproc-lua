@@ -10,6 +10,7 @@ local unicode = require("unicode")
 
 local Element = require("citeproc-element").Element
 local names = require("citeproc-node-names")
+local InlineElement = require("citeproc-output").InlineElement
 local util = require("citeproc-util")
 
 
@@ -159,6 +160,10 @@ function Key:render(engine, state, context)
       res = value
     else
       res = context:get_variable(self.variable)
+      if type(res) == "string" then
+        local inlines = InlineElement:parse(res, context)
+        res = context.format:output(inlines)
+      end
     end
   -- else
   --   local macro = self:get_attribute("macro")
@@ -166,12 +171,6 @@ function Key:render(engine, state, context)
   --     res = self:get_macro(macro):render(item, context)
   --   end
   end
-  if res == nil then
-    res = false
-  end
-  -- if type(res) == "string" then
-  --   res = self._normalize_string(res)
-  -- end
   return res
 end
 
@@ -195,6 +194,10 @@ function Key:_render_name(engine, state, context)
     return false
   end
   local ir = self.name_inheritance:build_ir(self.variable, nil, nil, engine, state, context)
+  if type(ir) == "number" then
+    -- name count
+    return ir
+  end
   local output_format = context.format
   local inlines = ir:flatten(output_format)
 
