@@ -68,7 +68,7 @@ end
 
 function IrNode:capitalize_first_term()
   -- util.debug(self)
-  if self.type == "Rendered" and self.element and self.element.term then
+  if self.type == "Rendered" and self.element and (self.element.term == "ibid" or self.element.term == "and") then
     self.inlines[1]:capitalize_first_term()
   elseif self.type == "SeqIr" and self.children[1] then
     self.children[1]:capitalize_first_term()
