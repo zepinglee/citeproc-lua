@@ -18,7 +18,7 @@ label               15       4       0       0
 locale              23       0       0       0
 locator              4       1       0       0
 magic               32       7       1       0
-name                91      19       1       0
+name                92      18       1       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              634     200      17       0
+(all)              635     199      17       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -268,8 +268,8 @@ Expected:
 Failure → citeproc test test-suite bugreports_MatchedAuthorAndDate.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brown, J. 2006, August. <b><i>Tijdschrift voor praktijkondersteuning</i></b>. http://dx.doi.org/10.1007/bf03074904.</div>
-  <div class="csl-entry">Brown, J. 2006, August. <b><i>Huisarts en Wetenschap</i></b>. http://dx.doi.org/10.1007/bf03084836.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <i><b>Tijdschrift voor praktijkondersteuning</b></i>. http://dx.doi.org/10.1007/bf03074904.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <i><b>Huisarts en Wetenschap</b></i>. http://dx.doi.org/10.1007/bf03084836.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1380,20 +1380,6 @@ Passed in:
 Expected:
 (string) 'תפוחו תפוז'
 
-Failure → citeproc test test-suite name_HyphenatedNonDroppingParticle1.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">al-One, Alan</div>
-  <div class="csl-entry">Marple, Mary</div>
-  <div class="csl-entry">Participle, Paul</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Marple, Mary</div>
-  <div class="csl-entry">One, Alan al-</div>
-  <div class="csl-entry">Participle, Paul</div>
-</div>'
-
 Failure → citeproc test test-suite name_HyphenatedNonDroppingParticle2.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -1434,7 +1420,7 @@ Expected:
 
 Failure → citeproc test test-suite name_ParsedNonDroppingParticleWithApostrophe.txt
 Passed in:
-(string) '<span style="font-variant:small-caps;">d’Aubignac</span> (François Hédelin)'
+(string) '<span style="font-variant:small-caps;">Aubignac</span> (François Hédelin d’)'
 Expected:
 (string) '<span style="font-variant:small-caps;">Aubignac</span> (François Hédelin <span style="font-variant:small-caps;">d’</span>)'
 

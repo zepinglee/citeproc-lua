@@ -129,26 +129,38 @@ function Context:split_ndp_family(name)
   local parts = util.split(name.family)
   for i, part in ipairs(parts) do
     local ndp, family
-    if i == #parts or not string.match(part, "^%l") then
+    if not string.match(part, "^%l") then
       for j = i, #parts do
         table.insert(family_parts, parts[j])
       end
       break
     end
+    -- d'Aubignac
     ndp, family = string.match(part, "^(%l')(.+)$")
     if ndp and family then
       table.insert(ndp_parts, ndp)
-      table.insert(family_parts, family)
+      parts[i] = family
     else
       ndp, family = string.match(part, "^(%l’)(.+)$")
       if ndp and family then
         table.insert(ndp_parts, ndp)
-        table.insert(family_parts, family)
+        parts[i] = family
       else
-        if string.match(part, "^%l+$") then
+        -- al-Aswānī
+        ndp, family = string.match(part, "^(%l+%-)(.+)$")
+        if ndp and family then
+          table.insert(ndp_parts, ndp)
+          parts[i] = family
+        elseif i < #parts and string.match(part, "^%l+$") then
           table.insert(ndp_parts, part)
         end
       end
+    end
+    if ndp or i == #parts then
+      for j = i, #parts do
+        table.insert(family_parts, parts[j])
+      end
+      break
     end
   end
   if #ndp_parts > 0 then

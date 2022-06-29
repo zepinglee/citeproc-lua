@@ -691,7 +691,7 @@ function Name:render_family(person_name, is_romanesque, is_reversed, demote_ndp,
   if person_name["non-dropping-particle"] and is_romanesque and not (is_reversed and demote_ndp) then
     local ndp_inlines = self.family:format_text_case(person_name["non-dropping-particle"], context)
     local ndp = person_name["non-dropping-particle"]
-    if not util.endswith(ndp, "'") and not util.endswith(ndp, util.unicode["apostrophe"]) then
+    if not util.endswith(ndp, "'") and not util.endswith(ndp, "-") and not util.endswith(ndp, util.unicode["apostrophe"]) then
       table.insert(ndp_inlines, PlainText:new(" "))
     end
     family_inlines = util.extend(ndp_inlines, family_inlines)
