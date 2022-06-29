@@ -26,6 +26,7 @@ function Sort:from_node(node)
   for i, key in ipairs(o.children) do
     o.sort_directions[i] = (key.sort ~= "descending")
   end
+  table.insert(o.sort_directions, true)
 
   return o
 end
@@ -62,19 +63,22 @@ function Sort:sort(items, state, context)
   end
 
   -- TODO: optimize: use cached values for fixed keys
-  for _, item in ipairs(items) do
+  for i, item in ipairs(items) do
     key_map[item.id] = {}
 
     context.id = item.id
     context.cite = item
     context.reference = context.engine.registry.registry[item.id]
 
-    for i, key in ipairs(self.children) do
+    for j, key in ipairs(self.children) do
       context.sort_key = key
 
       local key_str = key:render(context.engine, state, context)
-      key_map[item.id][i] = key_str
+      key_map[item.id][j] = key_str
     end
+    -- To preserve the original order of items with same sort keys
+    -- sort_NameImplicitSortOrderAndForm.txt
+    table.insert(key_map[item.id], i)
   end
 
   -- util.debug(key_map)
@@ -82,6 +86,7 @@ function Sort:sort(items, state, context)
   local function compare_entry(item1, item2)
     return self.compare_entry(key_map, sort_directions, item1, item2)
   end
+  -- util.debug(items)
   table.sort(items, compare_entry)
 
   return items
