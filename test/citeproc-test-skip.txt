@@ -5,3 +5,7 @@ flipflop_NumericField.txt
 locator_TrickyEntryForPlurals.txt
 
 position_IbidInText.txt
+
+# Do not ommit empty entry output.
+sort_OmittedBibRefMixedNumericStyle.txt
+sort_OmittedBibRefNonNumericStyle.txt

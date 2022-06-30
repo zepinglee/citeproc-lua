@@ -333,6 +333,9 @@ function Bibliography:build_ir(engine, state, context)
     end
     ir.children = {ir.children[1], right_inline_ir}
   end
+  if not ir then
+    ir = Rendered:new(PlainText:new("[CSL STYLE ERROR: reference with no printed form.]"))
+  end
   return ir
 end
 

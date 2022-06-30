@@ -24,6 +24,10 @@ function Date:from_node(node)
   o:set_attribute(node, "form")
   o:set_attribute(node, "date-parts")
 
+  if o.form and not o.date_parts then
+    o.date_parts = "year-month-day"
+  end
+
   o:get_delimiter_attribute(node)
   o:set_formatting_attributes(node)
   o:set_affixes_attributes(node)
@@ -56,6 +60,7 @@ function Date:build_ir(engine, state, context)
 
   if variable["date-parts"] and #variable["date-parts"] > 0 then
 
+    -- TODO: move input normlization in one place
     for i = 1, 2 do
       if variable["date-parts"][i] then
         for j = 1, 3 do
@@ -71,6 +76,7 @@ function Date:build_ir(engine, state, context)
     if variable["season"] and not variable["date-parts"][1][2] then
       variable["date-parts"][1][2] = 20 + tonumber(variable["season"])
     end
+
     variable = variable["date-parts"]
     if self.form then
       ir = self:build_localized_date_ir(variable, engine, state, context)
@@ -99,6 +105,9 @@ function Date:build_ir(engine, state, context)
   if not ir then
     -- date_LiteralFailGracefullyIfNoValue.txt
     ir = Rendered:new()
+    if context.sort_key then
+      ir.sort_key = false
+    end
     ir.group_var = "missing"
     return ir
   end
@@ -108,6 +117,10 @@ function Date:build_ir(engine, state, context)
     if state.name_override then
       state.suppressed[self.variable] = true
     end
+  end
+
+  if context.sort_key then
+    ir.sort_key = self:render_sort_key(engine, state, context)
   end
 
   return ir
@@ -333,38 +346,47 @@ function Date:get_locale_date(context, form)
   return date
 end
 
-function Date:render_sort_key (item, context)
-  local variable_name = context.options["variable"]
-  local date = self:get_variable(item, variable_name, context)
-  if not date or not date["date-parts"] then
-    return nil
+function Date:render_sort_key(engine, state, context)
+  local date = context:get_variable(self.variable)
+  if not date then
+    return false
   end
+  if not date["date-parts"] then
+    if self.literal then
+      return "1" .. self.literal
+    else
+      return false
+    end
+  end
+
   local show_parts = {
     year = false,
     month = false,
     day = false,
   }
-  if self:get_attribute("form") then
-    local date_parts = self:get_attribute("date-parts") or "year-month-day"
-    for _, dp_name in ipairs(util.split(date_parts, "%-")) do
+  if self.form then
+    for _, dp_name in ipairs(util.split(self.date_parts, "%-")) do
       show_parts[dp_name] = true
     end
   else
-    for _, child in ipairs(self:query_selector("date-part")) do
-      show_parts[child:get_attribute("name")] = true
+    for _, date_part in ipairs(self.children) do
+      show_parts[date_part.name] = true
     end
   end
   local res = ""
-  for _, date_parts in ipairs(date["date-parts"]) do
+  for _, range_part in ipairs(date["date-parts"]) do
+    if res ~= "" then
+      res = res .. "/"
+    end
     for i, dp_name in ipairs({"year", "month", "day"}) do
-      local value = date_parts[i]
-      if not value or not show_parts[dp_name] then
-        value = 0
+      local value = 0
+      if show_parts[dp_name] and range_part[i] then
+        value = range_part[i]
       end
       if i == 1 then
         res = res .. string.format("%05d", value + 10000)
       else
-        res = res .. string.format("%02d", value)
+        res = res .. "-" .. string.format("%02d", value)
       end
     end
   end

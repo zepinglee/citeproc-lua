@@ -9,6 +9,7 @@ local sort = {}
 local unicode = require("unicode")
 
 local Element = require("citeproc-element").Element
+local Date = require("citeproc-node-date").Date
 local names = require("citeproc-node-names")
 local InlineElement = require("citeproc-output").InlineElement
 local util = require("citeproc-util")
@@ -175,8 +176,11 @@ function Key:render(engine, state, context)
     state:push_macro(self.macro)
     local ir = macro:build_ir(engine, state, context)
     state:pop_macro(self.macro)
+    -- util.debug(ir)
     if ir.name_count then
       return ir.name_count
+    elseif ir.sort_key ~= nil then
+      return ir.sort_key
     end
     local output_format = context.format
     local inlines = ir:flatten(output_format)
@@ -213,33 +217,13 @@ function Key:_render_name(engine, state, context)
 end
 
 function Key:_render_date(context)
-  local date = context:get_variable(self.variable)
-  if not date then
-    return false
+  if not self.date then
+    self.date = Date:new()
+    self.date.variable = self.variable
+    self.date.form = "numeric"
+    self.date.date_parts = "year-month-day"
   end
-  if not date["date-parts"] then
-    return date.literal or date.raw
-  end
-  local res = ""
-  for _, date_parts in ipairs(date["date-parts"]) do
-    for i, date_part in ipairs(date_parts) do
-      local value = date_parts[i]
-      if type(value) == "string" then
-        value = tonumber(value)
-      end
-      if i == 1 then -- year
-        res = res .. string.format("%05d", value + 10000)
-      elseif i == 2 then  -- month
-        if value < 1 or value > 12 then
-          value = 0
-        end
-        res = res .. string.format("%02d", value)
-      else  -- month
-        res = res .. string.format("%02d", value)
-      end
-    end
-  end
-  return res
+  return self.date:render_sort_key(context.engine, nil, context)
 end
 
 -- function Key._normalize_string(str)

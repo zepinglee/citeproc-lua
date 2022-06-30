@@ -29,7 +29,7 @@ position            13       2       0       0
 punctuation          9       7       0       0
 quotes               4       0       0       0
 simplespace          0       1       0       0
-sort                47      19       0       0
+sort                47      17       0       0
 sortseparator        1       0       0       0
 substitute           6       1       0       0
 testers              2       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              655     192       4       0
+(all)              655     190       4       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -254,8 +254,8 @@ Expected:
 Failure → citeproc test test-suite bugreports_MatchedAuthorAndDate.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brown, J. 2006, August. <i><b>Tijdschrift voor praktijkondersteuning</b></i>. http://dx.doi.org/10.1007/bf03074904.</div>
-  <div class="csl-entry">Brown, J. 2006, August. <i><b>Huisarts en Wetenschap</b></i>. http://dx.doi.org/10.1007/bf03084836.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <b><i>Tijdschrift voor praktijkondersteuning</i></b>. http://dx.doi.org/10.1007/bf03074904.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <b><i>Huisarts en Wetenschap</i></b>. http://dx.doi.org/10.1007/bf03084836.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2182,20 +2182,6 @@ Passed in:
 Expected:
 (string) 'Banda 1999; Aalto 2000, Aalto 2001'
 
-Failure → citeproc test test-suite sort_ConditionalMacroDates.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Title 1</div>
-  <div class="csl-entry">Title 2</div>
-  <div class="csl-entry">Title 3</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Title 3</div>
-  <div class="csl-entry">Title 1</div>
-  <div class="csl-entry">Title 2</div>
-</div>'
-
 Failure → citeproc test test-suite sort_DropNameLabelInSort.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -2217,19 +2203,6 @@ Passed in:
 (string) '>>[0] Smith 2003; Jones 2005; Smith 2010'
 Expected:
 (string) '>>[0] Smith 2003, 2010; Jones 2005'
-
-Failure → citeproc test test-suite sort_OmittedBibRefMixedNumericStyle.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">1. Anderson, Book One</div>
-  <div class="csl-entry">3. Crane, Book Two</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">1. Anderson, Book One</div>
-  <div class="csl-entry">2. [CSL STYLE ERROR: reference with no printed form.]</div>
-  <div class="csl-entry">3. Crane, Book Two</div>
-</div>'
 
 Failure → citeproc test test-suite sort_RangeUnaffected.txt
 Passed in:
@@ -2366,7 +2339,7 @@ Error → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntriesByCite.
 ./citeproc/citeproc-engine.lua:378: attempt to get length of a nil value (local 'previous_note_citations')
 
 Error → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
-./citeproc/citeproc-node-sort.lua:99: attempt to compare number with string
+./citeproc/citeproc-node-sort.lua:100: attempt to compare number with string
 
 Error → citeproc test test-suite name_EtAlWithCombined.txt
 ./citeproc/citeproc-node-choose.lua:168: attempt to index a nil value (field 'cite')

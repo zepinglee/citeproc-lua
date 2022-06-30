@@ -14,6 +14,7 @@ skipped_fixtures = [
     'bugreports_FrenchApostrophe.txt',
     'bugreports_parseName.txt',
     'decorations_NoNormalWithoutDecoration.txt',
+    'display_LostSuffix.txt',
     'flipflop_LeadingMarkupWithApostrophe.txt',
     'flipflop_OrphanQuote.txt',
     'flipflop_SingleBeforeColon.txt',
