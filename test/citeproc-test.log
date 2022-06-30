@@ -29,7 +29,7 @@ position            13       2       0       0
 punctuation          9       7       0       0
 quotes               4       0       0       0
 simplespace          0       1       0       0
-sort                46      20       0       0
+sort                47      19       0       0
 sortseparator        1       0       0       0
 substitute           6       1       0       0
 testers              2       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              654     193       4       0
+(all)              655     192       4       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -2222,7 +2222,6 @@ Failure → citeproc test test-suite sort_OmittedBibRefMixedNumericStyle.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">1. Anderson, Book One</div>
-  <div class="csl-entry"></div>
   <div class="csl-entry">3. Crane, Book Two</div>
 </div>'
 Expected:
@@ -2230,19 +2229,6 @@ Expected:
   <div class="csl-entry">1. Anderson, Book One</div>
   <div class="csl-entry">2. [CSL STYLE ERROR: reference with no printed form.]</div>
   <div class="csl-entry">3. Crane, Book Two</div>
-</div>'
-
-Failure → citeproc test test-suite sort_OmittedBibRefNonNumericStyle.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Anderson, Book One</div>
-  <div class="csl-entry"></div>
-  <div class="csl-entry">Crane, Book Two</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Anderson, Book One</div>
-  <div class="csl-entry">Crane, Book Two</div>
 </div>'
 
 Failure → citeproc test test-suite sort_RangeUnaffected.txt

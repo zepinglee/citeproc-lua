@@ -507,12 +507,13 @@ function CiteProc:makeBibliography()
 
     -- subsequent_author_substitute
 
-    -- util.debug(ir)
-    local flat = ir:flatten(output_format)
+    -- The layout output may be empty: sort_OmittedBibRefNonNumericStyle.txt
+    if ir then
+      local flat = ir:flatten(output_format)
+      local str = output_format:output_bibliography_entry(flat)
+      table.insert(res, str)
+    end
 
-    local str = output_format:output_bibliography_entry(flat)
-
-    table.insert(res, str)
   end
 
   return {params, res}
