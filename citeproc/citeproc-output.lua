@@ -223,25 +223,23 @@ function InlineElement:parse_quotes(inlines, context)
   local localized_quotes = context:get_localized_quotes()
 
   for _, fragment in ipairs(quote_fragments) do
+    local top_text_list = text_stack[#text_stack]
+
     if type(fragment) == "table" then
       if fragment.inlines then
         fragment.inlines = self:parse_quotes(fragment.inlines, context)
       end
-      table.insert(text_stack[#text_stack], fragment)
+      table.insert(top_text_list, fragment)
 
     elseif type(fragment) == "string" then
-
       local quote = fragment
-      local stack_top_quote = nil
-      if #quote_stack > 0 then
-        stack_top_quote = quote_stack[#quote_stack]
-      end
+      local top_quote = quote_stack[#quote_stack]
 
       if quote == "'" then
-        if stack_top_quote == "'" and #text_stack[#text_stack] > 0 then
-          table.remove(quote_stack, #quote_stack)
-          local quoted = Quoted:new(text_stack[#text_stack], localized_quotes)
-          table.remove(text_stack, #text_stack)
+        if top_quote == "'" and #top_text_list > 0 then
+          table.remove(quote_stack)
+          local quoted = Quoted:new(top_text_list, localized_quotes)
+          table.remove(text_stack)
           table.insert(text_stack[#text_stack], quoted)
         else
           table.insert(quote_stack, quote)
@@ -249,10 +247,10 @@ function InlineElement:parse_quotes(inlines, context)
         end
 
       elseif quote == '"' then
-        if stack_top_quote == '"' then
-          table.remove(quote_stack, #quote_stack)
-          local quoted = Quoted:new(text_stack[#text_stack], localized_quotes)
-          table.remove(text_stack, #text_stack)
+        if top_quote == '"' then
+          table.remove(quote_stack)
+          local quoted = Quoted:new(top_text_list, localized_quotes)
+          table.remove(text_stack)
           table.insert(text_stack[#text_stack], quoted)
         else
           table.insert(quote_stack, quote)
@@ -266,19 +264,23 @@ function InlineElement:parse_quotes(inlines, context)
         table.insert(text_stack, {})
 
       elseif (quote == util.unicode["right single quotation mark"] and
-              stack_top_quote == util.unicode["left single quotation mark"]) or
+              top_quote == util.unicode["left single quotation mark"]) or
              (quote == util.unicode["right double quotation mark"] and
-              stack_top_quote == util.unicode["left double quotation mark"]) or
+              top_quote == util.unicode["left double quotation mark"]) or
              (quote == util.unicode["right-pointing double angle quotation mark"] and
-              stack_top_quote == util.unicode["left-pointing double angle quotation mark"]) then
-          table.remove(quote_stack, #quote_stack)
-          local quoted = Quoted:new(text_stack[#text_stack], localized_quotes)
-          table.remove(text_stack, #text_stack)
+              top_quote == util.unicode["left-pointing double angle quotation mark"]) then
+          table.remove(quote_stack)
+          local quoted = Quoted:new(top_text_list, localized_quotes)
+          table.remove(text_stack)
           table.insert(text_stack[#text_stack], quoted)
 
       else
-        table.insert(text_stack[#text_stack], PlainText:new(quote))
-
+        local last_inline = top_text_list[#top_text_list]
+        if last_inline and last_inline.type == "PlainText" then
+          last_inline.value = last_inline.value .. fragment
+        else
+          table.insert(top_text_list, PlainText:new(fragment))
+        end
       end
 
     end
@@ -291,9 +293,24 @@ function InlineElement:parse_quotes(inlines, context)
       if quote == "'" then
         quote = util.unicode["apostrophe"]
       end
-      table.insert(elements, PlainText:new(quote))
-      for _, el in ipairs(text_stack[i + 1]) do
-        table.insert(elements, el)
+      local last_inline = elements[#elements]
+      if last_inline and last_inline.type == "PlainText" then
+        last_inline.value = last_inline.value .. quote
+      else
+        table.insert(elements, PlainText:new(quote))
+      end
+
+      for _, inline in ipairs(text_stack[i + 1]) do
+        if inline.type == "PlainText" then
+          local last_inline = elements[#elements]
+          if last_inline and last_inline.type == "PlainText" then
+            last_inline.value = last_inline.value .. inline.value
+          else
+            table.insert(elements, inline)
+          end
+        else
+          table.insert(elements, inline)
+        end
       end
     end
   end
@@ -301,6 +318,18 @@ function InlineElement:parse_quotes(inlines, context)
   return elements
 end
 
+local function merge_fragments_at(fragments, i)
+  if type(fragments[i+1]) == "string" then
+    fragments[i] = fragments[i] .. fragments[i+1]
+    table.remove(fragments, i+1)
+  end
+  if type(fragments[i-1]) == "string" then
+    fragments[i-1] = fragments[i-1] .. fragments[i]
+    table.remove(fragments, i)
+  end
+end
+
+-- Return a list of strings and InlineElement
 function InlineElement:get_quote_fragments(inlines)
   local fragments = {}
   for _, inline in ipairs(inlines) do
@@ -328,7 +357,7 @@ function InlineElement:get_quote_fragments(inlines)
         local idx, qt, next_idx = table.unpack(quote_tuple)
         local fragment = string.sub(inline.value, start_idx, idx-1)
         if fragment ~= "" then
-          table.insert(fragments, PlainText:new(fragment))
+          table.insert(fragments, fragment)
         end
         table.insert(fragments, qt)
         start_idx = next_idx
@@ -336,7 +365,7 @@ function InlineElement:get_quote_fragments(inlines)
       -- Insert last fragment
       local fragment = string.sub(inline.value, start_idx, #inline.value)
       if fragment ~= "" then
-        table.insert(fragments, PlainText:new(fragment))
+        table.insert(fragments, fragment)
       end
     else
       table.insert(fragments, inline)
@@ -360,15 +389,15 @@ function InlineElement:get_quote_fragments(inlines)
         end
         -- TODO: consider utf-8
         if left and right then
-          if fragment == '"' then
-            if string.match(left, "%s$") and string.match(right, "^%s") then
-              -- Orphan quote
-              fragments[i] = PlainText:new(fragment)
+          if string.match(left, "%s$") and string.match(right, "^%s") then
+            -- Orphan quote
+            merge_fragments_at(fragments, i)
+          end
+          if not string.match(left, "[%s%p]$") and not string.match(right, "^[%s%p]") then
+            if fragment == "'" then
+              fragments[i] = util.unicode['apostrophe']
             end
-          elseif fragment == "'" then
-            if not string.match(left, "[%s%p]$") and not string.match(right, "^[%s%p]") then
-              fragments[i] = PlainText:new(util.unicode['apostrophe'])
-            end
+            merge_fragments_at(fragments, i)
           end
         end
       end
@@ -527,7 +556,10 @@ local function transform_first_word(str, transform)
 end
 
 local function transform_each_word(str, seen_one, is_last, transform)
+  -- util.debug(str)
   local segments = util.segment_words(str)
+  -- util.debug(segments)
+  -- print(debug.traceback())
 
   local first_idx
   local last_idx
