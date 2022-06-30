@@ -2327,13 +2327,13 @@ Expected:
 </div>'
 
 Error → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntries.txt
-./citeproc/citeproc-engine.lua:378: attempt to get length of a nil value (local 'previous_note_citations')
+./citeproc/citeproc-engine.lua:362: attempt to get length of a nil value (local 'previous_note_citations')
 
 Error → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntriesByCite.txt
-./citeproc/citeproc-engine.lua:378: attempt to get length of a nil value (local 'previous_note_citations')
+./citeproc/citeproc-engine.lua:362: attempt to get length of a nil value (local 'previous_note_citations')
 
 Error → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
-./citeproc/citeproc-node-sort.lua:100: attempt to compare number with string
+./citeproc/citeproc-node-sort.lua:98: attempt to compare number with string
 
 Error → citeproc test test-suite name_EtAlWithCombined.txt
-./citeproc/citeproc-node-choose.lua:168: attempt to index a nil value (field 'cite')
+./citeproc/citeproc-node-choose.lua:161: attempt to index a nil value (field 'cite')

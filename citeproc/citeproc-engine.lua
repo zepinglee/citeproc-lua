@@ -8,14 +8,11 @@ local engine = {}
 
 local dom = require("luaxml-domobject")
 
-local richtext = require("citeproc-richtext")
-local Element = require("citeproc-element").Element
 local nodes = require("citeproc-nodes")
 local Style = require("citeproc-node-style").Style
 local Locale = require("citeproc-node-locale").Locale
 local Context = require("citeproc-context").Context
 local IrState = require("citeproc-context").IrState
-local formats = require("citeproc-formats")
 -- local OutputFormat = require("citeproc-output").OutputFormat
 local HtmlWriter = require("citeproc-output").HtmlWriter
 local SortStringFormat = require("citeproc-output").SortStringFormat
@@ -27,7 +24,7 @@ local util = require("citeproc-util")
 
 local CiteProc = {}
 
-function CiteProc.new (sys, style, lang, force_lang)
+function CiteProc.new(sys, style, lang, force_lang)
   if not sys then
     error("\"citeprocSys\" required")
   end
@@ -51,28 +48,15 @@ function CiteProc.new (sys, style, lang, force_lang)
   o.locales = {}
   o.system_locales = {}
 
-  -- TODO: rename to style
-  o.style_element = Style:parse(style)
-  -- util.debug(o.style_element)
+  o.style = Style:parse(style)
 
-  if type(style) == "string" then
-    o.csl = dom.parse(style)
-  else
-    o.csl = style
-  end
-  o.csl:traverse_elements(CiteProc.set_base_class)
-  o.csl:root_node().engine = o
-  o.style = o.csl:get_path("style")[1]
-  o.style.lang = lang
-
-  o.csl:root_node().style = o.style
-
-  o.lang = o.style_element.default_locale
+  o.lang = o.style.default_locale
   if not o.lang or force_lang then
     o.lang = lang or "en-US"
   end
 
-  o.formatter = formats.latex
+  -- TODO
+  -- o.formatter = formats.latex
   o.linking_enabled = false
 
   setmetatable(o, { __index = CiteProc })
@@ -84,20 +68,20 @@ function CiteProc:build_cluster(citation_items)
   local irs = {}
   citation_items = self:sorted_citation_items(citation_items)
   for _, cite_item in ipairs(citation_items) do
-    local state = IrState:new(self.style_element)
+    local state = IrState:new(self.style)
     cite_item.id = tostring(cite_item.id)
     local context = Context:new()
     context.engine = self
-    context.style = self.style_element
-    context.area = self.style_element.citation
+    context.style = self.style
+    context.area = self.style.citation
     context.locale = self:get_locale(self.lang)
-    context.name_inheritance = self.style_element.citation.name_inheritance
+    context.name_inheritance = self.style.citation.name_inheritance
     context.format = output_format
     context.id = cite_item.id
     context.cite = cite_item
     context.reference = self:get_item(cite_item.id)
 
-    local ir = self.style_element.citation:build_ir(self, state, context)
+    local ir = self.style.citation:build_ir(self, state, context)
     table.insert(irs, ir)
   end
 
@@ -111,7 +95,7 @@ function CiteProc:build_cluster(citation_items)
   for i, ir in ipairs(irs) do
     if i == 1 then
       -- local layout_prefix
-      -- local layout_affixes = self.style_element.citation.layout.affixes
+      -- local layout_affixes = self.style.citation.layout.affixes
       -- if layout_affixes then
       --   layout_prefix = layout_affixes.prefix
       -- end
@@ -120,7 +104,7 @@ function CiteProc:build_cluster(citation_items)
         ir:capitalize_first_term()
       end
     else
-      local delimiter = self.style_element.citation.layout.delimiter
+      local delimiter = self.style.citation.layout.delimiter
       if not delimiter or string.match(delimiter, "[.!?]%s*$") then
         ir:capitalize_first_term()
       end
@@ -129,16 +113,16 @@ function CiteProc:build_cluster(citation_items)
 
   -- util.debug(irs)
 
-  local citation_delimiter = self.style_element.citation.layout.delimiter
+  local citation_delimiter = self.style.citation.layout.delimiter
   local citation_stream = {}
 
   local context = Context:new()
   context.engine = self
-  context.style = self.style_element
-  context.area = self.style_element.citation
+  context.style = self.style
+  context.area = self.style.citation
   context.in_bibliography = false
   context.locale = self:get_locale(self.lang)
-  context.name_inheritance = self.style_element.citation.name_inheritance
+  context.name_inheritance = self.style.citation.name_inheritance
   context.format = output_format
 
   for i, ir in ipairs(irs) do
@@ -191,7 +175,7 @@ function CiteProc:build_cluster(citation_items)
 end
 
 function CiteProc:sorted_citation_items(items)
-  local citation_sort = self.style_element.citation.sort
+  local citation_sort = self.style.citation.sort
   if not citation_sort then
     return items
   end
@@ -199,11 +183,11 @@ function CiteProc:sorted_citation_items(items)
   local state = IrState:new()
   local context = Context:new()
   context.engine = self
-  context.style = self.style_element
-  context.area = self.style_element.citation
+  context.style = self.style
+  context.area = self.style.citation
   context.in_bibliography = false
   context.locale = self:get_locale(self.lang)
-  context.name_inheritance = self.style_element.citation.name_inheritance
+  context.name_inheritance = self.style.citation.name_inheritance
   context.format = SortStringFormat:new()
   -- context.id = id
   context.cite = nil
@@ -213,7 +197,7 @@ function CiteProc:sorted_citation_items(items)
   return items
 end
 
-function CiteProc:updateItems (ids)
+function CiteProc:updateItems(ids)
   self.registry.reflist = {}
   self.registry.registry = {}
   for _, id in ipairs(ids) do
@@ -483,7 +467,7 @@ function CiteProc:makeBibliography()
   }
   local res = {}
 
-  if not self.style_element.bibliography then
+  if not self.style.bibliography then
     return params, res
   end
 
@@ -493,17 +477,17 @@ function CiteProc:makeBibliography()
     local state = IrState:new()
     local context = Context:new()
     context.engine = self
-    context.style = self.style_element
-    context.area = self.style_element.bibliography
+    context.style = self.style
+    context.area = self.style.bibliography
     context.in_bibliography = true
     context.locale = self:get_locale(self.lang)
-    context.name_inheritance = self.style_element.bibliography.name_inheritance
+    context.name_inheritance = self.style.bibliography.name_inheritance
     context.format = output_format
     context.id = id
     context.cite = nil
     context.reference = self:get_item(id)
 
-    local ir = self.style_element.bibliography:build_ir(self, state, context)
+    local ir = self.style.bibliography:build_ir(self, state, context)
 
     -- subsequent_author_substitute
 
@@ -527,7 +511,8 @@ function CiteProc:get_sorted_refs()
 end
 
 function CiteProc:set_formatter(format)
-  self.formatter = formats[format]
+  -- TODO
+  -- self.formatter = formats[format]
 end
 
 function CiteProc:enable_linking()
@@ -536,18 +521,6 @@ end
 
 function CiteProc:disable_linking()
   self.linking_enabled = false
-end
-
-function CiteProc.set_base_class (node)
-  if node:is_element() then
-    local name = node:get_element_name()
-    local element_class = nodes[name]
-    if element_class then
-      element_class:set_base_class(node)
-    else
-      Element:set_base_class(node)
-    end
-  end
 end
 
 function CiteProc.create_element_tree(node)
@@ -573,11 +546,7 @@ function CiteProc.create_element_tree(node)
   return el
 end
 
-function CiteProc:get_style_class()
-  return self.style:get_attribute("class") or "in-text"
-end
-
-function CiteProc:get_item (id)
+function CiteProc:get_item(id)
   local item = self.registry.registry[id]
   if not item then
     item = self:_retrieve_item(id)
@@ -596,7 +565,7 @@ function CiteProc:get_item (id)
   return item
 end
 
-function CiteProc:_retrieve_item (id)
+function CiteProc:_retrieve_item(id)
   -- Retrieve, copy, and normalize
   local res = {}
   local item = self.sys.retrieveItem(id)
@@ -620,6 +589,7 @@ function CiteProc:_retrieve_item (id)
   return res
 end
 
+-- TODO: Nomalize all inputs
 function CiteProc:process_extra_note(item)
   if item.note then
     local note_fields = {}
@@ -656,8 +626,8 @@ function CiteProc:sort_bibliography()
   -- Sort the items in registry according to the `sort` in `bibliography.`
   -- This will update the `citation-number` of each item.
   local bibliography_sort = nil
-  if self.style_element.bibliography and self.style_element.bibliography.sort then
-    bibliography_sort = self.style_element.bibliography.sort
+  if self.style.bibliography and self.style.bibliography.sort then
+    bibliography_sort = self.style.bibliography.sort
   end
   if not bibliography_sort then
     return
@@ -670,11 +640,11 @@ function CiteProc:sort_bibliography()
   local state = IrState:new()
   local context = Context:new()
   context.engine = self
-  context.style = self.style_element
-  context.area = self.style_element.bibliography
+  context.style = self.style
+  context.area = self.style.bibliography
   context.in_bibliography = true
   context.locale = self:get_locale(self.lang)
-  context.name_inheritance = self.style_element.bibliography.name_inheritance
+  context.name_inheritance = self.style.bibliography.name_inheritance
   context.format = SortStringFormat:new()
   -- context.id = id
   context.cite = nil
@@ -709,15 +679,15 @@ function CiteProc:get_merged_locales(lang)
 
   -- 1. In-style cs:locale elements
   --    i. `xml:lang` set to chosen dialect, “de-AT”
-  table.insert(fall_back_locales, self.style_element.locales[lang])
+  table.insert(fall_back_locales, self.style.locales[lang])
 
   --    ii. `xml:lang` set to matching language, “de” (German)
   if language and language ~= lang then
-    table.insert(fall_back_locales, self.style_element.locales[language])
+    table.insert(fall_back_locales, self.style.locales[language])
   end
 
   --    iii. `xml:lang` not set
-  table.insert(fall_back_locales, self.style_element.locales["@generic"])
+  table.insert(fall_back_locales, self.style.locales["@generic"])
 
   -- 2. Locale files
   --    iv. `xml:lang` set to chosen dialect, “de-AT”

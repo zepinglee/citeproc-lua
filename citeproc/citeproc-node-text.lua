@@ -7,14 +7,9 @@
 local text_module = {}
 
 local Element = require("citeproc-element").Element
-
-local IrNode = require("citeproc-ir-node").IrNode
 local Rendered = require("citeproc-ir-node").Rendered
-
-local InlineElement = require("citeproc-output").InlineElement
-
-local richtext = require("citeproc-richtext")
 local util = require("citeproc-util")
+
 
 -- [Text](https://docs.citationstyles.org/en/stable/specification.html#text)
 local Text = Element:derive("text", {

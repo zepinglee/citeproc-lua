@@ -38,8 +38,6 @@ function Sort:sort(items, state, context)
   --   id2 = {key1, key2, ...},
   --   ...
   -- }
-  context.variable_attempt = {}
-
   local key_map = {}
   local sort_directions = self.sort_directions
   -- true: ascending
@@ -74,7 +72,7 @@ function Sort:sort(items, state, context)
     for j, key in ipairs(self.children) do
       context.sort_key = key
 
-      local key_str = key:render(context.engine, state, context)
+      local key_str = key:eval(context.engine, state, context)
       key_map[item.id][j] = key_str
     end
     -- To preserve the original order of items with same sort keys
@@ -150,14 +148,14 @@ function Key:from_node(node)
   return o
 end
 
-function Key:render(engine, state, context)
+function Key:eval(engine, state, context)
   local res
   if self.variable then
     local variable_type = util.variable_types[self.variable]
     if variable_type == "name" then
-      res = self:_render_name(engine, state, context)
+      res = self:eval_name(engine, state, context)
     elseif variable_type == "date" then
-      res = self:_render_date(context)
+      res = self:eval_date(context)
     elseif variable_type == "number" then
       local value = context:get_variable(self.variable)
       if type(value) == "string" and string.match(value, "%s+") then
@@ -195,7 +193,7 @@ function Key:render(engine, state, context)
   return res
 end
 
-function Key:_render_name(engine, state, context)
+function Key:eval_name(engine, state, context)
   if not self.name_inheritance then
     self.name_inheritance = util.clone(context.name_inheritance)
   end
@@ -216,7 +214,7 @@ function Key:_render_name(engine, state, context)
   return str
 end
 
-function Key:_render_date(context)
+function Key:eval_date(context)
   if not self.date then
     self.date = Date:new()
     self.date.variable = self.variable
@@ -225,21 +223,6 @@ function Key:_render_date(context)
   end
   return self.date:render_sort_key(context.engine, nil, context)
 end
-
--- function Key._normalize_string(str)
---   str = unicode.utf8.lower(str)
---   str = string.gsub(str, "[%[%]]", "")
---   local words = {}
---   for _, word in ipairs(util.split(str, " ")) do
---     -- TODO: strip leading prepositions
---     -- remove leading apostrophe on name particle
---     word = string.gsub(word, "^" .. util.unicode["apostrophe"], "")
---     table.insert(words, word)
---   end
---   str = table.concat(words, " ")
---   str = string.gsub(str, util.unicode["apostrophe"], "'")
---   return str
--- end
 
 
 sort.Sort = Sort

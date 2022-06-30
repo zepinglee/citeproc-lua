@@ -36,27 +36,6 @@ function Group:build_ir(engine, state, context)
   return ir
 end
 
-function Group:render (item, context)
-  self:debug_info(context)
-  context = self:process_context(context)
-
-  local num_variable_attempt = #context.variable_attempt
-
-  local res = self:render_children(item, context)
-
-  if #context.variable_attempt > num_variable_attempt then
-    if not util.any(util.slice(context.variable_attempt, num_variable_attempt + 1)) then
-      res = nil
-    end
-  end
-
-  res = self:_apply_format(res, context)
-  res = self:_apply_affixes(res, context)
-  res = self:_apply_display(res, context)
-  return res
-end
-
-
 group.Group = Group
 
 return group

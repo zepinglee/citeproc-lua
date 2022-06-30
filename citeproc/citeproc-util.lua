@@ -785,7 +785,7 @@ function util.convert_roman (number)
   local output = {}
   for _, tuple in ipairs(util.roman_numerals) do
     local letter, value = table.unpack(tuple)
-    table.insert(output, string.rep(letter, number // value))
+    table.insert(output, string.rep(letter, math.floor(number / value)))
     number = number % value
   end
   return table.concat(output, "")

@@ -67,13 +67,6 @@ function If:from_node(node)
   -- TODO: disambiguate
   o:set_bool_attribute(node, "disambiguate")
 
-  -- o.is_numeric = util.to_list(node:get_attribute("is-numeric"))
-  -- o.is_uncertain_date = util.to_list(node:get_attribute("is-uncertain-date"))
-  -- o:set_attribute(node, "locator")
-  -- o:set_attribute(node, "postition")
-  -- o.type = util.to_list(node:get_attribute("type"))
-  -- o.variable = util.to_list(node:get_attribute("variable"))
-
   o:add_conditions(node, "is-numeric")
   o:add_conditions(node, "is-uncertain-date")
   o:add_conditions(node, "locator")
