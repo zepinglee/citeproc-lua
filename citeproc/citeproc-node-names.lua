@@ -123,12 +123,17 @@ function Names:build_ir(engine, state, context)
   local irs = {}
   local num_names = 0
   -- util.debug(self.name)
-  for _, variable in ipairs(util.split(names_inheritance.variable)) do
-    local name_ir = names_inheritance.name:build_ir(variable, names_inheritance.et_al, names_inheritance.label, engine, state, context)
-    if name_ir and names_inheritance.name.form == "count" then
-      num_names = num_names + name_ir.name_count
+
+  -- The names element may not hold a variable attribute.
+  -- substitute_SubstituteOnlyOnceString.txt
+  if names_inheritance.variable then
+    for _, variable in ipairs(util.split(names_inheritance.variable)) do
+      local name_ir = names_inheritance.name:build_ir(variable, names_inheritance.et_al, names_inheritance.label, engine, state, context)
+      if name_ir and names_inheritance.name.form == "count" then
+        num_names = num_names + name_ir.name_count
+      end
+      table.insert(irs, name_ir)
     end
-    table.insert(irs, name_ir)
   end
 
   if names_inheritance.name.form == "count" then
