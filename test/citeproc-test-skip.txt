@@ -4,6 +4,9 @@ flipflop_NumericField.txt
 # locator parsing is not yet implemented
 locator_TrickyEntryForPlurals.txt
 
+# Citeproc-lua doesn't parse the "7, p. 3-8" in "edition" variable.
+number_OrdinalSpacing.txt
+
 position_IbidInText.txt
 
 # Do not ommit empty entry output.

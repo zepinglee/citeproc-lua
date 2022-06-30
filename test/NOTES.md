@@ -10,31 +10,9 @@ See <https://github.com/jgm/citeproc/blob/b27201c3ac48ffd2853f77152df19b6e2cf369
 - `position_IfIbidWithLocatorIsTrueThenIbidIsTrue`
 
 
-## Empty bibliography output
-
-- `sort_OmittedBibRefMixedNumericStyle`
-- `sort_OmittedBibRefNonNumericStyle`
-
-How to distinguish a numeric style?
-
-
-## Group suppressed
-
-- `variables_TitleShortOnShortTitleNoTitleCondition`
-  This test is contrary to the spec.  The whole group should
-  be suppressed because it contains variables but none are
-  called. See https://github.com/citation-style-language/test-suite/issues/29
-- `variables_TitleShortOnShortTitleNoTitleCondition`
-
-
 ## Varibles set in `note` field
 
 - label_NameLabelThroughSubstitute
-
-
-### bugreports_UnisaHarvardInitialization
-
-The expected output here includes a trailing space, which we delete.
 
 
 ### flipflop_LeadingMarkupWithApostrophe
@@ -47,19 +25,9 @@ Quotation marks in the prefix of cite-item are not transformed to double style a
 The period in `“Hello there.”` should be moved inside quotation marks.
 
 
-### label_PluralWithLocalizedAmpersand
-
-The `<term name="and" form="symbol">` does not exist in any locale files.
-
-
 ### name_AllCapsInitialsUntouched
 
 - Not initialized. It should be `<name initialized-with="." />`.
-
-
-### number_OrdinalSpacing
-
-Heuristics are used to render pages label.
 
 
 ### number_PlainHyphenOrEnDashAlwaysPlural
@@ -74,11 +42,6 @@ Heuristics are used to render pages label.
   ending in a number, or alphabetic strings consisting entirely of
   characters appropriate to a roman numeral."  This won't catch
   4a-5a or IIa-VIb.
-
-
-### position_IbidWithSuffix
-
-Name splitting issue.
 
 
 ### textcase_SentenceCapitalization.txt

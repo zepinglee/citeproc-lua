@@ -22,7 +22,7 @@ name                93      17       1       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
-number              18       2       0       0
+number              18       1       0       0
 page                 9       0       0       0
 plural               7       0       0       0
 position            13       2       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              655     190       4       0
+(all)              655     189       4       0
 
 Failure → citeproc test test-suite affix_CommaAfterQuote.txt
 Passed in:
@@ -1553,12 +1553,6 @@ Passed in:
 (string) '[Jean de] (La Fontaine) III'
 Expected:
 (string) '[Jean] (de La Fontaine III)'
-
-Failure → citeproc test test-suite number_OrdinalSpacing.txt
-Passed in:
-(string) 'Blah blah. 7, p. 3-8DD<i>ed</i>'
-Expected:
-(string) 'Blah blah. 7th, pp. 3–8DD<i>ed</i>'
 
 Failure → citeproc test test-suite number_PlainHyphenOrEnDashAlwaysPlural.txt
 Passed in:
