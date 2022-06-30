@@ -714,7 +714,7 @@ end
 function OutputFormat:flip_flop(inlines, state)
   for i, inline in ipairs(inlines) do
     if inline.type == "Micro" then
-      self:flip_flop(inline.inlines, state)
+      self:flip_flop_micro_inlines(inline.inlines, state)
 
     elseif inline.type == "Formatted" then
       local new_state = util.clone(state)
@@ -722,11 +722,16 @@ function OutputFormat:flip_flop(inlines, state)
 
       for _, attribute in ipairs({"font-style", "font-variant", "font-weight"}) do
         local value = formatting[attribute]
-        if value and value~= "normal" then
+        if value then
           if value == state[attribute] then
-            formatting[attribute] = "normal"
+            if value == "normal" then
+              formatting[attribute] = nil
+            -- Formatting outside Micro is not reset to "normal".
+            -- else
+            --   formatting[attribute] = "normal"
+            end
           end
-          new_state[attribute] = formatting[attribute]
+          new_state[attribute] = value
         end
       end
       self:flip_flop(inline.inlines, new_state)
@@ -745,6 +750,58 @@ function OutputFormat:flip_flop(inlines, state)
         ["text-decoration"] = "none",
       }
       self:flip_flop(inline.inlines, new_state)
+      for attr, value in pairs(new_state) do
+        if value and state[attr] ~= value then
+          if not inline.formatting then
+            inline.type = "Formatted"
+            inline.formatting = {}
+          end
+          inline.formatting[attr] = value
+        end
+      end
+    end
+  end
+end
+
+function OutputFormat:flip_flop_micro_inlines(inlines, state)
+  for i, inline in ipairs(inlines) do
+    if inline.type == "Micro" then
+      self:flip_flop_micro_inlines(inline.inlines, state)
+
+    elseif inline.type == "Formatted" then
+      local new_state = util.clone(state)
+      local formatting = inline.formatting
+
+      for _, attribute in ipairs({"font-style", "font-variant", "font-weight"}) do
+        local value = formatting[attribute]
+        if value then
+          if value == state[attribute] then
+            if value == "normal" then
+              formatting[attribute] = nil
+            else
+              -- Formatting inside Micro is reset to "normal".
+              formatting[attribute] = "normal"
+            end
+          end
+          new_state[attribute] = value
+        end
+      end
+      self:flip_flop_micro_inlines(inline.inlines, new_state)
+
+    elseif inline.type == "Quoted" then
+      inline.is_inner = state.in_inner_quotes
+      local new_state = util.clone(state)
+      new_state.in_inner_quotes = not new_state.in_inner_quotes
+      self:flip_flop_micro_inlines(inline.inlines, new_state)
+
+    elseif inline.type == "NoDecor" then
+      local new_state = {
+        ["font-style"] = "normal",
+        ["font-variant"] = "normal",
+        ["font-weight"] = "normal",
+        ["text-decoration"] = "none",
+      }
+      self:flip_flop_micro_inlines(inline.inlines, new_state)
       for attr, value in pairs(new_state) do
         if value and state[attr] ~= value then
           if not inline.formatting then
