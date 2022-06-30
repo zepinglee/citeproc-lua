@@ -17,6 +17,7 @@ local IrState = require("citeproc-context").IrState
 local HtmlWriter = require("citeproc-output").HtmlWriter
 local SortStringFormat = require("citeproc-output").SortStringFormat
 local InlineElement = require("citeproc-output").InlineElement
+local Micro = require("citeproc-output").Micro
 local Formatted = require("citeproc-output").Formatted
 local PlainText = require("citeproc-output").PlainText
 local util = require("citeproc-util")
@@ -133,35 +134,33 @@ function CiteProc:build_cluster(citation_items)
     end
 
     if cite_prefix then
-      for _, inline in ipairs(InlineElement:parse(cite_prefix, context)) do
-        table.insert(citation_stream, inline)
-      end
+      table.insert(citation_stream, Micro:new(InlineElement:parse(cite_prefix, context)))
     end
 
-    for _, el in ipairs(ir:flatten(output_format)) do
-      table.insert(citation_stream, el)
-    end
+    -- util.debug(ir)
+    util.extend(citation_stream, ir:flatten(output_format))
+    -- util.debug(citation_stream)
 
     if cite_suffix then
-      for _, inline in ipairs(InlineElement:parse(cite_suffix, context)) do
-        table.insert(citation_stream, inline)
-      end
+      table.insert(citation_stream, Micro:new(InlineElement:parse(cite_suffix, context)))
     end
   end
+  -- util.debug(citation_stream)
 
-    if context.area.layout.affixes then
-      local affixes = context.area.layout.affixes
-      if affixes.prefix then
-        table.insert(citation_stream, 1, PlainText:new(affixes.prefix))
-      end
-      if affixes.suffix then
-        table.insert(citation_stream, PlainText:new(affixes.suffix))
-      end
+  if context.area.layout.affixes then
+    local affixes = context.area.layout.affixes
+    if affixes.prefix then
+      table.insert(citation_stream, 1, PlainText:new(affixes.prefix))
     end
+    if affixes.suffix then
+      table.insert(citation_stream, PlainText:new(affixes.suffix))
+    end
+  end
+  -- util.debug(citation_stream)
 
-    if context.area.layout.formatting then
-      citation_stream = {Formatted:new(citation_stream, context.area.layout.formatting)}
-    end
+  if context.area.layout.formatting then
+    citation_stream = {Formatted:new(citation_stream, context.area.layout.formatting)}
+  end
   -- util.debug(citation_stream)
 
   if #citation_stream == 0 then

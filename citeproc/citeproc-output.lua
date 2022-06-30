@@ -83,6 +83,18 @@ function Formatted:new(inlines, formatting)
 end
 
 
+local Micro = InlineElement:derive("Micro")
+
+-- This is how we can flip-flop only user-supplied styling.
+-- Inside this is parsed micro html
+function Micro:new(inlines)
+  local o = InlineElement.new(self)
+  o.inlines = inlines
+  setmetatable(o, self)
+  return o
+end
+
+
 local Quoted = InlineElement:derive("Quoted")
 
 function Quoted:new(inlines, localized_quotes)
@@ -160,7 +172,6 @@ function InlineElement:parse(str, context)
 
   inlines = InlineElement:parse_quotes(inlines, context)
   return inlines
-
 end
 
 function InlineElement:from_node(node)
@@ -204,6 +215,7 @@ end
 
 function InlineElement:parse_quotes(inlines, context)
   local quote_fragments = InlineElement:get_quote_fragments(inlines)
+  -- util.debug(quote_fragments)
 
   local quote_stack = {}
   local text_stack = {{}}
@@ -347,12 +359,17 @@ function InlineElement:get_quote_fragments(inlines)
           end
         end
         -- TODO: consider utf-8
-        if not left or string.match(left, "%s$") or string.match(left, "%p$") then
-          fragments[i] = "'"
-        elseif not right or string.match(right, "^%s") or string.match(right, "^%p") then
-          fragments[i] = "'"
-        else
-          fragments[i] = PlainText:new(util.unicode['apostrophe'])
+        if left and right then
+          if fragment == '"' then
+            if string.match(left, "%s$") and string.match(right, "^%s") then
+              -- Orphan quote
+              fragments[i] = PlainText:new(fragment)
+            end
+          elseif fragment == "'" then
+            if not string.match(left, "[%s%p]$") and not string.match(right, "^[%s%p]") then
+              fragments[i] = PlainText:new(util.unicode['apostrophe'])
+            end
+          end
         end
       end
     end
@@ -664,7 +681,10 @@ end
 
 function OutputFormat:flip_flop(inlines, state)
   for i, inline in ipairs(inlines) do
-    if inline.type == "Formatted" then
+    if inline.type == "Micro" then
+      self:flip_flop(inline.inlines, state)
+
+    elseif inline.type == "Formatted" then
       local new_state = util.clone(state)
       local formatting = inline.formatting
 
@@ -719,6 +739,8 @@ end
 local function find_right(inline)
   if inline.type == "PlainText" then
     return inline
+  -- elseif inline.type == "Micro" then
+  --   return nil
   elseif inline.inlines then
     return find_right(inline.inlines[#inline.inlines])
   else
@@ -726,12 +748,15 @@ local function find_right(inline)
   end
 end
 
+-- "'Foo,' bar" => ,
 local function find_right_quoted(inline)
   if inline.type == "Quoted" then
     if inline.quotes.punctuation_in_quote == false then
       return nil
     end
     return find_right(inline.inlines[#inline.inlines])
+  -- elseif inline.type == "Micro" then
+  --   return nil
   elseif inline.inlines then
     return find_right_quoted(inline.inlines[#inline.inlines])
   else
@@ -765,7 +790,6 @@ local function normalise_text_elements(inlines)
 end
 
 local function move_around_quote(slice, idx, piq)
-  -- util.debug(slice)
   local first = find_right_quoted(slice[idx])
   if not first then
     return nil
@@ -873,12 +897,8 @@ function Markup:write_inline(inline)
     elseif inline.type == "NoCase" or inline.type == "NoDecor" then
       return self:write_inlines(inline.inlines)
 
-      -- local res = ""
-      -- for _, node in ipairs(inline.inlines) do
-      --   res = res .. self:write_inline(node)
-      -- end
-      -- return res
-
+    else
+      return self:write_inlines(inline.inlines)
     end
   end
   return ""
@@ -1052,6 +1072,7 @@ output_module.LocalizedQuotes = LocalizedQuotes
 output_module.InlineElement = InlineElement
 output_module.PlainText = PlainText
 output_module.Formatted = Formatted
+output_module.Micro = Micro
 output_module.Quoted = Quoted
 output_module.Linked = Linked
 output_module.Div = Div

@@ -8,40 +8,6 @@ import xml.etree.ElementTree as ET
 
 failed_fixtures = []
 skipped_fixtures = [
-    'affix_CommaAfterQuote.txt',
-    'bugreports_ApostropheOnParticle.txt',
-    'bugreports_EtAlSubsequent.txt',
-    'decorations_NoNormalWithoutDecoration.txt',
-    'display_LostSuffix.txt',
-    'flipflop_LeadingMarkupWithApostrophe.txt',
-    'flipflop_OrphanQuote.txt',
-    'flipflop_SingleBeforeColon.txt',
-    'integration_FirstReferenceNoteNumberPositionChange.txt',
-    'label_EditorTranslator2.txt',
-    'locator_SimpleLocators.txt',
-    'magic_NameSuffixWithComma.txt',
-    'name_CollapseRoleLabels.txt',
-    'name_EditorTranslatorSameWithTerm.txt',
-    'name_HebrewAnd.txt',
-    'name_InTextMarkupInitialize.txt',
-    'name_InTextMarkupNormalizeInitials.txt',
-    'name_ParsedNonDroppingParticleWithApostrophe.txt',
-    'name_ParticlesDemoteNonDroppingNever.txt',
-    'name_WithNonBreakingSpace.txt',
-    'name_namepartAffixes.txt',
-    'number_PlainHyphenOrEnDashAlwaysPlural.txt',
-    'position_IbidWithPrefixFullStop.txt',
-    'position_ResetNoteNumbers.txt',
-    'sort_BibliographyCitationNumberDescendingViaCompositeMacro.txt',
-    'sort_BibliographyCitationNumberDescendingViaMacro.txt',
-    'sort_CitationNumberPrimaryDescendingViaMacroBibliography.txt',
-    'sort_CitationNumberPrimaryDescendingViaMacroCitation.txt',
-    'sort_CitationNumberPrimaryDescendingViaVariableBibliography.txt',
-    'sort_CitationNumberPrimaryDescendingViaVariableCitation.txt',
-    'textcase_LocaleUnicode.txt',
-    'textcase_NoSpaceBeforeApostrophe.txt',
-    'textcase_SentenceCapitalization.txt',
-    'textcase_SkipNameParticlesInTitleCase.txt',
 ]
 
 with open('./test/citeproc-test.log') as f:
@@ -102,12 +68,12 @@ for path in paths:
 skip_tags = [
 ]
 skip_attrs = [
+    'cite-group-delimiter',
+    'collapse',
+    'disambiguate',
     'disambiguate-add-givenname',
     'disambiguate-add-names',
-    'disambiguate',
     'disambiguate-add-year-suffix',
-    'collapse',
-    'cite-group-delimiter',
     'subsequent-author-substitute',
     'subsequent-author-substitute-rule',
 ]
@@ -122,7 +88,7 @@ def skip_fixture(fixture):
 
 fixtures = [fixture for fixture in fixtures if not skip_fixture(fixture)]
 
-for fixture in list(sorted(fixtures, key=lambda x: x['count']))[:10]:
-    print(f'{fixture["count"]:<3} {os.path.split(fixture["path"])[1]:50} {fixture["path"]}')
+for fixture in reversed(sorted(fixtures, key=lambda x: x['count'])):
+    print(f'{fixture["count"]:<3} {os.path.split(fixture["path"])[1]:65} {fixture["path"]}')
 
 # print(len(failed_fixtures))

@@ -1,6 +1,6 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
-affix                7       2       0       0
+affix                8       1       0       0
 bugreports          47      35       0       0
 collapse             4      17       0       0
 condition           17       0       0       0
@@ -9,13 +9,13 @@ decorations          6       1       0       0
 disambiguate        19      50       2       0
 display              2       3       0       0
 etal                 4       0       0       0
-flipflop            14       4       0       0
+flipflop            15       3       0       0
 form                 3       0       0       0
 fullstyles           2       3       0       0
 group                6       1       0       0
 integration         10       4       0       0
-label               16       3       0       0
-locale              23       0       0       0
+label               17       2       0       0
+locale              22       0       1       0
 locator              4       1       0       0
 magic               32       7       1       0
 name                93      17       1       0
@@ -31,20 +31,14 @@ quotes               4       0       0       0
 simplespace          0       1       0       0
 sort                47      17       0       0
 sortseparator        1       0       0       0
-substitute           6       1       0       0
+substitute           5       1       1       0
 testers              2       0       0       0
 textcase            25       5       0       0
 unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              655     189       4       0
-
-Failure → citeproc test test-suite affix_CommaAfterQuote.txt
-Passed in:
-(string) '“quote,” Hello Thing'
-Expected:
-(string) '“quote”, Hello Thing'
+(all)              656     186       6       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -1093,15 +1087,9 @@ Expected:
 
 Failure → citeproc test test-suite flipflop_LeadingMarkupWithApostrophe.txt
 Passed in:
-(string) '<i>Insha’Allah</i> is an Arabic phrase meaning “God willing.” Another Arabic word is <i>bukra</i>. Aalto'
+(string) '<i>Insha’Allah</i> is an Arabic phrase meaning “God willing”. Another Arabic word is <i>bukra</i>. Aalto'
 Expected:
 (string) '<i>Insha’Allah</i> is an Arabic phrase meaning ‘God willing’. Another Arabic word is <i>bukra</i>. Aalto'
-
-Failure → citeproc test test-suite flipflop_OrphanQuote.txt
-Passed in:
-(string) 'Nation of “Positive Obligations ” of State under the European Convention on Human Rights (1)'
-Expected:
-(string) 'Nation of "Positive Obligations " of State under the European Convention on Human Rights (1)'
 
 Failure → citeproc test test-suite flipflop_SingleBeforeColon.txt
 Passed in:
@@ -1199,12 +1187,6 @@ Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">1.	Иванов И.И. Пример оформления книги с редактором и переводчиком в одном лице : вид издания : in 5 vols. Vol. 2 / И.И. Иванов, П.П. Петров, С.С. Сидоров; ed &#38; trans. Р.Р. Романов Дополнительно. – Тюмень: Дом, 2013. – 10. – 100 p.</div>
 </div>'
-
-Failure → citeproc test test-suite label_EditorTranslator2.txt
-Passed in:
-(string) 'Some title, “Hello there.”'
-Expected:
-(string) 'Some title, “Hello there”.'
 
 Failure → citeproc test test-suite label_NameLabelThroughSubstitute.txt
 Passed in:
@@ -2327,13 +2309,19 @@ Expected:
 </div>'
 
 Error → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntries.txt
-./citeproc/citeproc-engine.lua:362: attempt to get length of a nil value (local 'previous_note_citations')
+./citeproc/citeproc-engine.lua:361: attempt to get length of a nil value (local 'previous_note_citations')
 
 Error → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntriesByCite.txt
-./citeproc/citeproc-engine.lua:362: attempt to get length of a nil value (local 'previous_note_citations')
+./citeproc/citeproc-engine.lua:361: attempt to get length of a nil value (local 'previous_note_citations')
+
+Error → citeproc test test-suite locale_OverloadWithEmptyString.txt
+./citeproc/citeproc-output.lua:730: attempt to index a nil value (local 'inline')
 
 Error → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
 ./citeproc/citeproc-node-sort.lua:98: attempt to compare number with string
 
 Error → citeproc test test-suite name_EtAlWithCombined.txt
 ./citeproc/citeproc-node-choose.lua:161: attempt to index a nil value (field 'cite')
+
+Error → citeproc test test-suite substitute_SubstituteOnlyOnceTermEmpty.txt
+./citeproc/citeproc-output.lua:730: attempt to index a nil value (local 'inline')

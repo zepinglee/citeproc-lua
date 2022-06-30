@@ -47,13 +47,14 @@ function IrNode:flatten(format)
   if self.group_var == "missing" then
     return {}
   end
+  local inlines
   if self.type == "SeqIr" or self.type == "NameIr" then
-    return self:flatten_seq(format)
+    inlines = self:flatten_seq(format)
   else
-    local inlines = format:affixed_quoted(self.inlines, self.affixes, self.quotes);
-    return format:with_display(inlines, self.display);
+    inlines = format:affixed_quoted(self.inlines, self.affixes, self.quotes);
+    inlines = format:with_display(inlines, self.display);
   end
-
+  return inlines
 end
 
 function IrNode:flatten_seq(format)

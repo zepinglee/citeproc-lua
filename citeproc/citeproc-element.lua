@@ -9,6 +9,7 @@ local element = {}
 local SeqIr = require("citeproc-ir-node").SeqIr
 
 local InlineElement = require("citeproc-output").InlineElement
+local Micro = require("citeproc-output").Micro
 
 local util = require("citeproc-util")
 
@@ -271,6 +272,7 @@ function Element:render_text_inlines(str, context)
   local inlines = InlineElement:parse(str, context)
   local is_english = context:is_english()
   output_format:apply_text_case(inlines, self.text_case, is_english)
+  inlines = {Micro:new(inlines)}
   inlines = output_format:with_format(inlines, self.formatting)
   inlines = output_format:affixed_quoted(inlines, self.affixes, localized_quotes)
   return output_format:with_display(inlines, self.display)
