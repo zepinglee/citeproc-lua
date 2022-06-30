@@ -440,8 +440,6 @@ function Name:render_person_name(person_name, seen_one, context)
   local demote_ndp = (context.style.demote_non_dropping_particle == "display-and-sort" or
     (is_sort and context.style.demote_non_dropping_particle == "sort-only"))
 
-  self:parse_name_particle(person_name)
-
   local name_part_tokens = self:get_display_order(person_name, seen_one)
   local inlines = {}
   for i, name_part_token in ipairs(name_part_tokens) do
@@ -469,45 +467,6 @@ function Name:render_person_name(person_name, seen_one, context)
   end
   -- util.debug(inlines)
   return inlines
-end
-
-function Name:parse_name_particle(person_name)
-  if person_name.given == "" then
-    person_name.given = nil
-  end
-  if not person_name.given then
-    return
-  end
-
-  if string.match(person_name.given, ",") then
-    -- name_ParsedCommaDelimitedDroppingParticleSortOrderingWithoutAffixes.txt?
-    -- Split name suffix: magic_NameSuffixNoComma.txt
-    -- "John, III" => given: "John", suffix: "III"
-    -- magic_NameSuffixWithComma.txt?
-    if person_name.suffix then
-      return
-    end
-
-    local words = util.split(person_name.given, ",%s*")
-    person_name.suffix = words[#words]
-    person_name.given = table.concat(util.slice(words, 1, -2), ", ")
-  end
-
-  -- name_ParsedDroppingParticleWithApostrophe.txt
-  -- "François Hédelin d'" => "François Hédelin"
-  if person_name["non-dropping-particle"] then
-    return
-  end
-  local words = util.split(person_name.given)
-  if #words < 2 then
-    return
-  end
-  local last_word = words[#words]
-  if util.endswith(last_word, "'") or util.endswith(last_word, util.unicode["apostrophe"]) then
-    person_name["non-dropping-particle"] = last_word
-    local given = table.concat(util.slice(words, 1, -2), " ")
-    person_name.given = given
-  end
 end
 
 function Name:get_display_order(person_name, seen_one)

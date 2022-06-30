@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
-bugreports          46      36       0       0
+bugreports          47      35       0       0
 collapse             4      17       0       0
 condition           17       0       0       0
 date                96       5       0       0
@@ -33,12 +33,12 @@ sort                47      17       0       0
 sortseparator        1       0       0       0
 substitute           5       1       1       0
 testers              2       0       0       0
-textcase            26       4       0       0
+textcase            26       1       0       0
 unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              658     184       6       0
+(all)              659     180       6       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -55,12 +55,6 @@ Passed in:
 (string) '<span style="font-variant:normal;">J. Doe</span>, <i>His Anonymous Life</i>, , 1965.'
 Expected:
 (string) 'J. Doe, <i>His Anonymous Life</i>, , 1965.'
-
-Failure → citeproc test test-suite bugreports_ApostropheOnParticle.txt
-Passed in:
-(string) 'John d’ Jones'
-Expected:
-(string) 'John d’Jones'
 
 Failure → citeproc test test-suite bugreports_AuthorPosition.txt
 Passed in:
@@ -248,8 +242,8 @@ Expected:
 Failure → citeproc test test-suite bugreports_MatchedAuthorAndDate.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brown, J. 2006, August. <b><i>Tijdschrift voor praktijkondersteuning</i></b>. http://dx.doi.org/10.1007/bf03074904.</div>
-  <div class="csl-entry">Brown, J. 2006, August. <b><i>Huisarts en Wetenschap</i></b>. http://dx.doi.org/10.1007/bf03084836.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <i><b>Tijdschrift voor praktijkondersteuning</b></i>. http://dx.doi.org/10.1007/bf03074904.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <i><b>Huisarts en Wetenschap</b></i>. http://dx.doi.org/10.1007/bf03084836.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2228,18 +2222,6 @@ Expected:
   <div class="csl-entry">---: Book Two.</div>
 </div>'
 
-Failure → citeproc test test-suite textcase_LocaleUnicode.txt
-Passed in:
-(string) 'IA AND IB EN
-IA AND IB EN
-IC AND ID TR
-BAD LANGUAGE CODE THAT PASSES IN NODE.JS BUT FAILS IN SOME BROWSERS'
-Expected:
-(string) 'IA AND IB EN
-IA AND IB EN
-İC AND ID TR
-BAD LANGUAGE CODE THAT PASSES IN NODE.JS BUT FAILS IN SOME BROWSERS'
-
 Failure → citeproc test test-suite textcase_RepeatedTitleBug.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -2249,18 +2231,6 @@ Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Jenrich, R. I., &#38; Bentler, P. M. (2012). Exploratory bi-factor analysis: The oblique case. <i>Psychometrika</i>, <i>77</i>(3), 442–454. https://doi.org/https://doi.org/10.1007/s11336-012-9269-1</div>
 </div>'
-
-Failure → citeproc test test-suite textcase_SentenceCapitalization.txt
-Passed in:
-(string) 'This is a Pen that is a Smith Pencil'
-Expected:
-(string) 'This is a pen that is a Smith pencil'
-
-Failure → citeproc test test-suite textcase_SkipNameParticlesInTitleCase.txt
-Passed in:
-(string) 'John von Doe: An About up Life; John van Doe? A Life; John d’Doe! A Life; John de Doe a Life'
-Expected:
-(string) 'John von Doe: An about up Life; John van Doe? A Life; John d’Doe! A Life; John de Doe a Life'
 
 Failure → citeproc test test-suite variables_ContainerTitleShort.txt
 Passed in:

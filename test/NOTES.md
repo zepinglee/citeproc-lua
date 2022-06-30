@@ -44,11 +44,6 @@ The period in `“Hello there.”` should be moved inside quotation marks.
   4a-5a or IIa-VIb.
 
 
-### textcase_SentenceCapitalization.txt
-
-The in-sentence words should not be changed to lowercase.
-
-
 ## variables_ContainerTitleShort2
 
 `container-title-short` in `ntoe` field.

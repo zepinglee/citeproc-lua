@@ -109,15 +109,54 @@ function Context:get_ordinary(name, form)
 end
 
 -- TODO: optimize: process only once
+-- TODO: organize the name parsing code
 function Context:get_name(variable_name)
   local names = self.reference[variable_name]
   if names then
     for _, name in ipairs(names) do
+      self:parse_name_suffix(name)
+      self:parse_particles(name)
       self:split_ndp_family(name)
       self:split_given_dp(name)
+      self:parse_name_particle(name)
     end
   end
   return names
+end
+
+function Context:parse_name_suffix(name)
+  if not name.suffix and name.family and string.match(name.family, ",") then
+    local words = util.split(name.family, ",%s*")
+    name.suffix = words[#words]
+    name.family = table.concat(util.slice(words, 1, -2), ", ")
+  end
+  if not name.suffix and name.given and string.match(name.given, ",") then
+    -- name_ParsedCommaDelimitedDroppingParticleSortOrderingWithoutAffixes.txt?
+    -- Split name suffix: magic_NameSuffixNoComma.txt
+    -- "John, III" => given: "John", suffix: "III"
+    -- magic_NameSuffixWithComma.txt?
+    local words = util.split(name.given, ",%s*")
+    name.suffix = words[#words]
+    name.given = table.concat(util.slice(words, 1, -2), ", ")
+  end
+end
+
+function Context:parse_particles(name)
+  local ndp = name["non-dropping-particle"]
+  local dp = name["dropping-particle"]
+  if ndp or not dp then
+    return
+  end
+  if string.match(dp, "%l'$") or string.match(dp, "%l’$") then
+    local words = util.split(dp)
+    if #words == 1 then
+      name["non-dropping-particle"] = dp
+      name["dropping-particle"] = nil
+    else
+      name["non-dropping-particle"] = words[#words]
+      name["dropping-particle"] = table.concat(util.slice(words, 1, -2), " ")
+    end
+  end
 end
 
 function Context:split_ndp_family(name)
@@ -191,6 +230,30 @@ function Context:split_given_dp(name)
   if #dp_parts > 0 then
     name["dropping-particle"] = table.concat(dp_parts, " ")
     name.given = table.concat(given_parts, " ")
+  end
+end
+
+function Context:parse_name_particle(name)
+  if name.given == "" then
+    name.given = nil
+  end
+  if not name.given then
+    return
+  end
+
+  -- name_ParsedDroppingParticleWithApostrophe.txt
+  -- "François Hédelin d'" => "François Hédelin"
+  if name["non-dropping-particle"] then
+    return
+  end
+  local words = util.split(name.given)
+  if #words < 2 then
+    return
+  end
+  local last_word = words[#words]
+  if util.endswith(last_word, "'") or util.endswith(last_word, util.unicode["apostrophe"]) then
+    name["non-dropping-particle"] = last_word
+    name.given = table.concat(util.slice(words, 1, -2), " ")
   end
 end
 
