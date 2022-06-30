@@ -520,6 +520,12 @@ function Name:get_display_order(person_name, seen_one)
     if is_reversed or person_name["comma-suffix"] then
       table.insert(name_part_tokens, "sort-separator")
       table.insert(name_part_tokens, "suffix")
+    elseif string.match(person_name.suffix, "^%p") then
+      -- Strip exclamation prefix: magic_NameSuffixWithComma.txt
+      -- "! Jr." => "Jr."
+      person_name.suffix = string.gsub(person_name.suffix, "^%p%s*", "")
+      table.insert(name_part_tokens, "sort-separator")
+      table.insert(name_part_tokens, "suffix")
     else
       table.insert(name_part_tokens, "space")
       table.insert(name_part_tokens, "suffix")
