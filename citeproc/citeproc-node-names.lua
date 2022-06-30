@@ -114,6 +114,15 @@ function Names:build_ir(engine, state, context)
     end
   end
 
+  if context.cite and context.cite.position and context.cite.position >= util.position_map["subsequent"] then
+    if names_inheritance.name.et_al_subsequent_min then
+      names_inheritance.name.et_al_min = names_inheritance.name.et_al_subsequent_min
+    end
+    if names_inheritance.name.et_al_subsequent_use_first then
+      names_inheritance.name.et_al_use_first = names_inheritance.name.et_al_subsequent_use_first
+    end
+  end
+
   -- util.debug(names_inheritance)
   -- util.debug(context.reference.id)
   -- util.debug(names_inheritance.variable)
