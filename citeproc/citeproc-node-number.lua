@@ -59,7 +59,7 @@ function Number:build_ir(engine, state, context)
   ir.group_var = "important"
 
   -- Suppress substituted name variable
-  if state.name_override then
+  if state.name_override and not context.sort_key then
     state.suppressed[self.variable] = true
   end
   return ir

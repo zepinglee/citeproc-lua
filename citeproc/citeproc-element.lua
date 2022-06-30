@@ -429,25 +429,6 @@ function Element:get_locale_option (key)
   return nil
 end
 
-function Element:get_variable (item, name, context)
-  if context.suppressed_variables and context.suppressed_variables[name] then
-    return nil
-  else
-    local res = item[name]
-    if type(res) == "table" and res._type == "RichText" then
-      -- TODO: should be deep copy
-      res = res:shallow_copy()
-    end
-
-    if res and res ~= "" then
-      if context.suppress_subsequent_variables then
-        context.suppressed_variables[name] = true
-      end
-    end
-    return res
-  end
-end
-
 function Element:get_macro (name)
   local query = string.format("macro[name=\"%s\"]", name)
   local macro = self:root_node():query_selector(query)[1]

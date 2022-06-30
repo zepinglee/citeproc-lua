@@ -114,7 +114,7 @@ function Date:build_ir(engine, state, context)
 
   if ir.group_var == "important" then
     -- Suppress substituted name variable
-    if state.name_override then
+    if state.name_override and not context.sort_key then
       state.suppressed[self.variable] = true
     end
   end
