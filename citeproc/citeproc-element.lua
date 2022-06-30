@@ -190,6 +190,66 @@ function Element:build_children_ir(engine, state, context)
   return ir
 end
 
+-- Used in cs:group and cs:macro
+function Element:build_group_ir(engine, state, context)
+  if not self.children then
+    return nil
+  end
+  local irs = {}
+  local name_count
+  local group_var = "plain"
+
+  for _, child_element in ipairs(self.children) do
+    -- util.debug(child_element.element_name)
+    local child_ir = child_element:build_ir(engine, state, context)
+    -- util.debug(child_ir)
+    -- util.debug(child_ir.group_var)
+
+    if child_ir then
+      -- cs:group and its child elements are suppressed if
+      --   a) at least one rendering element in cs:group calls a variable (either
+      --      directly or via a macro), and
+      --   b) all variables that are called are empty. This accommodates
+      --      descriptive cs:text and `cs:label` elements.
+      local child_group_var = child_ir.group_var
+      if child_group_var == "important" then
+        group_var = "important"
+      elseif child_group_var == "missing" then
+        if group_var == "plain" then
+          group_var = "missing"
+        end
+      end
+
+      if child_ir.name_count then
+        if not name_count then
+          name_count = 0
+        end
+        name_count = name_count + child_ir.name_count
+      end
+
+      -- The condition can be simplified
+      if child_ir.group_var ~= "missing" then
+        table.insert(irs, child_ir)
+      end
+    end
+  end
+
+  if #irs == 0 or group_var == "missing" then
+    local ir = SeqIr:new()
+    ir.group_var = "missing"
+    ir.name_count = name_count
+    return ir
+  end
+
+  -- A non-empty nested cs:group is treated as a non-empty variable for the
+  -- puropses of determining suppression of the outer cs:group.
+  local ir = SeqIr:new(irs, self)
+  ir.name_count = name_count
+  ir.group_var = "important"
+
+  return ir
+end
+
 function Element:render_text_inlines(str, context)
   str = self:apply_strip_periods(str)
   -- TODO: try links

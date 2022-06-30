@@ -114,38 +114,41 @@ function Names:build_ir(engine, state, context)
       names_inheritance[key] = util.clone(value)
     end
   end
+
   -- util.debug(names_inheritance)
+  -- util.debug(context.reference.id)
+  -- util.debug(names_inheritance.variable)
+  -- util.debug(names_inheritance.name.form)
 
   local irs = {}
   local num_names = 0
   -- util.debug(self.name)
-  if self.variable then
-    for _, variable in ipairs(util.split(self.variable)) do
-      local name_ir = names_inheritance.name:build_ir(variable, names_inheritance.et_al, names_inheritance.label, engine, state, context)
-      if type(name_ir) == "number" then
-        num_names = num_names + name_ir
-      end
-      table.insert(irs, name_ir)
+  for _, variable in ipairs(util.split(names_inheritance.variable)) do
+    local name_ir = names_inheritance.name:build_ir(variable, names_inheritance.et_al, names_inheritance.label, engine, state, context)
+    if name_ir and names_inheritance.name.form == "count" then
+      num_names = num_names + name_ir.name_count
     end
-
-    if names_inheritance.name.form == "count" then
-      if num_names > 0 then
-        return Rendered:new({PlainText:new(tostring(num_names))})
-      else
-        -- name_AuthorCount.txt
-        return nil
-      end
-    end
+    table.insert(irs, name_ir)
   end
 
-  if #irs > 0 then
-    local ir = SeqIr:new(irs, self)
-    ir.group_var = "important"
-    ir.delimiter = names_inheritance.delimiter
-    ir.formatting = util.clone(names_inheritance.formatting)
-    ir.affixes = util.clone(names_inheritance.affixes)
-    ir.display = names_inheritance.display
-    return ir
+  if names_inheritance.name.form == "count" then
+    if num_names > 0 then
+      local ir = Rendered:new({PlainText:new(tostring(num_names))})
+      ir.name_count = num_names
+      ir.group_var = "important"
+      -- util.debug(ir)
+      return ir
+    end
+  else
+    if #irs > 0 then
+      local ir = SeqIr:new(irs, self)
+      ir.group_var = "important"
+      ir.delimiter = names_inheritance.delimiter
+      ir.formatting = util.clone(names_inheritance.formatting)
+      ir.affixes = util.clone(names_inheritance.affixes)
+      ir.display = names_inheritance.display
+      return ir
+    end
   end
 
   if self.substitute then
@@ -153,6 +156,7 @@ function Names:build_ir(engine, state, context)
     for _, substitute_names in ipairs(self.substitute.children) do
       local ir = substitute_names:build_ir(engine, state, context)
       if ir and ir.group_var ~= "missing" then
+        state.name_override = nil
         return ir
       end
     end
@@ -161,6 +165,7 @@ function Names:build_ir(engine, state, context)
 
   local ir = Rendered:new()
   ir.group_var = "missing"
+  ir.name_count = 0
   return ir
 
 end
@@ -449,26 +454,41 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     return nil
   end
 
+  if context.sort_key then
+    self.delimiter = "   "
+    self.name_as_sort_order = "all"
+    if context.sort_key.names_min then
+      self.et_al_min = context.sort_key.names_min
+    end
+    if context.sort_key.names_use_first then
+      self.et_al_use_first = context.sort_key.names_use_first
+    end
+    if context.sort_key.names_use_last then
+      self.et_al_use_last = context.sort_key.names_use_last
+    end
+    et_al = nil
+    label = nil
+  end
+
   local et_al_truncate = self.et_al_min and self.et_al_use_first and #names >= self.et_al_min
   local et_al_last = et_al_truncate and self.et_al_use_last and self.et_al_use_first <= self.et_al_min - 2
 
   if self.form == "count" then
+    local count
     if et_al_truncate then
-      return self.et_al_use_first
+      count = self.et_al_use_first
     else
-      return #names
+      count = #names
     end
+    local ir = Rendered:new({PlainText:new(tostring(count))})
+    ir.name_count = count
+    ir.group_var = "important"
+    return ir
   end
 
   local truncated_names = names
   if et_al_truncate then
     truncated_names = util.slice(names, 1, self.et_al_use_first)
-  end
-
-  if context.sort_key then
-    self.name_as_sort_order = "all"
-    et_al = nil
-    label = nil
   end
 
   local inlines = {}
@@ -544,7 +564,7 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
   local ir = NameIr:new(irs, self)
 
   -- Suppress substituted name variable
-  if state.name_override then
+  if state.name_override and not context.sort_key then
     state.suppressed[variable] = true
   end
 

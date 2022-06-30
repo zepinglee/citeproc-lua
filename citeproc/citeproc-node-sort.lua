@@ -143,9 +143,9 @@ function Key:from_node(node)
   o:set_attribute(node, "sort")
   o:set_attribute(node, "variable")
   o:set_attribute(node, "macro")
-  o:set_attribute(node, "names-min")
-  o:set_attribute(node, "names-use-first")
-  o:set_attribute(node, "names-use-last")
+  o:set_number_attribute(node, "names-min")
+  o:set_number_attribute(node, "names-use-first")
+  o:set_bool_attribute(node, "names-use-last")
   return o
 end
 
@@ -175,6 +175,9 @@ function Key:render(engine, state, context)
     state:push_macro(self.macro)
     local ir = macro:build_ir(engine, state, context)
     state:pop_macro(self.macro)
+    if ir.name_count then
+      return ir.name_count
+    end
     local output_format = context.format
     local inlines = ir:flatten(output_format)
     -- util.debug(inlines)
@@ -191,26 +194,15 @@ end
 function Key:_render_name(engine, state, context)
   if not self.name_inheritance then
     self.name_inheritance = util.clone(context.name_inheritance)
-    self.name_inheritance.name_as_sort_order = "all"
-    self.name_inheritance.delimiter = "   "
-    if self.names_min then
-      self.name_inheritance.et_al_min = self.names_min
-    end
-    if self.names_use_first then
-      self.name_inheritance.et_al_use_first = self.names_use_first
-    end
-    if self.names_use_last then
-      self.name_inheritance.et_al_use_last = self.names_use_last
-    end
   end
   local name = context:get_variable(self.variable)
   if not name then
     return false
   end
   local ir = self.name_inheritance:build_ir(self.variable, nil, nil, engine, state, context)
-  if type(ir) == "number" then
+  if ir.name_count then
     -- name count
-    return ir
+    return ir.name_count
   end
   local output_format = context.format
   local inlines = ir:flatten(output_format)

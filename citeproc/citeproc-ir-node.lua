@@ -20,7 +20,7 @@ local IrNode = {
   delimiter = nil,
 }
 
-function IrNode:new(children)
+function IrNode:new(children, element)
   local o = {
     type = self.type,
     children = children,
@@ -44,6 +44,9 @@ function IrNode:derive(type)
 end
 
 function IrNode:flatten(format)
+  if self.group_var == "missing" then
+    return {}
+  end
   if self.type == "SeqIr" or self.type == "NameIr" then
     return self:flatten_seq(format)
   else
@@ -55,6 +58,9 @@ end
 
 function IrNode:flatten_seq(format)
   local inlines_list = {}
+  if not self.children then
+    print(debug.traceback())
+  end
   for _, child in ipairs(self.children) do
     table.insert(inlines_list, child:flatten(format))
   end
