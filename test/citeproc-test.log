@@ -9,7 +9,7 @@ decorations          7       0       0       0
 disambiguate        19      50       2       0
 display              2       3       0       0
 etal                 4       0       0       0
-flipflop            16       2       0       0
+flipflop            17       1       0       0
 form                 3       0       0       0
 fullstyles           2       3       0       0
 group                6       1       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              661     178       6       0
+(all)              662     177       6       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -228,8 +228,8 @@ Expected:
 Failure → citeproc test test-suite bugreports_MatchedAuthorAndDate.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brown, J. 2006, August. <b><i>Tijdschrift voor praktijkondersteuning</i></b>. http://dx.doi.org/10.1007/bf03074904.</div>
-  <div class="csl-entry">Brown, J. 2006, August. <b><i>Huisarts en Wetenschap</i></b>. http://dx.doi.org/10.1007/bf03084836.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <i><b>Tijdschrift voor praktijkondersteuning</b></i>. http://dx.doi.org/10.1007/bf03074904.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <i><b>Huisarts en Wetenschap</b></i>. http://dx.doi.org/10.1007/bf03084836.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1062,14 +1062,6 @@ Expected:
     <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> F.G. Bennett Jr., “Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>, vol. 18, Aug. 2009, pp. 463–509.</div>
   </div>
 </div>'
-
-Failure → citeproc test test-suite flipflop_ItalicsFlipped.txt
-Passed in:
-(string) '<i>One Two <span style="font-style:normal;">Three</span> Four Five!</i>
-<i>One <span style="font-style:normal;">Two <span style="font-style:normal;">Three</span> Four</span> Five!</i>'
-Expected:
-(string) '<i>One Two <span style="font-style:normal;">Three</span> Four Five!</i>
-<i>One <span style="font-style:normal;">Two <i>Three</i> Four</span> Five!</i>'
 
 Failure → citeproc test test-suite flipflop_LeadingMarkupWithApostrophe.txt
 Passed in:
@@ -2263,7 +2255,7 @@ Error → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntriesByCite.
 ./citeproc/citeproc-engine.lua:361: attempt to get length of a nil value (local 'previous_note_citations')
 
 Error → citeproc test test-suite locale_OverloadWithEmptyString.txt
-./citeproc/citeproc-output.lua:817: attempt to index a nil value (local 'inline')
+./citeproc/citeproc-output.lua:820: attempt to index a nil value (local 'inline')
 
 Error → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
 ./citeproc/citeproc-node-sort.lua:98: attempt to compare number with string
@@ -2272,4 +2264,4 @@ Error → citeproc test test-suite name_EtAlWithCombined.txt
 ./citeproc/citeproc-node-choose.lua:161: attempt to index a nil value (field 'cite')
 
 Error → citeproc test test-suite substitute_SubstituteOnlyOnceTermEmpty.txt
-./citeproc/citeproc-output.lua:817: attempt to index a nil value (local 'inline')
+./citeproc/citeproc-output.lua:820: attempt to index a nil value (local 'inline')

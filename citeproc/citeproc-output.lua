@@ -781,6 +781,7 @@ function OutputFormat:flip_flop_micro_inlines(inlines, state)
             else
               -- Formatting inside Micro is reset to "normal".
               formatting[attribute] = "normal"
+              value = "normal"
             end
           end
           new_state[attribute] = value
