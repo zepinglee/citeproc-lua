@@ -216,42 +216,12 @@ end
 function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
   self.registry.citations[citation.citationID] = citation
 
-  local items = {}
-  local note_citation_map = {}
-  -- {
-  --   1 = {"citation-1", "citation-2"},
-  --   2 = {"citation-2"},
-  -- }
-
-  local cite_first_note_numbers = {}
-  local cite_last_note_numbers = {}
-  local previous_citation = nil
-  for _, citation_pre in ipairs(citationsPre) do
-    -- An array citationID/note-number pairs preceding the target citation
-    local citation_id = citation_pre[1]
-    local note_number = citation_pre[2]
-    if note_number > 0 then
-      if not note_citation_map[note_number] then
-        note_citation_map[note_number] = {}
-      end
-      table.insert(note_citation_map[note_number], citation_id)
-    end
-    local pre_citation = self.registry.citations[citation_id]
-    for _, cite_item in ipairs(pre_citation.citationItems) do
-      if not cite_first_note_numbers[cite_item.id] then
-        cite_first_note_numbers[cite_item.id] = note_number
-      end
-      cite_last_note_numbers[cite_item.id] = note_number
-    end
-    previous_citation = pre_citation
-  end
-
-  local note_number = 0
-  if citation.properties and citation.properties.noteIndex then
-    note_number = citation.properties.noteIndex
-  end
-  local citations_to_build = {{citation.citationID, note_number}}
+  local citations_to_build = {}
+  util.extend(citations_to_build, citationsPre)
+  table.insert(citations_to_build, {citation.citationID, citation.properties.noteIndex})
   util.extend(citations_to_build, citationsPost)
+
+  -- util.debug(citations_to_build)
 
   local params = {
     bibchange = false,
@@ -259,21 +229,71 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
   }
   local output = {}
 
+  local cite_first_note_numbers = {}
+  local cite_last_note_numbers = {}
+  local previous_citation
+  local note_citation_map = {}
+  -- {
+  --   1 = {"citation-1", "citation-2"},
+  --   2 = {"citation-2"},
+  -- }
+
+  -- for _, citation_pre in ipairs(citationsPre) do
+  --   -- An array citationID/note-number pairs preceding the target citation
+  --   local citation_id = citation_pre[1]
+  --   local note_number = citation_pre[2]
+  --   if note_number > 0 then
+  --     if not note_citation_map[note_number] then
+  --       note_citation_map[note_number] = {}
+  --     end
+  --     table.insert(note_citation_map[note_number], citation_id)
+  --   end
+  --   local pre_citation = self.registry.citations[citation_id]
+  --   for _, cite_item in ipairs(pre_citation.citationItems) do
+  --     if not cite_first_note_numbers[cite_item.id] then
+  --       cite_first_note_numbers[cite_item.id] = note_number
+  --     end
+  --     cite_last_note_numbers[cite_item.id] = note_number
+  --   end
+  --   previous_citation = pre_citation
+  -- end
+
+  if not citation.properties then
+    citation.properties = {}
+  end
+  if not citation.properties.noteIndex then
+    citation.properties.noteIndex = 0
+  end
+
+ local citation_changed = false
+
   for citation_index, tuple in ipairs(citations_to_build) do
     local citation_id, note_number = table.unpack(tuple)
     local citation_ = self.registry.citations[citation_id]
-    citation_index = citation_index + #citationsPre - 1
 
-    local citation_str = self:build_citation_str(citation_, note_number, note_citation_map, cite_first_note_numbers, cite_last_note_numbers, previous_citation)
+    if citation_.citation_index ~= citation_index then
+      citation_changed = true
+      citation_.citation_index = citation_index
+    end
+    if citation_id == citation.citationID then
+      citation_changed = true
+    end
+    -- TODO: disambiguation
 
-    if citation_str ~= self.registry.citation_strings[citation_id] then
-      params.bibchange = true
-      table.insert(output, {citation_index, citation_str, citation_id})
-      self.registry.citation_strings[citation_.citationID] = citation_str
-      if not self.registry.citations[citation_id].properties then
-        self.registry.citations[citation_id].properties = {}  -- TODO: store somewhere else
+    if citation_changed then
+      local citation_str = self:build_citation_str(citation_, note_number, note_citation_map, cite_first_note_numbers, cite_last_note_numbers, previous_citation)
+
+      if citation_str ~= self.registry.citation_strings[citation_id] then
+        params.bibchange = true
+        table.insert(output, {citation_index, citation_str, citation_id})
+        self.registry.citation_strings[citation_.citationID] = citation_str
+        if not self.registry.citations[citation_id].properties then
+          self.registry.citations[citation_id].properties = {}  -- TODO: store somewhere else
+        end
+        self.registry.citations[citation_id].properties.noteIndex = note_number
       end
-      self.registry.citations[citation_id].properties.noteIndex = note_number
+    else
+      self:update_position_info(citation_, note_number, cite_first_note_numbers, cite_last_note_numbers)
     end
 
     previous_citation = citation_
@@ -282,7 +302,19 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
   return {params, output}
 end
 
+
+function CiteProc:update_position_info(citation, note_number, cite_first_note_numbers, cite_last_note_numbers)
+  for _, cite_item in ipairs(citation.citationItems) do
+    local item = self.registry.registry[cite_item.id]
+    if not cite_first_note_numbers[item.id] then
+      cite_first_note_numbers[item.id] = note_number
+    end
+    cite_last_note_numbers[cite_item.id] = note_number
+  end
+end
+
 function CiteProc:build_citation_str(citation, note_number, note_citation_map, cite_first_note_numbers, cite_last_note_numbers, previous_citation)
+  -- util.debug(citation.citationID)
   local previous_note_citations
   if note_number > 1 then
     previous_note_citations = note_citation_map[note_number - 1]
@@ -290,11 +322,12 @@ function CiteProc:build_citation_str(citation, note_number, note_citation_map, c
   if not note_citation_map[note_number] then
     note_citation_map[note_number] = {}
   end
-  table.insert(note_citation_map[note_number], citation.citationId)
+  table.insert(note_citation_map[note_number], citation.citationID)
 
   local items = {}
   for i, cite_item in ipairs(citation.citationItems) do
     cite_item.id = tostring(cite_item.id)
+    -- util.debug(cite_item.id)
     local item_data = self:get_item(cite_item.id)
 
     local previous_cite
@@ -314,6 +347,7 @@ function CiteProc:build_citation_str(citation, note_number, note_citation_map, c
       end
 
       self:set_cite_position(item, note_number, cite_first_note_numbers, cite_last_note_numbers, previous_cite, previous_citation, previous_note_citations)
+      -- util.debug(item)
 
       table.insert(items, item)
     end
@@ -345,20 +379,19 @@ function CiteProc:set_cite_position(item, note_number, cite_first_note_numbers, 
   local preceding_cite
   if previous_cite then
     -- a. the current cite immediately follows on another cite, within the same
-    -- citation, that references the same item
+    --    citation, that references the same item
     if item.id == previous_cite.id then
       preceding_cite = previous_cite
     end
   elseif previous_citation then
-    -- (hidden) The previous note, if containing in the previous citation,
-    -- should has exactly one citation.
-    -- See also
-    --   https://github.com/citation-style-language/documentation/issues/121
-    --   position_IbidWithMultipleSoloCitesInBackref.txt
+    -- (hidden) The previous citation is the only one in the previous note.
+    --    See also
+    --    https://github.com/citation-style-language/documentation/issues/121
+    --    position_IbidWithMultipleSoloCitesInBackref.txt
     -- b. the current cite is the first cite in the citation, and the previous
-    -- citation consists of a single cite referencing the same item
+    --    citation consists of a single cite referencing the same item
     local previous_note_number = previous_citation.properties.noteIndex
-    if (previous_note_number == note_number - 1 and #previous_note_citations == 1)
+    if (previous_note_number == note_number - 1 and previous_note_citations and #previous_note_citations == 1)
         or previous_note_number == note_number then
       if #previous_citation.citationItems == 1 and previous_citation.citationItems[1].id == item.id then
         preceding_cite = previous_citation.citationItems[1]

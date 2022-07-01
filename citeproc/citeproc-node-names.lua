@@ -700,6 +700,9 @@ function Name:_check_delimiter(delimiter_attribute, index, inverted)
   return false
 end
 
+-- TODO: initialize name with markups
+--   name_InTextMarkupInitialize.txt
+--   name_InTextMarkupNormalizeInitials.txt
 function Name:initialize_name(given, with, initialize_with_hyphen)
   if not given or given == "" then
     return ""

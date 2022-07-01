@@ -8,14 +8,8 @@ import xml.etree.ElementTree as ET
 
 failed_fixtures = []
 skipped_fixtures = [
-    # Force quotation marks in external affixes
-    'flipflop_LeadingMarkupWithApostrophe.txt',
-    # editor-translator
-    'name_EditorTranslatorSameWithTerm.txt',
     # merge punctuations
     'name_WithNonBreakingSpace.txt',
-    # check number plural (test fixture needs to be fixed)
-    'number_PlainHyphenOrEnDashAlwaysPlural.txt',
 ]
 
 with open('./test/citeproc-test.log') as f:

@@ -1,12 +1,29 @@
+# Force quotation marks in external affixes
+flipflop_LeadingMarkupWithApostrophe.txt
+
 # citeproc-lua chooses to parse rich text in numeric fields.
 flipflop_NumericField.txt
 
 # locator parsing is not yet implemented
 locator_TrickyEntryForPlurals.txt
 
+# editor-translator
+name_EditorTranslatorSameWithTerm.txt
+
+# Hebrew
+name_HebrewAnd.txt
+
+# Initialize name with markups
+name_InTextMarkupInitialize.txt
+name_InTextMarkupNormalizeInitials.txt
+
 # Citeproc-lua doesn't parse the "7, p. 3-8" in "edition" variable.
 number_OrdinalSpacing.txt
 
+# Check number plural (test fixture needs to be fixed)
+number_PlainHyphenOrEnDashAlwaysPlural.txt
+
+# Citation-3 has noteIndex 0 but it's after citation-2 with noteIndex 1.
 position_IbidInText.txt
 
 # Do not ommit empty entry output.
