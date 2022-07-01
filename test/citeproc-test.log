@@ -7,25 +7,25 @@ condition           17       0       0       0
 date                96       5       0       0
 decorations          7       0       0       0
 disambiguate        19      52       0       0
-display              2       3       0       0
+display              2       2       0       0
 etal                 4       0       0       0
 flipflop            17       0       0       0
 form                 3       0       0       0
 fullstyles           2       3       0       0
 group                6       1       0       0
-integration         11       2       0       0
+integration         12       1       0       0
 label               17       2       0       0
 locale              23       0       0       0
 locator              5       0       0       0
 magic               33       6       1       0
-name                96       9       1       0
+name                96       8       1       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
 number              18       0       0       0
 page                 9       0       0       0
 plural               7       0       0       0
-position            11       4       0       0
+position            14       0       0       0
 punctuation          9       7       0       0
 quotes               4       0       0       0
 simplespace          0       1       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              666     161       2       0
+(all)              670     154       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -228,8 +228,8 @@ Expected:
 Failure → citeproc test test-suite bugreports_MatchedAuthorAndDate.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brown, J. 2006, August. <i><b>Tijdschrift voor praktijkondersteuning</b></i>. http://dx.doi.org/10.1007/bf03074904.</div>
-  <div class="csl-entry">Brown, J. 2006, August. <i><b>Huisarts en Wetenschap</b></i>. http://dx.doi.org/10.1007/bf03084836.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <b><i>Tijdschrift voor praktijkondersteuning</i></b>. http://dx.doi.org/10.1007/bf03074904.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <b><i>Huisarts en Wetenschap</i></b>. http://dx.doi.org/10.1007/bf03084836.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1049,16 +1049,6 @@ Expected:
   </div>
 </div>'
 
-Failure → citeproc test test-suite display_LostSuffix.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Book One,  (zitiert als: <i>Aalto</i>, Chapter One).</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Book One, (zitiert als: <i>Aalto</i>, Chapter One).</div>
-</div>'
-
 Failure → citeproc test test-suite display_SecondFieldAlignMigratePunctuation.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -1126,18 +1116,6 @@ Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Doe Inc. (n.d.). Retrieved June 1, 1965, from http://example.com/</div>
 </div>'
-
-Failure → citeproc test test-suite integration_IbidWithDifferentLocators.txt
-Passed in:
-(string) '..[0] (Doe p. 12)
-..[1] (subsequent)
-..[2] (Roe bk. 20)
->>[3] (subsequent)'
-Expected:
-(string) '..[0] (Doe p. 12)
-..[1] (ibid-with-locator)
-..[2] (Roe bk. 20)
->>[3] (ibid-with-locator)'
 
 Failure → citeproc test test-suite integration_YearSuffixOnOffOn.txt
 Passed in:
@@ -1305,56 +1283,6 @@ Expected:
   <div class="csl-entry">Title One</div>
   <div class="csl-entry">---</div>
 </div>'
-
-Failure → citeproc test test-suite name_WithNonBreakingSpace.txt
-Passed in:
-(string) 'John  Doe'
-Expected:
-(string) 'John Doe'
-
-Failure → citeproc test test-suite position_FirstTrueOnlyOnce.txt
-Passed in:
-(string) '..[0] Appleton “Tom Swift and His Electric Runabout” (1910).
->>[1] WTF?.'
-Expected:
-(string) '..[0] Appleton “Tom Swift and His Electric Runabout” (1910).
->>[1] Ibid. p. 23.'
-
-Failure → citeproc test test-suite position_IbidSeparateCiteSameNote.txt
-Passed in:
-(string) '..[0] [citation1-item1-note1] Appleton “Tom Swift and His Electric Runabout” (1910).
-..[1] [citation2-item1-note2] Appleton supra note 1.
-..[2] [citation3-item1-note2] ibid. page 33.
-..[3] [citation4-item2-note3] Bloggs “A Very Short Book Indeed” (2012); [citation4-item1-note3] Appleton supra note 1.
-..[4] [citation5-item1-note4] Appleton supra note 1 page 99.
-..[5] [citation6-item1-note4] Appleton supra note 1.
->>[6] [citation7-item1-note4] ibid.'
-Expected:
-(string) '..[0] [citation1-item1-note1] Appleton “Tom Swift and His Electric Runabout” (1910).
-..[1] [citation2-item1-note2] ibid.
-..[2] [citation3-item1-note2] ibid. page 33.
-..[3] [citation4-item2-note3] Bloggs “A Very Short Book Indeed” (2012); [citation4-item1-note3] Appleton supra note 1.
-..[4] [citation5-item1-note4] Appleton supra note 1 page 99.
-..[5] [citation6-item1-note4] Appleton supra note 1.
->>[6] [citation7-item1-note4] ibid.'
-
-Failure → citeproc test test-suite position_IbidWithMultipleSoloCitesInBackref.txt
-Passed in:
-(string) '..[0] Aalto
-..[1] Álvarez
-..[2] Álvarez
->>[3] Álvarez'
-Expected:
-(string) '..[0] Aalto
-..[1] Álvarez
-..[2] Álvarez
->>[3] Ibid.'
-
-Failure → citeproc test test-suite position_IbidWithPrefixFullStop.txt
-Passed in:
-(string) '>>[0] Book A; . He said “Please work.” ibid.'
-Expected:
-(string) '>>[0] Book A. He said “Please work.” Ibid.'
 
 Failure → citeproc test test-suite punctuation_DefaultYearSuffixDelimiter.txt
 Passed in:

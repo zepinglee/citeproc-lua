@@ -136,6 +136,7 @@ function CiteProc:get_tainted_citaion_ids(citations_to_build)
   local previous_citation
   for citation_index, tuple in ipairs(citations_to_build) do
     local citation_id, note_number = table.unpack(tuple)
+    -- util.debug(citation_id)
     local citation = self.registry.citations[citation_id]
     citation.properties.noteIndex = note_number
     citation.citation_index = citation_index
@@ -172,7 +173,7 @@ function CiteProc:set_cite_item_position(cite_item, note_number, previous_cite, 
     self.cite_first_note_numbers[cite_item.id] = note_number
   end
 
-  local preceding_cite_item = self:get_preceding_cite_item(cite_item, previous_cite, previous_citation, note_number, self.note_citations_map)
+  local preceding_cite_item = self:get_preceding_cite_item(cite_item, previous_cite, previous_citation, note_number)
   if preceding_cite_item then
     position = self:_get_cite_position(cite_item, preceding_cite_item)
   end
@@ -203,7 +204,7 @@ function CiteProc:set_cite_item_position(cite_item, note_number, previous_cite, 
 end
 
 -- Find the preceding cite referencing the same item
-function CiteProc:get_preceding_cite_item(cite_item, previous_cite, previous_citation, note_number, note_citations_map)
+function CiteProc:get_preceding_cite_item(cite_item, previous_cite, previous_citation, note_number)
   if previous_cite then
     -- a. the current cite immediately follows on another cite, within the same
     --    citation, that references the same item
@@ -218,7 +219,7 @@ function CiteProc:get_preceding_cite_item(cite_item, previous_cite, previous_cit
     -- b. the current cite is the first cite in the citation, and the previous
     --    citation consists of a single cite referencing the same item
     local previous_note_number = previous_citation.properties.noteIndex
-    local num_previous_note_citations = note_citations_map[previous_note_number]
+    local num_previous_note_citations = #self.note_citations_map[previous_note_number]
     if (previous_note_number == note_number - 1 and num_previous_note_citations == 1)
         or previous_note_number == note_number then
       if #previous_citation.citationItems == 1 then
@@ -641,6 +642,7 @@ function CiteProc:process_extra_note(item)
       item[field] = value
     end
   end
+  -- util.debug(item)
   return item
 end
 

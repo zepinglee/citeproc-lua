@@ -1,3 +1,8 @@
+# Merge punctuations
+display_LostSuffix.txt
+name_WithNonBreakingSpace.txt
+position_IbidWithPrefixFullStop.txt
+
 # Force quotation marks in external affixes
 flipflop_LeadingMarkupWithApostrophe.txt
 
@@ -9,6 +14,9 @@ integration_FirstReferenceNoteNumberPositionChange.txt
 
 # locator parsing is not yet implemented
 locator_TrickyEntryForPlurals.txt
+
+# # Not initialized. It should be `<name initialized-with="." />`.
+# name_AllCapsInitialsUntouched
 
 # editor-translator
 name_CollapseRoleLabels.txt
@@ -25,6 +33,9 @@ name_InTextMarkupNormalizeInitials.txt
 number_OrdinalSpacing.txt
 
 # Check number plural (test fixture needs to be fixed)
+# - The difference of cs:text and cs:name is not revealed.
+#   (Should it be `<number variable="page"/>`?)
+# - Duplicate item id `ITEM-4`.
 number_PlainHyphenOrEnDashAlwaysPlural.txt
 
 # Citation-3 has noteIndex 0 but it's after citation-2 with noteIndex 1.
