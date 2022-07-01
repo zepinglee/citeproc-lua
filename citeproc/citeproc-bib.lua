@@ -68,9 +68,9 @@ end
 function bib.parse_fields(contents)
   local fields = {}
   local field_patterns = {
-    "^(%w+)%s*=%s*(%b{}),?%s*(.-)$",
-    '^(%w+)%s*=%s*"([^"]*)",?%s*(.-)$',
-    "^(%w+)%s*=%s*(%w+),?%s*(.-)$",
+    "^([%w._+-]+)%s*=%s*(%b{}),?%s*(.-)$",
+    '^([%w._+-]+)%s*=%s*"([^"]*)",?%s*(.-)$',
+    "^([%w._+-]+)%s*=%s*(%w+),?%s*(.-)$",
   }
 
   while #contents > 0 do
@@ -94,9 +94,13 @@ function bib.parse_fields(contents)
           end
         end
         fields[field] = value
-        contents = rest
         break
       end
+    end
+    if value then
+      contents = rest
+    else
+      break
     end
   end
   return fields
