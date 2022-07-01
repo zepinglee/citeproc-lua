@@ -260,6 +260,10 @@ function Element:build_group_ir(engine, state, context)
 end
 
 function Element:render_text_inlines(str, context)
+  if str == "" then
+    return {}
+  end
+
   str = self:apply_strip_periods(str)
   -- TODO: try links
 

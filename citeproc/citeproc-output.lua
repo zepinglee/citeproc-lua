@@ -817,6 +817,9 @@ function OutputFormat:flip_flop_micro_inlines(inlines, state)
 end
 
 local function find_left(inline)
+  if not inline then
+    print(debug.traceback())
+  end
   if inline.type == "PlainText" then
     return inline
   elseif inline.inlines then
