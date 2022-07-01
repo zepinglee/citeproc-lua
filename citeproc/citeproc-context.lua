@@ -140,10 +140,8 @@ function Context:parse_name_suffix(name)
     name.family = table.concat(util.slice(words, 1, -2), ", ")
   end
   if not name.suffix and name.given and string.match(name.given, ",") then
-    -- name_ParsedCommaDelimitedDroppingParticleSortOrderingWithoutAffixes.txt?
     -- Split name suffix: magic_NameSuffixNoComma.txt
     -- "John, III" => given: "John", suffix: "III"
-    -- magic_NameSuffixWithComma.txt?
     local words = util.split(name.given, ",%s*")
     name.suffix = words[#words]
     name.given = table.concat(util.slice(words, 1, -2), ", ")
@@ -152,6 +150,12 @@ end
 
 function Context:split_ndp_family(name)
   if name["non-dropping-particle"] or not name.family then
+    return
+  end
+  if util.startswith(name.family, '"') and util.endswith(name.family, '"') then
+    -- Stop parsing family name if surrounded by quotation marks
+    -- bugreports_parseName.txt
+    name.family = string.gsub(name.family, '"', "")
     return
   end
   local ndp_parts = {}

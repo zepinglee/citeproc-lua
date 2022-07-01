@@ -591,8 +591,6 @@ function Name:render_family(name, token, context)
   end
 
   local family = name.family
-  -- Remove double quotes: name_ParticleCaps3.txt
-  family = string.gsub(family, '"', "")
   if context.sort_key then
     -- Remove brackets for sorting: sort_NameVariable.txt
     family = string.gsub(family, "[%[%]]", "")

@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
-bugreports          45      34       3       0
+bugreports          46      33       3       0
 collapse             4      17       0       0
 condition           17       0       0       0
 date                96       5       0       0
@@ -29,7 +29,7 @@ position            10       4       1       0
 punctuation          9       7       0       0
 quotes               4       0       0       0
 simplespace          0       1       0       0
-sort                37      17      10       0
+sort                37      14       7       0
 sortseparator        1       0       0       0
 substitute           6       1       0       0
 testers              0       0       2       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              647     170      22       0
+(all)              648     166      19       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -396,18 +396,6 @@ Passed in:
 Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry"> (2006): 1–7.</div>
-</div>'
-
-Failure → citeproc test test-suite bugreports_parseName.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Happel, Eduard "van 2008</div>
-  <div class="csl-entry">Hoppel, Gustav von 2008</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">van Happel, Eduard 2008</div>
-  <div class="csl-entry">Hoppel, Gustav von 2008</div>
 </div>'
 
 Failure → citeproc test test-suite collapse_AuthorCollapse.txt
@@ -1854,63 +1842,7 @@ Passed in:
 Expected:
 (string) '>>[0] (Day and Fitzpatrick, 2005a, 2005b; Mian et al., 2005)'
 
-Failure → citeproc test test-suite sort_BibliographyCitationNumberDescendingViaCompositeMacro.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">[1] Aaaa</div>
-  <div class="csl-entry">[2] Bbbb</div>
-  <div class="csl-entry">[3] Xxxx</div>
-  <div class="csl-entry">[4] Zzzz</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">[4] Aaaa</div>
-  <div class="csl-entry">[3] Bbbb</div>
-  <div class="csl-entry">[2] Xxxx</div>
-  <div class="csl-entry">[1] Zzzz</div>
-</div>'
-
-Failure → citeproc test test-suite sort_BibliographyCitationNumberDescendingViaMacro.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">[1] Book One</div>
-  <div class="csl-entry">[2] Book Three</div>
-  <div class="csl-entry">[3] Book Four</div>
-  <div class="csl-entry">[4] Book Six</div>
-  <div class="csl-entry">[5] Book Two</div>
-  <div class="csl-entry">[6] Book Five</div>
-  <div class="csl-entry">[7] Book Seven</div>
-  <div class="csl-entry">[8] Book Eight</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">[8] Book One</div>
-  <div class="csl-entry">[7] Book Three</div>
-  <div class="csl-entry">[6] Book Four</div>
-  <div class="csl-entry">[5] Book Six</div>
-  <div class="csl-entry">[4] Book Two</div>
-  <div class="csl-entry">[3] Book Five</div>
-  <div class="csl-entry">[2] Book Seven</div>
-  <div class="csl-entry">[1] Book Eight</div>
-</div>'
-
 Failure → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">[1] Xxxx (fourth-cited)</div>
-  <div class="csl-entry">[2] Zzzz (third-cited)</div>
-  <div class="csl-entry">[3] Bbbb (second-cited)</div>
-  <div class="csl-entry">[4] Aaaa (first-cited)</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">[4] Xxxx (fourth-cited)</div>
-  <div class="csl-entry">[3] Zzzz (third-cited)</div>
-  <div class="csl-entry">[2] Bbbb (second-cited)</div>
-  <div class="csl-entry">[1] Aaaa (first-cited)</div>
-</div>'
-
-Failure → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaVariableBibliography.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">[1] Xxxx (fourth-cited)</div>
@@ -2117,22 +2049,22 @@ Expected:
 </div>'
 
 Error → citeproc test test-suite bugreports_AsmJournals.txt
-./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+./citeproc/citeproc-node-names.lua:633: bad argument #1 to 'gsub' (string expected, got nil)
 
 Error → citeproc test test-suite bugreports_UndefinedInName.txt
-./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+./citeproc/citeproc-node-names.lua:633: bad argument #1 to 'gsub' (string expected, got nil)
 
 Error → citeproc test test-suite bugreports_undefinedCrash.txt
-./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+./citeproc/citeproc-node-names.lua:633: bad argument #1 to 'gsub' (string expected, got nil)
 
 Error → citeproc test test-suite disambiguate_FailWithYearSuffix.txt
-./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+./citeproc/citeproc-node-names.lua:633: bad argument #1 to 'gsub' (string expected, got nil)
 
 Error → citeproc test test-suite disambiguate_YearSuffixMidInsert.txt
-./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+./citeproc/citeproc-node-names.lua:633: bad argument #1 to 'gsub' (string expected, got nil)
 
 Error → citeproc test test-suite group_ComplexNesting.txt
-./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+./citeproc/citeproc-node-names.lua:633: bad argument #1 to 'gsub' (string expected, got nil)
 
 Error → citeproc test test-suite integration_DisambiguateAddGivenname1.txt
 ./citeproc/citeproc-engine.lua:319: attempt to compare number with nil
@@ -2144,40 +2076,31 @@ Error → citeproc test test-suite name_EtAlWithCombined.txt
 ./citeproc/citeproc-node-choose.lua:161: attempt to index a nil value (field 'cite')
 
 Error → citeproc test test-suite position_IbidWithSuffix.txt
-./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+./citeproc/citeproc-node-names.lua:633: bad argument #1 to 'gsub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CaseInsensitiveBibliography.txt
-./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+./citeproc/citeproc-node-names.lua:633: bad argument #1 to 'gsub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_ChicagoYearSuffix1.txt
-./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+./citeproc/citeproc-node-names.lua:633: bad argument #1 to 'gsub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_ChicagoYearSuffix2.txt
-./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+./citeproc/citeproc-node-names.lua:633: bad argument #1 to 'gsub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
-./citeproc/citeproc-engine.lua:221: attempt to index a nil value (field 'properties')
-
-Error → citeproc test test-suite sort_CitationNumberPrimaryAscendingViaVariableCitation.txt
 ./citeproc/citeproc-engine.lua:221: attempt to index a nil value (field 'properties')
 
 Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroCitation.txt
 ./citeproc/citeproc-engine.lua:221: attempt to index a nil value (field 'properties')
 
-Error → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:221: attempt to index a nil value (field 'properties')
-
-Error → citeproc test test-suite sort_CitationNumberSecondaryAscendingViaVariableCitation.txt
-./citeproc/citeproc-engine.lua:221: attempt to index a nil value (field 'properties')
-
 Error → citeproc test test-suite sort_FamilyOnly.txt
-./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+./citeproc/citeproc-node-names.lua:633: bad argument #1 to 'gsub' (string expected, got nil)
 
 Error → citeproc test test-suite sort_LeadingA.txt
-./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+./citeproc/citeproc-node-names.lua:633: bad argument #1 to 'gsub' (string expected, got nil)
 
 Error → citeproc test test-suite testers_FirstAutoGeneratedZoteroPluginTest.txt
-./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+./citeproc/citeproc-node-names.lua:633: bad argument #1 to 'gsub' (string expected, got nil)
 
 Error → citeproc test test-suite testers_SecondAutoGeneratedZoteroPluginTest.txt
-./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+./citeproc/citeproc-node-names.lua:633: bad argument #1 to 'gsub' (string expected, got nil)
