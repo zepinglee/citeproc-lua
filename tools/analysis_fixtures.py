@@ -14,7 +14,7 @@ skipped_fixtures = [
     'name_EditorTranslatorSameWithTerm.txt',
     # merge punctuations
     'name_WithNonBreakingSpace.txt',
-    # check number plural
+    # check number plural (test fixture needs to be fixed)
     'number_PlainHyphenOrEnDashAlwaysPlural.txt',
 ]
 

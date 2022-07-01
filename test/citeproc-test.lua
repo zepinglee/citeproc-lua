@@ -66,8 +66,12 @@ local function test_citation_items(engine, fixture)
   local citation_items = fixture.citation_items
   if not citation_items then
     citation_items = {{}}
+    local cited = {}  -- to remove duplicates: number_PlainHyphenOrEnDashAlwaysPlural.txt
     for _, item in ipairs(fixture.input) do
-      table.insert(citation_items[1], {id = tostring(item.id)})
+      if not cited[item.id] then
+        table.insert(citation_items[1], {id = tostring(item.id)})
+        cited[item.id] = true
+      end
     end
   end
 

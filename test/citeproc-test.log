@@ -13,7 +13,7 @@ flipflop            17       1       0       0
 form                 3       0       0       0
 fullstyles           2       3       0       0
 group                6       0       1       0
-integration          9       5       0       0
+integration         10       4       0       0
 label               17       2       0       0
 locale              23       0       0       0
 locator              4       1       0       0
@@ -25,7 +25,7 @@ namespaces           1       0       0       0
 number              18       1       0       0
 page                 9       0       0       0
 plural               7       0       0       0
-position            11       3       1       0
+position            12       2       1       0
 punctuation          9       7       0       0
 quotes               4       0       0       0
 simplespace          0       1       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              652     175      18       0
+(all)              654     173      18       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -228,8 +228,8 @@ Expected:
 Failure → citeproc test test-suite bugreports_MatchedAuthorAndDate.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brown, J. 2006, August. <b><i>Tijdschrift voor praktijkondersteuning</i></b>. http://dx.doi.org/10.1007/bf03074904.</div>
-  <div class="csl-entry">Brown, J. 2006, August. <b><i>Huisarts en Wetenschap</i></b>. http://dx.doi.org/10.1007/bf03084836.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <i><b>Tijdschrift voor praktijkondersteuning</b></i>. http://dx.doi.org/10.1007/bf03074904.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <i><b>Huisarts en Wetenschap</b></i>. http://dx.doi.org/10.1007/bf03084836.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -484,13 +484,13 @@ Expected:
 
 Failure → citeproc test test-suite collapse_NumericDuplicate.txt
 Passed in:
-(string) '(1,2,3,4)'
+(string) '(1,2,2,3,4)'
 Expected:
 (string) '(1,2,2–4)'
 
 Failure → citeproc test test-suite collapse_NumericDuplicate2.txt
 Passed in:
-(string) '(1,2,3,4,5)'
+(string) '(1,2,3,3,4,5)'
 Expected:
 (string) '(1–3,3–5)'
 
@@ -1127,14 +1127,6 @@ Expected:
 >>[3] Doe, supra note 2.
 >>[4] Roe, supra note 3.'
 
-Failure → citeproc test test-suite integration_SimpleIbid.txt
-Passed in:
-(string) '..[0] (Doe p. 12; Roe p. 23)
->>[1] (Noakes p. 34; Snoakes p. 45)'
-Expected:
-(string) '..[0] (Doe p. 12; Roe p. 23)
->>[1] (Noakes p. 34; ibid.; Snoakes p. 45)'
-
 Failure → citeproc test test-suite integration_YearSuffixOnOffOn.txt
 Passed in:
 (string) '>>[0] Smith (1986); Smith (1986); Smith (1986); Smith (1986)'
@@ -1364,19 +1356,9 @@ Expected:
 
 Failure → citeproc test test-suite position_IbidWithPrefixFullStop.txt
 Passed in:
-(string) '>>[0] Book A'
+(string) '>>[0] Book A; . He said “Please work.” ibid.'
 Expected:
 (string) '>>[0] Book A. He said “Please work.” Ibid.'
-
-Failure → citeproc test test-suite position_NearNoteSameNote.txt
-Passed in:
-(string) '..[0] Plain+Vanilla:Book-A
-..[1] Plain+Vanilla:Book-B
->>[2] Plain+Vanilla:Book-B; Plain+Vanilla:Book-A'
-Expected:
-(string) '..[0] Plain+Vanilla:Book-A; Near+Ibid:Book-A
-..[1] Plain+Vanilla:Book-B
->>[2] Plain+Vanilla:Book-B; Plain+Vanilla:Book-A'
 
 Failure → citeproc test test-suite position_ResetNoteNumbers.txt
 Passed in:
@@ -2161,10 +2143,10 @@ Error → citeproc test test-suite disambiguate_FailWithYearSuffix.txt
 ./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
 
 Error → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntries.txt
-./citeproc/citeproc-engine.lua:365: attempt to get length of a nil value (local 'previous_note_citations')
+./citeproc/citeproc-engine.lua:361: attempt to get length of a nil value (local 'previous_note_citations')
 
 Error → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntriesByCite.txt
-./citeproc/citeproc-engine.lua:365: attempt to get length of a nil value (local 'previous_note_citations')
+./citeproc/citeproc-engine.lua:361: attempt to get length of a nil value (local 'previous_note_citations')
 
 Error → citeproc test test-suite disambiguate_YearSuffixMidInsert.txt
 ./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
