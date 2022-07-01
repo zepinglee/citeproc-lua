@@ -463,7 +463,7 @@ function Name:render_person_name(name, seen_one, context)
       local given_inlines = self:render_given(name, token, context)
       util.extend(inlines, given_inlines)
 
-    elseif token == "dp-ndp" then
+    elseif token == "dp" or token == "dp-ndp" then
       local particle_inlines = self:render_particle(name, token, context)
       util.extend(inlines, particle_inlines)
 
@@ -583,6 +583,9 @@ function Name:render_family(name, token, context)
   if token == "dp-ndp-family-suffix" or token == "ndp-family" then
     local ndp_part = name["non-dropping-particle"]
     if ndp_part then
+      if context.sort_key then
+        ndp_part = self:format_sort_particle(ndp_part)
+      end
       if #inlines > 0 then
         table.insert(inlines, PlainText:new(" "))
       end
@@ -596,14 +599,13 @@ function Name:render_family(name, token, context)
   if context.sort_key then
     -- Remove brackets for sorting: sort_NameVariable.txt
     family = string.gsub(family, "[%[%]]", "")
-    -- Remove leading apostrophe: sort_LeadingApostropheOnNameParticle.txt
-    family = string.gsub(family, "^'", "")
-    family = string.gsub(family, "^’", "")
   end
 
   local family_inlines = self.family:format_text_case(family, context)
   if #inlines > 0 then
-    if not string.match(name_part, "['-]$") and not util.endswith(name_part, "’") then
+    if not string.match(name_part, "^%l'$") and
+        not string.match(name_part, "^%l’$") and
+        not util.endswith(name_part, "-") then
       table.insert(inlines, PlainText:new(" "))
     end
   end
@@ -667,22 +669,34 @@ function Name:render_given(name, token, context)
   return inlines
 end
 
+-- sort_LeadingApostropheOnNameParticle.txt
+-- "’t " => "t"
+function Name:format_sort_particle(particle)
+  particle = string.gsub(particle, "^'", "")
+  particle = string.gsub(particle, "^’", "")
+  return particle
+end
+
 function Name:render_particle(name, token, context)
   local inlines = {}
 
   local dp_part = name["dropping-particle"]
   if dp_part then
+    dp_part = self:format_sort_particle(dp_part)
     local dp_inlines = self.given:format_text_case(dp_part, context)
     util.extend(inlines, dp_inlines)
   end
 
-  local ndp_part = name["non-dropping-particle"]
-  if ndp_part then
-    if #inlines > 0 then
-      table.insert(inlines, PlainText:new(" "))
+  if token == "dp-ndp" then
+    local ndp_part = name["non-dropping-particle"]
+    if ndp_part then
+      if #inlines > 0 then
+        table.insert(inlines, PlainText:new(" "))
+      end
+      ndp_part = self:format_sort_particle(ndp_part)
+      local ndp_inlines = self.family:format_text_case(ndp_part, context)
+      util.extend(inlines, ndp_inlines)
     end
-    local ndp_inlines = self.family:format_text_case(ndp_part, context)
-    util.extend(inlines, ndp_inlines)
   end
 
   return inlines
