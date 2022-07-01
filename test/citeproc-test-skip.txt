@@ -8,6 +8,7 @@ flipflop_NumericField.txt
 locator_TrickyEntryForPlurals.txt
 
 # editor-translator
+name_CollapseRoleLabels.txt
 name_EditorTranslatorSameWithTerm.txt
 
 # Hebrew

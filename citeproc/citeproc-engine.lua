@@ -264,15 +264,8 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
     if citation_changed then
       local citation_str = self:build_citation_str(citation_, note_number, note_citation_map, cite_first_note_numbers, cite_last_note_numbers, previous_citation)
 
-      if citation_str ~= self.registry.citation_strings[citation_id] then
-        params.bibchange = true
-        table.insert(output, {citation_index, citation_str, citation_id})
-        self.registry.citation_strings[citation_.citationID] = citation_str
-        if not self.registry.citations[citation_id].properties then
-          self.registry.citations[citation_id].properties = {}  -- TODO: store somewhere else
-        end
-        self.registry.citations[citation_id].properties.noteIndex = note_number
-      end
+      params.bibchange = true
+      table.insert(output, {citation_index, citation_str, citation_id})
     else
       self:update_position_info(citation_, note_number, cite_first_note_numbers, cite_last_note_numbers)
     end

@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
-bugreports          49      33       0       0
+bugreports          48      34       0       0
 collapse             4      17       0       0
 condition           17       0       0       0
 date                96       5       0       0
@@ -13,12 +13,12 @@ flipflop            17       0       0       0
 form                 3       0       0       0
 fullstyles           2       3       0       0
 group                6       1       0       0
-integration          9       5       0       0
+integration         11       3       0       0
 label               17       2       0       0
 locale              23       0       0       0
 locator              5       0       0       0
 magic               33       6       1       0
-name                96      10       1       0
+name                96       9       1       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              664     165       2       0
+(all)              665     163       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -280,6 +280,14 @@ Expected:
 (string) '>>[0] John Doe, <i>Book A</i>, 2000; John Doe, <i>Book B</i>, 2000.
 >>[1] Doe, Book A; Doe, Book B.'
 
+Failure → citeproc test test-suite bugreports_OverwriteCitationItems.txt
+Passed in:
+(string) '>>[0] Title Four; Title Five
+>>[1] Title Two; Title Three'
+Expected:
+(string) '>>[0] Title Four; Title Five
+..[1] Title Two; Title Three'
+
 Failure → citeproc test test-suite bugreports_ProcessorHang1.txt
 Passed in:
 (string) '(Philpott et al. 2008)
@@ -384,7 +392,7 @@ Jones 1990'
 
 Failure → citeproc test test-suite bugreports_ikeyOne.txt
 Passed in:
-(string) '..[0] (Smith, <i>Book B</i>)'
+(string) '>>[0] (Smith, <i>Book B</i>)'
 Expected:
 (string) '>>[0] (Smith)'
 
@@ -1127,31 +1135,17 @@ Expected:
   <div class="csl-entry">Doe Inc. (n.d.). Retrieved June 1, 1965, from http://example.com/</div>
 </div>'
 
-Failure → citeproc test test-suite integration_DuplicateItem.txt
+Failure → citeproc test test-suite integration_IbidOnInsert.txt
 Passed in:
-(string) '..[0] la Berge, Nagel, Dement &#38; Zarcone (1981)'
+(string) '..[0] (Doe p. 12)
+>>[1] (Noakes p. 34)
+>>[2] (Ibid.)
+>>[3] (Snoakes p. 45)'
 Expected:
-(string) '>>[0] la Berge, Nagel, Dement &#38; Zarcone (1981)'
-
-Failure → citeproc test test-suite integration_DuplicateItem2.txt
-Passed in:
-(string) '..[0] la Berge, Nagel, Dement &#38; Zarcone (1981)'
-Expected:
-(string) '>>[0] la Berge, Nagel, Dement &#38; Zarcone (1981)'
-
-Failure → citeproc test test-suite integration_FirstReferenceNoteNumberPositionChange.txt
-Passed in:
-(string) '>>[0] Snoakes, “Life of Snoakes” (1902).
-..[1] Doe, “Life of Doe” (1901).
-..[2] Roe, “Life of Roe” (1900).
->>[3] Doe, supra note 2.
->>[4] Roe, supra note 3.'
-Expected:
-(string) '>>[0] Snoakes, “Life of Snoakes” (1902).
->>[1] Doe, “Life of Doe” (1901).
->>[2] Roe, “Life of Roe” (1900).
->>[3] Doe, supra note 2.
->>[4] Roe, supra note 3.'
+(string) '..[0] (Doe p. 12)
+>>[1] (Noakes p. 34)
+>>[2] (Ibid.)
+..[3] (Snoakes p. 45)'
 
 Failure → citeproc test test-suite integration_IbidWithDifferentLocators.txt
 Passed in:
@@ -1295,12 +1289,6 @@ Passed in:
 (string) '(Aalto 2015; Aalto 2015; Bartleby 2010)'
 Expected:
 (string) '(Aalto 2015a,b; Bartleby 2010)'
-
-Failure → citeproc test test-suite name_CollapseRoleLabels.txt
-Passed in:
-(string) 'Albert Asthma et al. (eds.), Albert Asthma et al. (trans.)'
-Expected:
-(string) 'Albert Asthma et al. (eds. &#38; trans.)'
 
 Failure → citeproc test test-suite name_SubsequentAuthorSubstituteMultipleNames.txt
 Passed in:
@@ -1919,7 +1907,7 @@ Expected:
 Failure → citeproc test test-suite sort_RangeUnaffected.txt
 Passed in:
 (string) '>>[0] <sup>3</sup>
-..[1] <sup>1,2,3</sup>'
+>>[1] <sup>1,2,3</sup>'
 Expected:
 (string) '>>[0] <sup>1</sup>
 >>[1] <sup>1–3</sup>'
