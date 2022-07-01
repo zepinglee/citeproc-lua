@@ -182,12 +182,7 @@ function If:check_position(position, context)
   if position == "first" then
     return (context.cite.position == util.position_map["first"])
   elseif position == "near-note" then
-    local near_note = context.cite["near-note"]
-    if near_note ~= nil then
-      return near_note
-    elseif context.cite.note_distance then
-      return context.cite.note_distance <= context.area.near_note_distance
-    end
+    return context.cite["near-note"] or context.cite.near_note
   else
     return (context.cite.position >= util.position_map[position])
   end

@@ -4,6 +4,9 @@ flipflop_LeadingMarkupWithApostrophe.txt
 # citeproc-lua chooses to parse rich text in numeric fields.
 flipflop_NumericField.txt
 
+# Note 2 and 3 are not changed.
+integration_FirstReferenceNoteNumberPositionChange.txt
+
 # locator parsing is not yet implemented
 locator_TrickyEntryForPlurals.txt
 

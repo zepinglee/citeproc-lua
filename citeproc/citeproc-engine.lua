@@ -64,6 +64,225 @@ function CiteProc.new(sys, style, lang, force_lang)
   return o
 end
 
+function CiteProc:updateItems(ids)
+  self.registry.reflist = {}
+  self.registry.registry = {}
+  for _, id in ipairs(ids) do
+    self:get_item(id)
+  end
+end
+
+function CiteProc:updateUncitedItems(ids)
+  for _, id in ipairs(ids) do
+    if not self.registry.registry[id] then
+      self:get_item(id)
+    end
+  end
+  -- TODO: disambiguation
+end
+
+function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
+  self.registry.citations[citation.citationID] = citation
+  -- Fix missing noteIndex: sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
+  if not citation.properties then
+    citation.properties = {}
+  end
+  if not citation.properties.noteIndex then
+    citation.properties.noteIndex = 0
+  end
+
+  local citations_to_build = {}
+  util.extend(citations_to_build, citationsPre)
+  table.insert(citations_to_build, {citation.citationID, citation.properties.noteIndex})
+  util.extend(citations_to_build, citationsPost)
+  -- util.debug(citations_to_build)
+
+  local params = {
+    bibchange = false,
+    citation_errors = {},
+  }
+  local output = {}
+
+  local tainted_citation_ids = self:get_tainted_citaion_ids(citations_to_build)
+  -- util.debug(tainted_citation_ids)
+
+  -- params.bibchange = #tainted_citation_ids > 0
+  for _, citation_id in ipairs(tainted_citation_ids) do
+    local citation_ = self.registry.citations[citation_id]
+
+    local citation_index = citation_.citation_index
+    local citation_str = self:build_citation_str(citation_)
+    -- util.debug(citation_str)
+    -- self.registry.citation_strings[citation_id] = citation_str
+    table.insert(output, {citation_index, citation_str, citation_id})
+  end
+
+  -- util.debug(output)
+  return {params, output}
+end
+
+
+function CiteProc:get_tainted_citaion_ids(citations_to_build)
+  local tainted_citation_ids = {}
+
+  self.cite_first_note_numbers = {}
+  self.cite_last_note_numbers = {}
+  self.note_citations_map = {}
+  -- {
+  --   1 = {"citation-1", "citation-2"},
+  --   2 = {"citation-2"},
+  -- }
+
+  local previous_citation
+  for citation_index, tuple in ipairs(citations_to_build) do
+    local citation_id, note_number = table.unpack(tuple)
+    local citation = self.registry.citations[citation_id]
+    citation.properties.noteIndex = note_number
+    citation.citation_index = citation_index
+
+    local tainted = false
+
+    local previous_cite
+    for _, cite_item in ipairs(citation.citationItems) do
+      tainted = self:set_cite_item_position(cite_item, note_number, previous_cite, previous_citation)
+      self.cite_last_note_numbers[cite_item.id] = note_number
+      previous_cite = cite_item
+    end
+
+    if tainted then
+      table.insert(tainted_citation_ids, citation.citationID)
+    end
+
+    if not self.note_citations_map[note_number] then
+      self.note_citations_map[note_number] = {}
+    end
+    table.insert(self.note_citations_map[note_number], citation.citationID)
+    previous_citation = citation
+  end
+  return tainted_citation_ids
+end
+
+function CiteProc:set_cite_item_position(cite_item, note_number, previous_cite, previous_citation)
+  local position = util.position_map["first"]
+
+  local first_reference_note_number = self.cite_first_note_numbers[cite_item.id]
+  if first_reference_note_number then
+    position = util.position_map["subsequent"]
+  else
+    self.cite_first_note_numbers[cite_item.id] = note_number
+  end
+
+  local preceding_cite_item = self:get_preceding_cite_item(cite_item, previous_cite, previous_citation, note_number, self.note_citations_map)
+  if preceding_cite_item then
+    position = self:_get_cite_position(cite_item, preceding_cite_item)
+  end
+
+  local near_note = false
+  local last_note_number = self.cite_last_note_numbers[cite_item.id]
+  if last_note_number then
+    local note_distance = note_number - last_note_number
+    if note_distance <= self.style.citation.near_note_distance then
+      near_note = true
+    end
+  end
+
+  local tainted = false
+  if cite_item.position ~= position then
+    tainted = true
+    cite_item.position = position
+  end
+  if cite_item["first-reference-note-number"] ~= first_reference_note_number then
+    tainted = true
+    cite_item["first-reference-note-number"] = first_reference_note_number
+  end
+  if cite_item.near_note ~= near_note then
+    tainted = true
+    cite_item.near_note = near_note
+  end
+  return tainted
+end
+
+-- Find the preceding cite referencing the same item
+function CiteProc:get_preceding_cite_item(cite_item, previous_cite, previous_citation, note_number, note_citations_map)
+  if previous_cite then
+    -- a. the current cite immediately follows on another cite, within the same
+    --    citation, that references the same item
+    if cite_item.id == previous_cite.id then
+      return previous_cite
+    end
+  elseif previous_citation then
+    -- (hidden) The previous citation is the only one in the previous note.
+    --    See also
+    --    https://github.com/citation-style-language/documentation/issues/121
+    --    position_IbidWithMultipleSoloCitesInBackref.txt
+    -- b. the current cite is the first cite in the citation, and the previous
+    --    citation consists of a single cite referencing the same item
+    local previous_note_number = previous_citation.properties.noteIndex
+    local num_previous_note_citations = note_citations_map[previous_note_number]
+    if (previous_note_number == note_number - 1 and num_previous_note_citations == 1)
+        or previous_note_number == note_number then
+      if #previous_citation.citationItems == 1 then
+        previous_cite = previous_citation.citationItems[1]
+        if previous_cite.id == cite_item.id then
+          return previous_cite
+        end
+      end
+    end
+  end
+  return nil
+end
+
+function CiteProc:_get_cite_position(item, preceding_cite)
+  if preceding_cite.locator then
+    if item.locator then
+      if item.locator == preceding_cite.locator and item.label == preceding_cite.label then
+        return util.position_map["ibid"]
+      else
+        return util.position_map["ibid-with-locator"]
+      end
+    else
+      return util.position_map["subsequent"]
+    end
+  else
+    if item.locator then
+      return util.position_map["ibid-with-locator"]
+    else
+      return util.position_map["ibid"]
+    end
+  end
+end
+
+function CiteProc:build_citation_str(citation)
+  -- util.debug(citation.citationID)
+  local items = {}
+  for i, cite_item in ipairs(citation.citationItems) do
+    cite_item.id = tostring(cite_item.id)
+    -- util.debug(cite_item.id)
+    local item_data = self:get_item(cite_item.id)
+
+    if item_data then
+      -- Create a wrapper of the orignal item from registry so that
+      -- it may hold different `locator` or `position` values for cites.
+      local item = setmetatable(cite_item, {__index = item_data})
+
+      -- Use "page" as locator label if missing
+      -- label_PluralWithAmpersand.txt
+      if item.locator and not item.label then
+        item.label = "page"
+      end
+
+      table.insert(items, item)
+    end
+  end
+
+  if self.registry.requires_sorting then
+    self:sort_bibliography()
+  end
+
+  local citation_str = self:build_cluster(items)
+  return citation_str
+end
+
 function CiteProc:build_cluster(citation_items)
   local output_format = HtmlWriter:new()
   local irs = {}
@@ -194,215 +413,6 @@ function CiteProc:sorted_citation_items(items)
 
   items = citation_sort:sort(items, state, context)
   return items
-end
-
-function CiteProc:updateItems(ids)
-  self.registry.reflist = {}
-  self.registry.registry = {}
-  for _, id in ipairs(ids) do
-    self:get_item(id)
-  end
-end
-
-function CiteProc:updateUncitedItems(ids)
-  for _, id in ipairs(ids) do
-    if not self.registry.registry[id] then
-      self:get_item(id)
-    end
-  end
-  -- TODO: disambiguation
-end
-
-function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
-  self.registry.citations[citation.citationID] = citation
-
-  -- Fix missing noteIndex: sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
-  if not citation.properties then
-    citation.properties = {}
-  end
-  if not citation.properties.noteIndex then
-    citation.properties.noteIndex = 0
-  end
-
-  local citations_to_build = {}
-  util.extend(citations_to_build, citationsPre)
-  table.insert(citations_to_build, {citation.citationID, citation.properties.noteIndex})
-  util.extend(citations_to_build, citationsPost)
-
-  -- util.debug(citations_to_build)
-
-  local params = {
-    bibchange = false,
-    citation_errors = {},
-  }
-  local output = {}
-
-  local cite_first_note_numbers = {}
-  local cite_last_note_numbers = {}
-  local previous_citation
-  local note_citation_map = {}
-  -- {
-  --   1 = {"citation-1", "citation-2"},
-  --   2 = {"citation-2"},
-  -- }
-
- local citation_changed = false
-
-  for citation_index, tuple in ipairs(citations_to_build) do
-    local citation_id, note_number = table.unpack(tuple)
-    local citation_ = self.registry.citations[citation_id]
-
-    if citation_.citation_index ~= citation_index then
-      citation_changed = true
-    end
-    if citation_id == citation.citationID then
-      citation_changed = true
-    end
-    -- TODO: disambiguation
-
-    if citation_changed then
-      local citation_str = self:build_citation_str(citation_, note_number, note_citation_map, cite_first_note_numbers, cite_last_note_numbers, previous_citation)
-      -- util.debug(citation_str)
-
-      params.bibchange = true
-
-      if citation_index ~= citation_.citation_index or citation_str ~= self.registry.citation_strings[citation_id] then
-        table.insert(output, {citation_index, citation_str, citation_id})
-        citation_.citation_index = citation_index
-        self.registry.citation_strings[citation_id] = citation_str
-      end
-
-    else
-      self:update_position_info(citation_, note_number, cite_first_note_numbers, cite_last_note_numbers)
-    end
-
-    previous_citation = citation_
-  end
-
-  return {params, output}
-end
-
-
-function CiteProc:update_position_info(citation, note_number, cite_first_note_numbers, cite_last_note_numbers)
-  for _, cite_item in ipairs(citation.citationItems) do
-    local item = self.registry.registry[cite_item.id]
-    if not cite_first_note_numbers[item.id] then
-      cite_first_note_numbers[item.id] = note_number
-    end
-    cite_last_note_numbers[cite_item.id] = note_number
-  end
-end
-
-function CiteProc:build_citation_str(citation, note_number, note_citation_map, cite_first_note_numbers, cite_last_note_numbers, previous_citation)
-  -- util.debug(citation.citationID)
-  local previous_note_citations
-  if note_number > 1 then
-    previous_note_citations = note_citation_map[note_number - 1]
-  end
-  if not note_citation_map[note_number] then
-    note_citation_map[note_number] = {}
-  end
-  table.insert(note_citation_map[note_number], citation.citationID)
-
-  local items = {}
-  for i, cite_item in ipairs(citation.citationItems) do
-    cite_item.id = tostring(cite_item.id)
-    -- util.debug(cite_item.id)
-    local item_data = self:get_item(cite_item.id)
-
-    local previous_cite
-    if i > 1 then
-      previous_cite = citation.citationItems[i-1]
-    end
-
-    if item_data then
-      -- Create a wrapper of the orignal item from registry so that
-      -- it may hold different `locator` or `position` values for cites.
-      local item = setmetatable(cite_item, {__index = item_data})
-
-      -- Use "page" as locator label if missing
-      -- label_PluralWithAmpersand.txt
-      if item.locator and not item.label then
-        item.label = "page"
-      end
-
-      self:set_cite_position(item, note_number, cite_first_note_numbers, cite_last_note_numbers, previous_cite, previous_citation, previous_note_citations)
-      -- util.debug(item)
-
-      table.insert(items, item)
-    end
-  end
-
-  if self.registry.requires_sorting then
-    self:sort_bibliography()
-  end
-
-  local citation_str = self:build_cluster(items)
-  return citation_str
-end
-
-function CiteProc:set_cite_position(item, note_number, cite_first_note_numbers, cite_last_note_numbers, previous_cite, previous_citation, previous_note_citations)
-
-  item.note_number = note_number
-  if cite_first_note_numbers[item.id] then
-    item.position = util.position_map["subsequent"]
-    item["first-reference-note-number"] = cite_first_note_numbers[item.id]
-    item.note_distance = note_number - cite_last_note_numbers[item.id]
-  else
-    item.position = util.position_map["first"]
-    cite_first_note_numbers[item.id] = note_number
-    item.note_distance = 0
-  end
-  cite_last_note_numbers[item.id] = note_number
-
-  -- Find the preceding cite referencing the same item
-  local preceding_cite
-  if previous_cite then
-    -- a. the current cite immediately follows on another cite, within the same
-    --    citation, that references the same item
-    if item.id == previous_cite.id then
-      preceding_cite = previous_cite
-    end
-  elseif previous_citation then
-    -- (hidden) The previous citation is the only one in the previous note.
-    --    See also
-    --    https://github.com/citation-style-language/documentation/issues/121
-    --    position_IbidWithMultipleSoloCitesInBackref.txt
-    -- b. the current cite is the first cite in the citation, and the previous
-    --    citation consists of a single cite referencing the same item
-    local previous_note_number = previous_citation.properties.noteIndex
-    if (previous_note_number == note_number - 1 and previous_note_citations and #previous_note_citations == 1)
-        or previous_note_number == note_number then
-      if #previous_citation.citationItems == 1 and previous_citation.citationItems[1].id == item.id then
-        preceding_cite = previous_citation.citationItems[1]
-      end
-    end
-  end
-
-  if preceding_cite then
-    item.position = self:_get_cite_position(item, preceding_cite)
-  end
-
-end
-
-function CiteProc:_get_cite_position(item, preceding_cite)
-  if preceding_cite.locator then
-    if item.locator then
-      if item.locator == preceding_cite.locator and item.label == preceding_cite.label then
-        return util.position_map["ibid"]
-      else
-        return util.position_map["ibid-with-locator"]
-      end
-    else
-      return util.position_map["subsequent"]
-    end
-  else
-    if item.locator then
-      return util.position_map["ibid-with-locator"]
-    else
-      return util.position_map["ibid"]
-    end
-  end
 end
 
 function CiteProc:makeCitationCluster(citation_items)
