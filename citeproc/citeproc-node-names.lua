@@ -628,8 +628,13 @@ end
 
 function Name:render_given(name, token, context)
   local given = name.given
-  -- Remove brackets for sorting: sort_NameVariable.txt
+
   if context.sort_key then
+    -- The empty given name is needed for evaluate the sort key.
+    if not given then
+      return {PlainText:new("")}
+    end
+    -- Remove brackets for sorting: sort_NameVariable.txt
     given = string.gsub(given, "[%[%]]", "")
   end
 
