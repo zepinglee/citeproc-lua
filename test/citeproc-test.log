@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
-bugreports          48      34       0       0
+bugreports          49      33       0       0
 collapse             4      17       0       0
 condition           17       0       0       0
 date                96       5       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              665     163       2       0
+(all)              666     162       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -279,14 +279,6 @@ Passed in:
 Expected:
 (string) '>>[0] John Doe, <i>Book A</i>, 2000; John Doe, <i>Book B</i>, 2000.
 >>[1] Doe, Book A; Doe, Book B.'
-
-Failure → citeproc test test-suite bugreports_OverwriteCitationItems.txt
-Passed in:
-(string) '>>[0] Title Four; Title Five
->>[1] Title Two; Title Three'
-Expected:
-(string) '>>[0] Title Four; Title Five
-..[1] Title Two; Title Three'
 
 Failure → citeproc test test-suite bugreports_ProcessorHang1.txt
 Passed in:

@@ -254,7 +254,6 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
 
     if citation_.citation_index ~= citation_index then
       citation_changed = true
-      citation_.citation_index = citation_index
     end
     if citation_id == citation.citationID then
       citation_changed = true
@@ -263,9 +262,16 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
 
     if citation_changed then
       local citation_str = self:build_citation_str(citation_, note_number, note_citation_map, cite_first_note_numbers, cite_last_note_numbers, previous_citation)
+      -- util.debug(citation_str)
 
       params.bibchange = true
-      table.insert(output, {citation_index, citation_str, citation_id})
+
+      if citation_index ~= citation_.citation_index or citation_str ~= self.registry.citation_strings[citation_id] then
+        table.insert(output, {citation_index, citation_str, citation_id})
+        citation_.citation_index = citation_index
+        self.registry.citation_strings[citation_id] = citation_str
+      end
+
     else
       self:update_position_info(citation_, note_number, cite_first_note_numbers, cite_last_note_numbers)
     end
