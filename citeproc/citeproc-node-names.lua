@@ -464,6 +464,8 @@ function Name:render_person_name(name, seen_one, context)
       util.extend(inlines, given_inlines)
 
     elseif token == "dp-ndp" then
+      local particle_inlines = self:render_particle(name, token, context)
+      util.extend(inlines, particle_inlines)
 
     elseif token == "suffix" then
       local text = name.suffix or ""
@@ -476,7 +478,7 @@ function Name:render_person_name(name, seen_one, context)
     elseif token == "space" then
       table.insert(inlines, PlainText:new(" "))
 
-    elseif token == "space" then
+    elseif token == "wide-space" then
       table.insert(inlines, PlainText:new("   "))
 
     elseif token == "sort-separator" then
@@ -662,6 +664,27 @@ function Name:render_given(name, token, context)
   end
 
   inlines = self.given:affixed(inlines)
+  return inlines
+end
+
+function Name:render_particle(name, token, context)
+  local inlines = {}
+
+  local dp_part = name["dropping-particle"]
+  if dp_part then
+    local dp_inlines = self.given:format_text_case(dp_part, context)
+    util.extend(inlines, dp_inlines)
+  end
+
+  local ndp_part = name["non-dropping-particle"]
+  if ndp_part then
+    if #inlines > 0 then
+      table.insert(inlines, PlainText:new(" "))
+    end
+    local ndp_inlines = self.family:format_text_case(ndp_part, context)
+    util.extend(inlines, ndp_inlines)
+  end
+
   return inlines
 end
 

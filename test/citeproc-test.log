@@ -29,7 +29,7 @@ position            11       4       0       0
 punctuation          9       7       0       0
 quotes               4       0       0       0
 simplespace          0       1       0       0
-sort                41      16       0       0
+sort                42      14       0       0
 sortseparator        1       0       0       0
 substitute           6       1       0       0
 testers              2       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              660     170       2       0
+(all)              661     168       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -1888,31 +1888,11 @@ Expected:
   <div class="csl-entry">---. 1974b. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
 </div>'
 
-Failure → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroCitation.txt
-Passed in:
-(string) '>>[0] [1] Xxxx (fourth-cited); [2] Zzzz (third-cited); [3] Bbbb (second-cited); [4] Aaaa (first-cited)'
-Expected:
-(string) '>>[0] [1] Aaaa (first-cited); [2] Bbbb (second-cited); [3] Zzzz (third-cited); [4] Xxxx (fourth-cited)'
-
 Failure → citeproc test test-suite sort_CiteGroupDelimiter.txt
 Passed in:
 (string) 'Banda 1999; Aalto 2000; Aalto 2001'
 Expected:
 (string) 'Banda 1999; Aalto 2000, Aalto 2001'
-
-Failure → citeproc test test-suite sort_DaleDalebout.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Allabout</div>
-  <div class="csl-entry">Dalebout</div>
-  <div class="csl-entry">Dale</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Allabout</div>
-  <div class="csl-entry">Dale</div>
-  <div class="csl-entry">Dalebout</div>
-</div>'
 
 Failure → citeproc test test-suite sort_DropNameLabelInSort.txt
 Passed in:
