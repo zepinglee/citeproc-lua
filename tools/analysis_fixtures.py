@@ -8,6 +8,7 @@ import xml.etree.ElementTree as ET
 
 failed_fixtures = []
 skipped_fixtures = [
+    'name_EditorTranslatorSameWithTerm.txt',
 ]
 
 with open('./test/citeproc-test.log') as f:

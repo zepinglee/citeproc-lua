@@ -18,7 +18,7 @@ label               17       2       0       0
 locale              22       0       1       0
 locator              4       1       0       0
 magic               33       6       1       0
-name                93      17       1       0
+name                94      16       1       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              663     176       6       0
+(all)              664     175       6       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -228,8 +228,8 @@ Expected:
 Failure → citeproc test test-suite bugreports_MatchedAuthorAndDate.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brown, J. 2006, August. <b><i>Tijdschrift voor praktijkondersteuning</i></b>. http://dx.doi.org/10.1007/bf03074904.</div>
-  <div class="csl-entry">Brown, J. 2006, August. <b><i>Huisarts en Wetenschap</i></b>. http://dx.doi.org/10.1007/bf03084836.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <i><b>Tijdschrift voor praktijkondersteuning</b></i>. http://dx.doi.org/10.1007/bf03074904.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <i><b>Huisarts en Wetenschap</b></i>. http://dx.doi.org/10.1007/bf03084836.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1321,12 +1321,6 @@ Expected:
   <div class="csl-entry"><b>Doe</b>, <b>J.</b> Q.</div>
   <div class="csl-entry"><b>Doe</b>, <b>J.</b>-Q.</div>
 </div>'
-
-Failure → citeproc test test-suite name_ParsedNonDroppingParticleWithApostrophe.txt
-Passed in:
-(string) '<span style="font-variant:small-caps;">Aubignac</span> (François Hédelin d’)'
-Expected:
-(string) '<span style="font-variant:small-caps;">Aubignac</span> (François Hédelin <span style="font-variant:small-caps;">d’</span>)'
 
 Failure → citeproc test test-suite name_ParticlesDemoteNonDroppingNever.txt
 Passed in:

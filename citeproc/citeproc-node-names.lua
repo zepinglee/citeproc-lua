@@ -574,8 +574,8 @@ function Name:render_given(person_name, is_romanesque, is_reversed, demote_ndp, 
     table.insert(given_inlines, PlainText:new(" "))
     util.extend(given_inlines, dp_inlines)
   end
-  if person_name["non-dropping-particle"] and is_romanesque and (is_reversed and demote_ndp) then
-    local ndp_inlines = self.given:format_text_case(person_name["non-dropping-particle"], context)
+  if (is_reversed and demote_ndp) and person_name["non-dropping-particle"] and is_romanesque then
+    local ndp_inlines = self.family:format_text_case(person_name["non-dropping-particle"], context)
     table.insert(given_inlines, PlainText:new(" "))
     util.extend(given_inlines, ndp_inlines)
   end
