@@ -10,6 +10,7 @@ failed_fixtures = []
 skipped_fixtures = [
     # merge punctuations
     'name_WithNonBreakingSpace.txt',
+    'position_IbidWithPrefixFullStop.txt',
 ]
 
 with open('./test/citeproc-test.log') as f:

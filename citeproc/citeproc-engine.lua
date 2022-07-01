@@ -216,6 +216,14 @@ end
 function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
   self.registry.citations[citation.citationID] = citation
 
+  -- Fix missing noteIndex: sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
+  if not citation.properties then
+    citation.properties = {}
+  end
+  if not citation.properties.noteIndex then
+    citation.properties.noteIndex = 0
+  end
+
   local citations_to_build = {}
   util.extend(citations_to_build, citationsPre)
   table.insert(citations_to_build, {citation.citationID, citation.properties.noteIndex})
@@ -237,33 +245,6 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
   --   1 = {"citation-1", "citation-2"},
   --   2 = {"citation-2"},
   -- }
-
-  -- for _, citation_pre in ipairs(citationsPre) do
-  --   -- An array citationID/note-number pairs preceding the target citation
-  --   local citation_id = citation_pre[1]
-  --   local note_number = citation_pre[2]
-  --   if note_number > 0 then
-  --     if not note_citation_map[note_number] then
-  --       note_citation_map[note_number] = {}
-  --     end
-  --     table.insert(note_citation_map[note_number], citation_id)
-  --   end
-  --   local pre_citation = self.registry.citations[citation_id]
-  --   for _, cite_item in ipairs(pre_citation.citationItems) do
-  --     if not cite_first_note_numbers[cite_item.id] then
-  --       cite_first_note_numbers[cite_item.id] = note_number
-  --     end
-  --     cite_last_note_numbers[cite_item.id] = note_number
-  --   end
-  --   previous_citation = pre_citation
-  -- end
-
-  if not citation.properties then
-    citation.properties = {}
-  end
-  if not citation.properties.noteIndex then
-    citation.properties.noteIndex = 0
-  end
 
  local citation_changed = false
 
