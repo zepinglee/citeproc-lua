@@ -603,7 +603,7 @@ function Name:render_family(name, token, context)
 
   local family_inlines = self.family:format_text_case(family, context)
   if #inlines > 0 then
-    if not util.endswith(name_part, "'") and not util.endswith(name_part, "’") then
+    if not string.match(name_part, "['-]$") and not util.endswith(name_part, "’") then
       table.insert(inlines, PlainText:new(" "))
     end
   end

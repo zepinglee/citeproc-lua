@@ -18,7 +18,7 @@ label               17       2       0       0
 locale              23       0       0       0
 locator              4       1       0       0
 magic               33       6       1       0
-name                94      16       1       0
+name                96      14       1       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              650     177      18       0
+(all)              652     175      18       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -228,8 +228,8 @@ Expected:
 Failure → citeproc test test-suite bugreports_MatchedAuthorAndDate.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brown, J. 2006, August. <i><b>Tijdschrift voor praktijkondersteuning</b></i>. http://dx.doi.org/10.1007/bf03074904.</div>
-  <div class="csl-entry">Brown, J. 2006, August. <i><b>Huisarts en Wetenschap</b></i>. http://dx.doi.org/10.1007/bf03084836.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <b><i>Tijdschrift voor praktijkondersteuning</i></b>. http://dx.doi.org/10.1007/bf03074904.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <b><i>Huisarts en Wetenschap</i></b>. http://dx.doi.org/10.1007/bf03084836.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1248,12 +1248,6 @@ Expected:
 (string) 'DOEBUCK, Jonathan, et al.; DOE, John, Jane ROE et al.; DOE, John, Janice ROEBUCK et al.
 APPLEBY, Aloysius, and Bobby BROWN; APPLEBY, Aloysius, Bobby BROWN and Cecile CREAM; APPLEBY, Aloysius, Bobby BROWN and Enola EVERGREEN'
 
-Failure → citeproc test test-suite name_ArabicShortForms.txt
-Passed in:
-(string) 'al- Aswānī; al- Aswānī'
-Expected:
-(string) 'al-Aswānī; al-Aswānī'
-
 Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearCollapse.txt
 Passed in:
 (string) '(Aalto 2015; Aalto 2015)'
@@ -1295,20 +1289,6 @@ Passed in:
 (string) 'תפוח ו  תפוז'
 Expected:
 (string) 'תפוחו תפוז'
-
-Failure → citeproc test test-suite name_HyphenatedNonDroppingParticle2.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Mary Marple</div>
-  <div class="csl-entry">Alan al- One</div>
-  <div class="csl-entry">Paul Participle</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Mary Marple</div>
-  <div class="csl-entry">Alan al-One</div>
-  <div class="csl-entry">Paul Participle</div>
-</div>'
 
 Failure → citeproc test test-suite name_InTextMarkupInitialize.txt
 Passed in:
