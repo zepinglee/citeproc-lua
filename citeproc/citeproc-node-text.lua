@@ -76,12 +76,18 @@ function Text:build_variable_ir(engine, state, context)
   if type(text) == "number" then
     text = tostring(text)
   end
+  local locator_label
   if variable == "locator" then
     text = util.strip(text)
+    locator_label = context:get_variable("label")
   end
   if variable == "page" or (variable == "locator" and
-      context:get_variable("label") == "page") then
+      locator_label == "page") then
     text = self:format_number(text, variable, "numeric", context)
+  elseif text and variable == "locator" and locator_label ~= "page" then
+    -- locator_SimpleLocators.txt
+    -- chpas. "200 - 201" => "200–201"
+    text = string.gsub(text, "%s*%-%s*", util.unicode["en dash"])
   end
   -- util.debug(text)
   local inlines = self:render_text_inlines(text, context)

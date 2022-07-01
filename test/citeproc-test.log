@@ -16,7 +16,7 @@ group                6       1       0       0
 integration          9       5       0       0
 label               17       2       0       0
 locale              23       0       0       0
-locator              4       1       0       0
+locator              5       0       0       0
 magic               33       6       1       0
 name                96      10       1       0
 nameattr            97       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              659     171       2       0
+(all)              660     170       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -1191,12 +1191,6 @@ Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Wolf, K. S. (2005). The future for Deaf individuals is not that bleak [Peer commentary, <i>Decrease of Deaf potential in a mainstreamed environment</i>, by W. C. Hall]. Retrieved from http://www.personalityresearch.org/papers/hall.html</div>
 </div>'
-
-Failure → citeproc test test-suite locator_SimpleLocators.txt
-Passed in:
-(string) 'Doe, Book A, 2000, pp. 100–103; Roe, Book B, 2001, chaps. 200 - 201.'
-Expected:
-(string) 'Doe, Book A, 2000, pp. 100–103; Roe, Book B, 2001, chaps. 200–201.'
 
 Failure → citeproc test test-suite magic_CitationLabelInBibliography.txt
 Passed in:
