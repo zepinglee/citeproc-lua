@@ -29,7 +29,7 @@ position            11       4       0       0
 punctuation          9       7       0       0
 quotes               4       0       0       0
 simplespace          0       1       0       0
-sort                43      13       0       0
+sort                45      11       0       0
 sortseparator        1       0       0       0
 substitute           6       1       0       0
 testers              2       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              662     167       2       0
+(all)              664     165       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -1916,20 +1916,6 @@ Passed in:
 Expected:
 (string) '>>[0] Smith 2003, 2010; Jones 2005'
 
-Failure → citeproc test test-suite sort_NameImplicitSortOrderAndForm.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, Book B</div>
-  <div class="csl-entry">Doe, Book C</div>
-  <div class="csl-entry">Roe, Book A</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, Book C</div>
-  <div class="csl-entry">Doe, Book B</div>
-  <div class="csl-entry">Roe, Book A</div>
-</div>'
-
 Failure → citeproc test test-suite sort_RangeUnaffected.txt
 Passed in:
 (string) '>>[0] <sup>3</sup>
@@ -1952,20 +1938,6 @@ Expected:
   <div class="csl-entry">--- ed. <i>Hello 1</i>.</div>
   <div class="csl-entry">Doe, John Barbitol. <i>Hello 2</i>.</div>
   <div class="csl-entry">Doe, John Egbert. <i>Hello 3</i>.</div>
-</div>'
-
-Failure → citeproc test test-suite sort_VariousNameMacros3.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
-  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
-  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
-  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
-  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
 </div>'
 
 Failure → citeproc test test-suite sort_WithAndInOneEntry.txt

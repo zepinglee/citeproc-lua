@@ -511,10 +511,18 @@ function Name:get_display_order(name, form, is_latin, is_sort, is_reversed, demo
   end
 
   if is_sort then
-    if demote_ndp then
-      return {"family", "wide-space", "dp-ndp", "wide-space", "given", "wide-space", "suffix"}
+    if self.form == "long" then
+      if demote_ndp then
+        return {"family", "wide-space", "dp-ndp", "wide-space", "given", "wide-space", "suffix"}
+      else
+        return {"ndp-family", "wide-space", "dp", "wide-space", "given", "wide-space", "suffix"}
+      end
     else
-      return {"ndp-family", "wide-space", "dp", "wide-space", "given", "wide-space", "suffix"}
+      if demote_ndp then
+        return {"family", "wide-space", "dp-ndp"}
+      else
+        return {"ndp-family", "wide-space", "dp"}
+      end
     end
   end
 
