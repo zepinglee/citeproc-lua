@@ -1,19 +1,19 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
-bugreports          49      33       0       0
+bugreports          45      34       3       0
 collapse             4      17       0       0
 condition           17       0       0       0
 date                96       5       0       0
 decorations          7       0       0       0
-disambiguate        19      50       2       0
+disambiguate        19      48       4       0
 display              2       3       0       0
 etal                 4       0       0       0
 flipflop            17       1       0       0
 form                 3       0       0       0
 fullstyles           2       3       0       0
-group                6       1       0       0
-integration         10       4       0       0
+group                6       0       1       0
+integration          9       5       0       0
 label               17       2       0       0
 locale              22       0       1       0
 locator              4       1       0       0
@@ -25,20 +25,20 @@ namespaces           1       0       0       0
 number              18       1       0       0
 page                 9       0       0       0
 plural               7       0       0       0
-position            13       2       0       0
+position            11       3       1       0
 punctuation          9       7       0       0
 quotes               4       0       0       0
 simplespace          0       1       0       0
-sort                47      17       0       0
+sort                40      19       5       0
 sortseparator        1       0       0       0
 substitute           5       1       1       0
-testers              2       0       0       0
+testers              0       0       2       0
 textcase            26       1       0       0
 unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              664     175       6       0
+(all)              648     177      20       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -228,8 +228,8 @@ Expected:
 Failure → citeproc test test-suite bugreports_MatchedAuthorAndDate.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brown, J. 2006, August. <i><b>Tijdschrift voor praktijkondersteuning</b></i>. http://dx.doi.org/10.1007/bf03074904.</div>
-  <div class="csl-entry">Brown, J. 2006, August. <i><b>Huisarts en Wetenschap</b></i>. http://dx.doi.org/10.1007/bf03084836.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <b><i>Tijdschrift voor praktijkondersteuning</i></b>. http://dx.doi.org/10.1007/bf03074904.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <b><i>Huisarts en Wetenschap</i></b>. http://dx.doi.org/10.1007/bf03084836.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -398,6 +398,18 @@ Expected:
   <div class="csl-entry"> (2006): 1–7.</div>
 </div>'
 
+Failure → citeproc test test-suite bugreports_parseName.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Happel, Eduard "van 2008</div>
+  <div class="csl-entry">Hoppel, Gustav von 2008</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">van Happel, Eduard 2008</div>
+  <div class="csl-entry">Hoppel, Gustav von 2008</div>
+</div>'
+
 Failure → citeproc test test-suite collapse_AuthorCollapse.txt
 Passed in:
 (string) '(Smith 1900, Smith 2000)'
@@ -472,13 +484,13 @@ Expected:
 
 Failure → citeproc test test-suite collapse_NumericDuplicate.txt
 Passed in:
-(string) '(1,2,2,3,4)'
+(string) '(1,2,3,4)'
 Expected:
 (string) '(1,2,2–4)'
 
 Failure → citeproc test test-suite collapse_NumericDuplicate2.txt
 Passed in:
-(string) '(1,2,3,3,4,5)'
+(string) '(1,2,3,4,5)'
 Expected:
 (string) '(1–3,3–5)'
 
@@ -770,14 +782,6 @@ Expected:
 >>[1] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990b)
 >>[2] (Caminiti, Johnson, &#38; Urbano 1990)'
 
-Failure → citeproc test test-suite disambiguate_FailWithYearSuffix.txt
-Passed in:
-(string) '(Caritas Europa et al. 2004)
-(Caritas Europa et al. 2004)'
-Expected:
-(string) '(Caritas Europa et al. 2004a)
-(Caritas Europa et al. 2004b)'
-
 Failure → citeproc test test-suite disambiguate_ImplicitYearSuffixOnceOnly.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -907,16 +911,6 @@ Smith 2001'
 Expected:
 (string) 'A Smith 2001
 B Smith 2001'
-
-Failure → citeproc test test-suite disambiguate_YearSuffixMidInsert.txt
-Passed in:
-(string) '(UN DESA 2011)
-(UN DESA 2011)
-(UN DESA 2011)'
-Expected:
-(string) '(UN DESA 2011b)
-(UN DESA 2011c)
-(UN DESA 2011a)'
 
 Failure → citeproc test test-suite disambiguate_YearSuffixMixedDates.txt
 Passed in:
@@ -1107,16 +1101,6 @@ Expected:
   <div class="csl-entry">---. 1994. <i>Book E</i>.</div>
 </div>'
 
-Failure → citeproc test test-suite group_ComplexNesting.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe Inc.. Retrieved June 1, 1965, from http://example.com/</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe Inc. (n.d.). Retrieved June 1, 1965, from http://example.com/</div>
-</div>'
-
 Failure → citeproc test test-suite integration_DuplicateItem.txt
 Passed in:
 (string) '..[0] la Berge, Nagel, Dement &#38; Zarcone (1981)'
@@ -1142,6 +1126,14 @@ Expected:
 >>[2] Roe, “Life of Roe” (1900).
 >>[3] Doe, supra note 2.
 >>[4] Roe, supra note 3.'
+
+Failure → citeproc test test-suite integration_SimpleIbid.txt
+Passed in:
+(string) '..[0] (Doe p. 12; Roe p. 23)
+>>[1] (Noakes p. 34; Snoakes p. 45)'
+Expected:
+(string) '..[0] (Doe p. 12; Roe p. 23)
+>>[1] (Noakes p. 34; ibid.; Snoakes p. 45)'
 
 Failure → citeproc test test-suite integration_YearSuffixOnOffOn.txt
 Passed in:
@@ -1256,6 +1248,12 @@ Expected:
 (string) 'DOEBUCK, Jonathan, et al.; DOE, John, Jane ROE et al.; DOE, John, Janice ROEBUCK et al.
 APPLEBY, Aloysius, and Bobby BROWN; APPLEBY, Aloysius, Bobby BROWN and Cecile CREAM; APPLEBY, Aloysius, Bobby BROWN and Enola EVERGREEN'
 
+Failure → citeproc test test-suite name_ArabicShortForms.txt
+Passed in:
+(string) 'al- Aswānī; al- Aswānī'
+Expected:
+(string) 'al-Aswānī; al-Aswānī'
+
 Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearCollapse.txt
 Passed in:
 (string) '(Aalto 2015; Aalto 2015)'
@@ -1298,6 +1296,20 @@ Passed in:
 Expected:
 (string) 'תפוחו תפוז'
 
+Failure → citeproc test test-suite name_HyphenatedNonDroppingParticle2.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Mary Marple</div>
+  <div class="csl-entry">Alan al- One</div>
+  <div class="csl-entry">Paul Participle</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Mary Marple</div>
+  <div class="csl-entry">Alan al-One</div>
+  <div class="csl-entry">Paul Participle</div>
+</div>'
+
 Failure → citeproc test test-suite name_InTextMarkupInitialize.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -1321,132 +1333,6 @@ Expected:
   <div class="csl-entry"><b>Doe</b>, <b>J.</b> Q.</div>
   <div class="csl-entry"><b>Doe</b>, <b>J.</b>-Q.</div>
 </div>'
-
-Failure → citeproc test test-suite name_ParticlesDemoteNonDroppingNever.txt
-Passed in:
-(string) '<b>Familyname</b>, <i>Givenname</i> <i>al</i>
-<b>Familyname</b>, <i>Givenname</i> <i>dos</i>
-<b>Familyname</b>, <i>Givenname</i> <i>el</i>
-<b>Las Familyname</b>, <i>Givenname</i> <i>de</i>
-<b>Familyname</b>, <i>Givenname</i> <i>lo</i>
-<b>Familyname</b>, <i>Givenname</i> <i>les</i>
-<b>Familyname</b>, <i>Givenname</i> <i>il</i>
-<b>del</b> <b>Familyname</b>, <i>Givenname</i>
-<b>Familyname</b>, <i>Givenname</i> <i>dela</i>
-<b>Familyname</b>, <i>Givenname</i> <i>della</i>
-<b>Familyname</b>, <i>Givenname</i> <i>dello</i>
-<b>Di Familyname</b>, <i>Givenname</i>
-<b>Da Familyname</b>, <i>Givenname</i>
-<b>Do Familyname</b>, <i>Givenname</i>
-<b>Des Familyname</b>, <i>Givenname</i>
-<b>Lou Familyname</b>, <i>Givenname</i>
-<b>Pietro Familyname</b>, <i>Givenname</i>
-<b>de</b> <b>Familyname</b>, <i>Givenname</i>
-<b>La Familyname</b>, <i>Givenname</i> <i>de</i>
-<b>Familyname</b>, <i>Givenname</i> <i>du</i>
-<b>d’</b><b>Familyname</b>, <i>Givenname</i>
-<b>Le Familyname</b>, <i>Givenname</i>
-<b>La Familyname</b>, <i>Givenname</i>
-<b>L’Familyname</b>, <i>Givenname</i>
-<b>Saint Familyname</b>, <i>Givenname</i>
-<b>Sainte Familyname</b>, <i>Givenname</i>
-<b>St. Familyname</b>, <i>Givenname</i>
-<b>Ste. Familyname</b>, <i>Givenname</i>
-<b>van</b> <b>Familyname</b>, <i>Givenname</i>
-<b>van de</b> <b>Familyname</b>, <i>Givenname</i>
-<b>van der</b> <b>Familyname</b>, <i>Givenname</i>
-<b>van den</b> <b>Familyname</b>, <i>Givenname</i>
-<b>vander</b> <b>Familyname</b>, <i>Givenname</i>
-<b>v.d. Familyname</b>, <i>Givenname</i>
-<b>vd</b> <b>Familyname</b>, <i>Givenname</i>
-<b>van het</b> <b>Familyname</b>, <i>Givenname</i>
-<b>ver</b> <b>Familyname</b>, <i>Givenname</i>
-<b>ten</b> <b>Familyname</b>, <i>Givenname</i>
-<b>ter</b> <b>Familyname</b>, <i>Givenname</i>
-<b>te</b> <b>Familyname</b>, <i>Givenname</i>
-<b>Familyname</b>, <i>Givenname</i> <i>de op</i>
-<b>in de</b> <b>Familyname</b>, <i>Givenname</i>
-<b>in</b> <b>’t Familyname</b>, <i>Givenname</i>
-<b>’t Familyname</b>, <i>Givenname</i>
-<b>in het</b> <b>Familyname</b>, <i>Givenname</i>
-<b>uit de</b> <b>Familyname</b>, <i>Givenname</i>
-<b>uit den</b> <b>Familyname</b>, <i>Givenname</i>
-<b>Familyname</b>, <i>Givenname</i> <i>von</i>
-<b>Familyname</b>, <i>Givenname</i> <i>der von</i>
-<b>Familyname</b>, <i>Givenname</i> <i>dem von</i>
-<b>Familyname</b>, <i>Givenname</i> <i>zu von</i>
-<b>v. Familyname</b>, <i>Givenname</i>
-<b>v</b> <b>Familyname</b>, <i>Givenname</i>
-<b>Familyname</b>, <i>Givenname</i> <i>vom</i>
-<b>Familyname</b>, <i>Givenname</i> <i>das</i>
-<b>Familyname</b>, <i>Givenname</i> <i>zum</i>
-<b>Familyname</b>, <i>Givenname</i> <i>zur</i>
-<b>Familyname</b>, <i>Givenname</i> <i>den</i>
-<b>Familyname</b>, <i>Givenname</i> <i>der</i>
-<b>Familyname</b>, <i>Givenname</i> <i>des</i>
-<b>Familyname</b>, <i>Givenname</i> <i>den auf</i>'
-Expected:
-(string) '<b>Familyname</b>, <i>Givenname</i> <i>al</i>
-<b>Familyname</b>, <i>Givenname</i> <i>dos</i>
-<b>Familyname</b>, <i>Givenname</i> <i>el</i>
-<b>Las Familyname</b>, <i>Givenname</i> <i>de</i>
-<b>Familyname</b>, <i>Givenname</i> <i>lo</i>
-<b>Familyname</b>, <i>Givenname</i> <i>les</i>
-<b>Familyname</b>, <i>Givenname</i> <i>il</i>
-<b>del</b> <b>Familyname</b>, <i>Givenname</i>
-<b>Familyname</b>, <i>Givenname</i> <i>dela</i>
-<b>Familyname</b>, <i>Givenname</i> <i>della</i>
-<b>Familyname</b>, <i>Givenname</i> <i>dello</i>
-<b>Di Familyname</b>, <i>Givenname</i>
-<b>Da Familyname</b>, <i>Givenname</i>
-<b>Do Familyname</b>, <i>Givenname</i>
-<b>Des Familyname</b>, <i>Givenname</i>
-<b>Lou Familyname</b>, <i>Givenname</i>
-<b>Pietro Familyname</b>, <i>Givenname</i>
-<b>de</b> <b>Familyname</b>, <i>Givenname</i>
-<b>La Familyname</b>, <i>Givenname</i> <i>de</i>
-<b>Familyname</b>, <i>Givenname</i> <i>du</i>
-<b>Familyname</b>, <i>Givenname</i> <i>d’</i>
-<b>Le Familyname</b>, <i>Givenname</i>
-<b>La Familyname</b>, <i>Givenname</i>
-<b>L’Familyname</b>, <i>Givenname</i>
-<b>Saint Familyname</b>, <i>Givenname</i>
-<b>Sainte Familyname</b>, <i>Givenname</i>
-<b>St. Familyname</b>, <i>Givenname</i>
-<b>Ste. Familyname</b>, <i>Givenname</i>
-<b>van</b> <b>Familyname</b>, <i>Givenname</i>
-<b>van de</b> <b>Familyname</b>, <i>Givenname</i>
-<b>van der</b> <b>Familyname</b>, <i>Givenname</i>
-<b>van den</b> <b>Familyname</b>, <i>Givenname</i>
-<b>vander</b> <b>Familyname</b>, <i>Givenname</i>
-<b>v.d.</b> <b>Familyname</b>, <i>Givenname</i>
-<b>vd</b> <b>Familyname</b>, <i>Givenname</i>
-<b>van het</b> <b>Familyname</b>, <i>Givenname</i>
-<b>ver</b> <b>Familyname</b>, <i>Givenname</i>
-<b>ten</b> <b>Familyname</b>, <i>Givenname</i>
-<b>ter</b> <b>Familyname</b>, <i>Givenname</i>
-<b>te</b> <b>Familyname</b>, <i>Givenname</i>
-<b>Familyname</b>, <i>Givenname</i> <i>op de</i>
-<b>in de</b> <b>Familyname</b>, <i>Givenname</i>
-<b>in ’t</b> <b>Familyname</b>, <i>Givenname</i>
-<b>’t</b> <b>Familyname</b>, <i>Givenname</i>
-<b>in het</b> <b>Familyname</b>, <i>Givenname</i>
-<b>uit de</b> <b>Familyname</b>, <i>Givenname</i>
-<b>uit den</b> <b>Familyname</b>, <i>Givenname</i>
-<b>Familyname</b>, <i>Givenname</i> <i>von</i>
-<b>Familyname</b>, <i>Givenname</i> <i>von der</i>
-<b>Familyname</b>, <i>Givenname</i> <i>von dem</i>
-<b>Familyname</b>, <i>Givenname</i> <i>von zu</i>
-<b>v.</b> <b>Familyname</b>, <i>Givenname</i>
-<b>v</b> <b>Familyname</b>, <i>Givenname</i>
-<b>Familyname</b>, <i>Givenname</i> <i>vom</i>
-<b>Familyname</b>, <i>Givenname</i> <i>das</i>
-<b>Familyname</b>, <i>Givenname</i> <i>zum</i>
-<b>Familyname</b>, <i>Givenname</i> <i>zur</i>
-<b>Familyname</b>, <i>Givenname</i> <i>den</i>
-<b>Familyname</b>, <i>Givenname</i> <i>der</i>
-<b>Familyname</b>, <i>Givenname</i> <i>des</i>
-<b>Familyname</b>, <i>Givenname</i> <i>auf den</i>'
 
 Failure → citeproc test test-suite name_SubsequentAuthorSubstituteMultipleNames.txt
 Passed in:
@@ -1490,23 +1376,27 @@ Passed in:
 Expected:
 (string) 'John Doe'
 
-Failure → citeproc test test-suite name_namepartAffixes.txt
-Passed in:
-(string) '[Jean de] (La Fontaine) III'
-Expected:
-(string) '[Jean] (de La Fontaine III)'
-
 Failure → citeproc test test-suite number_PlainHyphenOrEnDashAlwaysPlural.txt
 Passed in:
-(string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) pages i–ix (cs:text) vs His Anonymous Life (2) pages i–ix (cs:number); His Anonymous Life (3) page 3-B (cs:text) vs His Anonymous Life (3) page 3-B (cs:number); His Anonymous Life (4) pages Michaelson–Morely (cs:text) vs His Anonymous Life (4) pages Michaelson–Morely (cs:number); His Anonymous Life (4) pages Michaelson–Morely (cs:text) vs His Anonymous Life (4) pages Michaelson–Morely (cs:number)'
+(string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) pages i–ix (cs:text) vs His Anonymous Life (2) pages i–ix (cs:number); His Anonymous Life (3) page 3-B (cs:text) vs His Anonymous Life (3) page 3-B (cs:number); His Anonymous Life (4) pages Michaelson–Morely (cs:text) vs His Anonymous Life (4) pages Michaelson–Morely (cs:number)'
 Expected:
 (string) 'His Anonymous Life (1) pages 1–2 (cs:text) vs His Anonymous Life (1) pages 1–2 (cs:number); His Anonymous Life (2) pages i–ix (cs:text) vs His Anonymous Life (2) pages i–ix (cs:number); His Anonymous Life (3) page 3-B (cs:text) vs His Anonymous Life (3) page 3-B (cs:number); His Anonymous Life (4) page Michaelson-Morely (cs:text) vs His Anonymous Life (4) page Michaelson-Morely (cs:number)'
 
 Failure → citeproc test test-suite position_IbidWithPrefixFullStop.txt
 Passed in:
-(string) '>>[0] Book A; . He said “Please work.” ibid.'
+(string) '>>[0] Book A'
 Expected:
 (string) '>>[0] Book A. He said “Please work.” Ibid.'
+
+Failure → citeproc test test-suite position_NearNoteSameNote.txt
+Passed in:
+(string) '..[0] Plain+Vanilla:Book-A
+..[1] Plain+Vanilla:Book-B
+>>[2] Plain+Vanilla:Book-B; Plain+Vanilla:Book-A'
+Expected:
+(string) '..[0] Plain+Vanilla:Book-A; Near+Ibid:Book-A
+..[1] Plain+Vanilla:Book-B
+>>[2] Plain+Vanilla:Book-B; Plain+Vanilla:Book-A'
 
 Failure → citeproc test test-suite position_ResetNoteNumbers.txt
 Passed in:
@@ -2044,30 +1934,6 @@ Expected:
   <div class="csl-entry">[1] Book Eight</div>
 </div>'
 
-Failure → citeproc test test-suite sort_ChicagoYearSuffix1.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Beijing Zoo. 1974. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
-  <div class="csl-entry">Beijing Zoo. 1974. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Beijing Zoo. 1974a. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
-  <div class="csl-entry">---. 1974b. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
-</div>'
-
-Failure → citeproc test test-suite sort_ChicagoYearSuffix2.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Beijing Zoo. 1974. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
-  <div class="csl-entry">Beijing Zoo. 1974. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Beijing Zoo. 1974a. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
-  <div class="csl-entry">---. 1974b. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
-</div>'
-
 Failure → citeproc test test-suite sort_CitationNumberPrimaryDescendingViaMacroBibliography.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -2118,6 +1984,20 @@ Passed in:
 Expected:
 (string) 'Banda 1999; Aalto 2000, Aalto 2001'
 
+Failure → citeproc test test-suite sort_DaleDalebout.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Allabout</div>
+  <div class="csl-entry">Dalebout</div>
+  <div class="csl-entry">Dale</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Allabout</div>
+  <div class="csl-entry">Dale</div>
+  <div class="csl-entry">Dalebout</div>
+</div>'
+
 Failure → citeproc test test-suite sort_DropNameLabelInSort.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -2139,6 +2019,44 @@ Passed in:
 (string) '>>[0] Smith 2003; Jones 2005; Smith 2010'
 Expected:
 (string) '>>[0] Smith 2003, 2010; Jones 2005'
+
+Failure → citeproc test test-suite sort_LeadingApostropheOnNameParticle.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">’t Horvath, P A A</div>
+  <div class="csl-entry">’t Horvath, P A C</div>
+  <div class="csl-entry">d’Wander, W</div>
+  <div class="csl-entry">de’Frinkle, B</div>
+  <div class="csl-entry">in ’t Horvath, P A B</div>
+  <div class="csl-entry">in ’t Horvath, P A D</div>
+  <div class="csl-entry">Klabdaggit, M</div>
+  <div class="csl-entry">Vooz, B</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">d’Wander, W</div>
+  <div class="csl-entry">de’ Frinkle, B</div>
+  <div class="csl-entry">in ’t Horvath, P A B</div>
+  <div class="csl-entry">in ’t Horvath, P A D</div>
+  <div class="csl-entry">Klabdaggit, M</div>
+  <div class="csl-entry">’t Horvath, P A A</div>
+  <div class="csl-entry">’t Horvath, P A C</div>
+  <div class="csl-entry">Vooz, B</div>
+</div>'
+
+Failure → citeproc test test-suite sort_NameImplicitSortOrderAndForm.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe, Book B</div>
+  <div class="csl-entry">Doe, Book C</div>
+  <div class="csl-entry">Roe, Book A</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe, Book C</div>
+  <div class="csl-entry">Doe, Book B</div>
+  <div class="csl-entry">Roe, Book A</div>
+</div>'
 
 Failure → citeproc test test-suite sort_RangeUnaffected.txt
 Passed in:
@@ -2162,6 +2080,20 @@ Expected:
   <div class="csl-entry">--- ed. <i>Hello 1</i>.</div>
   <div class="csl-entry">Doe, John Barbitol. <i>Hello 2</i>.</div>
   <div class="csl-entry">Doe, John Egbert. <i>Hello 3</i>.</div>
+</div>'
+
+Failure → citeproc test test-suite sort_VariousNameMacros3.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
+  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
+  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
+  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
+  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
 </div>'
 
 Failure → citeproc test test-suite sort_WithAndInOneEntry.txt
@@ -2236,11 +2168,29 @@ Expected:
   </div>
 </div>'
 
+Error → citeproc test test-suite bugreports_AsmJournals.txt
+./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+
+Error → citeproc test test-suite bugreports_UndefinedInName.txt
+./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+
+Error → citeproc test test-suite bugreports_undefinedCrash.txt
+./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+
+Error → citeproc test test-suite disambiguate_FailWithYearSuffix.txt
+./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+
 Error → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntries.txt
-./citeproc/citeproc-engine.lua:361: attempt to get length of a nil value (local 'previous_note_citations')
+./citeproc/citeproc-engine.lua:365: attempt to get length of a nil value (local 'previous_note_citations')
 
 Error → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntriesByCite.txt
-./citeproc/citeproc-engine.lua:361: attempt to get length of a nil value (local 'previous_note_citations')
+./citeproc/citeproc-engine.lua:365: attempt to get length of a nil value (local 'previous_note_citations')
+
+Error → citeproc test test-suite disambiguate_YearSuffixMidInsert.txt
+./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+
+Error → citeproc test test-suite group_ComplexNesting.txt
+./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
 
 Error → citeproc test test-suite locale_OverloadWithEmptyString.txt
 ./citeproc/citeproc-output.lua:820: attempt to index a nil value (local 'inline')
@@ -2251,5 +2201,29 @@ Error → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
 Error → citeproc test test-suite name_EtAlWithCombined.txt
 ./citeproc/citeproc-node-choose.lua:161: attempt to index a nil value (field 'cite')
 
+Error → citeproc test test-suite position_IbidWithSuffix.txt
+./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+
+Error → citeproc test test-suite sort_CaseInsensitiveBibliography.txt
+./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+
+Error → citeproc test test-suite sort_ChicagoYearSuffix1.txt
+./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+
+Error → citeproc test test-suite sort_ChicagoYearSuffix2.txt
+./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+
+Error → citeproc test test-suite sort_FamilyOnly.txt
+./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+
+Error → citeproc test test-suite sort_LeadingA.txt
+./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+
 Error → citeproc test test-suite substitute_SubstituteOnlyOnceTermEmpty.txt
 ./citeproc/citeproc-output.lua:820: attempt to index a nil value (local 'inline')
+
+Error → citeproc test test-suite testers_FirstAutoGeneratedZoteroPluginTest.txt
+./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)
+
+Error → citeproc test test-suite testers_SecondAutoGeneratedZoteroPluginTest.txt
+./citeproc/citeproc-node-names.lua:635: bad argument #1 to 'gsub' (string expected, got nil)

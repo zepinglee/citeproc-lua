@@ -114,11 +114,20 @@ function Context:get_name(variable_name)
   local names = self.reference[variable_name]
   if names then
     for _, name in ipairs(names) do
+      if name.family == "" then
+        name.family = nil
+      end
+      if name.given == "" then
+        name.given = nil
+      end
+      if name.given and not name.family then
+        name.family = name.given
+        name.given = nil
+      end
       self:parse_name_suffix(name)
-      self:parse_particles(name)
       self:split_ndp_family(name)
+      -- self:split_given_ndp(name)
       self:split_given_dp(name)
-      self:parse_name_particle(name)
     end
   end
   return names
@@ -141,24 +150,6 @@ function Context:parse_name_suffix(name)
   end
 end
 
-function Context:parse_particles(name)
-  local ndp = name["non-dropping-particle"]
-  local dp = name["dropping-particle"]
-  if ndp or not dp then
-    return
-  end
-  if string.match(dp, "%l'$") or string.match(dp, "%l’$") then
-    local words = util.split(dp)
-    if #words == 1 then
-      name["non-dropping-particle"] = dp
-      name["dropping-particle"] = nil
-    else
-      name["non-dropping-particle"] = words[#words]
-      name["dropping-particle"] = table.concat(util.slice(words, 1, -2), " ")
-    end
-  end
-end
-
 function Context:split_ndp_family(name)
   if name["non-dropping-particle"] or not name.family then
     return
@@ -168,12 +159,6 @@ function Context:split_ndp_family(name)
   local parts = util.split(name.family)
   for i, part in ipairs(parts) do
     local ndp, family
-    if not string.match(part, "^%l") then
-      for j = i, #parts do
-        table.insert(family_parts, parts[j])
-      end
-      break
-    end
     -- d'Aubignac
     ndp, family = string.match(part, "^(%l')(.+)$")
     if ndp and family then
@@ -190,12 +175,18 @@ function Context:split_ndp_family(name)
         if ndp and family then
           table.insert(ndp_parts, ndp)
           parts[i] = family
-        elseif i < #parts and string.match(part, "^%l+$") then
+        elseif i < #parts and util.is_lower(part) then
           table.insert(ndp_parts, part)
         end
       end
     end
     if ndp or i == #parts then
+      for j = i, #parts do
+        table.insert(family_parts, parts[j])
+      end
+      break
+    end
+    if not util.is_lower(part) then
       for j = i, #parts do
         table.insert(family_parts, parts[j])
       end
@@ -209,7 +200,7 @@ function Context:split_ndp_family(name)
 end
 
 function Context:split_given_dp(name)
-  if name["dropping_particle"] or not name.given then
+  if name["dropping-particle"] or not name.given then
     return
   end
   local dp_parts = {}
@@ -217,14 +208,17 @@ function Context:split_given_dp(name)
   local parts = util.split(name.given)
   for i = #parts, 1, -1 do
     local part = parts[i]
-    if i == 1 or not string.match(part, "^%l") then
+    if i == 1 or not util.is_lower(part) then
       for j = 1, i do
         table.insert(given_parts, parts[j])
       end
       break
     end
-    if string.match(part, "^%l+$") then
-      table.insert(dp_parts, part)
+  -- name_ParsedDroppingParticleWithApostrophe.txt
+  -- given: "François Hédelin d'" =>
+  -- given: "François Hédelin", dropping-particle: "d'"
+    if string.match(part, "^%l+'?$") or string.match(part, "^%l+’$") then
+      table.insert(dp_parts, 1, part)
     end
   end
   if #dp_parts > 0 then
@@ -233,29 +227,26 @@ function Context:split_given_dp(name)
   end
 end
 
-function Context:parse_name_particle(name)
-  if name.given == "" then
-    name.given = nil
-  end
-  if not name.given then
-    return
-  end
+-- function Context:split_given_ndp(name)
+--   if name["non-dropping-particle"] or not name.given then
+--     return
+--   end
 
-  -- name_ParsedDroppingParticleWithApostrophe.txt
-  -- "François Hédelin d'" => "François Hédelin"
-  if name["non-dropping-particle"] then
-    return
-  end
-  local words = util.split(name.given)
-  if #words < 2 then
-    return
-  end
-  local last_word = words[#words]
-  if util.endswith(last_word, "'") or util.endswith(last_word, util.unicode["apostrophe"]) then
-    name["non-dropping-particle"] = last_word
-    name.given = table.concat(util.slice(words, 1, -2), " ")
-  end
-end
+--   if not (string.match(name.given, "%l'$") or string.match(name.given, "%l’$")) then
+--     return
+--   end
+
+--   local words = util.split(name.given)
+--   if #words < 2 then
+--     return
+--   end
+--   local last_word = words[#words]
+--   if util.endswith(last_word, "'") or util.endswith(last_word, util.unicode["apostrophe"]) then
+--     name["non-dropping-particle"] = last_word
+--     name.given = table.concat(util.slice(words, 1, -2), " ")
+--   end
+--   util.debug(name)
+-- end
 
 function Context:get_localized_date(form)
   return self.locale.dates[form]

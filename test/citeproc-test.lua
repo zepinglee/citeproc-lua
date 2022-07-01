@@ -16,6 +16,7 @@ require("busted.runner")()
 require("lualibs")
 local lfs = require("lfs")
 local inspect = require("inspect")
+local make_diff = require("diff")  -- luadiffer
 
 local citeproc = require("citeproc")
 local util = require("citeproc-util")
@@ -291,7 +292,16 @@ local function run_test(path)
     result = normalize_new_line(result)
     fixture.result = normalize_new_line(fixture.result)
   end
+
   assert.equal(fixture.result, result)
+
+  -- local compare_result = fixture.result == result
+  -- if not compare_result then
+  --   local diff = make_diff(fixture.result, result)
+  --   diff:print()
+  -- end
+  -- assert.is_true(compare_result)
+
 end
 
 local function run_suite(test_dir)

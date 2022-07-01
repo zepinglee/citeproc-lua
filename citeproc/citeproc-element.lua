@@ -395,6 +395,10 @@ end
 
 
 function Element:format_number(number, variable, form, context)
+  -- if not util.is_numeric(number) then
+  --   number = string.gsub(number, "\\%-", "-")
+  --   return number
+  -- end
   if variable == "locator" then
     variable = context:get_variable("label")
   end

@@ -439,38 +439,47 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
 end
 
 
-function Name:render_person_name(person_name, seen_one, context)
+function Name:render_person_name(name, seen_one, context)
   -- Return: inlines
-  local is_romanesque = util.has_romanesque_char(person_name.family)
+  local is_latin = util.has_romanesque_char(name.family)
   local is_reversed = (self.name_as_sort_order == "all" or
-    (self.name_as_sort_order == "first" and not seen_one) or not is_romanesque)
+    (self.name_as_sort_order == "first" and not seen_one) or not is_latin)
   -- TODO
   local is_sort = context.sort_key
   local demote_ndp = (context.style.demote_non_dropping_particle == "display-and-sort" or
     (is_sort and context.style.demote_non_dropping_particle == "sort-only"))
 
-  local name_part_tokens = self:get_display_order(person_name, seen_one)
+  local name_part_tokens = self:get_display_order(name, self.form, is_latin, is_sort, is_reversed, demote_ndp)
+  -- util.debug(name)
+  -- util.debug(name_part_tokens)
+
   local inlines = {}
-  for i, name_part_token in ipairs(name_part_tokens) do
-    if name_part_token == "family" then
-      local family_inlines = self:render_family(person_name, is_romanesque, is_reversed, demote_ndp, context)
+  for i, token in ipairs(name_part_tokens) do
+    if token == "family" or token == "ndp-family" or token == "dp-ndp-family-suffix" then
+      local family_inlines = self:render_family(name, token, context)
       util.extend(inlines, family_inlines)
 
-    elseif name_part_token == "given" then
-      local given_inlines = self:render_given(person_name, is_romanesque, is_reversed, demote_ndp, context)
+    elseif token == "given" or token == "given-dp" or token == "given-dp-ndp" then
+      local given_inlines = self:render_given(name, token, context)
       util.extend(inlines, given_inlines)
 
-    elseif name_part_token == "suffix" then
-      util.extend(inlines, InlineElement:parse(person_name.suffix, context))
+    elseif token == "dp-ndp" then
 
-    elseif name_part_token == "literal" then
-    local literal_inlines = self.family:format_text_case(person_name.literal, context)
+    elseif token == "suffix" then
+      local text = name.suffix or ""
+      util.extend(inlines, InlineElement:parse(text, context))
+
+    elseif token == "literal" then
+    local literal_inlines = self.family:format_text_case(name.literal, context)
       util.extend(inlines, literal_inlines)
 
-    elseif name_part_token == "space" then
+    elseif token == "space" then
       table.insert(inlines, PlainText:new(" "))
 
-    elseif name_part_token == "sort-separator" then
+    elseif token == "space" then
+      table.insert(inlines, PlainText:new("   "))
+
+    elseif token == "sort-separator" then
       table.insert(inlines, PlainText:new(self.sort_separator))
     end
   end
@@ -478,52 +487,73 @@ function Name:render_person_name(person_name, seen_one, context)
   return inlines
 end
 
-function Name:get_display_order(person_name, seen_one)
-  if not person_name.family and not person_name.given then
-    if person_name.literal then
+-- Name-part Order
+-- https://docs.citationstyles.org/en/stable/specification.html#name-part-order
+function Name:get_display_order(name, form, is_latin, is_sort, is_reversed, demote_ndp)
+  if not name.family then
+    if name.literal then
       return {"literal"}
     else
       util.error("Invalid name")
     end
   end
-  if not person_name.family then
-    -- name_OnlyGivenname.txt
-    person_name.family = person_name.given
-    person_name.given = nil
-    return {"family"}
-  end
 
   local name_part_tokens = {"family"}
 
-  if self.form == "short" then
-    return name_part_tokens
-  end
-
-  -- TODO: use is_romanesque
-  local is_romanesque = util.has_romanesque_char(person_name.family)
-  local is_reversed = (self.name_as_sort_order == "all" or
-    (self.name_as_sort_order == "first" and not seen_one) or not is_romanesque)
-
-  if person_name.given and person_name.given ~= "" then
-    if is_reversed then
-      if is_romanesque then
-        name_part_tokens = {"family", "sort-separator", "given"}
-      else
-        name_part_tokens = {"family", "given"}
-      end
+  if not is_latin then
+    if form == "long" and name.given then
+      return {"family", "given"}
     else
-      name_part_tokens = {"given", "space", "family"}
+      return {"family"}
     end
   end
 
-  if person_name.suffix then
-    if is_reversed or person_name["comma-suffix"] then
+  if is_sort then
+    if demote_ndp then
+      return {"family", "wide-space", "dp-ndp", "wide-space", "given", "wide-space", "suffix"}
+    else
+      return {"ndp-family", "wide-space", "dp", "wide-space", "given", "wide-space", "suffix"}
+    end
+  end
+
+  if form == "short" then
+    return {"ndp-family"}
+  end
+
+  local ndp = name["non-dropping-particle"]
+  local dp = name["dropping-particle"]
+
+  if name.given then
+    if is_reversed then
+      if demote_ndp then
+        name_part_tokens = {"family", "sort-separator", "given-dp-ndp"}
+      else
+        name_part_tokens = {"ndp-family", "sort-separator", "given-dp"}
+      end
+    else
+      name_part_tokens = {"given", "space", "dp-ndp-family-suffix"}
+    end
+  else
+    if is_reversed then
+      if demote_ndp then
+        if ndp or dp then
+          name_part_tokens = {"family", "sort-separator", "dp-ndp"}
+        else
+          name_part_tokens = {"family"}
+        end
+      else
+        name_part_tokens = {"ndp-family"}
+      end
+    else
+      name_part_tokens = {"dp-ndp-family-suffix"}
+    end
+  end
+
+  if name.suffix and is_reversed then
+    if is_reversed or name["comma-suffix"] then
       table.insert(name_part_tokens, "sort-separator")
       table.insert(name_part_tokens, "suffix")
-    elseif string.match(person_name.suffix, "^%p") then
-      -- Strip exclamation prefix: magic_NameSuffixWithComma.txt
-      -- "! Jr." => "Jr."
-      person_name.suffix = string.gsub(person_name.suffix, "^%p%s*", "")
+    elseif string.match(name.suffix, "^%p") then
       table.insert(name_part_tokens, "sort-separator")
       table.insert(name_part_tokens, "suffix")
     else
@@ -535,52 +565,101 @@ function Name:get_display_order(person_name, seen_one)
   return name_part_tokens
 end
 
-function Name:render_family(person_name, is_romanesque, is_reversed, demote_ndp, context)
-  local text = person_name.family
+function Name:render_family(name, token, context)
+  local inlines = {}
+  local name_part
+
+  if token == "dp-ndp-family-suffix" then
+    local dp_part = name["dropping-particle"]
+    if dp_part then
+      name_part = dp_part
+      local dp_inlines = self.given:format_text_case(dp_part, context)
+      util.extend(inlines, dp_inlines)
+    end
+  end
+
+  if token == "dp-ndp-family-suffix" or token == "ndp-family" then
+    local ndp_part = name["non-dropping-particle"]
+    if ndp_part then
+      if #inlines > 0 then
+        table.insert(inlines, PlainText:new(" "))
+      end
+      name_part = ndp_part
+      local ndp_inlines = self.family:format_text_case(ndp_part, context)
+      util.extend(inlines, ndp_inlines)
+    end
+  end
+
+  local family = name.family
   -- Remove double quotes: name_ParticleCaps3.txt
-  text = string.gsub(text, '"', "")
+  family = string.gsub(family, '"', "")
   if context.sort_key then
     -- Remove brackets for sorting: sort_NameVariable.txt
-    text = string.gsub(text, "[%[%]]", "")
+    family = string.gsub(family, "[%[%]]", "")
     -- Remove leading apostrophe: sort_LeadingApostropheOnNameParticle.txt
-    text = string.gsub(text, "^'", "")
-    text = string.gsub(text, "^’", "")
+    family = string.gsub(family, "^'", "")
+    family = string.gsub(family, "^’", "")
   end
-  local family_inlines = self.family:format_text_case(text, context)
-  if person_name["non-dropping-particle"] and is_romanesque and not (is_reversed and demote_ndp) then
-    local ndp_inlines = self.family:format_text_case(person_name["non-dropping-particle"], context)
-    local ndp = person_name["non-dropping-particle"]
-    if not util.endswith(ndp, "'") and not util.endswith(ndp, "-") and not util.endswith(ndp, util.unicode["apostrophe"]) then
-      table.insert(ndp_inlines, PlainText:new(" "))
+
+  local family_inlines = self.family:format_text_case(family, context)
+  if #inlines > 0 then
+    if not util.endswith(name_part, "'") and not util.endswith(name_part, "’") then
+      table.insert(inlines, PlainText:new(" "))
     end
-    family_inlines = util.extend(ndp_inlines, family_inlines)
   end
-  family_inlines = self.family:affixed(family_inlines)
-  return family_inlines
+  util.extend(inlines, family_inlines)
+
+  if token == "dp-ndp-family-suffix" then
+    local suffix_part = name.suffix
+    if suffix_part then
+      if name["comma-suffix"] or util.startswith(suffix_part, "!") then
+        -- force use sort-separator exclamation prefix: magic_NameSuffixWithComma.txt
+        -- "! Jr." => "Jr."
+        table.insert(inlines, PlainText:new(self.sort_separator))
+        suffix_part = string.gsub(suffix_part, "^%p%s*", "")
+      else
+        table.insert(inlines, PlainText:new(" "))
+      end
+      table.insert(inlines, PlainText:new(suffix_part))
+    end
+  end
+
+  inlines = self.family:affixed(inlines)
+  return inlines
 end
 
-function Name:render_given(person_name, is_romanesque, is_reversed, demote_ndp, context)
-  local text = person_name.given
+function Name:render_given(name, token, context)
+  local given = name.given
   -- Remove brackets for sorting: sort_NameVariable.txt
   if context.sort_key then
-    text = string.gsub(text, "[%[%]]", "")
+    given = string.gsub(given, "[%[%]]", "")
   end
+
   if self.initialize_with then
-    text = self:initialize_name(text, self.initialize_with, context.style.initialize_with_hyphen)
+    given = self:initialize_name(given, self.initialize_with, context.style.initialize_with_hyphen)
   end
-  local given_inlines = self.given:format_text_case(text, context)
-  if person_name["dropping-particle"] then
-    local dp_inlines = self.given:format_text_case(person_name["dropping-particle"], context)
-    table.insert(given_inlines, PlainText:new(" "))
-    util.extend(given_inlines, dp_inlines)
+  local inlines = self.given:format_text_case(given, context)
+
+  if token == "given-dp" or token == "given-dp-ndp" then
+    local name_part = name["dropping-particle"]
+    if name_part then
+      table.insert(inlines, PlainText:new(" "))
+      local dp_inlines = self.given:format_text_case(name_part, context)
+      util.extend(inlines, dp_inlines)
+    end
   end
-  if (is_reversed and demote_ndp) and person_name["non-dropping-particle"] and is_romanesque then
-    local ndp_inlines = self.family:format_text_case(person_name["non-dropping-particle"], context)
-    table.insert(given_inlines, PlainText:new(" "))
-    util.extend(given_inlines, ndp_inlines)
+
+  if token == "given-dp-ndp" then
+    local name_part = name["non-dropping-particle"]
+    if name_part then
+      table.insert(inlines, PlainText:new(" "))
+      local ndp_inlines = self.family:format_text_case(name_part, context)
+      util.extend(inlines, ndp_inlines)
+    end
   end
-  given_inlines = self.given:affixed(given_inlines)
-  return given_inlines
+
+  inlines = self.given:affixed(inlines)
+  return inlines
 end
 
 function Name:check_inverted(names, index)

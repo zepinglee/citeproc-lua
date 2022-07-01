@@ -293,6 +293,7 @@ function CiteProc:build_citation_str(citation, note_number, note_citation_map, c
   table.insert(note_citation_map[note_number], citation.citationId)
 
   local items = {}
+  local cited_items = {}  -- to remove duplicates
   for i, cite_item in ipairs(citation.citationItems) do
     cite_item.id = tostring(cite_item.id)
     local item_data = self:get_item(cite_item.id)
@@ -315,7 +316,10 @@ function CiteProc:build_citation_str(citation, note_number, note_citation_map, c
 
       self:set_cite_position(item, note_number, cite_first_note_numbers, cite_last_note_numbers, previous_cite, previous_citation, previous_note_citations)
 
-      table.insert(items, item)
+      if not cited_items[item.id] then
+        table.insert(items, item)
+        cited_items[item.id] = true
+      end
     end
   end
 
@@ -394,6 +398,7 @@ end
 
 function CiteProc:makeCitationCluster(citation_items)
   local items = {}
+  local cited_items = {}  -- to remove duplicates
   for i, cite_item in ipairs(citation_items) do
     cite_item.id = tostring(cite_item.id)
     local position_first = (self.registry.registry[cite_item.id] == nil)
@@ -430,14 +435,17 @@ function CiteProc:makeCitationCluster(citation_items)
       item.position = self:_get_cite_position(item, preceding_cite)
     end
 
-    table.insert(items, item)
+    if not cited_items[item.id] then
+      table.insert(items, item)
+      cited_items[item.id] = true
+    end
   end
 
   if self.registry.requires_sorting then
     self:sort_bibliography()
   end
 
-  local res = self:build_cluster(citation_items)
+  local res = self:build_cluster(items)
 
   -- local context = {
   --   build = {},

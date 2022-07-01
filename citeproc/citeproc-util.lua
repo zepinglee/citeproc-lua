@@ -242,10 +242,16 @@ function util.strip (str)
 end
 
 function util.startswith (str, prefix)
+  if not str then
+    return false
+  end
   return string.sub(str, 1, #prefix) == prefix
 end
 
 function util.endswith (str, suffix)
+  if not str then
+    return false
+  end
   return string.sub(str, -#suffix) == suffix
 end
 
@@ -259,9 +265,11 @@ function util.is_numeric (str)
   end
   local res = true
   for w in string.gmatch(str, "%w+") do
-    if string.match(w, "^%a*%d+%a*$") == nil then
-      res = false
-      break
+    if not string.match(w, "^%a*%d+%a*$") and
+        not string.match(w, "^[MDCLXVI]+$") and
+        not string.match(w, "^[mdclxvi]+$") then
+      -- Roman number withou validation
+      return false
     end
   end
   for w in string.gmatch(str, "%W+") do
