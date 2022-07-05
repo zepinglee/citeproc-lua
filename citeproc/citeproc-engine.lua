@@ -60,6 +60,12 @@ function CiteProc.new(sys, style, lang, force_lang)
   -- o.formatter = formats.latex
   o.linking_enabled = false
 
+  -- output string is ambiguous
+  o.is_ambiguous = {}
+  -- -- output str to cite id
+  -- o.disambiguation_map = {}
+
+
   setmetatable(o, { __index = CiteProc })
   return o
 end
@@ -289,20 +295,7 @@ function CiteProc:build_cluster(citation_items)
   local irs = {}
   citation_items = self:sorted_citation_items(citation_items)
   for _, cite_item in ipairs(citation_items) do
-    local state = IrState:new(self.style)
-    cite_item.id = tostring(cite_item.id)
-    local context = Context:new()
-    context.engine = self
-    context.style = self.style
-    context.area = self.style.citation
-    context.locale = self:get_locale(self.lang)
-    context.name_inheritance = self.style.citation.name_inheritance
-    context.format = output_format
-    context.id = cite_item.id
-    context.cite = cite_item
-    context.reference = self:get_item(cite_item.id)
-
-    local ir = self.style.citation:build_ir(self, state, context)
+    local ir = self:build_fully_disambiguated_ir(cite_item, output_format)
     table.insert(irs, ir)
   end
 
@@ -414,6 +407,62 @@ function CiteProc:sorted_citation_items(items)
 
   items = citation_sort:sort(items, state, context)
   return items
+end
+
+function CiteProc:build_fully_disambiguated_ir(cite_item, output_format)
+  local ir = self:build_ambiguous_ir(cite_item, output_format)
+  ir = self:disambiguate_add_givenname(cite_item, ir)
+  ir = self:disambiguate_add_names(cite_item, ir)
+  ir = self:disambiguate_conditionals(cite_item, ir)
+  ir = self:disambiguate_add_year_suffix(cite_item, ir)
+  return ir
+end
+
+function CiteProc:build_ambiguous_ir(cite_item, output_format)
+  local state = IrState:new(self.style)
+  cite_item.id = tostring(cite_item.id)
+  local context = Context:new()
+  context.engine = self
+  context.style = self.style
+  context.area = self.style.citation
+  context.locale = self:get_locale(self.lang)
+  context.name_inheritance = self.style.citation.name_inheritance
+  context.format = output_format
+  context.id = cite_item.id
+  context.cite = cite_item
+  context.reference = self:get_item(cite_item.id)
+
+  local ir = self.style.citation:build_ir(self, state, context)
+  return ir
+end
+
+function CiteProc:disambiguate_add_givenname(cite_item, ir)
+  if not self.style.citation.disambiguate_add_givenname then
+    return ir
+  end
+  util.debug(ir)
+  local output_format = SortStringFormat:new()
+  local inlines = ir:flatten(output_format)
+  local str = output_format:output(inlines)
+  util.debug(ir)
+  util.debug(str)
+  -- local cite_id = self.disambiguation_map[str]
+  -- if cite_id and cite_id ~= cite_item.id then
+
+  -- end
+  return ir
+end
+
+function CiteProc:disambiguate_add_names(cite_item, ir)
+  return ir
+end
+
+function CiteProc:disambiguate_conditionals(cite_item, ir)
+  return ir
+end
+
+function CiteProc:disambiguate_add_year_suffix(cite_item, ir)
+  return ir
 end
 
 function CiteProc:makeCitationCluster(citation_items)

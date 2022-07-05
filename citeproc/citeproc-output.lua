@@ -654,6 +654,7 @@ function OutputFormat:affixed(inlines, affixes)
 end
 
 function OutputFormat:affixed_quoted(inlines, affixes, localized_quotes)
+  inlines = util.clone(inlines)
   if localized_quotes then
     inlines = self:quoted(inlines, localized_quotes)
   end
