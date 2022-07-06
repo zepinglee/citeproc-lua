@@ -63,7 +63,9 @@ function IrNode:flatten_seq(format)
     print(debug.traceback())
   end
   for _, child in ipairs(self.children) do
-    table.insert(inlines_list, child:flatten(format))
+    if child.group_var ~= "missing" then
+      table.insert(inlines_list, child:flatten(format))
+    end
   end
 
   local inlines = format:group(inlines_list, self.delimiter, self.formatting)

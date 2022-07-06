@@ -183,12 +183,14 @@ function Element:build_children_ir(engine, state, context)
       end
     end
   end
-  if #child_irs == 0 then
-    return nil
-  end
   local ir = SeqIr:new(child_irs, self)
   ir.sort_key = ir_sort_key
   ir.group_var = group_var
+  if #child_irs == 0 then
+    ir.group_var = "missing"
+  else
+    ir.group_var = group_var
+  end
   return ir
 end
 

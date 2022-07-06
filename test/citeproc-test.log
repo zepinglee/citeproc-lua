@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              670     154       2       0
+(all)              670     154       3       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -728,13 +728,13 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_CitationLabelDefault.txt
 Passed in:
-(string) '[CSL STYLE ERROR: reference with no printed form.]'
+(string) '; ;'
 Expected:
 (string) 'Asth00a; Asth00b; Bron00'
 
 Failure → citeproc test test-suite disambiguate_CitationLabelInData.txt
 Passed in:
-(string) 'SpiffLabel1900; SpiffLabel1900'
+(string) 'SpiffLabel1900; SpiffLabel1900; ; ;'
 Expected:
 (string) 'SpiffLabel1900a; SpiffLabel1900b; Bron00; BrCh98; DEFG26'
 
@@ -1172,7 +1172,7 @@ Expected:
 
 Failure → citeproc test test-suite magic_CitationLabelInCitation.txt
 Passed in:
-(string) '[]'
+(string) '[, , ]'
 Expected:
 (string) '[Doe65, RoNo78a, RoNo78b]'
 
@@ -1907,6 +1907,9 @@ Expected:
     <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. Container. :25.</div>
   </div>
 </div>'
+
+Error → citeproc test fixtures-local test_Test.txt
+test/citeproc-test.lua:251: attempt to index a nil value
 
 Error → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
 ./citeproc/citeproc-node-sort.lua:98: attempt to compare number with string

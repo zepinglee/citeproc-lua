@@ -48,47 +48,47 @@ function Layout:build_ir(engine, state, context)
 end
 
 
-function Layout:_collapse_citations(output, context)
-  if context.options["collapse"] == "citation-number" then
-    assert(#output == #context.items)
-    local citation_numbers = {}
-    for i, item in ipairs(context.items) do
-      citation_numbers[i] = context.build.item_citation_numbers[item.id] or 0
-    end
+-- function Layout:_collapse_citations(output, context)
+--   if context.options["collapse"] == "citation-number" then
+--     assert(#output == #context.items)
+--     local citation_numbers = {}
+--     for i, item in ipairs(context.items) do
+--       citation_numbers[i] = context.build.item_citation_numbers[item.id] or 0
+--     end
 
-    local collapsed_output = {}
-    local citation_number_range_delimiter = util.unicode["en dash"]
-    local index = 1
-    while index <= #citation_numbers do
-      local stop_index = index + 1
-      if output[index] == context.build.item_citation_number_text[index] then
-        while stop_index <= #citation_numbers  do
-          if output[stop_index] ~= context.build.item_citation_number_text[stop_index] then
-            break
-          end
-          if citation_numbers[stop_index - 1] + 1 ~= citation_numbers[stop_index] then
-            break
-          end
-          stop_index = stop_index + 1
-        end
-      end
+--     local collapsed_output = {}
+--     local citation_number_range_delimiter = util.unicode["en dash"]
+--     local index = 1
+--     while index <= #citation_numbers do
+--       local stop_index = index + 1
+--       if output[index] == context.build.item_citation_number_text[index] then
+--         while stop_index <= #citation_numbers  do
+--           if output[stop_index] ~= context.build.item_citation_number_text[stop_index] then
+--             break
+--           end
+--           if citation_numbers[stop_index - 1] + 1 ~= citation_numbers[stop_index] then
+--             break
+--           end
+--           stop_index = stop_index + 1
+--         end
+--       end
 
-      if stop_index >= index + 3 then
-        local range_text = output[index] .. citation_number_range_delimiter .. output[stop_index - 1]
-        table.insert(collapsed_output, range_text)
-      else
-        for i = index, stop_index - 1 do
-          table.insert(collapsed_output, output[i])
-        end
-      end
+--       if stop_index >= index + 3 then
+--         local range_text = output[index] .. citation_number_range_delimiter .. output[stop_index - 1]
+--         table.insert(collapsed_output, range_text)
+--       else
+--         for i = index, stop_index - 1 do
+--           table.insert(collapsed_output, output[i])
+--         end
+--       end
 
-      index = stop_index
-    end
+--       index = stop_index
+--     end
 
-    return self:concat(collapsed_output, context)
-  end
-  return self:concat(output, context)
-end
+--     return self:concat(collapsed_output, context)
+--   end
+--   return self:concat(output, context)
+-- end
 
 
 layout.Layout = Layout

@@ -60,11 +60,16 @@ function CiteProc.new(sys, style, lang, force_lang)
   -- o.formatter = formats.latex
   o.linking_enabled = false
 
-  -- output string is ambiguous
-  o.is_ambiguous = {}
-  -- -- output str to cite id
-  -- o.disambiguation_map = {}
+  o.disam_irs = {}
+  -- { <ir1>, <ir2>, ...  }
 
+  o.irs_by_output = {}
+  -- {
+  --   ["Roe, J"] = {<ir1>},
+  --   ["Doe, J"] = {<ir2>, <ir3>},
+  --   ["Doe, John"] = {<ir2>},
+  --   ["Doe, Jack"] = {<ir2>},
+  -- }
 
   setmetatable(o, { __index = CiteProc })
   return o
@@ -411,10 +416,10 @@ end
 
 function CiteProc:build_fully_disambiguated_ir(cite_item, output_format)
   local ir = self:build_ambiguous_ir(cite_item, output_format)
-  ir = self:disambiguate_add_givenname(cite_item, ir)
-  ir = self:disambiguate_add_names(cite_item, ir)
-  ir = self:disambiguate_conditionals(cite_item, ir)
-  ir = self:disambiguate_add_year_suffix(cite_item, ir)
+  ir = self:disambiguate_add_givenname(ir)
+  ir = self:disambiguate_add_names(ir)
+  ir = self:disambiguate_conditionals(ir)
+  ir = self:disambiguate_add_year_suffix(ir)
   return ir
 end
 
@@ -433,35 +438,76 @@ function CiteProc:build_ambiguous_ir(cite_item, output_format)
   context.reference = self:get_item(cite_item.id)
 
   local ir = self.style.citation:build_ir(self, state, context)
+
+  ir.cite_item = cite_item
+  ir.reference = context.reference
+  ir.ir_index = #self.disam_irs + 1
+  table.insert(self.disam_irs, ir)
+  ir.is_ambiguous = false
+  ir.disam_level = 0
+
+  -- Formattings like font-style are ignored for disambiguation.
+  local disam_format = SortStringFormat:new()
+  local inlines = ir:flatten(disam_format)
+  local disam_str = disam_format:output(inlines)
+  ir.disam_str = disam_str
+
+  if self.irs_by_output[disam_str] then
+    for _, ir_ in ipairs(self.irs_by_output[disam_str]) do
+      if ir_.cite_item.id ~= cite_item.id then
+        ir.is_ambiguous = true
+        break
+        -- if ir_.disam_level == ir.disam_level then
+        --   ir_.is_ambiguous = true
+        -- end
+      end
+    end
+    table.insert(self.irs_by_output[disam_str], ir)
+  else
+    self.irs_by_output[disam_str] = {ir}
+  end
+
   return ir
 end
 
-function CiteProc:disambiguate_add_givenname(cite_item, ir)
-  if not self.style.citation.disambiguate_add_givenname then
+function CiteProc:get_ambiguous_irs(target_ir)
+  local res = {}
+  for _, ir in ipairs(self.irs_by_output[target_ir.disam_str]) do
+    if ir.disam_level == target_ir.disam_level then
+      table.insert(res, ir)
+    end
+  end
+  return res
+end
+
+
+function CiteProc:disambiguate_add_givenname(ir)
+  if not ir.is_ambiguous or not self.style.citation.disambiguate_add_givenname then
     return ir
   end
-  util.debug(ir)
-  local output_format = SortStringFormat:new()
-  local inlines = ir:flatten(output_format)
-  local str = output_format:output(inlines)
-  util.debug(ir)
-  util.debug(str)
-  -- local cite_id = self.disambiguation_map[str]
-  -- if cite_id and cite_id ~= cite_item.id then
+
+  -- print(ir.disam_str)
+
+  -- local ambiguous_irs = self:get_ambiguous_irs(ir)
+
+  -- local name_irs = ir.name_irs
+
+  -- for _, ambiguous_ir in ipairs(ambiguous_irs) do
 
   -- end
+
   return ir
 end
 
-function CiteProc:disambiguate_add_names(cite_item, ir)
+function CiteProc:disambiguate_add_names(ir)
   return ir
 end
 
-function CiteProc:disambiguate_conditionals(cite_item, ir)
+function CiteProc:disambiguate_conditionals(ir)
   return ir
 end
 
-function CiteProc:disambiguate_add_year_suffix(cite_item, ir)
+function CiteProc:disambiguate_add_year_suffix(ir)
   return ir
 end
 
