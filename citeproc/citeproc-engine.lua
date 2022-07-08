@@ -577,6 +577,7 @@ function CiteProc:disambiguate_add_givenname_by_cite(cite_ir)
   end
 
   for i, person_name_ir in ipairs(cite_ir.person_name_irs) do
+    -- util.debug(person_name_ir.disam_variants)
     if #ambiguous_cite_irs == 0 then
       cite_ir.is_ambiguous = false
       break
@@ -605,15 +606,16 @@ function CiteProc:disambiguate_add_givenname_by_cite(cite_ir)
             if person_name_ir_.disam_variants[j] then
               person_name_ir_.disam_variants_index = j
               local disam_variant = person_name_ir_.disam_variants[j]
+              person_name_ir_.name_output = disam_variant
               person_name_ir_.inlines = person_name_ir_.disam_inlines[disam_variant]
               -- Update cite ir output
               local inlines = ir_:flatten(disam_format)
               local disam_str = disam_format:output(inlines)
               ir_.disam_str = disam_str
               if self.cite_irs_by_output[disam_str] then
-                table.insert(self.cite_irs_by_output[disam_str], cite_ir)
+                table.insert(self.cite_irs_by_output[disam_str], ir_)
               else
-                self.cite_irs_by_output[disam_str] = {cite_ir}
+                self.cite_irs_by_output[disam_str] = {ir_}
               end
             end
           end
