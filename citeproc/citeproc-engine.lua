@@ -484,16 +484,19 @@ end
 
 function CiteProc:disambiguate_add_givenname(cite_ir)
   if self.style.citation.disambiguate_add_givenname then
-    local givenname_disambiguation_rule = self.style.citation.givenname_disambiguation_rule
-    if givenname_disambiguation_rule == "all-names" then
+    local gn_disam_rule = self.style.citation.givenname_disambiguation_rule
+    if gn_disam_rule == "all-names" or gn_disam_rule == "all-names-with-initials" then
       cite_ir = self:disambiguate_add_givenname_all_names(cite_ir)
-    elseif givenname_disambiguation_rule == "by-cite" then
+    elseif gn_disam_rule == "primary-name" or gn_disam_rule == "primary-name-with-initials" then
+      cite_ir = self:disambiguate_add_givenname_primary_name(cite_ir)
+    elseif gn_disam_rule == "by-cite" then
       cite_ir = self:disambiguate_add_givenname_by_cite(cite_ir)
     end
   end
   return cite_ir
 end
 
+-- TODO: reorganize this code
 function CiteProc:disambiguate_add_givenname_all_names(cite_ir)
   if not cite_ir.person_name_irs or #cite_ir.person_name_irs == 0 then
     return cite_ir
@@ -547,6 +550,65 @@ function CiteProc:disambiguate_add_givenname_all_names(cite_ir)
         if pn_ir.name_output == person_name_ir.name_output then
           table.insert(ambiguous_same_output_irs, pn_ir)
         end
+      end
+    end
+  end
+
+  return cite_ir
+end
+
+function CiteProc:disambiguate_add_givenname_primary_name(cite_ir)
+  if not cite_ir.person_name_irs or #cite_ir.person_name_irs == 0 then
+    return cite_ir
+  end
+  local person_name_ir = cite_ir.person_name_irs[1]
+  local name_output = person_name_ir.name_output
+  -- util.debug(name_output)
+  if not self.person_names_by_output[name_output] then
+    self.person_names_by_output[name_output] = {}
+  end
+  table.insert(self.person_names_by_output[name_output], person_name_ir)
+
+  local ambiguous_name_irs = {}
+  local ambiguous_same_output_irs = {}
+
+  for _, pn_ir in ipairs(self.person_names_by_output[person_name_ir.name_output]) do
+    if pn_ir.full_name ~= person_name_ir.full_name then
+      table.insert(ambiguous_name_irs, pn_ir)
+    end
+    if pn_ir.name_output == person_name_ir.name_output then
+      table.insert(ambiguous_same_output_irs, pn_ir)
+    end
+  end
+
+  for _, name_variant in ipairs(person_name_ir.disam_variants) do
+    if #ambiguous_name_irs == 0 then
+      break
+    end
+
+    for _, pn_ir in ipairs(ambiguous_same_output_irs) do
+      -- expand one name
+      if pn_ir.disam_variants_index < #pn_ir.disam_variants then
+        pn_ir.disam_variants_index = pn_ir.disam_variants_index + 1
+        pn_ir.name_output = pn_ir.disam_variants[pn_ir.disam_variants_index]
+        pn_ir.inlines = pn_ir.disam_inlines[pn_ir.name_output]
+
+        if not self.person_names_by_output[pn_ir.name_output] then
+          self.person_names_by_output[pn_ir.name_output] = {}
+        end
+        table.insert(self.person_names_by_output[pn_ir.name_output], person_name_ir)
+      end
+    end
+
+    -- update ambiguous_name_irs and ambiguous_same_output_irs
+    ambiguous_name_irs = {}
+    ambiguous_same_output_irs = {}
+    for _, pn_ir in ipairs(self.person_names_by_output[person_name_ir.name_output]) do
+      if pn_ir.full_name ~= person_name_ir.full_name then
+        table.insert(ambiguous_name_irs, pn_ir)
+      end
+      if pn_ir.name_output == person_name_ir.name_output then
+        table.insert(ambiguous_same_output_irs, pn_ir)
       end
     end
   end

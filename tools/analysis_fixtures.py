@@ -71,7 +71,6 @@ skip_attrs = [
     'cite-group-delimiter',
     'collapse',
     'disambiguate',
-    'disambiguate-add-names',
     'disambiguate-add-year-suffix',
     'subsequent-author-substitute',
     'subsequent-author-substitute-rule',

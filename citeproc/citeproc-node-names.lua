@@ -479,7 +479,10 @@ function Name:build_person_name_ir(name, is_first, context)
       end
     end
 
-    if disam_name.initialize then
+    local givenname_disambiguation_rule = context.area.givenname_disambiguation_rule
+    local only_initials = (givenname_disambiguation_rule == "all-names-with-initials" or
+      givenname_disambiguation_rule == "primary-name-with-initials")
+    if disam_name.initialize and not only_initials then
       disam_name.initialize = false
       local name_inlines = disam_name:render_person_name(name, is_first, context)
       local disam_variant = output_format:output(name_inlines)

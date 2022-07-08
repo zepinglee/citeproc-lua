@@ -6,7 +6,7 @@ collapse             4      17       0       0
 condition           17       0       0       0
 date                96       5       0       0
 decorations          7       0       0       0
-disambiguate        23      48       0       0
+disambiguate        27      44       0       0
 display              2       2       0       0
 etal                 4       0       0       0
 flipflop            17       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              674     150       2       0
+(all)              678     146       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -568,12 +568,6 @@ Passed in:
 Expected:
 (string) 'Asthma, Bosworth Bronchitis and C. Cold (1980); Asthma, Beauregarde Bronchitis and O. Cold (1995)'
 
-Failure → citeproc test test-suite disambiguate_AllNamesWithInitialsGenerally.txt
-Passed in:
-(string) 'Asthma, Bronchitis and Cold (1980); Asthma, Bronchitis and Cold (1995)'
-Expected:
-(string) 'Asthma, Bronchitis and C. Cold (1980); Asthma, Bronchitis and O. Cold (1995)'
-
 Failure → citeproc test test-suite disambiguate_AndreaEg1a.txt
 Passed in:
 (string) 'Smith et al. (1980); Smith et al. (1980)
@@ -792,18 +786,6 @@ Passed in:
 Expected:
 (string) 'Doe (2000a); Doe (2000b)'
 
-Failure → citeproc test test-suite disambiguate_PrimaryNameGenerally.txt
-Passed in:
-(string) 'Asthma and Bronchitis (1980); Asthma and Bronchitis (1995)'
-Expected:
-(string) 'Aloysius Asthma and Bronchitis (1980); Artemis Asthma and Bronchitis (1995)'
-
-Failure → citeproc test test-suite disambiguate_PrimaryNameWithInitialsLimitedToPrimary.txt
-Passed in:
-(string) 'Asthma et al. (1980); Asthma et al. (1995); Dropsy and Asthma (1995)'
-Expected:
-(string) 'A. Asthma et al. (1980); G. Asthma et al. (1995); Dropsy and Asthma (1995)'
-
 Failure → citeproc test test-suite disambiguate_SetsOfNames.txt
 Passed in:
 (string) '(Ely et al. 2001; Ely et al. 2001; Ely et al. 2001)'
@@ -821,12 +803,6 @@ Expected:
   <div class="csl-entry"><b>Doe J</b>. His Anonymous Life. http://example.com (accessed 15 December 2000). 1965a</div>
   <div class="csl-entry"><b>Doe J</b>. His Anonymous Life. http://example.com (accessed 15 December 2000). 1965b</div>
 </div>'
-
-Failure → citeproc test test-suite disambiguate_ToInitialOnly.txt
-Passed in:
-(string) 'Smith; Smith; Muggins; Muggins'
-Expected:
-(string) 'Smith; Smith; B. Muggins; J. Muggins'
 
 Failure → citeproc test test-suite disambiguate_Trigraph.txt
 Passed in:
