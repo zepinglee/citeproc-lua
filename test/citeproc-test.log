@@ -6,7 +6,7 @@ collapse             4      17       0       0
 condition           17       0       0       0
 date                96       5       0       0
 decorations          7       0       0       0
-disambiguate        19      52       0       0
+disambiguate        21      50       0       0
 display              2       2       0       0
 etal                 4       0       0       0
 flipflop            17       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              670     154       3       0
+(all)              672     152       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -228,8 +228,8 @@ Expected:
 Failure → citeproc test test-suite bugreports_MatchedAuthorAndDate.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brown, J. 2006, August. <i><b>Tijdschrift voor praktijkondersteuning</b></i>. http://dx.doi.org/10.1007/bf03074904.</div>
-  <div class="csl-entry">Brown, J. 2006, August. <i><b>Huisarts en Wetenschap</b></i>. http://dx.doi.org/10.1007/bf03084836.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <b><i>Tijdschrift voor praktijkondersteuning</i></b>. http://dx.doi.org/10.1007/bf03074904.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <b><i>Huisarts en Wetenschap</i></b>. http://dx.doi.org/10.1007/bf03084836.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -672,31 +672,15 @@ Passed in:
 Expected:
 (string) 'J. Doe, Jane Roe, Robert Jones; J. Doe, Josephine Roe, et al.; J. Doe, Jane Roe, Richard Jones'
 
-Failure → citeproc test test-suite disambiguate_ByCiteGivennameNoShortFormInitializeWith.txt
-Passed in:
-(string) 'J Roe
-J Doe; J Doe'
-Expected:
-(string) 'J Roe
-John Doe; Jack Doe'
-
 Failure → citeproc test test-suite disambiguate_ByCiteGivennameShortFormInitializeWith.txt
 Passed in:
 (string) 'Roe
-Doe; Doe
-Smith; Smith'
+J Doe; A Doe
+T Smith; T Smith'
 Expected:
 (string) 'Roe
 J Doe; A Doe
 Thomas Smith; Ted Smith'
-
-Failure → citeproc test test-suite disambiguate_ByCiteGivennameShortFormNoInitializeWith.txt
-Passed in:
-(string) 'Roe
-Doe; Doe'
-Expected:
-(string) 'Roe
-John Doe; Aloysius Doe'
 
 Failure → citeproc test test-suite disambiguate_ByCiteIncremental1.txt
 Passed in:
@@ -1907,9 +1891,6 @@ Expected:
     <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. Container. :25.</div>
   </div>
 </div>'
-
-Error → citeproc test fixtures-local test_Test.txt
-test/citeproc-test.lua:251: attempt to index a nil value
 
 Error → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
 ./citeproc/citeproc-node-sort.lua:98: attempt to compare number with string
