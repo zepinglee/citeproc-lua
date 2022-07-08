@@ -63,7 +63,8 @@ function CiteProc.new(sys, style, lang, force_lang)
   o.disam_irs = {}
   -- { <ir1>, <ir2>, ...  }
 
-  o.irs_by_output = {}
+  o.person_names_by_output = {}
+  o.cite_irs_by_output = {}
   -- {
   --   ["Roe, J"] = {<ir1>},
   --   ["Doe, J"] = {<ir2>, <ir3>},
@@ -453,8 +454,8 @@ function CiteProc:build_ambiguous_ir(cite_item, output_format)
   local disam_str = disam_format:output(inlines)
   ir.disam_str = disam_str
 
-  if self.irs_by_output[disam_str] then
-    for _, ir_ in ipairs(self.irs_by_output[disam_str]) do
+  if self.cite_irs_by_output[disam_str] then
+    for _, ir_ in ipairs(self.cite_irs_by_output[disam_str]) do
       if ir_.cite_item.id ~= cite_item.id then
         ir.is_ambiguous = true
         break
@@ -463,9 +464,9 @@ function CiteProc:build_ambiguous_ir(cite_item, output_format)
         -- end
       end
     end
-    table.insert(self.irs_by_output[disam_str], ir)
+    table.insert(self.cite_irs_by_output[disam_str], ir)
   else
-    self.irs_by_output[disam_str] = {ir}
+    self.cite_irs_by_output[disam_str] = {ir}
   end
 
   return ir
@@ -473,7 +474,7 @@ end
 
 -- function CiteProc:get_ambiguous_irs(target_ir)
 --   local res = {}
---   for _, ir in ipairs(self.irs_by_output[target_ir.disam_str]) do
+--   for _, ir in ipairs(self.cite_irs_by_output[target_ir.disam_str]) do
 --     -- if ir.disam_level == target_ir.disam_level then
 --     -- end
 --     table.insert(res, ir)
@@ -482,7 +483,7 @@ end
 -- end
 
 function CiteProc:disambiguate_add_givenname(cite_ir)
-  if cite_ir.is_ambiguous and self.style.citation.disambiguate_add_givenname then
+  if self.style.citation.disambiguate_add_givenname then
     local givenname_disambiguation_rule = self.style.citation.givenname_disambiguation_rule
     if givenname_disambiguation_rule == "all-names" then
       cite_ir = self:disambiguate_add_givenname_all_names(cite_ir)
@@ -494,10 +495,69 @@ function CiteProc:disambiguate_add_givenname(cite_ir)
 end
 
 function CiteProc:disambiguate_add_givenname_all_names(cite_ir)
+  if not cite_ir.person_name_irs or #cite_ir.person_name_irs == 0 then
+    return cite_ir
+  end
+  for _, person_name_ir in ipairs(cite_ir.person_name_irs) do
+    local name_output = person_name_ir.name_output
+    -- util.debug(name_output)
+    if not self.person_names_by_output[name_output] then
+      self.person_names_by_output[name_output] = {}
+    end
+    table.insert(self.person_names_by_output[name_output], person_name_ir)
+
+    local ambiguous_name_irs = {}
+    local ambiguous_same_output_irs = {}
+
+    for _, pn_ir in ipairs(self.person_names_by_output[person_name_ir.name_output]) do
+      if pn_ir.full_name ~= person_name_ir.full_name then
+        table.insert(ambiguous_name_irs, pn_ir)
+      end
+      if pn_ir.name_output == person_name_ir.name_output then
+        table.insert(ambiguous_same_output_irs, pn_ir)
+      end
+    end
+
+    for _, name_variant in ipairs(person_name_ir.disam_variants) do
+      if #ambiguous_name_irs == 0 then
+        break
+      end
+
+      for _, pn_ir in ipairs(ambiguous_same_output_irs) do
+        -- expand one name
+        if pn_ir.disam_variants_index < #pn_ir.disam_variants then
+          pn_ir.disam_variants_index = pn_ir.disam_variants_index + 1
+          pn_ir.name_output = pn_ir.disam_variants[pn_ir.disam_variants_index]
+          pn_ir.inlines = pn_ir.disam_inlines[pn_ir.name_output]
+
+          if not self.person_names_by_output[pn_ir.name_output] then
+            self.person_names_by_output[pn_ir.name_output] = {}
+          end
+          table.insert(self.person_names_by_output[pn_ir.name_output], person_name_ir)
+        end
+      end
+
+      -- update ambiguous_name_irs and ambiguous_same_output_irs
+      ambiguous_name_irs = {}
+      ambiguous_same_output_irs = {}
+      for _, pn_ir in ipairs(self.person_names_by_output[person_name_ir.name_output]) do
+        if pn_ir.full_name ~= person_name_ir.full_name then
+          table.insert(ambiguous_name_irs, pn_ir)
+        end
+        if pn_ir.name_output == person_name_ir.name_output then
+          table.insert(ambiguous_same_output_irs, pn_ir)
+        end
+      end
+    end
+  end
+
   return cite_ir
 end
 
 function CiteProc:disambiguate_add_givenname_by_cite(cite_ir)
+  if not cite_ir.is_ambiguous then
+    return cite_ir
+  end
   if not cite_ir.person_name_irs or #cite_ir.person_name_irs == 0 then
     return cite_ir
   end
@@ -507,7 +567,7 @@ function CiteProc:disambiguate_add_givenname_by_cite(cite_ir)
   local ambiguous_cite_irs = {}
   local ambiguous_same_output_irs = {}
 
-  for _, ir_ in ipairs(self.irs_by_output[cite_ir.disam_str]) do
+  for _, ir_ in ipairs(self.cite_irs_by_output[cite_ir.disam_str]) do
     if ir_.cite_item.id ~= cite_ir.cite_item.id then
       table.insert(ambiguous_cite_irs, ir_)
     end
@@ -550,10 +610,10 @@ function CiteProc:disambiguate_add_givenname_by_cite(cite_ir)
               local inlines = ir_:flatten(disam_format)
               local disam_str = disam_format:output(inlines)
               ir_.disam_str = disam_str
-              if self.irs_by_output[disam_str] then
-                table.insert(self.irs_by_output[disam_str], cite_ir)
+              if self.cite_irs_by_output[disam_str] then
+                table.insert(self.cite_irs_by_output[disam_str], cite_ir)
               else
-                self.irs_by_output[disam_str] = {cite_ir}
+                self.cite_irs_by_output[disam_str] = {cite_ir}
               end
             end
           end
@@ -562,7 +622,7 @@ function CiteProc:disambiguate_add_givenname_by_cite(cite_ir)
         -- update ambiguous_cite_irs and ambiguous_same_output_irs
         ambiguous_cite_irs = {}
         ambiguous_same_output_irs = {}
-        for _, ir_ in ipairs(self.irs_by_output[cite_ir.disam_str]) do
+        for _, ir_ in ipairs(self.cite_irs_by_output[cite_ir.disam_str]) do
           if ir_.cite_item.id ~= cite_ir.cite_item.id then
             table.insert(ambiguous_cite_irs, ir_)
           end

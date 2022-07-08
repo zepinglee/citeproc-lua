@@ -6,7 +6,7 @@ collapse             4      17       0       0
 condition           17       0       0       0
 date                96       5       0       0
 decorations          7       0       0       0
-disambiguate        21      50       0       0
+disambiguate        22      49       0       0
 display              2       2       0       0
 etal                 4       0       0       0
 flipflop            17       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              672     152       2       0
+(all)              673     151       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -564,15 +564,9 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_AllNamesGenerally.txt
 Passed in:
-(string) 'Asthma, Bronchitis and Cold (1980); Asthma, Bronchitis and Cold (1995)'
+(string) 'Asthma, B. Bronchitis and C. Cold (1980); Asthma, B. Bronchitis and O. Cold (1995)'
 Expected:
 (string) 'Asthma, Bosworth Bronchitis and C. Cold (1980); Asthma, Beauregarde Bronchitis and O. Cold (1995)'
-
-Failure → citeproc test test-suite disambiguate_AllNamesSimpleSequence.txt
-Passed in:
-(string) '(Malone 2001; Malone 1951)'
-Expected:
-(string) '(Nolan J. Malone 2001; Kemp Malone 1951)'
 
 Failure → citeproc test test-suite disambiguate_AllNamesWithInitialsGenerally.txt
 Passed in:
