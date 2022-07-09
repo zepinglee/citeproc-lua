@@ -74,6 +74,12 @@ local function test_citation_items(engine, fixture)
     end
   end
 
+  local ids = {}
+  for _, item in ipairs(fixture.input) do
+    table.insert(ids, item.id)
+  end
+  engine:updateItems(ids)
+
   local output = {}
   for _, items in ipairs(citation_items) do
     local res = engine:makeCitationCluster(items)

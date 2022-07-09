@@ -38,12 +38,27 @@ function CiteProc.new(sys, style, lang, force_lang)
   local o = {}
   o.registry = {
     citations = {},  -- A map
-    citation_strings = {},  -- A list
     registry = {},  -- A map
     reflist = {},  -- A list
     previous_citation = nil,
     requires_sorting = false,
   }
+
+  o.cite_first_note_numbers = {}
+  o.cite_last_note_numbers = {}
+  o.note_citations_map = {}
+
+  o.disam_irs = {}
+  -- { <ir1>, <ir2>, ...  }
+
+  o.person_names_by_output = {}
+  o.cite_irs_by_output = {}
+  -- {
+  --   ["Roe, J"] = {<ir1>},
+  --   ["Doe, J"] = {<ir2>, <ir3>},
+  --   ["Doe, John"] = {<ir2>},
+  --   ["Doe, Jack"] = {<ir2>},
+  -- }
 
   o.sys = sys
   o.locales = {}
@@ -60,18 +75,6 @@ function CiteProc.new(sys, style, lang, force_lang)
   -- o.formatter = formats.latex
   o.linking_enabled = false
 
-  o.disam_irs = {}
-  -- { <ir1>, <ir2>, ...  }
-
-  o.person_names_by_output = {}
-  o.cite_irs_by_output = {}
-  -- {
-  --   ["Roe, J"] = {<ir1>},
-  --   ["Doe, J"] = {<ir2>, <ir3>},
-  --   ["Doe, John"] = {<ir2>},
-  --   ["Doe, Jack"] = {<ir2>},
-  -- }
-
   setmetatable(o, { __index = CiteProc })
   return o
 end
@@ -79,9 +82,16 @@ end
 function CiteProc:updateItems(ids)
   self.registry.reflist = {}
   self.registry.registry = {}
+  local cite_items = {}
   for _, id in ipairs(ids) do
-    self:get_item(id)
+    table.insert(cite_items, {id = id})
   end
+  self:makeCitationCluster(cite_items)
+
+  self.registry.previous_citation = nil
+  self.cite_first_note_numbers = {}
+  self.cite_last_note_numbers = {}
+  self.note_citations_map = {}
 end
 
 function CiteProc:updateUncitedItems(ids)
@@ -124,8 +134,6 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
 
     local citation_index = citation_.citation_index
     local citation_str = self:build_citation_str(citation_)
-    -- util.debug(citation_str)
-    -- self.registry.citation_strings[citation_id] = citation_str
     table.insert(output, {citation_index, citation_str, citation_id})
   end
 
@@ -711,6 +719,12 @@ function CiteProc:disambiguate_add_names(cite_ir)
   local name_ir = find_first_name_ir(cite_ir)
   cite_ir.name_ir = name_ir
 
+  -- if name_ir then
+  --   util.debug(cite_ir.disam_str)
+  --   util.debug(cite_ir.name_ir.full_name_str)
+  --   util.debug(cite_ir.is_ambiguous)
+  -- end
+
   if not cite_ir.is_ambiguous then
     return cite_ir
   end
@@ -747,7 +761,7 @@ function CiteProc:disambiguate_add_names(cite_ir)
         break
       end
     end
-    util.debug(can_be_disambuguated)
+    -- util.debug(can_be_disambuguated)
     if not can_be_disambuguated then
       break
     end
@@ -759,7 +773,7 @@ function CiteProc:disambiguate_add_names(cite_ir)
         ir_.person_name_irs = ir_.name_ir.person_name_irs
         local inlines = ir_:flatten(disam_format)
         local disam_str = disam_format:output(inlines)
-        util.debug(disam_str)
+        -- util.debug(disam_str)
         ir_.disam_str = disam_str
         if not self.cite_irs_by_output[disam_str] then
           self.cite_irs_by_output[disam_str] = {}
@@ -797,7 +811,6 @@ function CiteProc:makeCitationCluster(citation_items)
   local items = {}
   for i, cite_item in ipairs(citation_items) do
     cite_item.id = tostring(cite_item.id)
-    local position_first = (self.registry.registry[cite_item.id] == nil)
     local item_data = self:get_item(cite_item.id)
 
     -- Create a wrapper of the orignal item from registry so that
@@ -810,11 +823,13 @@ function CiteProc:makeCitationCluster(citation_items)
       item.label = "page"
     end
 
-    if position_first then
-      item.position = util.position_map["first"]
-    else
+    item.position = util.position_map["first"]
+    if self.cite_first_note_numbers[cite_item.id] then
       item.position = util.position_map["subsequent"]
+    else
+      self.cite_first_note_numbers[cite_item.id] = 0
     end
+
     local preceding_cite
     if i == 1 then
       local previous_citation = self.registry.previous_citation
@@ -850,7 +865,7 @@ function CiteProc:makeCitationCluster(citation_items)
     citationID = "pseudo-citation",
     citationItems = items,
     properties = {
-      noteIndex = 1,
+      noteIndex = 0,
     }
   }
   return res

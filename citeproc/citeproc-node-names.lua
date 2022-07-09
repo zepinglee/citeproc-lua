@@ -473,7 +473,7 @@ function Name:build_person_name_ir(name, is_first, context)
   person_name_ir.disam_variants = {person_name_ir.name_output}
   person_name_ir.disam_inlines = {inlines}
 
-  if not context.sort_key then
+  if context.area.disambiguate_add_givenname and not context.sort_key then
     local disam_name = util.clone(self)
     if disam_name.form == "short" then
       disam_name.form = "long"
