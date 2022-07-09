@@ -339,12 +339,12 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     label = nil
   end
 
-  local et_al_truncate = self.et_al_min and self.et_al_use_first and #names >= self.et_al_min
-  local et_al_last = et_al_truncate and self.et_al_use_last and self.et_al_use_first <= self.et_al_min - 2
+  local et_al_abbreviation = self.et_al_min and self.et_al_use_first and #names >= self.et_al_min
+  local use_last = et_al_abbreviation and self.et_al_use_last and self.et_al_use_first <= self.et_al_min - 2
 
   if self.form == "count" then
     local count
-    if et_al_truncate then
+    if et_al_abbreviation then
       count = self.et_al_use_first
     else
       count = #names
@@ -355,74 +355,77 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     return ir
   end
 
-  local truncated_names = names
-  if et_al_truncate then
-    truncated_names = util.slice(names, 1, self.et_al_use_first)
-  end
+  -- TODO: only build names as needed
+  local full_name_irs = {}
+  local full_name_str = ""
+  for i, name_var in ipairs(names) do
+    local person_name_ir = self:build_person_name_ir(name_var, i == 1, context)
+    table.insert(full_name_irs, person_name_ir)
 
-  -- local inlines = {}
-  local irs = {}
-  local person_name_irs = {}
-
-  for i, name in ipairs(truncated_names) do
-    if i > 1 then
-      if i == #names and self["and"] then
-        local inverted = self:check_inverted(names, i-1)
-        if self:_check_delimiter(self.delimiter_precedes_last, i, inverted) then
-          -- table.insert(inlines, PlainText:new(self.delimiter))
-          table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
-        else
-          -- table.insert(inlines, PlainText:new(" "))
-          table.insert(irs, Rendered:new({PlainText:new(" ")}))
-        end
-        local and_term
-        if self["and"] == "text" then
-          and_term = context.locale:get_simple_term("and")
-        elseif self["and"] == "symbol" then
-          and_term = "&"
-        end
-        -- table.insert(inlines, PlainText:new(and_term .. " "))
-        table.insert(irs, Rendered:new({PlainText:new(and_term .. " ")}))
-      else
-        -- table.insert(inlines, PlainText:new(self.delimiter))
-        table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
-      end
+    local name_variants = person_name_ir.disam_variants
+    if full_name_str ~= "" then
+      full_name_str = full_name_str .. "     "
     end
-    -- util.extend(inlines, self:render_person_name(name, i == 1, context))
-    local person_name_ir = self:build_person_name_ir(name, i == 1, context)
-    table.insert(irs, person_name_ir)
-
-    table.insert(person_name_irs, person_name_ir)
+    full_name_str = full_name_str .. name_variants[#name_variants]
   end
 
-  if et_al_truncate then
-    if et_al_last then
-      local punctuation = self.delimiter .. util.unicode["horizontal ellipsis"] .. " "
-      table.insert(irs, Rendered:new({PlainText:new(punctuation)}))
-      table.insert(irs, Rendered:new(self:render_person_name(names[#names], self.et_al_use_first == 1, context)))
-    elseif self.et_al_use_first > 0 and et_al then
-      local et_al_inlines = et_al:render_term(context)
-      if #et_al_inlines > 0 then
-        if self:_check_delimiter(self.delimiter_precedes_et_al, self.et_al_use_first + 1) then
-          table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
-        else
-          table.insert(irs, Rendered:new({PlainText:new(" ")}))
-        end
-        table.insert(irs, Rendered:new(et_al:render_term(context)))
-      end
+  local person_name_irs  -- TODO: rename to rendered_name_irs
+  local hidden_name_irs
+  if et_al_abbreviation then
+    person_name_irs = util.slice(full_name_irs, 1, self.et_al_use_first)
+    hidden_name_irs = util.slice(full_name_irs, self.et_al_use_first + 1, #full_name_irs)
+    if use_last then
+      table.insert(person_name_irs, full_name_irs[#full_name_irs])
+      table.remove(hidden_name_irs, #hidden_name_irs)
+    end
+  else
+    person_name_irs = util.slice(full_name_irs, 1, #full_name_irs)
+    hidden_name_irs = {}
+  end
+
+
+  local and_term_ir
+  local and_term
+  if self["and"] == "text" then
+    and_term = context.locale:get_simple_term("and")
+  elseif self["and"] == "symbol" then
+    and_term = "&"
+  end
+  if and_term then
+    and_term_ir = Rendered:new({PlainText:new(and_term .. " ")})
+  end
+
+  local et_al_ir
+  if et_al and et_al_abbreviation and not use_last then
+    local et_al_inlines = et_al:render_term(context)
+    if #et_al_inlines > 0 then
+      et_al_ir = Rendered:new(et_al_inlines)
     end
   end
 
-  -- In the case et-al-use-first="0"
-  -- etal_UseZeroFirst.txt
-  if #irs == 0 then
-    local ir = NameIr:new()
-    ir.group_var = "missing"
-    return ir
-    -- return nil
-  end
+  local irs = self:join_person_name_irs(person_name_irs, and_term_ir, et_al_ir, use_last)
 
   local ir = NameIr:new(irs, self)
+
+  ir.name_inheritance = self
+  ir.name_variable = names
+  ir.and_term_ir = and_term_ir
+  ir.et_al_ir = et_al_ir
+  ir.et_al_abbreviation = et_al_abbreviation
+  ir.use_last = use_last
+
+  ir.full_name_irs = full_name_irs
+  ir.full_name_str = full_name_str
+  ir.person_name_irs = person_name_irs
+  ir.hidden_name_irs = hidden_name_irs
+
+  -- etal_UseZeroFirst.txt: et-al-use-first="0"
+  if #irs == 0 then
+    ir.group_var = "missing"
+    return ir
+  else
+    ir.group_var = "important"
+  end
 
   ir.formatting = self.formatting
   ir.affixes = self.affixes
@@ -450,29 +453,32 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     state.suppressed[variable] = true
   end
 
-  ir.person_name_irs = person_name_irs
-
   return ir
 end
 
 function Name:build_person_name_ir(name, is_first, context)
-  local inlines = self:render_person_name(name, is_first, context)
+  local is_latin = util.has_romanesque_char(name.family)
+  local is_inverted = (name.family and name.family ~= "" and is_latin and
+    (self.name_as_sort_order == "all" or (self.name_as_sort_order == "first" and is_first)))
+
+  local inlines = self:render_person_name(name, is_first, is_latin, is_inverted, context)
   local person_name_ir = PersonNameIr:new(inlines)
+
+  person_name_ir.is_inverted = is_inverted
 
   local output_format = SortStringFormat:new()
   person_name_ir.name_output = output_format:output(inlines)
-  person_name_ir.disam_variants_index = 0
+  person_name_ir.disam_variants_index = 1
 
+  person_name_ir.disam_variants = {person_name_ir.name_output}
+  person_name_ir.disam_inlines = {inlines}
 
   if not context.sort_key then
-    person_name_ir.disam_variants = {}
-    person_name_ir.disam_inlines = {}
-
     local disam_name = util.clone(self)
     if disam_name.form == "short" then
       disam_name.form = "long"
       if disam_name.initialize and disam_name.initialize_with then
-        local name_inlines = disam_name:render_person_name(name, is_first, context)
+        local name_inlines = disam_name:render_person_name(name, is_first, is_latin, is_inverted, context)
         local disam_variant = output_format:output(name_inlines)
         table.insert(person_name_ir.disam_variants, disam_variant)
         person_name_ir.disam_inlines[disam_variant] = name_inlines
@@ -484,14 +490,14 @@ function Name:build_person_name_ir(name, is_first, context)
       givenname_disambiguation_rule == "primary-name-with-initials")
     if disam_name.initialize and not only_initials then
       disam_name.initialize = false
-      local name_inlines = disam_name:render_person_name(name, is_first, context)
+      local name_inlines = disam_name:render_person_name(name, is_first, is_latin, is_inverted, context)
       local disam_variant = output_format:output(name_inlines)
       table.insert(person_name_ir.disam_variants, disam_variant)
       person_name_ir.disam_inlines[disam_variant] = name_inlines
     end
 
     context.sort_key = true
-    local full_name_inlines = disam_name:render_person_name(name, is_first, context)
+    local full_name_inlines = disam_name:render_person_name(name, is_first, is_latin, is_inverted, context)
     -- full_name is used for comparison in disambiguation
     person_name_ir.full_name = output_format:output(full_name_inlines)
     context.sort_key = false
@@ -500,17 +506,14 @@ function Name:build_person_name_ir(name, is_first, context)
   return person_name_ir
 end
 
-function Name:render_person_name(name, is_first, context)
+function Name:render_person_name(name, is_first, is_latin, is_inverted, context)
   -- Return: inlines
-  local is_latin = util.has_romanesque_char(name.family)
-  local is_reversed = (self.name_as_sort_order == "all" or
-    (self.name_as_sort_order == "first" and is_first) or not is_latin)
   -- TODO
   local is_sort = context.sort_key
   local demote_ndp = (context.style.demote_non_dropping_particle == "display-and-sort" or
     (is_sort and context.style.demote_non_dropping_particle == "sort-only"))
 
-  local name_part_tokens = self:get_display_order(name, self.form, is_latin, is_sort, is_reversed, demote_ndp)
+  local name_part_tokens = self:get_display_order(name, self.form, is_latin, is_sort, is_inverted, demote_ndp)
   -- util.debug(name)
   -- util.debug(name_part_tokens)
 
@@ -552,7 +555,7 @@ end
 
 -- Name-part Order
 -- https://docs.citationstyles.org/en/stable/specification.html#name-part-order
-function Name:get_display_order(name, form, is_latin, is_sort, is_reversed, demote_ndp)
+function Name:get_display_order(name, form, is_latin, is_sort, is_inverted, demote_ndp)
   if not name.family then
     if name.literal then
       return {"literal"}
@@ -595,7 +598,7 @@ function Name:get_display_order(name, form, is_latin, is_sort, is_reversed, demo
   local dp = name["dropping-particle"]
 
   if name.given then
-    if is_reversed then
+    if is_inverted then
       if demote_ndp then
         name_part_tokens = {"family", "sort-separator", "given-dp-ndp"}
       else
@@ -605,7 +608,7 @@ function Name:get_display_order(name, form, is_latin, is_sort, is_reversed, demo
       name_part_tokens = {"given", "space", "dp-ndp-family-suffix"}
     end
   else
-    if is_reversed then
+    if is_inverted then
       if demote_ndp then
         if ndp or dp then
           name_part_tokens = {"family", "sort-separator", "dp-ndp"}
@@ -620,8 +623,8 @@ function Name:get_display_order(name, form, is_latin, is_sort, is_reversed, demo
     end
   end
 
-  if name.suffix and is_reversed then
-    if is_reversed or name["comma-suffix"] then
+  if name.suffix and is_inverted then
+    if is_inverted or name["comma-suffix"] then
       table.insert(name_part_tokens, "sort-separator")
       table.insert(name_part_tokens, "suffix")
     elseif string.match(name.suffix, "^%p") then
@@ -771,30 +774,14 @@ function Name:render_particle(name, token, context)
   return inlines
 end
 
-function Name:check_inverted(names, index)
-  if index < 1 then
-    return false
-  end
-  if not names[index].family then
-    return false
-  end
-  if self.name_as_sort_order == "all" then
-    return true
-  elseif self.name_as_sort_order == "first" and index == 1 then
-    return true
-  else
-    return false
-  end
-end
-
-function Name:_check_delimiter(delimiter_attribute, index, inverted)
+function Name:_check_delimiter(delimiter_attribute, num_first_names, inverted)
   -- `delimiter-precedes-et-al` and `delimiter-precedes-last`
   if delimiter_attribute == "always" then
     return true
   elseif delimiter_attribute == "never" then
     return false
   elseif delimiter_attribute == "contextual" then
-    if index > 2 then
+    if num_first_names > 1 then
       return true
     else
       return false
@@ -906,6 +893,94 @@ function Name:initialize_name(given, with, initialize_with_hyphen)
   res = util.strip(res)
   return res
 
+end
+
+function Name:join_person_name_irs(rendered_name_irs, and_term_ir, et_al_ir, use_last)
+  local first_items = rendered_name_irs
+  local last_item
+  if et_al_ir then
+    first_items = rendered_name_irs
+    last_item = et_al_ir
+  elseif #rendered_name_irs > 1 then
+    first_items = util.slice(rendered_name_irs, 1, #rendered_name_irs - 1)
+    last_item = rendered_name_irs[#rendered_name_irs]
+  end
+
+  local irs = {}
+
+  for i, person_name_ir in ipairs(first_items) do
+    if i > 1 then
+      table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
+    end
+    table.insert(irs, person_name_ir)
+  end
+
+  if last_item then
+    if use_last then
+      local delimiter = self.delimiter .. util.unicode["horizontal ellipsis"] .. " "
+      table.insert(irs, Rendered:new({PlainText:new(delimiter)}))
+      table.insert(irs, last_item)
+    elseif et_al_ir then
+      if #first_items > 0 then
+        local inverted = first_items[#first_items].is_inverted
+        local use_delimiter = self:_check_delimiter(self.delimiter_precedes_et_al, #first_items, inverted)
+        if use_delimiter then
+          table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
+        else
+          table.insert(irs, Rendered:new({PlainText:new(" ")}))
+        end
+        table.insert(irs, last_item)
+      end
+    else
+      local inverted = first_items[#first_items].is_inverted
+      local use_delimiter = self:_check_delimiter(self.delimiter_precedes_last, #first_items, inverted)
+      if use_delimiter or not and_term_ir then
+        table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
+      else
+        table.insert(irs, Rendered:new({PlainText:new(" ")}))
+      end
+      if and_term_ir and not et_al_ir then
+        table.insert(irs, and_term_ir)
+      end
+      table.insert(irs, last_item)
+    end
+  end
+
+  return irs
+end
+
+-- For use in disambiguate-add-names
+function Name:expand_one_name(name_ir)
+  local rendered_name_irs = name_ir.person_name_irs
+  local hidden_name_irs = name_ir.hidden_name_irs
+  if #hidden_name_irs == 0 then
+    return nil
+  end
+  local person_name_ir_to_add = hidden_name_irs[1]
+  if name_ir.use_last then
+    table.insert(rendered_name_irs, #rendered_name_irs, person_name_ir_to_add)
+  else
+    table.insert(rendered_name_irs, person_name_ir_to_add)
+  end
+  table.remove(hidden_name_irs, 1)
+  if #hidden_name_irs == 0 then
+    if name_ir.et_al_abbreviation then
+      name_ir.et_al_abbreviation  = false
+    end
+    if name_ir.use_last then
+      name_ir.use_last = false
+    end
+  end
+
+  local and_term_ir = name_ir.and_term_ir
+  local et_al_ir
+  if name_ir.et_al_abbreviation then
+    et_al_ir = name_ir.et_al_ir
+  end
+  local use_last = name_ir.use_last
+
+  name_ir.children = self:join_person_name_irs(rendered_name_irs, and_term_ir, et_al_ir, use_last)
+  return person_name_ir_to_add
 end
 
 
