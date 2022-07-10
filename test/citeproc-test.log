@@ -6,7 +6,7 @@ collapse             4      17       0       0
 condition           17       0       0       0
 date                96       5       0       0
 decorations          7       0       0       0
-disambiguate        39      32       0       0
+disambiguate        40      31       0       0
 display              2       2       0       0
 etal                 4       0       0       0
 flipflop            17       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              692     132       2       0
+(all)              693     131       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -121,7 +121,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_CollapseFailure.txt
 Passed in:
-(string) '(Doe, Roe, et al. 1965; Doe, Spindlethrift, et al. 1965; Doe et al. 1970)'
+(string) '(Doe et al. 1965; Doe et al. 1965; Doe et al. 1970)'
 Expected:
 (string) '(Doe et al. 1965a, 1965b, 1970)'
 
@@ -133,7 +133,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_DisambiguationAddNames.txt
 Passed in:
-(string) '(Roe, Doe, et al., 1995; Roe, Noakes, et al., 1995)'
+(string) '(Roe et al., 1995; Roe et al., 1995)'
 Expected:
 (string) '(Roe et al., 1995a, 1995b)'
 
@@ -553,16 +553,6 @@ Passed in:
 (string) 'Asthma, Bosworth Bronchitis and Crispin Cold (1980); Asthma, Beauregarde Bronchitis and O. Cold (1995)'
 Expected:
 (string) 'Asthma, Bosworth Bronchitis and C. Cold (1980); Asthma, Beauregarde Bronchitis and O. Cold (1995)'
-
-Failure → citeproc test test-suite disambiguate_AndreaEg1c.txt
-Passed in:
-(string) 'Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; J. Jones (1980)
-Smith, Brown &#38; J. Jones (1980); Smith, Benson, et al. (1980)
-Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; A. Jones (1980)'
-Expected:
-(string) 'Smith et al. (1980); Smith et al. (1980)
-Smith et al. (1980); Smith et al. (1980)
-Smith et al. (1980); Smith et al. (1980)'
 
 Failure → citeproc test test-suite disambiguate_AndreaEg2.txt
 Passed in:

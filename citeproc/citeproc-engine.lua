@@ -729,6 +729,10 @@ local function find_first_name_ir(ir)
 end
 
 function CiteProc:disambiguate_add_names(cite_ir)
+  if not self.style.citation.disambiguate_add_names then
+    return cite_ir
+  end
+
   local name_ir = find_first_name_ir(cite_ir)
   cite_ir.name_ir = name_ir
 
