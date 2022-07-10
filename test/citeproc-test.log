@@ -6,7 +6,7 @@ collapse             4      17       0       0
 condition           17       0       0       0
 date                96       5       0       0
 decorations          7       0       0       0
-disambiguate        40      31       0       0
+disambiguate        42      29       0       0
 display              2       2       0       0
 etal                 4       0       0       0
 flipflop            17       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              693     131       2       0
+(all)              695     129       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -544,31 +544,15 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_AllNamesBaseNameCountOnFailureIfYearSuffixAvailable.txt
 Passed in:
-(string) 'Asthma et al. (1990); Asthma et al. (1990); Dropsy, Edward Enteritis, X. Fever (2000); Dropsy, Ernie Enteritis, Yves Fever (2000)'
+(string) 'Asthma et al. (1990); Asthma et al. (1990); Dropsy, Edward Enteritis, et al. (2000); Dropsy, Ernie Enteritis, et al. (2000)'
 Expected:
 (string) 'Asthma et al. (1990a); Asthma et al. (1990b); Dropsy, Edward Enteritis, et al. (2000); Dropsy, Ernie Enteritis, et al. (2000)'
-
-Failure → citeproc test test-suite disambiguate_AllNamesGenerally.txt
-Passed in:
-(string) 'Asthma, Bosworth Bronchitis and Crispin Cold (1980); Asthma, Beauregarde Bronchitis and O. Cold (1995)'
-Expected:
-(string) 'Asthma, Bosworth Bronchitis and C. Cold (1980); Asthma, Beauregarde Bronchitis and O. Cold (1995)'
-
-Failure → citeproc test test-suite disambiguate_AndreaEg2.txt
-Passed in:
-(string) 'Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; J. Jones (1980)
-Smith, Brown &#38; J. Jones (1980); Smith, Benson, et al. (1980)
-Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; Arthur Jones (1980)'
-Expected:
-(string) 'Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; J. Jones (1980)
-Smith, Brown &#38; J. Jones (1980); Smith, Benson, et al. (1980)
-Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; A. Jones (1980)'
 
 Failure → citeproc test test-suite disambiguate_AndreaEg3.txt
 Passed in:
 (string) 'Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; J. Jones (1980)
 Smith, Brown &#38; J. Jones (1980); Smith, Benson, et al. (1980)
-Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; Arthur Jones (1980)'
+Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; A. Jones (1980)'
 Expected:
 (string) 'Smith, Brown &#38; J. Jones (1980a); Smith, Brown &#38; J. Jones (1980b)
 Smith, Brown &#38; J. Jones (1980a); Smith, Benson, et al. (1980)

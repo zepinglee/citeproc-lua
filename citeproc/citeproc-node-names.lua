@@ -480,8 +480,11 @@ function Name:build_person_name_ir(name, is_first, context)
       if disam_name.initialize and disam_name.initialize_with then
         local name_inlines = disam_name:render_person_name(name, is_first, is_latin, is_inverted, context)
         local disam_variant = output_format:output(name_inlines)
-        table.insert(person_name_ir.disam_variants, disam_variant)
-        person_name_ir.disam_inlines[disam_variant] = name_inlines
+        local last_variant = person_name_ir.disam_variants[#person_name_ir.disam_variants]
+        if disam_variant ~= last_variant then
+          table.insert(person_name_ir.disam_variants, disam_variant)
+          person_name_ir.disam_inlines[disam_variant] = name_inlines
+        end
       end
     end
 
@@ -492,8 +495,11 @@ function Name:build_person_name_ir(name, is_first, context)
       disam_name.initialize = false
       local name_inlines = disam_name:render_person_name(name, is_first, is_latin, is_inverted, context)
       local disam_variant = output_format:output(name_inlines)
-      table.insert(person_name_ir.disam_variants, disam_variant)
-      person_name_ir.disam_inlines[disam_variant] = name_inlines
+      local last_variant = person_name_ir.disam_variants[#person_name_ir.disam_variants]
+      if disam_variant ~= last_variant then
+        table.insert(person_name_ir.disam_variants, disam_variant)
+        person_name_ir.disam_inlines[disam_variant] = name_inlines
+      end
     end
 
     context.sort_key = true
