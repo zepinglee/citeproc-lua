@@ -619,6 +619,11 @@ function CiteProc:disambiguate_add_givenname_by_cite(cite_ir)
     return cite_ir
   end
 
+  for _, ir_ in ipairs(self.disam_irs) do
+    -- util.debug(ir_.cite_item.id)
+    -- util.debug(ir_.disam_str)
+  end
+
   local disam_format = SortStringFormat:new()
 
   local ambiguous_cite_irs = {}
@@ -634,66 +639,74 @@ function CiteProc:disambiguate_add_givenname_by_cite(cite_ir)
   end
 
   for i, person_name_ir in ipairs(cite_ir.person_name_irs) do
+    -- util.debug(person_name_ir.name_output)
     -- util.debug(person_name_ir.disam_variants)
     if #ambiguous_cite_irs == 0 then
       cite_ir.is_ambiguous = false
       break
     end
 
-    local is_different_name = false
-    for _, ir_ in ipairs(ambiguous_cite_irs) do
-      if ir_.person_name_irs[i] then
-        if ir_.person_name_irs[i].full_name ~= person_name_ir.full_name then
-          is_different_name = true
-          break
+    -- util.debug(person_name_ir.disam_variants)
+    while person_name_ir.disam_variants_index < #person_name_ir.disam_variants do
+      -- util.debug(person_name_ir.name_output)
+
+      local is_different_name = false
+      for _, ir_ in ipairs(ambiguous_cite_irs) do
+        if ir_.person_name_irs[i] then
+          if ir_.person_name_irs[i].full_name ~= person_name_ir.full_name then
+            -- util.debug(ir_.cite_item.id)
+            is_different_name = true
+            break
+          end
         end
       end
-    end
+      -- util.debug(is_different_name)
+      if not is_different_name then
+        break
+      end
 
-    if is_different_name then
-      -- expand one name
-
-      -- util.debug(person_name_ir.disam_variants)
-      for j, name_disam_variant in ipairs(person_name_ir.disam_variants) do
-        -- util.debug(#ambiguous_same_output_irs)
-        for _, ir_ in ipairs(ambiguous_same_output_irs) do
-          -- util.debug(ir_.cite_item.id)
-          if ir_.person_name_irs[i] then
-            local person_name_ir_ = ir_.person_name_irs[i]
-            if person_name_ir_.disam_variants[j] then
-              person_name_ir_.disam_variants_index = j
-              local disam_variant = person_name_ir_.disam_variants[j]
-              person_name_ir_.name_output = disam_variant
-              person_name_ir_.inlines = person_name_ir_.disam_inlines[disam_variant]
-              -- Update cite ir output
-              local inlines = ir_:flatten(disam_format)
-              local disam_str = disam_format:output(inlines)
-              ir_.disam_str = disam_str
-              if not self.cite_irs_by_output[disam_str] then
-                self.cite_irs_by_output[disam_str] = {}
-              end
-              self.cite_irs_by_output[disam_str][ir_.ir_index] = ir_
+      for _, ir_ in ipairs(ambiguous_same_output_irs) do
+        -- util.debug(ir_.cite_item.id)
+        local person_name_ir_ = ir_.person_name_irs[i]
+        if person_name_ir_ then
+          if person_name_ir_.disam_variants_index < #person_name_ir_.disam_variants then
+            person_name_ir_.disam_variants_index = person_name_ir_.disam_variants_index + 1
+            local disam_variant = person_name_ir_.disam_variants[person_name_ir_.disam_variants_index]
+            person_name_ir_.name_output = disam_variant
+            -- util.debug(disam_variant)
+            person_name_ir_.inlines = person_name_ir_.disam_inlines[disam_variant]
+            -- Update cite ir output
+            local inlines = ir_:flatten(disam_format)
+            local disam_str = disam_format:output(inlines)
+            ir_.disam_str = disam_str
+            if not self.cite_irs_by_output[disam_str] then
+              self.cite_irs_by_output[disam_str] = {}
             end
+            self.cite_irs_by_output[disam_str][ir_.ir_index] = ir_
           end
-        end
-
-        -- update ambiguous_cite_irs and ambiguous_same_output_irs
-        ambiguous_cite_irs = {}
-        ambiguous_same_output_irs = {}
-        for ir_index, ir_ in pairs(self.cite_irs_by_output[cite_ir.disam_str]) do
-          if ir_.cite_item.id ~= cite_ir.cite_item.id then
-            table.insert(ambiguous_cite_irs, ir_)
-          end
-          if ir_.disam_str == cite_ir.disam_str then
-            table.insert(ambiguous_same_output_irs, ir_)
-          end
-        end
-
-        if #ambiguous_cite_irs == 0 then
-          cite_ir.is_ambiguous = false
-          return cite_ir
         end
       end
+
+      -- update ambiguous_cite_irs and ambiguous_same_output_irs
+      ambiguous_cite_irs = {}
+      ambiguous_same_output_irs = {}
+      for ir_index, ir_ in pairs(self.cite_irs_by_output[cite_ir.disam_str]) do
+        -- util.debug(ir_.cite_item.id)
+        if ir_.cite_item.id ~= cite_ir.cite_item.id then
+          table.insert(ambiguous_cite_irs, ir_)
+        end
+        if ir_.disam_str == cite_ir.disam_str then
+          table.insert(ambiguous_same_output_irs, ir_)
+        end
+      end
+
+      -- util.debug(#ambiguous_cite_irs)
+
+      if #ambiguous_cite_irs == 0 then
+        cite_ir.is_ambiguous = false
+        return cite_ir
+      end
+
     end
   end
 
@@ -719,11 +732,12 @@ function CiteProc:disambiguate_add_names(cite_ir)
   local name_ir = find_first_name_ir(cite_ir)
   cite_ir.name_ir = name_ir
 
-  -- if name_ir then
-  --   util.debug(cite_ir.disam_str)
-  --   util.debug(cite_ir.name_ir.full_name_str)
-  --   util.debug(cite_ir.is_ambiguous)
-  -- end
+  if name_ir then
+    -- util.debug(cite_ir.cite_item.id)
+    -- util.debug(cite_ir.disam_str)
+    -- util.debug(cite_ir.name_ir.full_name_str)
+    -- util.debug(cite_ir.is_ambiguous)
+  end
 
   if not cite_ir.is_ambiguous then
     return cite_ir

@@ -197,6 +197,7 @@ end
 
 
 local Citation = Element:derive("citation", {
+  givenname_disambiguation_rule = "by-cite",
   cite_group_delimiter = ", ",
   near_note_distance = 5,
 })

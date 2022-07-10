@@ -6,7 +6,7 @@ collapse             4      17       0       0
 condition           17       0       0       0
 date                96       5       0       0
 decorations          7       0       0       0
-disambiguate        35      36       0       0
+disambiguate        39      32       0       0
 display              2       2       0       0
 etal                 4       0       0       0
 flipflop            17       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              688     136       2       0
+(all)              692     132       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -554,21 +554,11 @@ Passed in:
 Expected:
 (string) 'Asthma, Bosworth Bronchitis and C. Cold (1980); Asthma, Beauregarde Bronchitis and O. Cold (1995)'
 
-Failure → citeproc test test-suite disambiguate_AndreaEg1b.txt
+Failure → citeproc test test-suite disambiguate_AndreaEg1c.txt
 Passed in:
-(string) 'Smith, Brown &#38; Jones (1980); Smith, Brown &#38; Jones (1980)
-Smith, Brown &#38; Jones (1980); Smith, Benson, et al. (1980)
-Smith, Brown &#38; Jones (1980); Smith, Brown &#38; Jones (1980)'
-Expected:
 (string) 'Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; J. Jones (1980)
 Smith, Brown &#38; J. Jones (1980); Smith, Benson, et al. (1980)
 Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; A. Jones (1980)'
-
-Failure → citeproc test test-suite disambiguate_AndreaEg1c.txt
-Passed in:
-(string) 'Smith, Brown &#38; Jones (1980); Smith, Brown &#38; Jones (1980)
-Smith, Brown &#38; Jones (1980); Smith, Benson, et al. (1980)
-Smith, Brown &#38; Jones (1980); Smith, Brown &#38; Jones (1980)'
 Expected:
 (string) 'Smith et al. (1980); Smith et al. (1980)
 Smith et al. (1980); Smith et al. (1980)
@@ -594,21 +584,11 @@ Expected:
 Smith, Brown &#38; J. Jones (1980a); Smith, Benson, et al. (1980)
 Smith, Brown &#38; J. Jones (1980a); Smith, Brown &#38; A. Jones (1980)'
 
-Failure → citeproc test test-suite disambiguate_AndreaEg4.txt
+Failure → citeproc test test-suite disambiguate_AndreaEg5.txt
 Passed in:
-(string) 'Smith, Brown &#38; John Jones (1980); Smith, Brown &#38; John Jones (1980)
-Smith, Brown &#38; John Jones (1980); Smith, Benson, et al. (1980)
-Smith, Brown &#38; John Jones (1980); Smith, Brown &#38; A. Jones (1980)'
-Expected:
 (string) 'Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; J. Jones (1980)
 Smith, Brown &#38; J. Jones (1980); Smith, Benson, et al. (1980)
 Smith, Brown &#38; J. Jones (1980); Smith, Brown &#38; A. Jones (1980)'
-
-Failure → citeproc test test-suite disambiguate_AndreaEg5.txt
-Passed in:
-(string) 'Smith, Brown &#38; John Jones (1980); Smith, Brown &#38; John Jones (1980)
-Smith, Brown &#38; John Jones (1980); Smith, Benson, et al. (1980)
-Smith, Brown &#38; John Jones (1980); Smith, Brown &#38; A. Jones (1980)'
 Expected:
 (string) 'Smith, Brown &#38; J. Jones (1980a); Smith, Brown &#38; J. Jones (1980b)
 Smith, Brown &#38; J. Jones (1980a); Smith, Benson, et al. (1980)
@@ -791,22 +771,6 @@ Passed in:
 Expected:
 (string) '..[0] (Smith 1986a; Smith 1986b; Smith 1986c; Smith 1986d; Smith 1986e; Smith 1986f; Smith 1986g; Smith 1986h; Smith 1986i; Smith 1986j; Smith 1986k; Smith 1986l; Smith 1986m; Smith 1986n; Smith 1986o; Smith 1986p; Smith 1986q; Smith 1986r; Smith 1986s; Smith 1986t; Smith 1986u; Smith 1986v; Smith 1986w; Smith 1986x; Smith 1986y; Smith 1986z; Smith 1986aa; Smith 1986ab; Smith 1986ac; Smith 1986ad; Smith 1986ae; Smith 1986af; Smith 1986ag; Smith 1986ah; Smith 1986ai; Smith 1986aj; Smith 1986ak; Smith 1986al; Smith 1986am; Smith 1986an; Smith 1986ao; Smith 1986ap; Smith 1986aq; Smith 1986ar; Smith 1986as; Smith 1986at; Smith 1986au; Smith 1986av; Smith 1986aw; Smith 1986ax; Smith 1986ay)
 >>[1] (Smith 1986az)'
-
-Failure → citeproc test test-suite disambiguate_YearSuffixMacroSameYearExplicit.txt
-Passed in:
-(string) 'Smith 2001
-Smith 2001'
-Expected:
-(string) 'A Smith 2001
-B Smith 2001'
-
-Failure → citeproc test test-suite disambiguate_YearSuffixMacroSameYearImplicit.txt
-Passed in:
-(string) 'Smith 2001
-Smith 2001'
-Expected:
-(string) 'A Smith 2001
-B Smith 2001'
 
 Failure → citeproc test test-suite disambiguate_YearSuffixMidInsert.txt
 Passed in:
