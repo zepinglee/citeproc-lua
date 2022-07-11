@@ -8,6 +8,7 @@ local text_module = {}
 
 local Element = require("citeproc-element").Element
 local Rendered = require("citeproc-ir-node").Rendered
+local YearSuffix = require("citeproc-ir-node").YearSuffix
 local util = require("citeproc-util")
 
 
@@ -65,6 +66,11 @@ end
 function Text:build_variable_ir(engine, state, context)
   local variable = self.variable
   local text
+
+  if variable == "year-suffix" then
+    return YearSuffix:new(nil, self)
+  end
+
   if not state.suppressed[variable] then
     text = context:get_variable(variable, self.form)
   end

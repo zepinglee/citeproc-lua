@@ -12,7 +12,7 @@ etal                 4       0       0       0
 flipflop            17       0       0       0
 form                 3       0       0       0
 fullstyles           2       3       0       0
-group                6       1       0       0
+group                7       0       0       0
 integration         13       0       0       0
 label               17       2       0       0
 locale              23       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              711     113       2       0
+(all)              712     112       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -488,19 +488,19 @@ Expected:
 
 Failure → citeproc test test-suite date_YearSuffixImplicitWithNoDate.txt
 Passed in:
-(string) '(John Doe [Accessed:  June 1, 1965]; John Doe [Accessed:  June 1, 2065])'
+(string) '(John Doe n.d. [Accessed:  June 1, 1965]; John Doe n.d. [Accessed:  June 1, 2065])'
 Expected:
 (string) '(John Doe n.d.-a [Accessed: June 1, 1965]; John Doe n.d.-b [Accessed: June 1, 2065])'
 
 Failure → citeproc test test-suite date_YearSuffixImplicitWithNoDateOneOnly.txt
 Passed in:
-(string) '(John Doe [Accessed:  June 1, 1965])'
+(string) '(John Doe n.d. [Accessed:  June 1, 1965])'
 Expected:
 (string) '(John Doe n.d. [Accessed: June 1, 1965])'
 
 Failure → citeproc test test-suite date_YearSuffixWithNoDate.txt
 Passed in:
-(string) '(John Doe [Accessed:  June 1, 1965]; John Doe [Accessed:  June 1, 2065])'
+(string) '(John Doe n.d. [Accessed:  June 1, 1965]; John Doe n.d. [Accessed:  June 1, 2065])'
 Expected:
 (string) '(John Doe n.d.-a [Accessed: June 1, 1965]; John Doe n.d.-b [Accessed: June 1, 2065])'
 
@@ -791,16 +791,6 @@ Expected:
   <div class="csl-entry">Doe, John, Jane Roe, and Alvin Asthma. 1992. <i>Book C</i>.</div>
   <div class="csl-entry">Doe, John, Jane Roe, Alvin Asthma, Bob Bronchitis, Chris Cold, Don Dropsy, Ernie Enteritis, et al. 1993. <i>Book D</i>.</div>
   <div class="csl-entry">---. 1994. <i>Book E</i>.</div>
-</div>'
-
-Failure → citeproc test test-suite group_ComplexNesting.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe Inc.. Retrieved June 1, 1965, from http://example.com/</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe Inc. (n.d.). Retrieved June 1, 1965, from http://example.com/</div>
 </div>'
 
 Failure → citeproc test test-suite label_EditorTranslator1.txt
