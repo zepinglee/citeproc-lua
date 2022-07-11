@@ -991,6 +991,7 @@ function CiteProc:disambiguate_add_year_suffix(cite_ir)
     else
       year_suffix_number = year_suffix_number + 1
       ir_.reference.year_suffix_number = year_suffix_number
+      ir_.reference["year-suffix"] = self:render_year_suffix(year_suffix_number)
     end
 
     if not ir_.year_suffix_irs then
@@ -1008,9 +1009,7 @@ function CiteProc:disambiguate_add_year_suffix(cite_ir)
 
     for _, year_suffix_ir in ipairs(ir_.year_suffix_irs) do
       if not year_suffix_ir.inlines then
-        -- util.debug(year_suffix_number)
-        year_suffix_ir.inlines = self.style.citation:render_year_suffix(year_suffix_number)
-        -- year_suffix_ir.inlines = {PlainText:new("a")}
+        year_suffix_ir.inlines = {PlainText:new(ir_.reference["year-suffix"])}
       end
     end
 
@@ -1058,6 +1057,20 @@ function CiteProc:find_first_year_ir(ir)
     end
   end
   return nil
+end
+
+function CiteProc:render_year_suffix(year_suffix_number)
+  if year_suffix_number <= 0 then
+    return nil
+  end
+  local year_suffix = ""
+  while year_suffix_number > 0 do
+    local i = (year_suffix_number - 1) % 26
+    year_suffix = string.char(i + 97) .. year_suffix
+    year_suffix_number = (year_suffix_number - 1) // 26
+  end
+  -- util.debug(year_suffix)
+  return year_suffix
 end
 
 function CiteProc:makeCitationCluster(citation_items)
@@ -1157,8 +1170,12 @@ function CiteProc:makeBibliography()
 
     local ir = self.style.bibliography:build_ir(self, state, context)
     -- util.debug(ir)
+    ir.reference = context.reference
 
     -- subsequent_author_substitute
+
+    -- Add year-suffix
+    self:add_bibliography_year_suffix(ir)
 
     -- The layout output may be empty: sort_OmittedBibRefNonNumericStyle.txt
     if ir then
@@ -1177,6 +1194,35 @@ function CiteProc:get_sorted_refs()
     self:sort_bibliography()
   end
   return self.registry.reflist
+end
+
+function CiteProc:add_bibliography_year_suffix(ir)
+  if not ir.reference.year_suffix_number then
+    return
+  end
+
+  local year_suffix_number = ir.reference.year_suffix_number
+
+  if not ir.year_suffix_irs then
+    ir.year_suffix_irs = self:collect_year_suffix_irs(ir)
+    if #ir.year_suffix_irs == 0 then
+      local year_ir = self:find_first_year_ir(ir)
+      -- util.debug(year_ir)
+      if year_ir then
+        local year_suffix_ir = YearSuffix:new(nil, self.style.citation)
+        table.insert(year_ir.children, year_suffix_ir)
+        table.insert(ir.year_suffix_irs, year_suffix_ir)
+      end
+    end
+  end
+
+  for _, year_suffix_ir in ipairs(ir.year_suffix_irs) do
+    if not year_suffix_ir.inlines then
+      year_suffix_ir.inlines = {PlainText:new(ir.reference["year-suffix"])}
+    end
+  end
+
+
 end
 
 function CiteProc:set_formatter(format)

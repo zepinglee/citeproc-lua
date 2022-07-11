@@ -67,7 +67,7 @@ function Text:build_variable_ir(engine, state, context)
   local variable = self.variable
   local text
 
-  if variable == "year-suffix" then
+  if variable == "year-suffix" and not context.bibliography then
     return YearSuffix:new(nil, self)
   end
 
@@ -97,7 +97,12 @@ function Text:build_variable_ir(engine, state, context)
   end
   -- util.debug(text)
   local inlines = self:render_text_inlines(text, context)
-  local ir = Rendered:new(inlines, self)
+  local ir
+  if variable == "year-suffix" then
+    ir = YearSuffix:new(inlines, self)
+  else
+    ir = Rendered:new(inlines, self)
+  end
   ir.group_var = "important"
 
   -- Suppress substituted name variable
