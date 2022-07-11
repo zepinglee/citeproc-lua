@@ -441,6 +441,38 @@ function OutputFormat:new(format_name)
   return o
 end
 
+function OutputFormat:flatten_ir(ir)
+  if self.group_var == "missing" then
+    return {}
+  end
+  local inlines
+  if ir._type == "SeqIr" or ir._type == "NameIr" then
+    inlines = self:flatten_seq_ir(ir)
+  else
+    inlines = self:affixed_quoted(ir.inlines, ir.affixes, ir.quotes);
+    inlines = self:with_display(inlines, ir.display);
+  end
+  return inlines
+end
+
+function OutputFormat:flatten_seq_ir(ir)
+  local inlines_list = {}
+  if not ir.children then
+    print(debug.traceback())
+  end
+  for _, child in ipairs(ir.children) do
+    if child.group_var ~= "missing" then
+      table.insert(inlines_list, self:flatten_ir(child))
+    end
+  end
+
+  local inlines = self:group(inlines_list, ir.delimiter, ir.formatting)
+  -- assert ir.quotes == localized quotes
+  inlines = self:affixed_quoted(inlines, ir.affixes, ir.quotes);
+  inlines = self:with_display(inlines, ir.display);
+  return inlines
+end
+
 function OutputFormat:group(inlines_list, delimiter, formatting)
   -- Each node is list of InlineElements
   if #inlines_list == 1 then
@@ -1093,13 +1125,39 @@ local SortStringFormat = OutputFormat:new()
 
 function SortStringFormat:output(inlines)
   -- self:flip_flop_inlines(inlines)
-  self:move_punctuation(inlines)
+  -- self:move_punctuation(inlines)
   return self:write_inlines(inlines)
 end
 
 function SortStringFormat:write_escaped(str)
   str = string.gsub(str, ",", "")
   return str
+end
+
+
+local DisamStringFormat = OutputFormat:new()
+
+function DisamStringFormat:output(inlines)
+  -- self:flip_flop_inlines(inlines)
+  -- self:move_punctuation(inlines)
+  return self:write_inlines(inlines)
+end
+
+function DisamStringFormat:flatten_ir(ir)
+  if self.group_var == "missing" then
+    return {}
+  end
+  local inlines
+  if ir._type == "SeqIr" or ir._type == "NameIr" then
+    inlines = self:flatten_seq_ir(ir)
+  elseif ir._type == "YearSuffix" then
+    -- Don't include year-suffix in disambiguation
+    inlines = {}
+  else
+    inlines = self:affixed_quoted(ir.inlines, ir.affixes, ir.quotes);
+    inlines = self:with_display(inlines, ir.display);
+  end
+  return inlines
 end
 
 
@@ -1176,7 +1234,7 @@ output_module.OutputFormat = OutputFormat
 output_module.Markup = Markup
 output_module.HtmlWriter = HtmlWriter
 output_module.PlainTextWriter = PlainTextWriter
-
+output_module.DisamStringFormat = DisamStringFormat
 output_module.SortStringFormat = SortStringFormat
 
 return output_module

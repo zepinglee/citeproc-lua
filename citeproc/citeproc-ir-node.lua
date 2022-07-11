@@ -62,39 +62,7 @@ function IrNode:derive(type)
 end
 
 function IrNode:flatten(format)
-  if self.group_var == "missing" then
-    return {}
-  end
-  local inlines
-  if self._type == "SeqIr" or self._type == "NameIr" then
-    inlines = self:flatten_seq(format)
-  else
-    inlines = format:affixed_quoted(self.inlines, self.affixes, self.quotes);
-    inlines = format:with_display(inlines, self.display);
-  end
-  return inlines
-end
-
-function IrNode:flatten_seq(format)
-  local inlines_list = {}
-  if not self.children then
-    print(debug.traceback())
-  end
-  for _, child in ipairs(self.children) do
-    if child.group_var ~= "missing" then
-      if not child.flatten then
-        print(debug.traceback())
-        util.debug(child)
-      end
-      table.insert(inlines_list, child:flatten(format))
-    end
-  end
-
-  local inlines = format:group(inlines_list, self.delimiter, self.formatting)
-  -- assert self.quotes == localized quotes
-  inlines = format:affixed_quoted(inlines, self.affixes, self.quotes);
-  inlines = format:with_display(inlines, self.display);
-  return inlines
+  return format:flatten_ir(self)
 end
 
 function IrNode:capitalize_first_term()

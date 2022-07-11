@@ -157,7 +157,6 @@ local function test_bibliography(engine, fixture)
     pending("bibsection")
   end
 
-  -- engine:updateItems(items)
   if fixture.citations then
     test_citations(engine, fixture)
   else

@@ -6,7 +6,7 @@ collapse             4      17       0       0
 condition           17       0       0       0
 date                96       5       0       0
 decorations          7       0       0       0
-disambiguate        52      19       0       0
+disambiguate        53      18       0       0
 display              2       2       0       0
 etal                 4       0       0       0
 flipflop            17       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              710     114       2       0
+(all)              711     113       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -212,8 +212,8 @@ Expected:
 Failure → citeproc test test-suite bugreports_MatchedAuthorAndDate.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brown, J. 2006, August. <i><b>Tijdschrift voor praktijkondersteuning</b></i>. http://dx.doi.org/10.1007/bf03074904.</div>
-  <div class="csl-entry">Brown, J. 2006, August. <i><b>Huisarts en Wetenschap</b></i>. http://dx.doi.org/10.1007/bf03084836.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <b><i>Tijdschrift voor praktijkondersteuning</i></b>. http://dx.doi.org/10.1007/bf03074904.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <b><i>Huisarts en Wetenschap</i></b>. http://dx.doi.org/10.1007/bf03084836.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -503,16 +503,6 @@ Passed in:
 (string) '(John Doe [Accessed:  June 1, 1965]; John Doe [Accessed:  June 1, 2065])'
 Expected:
 (string) '(John Doe n.d.-a [Accessed: June 1, 1965]; John Doe n.d.-b [Accessed: June 1, 2065])'
-
-Failure → citeproc test test-suite disambiguate_AndreaEg3.txt
-Passed in:
-(string) 'Smith, Brown &#38; Jones (1980a); Smith, Brown &#38; Jones (1980b)
-Smith, Brown &#38; Jones (1980a); Smith, Benson, et al. (1980)
-Smith, Brown &#38; J. Jones (1980a); Smith, Brown &#38; A. Jones (1980)'
-Expected:
-(string) 'Smith, Brown &#38; J. Jones (1980a); Smith, Brown &#38; J. Jones (1980b)
-Smith, Brown &#38; J. Jones (1980a); Smith, Benson, et al. (1980)
-Smith, Brown &#38; J. Jones (1980a); Smith, Brown &#38; A. Jones (1980)'
 
 Failure → citeproc test test-suite disambiguate_BasedOnEtAlSubsequent.txt
 Passed in:
