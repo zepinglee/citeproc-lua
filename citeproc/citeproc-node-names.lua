@@ -150,7 +150,7 @@ function Names:build_ir(engine, state, context)
 
   if names_inheritance.name.form == "count" then
     if num_names > 0 then
-      local ir = Rendered:new({PlainText:new(tostring(num_names))})
+      local ir = Rendered:new({PlainText:new(tostring(num_names))}, self)
       ir.name_count = num_names
       ir.group_var = "important"
       -- util.debug(ir)
@@ -180,7 +180,7 @@ function Names:build_ir(engine, state, context)
     state.name_override = nil
   end
 
-  local ir = Rendered:new()
+  local ir = Rendered:new({}, self)
   ir.group_var = "missing"
   ir.name_count = 0
   return ir
@@ -349,7 +349,7 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     else
       count = #names
     end
-    local ir = Rendered:new({PlainText:new(tostring(count))})
+    local ir = Rendered:new({PlainText:new(tostring(count))}, {})
     ir.name_count = count
     ir.group_var = "important"
     return ir
@@ -392,14 +392,14 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     and_term = "&"
   end
   if and_term then
-    and_term_ir = Rendered:new({PlainText:new(and_term .. " ")})
+    and_term_ir = Rendered:new({PlainText:new(and_term .. " ")}, {})
   end
 
   local et_al_ir
   if et_al and et_al_abbreviation and not use_last then
     local et_al_inlines = et_al:render_term(context)
     if #et_al_inlines > 0 then
-      et_al_ir = Rendered:new(et_al_inlines)
+      et_al_ir = Rendered:new(et_al_inlines, {})
     end
   end
 
@@ -437,7 +437,7 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     local label_term = context.locale:get_simple_term(variable, label.form, is_plural)
     if label_term and label_term ~= "" then
       local inlines = label:render_text_inlines(label_term, context)
-      local label_ir = Rendered:new(inlines)
+      local label_ir = Rendered:new(inlines, {})
       if label.after_name then
         table.insert(irs, label_ir)
       else
@@ -462,7 +462,7 @@ function Name:build_person_name_ir(name, is_first, context)
     (self.name_as_sort_order == "all" or (self.name_as_sort_order == "first" and is_first)))
 
   local inlines = self:render_person_name(name, is_first, is_latin, is_inverted, context)
-  local person_name_ir = PersonNameIr:new(inlines)
+  local person_name_ir = PersonNameIr:new(inlines, self)
 
   person_name_ir.is_inverted = is_inverted
 
@@ -916,7 +916,7 @@ function Name:join_person_name_irs(rendered_name_irs, and_term_ir, et_al_ir, use
 
   for i, person_name_ir in ipairs(first_items) do
     if i > 1 then
-      table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
+      table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}, self))
     end
     table.insert(irs, person_name_ir)
   end
@@ -924,16 +924,16 @@ function Name:join_person_name_irs(rendered_name_irs, and_term_ir, et_al_ir, use
   if last_item then
     if use_last then
       local delimiter = self.delimiter .. util.unicode["horizontal ellipsis"] .. " "
-      table.insert(irs, Rendered:new({PlainText:new(delimiter)}))
+      table.insert(irs, Rendered:new({PlainText:new(delimiter)}, self))
       table.insert(irs, last_item)
     elseif et_al_ir then
       if #first_items > 0 then
         local inverted = first_items[#first_items].is_inverted
         local use_delimiter = self:_check_delimiter(self.delimiter_precedes_et_al, #first_items, inverted)
         if use_delimiter then
-          table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
+          table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}, self))
         else
-          table.insert(irs, Rendered:new({PlainText:new(" ")}))
+          table.insert(irs, Rendered:new({PlainText:new(" ")}, self))
         end
         table.insert(irs, last_item)
       end
@@ -941,9 +941,9 @@ function Name:join_person_name_irs(rendered_name_irs, and_term_ir, et_al_ir, use
       local inverted = first_items[#first_items].is_inverted
       local use_delimiter = self:_check_delimiter(self.delimiter_precedes_last, #first_items, inverted)
       if use_delimiter or not and_term_ir then
-        table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}))
+        table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}, self))
       else
-        table.insert(irs, Rendered:new({PlainText:new(" ")}))
+        table.insert(irs, Rendered:new({PlainText:new(" ")}, self))
       end
       if and_term_ir and not et_al_ir then
         table.insert(irs, and_term_ir)

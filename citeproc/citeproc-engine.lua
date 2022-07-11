@@ -321,19 +321,19 @@ function CiteProc:build_cluster(citation_items)
 
   -- Capitalize first
   for i, ir in ipairs(irs) do
-    if i == 1 then
       -- local layout_prefix
       -- local layout_affixes = self.style.citation.layout.affixes
       -- if layout_affixes then
       --   layout_prefix = layout_affixes.prefix
       -- end
-      local prefix = citation_items[i].prefix
-      if not prefix or (string.match(prefix, "[.!?]%s*$") and #util.split(util.strip(prefix)) > 1) then
+    local prefix = citation_items[i].prefix
+    if prefix then
+      if prefix and string.match(prefix, "[.!?]%s*$") and #util.split(util.strip(prefix)) > 1 then
         ir:capitalize_first_term()
       end
     else
       local delimiter = self.style.citation.layout.delimiter
-      if not delimiter or string.match(delimiter, "[.!?]%s*$") then
+      if i == 1 or not delimiter or string.match(delimiter, "[.!?]%s*$") then
         ir:capitalize_first_term()
       end
     end
@@ -448,6 +448,7 @@ function CiteProc:build_ambiguous_ir(cite_item, output_format)
   context.reference = self:get_item(cite_item.id)
 
   local ir = self.style.citation:build_ir(self, state, context)
+  -- util.debug(ir)
 
   ir.cite_item = cite_item
   ir.reference = context.reference
@@ -932,6 +933,12 @@ function CiteProc:check_ambiguity(cite_ir)
 end
 
 function CiteProc:disambiguate_add_year_suffix(cite_ir)
+  if not cite_ir.is_ambiguous then
+    return cite_ir
+  end
+
+  -- util.debug(cite_ir)
+
   return cite_ir
 end
 

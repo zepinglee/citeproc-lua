@@ -69,7 +69,7 @@ function Text:build_variable_ir(engine, state, context)
     text = context:get_variable(variable, self.form)
   end
   if not text then
-    local ir = Rendered:new()
+    local ir = Rendered:new({}, self)
     ir.group_var = "missing"
     return ir
   end

@@ -1,16 +1,26 @@
 import glob
-from collections import Counter
 import os
 import re
-from telnetlib import theNULL
-from unicodedata import name
 import xml.etree.ElementTree as ET
 
-failed_fixtures = []
+skip_tags = [
+]
+skip_attrs = [
+    'cite-group-delimiter',
+    'collapse',
+    # 'disambiguate-add-year-suffix',
+    'subsequent-author-substitute',
+    'subsequent-author-substitute-rule',
+]
+skip_attr_values = [
+    'citation-label',
+]
 skipped_fixtures = [
     'disambiguate_BasedOnSubsequentFormWithBackref2.txt',
+    'bugreports_EnvAndUrb.txt',
 ]
 
+failed_fixtures = []
 with open('./test/citeproc-test.log') as f:
     for line in f:
         if line.startswith('Failure → citeproc test test-suite') or \
@@ -48,12 +58,15 @@ for path in paths:
     root = ET.fromstring(xml)
     tags = set()
     attrs = set()
+    attr_values = set()
 
     for el in root.iter():
         tag = el.tag.split("}")[1]
         tags.add(tag)
-        for attr in el.attrib.keys():
+        for attr, value in el.attrib.items():
             attrs.add(attr)
+            for value_var in value.split():
+                attr_values.add(value_var)
 
     # root = root.getroot()
     count = len(tags)
@@ -63,24 +76,19 @@ for path in paths:
         'count': count,
         'tags': tags,
         'attrs': attrs,
+        'attr_values': attr_values,
     }
     fixtures.append(fixture)
 
-skip_tags = [
-]
-skip_attrs = [
-    'cite-group-delimiter',
-    'collapse',
-    'disambiguate-add-year-suffix',
-    'subsequent-author-substitute',
-    'subsequent-author-substitute-rule',
-]
 def skip_fixture(fixture):
     for tag in skip_tags:
         if tag in fixture['tags']:
             return True
     for attr in skip_attrs:
         if attr in fixture['attrs']:
+            return True
+    for value in skip_attr_values:
+        if value in fixture['attr_values']:
             return True
     return False
 

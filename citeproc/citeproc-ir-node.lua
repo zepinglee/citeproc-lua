@@ -10,9 +10,9 @@ local util = require("citeproc-util")
 
 
 local IrNode = {
+  _element = nil,
   _type = "IrNode",
   _base_class = "IrNode",
-  element_name = nil,
   text = nil,
   formatting = nil,
   affixes = nil,
@@ -22,12 +22,22 @@ local IrNode = {
 
 function IrNode:new(children, element)
   local o = {
+    _element = element.element_name,
     _type = self._type,
     children = children,
     group_var = "plain",
-    -- element = element,
-    _element = element.element_name,
   }
+
+  o.group_var = "missing"
+  for _, child_ir in ipairs(children) do
+    if child_ir.group_var == "important" then
+      o.group_var = "important"
+      break
+    elseif child_ir.group_var == "plain" then
+      o.group_var = "plain"
+    end
+  end
+
   o.person_name_irs = {}
   if children then
     for _, child in ipairs(children) do
@@ -36,6 +46,7 @@ function IrNode:new(children, element)
       end
     end
   end
+
   setmetatable(o, self)
   self.__index = self
   return o
@@ -71,6 +82,10 @@ function IrNode:flatten_seq(format)
   end
   for _, child in ipairs(self.children) do
     if child.group_var ~= "missing" then
+      if not child.flatten then
+        print(debug.traceback())
+        util.debug(child)
+      end
       table.insert(inlines_list, child:flatten(format))
     end
   end
@@ -97,11 +112,13 @@ local Rendered = IrNode:derive("Rendered")
 
 function Rendered:new(inlines, element)
   local o = {
+    _element = element.element_name,
     _type = self._type,
+    element = element,  -- required for capitalizing first term
     inlines = inlines,
-    element = element,
     group_var = "plain",
   }
+
   setmetatable(o, self)
   self.__index = self
   return o
@@ -114,9 +131,9 @@ local PersonNameIr = IrNode:derive("PersonNameIr")
 
 function PersonNameIr:new(inlines, element)
   local o = {
+    _element = element.element_name,
     _type = self._type,
     inlines = inlines,
-    element = element,
     group_var = "plain",
   }
   setmetatable(o, self)

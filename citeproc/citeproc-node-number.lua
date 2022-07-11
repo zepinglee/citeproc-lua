@@ -42,7 +42,7 @@ function Number:build_ir(engine, state, context)
     number = context:get_variable(self.variable, self.form)
   end
   if not number then
-    local ir = Rendered:new()
+    local ir = Rendered:new({}, self)
     ir.group_var = "missing"
     return ir
   end
