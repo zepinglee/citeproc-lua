@@ -35,11 +35,11 @@ function Choose:build_ir(engine, state, context)
   end
 
   if not branch_ir then
-    branch_ir = SeqIr:new({})
+    branch_ir = SeqIr:new({}, self)
     branch_ir.group_var = "missing"
   end
 
-  local ir = SeqIr:new({branch_ir})
+  local ir = SeqIr:new({branch_ir}, self)
   ir.group_var = branch_ir.group_var
   ir.name_count = branch_ir.name_count
   ir.sort_key = branch_ir.sort_key
@@ -166,7 +166,7 @@ function If:build_children_ir(engine, state, context)
     group_var = "missing"
   end
 
-  local ir = SeqIr:new(irs)
+  local ir = SeqIr:new(irs, self)
   ir.name_count = name_count
   ir.sort_key = ir_sort_key
   ir.group_var = group_var

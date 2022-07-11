@@ -1031,6 +1031,7 @@ function CiteProc:makeBibliography()
     context.reference = self:get_item(id)
 
     local ir = self.style.bibliography:build_ir(self, state, context)
+    -- util.debug(ir)
 
     -- subsequent_author_substitute
 

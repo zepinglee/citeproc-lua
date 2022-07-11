@@ -1,86 +1,64 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
-bugreports          32      49       1       0
-collapse             3      18       0       0
+bugreports          52      30       0       0
+collapse             4      17       0       0
 condition           17       0       0       0
-date                94       7       0       0
+date                96       5       0       0
 decorations          7       0       0       0
-disambiguate        42      29       0       0
+disambiguate        45      26       0       0
 display              2       2       0       0
-etal                 3       1       0       0
-flipflop            16       1       0       0
+etal                 4       0       0       0
+flipflop            17       0       0       0
 form                 3       0       0       0
-fullstyles           0       5       0       0
-group                4       3       0       0
+fullstyles           2       3       0       0
+group                6       1       0       0
 integration         12       1       0       0
 label               17       2       0       0
 locale              23       0       0       0
 locator              5       0       0       0
 magic               33       6       1       0
-name                95       9       1       0
+name                97       7       1       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
-number              17       1       0       0
+number              18       0       0       0
 page                 9       0       0       0
 plural               7       0       0       0
 position            14       0       0       0
 punctuation          9       7       0       0
-quotes               2       2       0       0
+quotes               4       0       0       0
 simplespace          0       1       0       0
-sort                40      16       0       0
+sort                45      11       0       0
 sortseparator        1       0       0       0
-substitute           5       2       0       0
-testers              0       2       0       0
+substitute           6       1       0       0
+testers              2       0       0       0
 textcase            26       1       0       0
 unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              655     168       3       0
+(all)              700     124       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
-(string) '..[0] John Smith , <i>Book C</i> , , ,  , , , 2000 , , : , , and David Jones , <i>Book D</i> , , ,  , , , 2000 , , : , .
-..[1] Smith , <i>Book C</i>,  is one source,; Jones , <i>Book D</i>,  is another.
->>[2] Smith , <i>Book C</i>, 23 is one source,; Jones , <i>Book D</i>,  is another.'
+(string) '..[0] John Smith, <i>Book C</i>, 2000, and David Jones, <i>Book D</i>, 2000.
+..[1] Smith, <i>Book C</i> is one source,; Jones, <i>Book D</i> is another.
+>>[2] Smith, <i>Book C</i>, 23 is one source,; Jones, <i>Book D</i> is another.'
 Expected:
 (string) '..[0] John Smith, <i>Book C</i>, 2000, and David Jones, <i>Book D</i>, 2000.
 ..[1] Smith, <i>Book C</i> is one source, Jones, <i>Book D</i> is another.
 >>[2] Smith, <i>Book C</i>, 23 is one source, Jones, <i>Book D</i> is another.'
 
-Failure → citeproc test test-suite bugreports_AccidentalAllCaps.txt
-Passed in:
-(string) 'J. Doe, <i>His Anonymous Life</i>, , , , , 1965.'
-Expected:
-(string) 'J. Doe, <i>His Anonymous Life</i>, , 1965.'
-
-Failure → citeproc test test-suite bugreports_AllCapsLeakage.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><span style="font-variant:small-caps;">Doe</span> John, « His Anonymous Life », , <i>in</i> Jane Roe, (éd.). <i>His Anonymous Life</i>, , , 1 juin 1965, ,  .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><span style="font-variant:small-caps;">Doe</span> John, « His Anonymous Life », <i>in</i> Jane Roe, (éd.). <i>His Anonymous Life</i>, 1 juin 1965.</div>
-</div>'
-
 Failure → citeproc test test-suite bugreports_AuthorPosition.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">A00, A., A01, B., A02, C., A03, D., A04, E., A05, F., … A50, K.  (2010). Modelling the Species Distribution of Flat-Headed Cats (<i>Prionailurus planiceps</i>), an Endangered South-East Asian Small Felid. <i>PLoS ONE</i>, <i>5</i>(3), e9612. , . doi:10.1371/journal.pone.0009612 </div>
+  <div class="csl-entry">A00, A., A01, B., A02, C., A03, D., A04, E., A05, F., … A50, K.  (2010). Modelling the Species Distribution of Flat-Headed Cats (<i>Prionailurus planiceps</i>), an Endangered South-East Asian Small Felid. <i>PLoS ONE</i>, <i>5</i>(3), e9612. doi:10.1371/journal.pone.0009612</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">A00, A., A01, B., A02, C., A03, D., A04, E., A05, F., … A50, K. (2010). Modelling the Species Distribution of Flat-Headed Cats (<i>Prionailurus planiceps</i>), an Endangered South-East Asian Small Felid. <i>PLoS ONE</i>, <i>5</i>(3), e9612. doi:10.1371/journal.pone.0009612</div>
 </div>'
-
-Failure → citeproc test test-suite bugreports_AuthorYear.txt
-Passed in:
-(string) '(Family01, 2003, )'
-Expected:
-(string) '(Family01, 2003)'
 
 Failure → citeproc test test-suite bugreports_AutomaticallyDeleteItemsFails.txt
 Passed in:
@@ -122,7 +100,7 @@ Expected:
 Failure → citeproc test test-suite bugreports_ByBy.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">. . n.d. Review of <i>My Title</i>, by Beaver Burtle. . , , . . . .</div>
+  <div class="csl-entry">Review of <i>My Title</i>, by Burtle, Beaver. n.d.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -131,7 +109,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_ChicagoAuthorDateLooping.txt
 Passed in:
-(string) '(Manstein 1982, ; Anon. , ; Anon. , )'
+(string) '(Manstein 1982; Anon.; Anon.)'
 Expected:
 (string) '(Anon.; Anon.; Manstein 1982)'
 
@@ -149,7 +127,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_DemoPageFullCiteCruftOnSubsequent.txt
 Passed in:
-(string) 'Nolan J. Malone, U.S. Bureau of the Census, <i>Evaluating Components of International Migration: Consistency of 2000 Nativity Data</i>, , , , , ,  (, New York: Routledge, 2001), , .'
+(string) 'Nolan J. Malone, U.S. Bureau of the Census, <i>Evaluating Components of International Migration: Consistency of 2000 Nativity Data</i> (New York: Routledge, 2001).'
 Expected:
 (string) 'Malone and U.S. Bureau of the Census, <i>Evaluating Components of International Migration: Consistency of 2000 Nativity Data</i>.'
 
@@ -162,20 +140,14 @@ Expected:
 Failure → citeproc test test-suite bugreports_DisambiguationAddNamesBibliography.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Roe, J., Doe, J. and Smith, J.: , , , . , 1995.</div>
-  <div class="csl-entry">Roe, J., Noakes, R. and Brown, B.: , , , . , 1995.</div>
+  <div class="csl-entry">Roe, J., Doe, J. and Smith, J.:, 1995.</div>
+  <div class="csl-entry">Roe, J., Noakes, R. and Brown, B.:, 1995.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Roe, J., Doe, J. and Smith, J.:, 1995a.</div>
   <div class="csl-entry">Roe, J., Noakes, R. and Brown, B.:, 1995b.</div>
 </div>'
-
-Failure → citeproc test test-suite bugreports_DoubleEncodedAngleBraces.txt
-Passed in:
-(string) '<span style="font-variant:small-caps;">Center for History and New Media</span>, « Zotero Quick Start Guide », , , , s.d., , , [En ligne]. &#60;http://zotero.org/support/quick_start_guide&#62;. .'
-Expected:
-(string) '<span style="font-variant:small-caps;">Center for History and New Media</span>, « Zotero Quick Start Guide », s.d., [En ligne]. &#60;http://zotero.org/support/quick_start_guide&#62;. .'
 
 Failure → citeproc test test-suite bugreports_DuplicateSpaces.txt
 Passed in:
@@ -194,7 +166,7 @@ Expected:
 Failure → citeproc test test-suite bugreports_DuplicateSpaces2.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Smith, John, “Some Title” .  <i>Container Title</i> .</div>
+  <div class="csl-entry">Smith, John, “Some Title.”  <i>Container Title</i>.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -204,21 +176,11 @@ Expected:
 Failure → citeproc test test-suite bugreports_DuplicateSpaces3.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">1. Family Name N. The Title. In:  <i>Container Title</i>.  . .</div>
+  <div class="csl-entry">1. Family Name N. The Title. In:  <i>Container Title</i>.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">1. Family Name N. The Title. In: <i>Container Title</i>.</div>
-</div>'
-
-Failure → citeproc test test-suite bugreports_DuplicateTerminalPunctuationInBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">D’Arcus, Bruce. 2006. <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>.  . New York: Routledge http://www.test01.com.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">D’Arcus, Bruce. 2006. <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>. New York: Routledge http://www.test01.com.</div>
 </div>'
 
 Failure → citeproc test test-suite bugreports_EnvAndUrb.txt
@@ -230,26 +192,6 @@ Expected:
 (string) '>>[0] Baines, T S, O Benedettini and J M Kay, ‘Title One’; Baines, T S, F Gump and J M Kay, ‘Title Two’.
 ..[1] See reference 1, Baines et al.
 >>[2] See reference 1, Baines et al.'
-
-Failure → citeproc test test-suite bugreports_FourAndFour.txt
-Passed in:
-(string) 'Anne Tyler, George Smith, John Brown, and Cat Garfield, <i>Ladder of his’ Years</i>, , , , , vol. 2003, ,  (, New York: Ivy Books, 1997), , .
-Anne Tyler, George Smith, John Brown, and Cat Felix, <i>Ladder of his’ Years</i>, , , , , vol. 2003, ,  (, New York: Ivy Books, 1997), , .'
-Expected:
-(string) 'Anne Tyler, George Smith, John Brown, and Cat Garfield, <i>Ladder of his’ Years</i>, vol. 2003 (New York: Ivy Books, 1997).
-Anne Tyler, George Smith, John Brown, and Cat Felix, <i>Ladder of his’ Years</i>, vol. 2003 (New York: Ivy Books, 1997).'
-
-Failure → citeproc test test-suite bugreports_GreekStyleProblems.txt
-Passed in:
-(string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», , , στο: Κώστας Καρυωτάκης, <i>Ποιήματα και πεζά</i>, μτφ. Andreas Dimitriadis, επιμ. Γ. Π. Σαββίδης, , , 1998, , σ .'
-Expected:
-(string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Κώστας Καρυωτάκης, <i>Ποιήματα και πεζά</i>, μτφ. Andreas Dimitriadis, επιμ. Γ. Π. Σαββίδης, 1998.'
-
-Failure → citeproc test test-suite bugreports_GreekStyleTwoEditors.txt
-Passed in:
-(string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», , , στο: Γ. Π. Σαββίδης και Κώστας Καρυωτάκης (επιμ.), <i>Ποιήματα και πεζά</i>, μτφ. Andreas Dimitriadis, , , 1998, , σ .'
-Expected:
-(string) 'Τέλλος Άγρας, «Ο Καρυωτάκης και οι Σάτιρες», στο: Γ. Π. Σαββίδης και Κώστας Καρυωτάκης (επιμ.), <i>Ποιήματα και πεζά</i>, μτφ. Andreas Dimitriadis, 1998.'
 
 Failure → citeproc test test-suite bugreports_IeeePunctuation.txt
 Passed in:
@@ -268,7 +210,7 @@ Expected:
 Failure → citeproc test test-suite bugreports_LabelsOutOfPlace.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Jones, Colin.  . <i>Bourgeois Revolution Revivified: 1789 and Social Change</i>. .  Edited by Colin Lucas. , , . . . Oxford: Clarendon Press, 1991, . .</div>
+  <div class="csl-entry">Jones, Colin. <i>Bourgeois Revolution Revivified: 1789 and Social Change</i>.  Edited by Colin Lucas. Oxford: Clarendon Press, 1991.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -278,8 +220,8 @@ Expected:
 Failure → citeproc test test-suite bugreports_MatchedAuthorAndDate.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brown, J. 2006, August. . <i><b>Tijdschrift voor praktijkondersteuning</b></i>. , . http://dx.doi.org/10.1007/bf03074904.</div>
-  <div class="csl-entry">Brown, J. 2006, August. . <i><b>Huisarts en Wetenschap</b></i>. , . http://dx.doi.org/10.1007/bf03084836.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <b><i>Tijdschrift voor praktijkondersteuning</i></b>. http://dx.doi.org/10.1007/bf03074904.</div>
+  <div class="csl-entry">Brown, J. 2006, August. <b><i>Huisarts en Wetenschap</i></b>. http://dx.doi.org/10.1007/bf03084836.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -289,7 +231,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_MovePunctuationInsideQuotesForLocator.txt
 Passed in:
-(string) 'Jennifer J. Davis, “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830,” , , , ,  (Ph.D. diss. , Pennsylvania State University, History, 2004), , “gargoyle,” .'
+(string) 'Jennifer J. Davis, “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830” (Ph.D. diss., Pennsylvania State University, History, 2004), “gargoyle.”'
 Expected:
 (string) 'Jennifer J. Davis, “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830” (Ph.D. diss., Pennsylvania State University, History, 2004), s.v. “gargoyle.”'
 
@@ -300,14 +242,14 @@ Passed in:
 
     <div class="csl-block">Aalto, Alan</div>
 
-    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">““PIAAC-Longitudinal (PIAAC-L) 2015.”” . . . . . . , . </div>
-    .</div>
+    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">““PIAAC-Longitudinal (PIAAC-L) 2015.””</div>
+  </div>
   <div class="csl-entry">
 
     <div class="csl-block">Aalto, Alan</div>
 
-    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">“PIAAC-Longitudinal (PIAAC-Lx) 2015.” . . . . . . , . </div>
-    .</div>
+    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">“PIAAC-Longitudinal (PIAAC-Lx) 2015.”</div>
+  </div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -322,22 +264,10 @@ Expected:
   </div>
 </div>'
 
-Failure → citeproc test test-suite bugreports_NoTitle.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">ecs. (n.d.). . . , . </div>
-  <div class="csl-entry">Family01, G. (n.d.). XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX. . , . </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">ecs. (n.d.). .</div>
-  <div class="csl-entry">Family01, G. (n.d.). XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.</div>
-</div>'
-
 Failure → citeproc test test-suite bugreports_OldMhraDisambiguationFailure.txt
 Passed in:
-(string) '..[0] John Doe, <i>Book A</i>, , , , , 2000, , ; John Doe, <i>Book B</i>, , , , , 2000, , .
->>[1] Doe, Book A, ; Doe, Book B, .'
+(string) '..[0] John Doe, <i>Book A</i>, 2000; John Doe, <i>Book B</i>, 2000.
+>>[1] Doe, Book A; Doe, Book B.'
 Expected:
 (string) '>>[0] John Doe, <i>Book A</i>, 2000; John Doe, <i>Book B</i>, 2000.
 >>[1] Doe, Book A; Doe, Book B.'
@@ -352,17 +282,11 @@ Expected:
 (Philpott, Perfecto, et al. 2008<i>a</i>)
 (Philpott, Perfecto, et al. 2008<i>b</i>)'
 
-Failure → citeproc test test-suite bugreports_SelfLink.txt
-Passed in:
-(string) '[O A. <i>Book Title</i>, , ]'
-Expected:
-(string) '[O A. <i>Book Title</i>]'
-
 Failure → citeproc test test-suite bugreports_SingleQuote.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> , “production d ' eau glacée à condensation à eau avec récupération de chaleur . Modélisation simplifiée dans l ’ optique d ’ un calcul des consommations d ’ énergie d ’ une insta,” .</div>
+    <div class="csl-left-margin">[1]</div><div class="csl-right-inline">“production d ' eau glacée à condensation à eau avec récupération de chaleur . Modélisation simplifiée dans l ’ optique d ’ un calcul des consommations d ’ énergie d ’ une insta.”</div>
   </div>
 </div>'
 Expected:
@@ -374,7 +298,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_SingleQuoteXml.txt
 Passed in:
-(string) '[O A. "hello" <i>Book Title</i>, ,  ; Cite with a composer, , ]'
+(string) '[O A. "hello" <i>Book Title</i> ; Cite with a composer]'
 Expected:
 (string) '[Cite with a composer ; O A. "hello" <i>Book Title</i>]'
 
@@ -385,7 +309,7 @@ Passed in:
 
     <div class="csl-block">Aalto, Alan</div>
 
-    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline"><span style="font-variant:small-caps;">Here</span>. . . . . . . , . </div>
+    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline"><span style="font-variant:small-caps;">Here</span></div>
     .</div>
 </div>'
 Expected:
@@ -404,113 +328,13 @@ Passed in:
 Expected:
 (string) '(Roe, 1995, 1996)'
 
-Failure → citeproc test test-suite bugreports_SortSecondaryKeyBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Roe, J.: , , , . , 1995.</div>
-  <div class="csl-entry">Roe, J.: , , , . , 1996.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Roe, J.:, 1995.</div>
-  <div class="csl-entry">Roe, J.:, 1996.</div>
-</div>'
-
-Failure → citeproc test test-suite bugreports_SortedIeeeItalicsFail.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Doe, “His Anonymous Article,” <i>Journal of Obscurity</i>, , vol. 100, p. 15, Jun. 1965.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> G. Everhardt, “His Anonymous Article,” <i>Journal of Obscurity</i>, , vol. 100, p. 15, Jun. 1965.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[3]</div><div class="csl-right-inline"> J. Roe, “His Anonymous Article,” <i>Journal of Obscurity</i>, , vol. 100, p. 15, Jun. 1965.</div>
-  </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Doe, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> G. Everhardt, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[3]</div><div class="csl-right-inline"> J. Roe, “His Anonymous Article,” <i>Journal of Obscurity</i>, vol. 100, p. 15, Jun. 1965.</div>
-  </div>
-</div>'
-
-Failure → citeproc test test-suite bugreports_ThesisUniversityAppearsTwice.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Davis, Jennifer J.  . “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830.” . . , , . . Ph.D. diss., Pennsylvania State University, History, 2004, . .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Davis, Jennifer J. “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830.” Ph.D. diss., Pennsylvania State University, History, 2004.</div>
-</div>'
-
-Failure → citeproc test test-suite bugreports_UndefinedBeforeVal.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Aalto, A. . . Translated by Boy Beamish. . . . .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Aalto, A. Translated by Boy Beamish.</div>
-</div>'
-
-Failure → citeproc test test-suite bugreports_UndefinedInName.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">I Test J R. . . . . .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">I Test J R.</div>
-</div>'
-
-Failure → citeproc test test-suite bugreports_UndefinedInName2.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Kim, B-X, and A-Y Kim. .  . . .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Kim, B-X, and A-Y Kim.</div>
-</div>'
-
-Failure → citeproc test test-suite bugreports_UndefinedInName3.txt
-Passed in:
-(string) 'B-X Kim and A-Y Kim, , , , , , , , .
-Kim and Kim, , 23.'
-Expected:
-(string) 'B-X Kim and A-Y Kim.
-Kim and Kim, 23.'
-
-Failure → citeproc test test-suite bugreports_UndefinedNotString.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> , <i>FOO BAR</i> <b>n.d.</b></div>
-  </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"><i>FOO BAR</i> <b>n.d.</b></div>
-  </div>
-</div>'
-
 Failure → citeproc test test-suite bugreports_YearSuffixInHarvard1.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Africa News, 2006. Burkina Faso: Journalist Case Puts Spotlight On Justice System . <i>Africa News</i>. .</div>
-  <div class="csl-entry">Africa News, 2010. Niger: Who Really Ousted Tandja, And Why? . <i>Africa News</i>. .</div>
-  <div class="csl-entry">Africa News, 2007. Uganda: Police Protect Besigye Rally . <i>Africa News</i>. .</div>
-  <div class="csl-entry">Africa News, 2006. Uganda: UK, US Deploy Observers . <i>Africa News</i>. .</div>
+  <div class="csl-entry">Africa News, 2006. Burkina Faso: Journalist Case Puts Spotlight On Justice System. <i>Africa News</i>.</div>
+  <div class="csl-entry">Africa News, 2010. Niger: Who Really Ousted Tandja, And Why?. <i>Africa News</i>.</div>
+  <div class="csl-entry">Africa News, 2007. Uganda: Police Protect Besigye Rally. <i>Africa News</i>.</div>
+  <div class="csl-entry">Africa News, 2006. Uganda: UK, US Deploy Observers. <i>Africa News</i>.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -530,12 +354,6 @@ Expected:
 Smith 1990b
 Jones 1990'
 
-Failure → citeproc test test-suite bugreports_disambiguate.txt
-Passed in:
-(string) '(FamilyA &#38; FamilyB, 2003, ; FamilyA, FamilyC, &#38; FamilyB, 2007, )'
-Expected:
-(string) '(FamilyA &#38; FamilyB, 2003; FamilyA, FamilyC, &#38; FamilyB, 2007)'
-
 Failure → citeproc test test-suite bugreports_ikeyOne.txt
 Passed in:
 (string) '>>[0] (James Smith)'
@@ -545,7 +363,7 @@ Expected:
 Failure → citeproc test test-suite bugreports_parenthesis.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">,  .  (2006): 1–7 .</div>
+  <div class="csl-entry">  (2006): 1–7.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -572,9 +390,9 @@ Expected:
 
 Failure → citeproc test test-suite collapse_ChicagoAfterCollapse.txt
 Passed in:
-(string) '(Whittaker 1967, , Whittaker 1975, , Wiens 1989, , Wiens 1989, )
+(string) '(Whittaker 1967, Whittaker 1975, Wiens 1989, Wiens 1989)
 (Wong 1999, 328, Wong 2000, 475, Garcia 1998, 67)
-(Whittaker 1967, , Wiens 1989, )'
+(Whittaker 1967, Wiens 1989)'
 Expected:
 (string) '(Whittaker 1967, 1975; Wiens 1989a, 1989b)
 (Wong 1999, 328; 2000, 475; Garcia 1998, 67)
@@ -620,15 +438,9 @@ Expected:
 
 Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGrouped.txt
 Passed in:
-(string) '<b>([1, ],[2, ],[3, ])</b>'
+(string) '<b>([1],[2],[3])</b>'
 Expected:
 (string) '<b>([1]–[3])</b>'
-
-Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGroupedLocator.txt
-Passed in:
-(string) '<b>([1, ],[2, p. 23],[3, ])</b>'
-Expected:
-(string) '<b>([1],[2, p. 23],[3])</b>'
 
 Failure → citeproc test test-suite collapse_NumericDuplicate.txt
 Passed in:
@@ -679,22 +491,6 @@ Smith 2000;Smith 2000;Smith 2000;Smith 2000;Smith 2001'
 Expected:
 (string) 'Smith 2000a–e;2001
 Smith 2000a;c–e;2001'
-
-Failure → citeproc test test-suite date_AccessedCrash.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">.  (1994).  []. , ,  (). , .  </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"> (1994).</div>
-</div>'
-
-Failure → citeproc test test-suite date_DisappearingBug.txt
-Passed in:
-(string) '(Larry, 2017, )'
-Expected:
-(string) '(Larry, 2017)'
 
 Failure → citeproc test test-suite date_LopsidedDataYearSuffixCollapse.txt
 Passed in:
@@ -772,22 +568,6 @@ Expected:
 ..[3] Doe, His Book, supra note 1.
 >>[4] Roe, supra note 2.'
 
-Failure → citeproc test test-suite disambiguate_ByCiteIncremental1.txt
-Passed in:
-(string) '(Baines, Lightfoot, Benedettini, et al., 2009, )
-(Baines, Lightfoot and Kay, 2009, )
-(Grubic et al., 2009, )'
-Expected:
-(string) '(Baines, Lightfoot, Benedettini, et al., 2009)
-(Baines, Lightfoot and Kay, 2009)
-(Grubic et al., 2009)'
-
-Failure → citeproc test test-suite disambiguate_ByCiteIncremental2.txt
-Passed in:
-(string) '(Baines, Lightfoot, Benedettini, et al., 2009, ; Baines, Lightfoot and Kay, 2009, )'
-Expected:
-(string) '(Baines, Lightfoot, Benedettini, et al., 2009; Baines, Lightfoot and Kay, 2009)'
-
 Failure → citeproc test test-suite disambiguate_CitationLabelDefault.txt
 Passed in:
 (string) '; ;'
@@ -812,8 +592,8 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_FailWithYearSuffix.txt
 Passed in:
-(string) '(Caritas Europa et al. 2004, )
-(Caritas Europa et al. 2004, )'
+(string) '(Caritas Europa et al. 2004)
+(Caritas Europa et al. 2004)'
 Expected:
 (string) '(Caritas Europa et al. 2004a)
 (Caritas Europa et al. 2004b)'
@@ -872,14 +652,6 @@ Expected:
 Aalt02b
 Aalt02c'
 
-Failure → citeproc test test-suite disambiguate_WithOriginalYear.txt
-Passed in:
-(string) '(Castel, [1995] 1999, )
-(Castel, 1999, )'
-Expected:
-(string) '(Castel, [1995] 1999)
-(Castel, 1999)'
-
 Failure → citeproc test test-suite disambiguate_YearCollapseWithInstitution.txt
 Passed in:
 (string) '(Smith Co 2000; Smith Co 2000; Smith Co 2000)
@@ -920,9 +692,9 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_YearSuffixMidInsert.txt
 Passed in:
-(string) '(UN DESA 2011, )
-(UN DESA 2011, )
-(UN DESA 2011, )'
+(string) '(UN DESA 2011)
+(UN DESA 2011)
+(UN DESA 2011)'
 Expected:
 (string) '(UN DESA 2011b)
 (UN DESA 2011c)
@@ -1063,38 +835,20 @@ Expected:
   </div>
 </div>'
 
-Failure → citeproc test test-suite etal_CitationAndBibliographyDecorationsInCitation.txt
-Passed in:
-(string) '(Doe <i>et al.</i>, 1965, )'
-Expected:
-(string) '(Doe <i>et al.</i>, 1965)'
-
-Failure → citeproc test test-suite flipflop_Apostrophes.txt
-Passed in:
-(string) ', “Supplément Aux Annales Du Service Des Antiquités de l’Égypte, Cahier,” , , ,  , , ,  (, Cairo: Conseil Suprême des Antiquités de l’Égypte [formerly Imprimerie de l’Institut français d’archéologie orientale], n.d.), , : , .'
-Expected:
-(string) '“Supplément Aux Annales Du Service Des Antiquités de l’Égypte, Cahier” (Cairo: Conseil Suprême des Antiquités de l’Égypte [formerly Imprimerie de l’Institut français d’archéologie orientale], n.d.).'
-
 Failure → citeproc test test-suite fullstyles_ABdNT.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">COLE, S. J.; MOORE, R. Hydrological modelling using raingauge- and radar-based estimators of areal rainfall. <b>Journal of Hydrology</b>, , v. 358, n. 3-4, p. 159–181, 2008. </div>
+  <div class="csl-entry">COLE, S. J.; MOORE, R. Hydrological modelling using raingauge- and radar-based estimators of areal rainfall. <b>Journal of Hydrology</b>, v. 358, n. 3-4, p. 159–181, 2008. </div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">COLE, S. J.; MOORE, R. Hydrological modelling using raingauge- and radar-based estimators of areal rainfall. <b>Journal of Hydrology</b>, v. 358, n. 3–4, p. 159–181, 2008. </div>
 </div>'
 
-Failure → citeproc test test-suite fullstyles_APA.txt
-Passed in:
-(string) '(Oblinger &#38; Oblinger, 2009, )'
-Expected:
-(string) '(Oblinger &#38; Oblinger, 2009)'
-
 Failure → citeproc test test-suite fullstyles_ChicagoArticleTitleQuestion.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, John. 1994. An article is it?. . <i>New Thinker</i>.  10.  (): 5. .</div>
+  <div class="csl-entry">Doe, John. 1994. An article is it?. <i>New Thinker</i> 10: 5.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1104,11 +858,11 @@ Expected:
 Failure → citeproc test test-suite fullstyles_ChicagoAuthorDateSimple.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, John. 1990. <i>Book A</i>. . . . . Brobdingnag: Zardoz Press, . .</div>
-  <div class="csl-entry">Doe, John, and Jane Roe. 1991. <i>Book B</i>. . . . . , . .</div>
-  <div class="csl-entry">Doe, John, Jane Roe, and Alvin Asthma. 1992. <i>Book C</i>. . . . . , . .</div>
-  <div class="csl-entry">Doe, John, Jane Roe, Alvin Asthma, Bob Bronchitis, Chris Cold, Don Dropsy, Ernie Enteritis, et al. 1993. <i>Book D</i>. . . . . , . .</div>
-  <div class="csl-entry">Doe, John, Jane Roe, Alvin Asthma, Bob Bronchitis, Chris Cold, Don Dropsy, Ernie Enteritis, et al. 1994. <i>Book E</i>. . . . . , . .</div>
+  <div class="csl-entry">Doe, John. 1990. <i>Book A</i>. Brobdingnag: Zardoz Press.</div>
+  <div class="csl-entry">Doe, John, and Jane Roe. 1991. <i>Book B</i>.</div>
+  <div class="csl-entry">Doe, John, Jane Roe, and Alvin Asthma. 1992. <i>Book C</i>.</div>
+  <div class="csl-entry">Doe, John, Jane Roe, Alvin Asthma, Bob Bronchitis, Chris Cold, Don Dropsy, Ernie Enteritis, et al. 1993. <i>Book D</i>.</div>
+  <div class="csl-entry">Doe, John, Jane Roe, Alvin Asthma, Bob Bronchitis, Chris Cold, Don Dropsy, Ernie Enteritis, et al. 1994. <i>Book E</i>.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1119,42 +873,14 @@ Expected:
   <div class="csl-entry">---. 1994. <i>Book E</i>.</div>
 </div>'
 
-Failure → citeproc test test-suite fullstyles_ChicagoNoteWithBibliographyWithPublisher.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, John.  . <i>Book A</i>. . . , , . . . Brobdingnag: Zardoz Press, 1990, . .</div>
-  <div class="csl-entry">Roe, Jane.  . <i>Book B</i>. . . , , . . , 1991, . .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, John. <i>Book A</i>. Brobdingnag: Zardoz Press, 1990.</div>
-  <div class="csl-entry">Roe, Jane. <i>Book B</i>, 1991.</div>
-</div>'
-
 Failure → citeproc test test-suite group_ComplexNesting.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe Inc. . . , . Retrieved June 1, 1965, from http://example.com/</div>
+  <div class="csl-entry">Doe Inc.. Retrieved June 1, 1965, from http://example.com/</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Doe Inc. (n.d.). Retrieved June 1, 1965, from http://example.com/</div>
-</div>'
-
-Failure → citeproc test test-suite group_SuppressTermInMacro.txt
-Passed in:
-(string) 'His Anonymous Life, in'
-Expected:
-(string) 'His Anonymous Life'
-
-Failure → citeproc test test-suite group_SuppressWithEmptyNestedDateNode.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Author1, O., Author7, T. &#38; Author3, T., 2008. Test Article . <i>Test Journal</i>, 12. .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Author1, O., Author7, T. &#38; Author3, T., 2008. Test Article. <i>Test Journal</i>, 12.</div>
 </div>'
 
 Failure → citeproc test test-suite integration_YearSuffixOnOffOn.txt
@@ -1177,7 +903,7 @@ Expected:
 Failure → citeproc test test-suite label_NameLabelThroughSubstitute.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Wolf, K. S.  (2005). The future for Deaf individuals is not that bleak (; ) [Peer commentary, <i>Decrease of Deaf potential in a mainstreamed environment</i>, by W. C. Hall]. . . Retrieved from http://www.personalityresearch.org/papers/hall.html</div>
+  <div class="csl-entry">Wolf, K. S.  (2005). The future for Deaf individuals is not that bleak [Peer commentary, <i>Decrease of Deaf potential in a mainstreamed environment</i>, by W. C. Hall]. Retrieved from http://www.personalityresearch.org/papers/hall.html</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1187,11 +913,11 @@ Expected:
 Failure → citeproc test test-suite magic_CitationLabelInBibliography.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry"><div class="csl-right-inline">Roe, J. and Noakes, R.: Book A, , , . , 1978.</div>
+  <div class="csl-entry"><div class="csl-right-inline">Roe, J. and Noakes, R.: Book A., 1978.</div>
   </div>
-  <div class="csl-entry"><div class="csl-right-inline">Doe, J.: Book A, , , . , 1965.</div>
+  <div class="csl-entry"><div class="csl-right-inline">Doe, J.: Book A., 1965.</div>
   </div>
-  <div class="csl-entry"><div class="csl-right-inline">Roe, J. and Noakes, R.: Book A, , , . , 1978.</div>
+  <div class="csl-entry"><div class="csl-right-inline">Roe, J. and Noakes, R.: Book A., 1978.</div>
   </div>
 </div>'
 Expected:
@@ -1267,35 +993,15 @@ Expected:
 
 Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearSuffixCollapse2.txt
 Passed in:
-(string) '(Aalto 2015, ; Aalto 2015, ; Bartleby 2010, ; Aalto 2015, ; Aalto 2015, ; Aalto 2015, )'
+(string) '(Aalto 2015; Aalto 2015; Bartleby 2010; Aalto 2015; Aalto 2015; Aalto 2015)'
 Expected:
 (string) '(Aalto 2015a,b; Bartleby 2010; Aalto 2015c–e)'
 
 Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearSuffixCollapse3.txt
 Passed in:
-(string) '(Aalto 2015, ; Aalto 2015, ; Bartleby 2010, )'
+(string) '(Aalto 2015; Aalto 2015; Bartleby 2010)'
 Expected:
 (string) '(Aalto 2015a,b; Bartleby 2010)'
-
-Failure → citeproc test test-suite name_EditorTranslatorBoth.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Noakes, Richard. <i>Hello</i>. . Ed. by John Doe. Trans. by Jane Roe. . .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Noakes, Richard. <i>Hello</i>. Ed. by John Doe. Trans. by Jane Roe.</div>
-</div>'
-
-Failure → citeproc test test-suite name_EditorTranslatorWithTranslatorOnlyBib.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Noakes, Richard. <i>Hello</i>. . Trans. by Jane Roe. . .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Noakes, Richard. <i>Hello</i>. Trans. by Jane Roe.</div>
-</div>'
 
 Failure → citeproc test test-suite name_SubsequentAuthorSubstituteMultipleNames.txt
 Passed in:
@@ -1332,12 +1038,6 @@ Expected:
   <div class="csl-entry">Title One</div>
   <div class="csl-entry">---</div>
 </div>'
-
-Failure → citeproc test test-suite number_NewOrdinalsEdition.txt
-Passed in:
-(string) ', <i>Title 1</i> , , ,  , 1<sup>r</sup><sup>e</sup> éd., , 2000 , , : , .'
-Expected:
-(string) '<i>Title 1</i>, 1<sup>r</sup><sup>e</sup> éd., 2000.'
 
 Failure → citeproc test test-suite punctuation_DefaultYearSuffixDelimiter.txt
 Passed in:
@@ -1745,36 +1445,16 @@ ENDING IN COMMA
 
 Failure → citeproc test test-suite punctuation_SuppressPrefixPeriodForDelimiterSemicolon.txt
 Passed in:
-(string) '..[0] John Doe, “His Anonymous Life,” , , in , , , , 1965, , ; Jane Roe, “Her Anonymous Life,” , , in , , , , 1965, , .
->>[1] Doe, “His Anonymous Life,” ; Roe, “Her Anonymous Life,” .'
+(string) '..[0] John Doe, “His Anonymous Life,” 1965; Jane Roe, “Her Anonymous Life,” 1965.
+>>[1] Doe, “His Anonymous Life;” Roe, “Her Anonymous Life.”'
 Expected:
 (string) '..[0] John Doe, “His Anonymous Life,” 1965; Jane Roe, “Her Anonymous Life,” 1965.
 >>[1] Doe, “His Anonymous Life”; Roe, “Her Anonymous Life.”'
 
-Failure → citeproc test test-suite quotes_PunctuationNasty.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Savage, Thomas. . “Report of Labors in Archives and Procuring Material for History of California: And Related Material” . . , , . ,  . .  , 1879, : . MSS C-E 191. Bancroft Library, University of California at Berkeley.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Savage, Thomas. “Report of Labors in Archives and Procuring Material for History of California: And Related Material,” 1879. MSS C-E 191. Bancroft Library, University of California at Berkeley.</div>
-</div>'
-
-Failure → citeproc test test-suite quotes_QuotesUnderQuotesFalse.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">, 'Title with ‘quotes’ in it', in: , .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"> 'Title with ‘quotes’ in it',.</div>
-</div>'
-
 Failure → citeproc test test-suite simplespace_case1.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, J., 1992. . In  <i>Some title</i>.  Vintage, pp. 250–300. .</div>
+  <div class="csl-entry">Doe, J., 1992. In <i>Some title</i>.  Vintage, pp. 250–300.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1838,8 +1518,8 @@ Expected:
 Failure → citeproc test test-suite sort_ChicagoYearSuffix1.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Beijing Zoo. 1974. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. . <i>Acta Zoologica Sinica</i>.  20.  (): 154–61. .</div>
-  <div class="csl-entry">Beijing Zoo. 1974. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. . <i>Acta Zoologica Sinica</i>.  20.  (): 139–47. .</div>
+  <div class="csl-entry">Beijing Zoo. 1974. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
+  <div class="csl-entry">Beijing Zoo. 1974. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1850,8 +1530,8 @@ Expected:
 Failure → citeproc test test-suite sort_ChicagoYearSuffix2.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Beijing Zoo. 1974. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. . <i>Acta Zoologica Sinica</i>.  20.  (): 154–61. .</div>
-  <div class="csl-entry">Beijing Zoo. 1974. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. . <i>Acta Zoologica Sinica</i>.  20.  (): 139–47. .</div>
+  <div class="csl-entry">Beijing Zoo. 1974. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
+  <div class="csl-entry">Beijing Zoo. 1974. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1868,10 +1548,10 @@ Expected:
 Failure → citeproc test test-suite sort_DropNameLabelInSort.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, John ed. <i>Hello</i>. .</div>
-  <div class="csl-entry">Doe, John. <i>Hello</i>. .</div>
-  <div class="csl-entry">Doe, John Eamon. <i>Hello</i>. .</div>
-  <div class="csl-entry">Doe, John Egbert. <i>Hello</i>. .</div>
+  <div class="csl-entry">Doe, John ed. <i>Hello</i>.</div>
+  <div class="csl-entry">Doe, John. <i>Hello</i>.</div>
+  <div class="csl-entry">Doe, John Eamon. <i>Hello</i>.</div>
+  <div class="csl-entry">Doe, John Egbert. <i>Hello</i>.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1887,26 +1567,6 @@ Passed in:
 Expected:
 (string) '>>[0] Smith 2003, 2010; Jones 2005'
 
-Failure → citeproc test test-suite sort_LeadingA.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">. . “A er det første bogstav i alfabetet”. , Television broadcast. . , . , ,  . . . , DR, 2011 , , , : . .</div>
-  <div class="csl-entry">A Hansen, Martin. . <i>Alfabetiseringsproblemer</i>. . . , . , ,  . . . , København: Gyldendal, 2012 , , , : . .</div>
-  <div class="csl-entry">A kasernes fællesvirke. . <i>Problemer med alfabetet</i>. . . , . , ,  . . . , Kbh: Dafolo, 2015 , , , : . .</div>
-  <div class="csl-entry">Ab Delrahman, Hussein. . <i>Det danske alfabet er sært</i>. . . , . , ,  . . . , Kbh: Politiken, 2012 , , , : . .</div>
-  <div class="csl-entry">B Gjengen. . <i>Alfabeta</i>. . . , . , ,  . . . , Kbh, 2009 , , , : . .</div>
-  <div class="csl-entry">Juul Jensen, Uffe, Carsten Hædersdal, og Mogens Kim Skadborg. . “Etablering af klinisk etiske komitéer i Danmark: en praksis-filosofisk tilgang til klinisk etik fra bibliotek.dk”. . . <i>Bibliotek for læger</i>, . , ,  , 206, nr. 1. .  (2014), , , : 44–61. .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">“A er det første bogstav i alfabetet”. Television broadcast. DR, 2011.</div>
-  <div class="csl-entry">A Hansen, Martin. <i>Alfabetiseringsproblemer</i>. København: Gyldendal, 2012.</div>
-  <div class="csl-entry">A kasernes fællesvirke. <i>Problemer med alfabetet</i>. Kbh: Dafolo, 2015.</div>
-  <div class="csl-entry">Ab Delrahman, Hussein. <i>Det danske alfabet er sært</i>. Kbh: Politiken, 2012.</div>
-  <div class="csl-entry">B Gjengen. <i>Alfabeta</i>. Kbh, 2009.</div>
-  <div class="csl-entry">Juul Jensen, Uffe, Carsten Hædersdal, og Mogens Kim Skadborg. “Etablering af klinisk etiske komitéer i Danmark: en praksis-filosofisk tilgang til klinisk etik fra bibliotek.dk”. <i>Bibliotek for læger</i> 206, nr. 1 (2014): 44–61.</div>
-</div>'
-
 Failure → citeproc test test-suite sort_RangeUnaffected.txt
 Passed in:
 (string) '>>[0] <sup>3</sup>
@@ -1918,10 +1578,10 @@ Expected:
 Failure → citeproc test test-suite sort_SeparateAuthorsAndOthers.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, John. <i>Hello 4</i>. .</div>
-  <div class="csl-entry">Doe, John ed. <i>Hello 1</i>. .</div>
-  <div class="csl-entry">Doe, John Barbitol. <i>Hello 2</i>. .</div>
-  <div class="csl-entry">Doe, John Egbert. <i>Hello 3</i>. .</div>
+  <div class="csl-entry">Doe, John. <i>Hello 4</i>.</div>
+  <div class="csl-entry">Doe, John ed. <i>Hello 1</i>.</div>
+  <div class="csl-entry">Doe, John Barbitol. <i>Hello 2</i>.</div>
+  <div class="csl-entry">Doe, John Egbert. <i>Hello 3</i>.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -1931,73 +1591,19 @@ Expected:
   <div class="csl-entry">Doe, John Egbert. <i>Hello 3</i>.</div>
 </div>'
 
-Failure → citeproc test test-suite sort_SubstituteTitle.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brooker, C. (2011, July 24). The news coverage of the Norway mass-killings was fact-free conjecture. <i>The Guardian</i>. , London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/24/charlie-brooker-norway-mass-killings</div>
-  <div class="csl-entry">Brooker, C. (2011, July 31). Let’s think outside the box here: maybe blue-sky thinking is nonsense. <i>The Guardian</i>. , London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/31/blue-sky-thinking</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brooker, C. (2011, July 24). The news coverage of the Norway mass-killings was fact-free conjecture. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/24/charlie-brooker-norway-mass-killings</div>
-  <div class="csl-entry">Brooker, C. (2011, July 31). Let’s think outside the box here: maybe blue-sky thinking is nonsense. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/31/blue-sky-thinking</div>
-</div>'
-
-Failure → citeproc test test-suite sort_VariousNameMacros1.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1 . <i>Test</i> <b>1,</b> 1–2. .</div>
-  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3 . <i>Test</i> <b>3,</b> 3–4. .</div>
-  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2 . <i>Test</i> <b>2,</b> 1–2. .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
-  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
-  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
-</div>'
-
-Failure → citeproc test test-suite sort_VariousNameMacros2.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3 . <i>Test</i> <b>3,</b> 3–4. .</div>
-  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2 . <i>Test</i> <b>2,</b> 1–2. .</div>
-  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1 . <i>Test</i> <b>1,</b> 1–2. .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
-  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
-  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
-</div>'
-
-Failure → citeproc test test-suite sort_VariousNameMacros3.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3 . <i>Test</i> <b>3,</b> 3–4. .</div>
-  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1 . <i>Test</i> <b>1,</b> 1–2. .</div>
-  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2 . <i>Test</i> <b>2,</b> 1–2. .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe John A. &#38; Bloggs Joe A. (2011). Title 3. <i>Test</i> <b>3,</b> 3–4.</div>
-  <div class="csl-entry">Doe Jane B. &#38; Doe John A. (2009). Title 1. <i>Test</i> <b>1,</b> 1–2.</div>
-  <div class="csl-entry">Doe John A. &#38; Smith John A. (2010). Title 2. <i>Test</i> <b>2,</b> 1–2.</div>
-</div>'
-
 Failure → citeproc test test-suite sort_WithAndInOneEntry.txt
 Passed in:
-(string) '(Beck 1991, ; Beck, Katz, and Tucker 1998, ; Beck, King, and Zeng 2000, ; Beck and Katz 2001, ; Beck and Katz 2011, ; Colaresi 2006, ; Colaresi, Rasler, and Thompson 2007, ; Colaresi and Thompson 2002, ; Gochman 1993, ; Gochman and Leng 1983, ; Gochman and Maoz 1984, )'
+(string) '(Beck 1991; Beck, Katz, and Tucker 1998; Beck, King, and Zeng 2000; Beck and Katz 2001; Beck and Katz 2011; Colaresi 2006; Colaresi, Rasler, and Thompson 2007; Colaresi and Thompson 2002; Gochman 1993; Gochman and Leng 1983; Gochman and Maoz 1984)'
 Expected:
 (string) '(Beck 1991; Beck and Katz 2001, 2011; Beck, Katz, and Tucker 1998; Beck, King, and Zeng 2000; Colaresi 2006; Colaresi, Rasler, and Thompson 2007; Colaresi and Thompson 2002; Gochman 1993; Gochman and Leng 1983; Gochman and Maoz 1984)'
 
 Failure → citeproc test test-suite substitute_SharedMacro.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Alan Alto Inc.: Book Three., . . . .  . . .</div>
-  <div class="csl-entry">Alan Alto Inc.: Book Four., . . . .  . . .</div>
-  <div class="csl-entry">Alto, Alan: Book One., . . . .  . . .</div>
-  <div class="csl-entry">Alto, Alan: Book Two., . . . .  . . .</div>
+  <div class="csl-entry">Alan Alto Inc.: Book Three.</div>
+  <div class="csl-entry">Alan Alto Inc.: Book Four.</div>
+  <div class="csl-entry">Alto, Alan: Book One.</div>
+  <div class="csl-entry">Alto, Alan: Book Two.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2007,46 +1613,10 @@ Expected:
   <div class="csl-entry">---: Book Two.</div>
 </div>'
 
-Failure → citeproc test test-suite substitute_SuppressOrdinaryVariable.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">. <i>The Title</i>. The Publisher.</div>
-  <div class="csl-entry">John-boy Doe ed. <i>The Title</i>. The Publisher.</div>
-  <div class="csl-entry">Jane-girl Doe editor. <i>The Title</i>. The Organization.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">“The Title.” The Publisher.</div>
-  <div class="csl-entry">John-boy Doe ed. <i>The Title</i>. The Publisher.</div>
-  <div class="csl-entry">Jane-girl Doe editor. <i>The Title</i>. The Organization.</div>
-</div>'
-
-Failure → citeproc test test-suite testers_FirstAutoGeneratedZoteroPluginTest.txt
-Passed in:
-(string) '..[0] Center <sup>for</sup> History <sub>and</sub> New Media, “<b>Zotero</b> … ‘Quick Start’ &#38; <span style="font-variant:small-caps;">Guide</span> 日本語,” , , , , , , , 47, , http://zotero.org/support/quick_start_guide.
->>[1] John Smith, <i>Book A</i>, , , , , , , 2000, , ; Center <sup>for</sup> History <sub>and</sub> New Media, “<b>Zotero</b> … ‘Quick Start’ &#38; <span style="font-variant:small-caps;">Guide</span> 日本語,” .'
-Expected:
-(string) '..[0] Center <sup>for</sup> History <sub>and</sub> New Media, “<b>Zotero</b> … ‘Quick Start’ &#38; <span style="font-variant:small-caps;">Guide</span> 日本語,” 47, http://zotero.org/support/quick_start_guide.
->>[1] John Smith, <i>Book A</i>, 2000; Center <sup>for</sup> History <sub>and</sub> New Media, “<b>Zotero</b> … ‘Quick Start’ &#38; <span style="font-variant:small-caps;">Guide</span> 日本語.”'
-
-Failure → citeproc test test-suite testers_SecondAutoGeneratedZoteroPluginTest.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Center <sup>for</sup> History <sub>and</sub> New Media.  . “<b>Zotero</b> … ‘Quick Start’ &#38; <span style="font-variant:small-caps;">Guide</span> 日本語.” . . , , . , , . . http://zotero.org/support/quick_start_guide.</div>
-  <div class="csl-entry">Smith, John.  . <i>Book A</i>. . . , , . . , 2000, . .</div>
-  <div class="csl-entry">Smith, Steven.  . <i>Book A</i>. . . , , . . , 2000, . .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Center <sup>for</sup> History <sub>and</sub> New Media. “<b>Zotero</b> … ‘Quick Start’ &#38; <span style="font-variant:small-caps;">Guide</span> 日本語.” http://zotero.org/support/quick_start_guide.</div>
-  <div class="csl-entry">Smith, John. <i>Book A</i>, 2000.</div>
-  <div class="csl-entry">Smith, Steven. <i>Book A</i>, 2000.</div>
-</div>'
-
 Failure → citeproc test test-suite textcase_RepeatedTitleBug.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Jenrich, R. I., &#38; Bentler, P. M.  (2012). Exploratory bi-factor analysis: The oblique case []. , , <i>Psychometrika</i>, <i>77</i>(3), 442–454. , . https://doi.org/https://doi.org/10.1007/s11336-012-9269-1 </div>
+  <div class="csl-entry">Jenrich, R. I., &#38; Bentler, P. M.  (2012). Exploratory bi-factor analysis: The oblique case. <i>Psychometrika</i>, <i>77</i>(3), 442–454. https://doi.org/https://doi.org/10.1007/s11336-012-9269-1</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -2057,10 +1627,10 @@ Failure → citeproc test test-suite variables_ContainerTitleShort.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">
-    <div class="csl-left-margin">1. </div><div class="csl-right-inline">Campbell DT, Fiske DW. Main title. In:  Container: a title.    . (Series: a title). . </div>
+    <div class="csl-left-margin">1. </div><div class="csl-right-inline">Campbell DT, Fiske DW. Main title. In: Container: a title. (Series: a title). </div>
   </div>
   <div class="csl-entry">
-    <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. Main title. :  Container.   ;. . . </div>
+    <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. Main title. Container. </div>
   </div>
 </div>'
 Expected:
@@ -2077,10 +1647,10 @@ Failure → citeproc test test-suite variables_ContainerTitleShort2.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">
-    <div class="csl-left-margin">1. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. In:      . p. 25. . . </div>
+    <div class="csl-left-margin">1. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. In  p. 25. </div>
   </div>
   <div class="csl-entry">
-    <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. :  Container.   ;:25. . . </div>
+    <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. Container. :25. </div>
   </div>
 </div>'
 Expected:
@@ -2092,9 +1662,6 @@ Expected:
     <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. Container. :25.</div>
   </div>
 </div>'
-
-Error → citeproc test test-suite bugreports_StyleError001.txt
-./citeproc/citeproc-output.lua:824: attempt to index a nil value (local 'inline')
 
 Error → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
 ./citeproc/citeproc-node-sort.lua:98: attempt to compare number with string

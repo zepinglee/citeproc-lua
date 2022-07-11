@@ -446,7 +446,7 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     end
   end
 
-  ir = SeqIr:new(irs)
+  ir = SeqIr:new(irs, self)
 
   -- Suppress substituted name variable
   if state.name_override and not context.sort_key then

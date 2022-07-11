@@ -107,8 +107,7 @@ function Text:build_macro_ir(engine, state, context)
   state:push_macro(self.macro)
   local ir = macro:build_ir(engine, state, context)
   state:pop_macro(self.macro)
-  if ir and (ir.text or (ir.children and #ir.children > 0)) then
-    ir.group_var = "important"
+  if ir then
     ir.affixes = util.clone(self.affixes)
     ir.display = self.display
     ir.formatting = util.clone(self.formatting)

@@ -11,8 +11,7 @@ local util = require("citeproc-util")
 
 local IrNode = {
   _type = "IrNode",
-  type = "IrNode",
-  base_class = "IrNode",
+  _base_class = "IrNode",
   element_name = nil,
   text = nil,
   formatting = nil,
@@ -24,11 +23,10 @@ local IrNode = {
 function IrNode:new(children, element)
   local o = {
     _type = self._type,
-    type = self.type,
     children = children,
-    base_class = self.base_class,
     group_var = "plain",
     -- element = element,
+    _element = element.element_name,
   }
   o.person_name_irs = {}
   if children then
@@ -46,8 +44,6 @@ end
 function IrNode:derive(type)
   local o = {
     _type = type,
-    type = type,
-    base_class = self.base_class,
   }
   setmetatable(o, self)
   self.__index = self
@@ -88,7 +84,7 @@ end
 
 function IrNode:capitalize_first_term()
   -- util.debug(self)
-  if self.type == "Rendered" and self.element and (self.element.term == "ibid" or self.element.term == "and") then
+  if self._type == "Rendered" and self.element and (self.element.term == "ibid" or self.element.term == "and") then
     self.inlines[1]:capitalize_first_term()
   elseif self._type == "SeqIr" and self.children[1] then
     self.children[1]:capitalize_first_term()
@@ -101,11 +97,9 @@ local Rendered = IrNode:derive("Rendered")
 
 function Rendered:new(inlines, element)
   local o = {
-    _type = self.type,
+    _type = self._type,
     inlines = inlines,
     element = element,
-    type = self.type,
-    base_class = self.base_class,
     group_var = "plain",
   }
   setmetatable(o, self)
@@ -120,11 +114,9 @@ local PersonNameIr = IrNode:derive("PersonNameIr")
 
 function PersonNameIr:new(inlines, element)
   local o = {
-    _type = self.type,
+    _type = self._type,
     inlines = inlines,
     element = element,
-    type = self.type,
-    base_class = self.base_class,
     group_var = "plain",
   }
   setmetatable(o, self)

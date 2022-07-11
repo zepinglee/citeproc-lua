@@ -332,7 +332,8 @@ function Macro:from_node(node)
 end
 
 function Macro:build_ir(engine, state, context)
-  return self:build_group_ir(engine, state, context)
+  local ir = self:build_group_ir(engine, state, context)
+  return ir
 end
 
 

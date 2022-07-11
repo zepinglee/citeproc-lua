@@ -36,13 +36,12 @@ end
 
 local InlineElement = {
   type = "InlineElement",
-  base_class = "InlineElement",
+  _base_class = "InlineElement",
 }
 
 function InlineElement:derive(type)
   local o = {
     type  = type,
-    base_class = "InlineElement",
   }
   self[type] = o
   setmetatable(o, self)
@@ -55,7 +54,6 @@ function InlineElement:new(inlines)
   local o = {
     inlines = inlines,
     type  = self.type,
-    base_class = self.base_class,
   }
   setmetatable(o, self)
   return o
