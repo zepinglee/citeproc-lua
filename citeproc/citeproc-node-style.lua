@@ -263,12 +263,9 @@ function Citation:render_year_suffix(year_suffix_number)
   end
   local year_suffix = ""
   while year_suffix_number > 0 do
-    local i = year_suffix_number % 26
-    if i == 0 then
-      i = 26
-    end
-    year_suffix = string.char(i + 96) .. year_suffix
-    year_suffix_number = year_suffix_number // 26
+    local i = (year_suffix_number - 1) % 26
+    year_suffix = string.char(i + 97) .. year_suffix
+    year_suffix_number = (year_suffix_number - 1) // 26
   end
   -- util.debug(year_suffix)
   return {PlainText:new(year_suffix)}

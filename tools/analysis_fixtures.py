@@ -16,8 +16,10 @@ skip_attr_values = [
 ]
 skipped_fixtures = [
     'disambiguate_BasedOnSubsequentFormWithBackref2.txt',
-    'disambiguate_DisambiguationHang.txt',  # Disambiguation is based on the subsequent
     'bugreports_EnvAndUrb.txt',
+     # Disambiguation is based on the subsequent
+    'disambiguate_BasedOnEtAlSubsequent.txt',
+    'disambiguate_DisambiguationHang.txt',
 ]
 
 failed_fixtures = []
