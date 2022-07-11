@@ -80,7 +80,7 @@ function Sort:sort(items, state, context)
     table.insert(key_map[item.id], i)
   end
 
-  -- util.debug(key_map)
+  util.debug(key_map)
 
   local function compare_entry(item1, item2)
     return self.compare_entry(key_map, sort_directions, item1, item2)

@@ -41,6 +41,8 @@ function Choose:build_ir(engine, state, context)
 
   local ir = SeqIr:new({branch_ir})
   ir.group_var = branch_ir.group_var
+  ir.name_count = branch_ir.name_count
+  ir.sort_key = branch_ir.sort_key
 
   if not context.disambiguate then
     context.disambiguate = true

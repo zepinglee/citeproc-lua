@@ -8,6 +8,7 @@ import xml.etree.ElementTree as ET
 
 failed_fixtures = []
 skipped_fixtures = [
+    'disambiguate_BasedOnSubsequentFormWithBackref2.txt',
 ]
 
 with open('./test/citeproc-test.log') as f:

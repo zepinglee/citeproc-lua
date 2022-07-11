@@ -29,7 +29,7 @@ position            14       0       0       0
 punctuation          9       7       0       0
 quotes               2       2       0       0
 simplespace          0       1       0       0
-sort                39      17       0       0
+sort                40      16       0       0
 sortseparator        1       0       0       0
 substitute           5       2       0       0
 testers              0       2       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              654     169       3       0
+(all)              655     168       3       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -1865,20 +1865,6 @@ Passed in:
 Expected:
 (string) 'Banda 1999; Aalto 2000, Aalto 2001'
 
-Failure → citeproc test test-suite sort_ConditionalMacroDates.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Title 1</div>
-  <div class="csl-entry">Title 2</div>
-  <div class="csl-entry">Title 3</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Title 3</div>
-  <div class="csl-entry">Title 1</div>
-  <div class="csl-entry">Title 2</div>
-</div>'
-
 Failure → citeproc test test-suite sort_DropNameLabelInSort.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -2114,4 +2100,4 @@ Error → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
 ./citeproc/citeproc-node-sort.lua:98: attempt to compare number with string
 
 Error → citeproc test test-suite name_EtAlWithCombined.txt
-./citeproc/citeproc-node-choose.lua:243: attempt to index a nil value (field 'cite')
+./citeproc/citeproc-node-choose.lua:245: attempt to index a nil value (field 'cite')
