@@ -124,6 +124,24 @@ function Rendered:new(inlines, element)
   return o
 end
 
+
+local YearSuffix = IrNode:derive("YearSuffix")
+
+function YearSuffix:new(inlines, element)
+  local o = {
+    _element = element.element_name,
+    _type = self._type,
+    element = element,
+    inlines = inlines,
+    group_var = "plain",
+  }
+
+  setmetatable(o, self)
+  self.__index = self
+  return o
+end
+
+
 local NameIr = IrNode:derive("NameIr")
 
 
@@ -159,6 +177,7 @@ local SeqIr = IrNode:derive("SeqIr")
 
 irnode.IrNode = IrNode
 irnode.Rendered = Rendered
+irnode.YearSuffix = YearSuffix
 irnode.NameIr = NameIr
 irnode.PersonNameIr = PersonNameIr
 irnode.SeqIr = SeqIr

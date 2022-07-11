@@ -13,6 +13,7 @@ local Style = require("citeproc-node-style").Style
 local Locale = require("citeproc-node-locale").Locale
 local Context = require("citeproc-context").Context
 local IrState = require("citeproc-context").IrState
+local YearSuffix = require("citeproc-ir-node").YearSuffix
 -- local OutputFormat = require("citeproc-output").OutputFormat
 local HtmlWriter = require("citeproc-output").HtmlWriter
 local SortStringFormat = require("citeproc-output").SortStringFormat
@@ -852,7 +853,7 @@ function CiteProc:disambiguate_add_names(cite_ir)
   return cite_ir
 end
 
-function CiteProc:get_irs_with_disambiguate_branch(ir)
+function CiteProc:collect_irs_with_disambiguate_branch(ir)
   local irs_with_disambiguate_branch = {}
   if ir.children then
     for i, child_ir in ipairs(ir.children) do
@@ -860,7 +861,7 @@ function CiteProc:get_irs_with_disambiguate_branch(ir)
         table.insert(irs_with_disambiguate_branch, child_ir)
       elseif child_ir.children then
         util.extend(irs_with_disambiguate_branch,
-          self:get_irs_with_disambiguate_branch(child_ir))
+          self:collect_irs_with_disambiguate_branch(child_ir))
       end
     end
   end
@@ -870,7 +871,7 @@ end
 function CiteProc:disambiguate_conditionals(cite_ir)
   -- util.debug(cite_ir)
 
-  cite_ir.irs_with_disambiguate_branch = self:get_irs_with_disambiguate_branch(cite_ir)
+  cite_ir.irs_with_disambiguate_branch = self:collect_irs_with_disambiguate_branch(cite_ir)
 
   local disam_format = SortStringFormat:new()
 
@@ -932,14 +933,93 @@ function CiteProc:check_ambiguity(cite_ir)
   return false
 end
 
+function CiteProc:get_same_output_irs(cite_ir)
+  local ambiguous_same_output_irs = {}
+  for _, ir_ in pairs(self.cite_irs_by_output[cite_ir.disam_str]) do
+    if ir_.disam_str == cite_ir.disam_str then
+      table.insert(ambiguous_same_output_irs, ir_)
+    end
+  end
+  return ambiguous_same_output_irs
+end
+
 function CiteProc:disambiguate_add_year_suffix(cite_ir)
-  if not cite_ir.is_ambiguous then
+  if not cite_ir.is_ambiguous or not self.style.citation.disambiguate_add_year_suffix then
     return cite_ir
   end
 
+  local same_output_irs = self:get_same_output_irs(cite_ir)
+
+  table.sort(same_output_irs, function (a, b)
+    return a.ir_index < b.ir_index
+  end)
+
+  local year_suffix_number = 0
   -- util.debug(cite_ir)
 
+  for _, ir_ in ipairs(same_output_irs) do
+    if ir_.reference.year_suffix_number then
+      year_suffix_number = ir_.reference.year_suffix_number
+    else
+      year_suffix_number = year_suffix_number + 1
+      ir_.reference.year_suffix_number = year_suffix_number
+    end
+
+    if not ir_.year_suffix_irs then
+      ir_.year_suffix_irs = self:collect_year_suffix_irs(ir_)
+      if #ir_.year_suffix_irs == 0 then
+        local year_ir = self:find_first_year_ir(ir_)
+        -- util.debug(year_ir)
+        if year_ir then
+          local year_suffix_ir = YearSuffix:new(nil, self.style.citation)
+          table.insert(year_ir.children, year_suffix_ir)
+          table.insert(ir_.year_suffix_irs, year_suffix_ir)
+        end
+      end
+    end
+
+    for _, year_suffix_ir in ipairs(ir_.year_suffix_irs) do
+      if not year_suffix_ir.inlines then
+        -- util.debug(year_suffix_number)
+        year_suffix_ir.inlines = self.style.citation:render_year_suffix(year_suffix_number)
+        -- year_suffix_ir.inlines = {PlainText:new("a")}
+      end
+    end
+  end
+
+  cite_ir.is_ambiguous = false
+
   return cite_ir
+end
+
+function CiteProc:collect_year_suffix_irs(ir)
+  local year_suffix_irs = {}
+  if ir.children then
+    for i, child_ir in ipairs(ir.children) do
+      if child_ir._type == "YearSuffix" then
+        table.insert(year_suffix_irs, child_ir)
+      elseif child_ir.children then
+        util.extend(year_suffix_irs,
+          self:collect_year_suffix_irs(child_ir))
+      end
+    end
+  end
+  return year_suffix_irs
+end
+
+function CiteProc:find_first_year_ir(ir)
+  if ir.is_year then
+    return ir
+  end
+  if ir.children then
+    for _, child_ir in ipairs(ir.children) do
+      local year_ir = self:find_first_year_ir(child_ir)
+      if year_ir then
+        return year_ir
+      end
+    end
+  end
+  return nil
 end
 
 function CiteProc:makeCitationCluster(citation_items)

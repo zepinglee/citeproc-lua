@@ -257,6 +257,24 @@ function Citation:build_ir(engine, state, context)
 end
 
 
+function Citation:render_year_suffix(year_suffix_number)
+  if year_suffix_number <= 0 then
+    return nil
+  end
+  local year_suffix = ""
+  while year_suffix_number > 0 do
+    local i = year_suffix_number % 26
+    if i == 0 then
+      i = 26
+    end
+    year_suffix = string.char(i + 96) .. year_suffix
+    year_suffix_number = year_suffix_number // 26
+  end
+  -- util.debug(year_suffix)
+  return {PlainText:new(year_suffix)}
+end
+
+
 local Bibliography = Element:derive("bibliography")
 
 function Bibliography:from_node(node, style)
