@@ -70,7 +70,6 @@ skip_tags = [
 skip_attrs = [
     'cite-group-delimiter',
     'collapse',
-    'disambiguate',
     'disambiguate-add-year-suffix',
     'subsequent-author-substitute',
     'subsequent-author-substitute-rule',

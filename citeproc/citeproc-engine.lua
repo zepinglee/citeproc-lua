@@ -851,8 +851,84 @@ function CiteProc:disambiguate_add_names(cite_ir)
   return cite_ir
 end
 
+function CiteProc:get_irs_with_disambiguate_branch(ir)
+  local irs_with_disambiguate_branch = {}
+  if ir.children then
+    for i, child_ir in ipairs(ir.children) do
+      if child_ir.disambiguate_branch_ir then
+        table.insert(irs_with_disambiguate_branch, child_ir)
+      elseif child_ir.children then
+        util.extend(irs_with_disambiguate_branch,
+          self:get_irs_with_disambiguate_branch(child_ir))
+      end
+    end
+  end
+  return irs_with_disambiguate_branch
+end
+
 function CiteProc:disambiguate_conditionals(cite_ir)
+  -- util.debug(cite_ir)
+
+  cite_ir.irs_with_disambiguate_branch = self:get_irs_with_disambiguate_branch(cite_ir)
+
+  local disam_format = SortStringFormat:new()
+
+  while cite_ir.is_ambiguous do
+    if #cite_ir.irs_with_disambiguate_branch == 0 then
+      break
+    end
+
+    -- util.debug(cite_ir.cite_item.id)
+    -- util.debug(cite_ir.disam_str)
+
+    -- update ambiguous_same_output_irs
+    local ambiguous_same_output_irs = {}
+    for _, ir_ in pairs(self.cite_irs_by_output[cite_ir.disam_str]) do
+      if ir_.disam_str == cite_ir.disam_str then
+        table.insert(ambiguous_same_output_irs, ir_)
+      end
+    end
+
+    for _, ir_ in ipairs(ambiguous_same_output_irs) do
+      if #ir_.irs_with_disambiguate_branch > 0 then
+        -- Disambiguation is incremental
+        -- disambiguate_IncrementalExtraText.txt
+        local condition_ir = ir_.irs_with_disambiguate_branch[1]
+        condition_ir.children[1] = condition_ir.disambiguate_branch_ir
+        condition_ir.group_var = condition_ir.disambiguate_branch_ir.group_var
+        table.remove(ir_.irs_with_disambiguate_branch, 1)
+        -- disambiguate_DisambiguateTrueReflectedInBibliography.txt
+        ir_.reference.disambiguate = true
+
+        -- Update ir output
+        local inlines = ir_:flatten(disam_format)
+        local disam_str = disam_format:output(inlines)
+        -- util.debug("update: " .. ir_.cite_item.id .. ": " .. disam_str)
+        ir_.disam_str = disam_str
+        if not self.cite_irs_by_output[disam_str] then
+          self.cite_irs_by_output[disam_str] = {}
+        end
+        self.cite_irs_by_output[disam_str][ir_.ir_index] = ir_
+      end
+    end
+
+    cite_ir.is_ambiguous = self:check_ambiguity(cite_ir)
+    -- util.debug(cite_ir.is_ambiguous)
+    for _, ir_ in ipairs(self.disam_irs) do
+      -- util.debug(ir_.cite_item.id .. ": " .. ir_.disam_str)
+    end
+
+  end
   return cite_ir
+end
+
+function CiteProc:check_ambiguity(cite_ir)
+  for _, ir_ in pairs(self.cite_irs_by_output[cite_ir.disam_str]) do
+    if ir_.cite_item.id ~= cite_ir.cite_item.id then
+      return true
+    end
+  end
+  return false
 end
 
 function CiteProc:disambiguate_add_year_suffix(cite_ir)

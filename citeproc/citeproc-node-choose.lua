@@ -24,12 +24,40 @@ function Choose:from_node(node)
 end
 
 function Choose:build_ir(engine, state, context)
+  local branch
+  local branch_ir
   for _, child in ipairs(self.children) do
     if child:evaluate_conditions(engine, state, context) then
-      local ir = child:build_ir(engine, state, context)
-      return ir
+      branch = child
+      branch_ir = child:build_ir(engine, state, context)
+      break
     end
   end
+
+  if not branch_ir then
+    branch_ir = SeqIr:new({})
+    branch_ir.group_var = "missing"
+  end
+
+  local ir = SeqIr:new({branch_ir})
+  ir.group_var = branch_ir.group_var
+
+  if not context.disambiguate then
+    context.disambiguate = true
+
+    for _, child in ipairs(self.children) do
+      if child:evaluate_conditions(engine, state, context) then
+        if child ~= branch then
+          ir.disambiguate_branch_ir = child:build_ir(engine, state, context)
+        end
+        break
+      end
+    end
+
+    context.disambiguate = false
+  end
+
+  return ir
 end
 
 
@@ -66,8 +94,9 @@ end
 function If:from_node(node)
   local o = If:new()
   -- TODO: disambiguate
-  o:set_bool_attribute(node, "disambiguate")
+  -- o:set_bool_attribute(node, "disambiguate")
 
+  o:add_conditions(node, "disambiguate")
   o:add_conditions(node, "is-numeric")
   o:add_conditions(node, "is-uncertain-date")
   o:add_conditions(node, "locator")
@@ -127,9 +156,7 @@ function If:build_children_ir(engine, state, context)
       end
 
       -- The condition can be simplified
-      if child_ir.group_var ~= "missing" then
-        table.insert(irs, child_ir)
-      end
+      table.insert(irs, child_ir)
     end
   end
 
@@ -184,7 +211,10 @@ end
 function If:evaluate_condition(condition, state, context)
   -- util.debug(context.cite)
   -- util.debug(condition)
-  if condition.condition == "is-numeric" then
+  if condition.condition == "disambiguate" then
+    return context.disambiguate or (context.in_bibliography and context.reference.disambiguate)
+
+  elseif condition.condition == "is-numeric" then
     local variable = context:get_variable(condition.value)
     return util.is_numeric(variable)
 
@@ -256,9 +286,8 @@ function Else:evaluate_conditions(engine, state, context)
   return true
 end
 
-function Else:build_ir(engine, state, context)
-  return self:build_children_ir(engine, state, context)
-end
+Else.build_children_ir = If.build_children_ir
+Else.build_ir = If.build_ir
 
 
 choose.Choose = Choose

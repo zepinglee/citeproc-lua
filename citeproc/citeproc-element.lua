@@ -172,7 +172,7 @@ function Element:build_children_ir(engine, state, context)
   if self.children then
     for _, child_element in ipairs(self.children) do
       local child_ir = child_element:build_ir(engine, state, context)
-      if child_ir and child_ir.group_var ~= "missing" then
+      if child_ir then
         if child_ir.sort_key ~= nil then
           ir_sort_key = child_ir.sort_key
         end
@@ -236,27 +236,20 @@ function Element:build_group_ir(engine, state, context)
         ir_sort_key = child_ir.sort_key
       end
 
-      -- The condition can be simplified
-      if child_ir.group_var ~= "missing" then
-        table.insert(irs, child_ir)
-      end
+      table.insert(irs, child_ir)
     end
-  end
-
-  if #irs == 0 or group_var == "missing" then
-    local ir = SeqIr:new()
-    ir.name_count = name_count
-    ir.sort_key = ir_sort_key
-    ir.group_var = "missing"
-    return ir
   end
 
   -- A non-empty nested cs:group is treated as a non-empty variable for the
   -- puropses of determining suppression of the outer cs:group.
+  if #irs > 0 and group_var == "plain" then
+    group_var = "important"
+  end
+
   local ir = SeqIr:new(irs, self)
   ir.name_count = name_count
   ir.sort_key = ir_sort_key
-  ir.group_var = "important"
+  ir.group_var = group_var
 
   return ir
 end
