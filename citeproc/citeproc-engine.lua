@@ -977,13 +977,18 @@ function CiteProc:disambiguate_add_year_suffix(cite_ir)
   local same_output_irs = self:get_same_output_irs(cite_ir)
 
   table.sort(same_output_irs, function (a, b)
-    return a.ir_index < b.ir_index
+    -- return a.ir_index < b.ir_index
+    return a.reference["citation-number"] < b.reference["citation-number"]
   end)
 
   local year_suffix_number = 0
   -- util.debug(cite_ir)
 
   local disam_format = DisamStringFormat:new()
+
+  for _, ir_ in ipairs(same_output_irs) do
+    ir_.reference.year_suffix_number = nil
+  end
 
   for _, ir_ in ipairs(same_output_irs) do
     if ir_.reference.year_suffix_number then
@@ -1000,7 +1005,7 @@ function CiteProc:disambiguate_add_year_suffix(cite_ir)
         local year_ir = self:find_first_year_ir(ir_)
         -- util.debug(year_ir)
         if year_ir then
-          local year_suffix_ir = YearSuffix:new(nil, self.style.citation)
+          local year_suffix_ir = YearSuffix:new({}, self.style.citation)
           table.insert(year_ir.children, year_suffix_ir)
           table.insert(ir_.year_suffix_irs, year_suffix_ir)
         end
@@ -1008,9 +1013,8 @@ function CiteProc:disambiguate_add_year_suffix(cite_ir)
     end
 
     for _, year_suffix_ir in ipairs(ir_.year_suffix_irs) do
-      if not year_suffix_ir.inlines then
-        year_suffix_ir.inlines = {PlainText:new(ir_.reference["year-suffix"])}
-      end
+      year_suffix_ir.inlines = {PlainText:new(ir_.reference["year-suffix"])}
+      year_suffix_ir.group_var = "important"
     end
 
     local inlines = ir_:flatten(disam_format)
@@ -1209,7 +1213,7 @@ function CiteProc:add_bibliography_year_suffix(ir)
       local year_ir = self:find_first_year_ir(ir)
       -- util.debug(year_ir)
       if year_ir then
-        local year_suffix_ir = YearSuffix:new(nil, self.style.citation)
+        local year_suffix_ir = YearSuffix:new({}, self.style.citation)
         table.insert(year_ir.children, year_suffix_ir)
         table.insert(ir.year_suffix_irs, year_suffix_ir)
       end
@@ -1217,9 +1221,8 @@ function CiteProc:add_bibliography_year_suffix(ir)
   end
 
   for _, year_suffix_ir in ipairs(ir.year_suffix_irs) do
-    if not year_suffix_ir.inlines then
-      year_suffix_ir.inlines = {PlainText:new(ir.reference["year-suffix"])}
-    end
+    year_suffix_ir.inlines = {PlainText:new(ir.reference["year-suffix"])}
+    year_suffix_ir.group_var = "important"
   end
 
 

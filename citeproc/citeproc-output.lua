@@ -853,6 +853,8 @@ local function find_left(inline)
   end
   if inline.type == "PlainText" then
     return inline
+  -- elseif inline.type == "Micro" then
+  --   return nil
   elseif inline.inlines then
     return find_left(inline.inlines[1])
   else
@@ -904,7 +906,9 @@ local function normalise_text_elements(inlines)
 
     local first_char = string.sub(first.value, -1)
     local second_char = string.sub(second.value, 1, 1)
-    if first_char == second_char and (first_char == "," or first_char == ".") then
+    -- TODO: while loop
+    if first_char == second_char and (first_char == "," or first_char == ".") or
+        (first_char == " " and second_char == " ") then
       second.value = string.sub(second.value, 2)
     end
 

@@ -9,6 +9,7 @@ local text_module = {}
 local Element = require("citeproc-element").Element
 local Rendered = require("citeproc-ir-node").Rendered
 local YearSuffix = require("citeproc-ir-node").YearSuffix
+local PlainText = require("citeproc-output").PlainText
 local util = require("citeproc-util")
 
 
@@ -67,13 +68,14 @@ function Text:build_variable_ir(engine, state, context)
   local variable = self.variable
   local text
 
-  if variable == "year-suffix" and not context.bibliography then
-    return YearSuffix:new(nil, self)
+  if variable == "year-suffix" then
+    return self:build_year_suffix_ir(engine, state, context)
   end
 
   if not state.suppressed[variable] then
     text = context:get_variable(variable, self.form)
   end
+
   if not text then
     local ir = Rendered:new({}, self)
     ir.group_var = "missing"
@@ -97,12 +99,7 @@ function Text:build_variable_ir(engine, state, context)
   end
   -- util.debug(text)
   local inlines = self:render_text_inlines(text, context)
-  local ir
-  if variable == "year-suffix" then
-    ir = YearSuffix:new(inlines, self)
-  else
-    ir = Rendered:new(inlines, self)
-  end
+  local ir = Rendered:new(inlines, self)
   ir.group_var = "important"
 
   -- Suppress substituted name variable
@@ -110,6 +107,27 @@ function Text:build_variable_ir(engine, state, context)
     state.suppressed[variable] = true
   end
 
+  return ir
+end
+
+function Text:build_year_suffix_ir(engine, state, context)
+  local text = context:get_variable(self.variable, self.form)
+  local group_var
+  if text then
+    group_var = "important"
+  else
+    text = ""
+    group_var = "missing"
+  end
+
+  local ir = YearSuffix:new({PlainText:new(text)}, self)
+  ir.group_var = group_var
+  ir.affixes = util.clone(self.affixes)
+  ir.display = self.display
+  ir.formatting = util.clone(self.formatting)
+  if self.quotes then
+    ir.quotes = context:get_localized_quotes()
+  end
   return ir
 end
 

@@ -140,7 +140,7 @@ function If:build_children_ir(engine, state, context)
       local child_group_var = child_ir.group_var
       if child_group_var == "important" then
         group_var = "important"
-      elseif child_group_var == "missing" then
+      elseif child_group_var == "missing" and child_ir._type ~= "YearSuffix" then
         if group_var == "plain" then
           group_var = "missing"
         end
