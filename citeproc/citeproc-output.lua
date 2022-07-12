@@ -855,7 +855,7 @@ local function find_left(inline)
     return inline
   -- elseif inline.type == "Micro" then
   --   return nil
-  elseif inline.inlines then
+  elseif inline.inlines and inline.type~="Quoted" then
     return find_left(inline.inlines[1])
   else
     return nil
@@ -867,7 +867,7 @@ local function find_right(inline)
     return inline
   -- elseif inline.type == "Micro" then
   --   return nil
-  elseif inline.inlines then
+  elseif inline.inlines and inline.type ~= "Quoted" then
     return find_right(inline.inlines[#inline.inlines])
   else
     return nil
@@ -891,28 +891,33 @@ local function find_right_quoted(inline)
 end
 
 local function normalise_text_elements(inlines)
+  -- 1. Merge punctuations: "?." => "?"
+  -- 2. Merge spaces: "  " => " "
   local idx = 1
   local len = #inlines
   while idx < len do
-    local first = find_right(inlines[idx])
-    if not first then
-      return nil
-    end
+    local first = find_right(inlines[idx])  -- PlainText
+    local second = find_left(inlines[idx+1])  -- PlainText
+    if first and second then
+      local first_char = string.sub(first.value, -1)
+      local second_char = string.sub(second.value, 1, 1)
+      -- TODO: merge punctuations
 
-    local second = find_left(inlines[idx+1])
-    if not second then
-      return nil
+      local punct_map = output_module.quote_punctuation_map
+      if punct_map[first_char] and punct_map[first_char][second_char] then
+        first.value = string.sub(first.value, 1, -2) .. punct_map[first_char][second_char]
+        second.value = string.sub(second.value, 2)
+      elseif punct_map[first_char] and first_char == second_char then
+        second.value = string.sub(second.value, 2)
+      elseif second_char == " " and (first_char == " " or
+          util.endswith(first.value, util.unicode["no-break space"])) then
+        second.value = string.sub(second.value, 2)
+      else
+        idx = idx + 1
+      end
+    else
+      idx = idx + 1
     end
-
-    local first_char = string.sub(first.value, -1)
-    local second_char = string.sub(second.value, 1, 1)
-    -- TODO: while loop
-    if first_char == second_char and (first_char == "," or first_char == ".") or
-        (first_char == " " and second_char == " ") then
-      second.value = string.sub(second.value, 2)
-    end
-
-    idx = idx + 1
   end
 
 end
@@ -935,7 +940,10 @@ local function move_around_quote(slice, idx, piq)
   -- util.debug(second_char)
 
   if output_module.in_quote_puncts[second_char] then
-    if output_module.quote_punctuation_map[first_char] then
+    if first_char == second_char then
+      first.value = first.value .. second_char
+      second.value = string.sub(second.value, 2)
+    elseif output_module.quote_punctuation_map[first_char] then
       local combined = output_module.quote_punctuation_map[first_char][second_char]
       first.value = string.sub(first.value, 1, -2) .. combined
       second.value = string.sub(second.value, 2)
@@ -945,20 +953,17 @@ local function move_around_quote(slice, idx, piq)
     end
   end
 
-  -- local outside = find_left_text(inlines[idx+1])
-  -- local outside_char = string.sub(outside.value, 1, 1)
-  -- if util.is_punct(outside_char) then
-  -- end
-
 end
 
 function OutputFormat:move_punctuation(inlines, piq)
+  -- Merge punctuations
   normalise_text_elements(inlines)
 
   local idx = 1
   local len = #inlines
   while idx < len do
     local new_idx = idx + 1
+    -- Move punctuation into quotes as needed
     move_around_quote(inlines, idx, piq)
 
     idx = new_idx
@@ -1167,10 +1172,9 @@ end
 
 output_module.in_quote_puncts = {
   ["."] = true,
+  ["!"] = true,
   ["?"] = true,
-  -- [":"] = true,
   [","] = true,
-  [";"] = true,
 }
 
 -- https://github.com/Juris-M/citeproc-js/blob/aa2683f48fe23be459f4ed3be3960e2bb56203f0/src/queue.js#L724

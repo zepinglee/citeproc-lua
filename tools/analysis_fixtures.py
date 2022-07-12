@@ -23,6 +23,8 @@ skipped_fixtures = [
     # Disambiguation with only issued date?
     'date_YearSuffixImplicitWithNoDate.txt',
     'date_YearSuffixWithNoDate.txt',
+    # quotes
+    'punctuation_FrenchOrthography.txt',
 ]
 
 failed_fixtures = []
@@ -40,7 +42,7 @@ namespaces = {
 # paths = sorted(glob.glob('./test/test-suite/processor-tests/humans/*.txt'))
 paths = sorted([
     './test/test-suite/processor-tests/humans/' + f for f in failed_fixtures
-    if f not in skipped_fixtures and not f.startswith('punctuation_')
+    if f not in skipped_fixtures
 ])
 
 fixtures = []

@@ -1,33 +1,33 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
-bugreports          62      20       0       0
+bugreports          64      18       0       0
 collapse             4      17       0       0
 condition           17       0       0       0
 date                97       4       0       0
 decorations          7       0       0       0
 disambiguate        61      10       0       0
-display              2       2       0       0
-etal                 4       0       0       0
+display              3       2       0       0
+etal                 3       1       0       0
 flipflop            17       0       0       0
 form                 3       0       0       0
-fullstyles           2       3       0       0
+fullstyles           3       2       0       0
 group                6       1       0       0
 integration         13       0       0       0
 label               18       1       0       0
 locale              23       0       0       0
 locator              5       0       0       0
 magic               33       6       1       0
-name                97       7       1       0
+name                98       7       1       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
 number              18       0       0       0
 page                 9       0       0       0
 plural               7       0       0       0
-position            14       0       0       0
-punctuation          9       7       0       0
-quotes               4       0       0       0
+position            14       1       0       0
+punctuation         13       3       0       0
+quotes               3       1       0       0
 simplespace          1       0       0       0
 sort                46      10       0       0
 sortseparator        1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              732      92       2       0
+(all)              739      88       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -97,7 +97,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_CitationSortsWithEtAl.txt
 Passed in:
-(string) '[<i>Aalto et al.</i>, 1999; <i>Aalto et al.</i>, 2000; <i>Aalto et al.</i>, 2001]'
+(string) '[<i>Aalto et al.,</i> 1999; <i>Aalto et al.,</i> 2000; <i>Aalto et al.,</i> 2001]'
 Expected:
 (string) '[<i>Aalto et al.</i>, 1999, 2000, 2001]'
 
@@ -129,18 +129,6 @@ Expected:
 ..[1] See reference 1, Baines et al.
 >>[2] See reference 1, Baines et al.'
 
-Failure → citeproc test test-suite bugreports_MatchedAuthorAndDate.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brown, J. 2006a, August. <i><b>Tijdschrift voor praktijkondersteuning</b></i>. http://dx.doi.org/10.1007/bf03074904.</div>
-  <div class="csl-entry">Brown, J. 2006b, August. <i><b>Huisarts en Wetenschap</b></i>. http://dx.doi.org/10.1007/bf03084836.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brown, J. 2006a, August. <b><i>Tijdschrift voor praktijkondersteuning</i></b>. http://dx.doi.org/10.1007/bf03074904.</div>
-  <div class="csl-entry">Brown, J. 2006b, August. <b><i>Huisarts en Wetenschap</i></b>. http://dx.doi.org/10.1007/bf03084836.</div>
-</div>'
-
 Failure → citeproc test test-suite bugreports_MovePunctuationInsideQuotesForLocator.txt
 Passed in:
 (string) 'Jennifer J. Davis, “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830” (Ph.D. diss., Pennsylvania State University, History, 2004), “gargoyle.”'
@@ -154,8 +142,8 @@ Passed in:
 
     <div class="csl-block">Aalto, Alan</div>
 
-    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">““PIAAC-Longitudinal (PIAAC-L) 2015.””</div>
-  </div>
+    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">““PIAAC-Longitudinal (PIAAC-L) 2015””</div>
+    .</div>
   <div class="csl-entry">
 
     <div class="csl-block">Aalto, Alan</div>
@@ -239,22 +227,6 @@ Passed in:
 (string) '(Roe, 1995; Roe, 1996)'
 Expected:
 (string) '(Roe, 1995, 1996)'
-
-Failure → citeproc test test-suite bugreports_YearSuffixInHarvard1.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Africa News, 2006a. Burkina Faso: Journalist Case Puts Spotlight On Justice System. <i>Africa News</i>.</div>
-  <div class="csl-entry">Africa News, 2010. Niger: Who Really Ousted Tandja, And Why?. <i>Africa News</i>.</div>
-  <div class="csl-entry">Africa News, 2007. Uganda: Police Protect Besigye Rally. <i>Africa News</i>.</div>
-  <div class="csl-entry">Africa News, 2006b. Uganda: UK, US Deploy Observers. <i>Africa News</i>.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Africa News, 2006a. Burkina Faso: Journalist Case Puts Spotlight On Justice System. <i>Africa News</i>.</div>
-  <div class="csl-entry">Africa News, 2010. Niger: Who Really Ousted Tandja, And Why? <i>Africa News</i>.</div>
-  <div class="csl-entry">Africa News, 2007. Uganda: Police Protect Besigye Rally. <i>Africa News</i>.</div>
-  <div class="csl-entry">Africa News, 2006b. Uganda: UK, US Deploy Observers. <i>Africa News</i>.</div>
-</div>'
 
 Failure → citeproc test test-suite bugreports_ikeyOne.txt
 Passed in:
@@ -558,7 +530,7 @@ Passed in:
     <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005.</div>
   </div>
   <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> F.G. Bennett Jr., “Getting Property Right: “Informal” Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>, vol. 18, Aug. 2009, pp. 463–509.</div>
+    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> F.G. Bennett Jr., “Getting Property Right: “Informal” Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.,</i> vol. 18, Aug. 2009, pp. 463–509.</div>
   </div>
 </div>'
 Expected:
@@ -571,6 +543,12 @@ Expected:
   </div>
 </div>'
 
+Failure → citeproc test test-suite etal_CitationAndBibliographyDecorationsInCitation.txt
+Passed in:
+(string) '(Doe <i>et al.,</i> 1965)'
+Expected:
+(string) '(Doe <i>et al.</i>, 1965)'
+
 Failure → citeproc test test-suite fullstyles_ABdNT.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -579,16 +557,6 @@ Passed in:
 Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">COLE, S. J.; MOORE, R. Hydrological modelling using raingauge- and radar-based estimators of areal rainfall. <b>Journal of Hydrology</b>, v. 358, n. 3–4, p. 159–181, 2008. </div>
-</div>'
-
-Failure → citeproc test test-suite fullstyles_ChicagoArticleTitleQuestion.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, John. 1994. An article is it?. <i>New Thinker</i> 10: 5.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe, John. 1994. An article is it? <i>New Thinker</i> 10: 5.</div>
 </div>'
 
 Failure → citeproc test test-suite fullstyles_ChicagoAuthorDateSimple.txt
@@ -759,6 +727,12 @@ Expected:
   <div class="csl-entry">---</div>
 </div>'
 
+Failure → citeproc test test-suite position_IbidWithPrefixFullStop.txt
+Passed in:
+(string) '>>[0] Book A; . He said “Please work.” ibid.'
+Expected:
+(string) '>>[0] Book A. He said “Please work.” Ibid.'
+
 Failure → citeproc test test-suite punctuation_DefaultYearSuffixDelimiter.txt
 Passed in:
 (string) '(Aalto 2000a; Aalto 2000b; Aalto 2000c)'
@@ -771,249 +745,53 @@ Passed in:
 Expected:
 (string) 'His « Anonymous » Life'
 
-Failure → citeproc test test-suite punctuation_FullMontyField.txt
-Passed in:
-(string) 'ENDING IN COLON
-colon:: colon
-period.: colon
-semicolon;: colon
-exclamation!: colon
-question?: colon
-comma,: colon
-
-ENDING IN PERIOD
-colon:. period
-period. period
-semicolon;. period
-exclamation!. period
-question?. period
-comma,. period
-
-ENDING IN SEMICOLON
-colon:; semicolon
-period.; semicolon
-semicolon;; semicolon
-exclamation!; semicolon
-question?; semicolon
-comma,; semicolon
-
-ENDING IN EXCLAMATION
-colon:! exclamation
-period.! exclamation
-semicolon;! exclamation
-exclamation!! exclamation
-question?! exclamation
-comma,! exclamation
-
-ENDING IN QUESTION
-colon:? question
-period.? question
-semicolon;? question
-exclamation!? question
-question?? question
-comma,? question
-
-ENDING IN COMMA
-colon:, comma
-period., comma
-semicolon;, comma
-exclamation!, comma
-question?, comma
-comma, comma'
-Expected:
-(string) 'ENDING IN COLON
-colon: colon
-period.: colon
-semicolon; colon
-exclamation! colon
-question? colon
-comma,: colon
-
-ENDING IN PERIOD
-colon: period
-period. period
-semicolon; period
-exclamation! period
-question? period
-comma,. period
-
-ENDING IN SEMICOLON
-colon:; semicolon
-period.; semicolon
-semicolon; semicolon
-exclamation!; semicolon
-question?; semicolon
-comma,; semicolon
-
-ENDING IN EXCLAMATION
-colon! exclamation
-period.! exclamation
-semicolon! exclamation
-exclamation! exclamation
-question?! exclamation
-comma,! exclamation
-
-ENDING IN QUESTION
-colon? question
-period.? question
-semicolon? question
-exclamation!? question
-question? question
-comma,? question
-
-ENDING IN COMMA
-colon:, comma
-period., comma
-semicolon;, comma
-exclamation!, comma
-question?, comma
-comma, comma'
-
-Failure → citeproc test test-suite punctuation_FullMontyPlain.txt
-Passed in:
-(string) 'ENDING IN COLON
-colon:: colon
-period.: colon
-semicolon;: colon
-exclamation!: colon
-question?: colon
-comma,: colon
-
-ENDING IN PERIOD
-colon:. period
-period. period
-semicolon;. period
-exclamation!. period
-question?. period
-comma,. period
-
-ENDING IN SEMICOLON
-colon:; semicolon
-period.; semicolon
-semicolon;; semicolon
-exclamation!; semicolon
-question?; semicolon
-comma,; semicolon
-
-ENDING IN EXCLAMATION
-colon:! exclamation
-period.! exclamation
-semicolon;! exclamation
-exclamation!! exclamation
-question?! exclamation
-comma,! exclamation
-
-ENDING IN QUESTION
-colon:? question
-period.? question
-semicolon;? question
-exclamation!? question
-question?? question
-comma,? question
-
-ENDING IN COMMA
-colon:, comma
-period., comma
-semicolon;, comma
-exclamation!, comma
-question?, comma
-comma, comma'
-Expected:
-(string) 'ENDING IN COLON
-colon: colon
-period.: colon
-semicolon; colon
-exclamation! colon
-question? colon
-comma,: colon
-
-ENDING IN PERIOD
-colon: period
-period. period
-semicolon; period
-exclamation! period
-question? period
-comma,. period
-
-ENDING IN SEMICOLON
-colon:; semicolon
-period.; semicolon
-semicolon; semicolon
-exclamation!; semicolon
-question?; semicolon
-comma,; semicolon
-
-ENDING IN EXCLAMATION
-colon! exclamation
-period.! exclamation
-semicolon! exclamation
-exclamation! exclamation
-question?! exclamation
-comma,! exclamation
-
-ENDING IN QUESTION
-colon? question
-period.? question
-semicolon? question
-exclamation!? question
-question? question
-comma,? question
-
-ENDING IN COMMA
-colon:, comma
-period., comma
-semicolon;, comma
-exclamation!, comma
-question?, comma
-comma, comma'
-
 Failure → citeproc test test-suite punctuation_FullMontyQuotesIn.txt
 Passed in:
 (string) 'ENDING IN COLON
-“colon”:: colon
+“colon”: colon
 “period.”: colon
-“semicolon;”: colon
-“exclamation”!: colon
-“question?”: colon
+“semicolon”; colon
+“exclamation!” colon
+“question?” colon
 “comma,”: colon
 
 ENDING IN PERIOD
-“colon”:. period
+“colon”: period
 “period.” period
-“semicolon;”. period
-“exclamation”!. period
-“question?”. period
+“semicolon”; period
+“exclamation!” period
+“question?” period
 “comma,”. period
 
 ENDING IN SEMICOLON
 “colon”:; semicolon
 “period.”; semicolon
-“semicolon;”; semicolon
-“exclamation”!; semicolon
+“semicolon”; semicolon
+“exclamation!”; semicolon
 “question?”; semicolon
 “comma,”; semicolon
 
 ENDING IN EXCLAMATION
-“colon”:! exclamation
+“colon!” exclamation
 “period.”! exclamation
-“semicolon;”! exclamation
-“exclamation”!! exclamation
+“semicolon!” exclamation
+“exclamation!” exclamation
 “question?”! exclamation
 “comma,”! exclamation
 
 ENDING IN QUESTION
-“colon”:? question
+“colon?” question
 “period.”? question
-“semicolon;”? question
-“exclamation”!? question
-“question?”? question
+“semicolon?” question
+“exclamation!”? question
+“question?” question
 “comma,”? question
 
 ENDING IN COMMA
 “colon”:, comma
 “period.”, comma
-“semicolon;”, comma
-“exclamation”!, comma
+“semicolon”;, comma
+“exclamation!”, comma
 “question?”, comma
 “comma,” comma'
 Expected:
@@ -1065,111 +843,15 @@ ENDING IN COMMA
 “question?,” comma
 “comma,” comma'
 
-Failure → citeproc test test-suite punctuation_FullMontyQuotesOut.txt
+Failure → citeproc test test-suite quotes_PunctuationWithInnerQuote.txt
 Passed in:
-(string) 'ENDING IN COLON
-“colon”:: colon
-“period”.: colon
-“semicolon”;: colon
-“exclamation”!: colon
-“question”?: colon
-“comma”,: colon
-
-ENDING IN PERIOD
-“colon”:. period
-“period”. period
-“semicolon”;. period
-“exclamation”!. period
-“question”?. period
-“comma”,. period
-
-ENDING IN SEMICOLON
-“colon”:; semicolon
-“period”.; semicolon
-“semicolon”;; semicolon
-“exclamation”!; semicolon
-“question”?; semicolon
-“comma”,; semicolon
-
-ENDING IN EXCLAMATION
-“colon”:! exclamation
-“period”.! exclamation
-“semicolon”;! exclamation
-“exclamation”!! exclamation
-“question”?! exclamation
-“comma”,! exclamation
-
-ENDING IN QUESTION
-“colon”:? question
-“period”.? question
-“semicolon”;? question
-“exclamation”!? question
-“question”?? question
-“comma”,? question
-
-ENDING IN COMMA
-“colon”:, comma
-“period”., comma
-“semicolon”;, comma
-“exclamation”!, comma
-“question”?, comma
-“comma”, comma'
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">“This is ‘The One’”.</div>
+</div>'
 Expected:
-(string) 'ENDING IN COLON
-“colon”: colon
-“period”.: colon
-“semicolon”; colon
-“exclamation”! colon
-“question”? colon
-“comma”,: colon
-
-ENDING IN PERIOD
-“colon”: period
-“period”. period
-“semicolon”; period
-“exclamation”! period
-“question”? period
-“comma”,. period
-
-ENDING IN SEMICOLON
-“colon”:; semicolon
-“period”.; semicolon
-“semicolon”; semicolon
-“exclamation”!; semicolon
-“question”?; semicolon
-“comma”,; semicolon
-
-ENDING IN EXCLAMATION
-“colon”! exclamation
-“period”.! exclamation
-“semicolon”! exclamation
-“exclamation”! exclamation
-“question”?! exclamation
-“comma”,! exclamation
-
-ENDING IN QUESTION
-“colon”? question
-“period”.? question
-“semicolon”? question
-“exclamation”!? question
-“question”? question
-“comma”,? question
-
-ENDING IN COMMA
-“colon”:, comma
-“period”., comma
-“semicolon”;, comma
-“exclamation”!, comma
-“question”?, comma
-“comma”, comma'
-
-Failure → citeproc test test-suite punctuation_SuppressPrefixPeriodForDelimiterSemicolon.txt
-Passed in:
-(string) '..[0] John Doe, “His Anonymous Life,” 1965; Jane Roe, “Her Anonymous Life,” 1965.
->>[1] Doe, “His Anonymous Life;” Roe, “Her Anonymous Life.”'
-Expected:
-(string) '..[0] John Doe, “His Anonymous Life,” 1965; Jane Roe, “Her Anonymous Life,” 1965.
->>[1] Doe, “His Anonymous Life”; Roe, “Her Anonymous Life.”'
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">“This is ‘The One.’”</div>
+</div>'
 
 Failure → citeproc test test-suite sort_AuthorDateWithYearSuffix.txt
 Passed in:
