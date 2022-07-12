@@ -26,7 +26,7 @@ number              18       0       0       0
 page                 9       0       0       0
 plural               7       0       0       0
 position            14       1       0       0
-punctuation         13       3       0       0
+punctuation         14       2       0       0
 quotes               3       1       0       0
 simplespace          1       0       0       0
 sort                46      10       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              739      88       2       0
+(all)              740      87       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -744,104 +744,6 @@ Passed in:
 (string) 'His “ Anonymous ” Life'
 Expected:
 (string) 'His « Anonymous » Life'
-
-Failure → citeproc test test-suite punctuation_FullMontyQuotesIn.txt
-Passed in:
-(string) 'ENDING IN COLON
-“colon”: colon
-“period.”: colon
-“semicolon”; colon
-“exclamation!” colon
-“question?” colon
-“comma,”: colon
-
-ENDING IN PERIOD
-“colon”: period
-“period.” period
-“semicolon”; period
-“exclamation!” period
-“question?” period
-“comma,”. period
-
-ENDING IN SEMICOLON
-“colon”:; semicolon
-“period.”; semicolon
-“semicolon”; semicolon
-“exclamation!”; semicolon
-“question?”; semicolon
-“comma,”; semicolon
-
-ENDING IN EXCLAMATION
-“colon!” exclamation
-“period.”! exclamation
-“semicolon!” exclamation
-“exclamation!” exclamation
-“question?”! exclamation
-“comma,”! exclamation
-
-ENDING IN QUESTION
-“colon?” question
-“period.”? question
-“semicolon?” question
-“exclamation!”? question
-“question?” question
-“comma,”? question
-
-ENDING IN COMMA
-“colon”:, comma
-“period.”, comma
-“semicolon”;, comma
-“exclamation!”, comma
-“question?”, comma
-“comma,” comma'
-Expected:
-(string) 'ENDING IN COLON
-“colon”: colon
-“period.”: colon
-“semicolon”; colon
-“exclamation!” colon
-“question?” colon
-“comma,”: colon
-
-ENDING IN PERIOD
-“colon”: period
-“period.” period
-“semicolon”; period
-“exclamation!” period
-“question?” period
-“comma,.” period
-
-ENDING IN SEMICOLON
-“colon”:; semicolon
-“period.”; semicolon
-“semicolon”; semicolon
-“exclamation!”; semicolon
-“question?”; semicolon
-“comma,”; semicolon
-
-ENDING IN EXCLAMATION
-“colon!” exclamation
-“period.!” exclamation
-“semicolon!” exclamation
-“exclamation!” exclamation
-“question?!” exclamation
-“comma,!” exclamation
-
-ENDING IN QUESTION
-“colon?” question
-“period.?” question
-“semicolon?” question
-“exclamation!?” question
-“question?” question
-“comma,?” question
-
-ENDING IN COMMA
-“colon”:, comma
-“period.,” comma
-“semicolon”;, comma
-“exclamation!,” comma
-“question?,” comma
-“comma,” comma'
 
 Failure → citeproc test test-suite quotes_PunctuationWithInnerQuote.txt
 Passed in:

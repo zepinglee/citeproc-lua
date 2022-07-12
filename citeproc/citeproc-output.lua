@@ -877,16 +877,13 @@ end
 -- "'Foo,' bar" => ,
 local function find_right_quoted(inline)
   if inline.type == "Quoted" then
-    if inline.quotes.punctuation_in_quote == false then
-      return nil
-    end
-    return find_right(inline.inlines[#inline.inlines])
+    return find_right(inline.inlines[#inline.inlines]), inline.quotes.punctuation_in_quote
   -- elseif inline.type == "Micro" then
   --   return nil
   elseif inline.inlines then
     return find_right_quoted(inline.inlines[#inline.inlines])
   else
-    return nil
+    return nil, false
   end
 end
 
@@ -922,52 +919,79 @@ local function normalise_text_elements(inlines)
 
 end
 
-local function move_around_quote(slice, idx, piq)
-  local first = find_right_quoted(slice[idx])
-  if not first then
-    return nil
-  end
-
-  local second = find_left(slice[idx+1])
-  if not second then
-    return nil
-  end
-
+local function move_in_quotes(first, second)
   local first_char = string.sub(first.value, -1)
   local second_char = string.sub(second.value, 1, 1)
-
-  -- util.debug(first_char)
-  -- util.debug(second_char)
-
-  if output_module.in_quote_puncts[second_char] then
+  local success = false
+  if output_module.move_in_puncts[second_char] then
     if first_char == second_char then
-      first.value = first.value .. second_char
       second.value = string.sub(second.value, 2)
+      success = true
     elseif output_module.quote_punctuation_map[first_char] then
       local combined = output_module.quote_punctuation_map[first_char][second_char]
       first.value = string.sub(first.value, 1, -2) .. combined
       second.value = string.sub(second.value, 2)
+      success = true
     else
       first.value = first.value .. second_char
       second.value = string.sub(second.value, 2)
+      success = true
     end
   end
+  return success
+end
 
+local function move_out_quotes(first, second)
+  local first_char = string.sub(first.value, -1)
+  local second_char = string.sub(second.value, 1, 1)
+  local success = false
+  if output_module.move_out_puncts[first_char] then
+    if first_char == second_char then
+      first.value = string.sub(first.value, 1, -2)
+      success = true
+    elseif output_module.quote_punctuation_map[second_char] then
+      local combined = output_module.quote_punctuation_map[first_char][second_char]
+      first.value = string.sub(first.value, 1, -2)
+      second.value = combined .. string.sub(second.value, 2)
+      success = true
+    else
+      first.value = string.sub(first.value, 1, -2)
+      second.value = first_char .. second.value
+      success = true
+    end
+  end
+  return success
+end
+
+local function move_around_quote(inlines)
+  local idx = 1
+  local len = #inlines
+
+  while idx < len do
+    -- Move punctuation into quotes as needed
+    local first, punctuation_in_quote = find_right_quoted(inlines[idx])
+    local second = find_left(inlines[idx+1])
+    local success = false
+    if first and second then
+      if punctuation_in_quote then
+        success = move_in_quotes(first, second)
+      else
+        success = move_out_quotes(first, second)
+      end
+      if not success then
+        idx = idx + 1
+      end
+    else
+      idx = idx + 1
+    end
+  end
 end
 
 function OutputFormat:move_punctuation(inlines, piq)
   -- Merge punctuations
   normalise_text_elements(inlines)
 
-  local idx = 1
-  local len = #inlines
-  while idx < len do
-    local new_idx = idx + 1
-    -- Move punctuation into quotes as needed
-    move_around_quote(inlines, idx, piq)
-
-    idx = new_idx
-  end
+  move_around_quote(inlines)
 
   for _, inline in ipairs(inlines) do
     if inline.type == "Quoted" or inline.type == "Formatted" or
@@ -1170,11 +1194,17 @@ function DisamStringFormat:flatten_ir(ir)
 end
 
 
-output_module.in_quote_puncts = {
+output_module.move_in_puncts = {
   ["."] = true,
   ["!"] = true,
   ["?"] = true,
   [","] = true,
+}
+
+output_module.move_out_puncts = {
+  [","] = true,
+  [";"] = true,
+  [":"] = true,
 }
 
 -- https://github.com/Juris-M/citeproc-js/blob/aa2683f48fe23be459f4ed3be3960e2bb56203f0/src/queue.js#L724
