@@ -27,7 +27,7 @@ page                 9       0       0       0
 plural               7       0       0       0
 position            14       1       0       0
 punctuation         14       2       0       0
-quotes               3       1       0       0
+quotes               4       0       0       0
 simplespace          1       0       0       0
 sort                46      10       0       0
 sortseparator        1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              740      87       2       0
+(all)              741      86       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -142,8 +142,8 @@ Passed in:
 
     <div class="csl-block">Aalto, Alan</div>
 
-    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">““PIAAC-Longitudinal (PIAAC-L) 2015””</div>
-    .</div>
+    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">““PIAAC-Longitudinal (PIAAC-L) 2015.””</div>
+  </div>
   <div class="csl-entry">
 
     <div class="csl-block">Aalto, Alan</div>
@@ -744,16 +744,6 @@ Passed in:
 (string) 'His “ Anonymous ” Life'
 Expected:
 (string) 'His « Anonymous » Life'
-
-Failure → citeproc test test-suite quotes_PunctuationWithInnerQuote.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">“This is ‘The One’”.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">“This is ‘The One.’”</div>
-</div>'
 
 Failure → citeproc test test-suite sort_AuthorDateWithYearSuffix.txt
 Passed in:

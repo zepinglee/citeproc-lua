@@ -874,10 +874,22 @@ local function find_right(inline)
   end
 end
 
+local function find_right_in_quoted(inline)
+  if inline.type == "PlainText" then
+    return inline
+  -- elseif inline.type == "Micro" then
+  --   return nil
+  elseif inline.inlines then
+    return find_right_in_quoted(inline.inlines[#inline.inlines])
+  else
+    return nil
+  end
+end
+
 -- "'Foo,' bar" => ,
 local function find_right_quoted(inline)
   if inline.type == "Quoted" then
-    return find_right(inline.inlines[#inline.inlines]), inline.quotes.punctuation_in_quote
+    return find_right_in_quoted(inline.inlines[#inline.inlines]), inline.quotes.punctuation_in_quote
   -- elseif inline.type == "Micro" then
   --   return nil
   elseif inline.inlines then
