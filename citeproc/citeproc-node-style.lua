@@ -372,7 +372,13 @@ function Bibliography:substitute_subsequent_authors_complete_all(engine, ir)
   ir.first_names_ir.bib_names_str = bib_names_str
   if engine.previous_bib_names_ir and
       engine.previous_bib_names_ir.bib_names_str == bib_names_str then
-    ir.first_names_ir.children = {Rendered:new({PlainText:new(self.subsequent_author_substitute)}, self)}
+    local text = self.subsequent_author_substitute
+    if text == "" then
+      ir.first_names_ir.children = {}
+      ir.first_names_ir.group_var = "missing"
+    else
+      ir.first_names_ir.children = {Rendered:new({PlainText:new(text)}, self)}
+    end
   end
 end
 

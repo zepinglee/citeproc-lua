@@ -456,10 +456,13 @@ function OutputFormat:flatten_ir(ir)
 end
 
 function OutputFormat:flatten_seq_ir(ir)
-  local inlines_list = {}
   if not ir.children then
     print(debug.traceback())
   end
+  if #ir.children == 0 then
+    return {}
+  end
+  local inlines_list = {}
   for _, child in ipairs(ir.children) do
     if child.group_var ~= "missing" then
       table.insert(inlines_list, self:flatten_ir(child))
@@ -867,7 +870,7 @@ local function find_right(inline)
     return inline
   -- elseif inline.type == "Micro" then
   --   return nil
-  elseif inline.inlines and inline.type ~= "Quoted" then
+  elseif inline.inlines and #inline.inlines > 0 and inline.type ~= "Quoted" then
     return find_right(inline.inlines[#inline.inlines])
   else
     return nil
@@ -879,7 +882,7 @@ local function find_right_in_quoted(inline)
     return inline
   -- elseif inline.type == "Micro" then
   --   return nil
-  elseif inline.inlines then
+  elseif inline.inlines and #inline.inlines > 0 then
     return find_right_in_quoted(inline.inlines[#inline.inlines])
   else
     return nil
@@ -888,11 +891,11 @@ end
 
 -- "'Foo,' bar" => ,
 local function find_right_quoted(inline)
-  if inline.type == "Quoted" then
+  if inline.type == "Quoted" and #inline.inlines > 0 then
     return find_right_in_quoted(inline.inlines[#inline.inlines]), inline.quotes.punctuation_in_quote
   -- elseif inline.type == "Micro" then
   --   return nil
-  elseif inline.inlines then
+  elseif inline.inlines and #inline.inlines > 0 then
     return find_right_quoted(inline.inlines[#inline.inlines])
   else
     return nil, false
