@@ -22,6 +22,7 @@ skipped_fixtures = [
     'disambiguate_DisambiguationHang.txt',
     # Disambiguation with only issued date?
     'date_YearSuffixImplicitWithNoDate.txt',
+    'date_YearSuffixWithNoDate.txt',
 ]
 
 failed_fixtures = []

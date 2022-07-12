@@ -6,7 +6,7 @@ collapse             4      17       0       0
 condition           17       0       0       0
 date                97       4       0       0
 decorations          7       0       0       0
-disambiguate        60      11       0       0
+disambiguate        61      10       0       0
 display              2       2       0       0
 etal                 4       0       0       0
 flipflop            17       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              731      93       2       0
+(all)              732      92       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -407,12 +407,6 @@ Passed in:
 (string) '(John Doe n.d. [Accessed: June 1, 1965]; John Doe n.d. [Accessed: June 1, 2065])'
 Expected:
 (string) '(John Doe n.d.-a [Accessed: June 1, 1965]; John Doe n.d.-b [Accessed: June 1, 2065])'
-
-Failure → citeproc test test-suite disambiguate_AllNamesBaseNameCountOnFailureIfYearSuffixAvailable.txt
-Passed in:
-(string) 'Asthma et al. (1990a); Asthma et al. (1990b); Dropsy, Edward Enteritis, et al. (2000a); Dropsy, Ernie Enteritis, et al. (2000b)'
-Expected:
-(string) 'Asthma et al. (1990a); Asthma et al. (1990b); Dropsy, Edward Enteritis, et al. (2000); Dropsy, Ernie Enteritis, et al. (2000)'
 
 Failure → citeproc test test-suite disambiguate_BasedOnEtAlSubsequent.txt
 Passed in:
