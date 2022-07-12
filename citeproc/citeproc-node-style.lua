@@ -257,7 +257,9 @@ function Citation:build_ir(engine, state, context)
 end
 
 
-local Bibliography = Element:derive("bibliography")
+local Bibliography = Element:derive("bibliography", {
+  subsequent_author_substitute_rule = "complete-all"
+})
 
 function Bibliography:from_node(node, style)
   local o = Bibliography:new()
@@ -314,12 +316,74 @@ function Bibliography:build_ir(engine, state, context)
     end
     ir.children = {ir.children[1], right_inline_ir}
   end
+
+  if self.subsequent_author_substitute then
+    self:substitute_subsequent_authors(engine, ir)
+  end
+
   if not ir then
     ir = Rendered:new(PlainText:new("[CSL STYLE ERROR: reference with no printed form.]"), self)
   end
   return ir
 end
 
+function Bibliography:substitute_subsequent_authors(engine, ir)
+  ir.first_names_ir = self:find_first_names_ir(ir)  -- should be a SeqIr wiht _element = "names"
+  if not ir.first_names_ir then
+    engine.previous_bib_names_ir = nil
+    return
+  end
+  if self.subsequent_author_substitute_rule == "complete-all" then
+    self:substitute_subsequent_authors_complete_all(engine, ir)
+  elseif self.subsequent_author_substitute_rule == "complete-each" then
+    self:substitute_subsequent_authors_complete_each(engine, ir)
+  elseif self.subsequent_author_substitute_rule == "partial-each" then
+    self:substitute_subsequent_authors_partial_each(engine, ir)
+  elseif self.subsequent_author_substitute_rule == "partial-first" then
+    self:substitute_subsequent_authors_partial_first(engine, ir)
+  end
+  engine.previous_bib_names_ir = ir.first_names_ir
+end
+
+function Bibliography:find_first_names_ir(ir)
+  if ir._element == "names" then
+    return ir
+  elseif ir.children then
+    for _, child_ir in ipairs(ir.children) do
+      local first_names_ir = self:find_first_names_ir(child_ir)
+      if first_names_ir then
+        return first_names_ir
+      end
+    end
+  end
+  return nil
+end
+
+function Bibliography:substitute_subsequent_authors_complete_all(engine, ir)
+  local bib_names_str = ""
+  for _, person_name_ir in ipairs(ir.first_names_ir.person_name_irs) do
+    if bib_names_str ~= "" then
+      bib_names_str = bib_names_str .. "     "
+    end
+    local name_variants = person_name_ir.disam_variants
+    bib_names_str = bib_names_str .. name_variants[#name_variants]
+  end
+
+  ir.first_names_ir.bib_names_str = bib_names_str
+  if engine.previous_bib_names_ir and
+      engine.previous_bib_names_ir.bib_names_str == bib_names_str then
+    ir.first_names_ir.children = {Rendered:new({PlainText:new(self.subsequent_author_substitute)}, self)}
+  end
+end
+
+function Bibliography:substitute_subsequent_authors_complete_each(engine, ir)
+end
+
+function Bibliography:substitute_subsequent_authors_partial_each(engine, ir)
+end
+
+function Bibliography:substitute_subsequent_authors_partial_first(engine, ir)
+end
 
 local Macro = Element:derive("macro")
 

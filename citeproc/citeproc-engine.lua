@@ -1193,8 +1193,6 @@ function CiteProc:makeBibliography()
     -- util.debug(ir)
     ir.reference = context.reference
 
-    -- subsequent_author_substitute
-
     -- Add year-suffix
     self:add_bibliography_year_suffix(ir)
 

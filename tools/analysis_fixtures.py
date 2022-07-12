@@ -8,8 +8,8 @@ skip_tags = [
 skip_attrs = [
     'cite-group-delimiter',
     'collapse',
-    'subsequent-author-substitute',
-    'subsequent-author-substitute-rule',
+    # 'subsequent-author-substitute',
+    # 'subsequent-author-substitute-rule',
 ]
 skip_attr_values = [
     'citation-label',
