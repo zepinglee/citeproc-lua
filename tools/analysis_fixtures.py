@@ -23,8 +23,10 @@ skipped_fixtures = [
     # Disambiguation with only issued date?
     'date_YearSuffixImplicitWithNoDate.txt',
     'date_YearSuffixWithNoDate.txt',
-    # quotes
+    # Quotes
     'punctuation_FrenchOrthography.txt',
+    # Punctuation merge
+    'position_IbidWithPrefixFullStop.txt'
 ]
 
 failed_fixtures = []

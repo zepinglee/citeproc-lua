@@ -182,7 +182,6 @@ function Names:build_ir(engine, state, context)
 
   local ir = Rendered:new({}, self)
   ir.group_var = "missing"
-  ir.name_count = 0
   return ir
 
 end

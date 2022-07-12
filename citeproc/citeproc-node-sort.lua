@@ -174,7 +174,6 @@ function Key:eval(engine, state, context)
     state:push_macro(self.macro)
     local ir = macro:build_ir(engine, state, context)
     state:pop_macro(self.macro)
-    -- util.debug(ir)
     if ir.name_count then
       return ir.name_count
     elseif ir.sort_key ~= nil then

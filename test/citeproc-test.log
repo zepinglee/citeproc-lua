@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
-bugreports          64      18       0       0
+bugreports          65      17       0       0
 collapse             4      17       0       0
 condition           17       0       0       0
 date                97       4       0       0
@@ -17,7 +17,7 @@ integration         13       0       0       0
 label               18       1       0       0
 locale              23       0       0       0
 locator              5       0       0       0
-magic               33       6       1       0
+magic               33       7       0       0
 name                98       7       1       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              741      86       2       0
+(all)              742      86       1       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -195,12 +195,6 @@ Expected:
     <div class="csl-left-margin">[1]</div><div class="csl-right-inline">“production d ’ eau glacée à condensation à eau avec récupération de chaleur . Modélisation simplifiée dans l ’ optique d ’ un calcul des consommations d ’ énergie d ’ une insta.”</div>
   </div>
 </div>'
-
-Failure → citeproc test test-suite bugreports_SingleQuoteXml.txt
-Passed in:
-(string) '[O A. "hello" <i>Book Title</i> ; Cite with a composer]'
-Expected:
-(string) '[Cite with a composer ; O A. "hello" <i>Book Title</i>]'
 
 Failure → citeproc test test-suite bugreports_SmallCapsEscape.txt
 Passed in:
@@ -653,6 +647,20 @@ Expected:
   <div class="csl-entry">John Smith, Book C (2002)</div>
 </div>'
 
+Failure → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
+Passed in:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Silverstein, Theodore, tran.. “Sir Gawain and the Green Knight.” Chicago: University of Chicago Press, 1974.</div>
+  <div class="csl-entry">Soltes, Ori A., ed.. “Georgia: Art and Civilization through the Ages.” London: Philip Wilson, 1999.</div>
+  <div class="csl-entry">“The Chicago Manual of Style.” Chicago: University of Chicago Press, 1993.</div>
+</div>'
+Expected:
+(string) '<div class="csl-bib-body">
+  <div class="csl-entry">Silverstein, Theodore, tran. “Sir Gawain and the Green Knight.” Chicago: University of Chicago Press, 1974.</div>
+  <div class="csl-entry">Soltes, Ori A., ed. “Georgia: Art and Civilization through the Ages.” London: Philip Wilson, 1999.</div>
+  <div class="csl-entry">“The Chicago Manual of Style.” Chicago: University of Chicago Press, 1993.</div>
+</div>'
+
 Failure → citeproc test test-suite magic_SubsequentAuthorSubstituteOfTitleField.txt
 Passed in:
 (string) '<div class="csl-bib-body">
@@ -754,8 +762,8 @@ Expected:
 Failure → citeproc test test-suite sort_ChicagoYearSuffix1.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Beijing Zoo. 1974a. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
-  <div class="csl-entry">Beijing Zoo. 1974b. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
+  <div class="csl-entry">Beijing Zoo. 1974a. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
+  <div class="csl-entry">Beijing Zoo. 1974b. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -766,8 +774,8 @@ Expected:
 Failure → citeproc test test-suite sort_ChicagoYearSuffix2.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Beijing Zoo. 1974a. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
-  <div class="csl-entry">Beijing Zoo. 1974b. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
+  <div class="csl-entry">Beijing Zoo. 1974a. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
+  <div class="csl-entry">Beijing Zoo. 1974b. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -900,9 +908,6 @@ Expected:
     <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. Container. :25.</div>
   </div>
 </div>'
-
-Error → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
-./citeproc/citeproc-node-sort.lua:98: attempt to compare number with string
 
 Error → citeproc test test-suite name_EtAlWithCombined.txt
 ./citeproc/citeproc-node-choose.lua:245: attempt to index a nil value (field 'cite')
