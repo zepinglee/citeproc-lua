@@ -174,8 +174,11 @@ function Names:build_ir(engine, state, context)
       local ir = substitute_names:build_ir(engine, state, context)
       if ir and ir.group_var ~= "missing" then
         state.name_override = nil
-        ir = SeqIr:new({ir}, self)
-        ir.group_var = "important"
+        if not ir.person_name_irs or #ir.person_name_irs == 0 then
+          -- In case of a <text variable="title"/> in <substitute>
+          ir = NameIr:new({ir}, self)
+          ir.group_var = "important"
+        end
         return ir
       end
     end
@@ -438,7 +441,7 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     local label_term = context.locale:get_simple_term(variable, label.form, is_plural)
     if label_term and label_term ~= "" then
       local inlines = label:render_text_inlines(label_term, context)
-      local label_ir = Rendered:new(inlines, {})
+      local label_ir = Rendered:new(inlines, label)
       if label.after_name then
         table.insert(irs, label_ir)
       else

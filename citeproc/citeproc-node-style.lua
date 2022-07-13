@@ -329,8 +329,8 @@ function Bibliography:build_ir(engine, state, context)
 end
 
 function Bibliography:substitute_subsequent_authors(engine, ir)
-  ir.first_names_ir = self:find_first_names_ir(ir)  -- should be a SeqIr wiht _element = "names"
-  if not ir.first_names_ir then
+  ir.first_name_ir = self:find_first_name_ir(ir)  -- should be a SeqIr wiht _element = "names"
+  if not ir.first_name_ir then
     engine.previous_bib_names_ir = nil
     return
   end
@@ -343,17 +343,17 @@ function Bibliography:substitute_subsequent_authors(engine, ir)
   elseif self.subsequent_author_substitute_rule == "partial-first" then
     self:substitute_subsequent_authors_partial_first(engine, ir)
   end
-  engine.previous_bib_names_ir = ir.first_names_ir
+  engine.previous_bib_names_ir = ir.first_name_ir
 end
 
-function Bibliography:find_first_names_ir(ir)
-  if ir._element == "names" then
+function Bibliography:find_first_name_ir(ir)
+  if ir._type == "NameIr" then
     return ir
   elseif ir.children then
     for _, child_ir in ipairs(ir.children) do
-      local first_names_ir = self:find_first_names_ir(child_ir)
-      if first_names_ir then
-        return first_names_ir
+      local first_name_ir = self:find_first_name_ir(child_ir)
+      if first_name_ir then
+        return first_name_ir
       end
     end
   end
@@ -363,8 +363,8 @@ end
 function Bibliography:substitute_subsequent_authors_complete_all(engine, ir)
   local bib_names_str = ""
 
-  if #ir.first_names_ir.person_name_irs > 0 then
-    for _, person_name_ir in ipairs(ir.first_names_ir.person_name_irs) do
+  if #ir.first_name_ir.person_name_irs > 0 then
+    for _, person_name_ir in ipairs(ir.first_name_ir.person_name_irs) do
       if bib_names_str ~= "" then
         bib_names_str = bib_names_str .. "     "
       end
@@ -374,19 +374,25 @@ function Bibliography:substitute_subsequent_authors_complete_all(engine, ir)
   else
     -- In case of a <text variable="title"/> in <substitute>
     local disam_format = DisamStringFormat:new()
-    local inlines = ir.first_names_ir:flatten(disam_format)
+    local inlines = ir.first_name_ir:flatten(disam_format)
     bib_names_str = disam_format:output(inlines)
   end
-  ir.first_names_ir.bib_names_str = bib_names_str
+  ir.first_name_ir.bib_names_str = bib_names_str
 
   if engine.previous_bib_names_ir and
       engine.previous_bib_names_ir.bib_names_str == bib_names_str then
     local text = self.subsequent_author_substitute
     if text == "" then
-      ir.first_names_ir.children = {}
-      ir.first_names_ir.group_var = "missing"
+      ir.first_name_ir.children = {}
+      ir.first_name_ir.group_var = "missing"
     else
-      ir.first_names_ir.children = {Rendered:new({PlainText:new(text)}, self)}
+      -- the output of label is not substituted
+      for i, child_ir in ipairs(ir.first_name_ir.children) do
+        if child_ir._element ~= "label" then
+          ir.first_name_ir.children[i] = Rendered:new({PlainText:new(text)}, self)
+          break
+        end
+      end
     end
   end
 end
@@ -397,9 +403,9 @@ end
 function Bibliography:substitute_subsequent_authors_partial_each(engine, ir)
   local bib_names_str = ""
 
-  if #ir.first_names_ir.person_name_irs > 0 then
+  if #ir.first_name_ir.person_name_irs > 0 then
     if engine.previous_bib_names_ir then
-      for i, person_name_ir in ipairs(ir.first_names_ir.person_name_irs) do
+      for i, person_name_ir in ipairs(ir.first_name_ir.person_name_irs) do
         local prev_name_ir = engine.previous_bib_names_ir.person_names[i]
         if prev_name_ir then
           local prev_name_variants = prev_name_ir.disam_variants
@@ -418,17 +424,17 @@ function Bibliography:substitute_subsequent_authors_partial_each(engine, ir)
   else
     -- In case of a <text variable="title"/> in <substitute>
     local disam_format = DisamStringFormat:new()
-    local inlines = ir.first_names_ir:flatten(disam_format)
+    local inlines = ir.first_name_ir:flatten(disam_format)
     bib_names_str = disam_format:output(inlines)
-    ir.first_names_ir.bib_names_str = bib_names_str
+    ir.first_name_ir.bib_names_str = bib_names_str
     if engine.previous_bib_names_ir and
         engine.previous_bib_names_ir.bib_names_str == bib_names_str then
       local text = self.subsequent_author_substitute
       if text == "" then
-        ir.first_names_ir.children = {}
-        ir.first_names_ir.group_var = "missing"
+        ir.first_name_ir.children = {}
+        ir.first_name_ir.group_var = "missing"
       else
-        ir.first_names_ir.children = {Rendered:new({PlainText:new(text)}, self)}
+        ir.first_name_ir.children = {Rendered:new({PlainText:new(text)}, self)}
       end
     end
   end
