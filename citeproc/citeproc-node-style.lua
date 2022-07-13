@@ -387,12 +387,8 @@ function Bibliography:substitute_subsequent_authors_complete_all(engine, ir)
       ir.first_name_ir.group_var = "missing"
     else
       -- the output of label is not substituted
-      for i, child_ir in ipairs(ir.first_name_ir.children) do
-        if child_ir._element ~= "label" then
-          ir.first_name_ir.children[i] = Rendered:new({PlainText:new(text)}, self)
-          break
-        end
-      end
+      -- util.debug(ir.first_name_ir)
+      ir.first_name_ir.children = {Rendered:new({PlainText:new(text)}, self)}
     end
   end
 end
