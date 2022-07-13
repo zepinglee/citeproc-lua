@@ -86,34 +86,42 @@ function Names:build_ir(engine, state, context)
   -- name_override: names, name, et-al, label elements inherited in substitute element
   local names_inheritance = Names:new()
   names_inheritance.delimiter = context.name_inheritance.names_delimiter
-  names_inheritance.name = util.clone(context.name_inheritance)
-  if state.name_override then
-    for key, value in pairs(state.name_override) do
-      if key == "name" and not self.name then
-        for k, v in pairs(state.name_override.name) do
-          names_inheritance.name[k] = util.clone(v)
-        end
-      else
-        names_inheritance[key] = util.clone(value)
-      end
-    end
-  else
-    if not self.name then
-      self.name = Name:new()
-    end
-    if not self.et_al then
-      self.et_al = EtAl:new()
+
+  names_inheritance.variable = self.variable
+
+  for _, attr in ipairs({"delimiter", "affixes", "formatting", "display"}) do
+    if self[attr] then
+      names_inheritance[attr] = util.clone(self[attr])
+    elseif state.name_override and state.name_override[attr] then
+      names_inheritance[attr] = util.clone(state.name_override[attr])
     end
   end
 
-  for key, value in pairs(self) do
-    if key == "name" then
-      for k, v in pairs(self.name) do
-        names_inheritance.name[k] = util.clone(v)
-      end
-    else
-      names_inheritance[key] = util.clone(value)
+  if self.name then
+    names_inheritance.name = util.clone(context.name_inheritance)
+    for key, value in pairs(self.name) do
+      names_inheritance.name[key] = util.clone(value)
     end
+  else
+    if state.name_override then
+      names_inheritance.name = util.clone(state.name_override.name)
+    else
+      names_inheritance.name = util.clone(context.name_inheritance)
+    end
+  end
+
+  if self.et_al then
+    names_inheritance.et_al = util.clone(self.et_al)
+  elseif state.name_override then
+    names_inheritance.et_al = util.clone(state.name_override.et_al)
+  else
+    names_inheritance.et_al = EtAl:new()
+  end
+
+  if self.label then
+    names_inheritance.label = util.clone(self.label)
+  elseif state.name_override then
+    names_inheritance.label = util.clone(state.name_override.label)
   end
 
   if context.cite and context.cite.position and context.cite.position >= util.position_map["subsequent"] then
@@ -124,11 +132,6 @@ function Names:build_ir(engine, state, context)
       names_inheritance.name.et_al_use_first = names_inheritance.name.et_al_subsequent_use_first
     end
   end
-
-  -- util.debug(names_inheritance)
-  -- util.debug(context.reference.id)
-  -- util.debug(names_inheritance.variable)
-  -- util.debug(names_inheritance.name.form)
 
   local irs = {}
   local num_names = 0
@@ -169,11 +172,11 @@ function Names:build_ir(engine, state, context)
   end
 
   if self.substitute then
-    state.name_override = names_inheritance
-    for _, substitute_names in ipairs(self.substitute.children) do
-      local ir = substitute_names:build_ir(engine, state, context)
+    local new_state = util.clone(state)
+    new_state.name_override = names_inheritance
+    for _, substitution in ipairs(self.substitute.children) do
+      local ir = substitution:build_ir(engine, new_state, context)
       if ir and ir.group_var ~= "missing" then
-        state.name_override = nil
         if not ir.person_name_irs or #ir.person_name_irs == 0 then
           -- In case of a <text variable="title"/> in <substitute>
           ir = NameIr:new({ir}, self)
@@ -182,7 +185,6 @@ function Names:build_ir(engine, state, context)
         return ir
       end
     end
-    state.name_override = nil
   end
 
   local ir = Rendered:new({}, self)
@@ -401,10 +403,7 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
 
   local et_al_ir
   if et_al and et_al_abbreviation and not use_last then
-    local et_al_inlines = et_al:render_term(context)
-    if #et_al_inlines > 0 then
-      et_al_ir = Rendered:new(et_al_inlines, {})
-    end
+    et_al_ir = et_al:build_ir(engine, state, context)
   end
 
   local irs = self:join_person_name_irs(person_name_irs, and_term_ir, et_al_ir, use_last)
@@ -936,7 +935,8 @@ function Name:join_person_name_irs(rendered_name_irs, and_term_ir, et_al_ir, use
         local use_delimiter = self:_check_delimiter(self.delimiter_precedes_et_al, #first_items, inverted)
         if use_delimiter then
           table.insert(irs, Rendered:new({PlainText:new(self.delimiter)}, self))
-        else
+        elseif not et_al_ir.starts_with_cjk then
+          -- name_EtAlWithCombined.txt
           table.insert(irs, Rendered:new({PlainText:new(" ")}, self))
         end
         table.insert(irs, last_item)
@@ -1046,11 +1046,25 @@ function EtAl:from_node(node)
   return o
 end
 
-function EtAl:render_term(context)
+function EtAl:build_ir(engine, state, context)
   local term = context.locale:get_simple_term(self.term)
-  local inlines= InlineElement:parse(term, context)
+  if not term then
+    return term
+  end
+  local inlines = InlineElement:parse(term, context)
+  if #inlines == 0 then
+    return nil
+  end
+
   inlines = context.format:with_format(inlines, self.formatting)
-  return inlines
+
+  local ir = Rendered:new(inlines, self)
+
+  if util.is_cjk_char(utf8.codepoint(term, 1)) then
+    ir.starts_with_cjk = true
+  end
+
+  return ir
 end
 
 function Substitute:from_node(node)

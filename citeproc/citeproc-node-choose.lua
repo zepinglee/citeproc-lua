@@ -242,7 +242,11 @@ function If:evaluate_condition(condition, state, context)
   elseif condition.condition == "variable" then
     local var = condition.value
     if var == "locator" or var == "label" then
-      return context.cite[var] ~= nil
+      if context.in_bibliography then
+        return false
+      else
+        return context.cite[var] ~= nil
+      end
     else
       local res = context.reference[var] ~= nil
       return res
