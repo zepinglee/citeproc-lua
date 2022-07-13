@@ -7,7 +7,7 @@ condition           17       0       0       0
 date                97       4       0       0
 decorations          7       0       0       0
 disambiguate        61      10       0       0
-display              3       2       0       0
+display              4       1       0       0
 etal                 3       1       0       0
 flipflop            17       0       0       0
 form                 3       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              750      77       2       0
+(all)              751      76       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -135,9 +135,6 @@ Passed in:
     <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">““PIAAC-Longitudinal (PIAAC-L) 2015.””</div>
   </div>
   <div class="csl-entry">
-
-    <div class="csl-block"></div>
-
     <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">“PIAAC-Longitudinal (PIAAC-Lx) 2015.”</div>
   </div>
 </div>'
@@ -447,65 +444,6 @@ Expected:
 (string) '(Smith 2000a; 2000b; 2000c)
 (Smith 2000b)
 (Smith 2000c)'
-
-Failure → citeproc test test-suite display_AuthorAsHeading.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-
-    <div class="csl-block">John Aloysius Doe</div>
-
-    <div class="csl-left-margin">1999</div><div class="csl-right-inline">Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa</div>
-  </div>
-  <div class="csl-entry">
-
-    <div class="csl-block"></div>
-
-    <div class="csl-left-margin">2000</div><div class="csl-right-inline">Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb</div>
-  </div>
-  <div class="csl-entry">
-
-    <div class="csl-block">Jane Henrietta Roe</div>
-
-    <div class="csl-left-margin">1999a</div><div class="csl-right-inline">Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc</div>
-  </div>
-  <div class="csl-entry">
-
-    <div class="csl-block"></div>
-
-    <div class="csl-left-margin">1999b</div><div class="csl-right-inline">Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd</div>
-  </div>
-  <div class="csl-entry">
-
-    <div class="csl-block"></div>
-
-    <div class="csl-left-margin">2000</div><div class="csl-right-inline">Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee</div>
-  </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-
-    <div class="csl-block">John Aloysius Doe</div>
-
-    <div class="csl-left-margin">1999</div><div class="csl-right-inline">Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa Aaaaa</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">2000</div><div class="csl-right-inline">Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb Bbbbb</div>
-  </div>
-  <div class="csl-entry">
-
-    <div class="csl-block">Jane Henrietta Roe</div>
-
-    <div class="csl-left-margin">1999a</div><div class="csl-right-inline">Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc Ccccc</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">1999b</div><div class="csl-right-inline">Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd Ddddd</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">2000</div><div class="csl-right-inline">Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee Eeeee</div>
-  </div>
-</div>'
 
 Failure → citeproc test test-suite display_SecondFieldAlignMigratePunctuation.txt
 Passed in:

@@ -1133,17 +1133,23 @@ end
 
 function HtmlWriter:write_formatted(inline)
   local res = self:write_children(inline)
-  for key, value in pairs(inline.formatting) do
-    key = "@" .. key .. "/" .. value
-    local format_str = self.markups[key]
-    if format_str then
-      res = string.format(format_str, res)
+  for _, key in ipairs({"font-style", "font-variant", "font-weight", "text-decoration", "vertical-align"}) do
+    local value = inline.formatting[key]
+    if value then
+      key = "@" .. key .. "/" .. value
+      local format_str = self.markups[key]
+      if format_str then
+        res = string.format(format_str, res)
+      end
     end
   end
   return res
 end
 
 function HtmlWriter:write_display(inline)
+  if #inline.inlines == 0 then
+    return ""
+  end
   local res = self:write_children(inline)
   local key = string.format("@display/%s", inline.div)
   local format_str = self.markups[key]
