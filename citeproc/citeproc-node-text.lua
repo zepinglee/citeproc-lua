@@ -102,6 +102,10 @@ function Text:build_variable_ir(engine, state, context)
   local ir = Rendered:new(inlines, self)
   ir.group_var = "important"
 
+  if variable == "citation-number" then
+    ir.citation_number = context.reference["citation-number"]
+  end
+
   -- Suppress substituted name variable
   if state.name_override and not context.sort_key then
     state.suppressed[variable] = true

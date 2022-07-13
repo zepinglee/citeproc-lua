@@ -317,11 +317,10 @@ function CiteProc:build_cluster(citation_items)
     table.insert(irs, ir)
   end
 
-  -- util.debug(irs)
-
-  -- TODO: disambiguation
-
   -- TODO: collapsing
+  if self.style.citation.collapse then
+    self:collapse_cites(irs)
+  end
 
   -- Capitalize first
   for i, ir in ipairs(irs) do
@@ -357,11 +356,16 @@ function CiteProc:build_cluster(citation_items)
   context.name_inheritance = self.style.citation.name_inheritance
   context.format = output_format
 
+  local previous_ir
   for i, ir in ipairs(irs) do
     local cite_prefix = citation_items[i].prefix
     local cite_suffix = citation_items[i].suffix
-    if citation_delimiter and i > 1 and not (cite_prefix and util.startswith(cite_prefix, ",")) then
-      table.insert(citation_stream, PlainText:new(citation_delimiter))
+    if previous_ir and not ir.collapse_suppressed then
+      if previous_ir.own_delimiter then
+        table.insert(citation_stream, PlainText:new(previous_ir.own_delimiter))
+      elseif citation_delimiter and not (cite_prefix and util.startswith(cite_prefix, ",")) then
+        table.insert(citation_stream, PlainText:new(citation_delimiter))
+      end
     end
 
     if cite_prefix then
@@ -369,8 +373,10 @@ function CiteProc:build_cluster(citation_items)
     end
 
     -- util.debug(ir)
-    util.extend(citation_stream, ir:flatten(output_format))
-    -- util.debug(citation_stream)
+    if not ir.collapse_suppressed then
+      util.extend(citation_stream, ir:flatten(output_format))
+      previous_ir = ir
+    end
 
     if cite_suffix then
       table.insert(citation_stream, Micro:new(InlineElement:parse(cite_suffix, context)))
@@ -1092,6 +1098,60 @@ function CiteProc:render_year_suffix(year_suffix_number)
   end
   -- util.debug(year_suffix)
   return year_suffix
+end
+
+function CiteProc:collapse_cites(irs)
+  if self.style.citation.collapse == "citation-number" then
+    self:collapse_cites_citation_number(irs)
+  elseif self.style.citation.collapse == "year" then
+    self:collapse_cites_year(irs)
+  elseif self.style.citation.collapse == "year-suffix" then
+    self:collapse_cites_year_suffix(irs)
+  elseif self.style.citation.collapse == "year-suffix-ranged" then
+    self:collapse_cites_year_suffix_ranged(irs)
+  end
+end
+
+function CiteProc:collapse_cites_citation_number(irs)
+  local cite_groups = {}
+  local current_group = {}
+  local previous_citation_number
+  for i, ir in ipairs(irs) do
+    local citation_number
+    if #ir.children == 1 then
+      citation_number = ir.children[1].citation_number
+    end
+    if i == 1 then
+      table.insert(current_group, ir)
+    elseif citation_number and previous_citation_number and
+      previous_citation_number + 1 == citation_number then
+      table.insert(current_group, ir)
+    else
+      table.insert(cite_groups, current_group)
+      current_group = {ir}
+    end
+    previous_citation_number = citation_number
+  end
+  table.insert(cite_groups, current_group)
+
+  for _, cite_group in ipairs(cite_groups) do
+    if #cite_group >= 3 then
+      cite_group[1].own_delimiter = util.unicode["en dash"]
+      for i = 2, #cite_group - 1 do
+        cite_group[i].collapse_suppressed = true
+      end
+      cite_group[#cite_group].own_delimiter = self.style.citation.after_collapse_delimiter
+    end
+  end
+end
+
+function CiteProc:collapse_cites_year(irs)
+end
+
+function CiteProc:collapse_cites_year_suffix(irs)
+end
+
+function CiteProc:collapse_cites_year_suffix_ranged(irs)
 end
 
 function CiteProc:makeCitationCluster(citation_items)

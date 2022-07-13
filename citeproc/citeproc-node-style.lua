@@ -233,7 +233,13 @@ function Citation:from_node(node, style)
   -- Cite Collapsing
   o:set_attribute(node, "collapse")
   o:set_attribute(node, "year-suffix-delimiter")
+  if not o.year_suffix_delimiter then
+    o.year_suffix_delimiter = o.layout.delimiter
+  end
   o:set_attribute(node, "after-collapse-delimiter")
+  if not o.after_collapse_delimiter then
+    o.after_collapse_delimiter = o.layout.delimiter
+  end
 
   -- Note Distance
   o:set_number_attribute(node, "near-note-distance")

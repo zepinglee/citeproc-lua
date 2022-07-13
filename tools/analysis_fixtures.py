@@ -6,8 +6,8 @@ import xml.etree.ElementTree as ET
 skip_tags = [
 ]
 skip_attrs = [
-    'cite-group-delimiter',
-    'collapse',
+    # 'cite-group-delimiter',
+    # 'collapse',
     # 'subsequent-author-substitute',
     # 'subsequent-author-substitute-rule',
 ]

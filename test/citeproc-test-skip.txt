@@ -1,3 +1,6 @@
+# Citation sorting
+bugreports_ChicagoAuthorDateLooping.txt
+
 # Force quotation marks in external affixes
 flipflop_LeadingMarkupWithApostrophe.txt
 
