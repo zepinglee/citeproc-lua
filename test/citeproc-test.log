@@ -18,7 +18,7 @@ label               18       1       0       0
 locale              23       0       0       0
 locator              5       0       0       0
 magic               35       4       1       0
-name                99       6       1       0
+name               101       4       1       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -29,7 +29,7 @@ position            14       1       0       0
 punctuation         14       2       0       0
 quotes               4       0       0       0
 simplespace          1       0       0       0
-sort                46       9       1       0
+sort                44       9       3       0
 sortseparator        1       0       0       0
 substitute           6       1       0       0
 testers              2       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              746      79       4       0
+(all)              746      77       6       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -580,30 +580,6 @@ Passed in:
 Expected:
 (string) '(Aalto 2015a,b; Bartleby 2010)'
 
-Failure → citeproc test test-suite name_SubsequentAuthorSubstituteSingleField.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Yomiuri Shinbun.</div>
-  <div class="csl-entry">Yomiuri Shinbun.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Yomiuri Shinbun.</div>
-  <div class="csl-entry">———.</div>
-</div>'
-
-Failure → citeproc test test-suite name_SubstitutePartialEach.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Title One</div>
-  <div class="csl-entry">Title One</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Title One</div>
-  <div class="csl-entry">---</div>
-</div>'
-
 Failure → citeproc test test-suite position_IbidWithPrefixFullStop.txt
 Passed in:
 (string) '>>[0] Book A; . He said “Please work.” ibid.'
@@ -763,13 +739,19 @@ Expected:
 </div>'
 
 Error → citeproc test test-suite bugreports_parenthesis.txt
-./citeproc/citeproc-node-style.lua:364: attempt to index a nil value
+./citeproc/citeproc-node-style.lua:366: attempt to get length of a nil value (field 'person_name_irs')
 
 Error → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
-./citeproc/citeproc-node-style.lua:364: attempt to index a nil value
+./citeproc/citeproc-node-style.lua:366: attempt to get length of a nil value (field 'person_name_irs')
 
 Error → citeproc test test-suite name_EtAlWithCombined.txt
 ./citeproc/citeproc-node-choose.lua:245: attempt to index a nil value (field 'cite')
 
+Error → citeproc test test-suite sort_AguStyle.txt
+./citeproc/citeproc-node-sort.lua:98: attempt to compare number with string
+
+Error → citeproc test test-suite sort_AguStyleReverseGroups.txt
+./citeproc/citeproc-node-sort.lua:98: attempt to compare number with string
+
 Error → citeproc test test-suite sort_LeadingA.txt
-./citeproc/citeproc-node-style.lua:364: attempt to index a nil value
+./citeproc/citeproc-node-style.lua:366: attempt to get length of a nil value (field 'person_name_irs')

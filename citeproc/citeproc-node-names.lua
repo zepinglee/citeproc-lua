@@ -174,6 +174,8 @@ function Names:build_ir(engine, state, context)
       local ir = substitute_names:build_ir(engine, state, context)
       if ir and ir.group_var ~= "missing" then
         state.name_override = nil
+        ir = SeqIr:new({ir}, self)
+        ir.group_var = "important"
         return ir
       end
     end

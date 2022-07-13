@@ -13,6 +13,7 @@ local IrNode = require("citeproc-ir-node").IrNode
 local Rendered = require("citeproc-ir-node").Rendered
 local SeqIr = require("citeproc-ir-node").SeqIr
 local PlainText = require("citeproc-output").PlainText
+local DisamStringFormat = require("citeproc-output").DisamStringFormat
 local util = require("citeproc-util")
 
 
@@ -361,15 +362,23 @@ end
 
 function Bibliography:substitute_subsequent_authors_complete_all(engine, ir)
   local bib_names_str = ""
-  for _, person_name_ir in ipairs(ir.first_names_ir.person_name_irs) do
-    if bib_names_str ~= "" then
-      bib_names_str = bib_names_str .. "     "
-    end
-    local name_variants = person_name_ir.disam_variants
-    bib_names_str = bib_names_str .. name_variants[#name_variants]
-  end
 
+  if #ir.first_names_ir.person_name_irs > 0 then
+    for _, person_name_ir in ipairs(ir.first_names_ir.person_name_irs) do
+      if bib_names_str ~= "" then
+        bib_names_str = bib_names_str .. "     "
+      end
+      local name_variants = person_name_ir.disam_variants
+      bib_names_str = bib_names_str .. name_variants[#name_variants]
+    end
+  else
+    -- In case of a <text variable="title"/> in <substitute>
+    local disam_format = DisamStringFormat:new()
+    local inlines = ir.first_names_ir:flatten(disam_format)
+    bib_names_str = disam_format:output(inlines)
+  end
   ir.first_names_ir.bib_names_str = bib_names_str
+
   if engine.previous_bib_names_ir and
       engine.previous_bib_names_ir.bib_names_str == bib_names_str then
     local text = self.subsequent_author_substitute
@@ -386,6 +395,43 @@ function Bibliography:substitute_subsequent_authors_complete_each(engine, ir)
 end
 
 function Bibliography:substitute_subsequent_authors_partial_each(engine, ir)
+  local bib_names_str = ""
+
+  if #ir.first_names_ir.person_name_irs > 0 then
+    if engine.previous_bib_names_ir then
+      for i, person_name_ir in ipairs(ir.first_names_ir.person_name_irs) do
+        local prev_name_ir = engine.previous_bib_names_ir.person_names[i]
+        if prev_name_ir then
+          local prev_name_variants = prev_name_ir.disam_variants
+          local prev_full_name_str = prev_name_variants[#prev_name_variants]
+          local name_variants = person_name_ir.disam_variants
+          local full_name_str = name_variants[#name_variants]
+          if prev_full_name_str == full_name_str then
+            local text = self.subsequent_author_substitute
+            person_name_ir.children = {Rendered:new({PlainText:new(text)}, self)}
+          else
+            break
+          end
+        end
+      end
+    end
+  else
+    -- In case of a <text variable="title"/> in <substitute>
+    local disam_format = DisamStringFormat:new()
+    local inlines = ir.first_names_ir:flatten(disam_format)
+    bib_names_str = disam_format:output(inlines)
+    ir.first_names_ir.bib_names_str = bib_names_str
+    if engine.previous_bib_names_ir and
+        engine.previous_bib_names_ir.bib_names_str == bib_names_str then
+      local text = self.subsequent_author_substitute
+      if text == "" then
+        ir.first_names_ir.children = {}
+        ir.first_names_ir.group_var = "missing"
+      else
+        ir.first_names_ir.children = {Rendered:new({PlainText:new(text)}, self)}
+      end
+    end
+  end
 end
 
 function Bibliography:substitute_subsequent_authors_partial_first(engine, ir)
