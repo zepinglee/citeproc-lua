@@ -1193,7 +1193,58 @@ end
 function CiteProc:collapse_cites_year(irs)
 end
 
+local function find_rendered_year_suffix(ir)
+  if ir._type == "YearSuffix" then
+    return ir
+  end
+  if ir.children then
+    for _, child in ipairs(ir.children) do
+      if child.group_var ~= "missing" then
+        local year_suffix = find_rendered_year_suffix(child)
+        if year_suffix then
+          return year_suffix
+        end
+      end
+    end
+  end
+  return nil
+end
+
 function CiteProc:collapse_cites_year_suffix(irs)
+  -- Group by disam_str
+  -- The year-suffix is ommitted in DisamStringFormat
+  local cite_groups = {{}}
+  local previous_ir
+  local previous_year_suffix
+  for i, ir in ipairs(irs) do
+    local year_suffix = find_rendered_year_suffix(ir)
+    ir.rendered_year_suffix_ir = year_suffix
+    if i == 1 then
+      table.insert(cite_groups[#cite_groups], ir)
+    elseif year_suffix and previous_ir.disam_str == ir.disam_str and previous_year_suffix then
+      -- TODO: and not previous cite suffix
+      table.insert(cite_groups[#cite_groups], ir)
+    else
+      table.insert(cite_groups, {ir})
+    end
+    previous_ir = ir
+    previous_year_suffix = year_suffix
+  end
+
+  for _, cite_group in ipairs(cite_groups) do
+    if #cite_group > 1 then
+      for i, cite_ir in ipairs(cite_group) do
+        if i > 1 then
+          cite_ir.children = {cite_ir.rendered_year_suffix_ir}
+        end
+        if i == #cite_group then
+          cite_ir.own_delimiter = self.style.after_collapse_delimiter
+        else
+          cite_ir.own_delimiter = self.style.citation.year_suffix_delimiter
+        end
+      end
+    end
+  end
 end
 
 function CiteProc:collapse_cites_year_suffix_ranged(irs)
