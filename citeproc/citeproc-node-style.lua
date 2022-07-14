@@ -253,6 +253,8 @@ function Citation:from_node(node, style)
   make_name_inheritance(name_inheritance, node)
   o.name_inheritance = name_inheritance
 
+  -- update_mode = "plain" or "numeric" or "position" (or "both"?)
+
   return o
 end
 
@@ -262,7 +264,6 @@ function Citation:build_ir(engine, state, context)
   end
   return self.layout:build_ir(engine, state, context)
 end
-
 
 local Bibliography = Element:derive("bibliography", {
   subsequent_author_substitute_rule = "complete-all"

@@ -102,7 +102,7 @@ local function test_citations(engine, fixture)
     local res = engine:processCitationCluster(citation, citations_pre, citations_post)
 
     for citation_id, citation_output in pairs(output) do
-      if not engine.registry.citations[citation_id] then
+      if not engine.registry.citations_by_id[citation_id] then
         output[citation_id] = nil
       end
     end

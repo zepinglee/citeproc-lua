@@ -39,7 +39,9 @@ function CiteProc.new(sys, style, lang, force_lang)
   end
   local o = {}
   o.registry = {
-    citations = {},  -- A map
+    citations_by_id = {},  -- A map
+    citation_list = {},  -- A list
+    citations_by_item_id = {},  -- A map from item id to a map of citations
     registry = {},  -- A map
     reflist = {},  -- A list
     previous_citation = nil,
@@ -49,6 +51,8 @@ function CiteProc.new(sys, style, lang, force_lang)
   o.cite_first_note_numbers = {}
   o.cite_last_note_numbers = {}
   o.note_citations_map = {}
+
+  o.tainted_item_ids = {}
 
   o.person_names = {}
   o.person_names_by_output = {}
@@ -108,7 +112,6 @@ function CiteProc:updateUncitedItems(ids)
 end
 
 function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
-  self.registry.citations[citation.citationID] = citation
   -- Fix missing noteIndex: sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
   if not citation.properties then
     citation.properties = {}
@@ -117,11 +120,42 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
     citation.properties.noteIndex = 0
   end
 
-  local citations_to_build = {}
-  util.extend(citations_to_build, citationsPre)
-  table.insert(citations_to_build, {citation.citationID, citation.properties.noteIndex})
-  util.extend(citations_to_build, citationsPost)
-  -- util.debug(citations_to_build)
+  -- Registor citation
+  self.registry.citations_by_id[citation.citationID] = citation
+
+  local citation_note_pairs = {}
+  util.extend(citation_note_pairs, citationsPre)
+  table.insert(citation_note_pairs, {citation.citationID, citation.properties.noteIndex})
+  util.extend(citation_note_pairs, citationsPost)
+  -- util.debug(citation_note_pairs)
+
+  local citations_by_id = {}
+  local citation_list = {}
+  for _, pair in ipairs(citation_note_pairs) do
+    local citation_id, note_number = table.unpack(pair)
+    local citation_ = self.registry.citations_by_id[citation_id]
+    if not citation_ then
+      util.error("Citation not in registry.")
+    end
+    citations_by_id[citation_.citationID] = citation_
+    table.insert(citation_list, citation_)
+  end
+  self.registry.citations_by_id = citations_by_id
+  self.registry.citation_list = citation_list
+
+  -- update self.registry.citations_by_item_id
+  local item_ids = {}
+  self.registry.citations_by_item_id = {}
+  for _, citation_ in ipairs(citation_list) do
+    for _, cite_item in ipairs(citation_.citationItems) do
+      if not self.registry.citations_by_item_id[cite_item.id] then
+        self.registry.citations_by_item_id[cite_item.id] = {}
+        table.insert(item_ids, cite_item.id)
+      end
+      self.registry.citations_by_item_id[cite_item.id][citation_.citationID] = true
+    end
+  end
+  self:updateItems(item_ids)
 
   local params = {
     bibchange = false,
@@ -129,12 +163,12 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
   }
   local output = {}
 
-  local tainted_citation_ids = self:get_tainted_citaion_ids(citations_to_build)
+  local tainted_citation_ids = self:get_tainted_citaion_ids(citation_note_pairs)
   -- util.debug(tainted_citation_ids)
 
   -- params.bibchange = #tainted_citation_ids > 0
-  for _, citation_id in ipairs(tainted_citation_ids) do
-    local citation_ = self.registry.citations[citation_id]
+  for citation_id, _ in pairs(tainted_citation_ids) do
+    local citation_ = self.registry.citations_by_id[citation_id]
 
     local citation_index = citation_.citation_index
     local citation_str = self:build_citation_str(citation_)
@@ -146,7 +180,7 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
 end
 
 
-function CiteProc:get_tainted_citaion_ids(citations_to_build)
+function CiteProc:get_tainted_citaion_ids(citation_note_pairs)
   local tainted_citation_ids = {}
 
   self.cite_first_note_numbers = {}
@@ -158,10 +192,10 @@ function CiteProc:get_tainted_citaion_ids(citations_to_build)
   -- }
 
   local previous_citation
-  for citation_index, tuple in ipairs(citations_to_build) do
-    local citation_id, note_number = table.unpack(tuple)
+  for citation_index, pair in ipairs(citation_note_pairs) do
+    local citation_id, note_number = table.unpack(pair)
     -- util.debug(citation_id)
-    local citation = self.registry.citations[citation_id]
+    local citation = self.registry.citations_by_id[citation_id]
     citation.properties.noteIndex = note_number
     citation.citation_index = citation_index
 
@@ -175,7 +209,7 @@ function CiteProc:get_tainted_citaion_ids(citations_to_build)
     end
 
     if tainted then
-      table.insert(tainted_citation_ids, citation.citationID)
+      tainted_citation_ids[citation.citationID] = true
     end
 
     if not self.note_citations_map[note_number] then
@@ -184,6 +218,17 @@ function CiteProc:get_tainted_citaion_ids(citations_to_build)
     table.insert(self.note_citations_map[note_number], citation.citationID)
     previous_citation = citation
   end
+
+  -- Update tainted citation ids because of citation-number's change
+  -- The self.tainted_item_ids were added in the sort_bibliography() procedure.
+  for item_id, _ in pairs(self.tainted_item_ids) do
+    if self.registry.citations_by_item_id[item_id] then
+      for citation_id, _ in pairs(self.registry.citations_by_item_id[item_id]) do
+        tainted_citation_ids[citation_id] = true
+      end
+    end
+  end
+
   return tainted_citation_ids
 end
 
@@ -1446,7 +1491,11 @@ function CiteProc:sort_bibliography()
 
   bibliography_sort:sort(items, state, context)
   self.registry.reflist = {}
+  self.tainted_item_ids = {}
   for i, item in ipairs(items) do
+    if item["citation-number"] ~= i then
+      self.tainted_item_ids[item.id] = true
+    end
     item["citation-number"] = i
     self.registry.reflist[i] = item.id
   end

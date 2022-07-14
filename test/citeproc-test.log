@@ -1,19 +1,19 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
-bugreports          66      15       0       0
-collapse            10      11       0       0
+bugreports          67      14       0       0
+collapse            11      10       0       0
 condition           17       0       0       0
 date                97       4       0       0
 decorations          7       0       0       0
-disambiguate        61      10       0       0
+disambiguate        59      12       0       0
 display              4       1       0       0
 etal                 3       1       0       0
 flipflop            17       0       0       0
 form                 3       0       0       0
 fullstyles           4       1       0       0
 group                6       1       0       0
-integration         13       0       0       0
+integration         12       1       0       0
 label               18       1       0       0
 locale              23       0       0       0
 locator              5       0       0       0
@@ -38,40 +38,17 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              757      69       2       0
+(all)              756      70       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
-(string) '..[0] John Smith, <i>Book C</i>, 2000, and David Jones, <i>Book D</i>, 2000.
-..[1] Smith, <i>Book C</i> is one source,; Jones, <i>Book D</i> is another.
+(string) '>>[0] John Smith, <i>Book C</i>, 2000, and David Jones, <i>Book D</i>, 2000.
+>>[1] Smith, <i>Book C</i> is one source,; Jones, <i>Book D</i> is another.
 >>[2] Smith, <i>Book C</i>, 23 is one source,; Jones, <i>Book D</i> is another.'
 Expected:
 (string) '..[0] John Smith, <i>Book C</i>, 2000, and David Jones, <i>Book D</i>, 2000.
 ..[1] Smith, <i>Book C</i> is one source, Jones, <i>Book D</i> is another.
 >>[2] Smith, <i>Book C</i>, 23 is one source, Jones, <i>Book D</i> is another.'
-
-Failure → citeproc test test-suite bugreports_AutomaticallyDeleteItemsFails.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Doe, <i>Book A</i>, 2000.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> J. Doe, <i>Book B</i>, 2000.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[3]</div><div class="csl-right-inline"> R. Snoakes, <i>Book C</i>, 2000.</div>
-  </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> J. Doe, <i>Book A</i>, 2000.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> J. Doe, <i>Book B</i>, 2000.</div>
-  </div>
-</div>'
 
 Failure → citeproc test test-suite bugreports_BadDelimiterBeforeCollapse.txt
 Passed in:
@@ -237,14 +214,6 @@ Expected:
 (Wong 1999, 328; 2000, 475; Garcia 1998, 67)
 (Whittaker 1967; Wiens 1989b)'
 
-Failure → citeproc test test-suite collapse_CitationNumberRangesInsert.txt
-Passed in:
-(string) '..[0] [4]
->>[1] [1]–[4]'
-Expected:
-(string) '..[0] [1]
->>[1] [1]–[4]'
-
 Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGrouped.txt
 Passed in:
 (string) '<b>([1],[2],[3])</b>'
@@ -381,6 +350,22 @@ Expected:
 (Smith Co 2000b)
 (Smith Co 2000c)'
 
+Failure → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntries.txt
+Passed in:
+(string) '..[0] (Smith 1986a; Smith 1986b; Smith 1986c; Smith 1986d; Smith 1986e; Smith 1986f; Smith 1986g; Smith 1986h; Smith 1986i; Smith 1986j; Smith 1986k; Smith 1986l; Smith 1986m; Smith 1986n; Smith 1986o; Smith 1986p; Smith 1986q; Smith 1986r; Smith 1986s; Smith 1986t; Smith 1986u; Smith 1986v; Smith 1986w; Smith 1986x; Smith 1986y; Smith 1986z; Smith 1986aa; Smith 1986ab; Smith 1986ac; Smith 1986ad; Smith 1986ae; Smith 1986af; Smith 1986ag; Smith 1986ah; Smith 1986ai; Smith 1986aj; Smith 1986ak; Smith 1986al; Smith 1986am; Smith 1986an; Smith 1986ao; Smith 1986ap; Smith 1986aq; Smith 1986ar; Smith 1986as; Smith 1986at; Smith 1986au; Smith 1986av; Smith 1986aw; Smith 1986ax; Smith 1986ay)
+>>[1] (Smith 1986cf)'
+Expected:
+(string) '..[0] (Smith 1986a; Smith 1986b; Smith 1986c; Smith 1986d; Smith 1986e; Smith 1986f; Smith 1986g; Smith 1986h; Smith 1986i; Smith 1986j; Smith 1986k; Smith 1986l; Smith 1986m; Smith 1986n; Smith 1986o; Smith 1986p; Smith 1986q; Smith 1986r; Smith 1986s; Smith 1986t; Smith 1986u; Smith 1986v; Smith 1986w; Smith 1986x; Smith 1986y; Smith 1986z; Smith 1986aa; Smith 1986ab; Smith 1986ac; Smith 1986ad; Smith 1986ae; Smith 1986af; Smith 1986ag; Smith 1986ah; Smith 1986ai; Smith 1986aj; Smith 1986ak; Smith 1986al; Smith 1986am; Smith 1986an; Smith 1986ao; Smith 1986ap; Smith 1986aq; Smith 1986ar; Smith 1986as; Smith 1986at; Smith 1986au; Smith 1986av; Smith 1986aw; Smith 1986ax; Smith 1986ay)
+>>[1] (Smith 1986az)'
+
+Failure → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntriesByCite.txt
+Passed in:
+(string) '..[0] (Smith 1986a; Smith 1986b; Smith 1986c; Smith 1986d; Smith 1986e; Smith 1986f; Smith 1986g; Smith 1986h; Smith 1986i; Smith 1986j; Smith 1986k; Smith 1986l; Smith 1986m; Smith 1986n; Smith 1986o; Smith 1986p; Smith 1986q; Smith 1986r; Smith 1986s; Smith 1986t; Smith 1986u; Smith 1986v; Smith 1986w; Smith 1986x; Smith 1986y; Smith 1986z; Smith 1986aa; Smith 1986ab; Smith 1986ac; Smith 1986ad; Smith 1986ae; Smith 1986af; Smith 1986ag; Smith 1986ah; Smith 1986ai; Smith 1986aj; Smith 1986ak; Smith 1986al; Smith 1986am; Smith 1986an; Smith 1986ao; Smith 1986ap; Smith 1986aq; Smith 1986ar; Smith 1986as; Smith 1986at; Smith 1986au; Smith 1986av; Smith 1986aw; Smith 1986ax; Smith 1986ay)
+>>[1] (Smith 1986cf)'
+Expected:
+(string) '..[0] (Smith 1986a; Smith 1986b; Smith 1986c; Smith 1986d; Smith 1986e; Smith 1986f; Smith 1986g; Smith 1986h; Smith 1986i; Smith 1986j; Smith 1986k; Smith 1986l; Smith 1986m; Smith 1986n; Smith 1986o; Smith 1986p; Smith 1986q; Smith 1986r; Smith 1986s; Smith 1986t; Smith 1986u; Smith 1986v; Smith 1986w; Smith 1986x; Smith 1986y; Smith 1986z; Smith 1986aa; Smith 1986ab; Smith 1986ac; Smith 1986ad; Smith 1986ae; Smith 1986af; Smith 1986ag; Smith 1986ah; Smith 1986ai; Smith 1986aj; Smith 1986ak; Smith 1986al; Smith 1986am; Smith 1986an; Smith 1986ao; Smith 1986ap; Smith 1986aq; Smith 1986ar; Smith 1986as; Smith 1986at; Smith 1986au; Smith 1986av; Smith 1986aw; Smith 1986ax; Smith 1986ay)
+>>[1] (Smith 1986az)'
+
 Failure → citeproc test test-suite disambiguate_YearSuffixMixedDates.txt
 Passed in:
 (string) '(A Ylinen, 1995a; A Ylinen, 1995b; A Ylinen, 1995c)'
@@ -442,6 +427,12 @@ Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Doe Inc. (n.d.). Retrieved June 1, 1965, from http://example.com/</div>
 </div>'
+
+Failure → citeproc test test-suite integration_YearSuffixOnOffOn.txt
+Passed in:
+(string) '>>[0] Smith (1986b); Smith (1986c); Smith (1986c); Smith (1986d)'
+Expected:
+(string) '>>[0] Smith (1986a); Smith (1986b); Smith (1986c); Smith (1986d)'
 
 Failure → citeproc test test-suite label_EditorTranslator1.txt
 Passed in:
@@ -595,7 +586,7 @@ Expected:
 
 Failure → citeproc test test-suite sort_RangeUnaffected.txt
 Passed in:
-(string) '>>[0] <sup>3</sup>
+(string) '>>[0] <sup>1</sup>
 >>[1] <sup>1,2,3</sup>'
 Expected:
 (string) '>>[0] <sup>1</sup>
