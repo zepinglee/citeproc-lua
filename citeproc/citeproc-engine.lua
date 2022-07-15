@@ -371,6 +371,12 @@ function CiteProc:build_cluster(citation_items)
 
   if self.style.citation.cite_grouping then
     self:group_cites(irs)
+  else
+    local cite_collapsing = self.style.citation.collapse
+    if cite_collapsing == "year" or cite_collapsing == "year-suffix" or
+        cite_collapsing == "year-suffix-ranged" then
+      self:group_cites(irs)
+    end
   end
 
   if self.style.citation.collapse then
@@ -1214,7 +1220,7 @@ function CiteProc:group_cites(irs)
   for _, name_str in ipairs(name_list) do
     local irs_with_same_name = irs_by_name[name_str]
     for i, ir in ipairs(irs_with_same_name) do
-      if i < #irs_by_name then
+      if i < #irs_with_same_name then
         ir.own_delimiter = self.style.citation.cite_group_delimiter
       end
       table.insert(grouped, ir)
@@ -1376,7 +1382,9 @@ function CiteProc:collapse_cites_year_suffix(irs)
           -- This leaves the disamb ir structure unchanged.
           self:suppress_ir_except_child(cite_ir, cite_ir.rendered_year_suffix_ir)
         end
-        if i < #cite_group then
+        if not self.style.citation.cite_grouping and i < #cite_group then
+          -- Explicit cite-group-delimiter overrides year-suffix-delimiter
+          -- name_CiteGroupDelimiterWithYearSuffixCollapse.txt
           cite_ir.own_delimiter = self.style.citation.year_suffix_delimiter
         end
       end

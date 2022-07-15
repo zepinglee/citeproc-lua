@@ -1,12 +1,12 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
-bugreports          69      12       0       0
-collapse            19       2       0       0
+bugreports          72       9       0       0
+collapse            17       4       0       0
 condition           17       0       0       0
-date                99       2       0       0
+date                98       3       0       0
 decorations          7       0       0       0
-disambiguate        64       7       0       0
+disambiguate        62       9       0       0
 display              4       1       0       0
 etal                 3       1       0       0
 flipflop            17       0       0       0
@@ -18,7 +18,7 @@ label               18       1       0       0
 locale              23       0       0       0
 locator              5       0       0       0
 magic               37       3       0       0
-name               102       4       0       0
+name               105       1       0       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -29,7 +29,7 @@ position            14       1       0       0
 punctuation         15       1       0       0
 quotes               4       0       0       0
 simplespace          1       0       0       0
-sort                47       7       2       0
+sort                48       6       2       0
 sortseparator        1       0       0       0
 substitute           6       1       0       0
 testers              2       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              778      48       2       0
+(all)              780      46       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -52,27 +52,15 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_CitationSortsWithEtAl.txt
 Passed in:
-(string) '[<i>Aalto et al.,</i> 1999; 2000; 2001]'
+(string) '[<i>Aalto et al.,</i> 1999, 2000, 2001]'
 Expected:
 (string) '[<i>Aalto et al.</i>, 1999, 2000, 2001]'
-
-Failure → citeproc test test-suite bugreports_CollapseFailure.txt
-Passed in:
-(string) '(Doe et al. 1965a; 1965b; 1970)'
-Expected:
-(string) '(Doe et al. 1965a, 1965b, 1970)'
 
 Failure → citeproc test test-suite bugreports_DemoPageFullCiteCruftOnSubsequent.txt
 Passed in:
 (string) 'Nolan J. Malone, U.S. Bureau of the Census, <i>Evaluating Components of International Migration: Consistency of 2000 Nativity Data</i> (New York: Routledge, 2001).'
 Expected:
 (string) 'Malone and U.S. Bureau of the Census, <i>Evaluating Components of International Migration: Consistency of 2000 Nativity Data</i>.'
-
-Failure → citeproc test test-suite bugreports_DisambiguationAddNames.txt
-Passed in:
-(string) '(Roe et al., 1995a; 1995b)'
-Expected:
-(string) '(Roe et al., 1995a, 1995b)'
 
 Failure → citeproc test test-suite bugreports_EnvAndUrb.txt
 Passed in:
@@ -168,12 +156,6 @@ Expected:
   </div>
 </div>'
 
-Failure → citeproc test test-suite bugreports_SortSecondaryKey.txt
-Passed in:
-(string) '(Roe, 1995; 1996)'
-Expected:
-(string) '(Roe, 1995, 1996)'
-
 Failure → citeproc test test-suite collapse_ChicagoAfterCollapse.txt
 Passed in:
 (string) '(Whittaker 1967, 1975, Wiens 1989a, 1989b)
@@ -189,6 +171,28 @@ Passed in:
 (string) '(Condit et al. 2000, 1995, 1998, Connell 1971, Cortes &#38; Hunziker 1971)'
 Expected:
 (string) '(Condit et al. 2000, 1995, 1998; Connell 1971, Cortes &#38; Hunziker 1971)'
+
+Failure → citeproc test test-suite collapse_YearSuffixCollapseNoYearSuffixDelimiter.txt
+Passed in:
+(string) 'Smith 2000a–e, 2001
+Smith 2000a;c–e, 2001'
+Expected:
+(string) 'Smith 2000a–e;2001
+Smith 2000a;c–e;2001'
+
+Failure → citeproc test test-suite collapse_YearSuffixImplicitCollapseNoYearSuffixDelimiter.txt
+Passed in:
+(string) 'Smith 2000a–e, 2001
+Smith 2000a;c–e, 2001'
+Expected:
+(string) 'Smith 2000a–e;2001
+Smith 2000a;c–e;2001'
+
+Failure → citeproc test test-suite date_YearSuffixDelimiter.txt
+Passed in:
+(string) 'Doe 2000a,b, 2001'
+Expected:
+(string) 'Doe 2000a,b;2001'
 
 Failure → citeproc test test-suite date_YearSuffixImplicitWithNoDate.txt
 Passed in:
@@ -246,7 +250,7 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_InitializeWithButNoDisambiguation.txt
 Passed in:
-(string) '(Doe, 1965b; 1965a)'
+(string) '(Doe, 1965b, 1965a)'
 Expected:
 (string) '(Doe, 1965a, 1965b)'
 
@@ -259,6 +263,26 @@ Expected:
 (string) 'Aalt02a
 Aalt02b
 Aalt02c'
+
+Failure → citeproc test test-suite disambiguate_YearCollapseWithInstitution.txt
+Passed in:
+(string) '(Smith Co 2000a, 2000b, 2000c)
+(Smith Co 2000b)
+(Smith Co 2000c)'
+Expected:
+(string) '(Smith Co 2000a; 2000b; 2000c)
+(Smith Co 2000b)
+(Smith Co 2000c)'
+
+Failure → citeproc test test-suite disambiguate_YearSuffixWithEtAlSubequent.txt
+Passed in:
+(string) '(Smith 2000a, 2000b, 2000c)
+(Smith 2000b)
+(Smith 2000c)'
+Expected:
+(string) '(Smith 2000a; 2000b; 2000c)
+(Smith 2000b)
+(Smith 2000c)'
 
 Failure → citeproc test test-suite display_SecondFieldAlignMigratePunctuation.txt
 Passed in:
@@ -360,29 +384,11 @@ Expected:
   <div class="csl-entry">“The Chicago Manual of Style.” Chicago: University of Chicago Press, 1993.</div>
 </div>'
 
-Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearCollapse.txt
-Passed in:
-(string) '(Aalto 2015a; 2015b)'
-Expected:
-(string) '(Aalto 2015a 2015b)'
-
-Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearSuffixCollapse.txt
-Passed in:
-(string) '(Aalto 2015a; b)'
-Expected:
-(string) '(Aalto 2015a, b)'
-
 Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearSuffixCollapse2.txt
 Passed in:
-(string) '(Aalto 2015a; b; Bartleby 2010; Aalto 2015c–e)'
+(string) '(Aalto 2015a,b,Bartleby 2010; Aalto 2015c–e)'
 Expected:
 (string) '(Aalto 2015a,b; Bartleby 2010; Aalto 2015c–e)'
-
-Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearSuffixCollapse3.txt
-Passed in:
-(string) '(Aalto 2015a; b; Bartleby 2010)'
-Expected:
-(string) '(Aalto 2015a,b; Bartleby 2010)'
 
 Failure → citeproc test test-suite position_IbidWithPrefixFullStop.txt
 Passed in:
@@ -398,7 +404,7 @@ Expected:
 
 Failure → citeproc test test-suite sort_AuthorDateWithYearSuffix.txt
 Passed in:
-(string) '>>[0] (Day and Fitzpatrick, 2005a; Mian et al., 2005; Day and Fitzpatrick, 2005b)'
+(string) '>>[0] (Day and Fitzpatrick, 2005a, Mian et al., 2005; Day and Fitzpatrick, 2005b)'
 Expected:
 (string) '>>[0] (Day and Fitzpatrick, 2005a, 2005b; Mian et al., 2005)'
 
@@ -426,15 +432,9 @@ Expected:
   <div class="csl-entry">---. 1974b. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
 </div>'
 
-Failure → citeproc test test-suite sort_CiteGroupDelimiter.txt
-Passed in:
-(string) 'Banda 1999; Aalto 2000; Aalto 2001'
-Expected:
-(string) 'Banda 1999; Aalto 2000, Aalto 2001'
-
 Failure → citeproc test test-suite sort_GroupedByAuthorstring.txt
 Passed in:
-(string) '>>[0] Smith 2003; Jones 2005; Smith 2010'
+(string) '>>[0] Smith 2003, Jones 2005; Smith 2010'
 Expected:
 (string) '>>[0] Smith 2003, 2010; Jones 2005'
 
@@ -452,7 +452,7 @@ Expected:
 
 Failure → citeproc test test-suite sort_WithAndInOneEntry.txt
 Passed in:
-(string) '(Beck 1991; Beck, Katz, and Tucker 1998; Beck, King, and Zeng 2000; Beck and Katz 2001; 2011; Colaresi 2006; Colaresi, Rasler, and Thompson 2007; Colaresi and Thompson 2002; Gochman 1993; Gochman and Leng 1983; Gochman and Maoz 1984)'
+(string) '(Beck 1991; Beck, Katz, and Tucker 1998; Beck, King, and Zeng 2000; Beck and Katz 2001, 2011; Colaresi 2006; Colaresi, Rasler, and Thompson 2007; Colaresi and Thompson 2002; Gochman 1993; Gochman and Leng 1983; Gochman and Maoz 1984)'
 Expected:
 (string) '(Beck 1991; Beck and Katz 2001, 2011; Beck, Katz, and Tucker 1998; Beck, King, and Zeng 2000; Colaresi 2006; Colaresi, Rasler, and Thompson 2007; Colaresi and Thompson 2002; Gochman 1993; Gochman and Leng 1983; Gochman and Maoz 1984)'
 
