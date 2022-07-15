@@ -1085,6 +1085,7 @@ function CiteProc:disambiguate_add_year_suffix(cite_ir)
 
     for _, year_suffix_ir in ipairs(ir_.year_suffix_irs) do
       year_suffix_ir.inlines = {PlainText:new(ir_.reference["year-suffix"])}
+      year_suffix_ir.year_suffix_number = year_suffix_number
       year_suffix_ir.group_var = "important"
     end
 
@@ -1304,6 +1305,7 @@ local function find_rendered_year_suffix(ir)
 end
 
 function CiteProc:collapse_cites_year_suffix(irs)
+  self:collapse_cites_year(irs)
   -- Group by disam_str
   -- The year-suffix is ommitted in DisamStringFormat
   local cite_groups = {{}}
@@ -1328,11 +1330,12 @@ function CiteProc:collapse_cites_year_suffix(irs)
     if #cite_group > 1 then
       for i, cite_ir in ipairs(cite_group) do
         if i > 1 then
-          cite_ir.children = {cite_ir.rendered_year_suffix_ir}
+          -- cite_ir.children = {cite_ir.rendered_year_suffix_ir}
+          -- Set the collapse_suppressed flag rather than removing the child irs.
+          -- This leaves the disamb ir structure unchanged.
+          self:suppress_ir_except_child(cite_ir, cite_ir.rendered_year_suffix_ir)
         end
-        if i == #cite_group then
-          cite_ir.own_delimiter = self.style.after_collapse_delimiter
-        else
+        if i < #cite_group then
           cite_ir.own_delimiter = self.style.citation.year_suffix_delimiter
         end
       end
@@ -1340,7 +1343,57 @@ function CiteProc:collapse_cites_year_suffix(irs)
   end
 end
 
+function CiteProc:suppress_ir_except_child(ir, target)
+  if ir == target then
+    ir.collapse_suppressed = false
+    return false
+  end
+  ir.collapse_suppressed = true
+  if ir.children then
+    for _, child in ipairs(ir.children) do
+      if child.group_var ~= "missing" and not child.collapse_suppressed then
+        if not self:suppress_ir_except_child(child, target) then
+          ir.collapse_suppressed = false
+        end
+      end
+    end
+  end
+  return ir.collapse_suppressed
+end
+
 function CiteProc:collapse_cites_year_suffix_ranged(irs)
+  self:collapse_cites_year_suffix(irs)
+  -- Group by disam_str
+  local cite_groups = {{}}
+  local previous_ir
+  local previous_year_suffix
+  for i, ir in ipairs(irs) do
+    local year_suffix_ir = find_rendered_year_suffix(ir)
+    ir.rendered_year_suffix_ir = year_suffix_ir
+    if i == 1 then
+      table.insert(cite_groups[#cite_groups], ir)
+    elseif year_suffix_ir and previous_ir.disam_str == ir.disam_str and previous_year_suffix and
+        year_suffix_ir.year_suffix_number == previous_year_suffix.year_suffix_number + 1 then
+      -- TODO: and not previous cite suffix
+      table.insert(cite_groups[#cite_groups], ir)
+    else
+      table.insert(cite_groups, {ir})
+    end
+    previous_ir = ir
+    previous_year_suffix = year_suffix_ir
+  end
+
+  for _, cite_group in ipairs(cite_groups) do
+    if #cite_group > 2 then
+      for i, cite_ir in ipairs(cite_group) do
+        if i == 1 then
+          cite_ir.own_delimiter = util.unicode["en dash"]
+        elseif i < #cite_group then
+          cite_ir.collapse_suppressed = true
+        end
+      end
+    end
+  end
 end
 
 function CiteProc:makeCitationCluster(citation_items)

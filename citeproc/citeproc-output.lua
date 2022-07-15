@@ -1214,6 +1214,29 @@ function DisamStringFormat:flatten_ir(ir)
   return inlines
 end
 
+function DisamStringFormat:flatten_seq_ir(ir)
+  if not ir.children then
+    print(debug.traceback())
+  end
+  if #ir.children == 0 then
+    return {}
+  end
+  local inlines_list = {}
+  for _, child in ipairs(ir.children) do
+    if child.group_var ~= "missing" then
+      -- and not child.collapse_suppressed
+      -- Suppressed irs are stil kept in the DisamStringFormat
+      table.insert(inlines_list, self:flatten_ir(child))
+    end
+  end
+
+  local inlines = self:group(inlines_list, ir.delimiter, ir.formatting)
+  -- assert ir.quotes == localized quotes
+  inlines = self:affixed_quoted(inlines, ir.affixes, ir.quotes);
+  inlines = self:with_display(inlines, ir.display);
+  return inlines
+end
+
 
 output_module.move_in_puncts = {
   ["."] = true,
