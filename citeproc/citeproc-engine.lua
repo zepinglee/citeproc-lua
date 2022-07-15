@@ -370,12 +370,12 @@ function CiteProc:build_cluster(citation_items)
   end
 
   if self.style.citation.cite_grouping then
-    self:group_cites(irs)
+    irs = self:group_cites(irs)
   else
-    local cite_collapsing = self.style.citation.collapse
-    if cite_collapsing == "year" or cite_collapsing == "year-suffix" or
-        cite_collapsing == "year-suffix-ranged" then
-      self:group_cites(irs)
+    local citation_collapse = self.style.citation.collapse
+    if citation_collapse == "year" or citation_collapse == "year-suffix" or
+        citation_collapse == "year-suffix-ranged" then
+      irs = self:group_cites(irs)
     end
   end
 
@@ -1185,7 +1185,7 @@ end
 
 function CiteProc:group_cites(irs)
   local disam_format = DisamStringFormat:new()
-  for i, ir in ipairs(irs) do
+  for _, ir in ipairs(irs) do
     local first_names_ir = ir.first_names_ir
     if not first_names_ir then
       first_names_ir = find_first(ir, function (ir_)
@@ -1202,18 +1202,16 @@ function CiteProc:group_cites(irs)
   local irs_by_name = {}
   local name_list = {}
 
-  for i, ir in ipairs(irs) do
+  for _, ir in ipairs(irs) do
+    local name_str = ""
     if ir.first_names_ir then
-      local name_str = ir.first_names_ir.disam_str
-      if not irs_by_name[name_str] then
-        irs_by_name[name_str] = {}
-        table.insert(name_list, name_str)
-      end
-      table.insert(irs_by_name[ir.first_names_ir.disam_str], ir)
-    else
-      irs_by_name[ir.disam_str] = {ir}
-      table.insert(name_list, ir.disam_str)
+      name_str = ir.first_names_ir.disam_str
     end
+    if not irs_by_name[name_str] then
+      irs_by_name[name_str] = {}
+      table.insert(name_list, name_str)
+    end
+    table.insert(irs_by_name[name_str], ir)
   end
 
   local grouped = {}
@@ -1226,6 +1224,7 @@ function CiteProc:group_cites(irs)
       table.insert(grouped, ir)
     end
   end
+  return grouped
 end
 
 function CiteProc:collapse_cites(irs)
@@ -1329,6 +1328,14 @@ function CiteProc:collapse_cites_year(irs)
         end
         if i == #cite_group then
           cite_ir.own_delimiter = self.style.citation.after_collapse_delimiter
+        else
+          -- The delimiter depends on the citation > sort.
+          -- https://github.com/citation-style-language/test-suite/issues/39#issuecomment-687901688
+          if self.style.citation.sort then
+            cite_ir.own_delimiter = self.style.citation.cite_group_delimiter
+          else
+            cite_ir.own_delimiter = self.style.citation.layout.delimiter
+          end
         end
       end
     end
@@ -1383,10 +1390,16 @@ function CiteProc:collapse_cites_year_suffix(irs)
           -- This leaves the disamb ir structure unchanged.
           self:suppress_ir_except_child(cite_ir, cite_ir.rendered_year_suffix_ir)
         end
-        if i < #cite_group and not self.style.citation.cite_grouping then
-          -- Explicit cite-group-delimiter overrides year-suffix-delimiter
-          -- name_CiteGroupDelimiterWithYearSuffixCollapse.txt
-          cite_ir.own_delimiter = self.style.citation.year_suffix_delimiter
+        if i < #cite_group then
+          if self.style.citation.cite_grouping then
+            -- In the current citeproc-js impplementation, explicitly set
+            -- cite-group-delimiter takes precedence over year-suffix-delimiter.
+            -- May be changed in the future.
+            -- https://github.com/citation-style-language/test-suite/issues/50
+            cite_ir.own_delimiter = self.style.citation.cite_group_delimiter
+          else
+            cite_ir.own_delimiter = self.style.citation.year_suffix_delimiter
+          end
         elseif i == #cite_group then
           cite_ir.own_delimiter = self.style.citation.after_collapse_delimiter
         end

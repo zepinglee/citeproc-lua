@@ -199,6 +199,8 @@ end
 
 local Citation = Element:derive("citation", {
   givenname_disambiguation_rule = "by-cite",
+  -- https://github.com/citation-style-language/schema/issues/338
+  -- The cite_group_delimiter may be changed to inherit the delimiter in citaion > layout.
   cite_group_delimiter = ", ",
   near_note_distance = 5,
 })
@@ -229,6 +231,17 @@ function Citation:from_node(node, style)
 
   -- Cite Grouping
   o:set_attribute(node, "cite-group-delimiter")
+  -- In the current citeproc-js implementation and test suite,
+  -- cite grouping is activated by setting the cite-group-delimiter
+  -- attribute or the collapse attributes on cs:citation.
+  -- It may be changed to an independent procedure.
+  -- https://github.com/citation-style-language/schema/issues/338
+  if node:get_attribute("cite-group-delimiter") then
+    o.cite_grouping = true
+  else
+    o.cite_grouping = false
+  end
+
 
   -- Cite Collapsing
   o:set_attribute(node, "collapse")
@@ -239,13 +252,6 @@ function Citation:from_node(node, style)
   o:set_attribute(node, "after-collapse-delimiter")
   if not o.after_collapse_delimiter then
     o.after_collapse_delimiter = o.layout.delimiter
-  end
-
-  o.cite_grouping = false
-  -- Cite grouping can be activated by setting the cite-group-delimiter
-  -- attribute or the collapse attributes on cs:citation.
-  if node:get_attribute("cite-group-delimiter") then
-    o.cite_grouping = true
   end
 
   -- Note Distance

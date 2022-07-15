@@ -6,7 +6,7 @@ collapse            20       1       0       0
 condition           17       0       0       0
 date                99       2       0       0
 decorations          7       0       0       0
-disambiguate        62       9       0       0
+disambiguate        64       7       0       0
 display              4       1       0       0
 etal                 3       1       0       0
 flipflop            17       0       0       0
@@ -18,7 +18,7 @@ label               18       1       0       0
 locale              23       0       0       0
 locator              5       0       0       0
 magic               37       3       0       0
-name               106       0       0       0
+name               105       1       0       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -29,7 +29,7 @@ position            14       1       0       0
 punctuation         15       1       0       0
 quotes               4       0       0       0
 simplespace          1       0       0       0
-sort                48       6       2       0
+sort                50       4       2       0
 sortseparator        1       0       0       0
 substitute           6       1       0       0
 testers              2       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              785      41       2       0
+(all)              788      38       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -222,7 +222,7 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_InitializeWithButNoDisambiguation.txt
 Passed in:
-(string) '(Doe, 1965b, 1965a)'
+(string) '(Doe, 1965b; 1965a)'
 Expected:
 (string) '(Doe, 1965a, 1965b)'
 
@@ -235,26 +235,6 @@ Expected:
 (string) 'Aalt02a
 Aalt02b
 Aalt02c'
-
-Failure → citeproc test test-suite disambiguate_YearCollapseWithInstitution.txt
-Passed in:
-(string) '(Smith Co 2000a, 2000b, 2000c)
-(Smith Co 2000b)
-(Smith Co 2000c)'
-Expected:
-(string) '(Smith Co 2000a; 2000b; 2000c)
-(Smith Co 2000b)
-(Smith Co 2000c)'
-
-Failure → citeproc test test-suite disambiguate_YearSuffixWithEtAlSubequent.txt
-Passed in:
-(string) '(Smith 2000a, 2000b, 2000c)
-(Smith 2000b)
-(Smith 2000c)'
-Expected:
-(string) '(Smith 2000a; 2000b; 2000c)
-(Smith 2000b)
-(Smith 2000c)'
 
 Failure → citeproc test test-suite display_SecondFieldAlignMigratePunctuation.txt
 Passed in:
@@ -356,6 +336,12 @@ Expected:
   <div class="csl-entry">“The Chicago Manual of Style.” Chicago: University of Chicago Press, 1993.</div>
 </div>'
 
+Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearSuffixCollapse2.txt
+Passed in:
+(string) '(Aalto 2015a–e; Bartleby 2010)'
+Expected:
+(string) '(Aalto 2015a,b; Bartleby 2010; Aalto 2015c–e)'
+
 Failure → citeproc test test-suite position_IbidWithPrefixFullStop.txt
 Passed in:
 (string) '>>[0] Book A; . He said “Please work.” ibid.'
@@ -367,12 +353,6 @@ Passed in:
 (string) 'His “ Anonymous ” Life'
 Expected:
 (string) 'His « Anonymous » Life'
-
-Failure → citeproc test test-suite sort_AuthorDateWithYearSuffix.txt
-Passed in:
-(string) '>>[0] (Day and Fitzpatrick, 2005a, Mian et al., 2005; Day and Fitzpatrick, 2005b)'
-Expected:
-(string) '>>[0] (Day and Fitzpatrick, 2005a, 2005b; Mian et al., 2005)'
 
 Failure → citeproc test test-suite sort_ChicagoYearSuffix1.txt
 Passed in:
@@ -397,12 +377,6 @@ Expected:
   <div class="csl-entry">Beijing Zoo. 1974a. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
   <div class="csl-entry">---. 1974b. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
 </div>'
-
-Failure → citeproc test test-suite sort_GroupedByAuthorstring.txt
-Passed in:
-(string) '>>[0] Smith 2003, Jones 2005; Smith 2010'
-Expected:
-(string) '>>[0] Smith 2003, 2010; Jones 2005'
 
 Failure → citeproc test test-suite sort_SubstituteTitle.txt
 Passed in:
