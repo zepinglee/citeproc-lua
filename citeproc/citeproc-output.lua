@@ -442,10 +442,10 @@ function OutputFormat:new(format_name)
 end
 
 function OutputFormat:flatten_ir(ir)
-  if self.group_var == "missing" then
+  if self.group_var == "missing" or self.collapse_suppressed then
     return {}
   end
-  local inlines
+  local inlines = {}
   if ir._type == "SeqIr" or ir._type == "NameIr" then
     inlines = self:flatten_seq_ir(ir)
   else
@@ -465,8 +465,15 @@ function OutputFormat:flatten_seq_ir(ir)
   local inlines_list = {}
   for _, child in ipairs(ir.children) do
     if child.group_var ~= "missing" and not child.collapse_suppressed then
-      table.insert(inlines_list, self:flatten_ir(child))
+      local child_inlines = self:flatten_ir(child)
+      if #child_inlines > 0 then
+        table.insert(inlines_list, child_inlines)
+      end
     end
+  end
+
+  if #inlines_list == 0 then
+    return {}
   end
 
   local inlines = self:group(inlines_list, ir.delimiter, ir.formatting)

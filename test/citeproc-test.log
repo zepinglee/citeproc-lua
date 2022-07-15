@@ -1,19 +1,19 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
-bugreports          68      12       1       0
+bugreports          69      12       0       0
 collapse            17       4       0       0
 condition           17       0       0       0
 date                99       2       0       0
 decorations          7       0       0       0
-disambiguate        62       9       0       0
+disambiguate        64       7       0       0
 display              4       1       0       0
 etal                 3       1       0       0
 flipflop            17       0       0       0
 form                 3       0       0       0
 fullstyles           4       1       0       0
 group                6       1       0       0
-integration         12       1       0       0
+integration         13       0       0       0
 label               18       1       0       0
 locale              23       0       0       0
 locator              5       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              771      54       3       0
+(all)              775      51       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -49,6 +49,12 @@ Expected:
 (string) '..[0] John Smith, <i>Book C</i>, 2000, and David Jones, <i>Book D</i>, 2000.
 ..[1] Smith, <i>Book C</i> is one source, Jones, <i>Book D</i> is another.
 >>[2] Smith, <i>Book C</i>, 23 is one source, Jones, <i>Book D</i> is another.'
+
+Failure → citeproc test test-suite bugreports_CitationSortsWithEtAl.txt
+Passed in:
+(string) '[<i>Aalto et al.,</i> 1999; 2000; 2001]'
+Expected:
+(string) '[<i>Aalto et al.</i>, 1999, 2000, 2001]'
 
 Failure → citeproc test test-suite bugreports_CollapseFailure.txt
 Passed in:
@@ -64,7 +70,7 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_DisambiguationAddNames.txt
 Passed in:
-(string) '(Roe et al., 1995a; , 1995b)'
+(string) '(Roe et al., 1995a; 1995b)'
 Expected:
 (string) '(Roe et al., 1995a, 1995b)'
 
@@ -72,7 +78,7 @@ Failure → citeproc test test-suite bugreports_EnvAndUrb.txt
 Passed in:
 (string) '..[0] Baines, T S, O Benedettini and J M Kay, ‘Title One’; Baines, T S, F Gump and J M Kay, ‘Title Two’.
 ..[1] See reference 1.
->>[2] See reference 1, Baines et al., ‘Title Two’.'
+>>[2] See reference 1.'
 Expected:
 (string) '>>[0] Baines, T S, O Benedettini and J M Kay, ‘Title One’; Baines, T S, F Gump and J M Kay, ‘Title Two’.
 ..[1] See reference 1, Baines et al.
@@ -164,15 +170,9 @@ Expected:
 
 Failure → citeproc test test-suite bugreports_SortSecondaryKey.txt
 Passed in:
-(string) '(Roe, 1995; , 1996)'
+(string) '(Roe, 1995; 1996)'
 Expected:
 (string) '(Roe, 1995, 1996)'
-
-Failure → citeproc test test-suite bugreports_ikeyOne.txt
-Passed in:
-(string) '>>[0] (James Smith)'
-Expected:
-(string) '>>[0] (Smith)'
 
 Failure → citeproc test test-suite collapse_AuthorCollapseNoDateSorted.txt
 Passed in:
@@ -249,7 +249,7 @@ Expected:
 Failure → citeproc test test-suite disambiguate_DisambiguationHang.txt
 Passed in:
 (string) '..[0] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990)
-..[1] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990b)
+..[1] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990)
 >>[2] (Caminiti, Johnson, &#38; Urbano 1990)'
 Expected:
 (string) '>>[0] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990a)
@@ -258,7 +258,7 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_InitializeWithButNoDisambiguation.txt
 Passed in:
-(string) '(Doe, 1965b; , 1965a)'
+(string) '(Doe, 1965b; 1965a)'
 Expected:
 (string) '(Doe, 1965a, 1965b)'
 
@@ -271,22 +271,6 @@ Expected:
 (string) 'Aalt02a
 Aalt02b
 Aalt02c'
-
-Failure → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntries.txt
-Passed in:
-(string) '..[0] (Smith 1986a; Smith 1986b; Smith 1986c; Smith 1986d; Smith 1986e; Smith 1986f; Smith 1986g; Smith 1986h; Smith 1986i; Smith 1986j; Smith 1986k; Smith 1986l; Smith 1986m; Smith 1986n; Smith 1986o; Smith 1986p; Smith 1986q; Smith 1986r; Smith 1986s; Smith 1986t; Smith 1986u; Smith 1986v; Smith 1986w; Smith 1986x; Smith 1986y; Smith 1986z; Smith 1986aa; Smith 1986ab; Smith 1986ac; Smith 1986ad; Smith 1986ae; Smith 1986af; Smith 1986ag; Smith 1986ah; Smith 1986ai; Smith 1986aj; Smith 1986ak; Smith 1986al; Smith 1986am; Smith 1986an; Smith 1986ao; Smith 1986ap; Smith 1986aq; Smith 1986ar; Smith 1986as; Smith 1986at; Smith 1986au; Smith 1986av; Smith 1986aw; Smith 1986ax; Smith 1986ay)
->>[1] (Smith 1986cf)'
-Expected:
-(string) '..[0] (Smith 1986a; Smith 1986b; Smith 1986c; Smith 1986d; Smith 1986e; Smith 1986f; Smith 1986g; Smith 1986h; Smith 1986i; Smith 1986j; Smith 1986k; Smith 1986l; Smith 1986m; Smith 1986n; Smith 1986o; Smith 1986p; Smith 1986q; Smith 1986r; Smith 1986s; Smith 1986t; Smith 1986u; Smith 1986v; Smith 1986w; Smith 1986x; Smith 1986y; Smith 1986z; Smith 1986aa; Smith 1986ab; Smith 1986ac; Smith 1986ad; Smith 1986ae; Smith 1986af; Smith 1986ag; Smith 1986ah; Smith 1986ai; Smith 1986aj; Smith 1986ak; Smith 1986al; Smith 1986am; Smith 1986an; Smith 1986ao; Smith 1986ap; Smith 1986aq; Smith 1986ar; Smith 1986as; Smith 1986at; Smith 1986au; Smith 1986av; Smith 1986aw; Smith 1986ax; Smith 1986ay)
->>[1] (Smith 1986az)'
-
-Failure → citeproc test test-suite disambiguate_YearSuffixFiftyTwoEntriesByCite.txt
-Passed in:
-(string) '..[0] (Smith 1986a; Smith 1986b; Smith 1986c; Smith 1986d; Smith 1986e; Smith 1986f; Smith 1986g; Smith 1986h; Smith 1986i; Smith 1986j; Smith 1986k; Smith 1986l; Smith 1986m; Smith 1986n; Smith 1986o; Smith 1986p; Smith 1986q; Smith 1986r; Smith 1986s; Smith 1986t; Smith 1986u; Smith 1986v; Smith 1986w; Smith 1986x; Smith 1986y; Smith 1986z; Smith 1986aa; Smith 1986ab; Smith 1986ac; Smith 1986ad; Smith 1986ae; Smith 1986af; Smith 1986ag; Smith 1986ah; Smith 1986ai; Smith 1986aj; Smith 1986ak; Smith 1986al; Smith 1986am; Smith 1986an; Smith 1986ao; Smith 1986ap; Smith 1986aq; Smith 1986ar; Smith 1986as; Smith 1986at; Smith 1986au; Smith 1986av; Smith 1986aw; Smith 1986ax; Smith 1986ay)
->>[1] (Smith 1986cf)'
-Expected:
-(string) '..[0] (Smith 1986a; Smith 1986b; Smith 1986c; Smith 1986d; Smith 1986e; Smith 1986f; Smith 1986g; Smith 1986h; Smith 1986i; Smith 1986j; Smith 1986k; Smith 1986l; Smith 1986m; Smith 1986n; Smith 1986o; Smith 1986p; Smith 1986q; Smith 1986r; Smith 1986s; Smith 1986t; Smith 1986u; Smith 1986v; Smith 1986w; Smith 1986x; Smith 1986y; Smith 1986z; Smith 1986aa; Smith 1986ab; Smith 1986ac; Smith 1986ad; Smith 1986ae; Smith 1986af; Smith 1986ag; Smith 1986ah; Smith 1986ai; Smith 1986aj; Smith 1986ak; Smith 1986al; Smith 1986am; Smith 1986an; Smith 1986ao; Smith 1986ap; Smith 1986aq; Smith 1986ar; Smith 1986as; Smith 1986at; Smith 1986au; Smith 1986av; Smith 1986aw; Smith 1986ax; Smith 1986ay)
->>[1] (Smith 1986az)'
 
 Failure → citeproc test test-suite display_SecondFieldAlignMigratePunctuation.txt
 Passed in:
@@ -333,12 +317,6 @@ Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Doe Inc. (n.d.). Retrieved June 1, 1965, from http://example.com/</div>
 </div>'
-
-Failure → citeproc test test-suite integration_YearSuffixOnOffOn.txt
-Passed in:
-(string) '>>[0] Smith (1986b); Smith (1986c); Smith (1986c); Smith (1986d)'
-Expected:
-(string) '>>[0] Smith (1986a); Smith (1986b); Smith (1986c); Smith (1986d)'
 
 Failure → citeproc test test-suite label_EditorTranslator1.txt
 Passed in:
@@ -553,9 +531,6 @@ Expected:
     <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. Container. :25.</div>
   </div>
 </div>'
-
-Error → citeproc test test-suite bugreports_CitationSortsWithEtAl.txt
-./citeproc/citeproc-output.lua:857: attempt to index a nil value (local 'inline')
 
 Error → citeproc test test-suite sort_AguStyle.txt
 ./citeproc/citeproc-node-sort.lua:98: attempt to compare number with string

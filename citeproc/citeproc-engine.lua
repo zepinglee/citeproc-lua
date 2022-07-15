@@ -38,6 +38,18 @@ function CiteProc.new(sys, style, lang, force_lang)
     error("\"citeprocSys.retrieveItem\" required")
   end
   local o = {}
+
+  o.style = Style:parse(style)
+
+  o.sys = sys
+  o.locales = {}
+  o.system_locales = {}
+
+  o.lang = o.style.default_locale
+  if not o.lang or force_lang then
+    o.lang = lang or "en-US"
+  end
+
   o.registry = {
     citations_by_id = {},  -- A map
     citation_list = {},  -- A list
@@ -54,9 +66,6 @@ function CiteProc.new(sys, style, lang, force_lang)
 
   o.tainted_item_ids = {}
 
-  o.person_names = {}
-  o.person_names_by_output = {}
-
   o.disam_irs = {}
   -- { <ir1>, <ir2>, ...  }
 
@@ -68,16 +77,8 @@ function CiteProc.new(sys, style, lang, force_lang)
   --   ["Doe, Jack"] = {<ir2>},
   -- }
 
-  o.sys = sys
-  o.locales = {}
-  o.system_locales = {}
-
-  o.style = Style:parse(style)
-
-  o.lang = o.style.default_locale
-  if not o.lang or force_lang then
-    o.lang = lang or "en-US"
-  end
+  o.person_names = {}
+  o.person_names_by_output = {}
 
   -- TODO
   -- o.formatter = formats.latex
@@ -90,6 +91,11 @@ end
 function CiteProc:updateItems(ids)
   self.registry.reflist = {}
   self.registry.registry = {}
+  self.person_names = {}
+  self.person_names_by_output = {}
+  self.disam_irs = {}
+  self.cite_irs_by_output = {}
+
   local cite_items = {}
   for _, id in ipairs(ids) do
     table.insert(cite_items, {id = id})
@@ -112,6 +118,7 @@ function CiteProc:updateUncitedItems(ids)
 end
 
 function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
+  -- util.debug(citation.citationID)
   -- Fix missing noteIndex: sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
   if not citation.properties then
     citation.properties = {}
@@ -1062,9 +1069,9 @@ function CiteProc:disambiguate_add_year_suffix(cite_ir)
   end
 
   for _, ir_ in ipairs(same_output_irs) do
-    if ir_.reference.year_suffix_number then
-      year_suffix_number = ir_.reference.year_suffix_number
-    else
+    -- print(ir_.cite_item.id)
+    -- print(ir_.reference)
+    if not ir_.reference.year_suffix_number then
       year_suffix_number = year_suffix_number + 1
       ir_.reference.year_suffix_number = year_suffix_number
       ir_.reference["year-suffix"] = self:render_year_suffix(year_suffix_number)
@@ -1073,6 +1080,7 @@ function CiteProc:disambiguate_add_year_suffix(cite_ir)
     if not ir_.year_suffix_irs then
       ir_.year_suffix_irs = self:collect_year_suffix_irs(ir_)
       if #ir_.year_suffix_irs == 0 then
+        -- By default, the year-suffix is appended the first year rendered through cs:date
         local year_ir = self:find_first_year_ir(ir_)
         -- util.debug(year_ir)
         if year_ir then
@@ -1085,7 +1093,7 @@ function CiteProc:disambiguate_add_year_suffix(cite_ir)
 
     for _, year_suffix_ir in ipairs(ir_.year_suffix_irs) do
       year_suffix_ir.inlines = {PlainText:new(ir_.reference["year-suffix"])}
-      year_suffix_ir.year_suffix_number = year_suffix_number
+      year_suffix_ir.year_suffix_number = ir_.reference.year_suffix_number
       year_suffix_ir.group_var = "important"
     end
 
