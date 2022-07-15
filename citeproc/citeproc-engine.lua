@@ -1324,10 +1324,11 @@ function CiteProc:collapse_cites_year(irs)
   for _, cite_group in ipairs(cite_groups) do
     if #cite_group > 1 then
       for i, cite_ir in ipairs(cite_group) do
-        if i > 1 then
-          if cite_ir.first_names_ir then
-            cite_ir.first_names_ir.collapse_suppressed = true
-          end
+        if i > 1 and cite_ir.first_names_ir then
+          cite_ir.first_names_ir.collapse_suppressed = true
+        end
+        if i == #cite_group then
+          cite_ir.own_delimiter = self.style.citation.after_collapse_delimiter
         end
       end
     end
@@ -1382,10 +1383,12 @@ function CiteProc:collapse_cites_year_suffix(irs)
           -- This leaves the disamb ir structure unchanged.
           self:suppress_ir_except_child(cite_ir, cite_ir.rendered_year_suffix_ir)
         end
-        if not self.style.citation.cite_grouping and i < #cite_group then
+        if i < #cite_group and not self.style.citation.cite_grouping then
           -- Explicit cite-group-delimiter overrides year-suffix-delimiter
           -- name_CiteGroupDelimiterWithYearSuffixCollapse.txt
           cite_ir.own_delimiter = self.style.citation.year_suffix_delimiter
+        elseif i == #cite_group then
+          cite_ir.own_delimiter = self.style.citation.after_collapse_delimiter
         end
       end
     end

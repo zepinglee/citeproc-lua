@@ -2,9 +2,9 @@ category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
 bugreports          72       9       0       0
-collapse            17       4       0       0
+collapse            20       1       0       0
 condition           17       0       0       0
-date                98       3       0       0
+date                99       2       0       0
 decorations          7       0       0       0
 disambiguate        62       9       0       0
 display              4       1       0       0
@@ -18,7 +18,7 @@ label               18       1       0       0
 locale              23       0       0       0
 locator              5       0       0       0
 magic               37       3       0       0
-name               105       1       0       0
+name               106       0       0       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              780      46       2       0
+(all)              785      41       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -158,41 +158,13 @@ Expected:
 
 Failure → citeproc test test-suite collapse_ChicagoAfterCollapse.txt
 Passed in:
-(string) '(Whittaker 1967, 1975, Wiens 1989a, 1989b)
-(Wong 1999, 328, 2000, 475, Garcia 1998, 67)
+(string) '(Whittaker 1967, 1975; Wiens 1989a, 1989b)
+(Wong 1999, 328, 2000, 475; Garcia 1998, 67)
 (Whittaker 1967, Wiens 1989b)'
 Expected:
 (string) '(Whittaker 1967, 1975; Wiens 1989a, 1989b)
 (Wong 1999, 328; 2000, 475; Garcia 1998, 67)
 (Whittaker 1967; Wiens 1989b)'
-
-Failure → citeproc test test-suite collapse_TrailingDelimiter.txt
-Passed in:
-(string) '(Condit et al. 2000, 1995, 1998, Connell 1971, Cortes &#38; Hunziker 1971)'
-Expected:
-(string) '(Condit et al. 2000, 1995, 1998; Connell 1971, Cortes &#38; Hunziker 1971)'
-
-Failure → citeproc test test-suite collapse_YearSuffixCollapseNoYearSuffixDelimiter.txt
-Passed in:
-(string) 'Smith 2000a–e, 2001
-Smith 2000a;c–e, 2001'
-Expected:
-(string) 'Smith 2000a–e;2001
-Smith 2000a;c–e;2001'
-
-Failure → citeproc test test-suite collapse_YearSuffixImplicitCollapseNoYearSuffixDelimiter.txt
-Passed in:
-(string) 'Smith 2000a–e, 2001
-Smith 2000a;c–e, 2001'
-Expected:
-(string) 'Smith 2000a–e;2001
-Smith 2000a;c–e;2001'
-
-Failure → citeproc test test-suite date_YearSuffixDelimiter.txt
-Passed in:
-(string) 'Doe 2000a,b, 2001'
-Expected:
-(string) 'Doe 2000a,b;2001'
 
 Failure → citeproc test test-suite date_YearSuffixImplicitWithNoDate.txt
 Passed in:
@@ -383,12 +355,6 @@ Expected:
   <div class="csl-entry">Soltes, Ori A., ed. “Georgia: Art and Civilization through the Ages.” London: Philip Wilson, 1999.</div>
   <div class="csl-entry">“The Chicago Manual of Style.” Chicago: University of Chicago Press, 1993.</div>
 </div>'
-
-Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearSuffixCollapse2.txt
-Passed in:
-(string) '(Aalto 2015a,b,Bartleby 2010; Aalto 2015c–e)'
-Expected:
-(string) '(Aalto 2015a,b; Bartleby 2010; Aalto 2015c–e)'
 
 Failure → citeproc test test-suite position_IbidWithPrefixFullStop.txt
 Passed in:
