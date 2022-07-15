@@ -415,26 +415,31 @@ function CiteProc:build_cluster(citation_items)
   for i, ir in ipairs(irs) do
     local cite_prefix = citation_items[i].prefix
     local cite_suffix = citation_items[i].suffix
-    if previous_ir and not ir.collapse_suppressed then
-      if previous_ir.own_delimiter then
-        table.insert(citation_stream, PlainText:new(previous_ir.own_delimiter))
-      elseif citation_delimiter and not (cite_prefix and util.startswith(cite_prefix, ",")) then
-        table.insert(citation_stream, PlainText:new(citation_delimiter))
-      end
-    end
-
-    if cite_prefix then
-      table.insert(citation_stream, Micro:new(InlineElement:parse(cite_prefix, context)))
-    end
-
-    -- util.debug(ir)
     if not ir.collapse_suppressed then
-      util.extend(citation_stream, ir:flatten(output_format))
-      previous_ir = ir
-    end
+      local ir_inlines = ir:flatten(output_format)
+      if #ir_inlines > 0 then
+        -- Make sure ir_inlines has outputs contents.
+        -- collapse_AuthorCollapseNoDateSorted.txt
+        if previous_ir then
+          if previous_ir.own_delimiter then
+            table.insert(citation_stream, PlainText:new(previous_ir.own_delimiter))
+          elseif citation_delimiter and not (cite_prefix and util.startswith(cite_prefix, ",")) then
+            table.insert(citation_stream, PlainText:new(citation_delimiter))
+          end
+        end
 
-    if cite_suffix then
-      table.insert(citation_stream, Micro:new(InlineElement:parse(cite_suffix, context)))
+        if cite_prefix then
+          table.insert(citation_stream, Micro:new(InlineElement:parse(cite_prefix, context)))
+        end
+
+        -- util.debug(ir)
+        util.extend(citation_stream, ir_inlines)
+        previous_ir = ir
+
+        if cite_suffix then
+          table.insert(citation_stream, Micro:new(InlineElement:parse(cite_suffix, context)))
+        end
+      end
     end
   end
   -- util.debug(citation_stream)

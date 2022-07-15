@@ -2,7 +2,7 @@ category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
 bugreports          69      12       0       0
-collapse            17       4       0       0
+collapse            18       3       0       0
 condition           17       0       0       0
 date                99       2       0       0
 decorations          7       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              775      51       2       0
+(all)              776      50       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -174,12 +174,6 @@ Passed in:
 Expected:
 (string) '(Roe, 1995, 1996)'
 
-Failure → citeproc test test-suite collapse_AuthorCollapseNoDateSorted.txt
-Passed in:
-(string) '(Smith 325AD, 2000, )'
-Expected:
-(string) '(Smith 325AD, 2000)'
-
 Failure → citeproc test test-suite collapse_ChicagoAfterCollapse.txt
 Passed in:
 (string) '(Whittaker 1967, 1975, Wiens 1989a, 1989b)
@@ -236,13 +230,13 @@ Expected:
 
 Failure → citeproc test test-suite disambiguate_CitationLabelDefault.txt
 Passed in:
-(string) '; ;'
+(string) '[CSL STYLE ERROR: reference with no printed form.]'
 Expected:
 (string) 'Asth00a; Asth00b; Bron00'
 
 Failure → citeproc test test-suite disambiguate_CitationLabelInData.txt
 Passed in:
-(string) 'SpiffLabel1900; SpiffLabel1900; ; ;'
+(string) 'SpiffLabel1900; SpiffLabel1900'
 Expected:
 (string) 'SpiffLabel1900a; SpiffLabel1900b; Bron00; BrCh98; DEFG26'
 
@@ -354,7 +348,7 @@ Expected:
 
 Failure → citeproc test test-suite magic_CitationLabelInCitation.txt
 Passed in:
-(string) '[, , ]'
+(string) '[]'
 Expected:
 (string) '[Doe65, RoNo78a, RoNo78b]'
 
