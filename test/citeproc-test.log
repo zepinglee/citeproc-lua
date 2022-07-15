@@ -29,7 +29,7 @@ position            14       1       0       0
 punctuation         15       1       0       0
 quotes               4       0       0       0
 simplespace          1       0       0       0
-sort                50       4       2       0
+sort                52       4       0       0
 sortseparator        1       0       0       0
 substitute           6       1       0       0
 testers              2       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              788      38       2       0
+(all)              790      38       0       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -451,9 +451,3 @@ Expected:
     <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. Container. :25.</div>
   </div>
 </div>'
-
-Error → citeproc test test-suite sort_AguStyle.txt
-./citeproc/citeproc-node-sort.lua:98: attempt to compare number with string
-
-Error → citeproc test test-suite sort_AguStyleReverseGroups.txt
-./citeproc/citeproc-node-sort.lua:98: attempt to compare number with string

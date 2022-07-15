@@ -156,6 +156,9 @@ function Names:build_ir(engine, state, context)
       local ir = Rendered:new({PlainText:new(tostring(num_names))}, self)
       ir.name_count = num_names
       ir.group_var = "important"
+      ir = NameIr:new({ir}, self)
+      ir.name_count = num_names
+      ir.group_var = "important"
       -- util.debug(ir)
       return ir
     end
@@ -179,7 +182,9 @@ function Names:build_ir(engine, state, context)
       if ir and ir.group_var ~= "missing" then
         if not ir.person_name_irs or #ir.person_name_irs == 0 then
           -- In case of a <text variable="title"/> in <substitute>
+          local name_count = ir.name_count
           ir = NameIr:new({ir}, self)
+          ir.name_count = name_count  -- sort_AguStyle.txt
           ir.group_var = "important"
         end
         return ir
