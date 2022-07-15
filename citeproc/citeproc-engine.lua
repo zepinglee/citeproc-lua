@@ -1240,8 +1240,11 @@ function CiteProc:collapse_cites_citation_number(irs)
   local previous_citation_number
   for i, ir in ipairs(irs) do
     local citation_number
-    if #ir.children == 1 then
-      citation_number = ir.children[1].citation_number
+    local only_citation_number_ir = self:get_only_citation_number(ir)
+    if only_citation_number_ir then
+      -- Other irs like locators are not rendered.
+      -- collapse_CitationNumberRangesWithAffixesGrouped.txt
+      citation_number = only_citation_number_ir.citation_number
     end
     if i == 1 then
       table.insert(current_group, ir)
@@ -1265,6 +1268,31 @@ function CiteProc:collapse_cites_citation_number(irs)
       cite_group[#cite_group].own_delimiter = self.style.citation.after_collapse_delimiter
     end
   end
+end
+
+function CiteProc:get_only_citation_number(ir)
+  if ir.citation_number then
+    return ir
+  end
+  if not ir.children then
+    return nil
+  end
+  local only_citation_number_ir
+  for _, child in ipairs(ir.children) do
+    if child.group_var ~= "missing" then
+      local citation_number_ir = self:get_only_citation_number(child)
+      if citation_number_ir then
+        if only_citation_number_ir then
+          return nil
+        else
+          only_citation_number_ir = citation_number_ir
+        end
+      else
+        return false
+      end
+    end
+  end
+  return only_citation_number_ir
 end
 
 function CiteProc:collapse_cites_year(irs)

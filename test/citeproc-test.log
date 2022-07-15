@@ -2,7 +2,7 @@ category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
 bugreports          69      12       0       0
-collapse            18       3       0       0
+collapse            19       2       0       0
 condition           17       0       0       0
 date                99       2       0       0
 decorations          7       0       0       0
@@ -29,7 +29,7 @@ position            14       1       0       0
 punctuation         15       1       0       0
 quotes               4       0       0       0
 simplespace          1       0       0       0
-sort                46       8       2       0
+sort                47       7       2       0
 sortseparator        1       0       0       0
 substitute           6       1       0       0
 testers              2       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              776      50       2       0
+(all)              778      48       2       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -183,12 +183,6 @@ Expected:
 (string) '(Whittaker 1967, 1975; Wiens 1989a, 1989b)
 (Wong 1999, 328; 2000, 475; Garcia 1998, 67)
 (Whittaker 1967; Wiens 1989b)'
-
-Failure → citeproc test test-suite collapse_CitationNumberRangesWithAffixesGrouped.txt
-Passed in:
-(string) '<b>([1],[2],[3])</b>'
-Expected:
-(string) '<b>([1]–[3])</b>'
 
 Failure → citeproc test test-suite collapse_TrailingDelimiter.txt
 Passed in:
@@ -443,14 +437,6 @@ Passed in:
 (string) '>>[0] Smith 2003; Jones 2005; Smith 2010'
 Expected:
 (string) '>>[0] Smith 2003, 2010; Jones 2005'
-
-Failure → citeproc test test-suite sort_RangeUnaffected.txt
-Passed in:
-(string) '>>[0] <sup>1</sup>
->>[1] <sup>1,2,3</sup>'
-Expected:
-(string) '>>[0] <sup>1</sup>
->>[1] <sup>1–3</sup>'
 
 Failure → citeproc test test-suite sort_SubstituteTitle.txt
 Passed in:
