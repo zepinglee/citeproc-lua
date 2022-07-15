@@ -464,7 +464,7 @@ function OutputFormat:flatten_seq_ir(ir)
   end
   local inlines_list = {}
   for _, child in ipairs(ir.children) do
-    if child.group_var ~= "missing" then
+    if child.group_var ~= "missing" and not child.collapse_suppressed then
       table.insert(inlines_list, self:flatten_ir(child))
     end
   end

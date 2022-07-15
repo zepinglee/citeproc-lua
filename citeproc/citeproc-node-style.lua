@@ -241,6 +241,13 @@ function Citation:from_node(node, style)
     o.after_collapse_delimiter = o.layout.delimiter
   end
 
+  o.cite_grouping = false
+  -- Cite grouping can be activated by setting the cite-group-delimiter
+  -- attribute or the collapse attributes on cs:citation.
+  if node:get_attribute("cite-group-delimiter") or (o.collapse and o.collapse ~= "citation-number") then
+    o.cite_grouping = true
+  end
+
   -- Note Distance
   o:set_number_attribute(node, "near-note-distance")
 

@@ -362,7 +362,10 @@ function CiteProc:build_cluster(citation_items)
     table.insert(irs, ir)
   end
 
-  -- TODO: collapsing
+  if self.style.citation.cite_grouping then
+    self:group_cites(irs)
+  end
+
   if self.style.citation.collapse then
     self:collapse_cites(irs)
   end
@@ -1145,6 +1148,66 @@ function CiteProc:render_year_suffix(year_suffix_number)
   return year_suffix
 end
 
+local function find_first(ir, check)
+  if check(ir) then
+    return ir
+  end
+  if ir.children then
+    for _, child in ipairs(ir.children) do
+      local target_ir = find_first(child, check)
+      if target_ir then
+        return target_ir
+      end
+    end
+  end
+  return nil
+end
+
+function CiteProc:group_cites(irs)
+  local disam_format = DisamStringFormat:new()
+  for i, ir in ipairs(irs) do
+    local first_names_ir = ir.first_names_ir
+    if not first_names_ir then
+      first_names_ir = find_first(ir, function (ir_)
+        return ir_._element == "names"
+      end)
+      if first_names_ir then
+        local inlines = first_names_ir:flatten(disam_format)
+        first_names_ir.disam_str = disam_format:output(inlines)
+      end
+      ir.first_names_ir = first_names_ir
+    end
+  end
+
+  local irs_by_name = {}
+  local name_list = {}
+
+  for i, ir in ipairs(irs) do
+    if ir.first_names_ir then
+      local name_str = ir.first_names_ir.disam_str
+      if not irs_by_name[name_str] then
+        irs_by_name[name_str] = {}
+        table.insert(name_list, name_str)
+      end
+      table.insert(irs_by_name[ir.first_names_ir.disam_str], ir)
+    else
+      irs_by_name[ir.disam_str] = {ir}
+      table.insert(name_list, ir.disam_str)
+    end
+  end
+
+  local grouped = {}
+  for _, name_str in ipairs(name_list) do
+    local irs_with_same_name = irs_by_name[name_str]
+    for i, ir in ipairs(irs_with_same_name) do
+      if i < #irs_by_name then
+        ir.own_delimiter = self.style.citation.cite_group_delimiter
+      end
+      table.insert(grouped, ir)
+    end
+  end
+end
+
 function CiteProc:collapse_cites(irs)
   if self.style.citation.collapse == "citation-number" then
     self:collapse_cites_citation_number(irs)
@@ -1191,6 +1254,36 @@ function CiteProc:collapse_cites_citation_number(irs)
 end
 
 function CiteProc:collapse_cites_year(irs)
+  local cite_groups = {{}}
+  local previous_name_str
+  for i, ir in ipairs(irs) do
+    local name_str
+    if ir.first_names_ir then
+      name_str = ir.first_names_ir.disam_str
+    end
+    if i == 1 then
+      table.insert(cite_groups[#cite_groups], ir)
+    elseif name_str and name_str == previous_name_str then
+      -- ir.fist_names_ir was set in the cite grouping stage
+      -- TODO: and not previous cite suffix
+      table.insert(cite_groups[#cite_groups], ir)
+    else
+      table.insert(cite_groups, {ir})
+    end
+    previous_name_str = name_str
+  end
+
+  for _, cite_group in ipairs(cite_groups) do
+    if #cite_group > 1 then
+      for i, cite_ir in ipairs(cite_group) do
+        if i > 1 then
+          if cite_ir.first_names_ir then
+            cite_ir.first_names_ir.collapse_suppressed = true
+          end
+        end
+      end
+    end
+  end
 end
 
 local function find_rendered_year_suffix(ir)
