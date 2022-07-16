@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
-bugreports          75       6       0       0
+bugreports          76       5       0       0
 collapse            20       1       0       0
 condition           17       0       0       0
 date                99       2       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              798      30       0       0
+(all)              799      29       0       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -59,12 +59,6 @@ Expected:
 (string) '>>[0] Baines, T S, O Benedettini and J M Kay, ‘Title One’; Baines, T S, F Gump and J M Kay, ‘Title Two’.
 ..[1] See reference 1, Baines et al.
 >>[2] See reference 1, Baines et al.'
-
-Failure → citeproc test test-suite bugreports_MovePunctuationInsideQuotesForLocator.txt
-Passed in:
-(string) 'Jennifer J. Davis, “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830” (Ph.D. diss., Pennsylvania State University, History, 2004), “gargoyle.”'
-Expected:
-(string) 'Jennifer J. Davis, “Men of Taste: Gender and Authority in the French Culinary Trades, 1730-1830” (Ph.D. diss., Pennsylvania State University, History, 2004), s.v. “gargoyle.”'
 
 Failure → citeproc test test-suite bugreports_NoCaseEscape.txt
 Passed in:

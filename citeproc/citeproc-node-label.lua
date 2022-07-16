@@ -46,6 +46,10 @@ function Label:build_ir(engine, state, context)
   local variable = self.variable
   if variable == "locator" then
     variable = context:get_variable("label") or "page"
+    if variable == "sub verbo" then
+      -- bugreports_MovePunctuationInsideQuotesForLocator.txt
+      variable = "sub-verbo"
+    end
   end
   local text = context:get_simple_term(variable, self.form, is_plural)
   if not text or text == "" then
