@@ -416,6 +416,41 @@ function Bibliography:substitute_subsequent_authors_complete_all(engine, ir)
 end
 
 function Bibliography:substitute_subsequent_authors_complete_each(engine, ir)
+  local bib_names_str = ""
+
+  if #ir.first_name_ir.person_name_irs > 0 then
+    for _, person_name_ir in ipairs(ir.first_name_ir.person_name_irs) do
+      if bib_names_str ~= "" then
+        bib_names_str = bib_names_str .. "     "
+      end
+      local name_variants = person_name_ir.disam_variants
+      bib_names_str = bib_names_str .. name_variants[#name_variants]
+    end
+  else
+    -- In case of a <text variable="title"/> in <substitute>
+    local disam_format = DisamStringFormat:new()
+    local inlines = ir.first_name_ir:flatten(disam_format)
+    bib_names_str = disam_format:output(inlines)
+  end
+  ir.first_name_ir.bib_names_str = bib_names_str
+
+  if engine.previous_bib_names_ir and
+      engine.previous_bib_names_ir.bib_names_str == bib_names_str then
+    local text = self.subsequent_author_substitute
+    if #ir.first_name_ir.person_name_irs > 0 then
+      for _, person_name_ir in ipairs(ir.first_name_ir.person_name_irs) do
+        person_name_ir.inlines = {PlainText:new(text)}
+      end
+    else
+      -- In case of a <text variable="title"/> in <substitute>
+      if text == "" then
+        ir.first_name_ir.children = {}
+        ir.first_name_ir.group_var = "missing"
+      else
+        ir.first_name_ir.children = {Rendered:new({PlainText:new(text)}, self)}
+      end
+    end
+  end
 end
 
 function Bibliography:substitute_subsequent_authors_partial_each(engine, ir)
@@ -432,7 +467,7 @@ function Bibliography:substitute_subsequent_authors_partial_each(engine, ir)
           local full_name_str = name_variants[#name_variants]
           if prev_full_name_str == full_name_str then
             local text = self.subsequent_author_substitute
-            person_name_ir.children = {Rendered:new({PlainText:new(text)}, self)}
+            person_name_ir.inlines = {PlainText:new(text)}
           else
             break
           end

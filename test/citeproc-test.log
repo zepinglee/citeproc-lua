@@ -31,14 +31,14 @@ quotes               4       0       0       0
 simplespace          1       0       0       0
 sort                55       1       0       0
 sortseparator        1       0       0       0
-substitute           6       1       0       0
+substitute           7       0       0       0
 testers              2       0       0       0
 textcase            27       0       0       0
 unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              803      24       0       0
+(all)              804      23       0       0
 
 Failure → test-suite affix_WithCommas.txt
 Passed in:
@@ -230,22 +230,6 @@ Expected:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Brooker, C. (2011, July 24). The news coverage of the Norway mass-killings was fact-free conjecture. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/24/charlie-brooker-norway-mass-killings</div>
   <div class="csl-entry">Brooker, C. (2011, July 31). Let’s think outside the box here: maybe blue-sky thinking is nonsense. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/31/blue-sky-thinking</div>
-</div>'
-
-Failure → test-suite substitute_SharedMacro.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Alan Alto Inc.: Book Three.</div>
-  <div class="csl-entry">Alan Alto Inc.: Book Four.</div>
-  <div class="csl-entry">Alto, Alan: Book One.</div>
-  <div class="csl-entry">Alto, Alan: Book Two.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Alan Alto Inc.: Book Three.</div>
-  <div class="csl-entry">---: Book Four.</div>
-  <div class="csl-entry">Alto, Alan: Book One.</div>
-  <div class="csl-entry">---: Book Two.</div>
 </div>'
 
 Failure → test-suite variables_ContainerTitleShort.txt
