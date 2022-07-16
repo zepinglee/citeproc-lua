@@ -32,8 +32,8 @@ skipped_fixtures = [
 failed_fixtures = []
 with open('./test/citeproc-test.log') as f:
     for line in f:
-        if line.startswith('Failure → citeproc test test-suite') or \
-            line.startswith('Error → citeproc test test-suite'):
+        if line.startswith('Failure → test-suite') or \
+            line.startswith('Error → test-suite'):
             failure_file = line.split()[-1]
             failed_fixtures.append(failure_file)
 

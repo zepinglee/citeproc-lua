@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
-bugreports          77       4       0       0
+bugreports          78       3       0       0
 collapse            20       1       0       0
 condition           17       0       0       0
 date                99       2       0       0
@@ -38,9 +38,9 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              801      26       0       0
+(all)              802      25       0       0
 
-Failure → citeproc test test-suite affix_WithCommas.txt
+Failure → test-suite affix_WithCommas.txt
 Passed in:
 (string) '>>[0] John Smith, <i>Book C</i>, 2000, and David Jones, <i>Book D</i>, 2000.
 >>[1] Smith, <i>Book C</i> is one source,; Jones, <i>Book D</i> is another.
@@ -50,7 +50,7 @@ Expected:
 ..[1] Smith, <i>Book C</i> is one source, Jones, <i>Book D</i> is another.
 >>[2] Smith, <i>Book C</i>, 23 is one source, Jones, <i>Book D</i> is another.'
 
-Failure → citeproc test test-suite bugreports_EnvAndUrb.txt
+Failure → test-suite bugreports_EnvAndUrb.txt
 Passed in:
 (string) '..[0] Baines, T S, O Benedettini and J M Kay, ‘Title One’; Baines, T S, F Gump and J M Kay, ‘Title Two’.
 ..[1] See reference 1.
@@ -60,33 +60,7 @@ Expected:
 ..[1] See reference 1, Baines et al.
 >>[2] See reference 1, Baines et al.'
 
-Failure → citeproc test test-suite bugreports_NoCaseEscape.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-
-    <div class="csl-block">Aalto, Alan</div>
-
-    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">“‘PIAAC-Longitudinal (PIAAC-L) 2015.’”</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">“PIAAC-Longitudinal (PIAAC-Lx) 2015.”</div>
-  </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-
-    <div class="csl-block">Aalto, Alan</div>
-
-    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">“‘PIAAC-Longitudinal (PIAAC-L) 2015.’”</div>
-  </div>
-  <div class="csl-entry"> 
-    <div class="csl-left-margin">N.d.</div><div class="csl-right-inline">“PIAAC-Longitudinal (PIAAC-Lx) 2015.”</div>
-  </div>
-</div>'
-
-Failure → citeproc test test-suite bugreports_OldMhraDisambiguationFailure.txt
+Failure → test-suite bugreports_OldMhraDisambiguationFailure.txt
 Passed in:
 (string) '..[0] John Doe, <i>Book A</i>, 2000; John Doe, <i>Book B</i>, 2000.
 >>[1] Doe, Book A; Doe, Book B.'
@@ -94,7 +68,7 @@ Expected:
 (string) '>>[0] John Doe, <i>Book A</i>, 2000; John Doe, <i>Book B</i>, 2000.
 >>[1] Doe, Book A; Doe, Book B.'
 
-Failure → citeproc test test-suite bugreports_SmallCapsEscape.txt
+Failure → test-suite bugreports_SmallCapsEscape.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">
@@ -114,7 +88,7 @@ Expected:
   </div>
 </div>'
 
-Failure → citeproc test test-suite collapse_ChicagoAfterCollapse.txt
+Failure → test-suite collapse_ChicagoAfterCollapse.txt
 Passed in:
 (string) '(Whittaker 1967, 1975; Wiens 1989a, 1989b)
 (Wong 1999, 328, 2000, 475; Garcia 1998, 67)
@@ -124,25 +98,25 @@ Expected:
 (Wong 1999, 328; 2000, 475; Garcia 1998, 67)
 (Whittaker 1967; Wiens 1989b)'
 
-Failure → citeproc test test-suite date_YearSuffixImplicitWithNoDate.txt
+Failure → test-suite date_YearSuffixImplicitWithNoDate.txt
 Passed in:
 (string) '(John Doe n.d. [Accessed: June 1, 1965]; John Doe n.d. [Accessed: June 1, 2065])'
 Expected:
 (string) '(John Doe n.d.-a [Accessed: June 1, 1965]; John Doe n.d.-b [Accessed: June 1, 2065])'
 
-Failure → citeproc test test-suite date_YearSuffixWithNoDate.txt
+Failure → test-suite date_YearSuffixWithNoDate.txt
 Passed in:
 (string) '(John Doe n.d. [Accessed: June 1, 1965]; John Doe n.d. [Accessed: June 1, 2065])'
 Expected:
 (string) '(John Doe n.d.-a [Accessed: June 1, 1965]; John Doe n.d.-b [Accessed: June 1, 2065])'
 
-Failure → citeproc test test-suite disambiguate_BasedOnEtAlSubsequent.txt
+Failure → test-suite disambiguate_BasedOnEtAlSubsequent.txt
 Passed in:
 (string) '(Baur, Fröberg, Baur, et al. 2000; Baur, Schileyko, Baur, et al. 2000; Doe 2000)'
 Expected:
 (string) '(Baur, Fröberg, Baur, et al. 2000<i>a</i>; Baur, Schileyko &#38; Baur 2000<i>b</i>; Doe 2000)'
 
-Failure → citeproc test test-suite disambiguate_BasedOnSubsequentFormWithBackref2.txt
+Failure → test-suite disambiguate_BasedOnSubsequentFormWithBackref2.txt
 Passed in:
 (string) '..[0] John Doe, His Book (2000); John Doe, His Other Book (2001).
 ..[1] Jane Roe, Her Book (1998).
@@ -156,19 +130,19 @@ Expected:
 ..[3] Doe, His Book, supra note 1.
 >>[4] Roe, supra note 2.'
 
-Failure → citeproc test test-suite disambiguate_CitationLabelDefault.txt
+Failure → test-suite disambiguate_CitationLabelDefault.txt
 Passed in:
 (string) '[CSL STYLE ERROR: reference with no printed form.]'
 Expected:
 (string) 'Asth00a; Asth00b; Bron00'
 
-Failure → citeproc test test-suite disambiguate_CitationLabelInData.txt
+Failure → test-suite disambiguate_CitationLabelInData.txt
 Passed in:
 (string) 'SpiffLabel1900; SpiffLabel1900'
 Expected:
 (string) 'SpiffLabel1900a; SpiffLabel1900b; Bron00; BrCh98; DEFG26'
 
-Failure → citeproc test test-suite disambiguate_DisambiguationHang.txt
+Failure → test-suite disambiguate_DisambiguationHang.txt
 Passed in:
 (string) '..[0] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990)
 ..[1] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990)
@@ -178,7 +152,7 @@ Expected:
 >>[1] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990b)
 >>[2] (Caminiti, Johnson, &#38; Urbano 1990)'
 
-Failure → citeproc test test-suite disambiguate_Trigraph.txt
+Failure → test-suite disambiguate_Trigraph.txt
 Passed in:
 (string) '[CSL STYLE ERROR: reference with no printed form.]
 [CSL STYLE ERROR: reference with no printed form.]
@@ -188,7 +162,7 @@ Expected:
 Aalt02b
 Aalt02c'
 
-Failure → citeproc test test-suite fullstyles_ABdNT.txt
+Failure → test-suite fullstyles_ABdNT.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">COLE, S. J.; MOORE, R. Hydrological modelling using raingauge- and radar-based estimators of areal rainfall. <b>Journal of Hydrology</b>, v. 358, n. 3-4, p. 159–181, 2008. </div>
@@ -198,7 +172,7 @@ Expected:
   <div class="csl-entry">COLE, S. J.; MOORE, R. Hydrological modelling using raingauge- and radar-based estimators of areal rainfall. <b>Journal of Hydrology</b>, v. 358, n. 3–4, p. 159–181, 2008. </div>
 </div>'
 
-Failure → citeproc test test-suite group_ComplexNesting.txt
+Failure → test-suite group_ComplexNesting.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Doe Inc. Retrieved June 1, 1965, from http://example.com/</div>
@@ -208,7 +182,7 @@ Expected:
   <div class="csl-entry">Doe Inc. (n.d.). Retrieved June 1, 1965, from http://example.com/</div>
 </div>'
 
-Failure → citeproc test test-suite label_EditorTranslator1.txt
+Failure → test-suite label_EditorTranslator1.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">1.	Иванов И.И. 
@@ -219,7 +193,7 @@ Expected:
   <div class="csl-entry">1.	Иванов И.И. Пример оформления книги с редактором и переводчиком в одном лице : вид издания : in 5 vols. Vol. 2 / И.И. Иванов, П.П. Петров, С.С. Сидоров; ed &#38; trans. Р.Р. Романов Дополнительно. – Тюмень: Дом, 2013. – 10. – 100 p.</div>
 </div>'
 
-Failure → citeproc test test-suite magic_CitationLabelInBibliography.txt
+Failure → test-suite magic_CitationLabelInBibliography.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry"><div class="csl-right-inline">Roe, J. and Noakes, R.: Book A., 1978a.</div>
@@ -242,31 +216,31 @@ Expected:
   </div>
 </div>'
 
-Failure → citeproc test test-suite magic_CitationLabelInCitation.txt
+Failure → test-suite magic_CitationLabelInCitation.txt
 Passed in:
 (string) '[]'
 Expected:
 (string) '[Doe65, RoNo78a, RoNo78b]'
 
-Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearSuffixCollapse2.txt
+Failure → test-suite name_CiteGroupDelimiterWithYearSuffixCollapse2.txt
 Passed in:
 (string) '(Aalto 2015a–e; Bartleby 2010)'
 Expected:
 (string) '(Aalto 2015a,b; Bartleby 2010; Aalto 2015c–e)'
 
-Failure → citeproc test test-suite position_IbidWithPrefixFullStop.txt
+Failure → test-suite position_IbidWithPrefixFullStop.txt
 Passed in:
 (string) '>>[0] Book A; . He said “Please work.” ibid.'
 Expected:
 (string) '>>[0] Book A. He said “Please work.” Ibid.'
 
-Failure → citeproc test test-suite punctuation_FrenchOrthography.txt
+Failure → test-suite punctuation_FrenchOrthography.txt
 Passed in:
 (string) 'His “ Anonymous ” Life'
 Expected:
 (string) 'His « Anonymous » Life'
 
-Failure → citeproc test test-suite sort_SubstituteTitle.txt
+Failure → test-suite sort_SubstituteTitle.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Brooker, C. (2011a, July 24). The news coverage of the Norway mass-killings was fact-free conjecture. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/24/charlie-brooker-norway-mass-killings</div>
@@ -278,7 +252,7 @@ Expected:
   <div class="csl-entry">Brooker, C. (2011, July 31). Let’s think outside the box here: maybe blue-sky thinking is nonsense. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/31/blue-sky-thinking</div>
 </div>'
 
-Failure → citeproc test test-suite substitute_SharedMacro.txt
+Failure → test-suite substitute_SharedMacro.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">Alan Alto Inc.: Book Three.</div>
@@ -294,7 +268,7 @@ Expected:
   <div class="csl-entry">---: Book Two.</div>
 </div>'
 
-Failure → citeproc test test-suite variables_ContainerTitleShort.txt
+Failure → test-suite variables_ContainerTitleShort.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">
@@ -314,7 +288,7 @@ Expected:
   </div>
 </div>'
 
-Failure → citeproc test test-suite variables_ContainerTitleShort2.txt
+Failure → test-suite variables_ContainerTitleShort2.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">

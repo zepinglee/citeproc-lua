@@ -33,6 +33,15 @@ local function endswith(str, suffix)
   return string.sub(str, -#suffix) == suffix
 end
 
+local function path_exists(path)
+  if pcall(function () lfs.dir(path) end) then
+    return true
+  else
+    return false
+  end
+end
+
+
 local function listdir(path)
   local files = {}
   for file in lfs.dir(path) do
@@ -313,24 +322,40 @@ local function run_test(path)
 
 end
 
-local function run_suite(test_dir)
-  local files = listdir(test_dir)
-  local skipped_files = get_skipped_files()
-  for _, file in ipairs(files) do
-    if string.match(file, "%.txt$") and not skipped_files[file] then
-      local path = test_dir .. "/" .. file
-      it(file, function ()
-        run_test(path)
-      end)
+local function main()
+  local test_dirs = {
+    "./test/test-suite/processor-tests/humans",  -- standard test-suite
+    "./test/overrides",  -- fixture that overrides the standard
+    "./test/local",
+  }
+  local fixture_list = {}
+  local fixture_path = {}
+  for _, test_dir in ipairs(test_dirs) do
+    if path_exists(test_dir) then
+      local files = listdir(test_dir)
+      local skipped_files = get_skipped_files()
+      for _, file in ipairs(files) do
+        if string.match(file, "%.txt$") and not skipped_files[file] then
+          local path = test_dir .. "/" .. file
+          if not fixture_path[file] then
+            table.insert(fixture_list, file)
+          end
+          fixture_path[file] = path
+        end
+      end
     end
   end
+
+  describe("test-suite", function ()
+    for _, fixture in ipairs(fixture_list) do
+      local path = fixture_path[fixture] do
+        it(fixture, function ()
+          run_test(path)
+        end)
+      end
+    end
+  end)
 end
 
-describe("citeproc test", function ()
-  describe("fixtures-local", function ()
-    run_suite("./test/fixtures-local")
-  end)
-  describe("test-suite", function ()
-    run_suite("./test/test-suite/processor-tests/humans")
-  end)
-end)
+
+main()
