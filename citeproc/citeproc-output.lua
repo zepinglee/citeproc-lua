@@ -388,7 +388,10 @@ function InlineElement:get_quote_fragments(inlines)
         -- TODO: consider utf-8
         if left and right then
           if string.match(left, "%s$") and string.match(right, "^%s") then
-            -- Orphan quote
+            -- Orphan quote: bugreports_SingleQuote.txt
+            if fragment == "'" then
+              fragments[i] = util.unicode['apostrophe']
+            end
             merge_fragments_at(fragments, i)
           end
           if not string.match(left, "[%s%p]$") and not string.match(right, "^[%s%p]") then

@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
-bugreports          73       8       0       0
+bugreports          74       7       0       0
 collapse            20       1       0       0
 condition           17       0       0       0
 date                99       2       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              793      35       0       0
+(all)              794      34       0       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -115,20 +115,6 @@ Expected:
 (string) '(Philpott, Arendt, et al. 2008)
 (Philpott, Perfecto, et al. 2008<i>a</i>)
 (Philpott, Perfecto, et al. 2008<i>b</i>)'
-
-Failure → citeproc test test-suite bugreports_SingleQuote.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline">“production d ' eau glacée à condensation à eau avec récupération de chaleur . Modélisation simplifiée dans l ’ optique d ’ un calcul des consommations d ’ énergie d ’ une insta.”</div>
-  </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline">“production d ’ eau glacée à condensation à eau avec récupération de chaleur . Modélisation simplifiée dans l ’ optique d ’ un calcul des consommations d ’ énergie d ’ une insta.”</div>
-  </div>
-</div>'
 
 Failure → citeproc test test-suite bugreports_SmallCapsEscape.txt
 Passed in:
