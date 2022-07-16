@@ -35,10 +35,10 @@ substitute           7       0       0       0
 testers              2       0       0       0
 textcase            27       0       0       0
 unicode              1       0       0       0
-variables            3       2       0       0
+variables            4       1       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              806      25       0       0
+(all)              807      24       0       0
 
 Failure → test-suite affix_WithCommas.txt
 Passed in:
@@ -242,34 +242,14 @@ Passed in:
 Expected:
 (string) 'His « Anonymous » Life'
 
-Failure → test-suite variables_ContainerTitleShort.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">1. </div><div class="csl-right-inline">Campbell DT, Fiske DW. Main title. In: Container: a title. (Series: a title). </div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. Main title. Container. </div>
-  </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">1. </div><div class="csl-right-inline">Campbell DT, Fiske DW. Main title. In: Container: a title. (Series: a title).</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. Main title. Container.</div>
-  </div>
-</div>'
-
 Failure → test-suite variables_ContainerTitleShort2.txt
 Passed in:
 (string) '<div class="csl-bib-body">
   <div class="csl-entry">
-    <div class="csl-left-margin">1. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. In p. 25. </div>
+    <div class="csl-left-margin">1. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. In p. 25.</div>
   </div>
   <div class="csl-entry">
-    <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. Container. :25. </div>
+    <div class="csl-left-margin">2. </div><div class="csl-right-inline">Campbell DT, Fiske DW. CONVERGENT AND DISCRIMINANT VALIDATION BY THE MULTITRAIT-MULTIMETHOD MATRIX. Container. :25.</div>
   </div>
 </div>'
 Expected:

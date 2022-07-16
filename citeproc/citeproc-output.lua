@@ -1234,6 +1234,11 @@ function HtmlWriter:write_display(inline)
   end
   local res = self:write_children(inline)
   local key = string.format("@display/%s", inline.div)
+  if inline.div == "right-inline" then
+    -- Strip trailing spaces
+    -- variables_ContainerTitleShort.txt
+    res = string.gsub(res, "%s+$", "")
+  end
   local format_str = self.markups[key]
   res = string.format(format_str, res)
   return res
