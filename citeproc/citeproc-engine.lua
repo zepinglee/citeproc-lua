@@ -1229,17 +1229,17 @@ end
 
 function CiteProc:collapse_cites(irs)
   if self.style.citation.collapse == "citation-number" then
-    self:collapse_cites_citation_number(irs)
+    self:collapse_cites_by_citation_number(irs)
   elseif self.style.citation.collapse == "year" then
-    self:collapse_cites_year(irs)
+    self:collapse_cites_by_year(irs)
   elseif self.style.citation.collapse == "year-suffix" then
-    self:collapse_cites_year_suffix(irs)
+    self:collapse_cites_by_year_suffix(irs)
   elseif self.style.citation.collapse == "year-suffix-ranged" then
-    self:collapse_cites_year_suffix_ranged(irs)
+    self:collapse_cites_by_year_suffix_ranged(irs)
   end
 end
 
-function CiteProc:collapse_cites_citation_number(irs)
+function CiteProc:collapse_cites_by_citation_number(irs)
   local cite_groups = {}
   local current_group = {}
   local previous_citation_number
@@ -1300,7 +1300,7 @@ function CiteProc:get_only_citation_number(ir)
   return only_citation_number_ir
 end
 
-function CiteProc:collapse_cites_year(irs)
+function CiteProc:collapse_cites_by_year(irs)
   local cite_groups = {{}}
   local previous_name_str
   for i, ir in ipairs(irs) do
@@ -1328,10 +1328,13 @@ function CiteProc:collapse_cites_year(irs)
         end
         if i == #cite_group then
           cite_ir.own_delimiter = self.style.citation.after_collapse_delimiter
-        else
+        elseif i < #cite_group then
           -- The delimiter depends on the citation > sort.
           -- https://github.com/citation-style-language/test-suite/issues/39#issuecomment-687901688
-          if self.style.citation.cite_grouping then
+          if cite_ir.cite_item.locator then
+            -- Special hack for
+            cite_ir.own_delimiter = self.style.citation.after_collapse_delimiter
+          elseif self.style.citation.cite_grouping then
             if self.style.citation.sort then
               cite_ir.own_delimiter = self.style.citation.cite_group_delimiter
             else
@@ -1369,8 +1372,8 @@ local function find_rendered_year_suffix(ir)
   return nil
 end
 
-function CiteProc:collapse_cites_year_suffix(irs)
-  self:collapse_cites_year(irs)
+function CiteProc:collapse_cites_by_year_suffix(irs)
+  self:collapse_cites_by_year(irs)
   -- Group by disam_str
   -- The year-suffix is ommitted in DisamStringFormat
   local cite_groups = {{}}
@@ -1436,8 +1439,8 @@ function CiteProc:suppress_ir_except_child(ir, target)
   return ir.collapse_suppressed
 end
 
-function CiteProc:collapse_cites_year_suffix_ranged(irs)
-  self:collapse_cites_year_suffix(irs)
+function CiteProc:collapse_cites_by_year_suffix_ranged(irs)
+  self:collapse_cites_by_year_suffix(irs)
   -- Group by disam_str
   local cite_groups = {{}}
   local previous_ir
