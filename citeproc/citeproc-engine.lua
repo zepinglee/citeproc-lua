@@ -1331,10 +1331,20 @@ function CiteProc:collapse_cites_year(irs)
         else
           -- The delimiter depends on the citation > sort.
           -- https://github.com/citation-style-language/test-suite/issues/39#issuecomment-687901688
-          if self.style.citation.sort then
-            cite_ir.own_delimiter = self.style.citation.cite_group_delimiter
+          if self.style.citation.cite_grouping then
+            if self.style.citation.sort then
+              cite_ir.own_delimiter = self.style.citation.cite_group_delimiter
+            else
+              cite_ir.own_delimiter = self.style.citation.layout.delimiter
+            end
           else
-            cite_ir.own_delimiter = self.style.citation.layout.delimiter
+            if self.style.citation.sort then
+              cite_ir.own_delimiter = self.style.citation.cite_group_delimiter
+            else
+              -- disambiguate_YearCollapseWithInstitution.txt
+              -- disambiguate_InitializeWithButNoDisambiguation.txt ?
+              cite_ir.own_delimiter = self.style.citation.layout.delimiter
+            end
           end
         end
       end

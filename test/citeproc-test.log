@@ -6,7 +6,7 @@ collapse            20       1       0       0
 condition           17       0       0       0
 date                99       2       0       0
 decorations          7       0       0       0
-disambiguate        64       7       0       0
+disambiguate        64       6       0       0
 display              5       0       0       0
 etal                 4       0       0       0
 flipflop            17       0       0       0
@@ -29,7 +29,7 @@ position            14       1       0       0
 punctuation         15       1       0       0
 quotes               4       0       0       0
 simplespace          1       0       0       0
-sort                54       2       0       0
+sort                55       1       0       0
 sortseparator        1       0       0       0
 substitute           6       1       0       0
 testers              2       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              800      28       0       0
+(all)              801      26       0       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -178,12 +178,6 @@ Expected:
 >>[1] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990b)
 >>[2] (Caminiti, Johnson, &#38; Urbano 1990)'
 
-Failure → citeproc test test-suite disambiguate_InitializeWithButNoDisambiguation.txt
-Passed in:
-(string) '(Doe, 1965b; 1965a)'
-Expected:
-(string) '(Doe, 1965a, 1965b)'
-
 Failure → citeproc test test-suite disambiguate_Trigraph.txt
 Passed in:
 (string) '[CSL STYLE ERROR: reference with no printed form.]
@@ -283,12 +277,6 @@ Expected:
   <div class="csl-entry">Brooker, C. (2011, July 24). The news coverage of the Norway mass-killings was fact-free conjecture. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/24/charlie-brooker-norway-mass-killings</div>
   <div class="csl-entry">Brooker, C. (2011, July 31). Let’s think outside the box here: maybe blue-sky thinking is nonsense. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/31/blue-sky-thinking</div>
 </div>'
-
-Failure → citeproc test test-suite sort_WithAndInOneEntry.txt
-Passed in:
-(string) '(Beck 1991; Beck, Katz, and Tucker 1998; Beck, King, and Zeng 2000; Beck and Katz 2001, 2011; Colaresi 2006; Colaresi, Rasler, and Thompson 2007; Colaresi and Thompson 2002; Gochman 1993; Gochman and Leng 1983; Gochman and Maoz 1984)'
-Expected:
-(string) '(Beck 1991; Beck and Katz 2001, 2011; Beck, Katz, and Tucker 1998; Beck, King, and Zeng 2000; Colaresi 2006; Colaresi, Rasler, and Thompson 2007; Colaresi and Thompson 2002; Gochman 1993; Gochman and Leng 1983; Gochman and Maoz 1984)'
 
 Failure → citeproc test test-suite substitute_SharedMacro.txt
 Passed in:

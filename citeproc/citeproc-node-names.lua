@@ -399,14 +399,17 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
 
 
   local and_term_ir
-  local and_term
-  if self["and"] == "text" then
-    and_term = context.locale:get_simple_term("and")
-  elseif self["and"] == "symbol" then
-    and_term = "&"
-  end
-  if and_term then
-    and_term_ir = Rendered:new({PlainText:new(and_term .. " ")}, {})
+  if not context.sort_key then
+    -- sort_WithAndInOneEntry.txt
+    local and_term
+    if self["and"] == "text" then
+      and_term = context.locale:get_simple_term("and")
+    elseif self["and"] == "symbol" then
+      and_term = "&"
+    end
+    if and_term then
+      and_term_ir = Rendered:new({PlainText:new(and_term .. " ")}, {})
+    end
   end
 
   local et_al_ir

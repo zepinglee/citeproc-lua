@@ -1,6 +1,9 @@
 # Citation sorting
 bugreports_ChicagoAuthorDateLooping.txt
 
+# Incorrect citation sorting and cite-group-delimiter
+disambiguate_InitializeWithButNoDisambiguation.txt
+
 # Force quotation marks in external affixes
 flipflop_LeadingMarkupWithApostrophe.txt
 
