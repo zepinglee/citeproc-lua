@@ -570,25 +570,24 @@ end
 -- Name-part Order
 -- https://docs.citationstyles.org/en/stable/specification.html#name-part-order
 function Name:get_display_order(name, form, is_latin, is_sort, is_inverted, demote_ndp)
-  if not name.family then
-    if name.literal then
-      return {"literal"}
-    else
-      util.error("Invalid name")
-    end
-  end
-
-  local name_part_tokens = {"family"}
-
-  if not is_latin then
-    if form == "long" and name.given then
-      return {"family", "given"}
-    else
-      return {"family"}
-    end
-  end
-
   if is_sort then
+    if not name.family then
+      -- The literal is compared with the literal
+      if self.form == "long" then
+        return {"literal", "wide-space", "wide-space", "wide-space"}
+      else
+        return {"literal", "wide-space"}
+      end
+    end
+
+    if not is_latin then
+      if form == "long" and name.given then
+        return {"family", "given"}
+      else
+        return {"family"}
+      end
+    end
+
     if self.form == "long" then
       if demote_ndp then
         return {"family", "wide-space", "dp-ndp", "wide-space", "given", "wide-space", "suffix"}
@@ -604,6 +603,22 @@ function Name:get_display_order(name, form, is_latin, is_sort, is_inverted, demo
     end
   end
 
+  if not name.family then
+    if name.literal then
+      return {"literal"}
+    else
+      util.error("Invalid name")
+    end
+  end
+
+  if not is_latin then
+    if form == "long" and name.given then
+      return {"family", "given"}
+    else
+      return {"family"}
+    end
+  end
+
   if form == "short" then
     return {"ndp-family"}
   end
@@ -611,6 +626,7 @@ function Name:get_display_order(name, form, is_latin, is_sort, is_inverted, demo
   local ndp = name["non-dropping-particle"]
   local dp = name["dropping-particle"]
 
+  local name_part_tokens = {"family"}
   if name.given then
     if is_inverted then
       if demote_ndp then

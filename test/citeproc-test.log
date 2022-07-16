@@ -29,7 +29,7 @@ position            14       1       0       0
 punctuation         15       1       0       0
 quotes               4       0       0       0
 simplespace          1       0       0       0
-sort                52       4       0       0
+sort                54       2       0       0
 sortseparator        1       0       0       0
 substitute           6       1       0       0
 testers              2       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              795      33       0       0
+(all)              797      31       0       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -293,30 +293,6 @@ Passed in:
 (string) 'His “ Anonymous ” Life'
 Expected:
 (string) 'His « Anonymous » Life'
-
-Failure → citeproc test test-suite sort_ChicagoYearSuffix1.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Beijing Zoo. 1974a. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
-  <div class="csl-entry">---. 1974b. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Beijing Zoo. 1974a. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
-  <div class="csl-entry">---. 1974b. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
-</div>'
-
-Failure → citeproc test test-suite sort_ChicagoYearSuffix2.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Beijing Zoo. 1974a. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
-  <div class="csl-entry">---. 1974b. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Beijing Zoo. 1974a. Observations on the breeding of the giant panda and the raising of its young [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 154–61.</div>
-  <div class="csl-entry">---. 1974b. On the diseases of the giant panda and their preventive and curative measures [in Chinese]. <i>Acta Zoologica Sinica</i> 20: 139–47.</div>
-</div>'
 
 Failure → citeproc test test-suite sort_SubstituteTitle.txt
 Passed in:
