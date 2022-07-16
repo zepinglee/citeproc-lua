@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
-bugreports          78       3       0       0
+bugreports          79       2       0       0
 collapse            20       1       0       0
 condition           17       0       0       0
 date                99       2       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              802      25       0       0
+(all)              803      24       0       0
 
 Failure → test-suite affix_WithCommas.txt
 Passed in:
@@ -67,26 +67,6 @@ Passed in:
 Expected:
 (string) '>>[0] John Doe, <i>Book A</i>, 2000; John Doe, <i>Book B</i>, 2000.
 >>[1] Doe, Book A; Doe, Book B.'
-
-Failure → test-suite bugreports_SmallCapsEscape.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-
-    <div class="csl-block">Aalto, Alan</div>
-
-    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline"><span style="font-variant:small-caps;">Here</span></div>
-    .</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-
-    <div class="csl-block">Aalto, Alan</div>
-
-    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline"><span style="font-variant:small-caps;">Here</span>.</div>
-  </div>
-</div>'
 
 Failure → test-suite collapse_ChicagoAfterCollapse.txt
 Passed in:

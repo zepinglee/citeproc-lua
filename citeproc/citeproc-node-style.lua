@@ -332,8 +332,10 @@ function Bibliography:build_ir(engine, state, context)
     local right_inline_ir = SeqIr:new(util.slice(ir.children, 2), self)
     right_inline_ir.display = "right-inline"
     if ir.affixes then
-      right_inline_ir.affixes = util.clone(ir.affixes)
+      right_inline_ir.affixes = ir.affixes
+      right_inline_ir.formatting = ir.formatting
       ir.affixes = nil
+      ir.formatting = nil
     end
     ir.children = {ir.children[1], right_inline_ir}
   end

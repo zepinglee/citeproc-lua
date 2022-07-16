@@ -7,6 +7,7 @@
 local layout = {}
 
 local Element = require("citeproc-element").Element
+local SeqIr = require("citeproc-ir-node").SeqIr
 local util = require("citeproc-util")
 
 
@@ -30,65 +31,32 @@ function Layout:build_ir(engine, state, context)
   end
   if context.in_bibliography then
     ir.delimiter = self.delimiter
-    ir.affixes = util.clone(self.affixes)
-    -- if self.affixes then
-    --   local irs = {}
-    --   if self.affixes.prefix then
-    --     table.insert(irs, Rendered:new(PlainText:new(self.affixes.prefix)))
-    --   end
-    --   table.insert(irs, ir)
-    --   if self.affixes.suffix then
-    --     table.insert(irs, Rendered:new(PlainText:new(self.affixes.suffix)))
-    --   end
-    --   ir = SeqIr:new(irs, self)
-    -- end
-    ir.formatting = util.clone(self.formatting)
+
+    -- Move affixes of `bibliography > layout` into the right-inline element
+    -- bugreports_SmallCapsEscape.txt
+    local has_right_inline = false
+    if self.affixes or self.formatting then
+      for i, child_ir in ipairs(ir.children) do
+        if child_ir.display == "right-inline" then
+          has_right_inline = true
+          local right_inline_with_affixes = SeqIr:new({child_ir}, self)
+          right_inline_with_affixes.affixes = util.clone(self.affixes)
+          right_inline_with_affixes.formatting = util.clone(self.formatting)
+          child_ir.display = nil
+          right_inline_with_affixes.display = "right-inline"
+          ir.children[i] = right_inline_with_affixes
+          break
+        end
+      end
+    end
+
+    if not has_right_inline then
+      ir.affixes = util.clone(self.affixes)
+      ir.formatting = util.clone(self.formatting)
+    end
   end
   return ir
 end
-
-
--- function Layout:_collapse_citations(output, context)
---   if context.options["collapse"] == "citation-number" then
---     assert(#output == #context.items)
---     local citation_numbers = {}
---     for i, item in ipairs(context.items) do
---       citation_numbers[i] = context.build.item_citation_numbers[item.id] or 0
---     end
-
---     local collapsed_output = {}
---     local citation_number_range_delimiter = util.unicode["en dash"]
---     local index = 1
---     while index <= #citation_numbers do
---       local stop_index = index + 1
---       if output[index] == context.build.item_citation_number_text[index] then
---         while stop_index <= #citation_numbers  do
---           if output[stop_index] ~= context.build.item_citation_number_text[stop_index] then
---             break
---           end
---           if citation_numbers[stop_index - 1] + 1 ~= citation_numbers[stop_index] then
---             break
---           end
---           stop_index = stop_index + 1
---         end
---       end
-
---       if stop_index >= index + 3 then
---         local range_text = output[index] .. citation_number_range_delimiter .. output[stop_index - 1]
---         table.insert(collapsed_output, range_text)
---       else
---         for i = index, stop_index - 1 do
---           table.insert(collapsed_output, output[i])
---         end
---       end
-
---       index = stop_index
---     end
-
---     return self:concat(collapsed_output, context)
---   end
---   return self:concat(output, context)
--- end
 
 
 layout.Layout = Layout
