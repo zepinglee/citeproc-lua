@@ -35,13 +35,13 @@ end
 
 
 local InlineElement = {
-  type = "InlineElement",
+  _type = "InlineElement",
   _base_class = "InlineElement",
 }
 
 function InlineElement:derive(type)
   local o = {
-    type  = type,
+    _type  = type,
   }
   self[type] = o
   setmetatable(o, self)
@@ -53,7 +53,7 @@ end
 function InlineElement:new(inlines)
   local o = {
     inlines = inlines,
-    type  = self.type,
+    _type  = self._type,
   }
   setmetatable(o, self)
   return o
@@ -98,6 +98,7 @@ local Quoted = InlineElement:derive("Quoted")
 function Quoted:new(inlines, localized_quotes)
   local o = InlineElement.new(self)
   o.inlines = inlines
+  o.is_inner = false
   if localized_quotes then
     o.quotes = localized_quotes
   else
@@ -274,7 +275,7 @@ function InlineElement:parse_quotes(inlines, context)
 
       else
         local last_inline = top_text_list[#top_text_list]
-        if last_inline and last_inline.type == "PlainText" then
+        if last_inline and last_inline._type == "PlainText" then
           last_inline.value = last_inline.value .. fragment
         else
           table.insert(top_text_list, PlainText:new(fragment))
@@ -292,16 +293,16 @@ function InlineElement:parse_quotes(inlines, context)
         quote = util.unicode["apostrophe"]
       end
       local last_inline = elements[#elements]
-      if last_inline and last_inline.type == "PlainText" then
+      if last_inline and last_inline._type == "PlainText" then
         last_inline.value = last_inline.value .. quote
       else
         table.insert(elements, PlainText:new(quote))
       end
 
       for _, inline in ipairs(text_stack[i + 1]) do
-        if inline.type == "PlainText" then
+        if inline._type == "PlainText" then
           local last_inline = elements[#elements]
-          if last_inline and last_inline.type == "PlainText" then
+          if last_inline and last_inline._type == "PlainText" then
             last_inline.value = last_inline.value .. inline.value
           else
             table.insert(elements, inline)
@@ -331,7 +332,7 @@ end
 function InlineElement:get_quote_fragments(inlines)
   local fragments = {}
   for _, inline in ipairs(inlines) do
-    if inline.type == "PlainText" then
+    if inline._type == "PlainText" then
       local quote_tuples = {}
       for _, quote in ipairs({
         "'",
@@ -425,7 +426,7 @@ end
 
 function InlineElement:capitalize_first_term()
   -- util.debug(self)
-  if self.type == "PlainText" then
+  if self._type == "PlainText" then
     self.value = util.capitalize(self.value)
   elseif self.inlines[1] then
     self.inlines[1]:capitalize_first_term()
@@ -538,7 +539,7 @@ local function string_contains_word(str)
 end
 
 local function inline_contains_word(inline)
-  if inline.type == "PlainText" then
+  if inline._type == "PlainText" then
     return string_contains_word(inline.value)
   elseif inline.inlines then
     for _, el in ipairs(inline.inlines) do
@@ -556,17 +557,17 @@ function OutputFormat:apply_text_case_inner(inlines, text_case, seen_one, is_upp
       break
     end
     local is_last = (i == #inlines)
-    if inline.type == "PlainText" then
+    if inline._type == "PlainText" then
       inline.value = self:transform_case(inline.value, text_case, seen_one, is_last, is_uppercase);
       seen_one = seen_one or string_contains_word(inline.value)
-    elseif inline.type == "NoCase" or
-           inline.type == "NoDecor" or
-           (inline.type == "Formatted" and inline.formatting["font-variant"] == "small-caps") or
-           (inline.type == "Formatted" and inline.formatting["vertical-align"] == "sup") or
-           (inline.type == "Formatted" and inline.formatting["vertical-align"] == "sub") then
+    elseif inline._type == "NoCase" or
+           inline._type == "NoDecor" or
+           (inline._type == "Formatted" and inline.formatting["font-variant"] == "small-caps") or
+           (inline._type == "Formatted" and inline.formatting["vertical-align"] == "sup") or
+           (inline._type == "Formatted" and inline.formatting["vertical-align"] == "sub") then
       seen_one = seen_one or inline_contains_word(inline)
 
-    elseif inline.type == "Formatted" or inline.type == "Quoted" then
+    elseif inline._type == "Formatted" or inline._type == "Quoted" then
       seen_one = self:apply_text_case_inner(inline.inlines, text_case, seen_one, is_uppercase) or seen_one
     end
   end
@@ -734,6 +735,7 @@ end
 
 function OutputFormat:output_bibliography_entry(inlines, punctuation_in_quote)
   self:flip_flop_inlines(inlines)
+  -- util.debug(inlines)
   self:move_punctuation(inlines)
   -- TODO:
   -- if self.format == "html" then
@@ -757,10 +759,10 @@ end
 
 function OutputFormat:flip_flop(inlines, state)
   for i, inline in ipairs(inlines) do
-    if inline.type == "Micro" then
+    if inline._type == "Micro" then
       self:flip_flop_micro_inlines(inline.inlines, state)
 
-    elseif inline.type == "Formatted" then
+    elseif inline._type == "Formatted" then
       local new_state = util.clone(state)
       local formatting = inline.formatting
 
@@ -780,13 +782,13 @@ function OutputFormat:flip_flop(inlines, state)
       end
       self:flip_flop(inline.inlines, new_state)
 
-    elseif inline.type == "Quoted" then
+    elseif inline._type == "Quoted" then
       inline.is_inner = state.in_inner_quotes
       local new_state = util.clone(state)
       new_state.in_inner_quotes = not new_state.in_inner_quotes
       self:flip_flop(inline.inlines, new_state)
 
-    elseif inline.type == "NoDecor" then
+    elseif inline._type == "NoDecor" then
       local new_state = {
         ["font-style"] = "normal",
         ["font-variant"] = "normal",
@@ -797,22 +799,25 @@ function OutputFormat:flip_flop(inlines, state)
       for attr, value in pairs(new_state) do
         if value and state[attr] ~= value then
           if not inline.formatting then
-            inline.type = "Formatted"
+            inline._type = "Formatted"
             inline.formatting = {}
           end
           inline.formatting[attr] = value
         end
       end
+
+    elseif inline.inlines then  -- Div, ...
+      self:flip_flop(inline.inlines, state)
     end
   end
 end
 
 function OutputFormat:flip_flop_micro_inlines(inlines, state)
   for i, inline in ipairs(inlines) do
-    if inline.type == "Micro" then
+    if inline._type == "Micro" then
       self:flip_flop_micro_inlines(inline.inlines, state)
 
-    elseif inline.type == "Formatted" then
+    elseif inline._type == "Formatted" then
       local new_state = util.clone(state)
       local formatting = inline.formatting
 
@@ -833,13 +838,13 @@ function OutputFormat:flip_flop_micro_inlines(inlines, state)
       end
       self:flip_flop_micro_inlines(inline.inlines, new_state)
 
-    elseif inline.type == "Quoted" then
+    elseif inline._type == "Quoted" then
       inline.is_inner = state.in_inner_quotes
       local new_state = util.clone(state)
       new_state.in_inner_quotes = not new_state.in_inner_quotes
       self:flip_flop_micro_inlines(inline.inlines, new_state)
 
-    elseif inline.type == "NoDecor" then
+    elseif inline._type == "NoDecor" then
       local new_state = {
         ["font-style"] = "normal",
         ["font-variant"] = "normal",
@@ -850,12 +855,15 @@ function OutputFormat:flip_flop_micro_inlines(inlines, state)
       for attr, value in pairs(new_state) do
         if value and state[attr] ~= value then
           if not inline.formatting then
-            inline.type = "Formatted"
+            inline._type = "Formatted"
             inline.formatting = {}
           end
           inline.formatting[attr] = value
         end
       end
+
+    elseif inline.inlines then  -- Div, ...
+      self:flip_flop_micro_inlines(inline.inlines, state)
     end
   end
 end
@@ -864,11 +872,11 @@ local function find_left(inline)
   if not inline then
     print(debug.traceback())
   end
-  if inline.type == "PlainText" then
+  if inline._type == "PlainText" then
     return inline
-  -- elseif inline.type == "Micro" then
+  -- elseif inline._type == "Micro" then
   --   return nil
-  elseif inline.inlines and inline.type~="Quoted" then
+  elseif inline.inlines and inline._type~="Quoted" then
     return find_left(inline.inlines[1])
   else
     return nil
@@ -876,11 +884,11 @@ local function find_left(inline)
 end
 
 local function find_right(inline)
-  if inline.type == "PlainText" then
+  if inline._type == "PlainText" then
     return inline
-  -- elseif inline.type == "Micro" then
+  -- elseif inline._type == "Micro" then
   --   return nil
-  elseif inline.inlines and #inline.inlines > 0 and inline.type ~= "Quoted" then
+  elseif inline.inlines and #inline.inlines > 0 and inline._type ~= "Quoted" then
     return find_right(inline.inlines[#inline.inlines])
   else
     return nil
@@ -888,9 +896,9 @@ local function find_right(inline)
 end
 
 local function find_right_in_quoted(inline)
-  if inline.type == "PlainText" then
+  if inline._type == "PlainText" then
     return inline
-  -- elseif inline.type == "Micro" then
+  -- elseif inline._type == "Micro" then
   --   return nil
   elseif inline.inlines and #inline.inlines > 0 then
     return find_right_in_quoted(inline.inlines[#inline.inlines])
@@ -901,9 +909,9 @@ end
 
 -- "'Foo,' bar" => ,
 local function find_right_quoted(inline)
-  if inline.type == "Quoted" and #inline.inlines > 0 then
+  if inline._type == "Quoted" and #inline.inlines > 0 then
     return find_right_in_quoted(inline.inlines[#inline.inlines]), inline.quotes.punctuation_in_quote
-  -- elseif inline.type == "Micro" then
+  -- elseif inline._type == "Micro" then
   --   return nil
   elseif inline.inlines and #inline.inlines > 0 then
     return find_right_quoted(inline.inlines[#inline.inlines])
@@ -975,12 +983,12 @@ local function normalise_text_elements(inlines)
     local first = inlines[idx]
     local second = inlines[idx+1]
 
-    if first.type == "PlainText" and second.type == "PlainText" then
+    if first._type == "PlainText" and second._type == "PlainText" then
       smash_string_push(first, second)
       first.value = first.value .. second.value
       table.remove(inlines, idx + 1)
 
-    elseif first.type == "Micro" and second.type == "PlainText" then
+    elseif first._type == "Micro" and second._type == "PlainText" then
       local success = smash_just_punc(first, second)
       if success then
         if second.value == "" then
@@ -990,7 +998,7 @@ local function normalise_text_elements(inlines)
         idx = idx + 1
       end
 
-    elseif first.type == "Formatted" and second.type == "PlainText" then
+    elseif first._type == "Formatted" and second._type == "PlainText" then
       local success = smash_just_punc(first, second)
       if success then
         if second.value == "" then
@@ -1082,8 +1090,8 @@ function OutputFormat:move_punctuation(inlines, piq)
   move_around_quote(inlines)
 
   for _, inline in ipairs(inlines) do
-    if inline.type == "Quoted" or inline.type == "Formatted" or
-        inline.type == "Div" then
+    if inline._type == "Quoted" or inline._type == "Formatted" or
+        inline._type == "Div" then
       self:move_punctuation(inline.inlines)
     end
   end
@@ -1120,26 +1128,26 @@ function Markup:write_inline(inline)
     return self:write_escaped(inline)
 
   elseif type(inline) == "table" then
-    -- util.debug(inline.type)
-    if inline.type == "PlainText" then
+    -- util.debug(inline._type)
+    if inline._type == "PlainText" then
       return self:write_escaped(inline.value)
 
-    elseif inline.type == "InlineElement" then
+    elseif inline._type == "InlineElement" then
       return self:write_children(inline)
 
-    elseif inline.type == "Formatted" then
+    elseif inline._type == "Formatted" then
       return self:write_formatted(inline)
 
-    elseif inline.type == "Quoted" then
+    elseif inline._type == "Quoted" then
       return self:write_quoted(inline)
 
-    elseif inline.type == "Div" then
+    elseif inline._type == "Div" then
       return self:write_display(inline)
 
-    elseif inline.type == "Linked" then
+    elseif inline._type == "Linked" then
       return self:write_link(inline)
 
-    elseif inline.type == "NoCase" or inline.type == "NoDecor" then
+    elseif inline._type == "NoCase" or inline._type == "NoDecor" then
       return self:write_inlines(inline.inlines)
 
     else

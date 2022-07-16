@@ -7,7 +7,7 @@ condition           17       0       0       0
 date                99       2       0       0
 decorations          7       0       0       0
 disambiguate        64       7       0       0
-display              4       1       0       0
+display              5       0       0       0
 etal                 4       0       0       0
 flipflop            17       0       0       0
 form                 3       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              794      34       0       0
+(all)              795      33       0       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -79,7 +79,7 @@ Passed in:
 
     <div class="csl-block">Aalto, Alan</div>
 
-    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">““PIAAC-Longitudinal (PIAAC-L) 2015.””</div>
+    <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">“‘PIAAC-Longitudinal (PIAAC-L) 2015.’”</div>
   </div>
   <div class="csl-entry">
     <div class="csl-left-margin"> N.d.</div><div class="csl-right-inline">“PIAAC-Longitudinal (PIAAC-Lx) 2015.”</div>
@@ -215,26 +215,6 @@ Expected:
 (string) 'Aalt02a
 Aalt02b
 Aalt02c'
-
-Failure → citeproc test test-suite display_SecondFieldAlignMigratePunctuation.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> F.G. Bennett Jr., “Getting Property Right: “Informal” Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>, vol. 18, Aug. 2009, pp. 463–509.</div>
-  </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> F.G. Bennett Jr., “Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>, vol. 18, Aug. 2009, pp. 463–509.</div>
-  </div>
-</div>'
 
 Failure → citeproc test test-suite fullstyles_ABdNT.txt
 Passed in:
