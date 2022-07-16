@@ -909,31 +909,94 @@ local function find_right_quoted(inline)
   end
 end
 
+local function smash_string_push(first, second)
+  local first_char = string.sub(first.value, -1)
+  local second_char = string.sub(second.value, 1, 1)
+  -- util.debug(first_char)
+  -- util.debug(second_char)
+
+  local punct_map = output_module.quote_punctuation_map
+  if second_char == " " and (first_char == " " or
+      util.endswith(first.value, util.unicode["no-break space"])) then
+    second.value = string.sub(second.value, 2)
+  elseif punct_map[first_char] then
+    if first_char == second_char then
+      second.value = string.sub(second.value, 2)
+    else
+      local combined = punct_map[first_char][second_char]
+      if combined and #combined == 1 then
+        second.value = string.sub(second.value, 2)
+        first.value = string.sub(first.value, 1, -2) .. combined
+      end
+    end
+  end
+end
+
+local function smash_just_punc(first, second)
+  first = find_right(first)  -- PlainText
+  second = find_left(second)  -- PlainText
+  if first and second then
+    local first_char = string.sub(first.value, -1)
+    local second_char = string.sub(second.value, 1, 1)
+    -- util.debug(first_char)
+    -- util.debug(second_char)
+
+    local punct_map = output_module.quote_punctuation_map
+    if second_char == " " and (first_char == " " or
+        util.endswith(first.value, util.unicode["no-break space"])) then
+      second.value = string.sub(second.value, 2)
+      return true
+    elseif punct_map[first_char] then
+      if first_char == second_char then
+        second.value = string.sub(second.value, 2)
+        return true
+      else
+        local combined = punct_map[first_char][second_char]
+        if combined and #combined == 1 then
+          second.value = string.sub(second.value, 2)
+          first.value = string.sub(first.value, 1, -2) .. combined
+          return true
+        end
+      end
+    end
+  else
+    return false
+  end
+end
+
 local function normalise_text_elements(inlines)
   -- 1. Merge punctuations: "?." => "?"
   -- 2. Merge spaces: "  " => " "
   local idx = 1
-  local len = #inlines
-  while idx < len do
-    local first = find_right(inlines[idx])  -- PlainText
-    local second = find_left(inlines[idx+1])  -- PlainText
-    if first and second then
-      local first_char = string.sub(first.value, -1)
-      local second_char = string.sub(second.value, 1, 1)
-      -- TODO: merge punctuations
+  while idx < #inlines do
+    local first = inlines[idx]
+    local second = inlines[idx+1]
 
-      local punct_map = output_module.quote_punctuation_map
-      if punct_map[first_char] and punct_map[first_char][second_char] then
-        first.value = string.sub(first.value, 1, -2) .. punct_map[first_char][second_char]
-        second.value = string.sub(second.value, 2)
-      elseif punct_map[first_char] and first_char == second_char then
-        second.value = string.sub(second.value, 2)
-      elseif second_char == " " and (first_char == " " or
-          util.endswith(first.value, util.unicode["no-break space"])) then
-        second.value = string.sub(second.value, 2)
+    if first.type == "PlainText" and second.type == "PlainText" then
+      smash_string_push(first, second)
+      first.value = first.value .. second.value
+      table.remove(inlines, idx + 1)
+
+    elseif first.type == "Micro" and second.type == "PlainText" then
+      local success = smash_just_punc(first, second)
+      if success then
+        if second.value == "" then
+          table.remove(inlines, idx + 1)
+        end
       else
         idx = idx + 1
       end
+
+    elseif first.type == "Formatted" and second.type == "PlainText" then
+      local success = smash_just_punc(first, second)
+      if success then
+        if second.value == "" then
+          table.remove(inlines, idx + 1)
+        end
+      else
+        idx = idx + 1
+      end
+
     else
       idx = idx + 1
     end

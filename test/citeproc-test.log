@@ -1,14 +1,14 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
-bugreports          72       9       0       0
+bugreports          73       8       0       0
 collapse            20       1       0       0
 condition           17       0       0       0
 date                99       2       0       0
 decorations          7       0       0       0
 disambiguate        64       7       0       0
 display              4       1       0       0
-etal                 3       1       0       0
+etal                 4       0       0       0
 flipflop            17       0       0       0
 form                 3       0       0       0
 fullstyles           4       1       0       0
@@ -17,7 +17,7 @@ integration         13       0       0       0
 label               18       1       0       0
 locale              23       0       0       0
 locator              5       0       0       0
-magic               37       3       0       0
+magic               38       2       0       0
 name               105       1       0       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              790      38       0       0
+(all)              793      35       0       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -49,12 +49,6 @@ Expected:
 (string) '..[0] John Smith, <i>Book C</i>, 2000, and David Jones, <i>Book D</i>, 2000.
 ..[1] Smith, <i>Book C</i> is one source, Jones, <i>Book D</i> is another.
 >>[2] Smith, <i>Book C</i>, 23 is one source, Jones, <i>Book D</i> is another.'
-
-Failure → citeproc test test-suite bugreports_CitationSortsWithEtAl.txt
-Passed in:
-(string) '[<i>Aalto et al.,</i> 1999, 2000, 2001]'
-Expected:
-(string) '[<i>Aalto et al.</i>, 1999, 2000, 2001]'
 
 Failure → citeproc test test-suite bugreports_DemoPageFullCiteCruftOnSubsequent.txt
 Passed in:
@@ -243,7 +237,7 @@ Passed in:
     <div class="csl-left-margin">[1]</div><div class="csl-right-inline"> B. D’Arcus, <i>Boundaries of Dissent: Protest and State Power in the Media Age</i>, Routledge, 2005.</div>
   </div>
   <div class="csl-entry">
-    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> F.G. Bennett Jr., “Getting Property Right: “Informal” Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.,</i> vol. 18, Aug. 2009, pp. 463–509.</div>
+    <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> F.G. Bennett Jr., “Getting Property Right: “Informal” Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>, vol. 18, Aug. 2009, pp. 463–509.</div>
   </div>
 </div>'
 Expected:
@@ -255,12 +249,6 @@ Expected:
     <div class="csl-left-margin">[2]</div><div class="csl-right-inline"> F.G. Bennett Jr., “Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts,” <i>Pac. Rim L. &#38; Pol’y J.</i>, vol. 18, Aug. 2009, pp. 463–509.</div>
   </div>
 </div>'
-
-Failure → citeproc test test-suite etal_CitationAndBibliographyDecorationsInCitation.txt
-Passed in:
-(string) '(Doe <i>et al.,</i> 1965)'
-Expected:
-(string) '(Doe <i>et al.</i>, 1965)'
 
 Failure → citeproc test test-suite fullstyles_ABdNT.txt
 Passed in:
@@ -275,7 +263,7 @@ Expected:
 Failure → citeproc test test-suite group_ComplexNesting.txt
 Passed in:
 (string) '<div class="csl-bib-body">
-  <div class="csl-entry">Doe Inc.. Retrieved June 1, 1965, from http://example.com/</div>
+  <div class="csl-entry">Doe Inc. Retrieved June 1, 1965, from http://example.com/</div>
 </div>'
 Expected:
 (string) '<div class="csl-bib-body">
@@ -321,20 +309,6 @@ Passed in:
 (string) '[]'
 Expected:
 (string) '[Doe65, RoNo78a, RoNo78b]'
-
-Failure → citeproc test test-suite magic_SubsequentAuthorSubstituteNotFooled.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Silverstein, Theodore, tran.. “Sir Gawain and the Green Knight.” Chicago: University of Chicago Press, 1974.</div>
-  <div class="csl-entry">Soltes, Ori A., ed.. “Georgia: Art and Civilization through the Ages.” London: Philip Wilson, 1999.</div>
-  <div class="csl-entry">“The Chicago Manual of Style.” Chicago: University of Chicago Press, 1993.</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Silverstein, Theodore, tran. “Sir Gawain and the Green Knight.” Chicago: University of Chicago Press, 1974.</div>
-  <div class="csl-entry">Soltes, Ori A., ed. “Georgia: Art and Civilization through the Ages.” London: Philip Wilson, 1999.</div>
-  <div class="csl-entry">“The Chicago Manual of Style.” Chicago: University of Chicago Press, 1993.</div>
-</div>'
 
 Failure → citeproc test test-suite name_CiteGroupDelimiterWithYearSuffixCollapse2.txt
 Passed in:
