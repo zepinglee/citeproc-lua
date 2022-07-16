@@ -2,9 +2,11 @@
 bibliography
 <<==== MODE ====<<
 
-Overriding bugreports_NoCaseEscape.txt in standard test-suite.
+
+Overrides bugreports_NoCaseEscape.txt in standard test-suite.
 
 In the standard fixture, the leading space of " N.d." is incorrectly moved outside <div class="csl-left-margin">.
+
 
 >>==== RESULT ====>>
 <div class="csl-bib-body">

@@ -33,6 +33,10 @@ skipped_fixtures = [
     'date_YearSuffixWithNoDate.txt',
     # Force quotation marks in external affixes
     'flipflop_LeadingMarkupWithApostrophe.txt',
+    # editor-translator
+    'label_EditorTranslator1.txt',
+    'name_CollapseRoleLabels.txt',
+    'name_EditorTranslatorSameWithTerm.txt',
     # Quotes
     'punctuation_FrenchOrthography.txt',
 ]

@@ -18,7 +18,7 @@ label               18       1       0       0
 locale              23       0       0       0
 locator              5       0       0       0
 magic               38       2       0       0
-name               105       1       0       0
+name               105       3       0       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -29,7 +29,7 @@ position            14       1       0       0
 punctuation         15       1       0       0
 quotes               4       0       0       0
 simplespace          1       0       0       0
-sort                55       1       0       0
+sort                56       0       0       0
 sortseparator        1       0       0       0
 substitute           7       0       0       0
 testers              2       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              805      24       0       0
+(all)              806      25       0       0
 
 Failure → test-suite affix_WithCommas.txt
 Passed in:
@@ -218,6 +218,18 @@ Passed in:
 Expected:
 (string) '(Aalto 2015a,b; Bartleby 2010; Aalto 2015c–e)'
 
+Failure → test-suite name_CollapseRoleLabels.txt
+Passed in:
+(string) 'Albert Asthma et al. (eds.), Albert Asthma et al. (trans.)'
+Expected:
+(string) 'Albert Asthma et al. (eds. &#38; trans.)'
+
+Failure → test-suite name_EditorTranslatorSameWithTerm.txt
+Passed in:
+(string) 'John Doe (ed.), John Doe (tran.)'
+Expected:
+(string) 'John Doe (ed. &#38; tran.)'
+
 Failure → test-suite position_IbidWithPrefixFullStop.txt
 Passed in:
 (string) '>>[0] Book A; . He said “Please work.” ibid.'
@@ -229,18 +241,6 @@ Passed in:
 (string) 'His “ Anonymous ” Life'
 Expected:
 (string) 'His « Anonymous » Life'
-
-Failure → test-suite sort_SubstituteTitle.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brooker, C. (2011a, July 24). The news coverage of the Norway mass-killings was fact-free conjecture. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/24/charlie-brooker-norway-mass-killings</div>
-  <div class="csl-entry">Brooker, C. (2011b, July 31). Let’s think outside the box here: maybe blue-sky thinking is nonsense. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/31/blue-sky-thinking</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">Brooker, C. (2011, July 24). The news coverage of the Norway mass-killings was fact-free conjecture. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/24/charlie-brooker-norway-mass-killings</div>
-  <div class="csl-entry">Brooker, C. (2011, July 31). Let’s think outside the box here: maybe blue-sky thinking is nonsense. <i>The Guardian</i>. London. Retrieved from http://www.guardian.co.uk/commentisfree/2011/jul/31/blue-sky-thinking</div>
-</div>'
 
 Failure → test-suite variables_ContainerTitleShort.txt
 Passed in:

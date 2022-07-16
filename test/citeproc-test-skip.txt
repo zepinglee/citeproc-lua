@@ -13,10 +13,6 @@ locator_TrickyEntryForPlurals.txt
 # # Not initialized. It should be `<name initialized-with="." />`.
 # name_AllCapsInitialsUntouched
 
-# editor-translator
-name_CollapseRoleLabels.txt
-name_EditorTranslatorSameWithTerm.txt
-
 # Hebrew
 name_HebrewAnd.txt
 
