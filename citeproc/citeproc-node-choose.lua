@@ -267,12 +267,16 @@ function If:check_position(position, context)
   if context.in_bibliography then
     return false
   end
+
+  local position_level = context.cite.position or context.cite.position_level or 0
+  -- context.cite.position is for hacking in debugging
+  -- bugreports_DemoPageFullCiteCruftOnSubsequent.txt
   if position == "first" then
-    return (context.cite.position == util.position_map["first"])
+    return (position_level == util.position_map["first"])
   elseif position == "near-note" then
     return context.cite["near-note"] or context.cite.near_note
   else
-    return (context.cite.position >= util.position_map[position])
+    return (position_level >= util.position_map[position])
   end
 end
 

@@ -264,9 +264,9 @@ function CiteProc:set_cite_item_position(cite_item, note_number, previous_cite, 
   end
 
   local tainted = false
-  if cite_item.position ~= position then
+  if cite_item.position_level ~= position then
     tainted = true
-    cite_item.position = position
+    cite_item.position_level = position
   end
   if cite_item["first-reference-note-number"] ~= first_reference_note_number then
     tainted = true
@@ -1477,9 +1477,9 @@ function CiteProc:makeCitationCluster(citation_items)
       item.label = "page"
     end
 
-    item.position = util.position_map["first"]
+    item.position_level = util.position_map["first"]
     if self.cite_first_note_numbers[cite_item.id] then
-      item.position = util.position_map["subsequent"]
+      item.position_level = util.position_map["subsequent"]
     else
       self.cite_first_note_numbers[cite_item.id] = 0
     end
@@ -1497,7 +1497,7 @@ function CiteProc:makeCitationCluster(citation_items)
     end
 
     if preceding_cite then
-      item.position = self:_get_cite_position(item, preceding_cite)
+      item.position_level = self:_get_cite_position(item, preceding_cite)
     end
 
     table.insert(items, item)

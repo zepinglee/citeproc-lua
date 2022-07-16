@@ -124,12 +124,15 @@ function Names:build_ir(engine, state, context)
     names_inheritance.label = util.clone(state.name_override.label)
   end
 
-  if context.cite and context.cite.position and context.cite.position >= util.position_map["subsequent"] then
-    if names_inheritance.name.et_al_subsequent_min then
-      names_inheritance.name.et_al_min = names_inheritance.name.et_al_subsequent_min
-    end
-    if names_inheritance.name.et_al_subsequent_use_first then
-      names_inheritance.name.et_al_use_first = names_inheritance.name.et_al_subsequent_use_first
+  if context.cite then
+    local position_level = context.cite.position or context.cite.position_level
+    if position_level and position_level >= util.position_map["subsequent"] then
+      if names_inheritance.name.et_al_subsequent_min then
+        names_inheritance.name.et_al_min = names_inheritance.name.et_al_subsequent_min
+      end
+      if names_inheritance.name.et_al_subsequent_use_first then
+        names_inheritance.name.et_al_use_first = names_inheritance.name.et_al_subsequent_use_first
+      end
     end
   end
 

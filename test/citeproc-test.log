@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
-bugreports          74       7       0       0
+bugreports          75       6       0       0
 collapse            20       1       0       0
 condition           17       0       0       0
 date                99       2       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              797      31       0       0
+(all)              798      30       0       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -49,12 +49,6 @@ Expected:
 (string) '..[0] John Smith, <i>Book C</i>, 2000, and David Jones, <i>Book D</i>, 2000.
 ..[1] Smith, <i>Book C</i> is one source, Jones, <i>Book D</i> is another.
 >>[2] Smith, <i>Book C</i>, 23 is one source, Jones, <i>Book D</i> is another.'
-
-Failure → citeproc test test-suite bugreports_DemoPageFullCiteCruftOnSubsequent.txt
-Passed in:
-(string) 'Nolan J. Malone, U.S. Bureau of the Census, <i>Evaluating Components of International Migration: Consistency of 2000 Nativity Data</i> (New York: Routledge, 2001).'
-Expected:
-(string) 'Malone and U.S. Bureau of the Census, <i>Evaluating Components of International Migration: Consistency of 2000 Nativity Data</i>.'
 
 Failure → citeproc test test-suite bugreports_EnvAndUrb.txt
 Passed in:
