@@ -386,7 +386,7 @@ function Element:split_number_parts(number, context)
     and_symbol = " " .. and_symbol .. " "
   end
   local number_part_list = {}
-  for _, tuple in ipairs(util.split(number, "%s*[,&]%s*", nil, true)) do
+  for _, tuple in ipairs(util.split_multiple(number, "%s*[,&]%s*", true)) do
     local single_number, delim = table.unpack(tuple)
     delim = util.strip(delim)
     if delim == "," then

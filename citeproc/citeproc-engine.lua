@@ -1704,9 +1704,12 @@ function CiteProc:process_extra_note(item)
   if item.note then
     local note_fields = {}
     for _, line in ipairs(util.split(item.note, "%s*\r?\n%s*")) do
+      -- util.debug(line)
       local splits = util.split(line, ":%s+", 1)
+      -- util.debug(splits)
       if #splits == 2 then
         local field, value = table.unpack(splits)
+        -- util.debug(field)
 
         local variable_type = util.variable_types[field]
         if not item[field] or field == "type" or variable_type == "date" then
@@ -1729,7 +1732,6 @@ function CiteProc:process_extra_note(item)
       item[field] = value
     end
   end
-  -- util.debug(item)
   return item
 end
 

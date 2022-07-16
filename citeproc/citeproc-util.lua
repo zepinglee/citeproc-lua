@@ -109,11 +109,39 @@ function util.debug(obj)
 end
 
 -- Similar to re.split() in Python
-function util.split(str, seps, maxsplit, include_sep)
+function util.split(str, sep, maxsplit)
   if not str then
-    print(debug.traceback())
-    error("Invalid string.")
+    util.error("Invalid string.")
   end
+  sep = sep or "%s+"
+  if sep == "" then
+    util.error("Empty separator")
+  end
+  if string.find(str, sep) == nil then
+    return { str }
+  end
+
+  if maxsplit == nil or maxsplit < 0 then
+    maxsplit = -1    -- No limit
+  end
+  local result = {}
+  local pattern = "(.-)" .. sep .. "()"
+  local num_splits = 0
+  local lastPos = 1
+  for part, pos in string.gmatch(str, pattern) do
+    if num_splits == maxsplit then
+      break
+    end
+    num_splits = num_splits + 1
+    result[num_splits] = part
+    lastPos = pos
+  end
+  -- Handle the last field
+  result[num_splits + 1] = string.sub(str, lastPos)
+  return result
+end
+
+function util.split_multiple(str, seps, include_sep)
   seps = seps or "%s+"
   if seps == "" then
     error("Empty separator")
@@ -157,8 +185,8 @@ end
 --   {word, boundary},
 --   {word, boundary},
 -- }
-function util.segment_words(str, maxsplit)
-  return util.split(str, util.word_boundaries, maxsplit, true)
+function util.segment_words(str)
+  return util.split_multiple(str, util.word_boundaries, true)
 end
 
 function util.slice (t, start, stop)
