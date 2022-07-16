@@ -15,18 +15,26 @@ skip_attr_values = [
     'citation-label',
 ]
 skipped_fixtures = [
-    'disambiguate_BasedOnSubsequentFormWithBackref2.txt',
+    # Cite affixes and delimiters
+    'affix_WithCommas.txt',
+    'position_IbidWithPrefixFullStop.txt',
+    # Disambiguation
     'bugreports_EnvAndUrb.txt',
+    # Update tainted citation status
+    'bugreports_OldMhraDisambiguationFailure.txt',
+    'integration_FirstReferenceNoteNumberPositionChange.txt',
     # Disambiguation is based on the subsequent
     'disambiguate_BasedOnEtAlSubsequent.txt',
     'disambiguate_DisambiguationHang.txt',
+    # Disambiguation
+    'disambiguate_BasedOnSubsequentFormWithBackref2.txt',
     # Disambiguation with only issued date?
     'date_YearSuffixImplicitWithNoDate.txt',
     'date_YearSuffixWithNoDate.txt',
+    # Force quotation marks in external affixes
+    'flipflop_LeadingMarkupWithApostrophe.txt',
     # Quotes
     'punctuation_FrenchOrthography.txt',
-    # Punctuation merge
-    'position_IbidWithPrefixFullStop.txt'
 ]
 
 failed_fixtures = []
