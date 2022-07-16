@@ -453,7 +453,8 @@ function OutputFormat:flatten_ir(ir)
   if ir._type == "SeqIr" or ir._type == "NameIr" then
     inlines = self:flatten_seq_ir(ir)
   else
-    inlines = self:affixed_quoted(ir.inlines, ir.affixes, ir.quotes);
+    inlines = self:with_format(ir.inlines, ir.formatting)
+    inlines = self:affixed_quoted(inlines, ir.affixes, ir.quotes);
     inlines = self:with_display(inlines, ir.display);
   end
   return inlines

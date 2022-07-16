@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       1       0       0
-bugreports          76       5       0       0
+bugreports          77       4       0       0
 collapse            20       1       0       0
 condition           17       0       0       0
 date                99       2       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            3       2       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              799      29       0       0
+(all)              800      28       0       0
 
 Failure → citeproc test test-suite affix_WithCommas.txt
 Passed in:
@@ -93,16 +93,6 @@ Passed in:
 Expected:
 (string) '>>[0] John Doe, <i>Book A</i>, 2000; John Doe, <i>Book B</i>, 2000.
 >>[1] Doe, Book A; Doe, Book B.'
-
-Failure → citeproc test test-suite bugreports_ProcessorHang1.txt
-Passed in:
-(string) '(Philpott, Arendt, et al. 2008)
-(Philpott, Perfecto, et al. 2008a)
-(Philpott, Perfecto, et al. 2008b)'
-Expected:
-(string) '(Philpott, Arendt, et al. 2008)
-(Philpott, Perfecto, et al. 2008<i>a</i>)
-(Philpott, Perfecto, et al. 2008<i>b</i>)'
 
 Failure → citeproc test test-suite bugreports_SmallCapsEscape.txt
 Passed in:
