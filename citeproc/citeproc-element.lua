@@ -332,6 +332,7 @@ function Element:format_number(number, variable, form, context)
   --   number = string.gsub(number, "\\%-", "-")
   --   return number
   -- end
+  number = util.strip(number)
   if variable == "locator" then
     variable = context:get_variable("label")
   end

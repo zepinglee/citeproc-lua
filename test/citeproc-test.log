@@ -11,7 +11,7 @@ display              5       0       0       0
 etal                 4       0       0       0
 flipflop            17       1       0       0
 form                 3       0       0       0
-fullstyles           4       1       0       0
+fullstyles           5       0       0       0
 group                7       0       0       0
 integration         13       1       0       0
 label               18       1       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            5       0       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              810      21       0       0
+(all)              811      20       0       0
 
 Failure → test-suite affix_WithCommas.txt
 Passed in:
@@ -137,16 +137,6 @@ Passed in:
 (string) '<i>Insha’Allah</i> is an Arabic phrase meaning “God willing”. Another Arabic word is <i>bukra</i>. Aalto'
 Expected:
 (string) '<i>Insha’Allah</i> is an Arabic phrase meaning ‘God willing’. Another Arabic word is <i>bukra</i>. Aalto'
-
-Failure → test-suite fullstyles_ABdNT.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">COLE, S. J.; MOORE, R. Hydrological modelling using raingauge- and radar-based estimators of areal rainfall. <b>Journal of Hydrology</b>, v. 358, n. 3-4, p. 159–181, 2008. </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">COLE, S. J.; MOORE, R. Hydrological modelling using raingauge- and radar-based estimators of areal rainfall. <b>Journal of Hydrology</b>, v. 358, n. 3–4, p. 159–181, 2008. </div>
-</div>'
 
 Failure → test-suite integration_FirstReferenceNoteNumberPositionChange.txt
 Passed in:
