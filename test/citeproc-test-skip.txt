@@ -35,12 +35,12 @@ position_IbidInText.txt
 # Update citation-number after sorting
 sort_BibliographyCitationNumberDescendingViaCompositeMacro.txt
 sort_BibliographyCitationNumberDescendingViaMacro.txt
-sort_CitationNumberPrimaryAscendingViaVariableCitation.txt
+# sort_CitationNumberPrimaryAscendingViaVariableCitation.txt
 sort_CitationNumberPrimaryDescendingViaMacroBibliography.txt
 sort_CitationNumberPrimaryDescendingViaMacroCitation.txt
 sort_CitationNumberPrimaryDescendingViaVariableBibliography.txt
 sort_CitationNumberPrimaryDescendingViaVariableCitation.txt
-sort_CitationNumberSecondaryAscendingViaVariableCitation.txt
+# sort_CitationNumberSecondaryAscendingViaVariableCitation.txt
 
 # Do not ommit empty entry output.
 sort_OmittedBibRefMixedNumericStyle.txt
@@ -48,9 +48,6 @@ sort_OmittedBibRefNonNumericStyle.txt
 
 # Localized uppercase conversion not available for tr-TR
 textcase_LocaleUnicode.txt
-
-# The word "Pen" should not be changed to lowercase in sentence case conversion.
-textcase_SentenceCapitalization.txt
 
 # The stop words ("about", etc.) in citeproc-js need to be updated with the schema.
 textcase_SkipNameParticlesInTitleCase.txt

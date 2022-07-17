@@ -29,16 +29,16 @@ position            14       1       0       0
 punctuation         15       1       0       0
 quotes               4       0       0       0
 simplespace          1       0       0       0
-sort                56       0       0       0
+sort                58       0       0       0
 sortseparator        1       0       0       0
 substitute           7       0       0       0
 testers              2       0       0       0
-textcase            27       0       0       0
+textcase            28       0       0       0
 unicode              1       0       0       0
 variables            5       0       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              811      20       0       0
+(all)              814      20       0       0
 
 Failure → test-suite affix_WithCommas.txt
 Passed in:
