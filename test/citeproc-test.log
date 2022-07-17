@@ -18,7 +18,7 @@ label               18       1       0       0
 locale              23       0       0       0
 locator              5       0       0       0
 magic               38       2       0       0
-name               105       3       0       0
+name               106       2       0       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,7 +38,7 @@ unicode              1       0       0       0
 variables            5       0       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              809      22       0       0
+(all)              810      21       0       0
 
 Failure → test-suite affix_WithCommas.txt
 Passed in:
@@ -201,12 +201,6 @@ Passed in:
 (string) '[]'
 Expected:
 (string) '[Doe65, RoNo78a, RoNo78b]'
-
-Failure → test-suite name_CiteGroupDelimiterWithYearSuffixCollapse2.txt
-Passed in:
-(string) '(Aalto 2015a–e; Bartleby 2010)'
-Expected:
-(string) '(Aalto 2015a,b; Bartleby 2010; Aalto 2015c–e)'
 
 Failure → test-suite name_CollapseRoleLabels.txt
 Passed in:
