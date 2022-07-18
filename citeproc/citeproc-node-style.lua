@@ -278,7 +278,11 @@ function Citation:build_ir(engine, state, context)
   return self.layout:build_ir(engine, state, context)
 end
 
+
 local Bibliography = Element:derive("bibliography", {
+  hanging_indent = false,
+  line_spacing = 1,
+  entry_spacing = 1,
   subsequent_author_substitute_rule = "complete-all"
 })
 
@@ -302,8 +306,8 @@ function Bibliography:from_node(node, style)
   -- Whitespace
   o:set_bool_attribute(node, "hanging-indent")
   o:set_attribute(node, "second-field-align")
-  o:set_attribute(node, "line-spacing")
-  o:set_attribute(node, "entry-spacing")
+  o:set_number_attribute(node, "line-spacing")
+  o:set_number_attribute(node, "entry-spacing")
 
   -- Reference Grouping
   o:set_attribute(node, "subsequent-author-substitute")

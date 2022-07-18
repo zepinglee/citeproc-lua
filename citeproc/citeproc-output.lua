@@ -724,17 +724,17 @@ function OutputFormat:with_display(nodes, display)
   end
 end
 
-function OutputFormat:output(inlines, punctuation_in_quote)
+function OutputFormat:output(inlines, context)
   self:flip_flop_inlines(inlines)
 
   self:move_punctuation(inlines)
 
   -- util.debug(inlines)
 
-  return self:write_inlines(inlines)
+  return self:write_inlines(inlines, context)
 end
 
-function OutputFormat:output_bibliography_entry(inlines, punctuation_in_quote)
+function OutputFormat:output_bibliography_entry(inlines, context)
   self:flip_flop_inlines(inlines)
   -- util.debug(inlines)
   self:move_punctuation(inlines)
@@ -742,8 +742,14 @@ function OutputFormat:output_bibliography_entry(inlines, punctuation_in_quote)
   -- if self.format == "html" then
   -- elseif self.format == "latex" then
   -- end
-  local res = self:write_inlines(inlines)
-  return string.format(self.markups["@bibliography/entry"], res)
+  local res = self:write_inlines(inlines, context)
+  local markup = self.markups["@bibliography/entry"]
+  if type(markup) == "string" then
+    res = string.format(markup, res)
+  elseif type(markup) == "function" then
+    res = markup(res, context)
+  end
+  return res
 end
 
 function OutputFormat:flip_flop_inlines(inlines)
@@ -1098,15 +1104,15 @@ function OutputFormat:move_punctuation(inlines, piq)
   end
 end
 
-function OutputFormat:write_inlines(inlines)
+function OutputFormat:write_inlines(inlines, context)
   local res = ""
   for _, inline in ipairs(inlines) do
-    res = res .. self:write_inline(inline)
+    res = res .. self:write_inline(inline, context)
   end
   return res
 end
 
-function OutputFormat:write_inline(inline)
+function OutputFormat:write_inline(inline, context)
   if inline.value then
     return self:write_escaped(inline.value)
   elseif inline.inlines then
@@ -1115,11 +1121,11 @@ function OutputFormat:write_inline(inline)
   return ""
 end
 
-function OutputFormat:write_escaped(str)
+function OutputFormat:write_escaped(str, context)
   return str
 end
 
-function OutputFormat:write_link(inline)
+function OutputFormat:write_link(inline, context)
   return self:write_escaped(inline.value)
 end
 
@@ -1127,30 +1133,30 @@ end
 
 local Markup = OutputFormat:new()
 
-function Markup:write_inline(inline)
+function Markup:write_inline(inline, context)
   -- Should be deprecated code
   if type(inline) == "string" then
-    return self:write_escaped(inline)
+    return self:write_escaped(inline, context)
 
   elseif type(inline) == "table" then
     -- util.debug(inline._type)
     if inline._type == "PlainText" then
-      return self:write_escaped(inline.value)
+      return self:write_escaped(inline.value, context)
 
     elseif inline._type == "InlineElement" then
-      return self:write_children(inline)
+      return self:write_children(inline, context)
 
     elseif inline._type == "Formatted" then
-      return self:write_formatted(inline)
+      return self:write_formatted(inline, context)
 
     elseif inline._type == "Quoted" then
-      return self:write_quoted(inline)
+      return self:write_quoted(inline, context)
 
     elseif inline._type == "Div" then
-      return self:write_display(inline)
+      return self:write_display(inline, context)
 
     elseif inline._type == "Linked" then
-      return self:write_link(inline)
+      return self:write_link(inline, context)
 
     elseif inline._type == "NoCase" or inline._type == "NoDecor" then
       return self:write_inlines(inline.inlines)
@@ -1162,21 +1168,123 @@ function Markup:write_inline(inline)
   return ""
 end
 
-function Markup:write_children(inline)
+function Markup:write_children(inline, context)
   local res = ""
   for _, child_inline in ipairs(inline.inlines) do
-    res = res .. self:write_inline(child_inline)
+    res = res .. self:write_inline(child_inline, context)
   end
   return res
 end
 
-function Markup:write_quoted(inline)
-  local res = self:write_children(inline)
+function Markup:write_quoted(inline, context)
+  local res = self:write_children(inline, context)
   local quotes = inline.quotes
   if inline.is_inner then
     return quotes.inner_open .. res .. quotes.inner_close
   else
     return quotes.outer_open .. res .. quotes.outer_close
+  end
+end
+
+
+local LatexWriter = Markup:new()
+
+LatexWriter.markups = {
+  ["bibstart"] = function (engine)
+    return string.format("\\begin{thebibliography}{%s}\n\n", engine.registry.longest_label)
+  end,
+  ["bibend"] = "\\end{thebibliography}",
+  ["@font-style/normal"] = "{\\normalshape %s}",
+  ["@font-style/italic"] = "\\textit{%s}",
+  ["@font-style/oblique"] = "\\textsl{%s}",
+  ["@font-variant/normal"] = "{\\normalshape %s}",
+  ["@font-variant/small-caps"] = "\\textsc{%s}",
+  ["@font-weight/normal"] = "{\\fontseries{m}\\selectfont %s}",
+  ["@font-weight/bold"] = "\\textbf{%s}",
+  ["@font-weight/light"] = "{\\fontseries{l}\\selectfont %s}",
+  ["@text-decoration/none"] = false,
+  ["@text-decoration/underline"] = "\\underline{%s}",
+  ["@vertical-align/sup"] = "\\textsuperscript{%s}",
+  ["@vertical-align/sub"] = "\\textsubscript{%s}",
+  ["@vertical-align/baseline"] = false,
+  ["@cite/entry"] = false,
+  ["@bibliography/entry"] = function (str, context)
+    if not string.match(str, "\\bibitem") then
+      str =  "\\bibitem{".. context.id .. "}\n" .. str .. "\n"
+    end
+    return str
+  end,
+  ["@display/block"] = false,
+  ["@display/left-margin"] = '\n    <div class="csl-left-margin">%s</div>',
+  ["@display/right-inline"] = '<div class="csl-right-inline">%s</div>\n  ',
+  ["@display/indent"] = '<div class="csl-indent">%s</div>\n  ',
+}
+
+function LatexWriter:write_escaped(str, context)
+  -- TeXbook, p. 38
+  str = str:gsub("\\", "\\textbackslash{}")
+  str = str:gsub("{", "\\{")
+  str = str:gsub("}", "\\}")
+  str = str:gsub("%$", "\\$")
+  str = str:gsub("&", "\\&")
+  str = str:gsub("#", "\\#")
+  str = str:gsub("%^", "\\^")
+  str = str:gsub("_", "\\_")
+  str = str:gsub("%%", "\\%%")
+  str = str:gsub("~", "\\~")
+  str = str:gsub(util.unicode["em space"], "\\quad ")
+  str = str:gsub(util.unicode["no-break space"], "~")
+  for char, sub in pairs(util.superscripts) do
+    str = string.gsub(str, char, "\\textsuperscript{" .. sub .. "}")
+  end
+  return str
+end
+
+function LatexWriter:write_formatted(inline, context)
+  local res = self:write_children(inline, context)
+  for _, key in ipairs({"font-style", "font-variant", "font-weight", "text-decoration", "vertical-align"}) do
+    local value = inline.formatting[key]
+    if value then
+      key = "@" .. key .. "/" .. value
+      local format_str = self.markups[key]
+      if format_str then
+        res = string.format(format_str, res)
+      end
+    end
+  end
+  return res
+end
+
+function LatexWriter:write_display(inline, context)
+  local plainter_text_writer = output_module.PlainTextWriter:new()
+  local str = plainter_text_writer:write_inline(inline)
+  local len = utf8.len(str)
+  if len > context.engine.registry.maxoffset then
+    context.engine.registry.maxoffset = len
+    context.engine.registry.longest_label = str
+  end
+
+  local res = self:write_children(inline, context)
+  if inline.display == "left-margin" then
+    if string.match(res, "%]") then
+      res = "{" .. res .. "}"
+    end
+    res = string.format("\\bibitem[%s]{%s}\n", res, context.id)
+
+  elseif inline.display == "right-inline" then
+    return res
+
+  elseif inline.display == "block" then
+    return ""
+  end
+  return res
+end
+
+function LatexWriter:write_link(inline, context)
+  if inline.href == inline.value then
+    return string.format("\\url{%s}", inline.value)
+  else
+    return string.format("\\href{%s}{%s}", inline.href, inline.value)
   end
 end
 
@@ -1199,7 +1307,7 @@ HtmlWriter.markups = {
   ["@vertical-align/sup"] = "<sup>%s</sup>",
   ["@vertical-align/sub"] = "<sub>%s</sub>",
   ["@vertical-align/baseline"] = '<span style="baseline">%s</span>',
-  ["@cite/entry"] = "%s",
+  ["@cite/entry"] = nil,
   ["@bibliography/entry"] = "<div class=\"csl-entry\">%s</div>\n",
   ["@display/block"] = '\n\n    <div class="csl-block">%s</div>\n',
   ["@display/left-margin"] = '\n    <div class="csl-left-margin">%s</div>',
@@ -1207,7 +1315,7 @@ HtmlWriter.markups = {
   ["@display/indent"] = '<div class="csl-indent">%s</div>\n  ',
 }
 
-function HtmlWriter:write_escaped(str)
+function HtmlWriter:write_escaped(str, context)
   str = string.gsub(str, "%&", "&#38;")
   str = string.gsub(str, "<", "&#60;")
   str = string.gsub(str, ">", "&#62;")
@@ -1217,8 +1325,8 @@ function HtmlWriter:write_escaped(str)
   return str
 end
 
-function HtmlWriter:write_formatted(inline)
-  local res = self:write_children(inline)
+function HtmlWriter:write_formatted(inline, context)
+  local res = self:write_children(inline, context)
   for _, key in ipairs({"font-style", "font-variant", "font-weight", "text-decoration", "vertical-align"}) do
     local value = inline.formatting[key]
     if value then
@@ -1232,11 +1340,19 @@ function HtmlWriter:write_formatted(inline)
   return res
 end
 
-function HtmlWriter:write_display(inline)
+function HtmlWriter:write_display(inline, context)
+  local plainter_text_writer = output_module.PlainTextWriter:new()
+  local str = plainter_text_writer:write_inline(inline)
+  local len = utf8.len(str)
+  if len > context.engine.registry.maxoffset then
+    context.engine.registry.maxoffset = len
+    context.engine.registry.longest_label = str
+  end
+
   if #inline.inlines == 0 then
     return ""
   end
-  local res = self:write_children(inline)
+  local res = self:write_children(inline, context)
   local key = string.format("@display/%s", inline.div)
   if inline.div == "right-inline" then
     -- Strip trailing spaces
@@ -1248,7 +1364,7 @@ function HtmlWriter:write_display(inline)
   return res
 end
 
-function HtmlWriter:write_link(inline)
+function HtmlWriter:write_link(inline, context)
   return string.format('<a href="%s">%s</a>', inline.href, inline.value)
 end
 
@@ -1257,28 +1373,28 @@ local PlainTextWriter = Markup:new()
 
 PlainTextWriter.markups = {}
 
-function PlainTextWriter:write_escaped(str)
+function PlainTextWriter:write_escaped(str, context)
   return str
 end
 
-function PlainTextWriter:write_formatted(inline)
-  return self:write_children(inline)
+function PlainTextWriter:write_formatted(inline, context)
+  return self:write_children(inline, context)
 end
 
-function PlainTextWriter:write_display(inline)
-  return self:write_children(inline)
+function PlainTextWriter:write_display(inline, context)
+  return self:write_children(inline, context)
 end
 
 
 local SortStringFormat = OutputFormat:new()
 
-function SortStringFormat:output(inlines)
+function SortStringFormat:output(inlines, context)
   -- self:flip_flop_inlines(inlines)
   -- self:move_punctuation(inlines)
-  return self:write_inlines(inlines)
+  return self:write_inlines(inlines, context)
 end
 
-function SortStringFormat:write_escaped(str)
+function SortStringFormat:write_escaped(str, context)
   str = string.gsub(str, ",", "")
   return str
 end
@@ -1286,10 +1402,10 @@ end
 
 local DisamStringFormat = OutputFormat:new()
 
-function DisamStringFormat:output(inlines)
+function DisamStringFormat:output(inlines, context)
   -- self:flip_flop_inlines(inlines)
   -- self:move_punctuation(inlines)
-  return self:write_inlines(inlines)
+  return self:write_inlines(inlines, context)
 end
 
 function DisamStringFormat:flatten_ir(ir)
@@ -1409,6 +1525,7 @@ output_module.NoDecor = NoDecor
 output_module.OutputFormat = OutputFormat
 
 output_module.Markup = Markup
+output_module.LatexWriter = LatexWriter
 output_module.HtmlWriter = HtmlWriter
 output_module.PlainTextWriter = PlainTextWriter
 output_module.DisamStringFormat = DisamStringFormat

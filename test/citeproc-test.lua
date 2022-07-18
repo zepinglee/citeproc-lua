@@ -290,7 +290,7 @@ local function run_test(path)
   local style = fixture.csl
 
   local engine = citeproc.new(citeproc_sys, style)
-  engine:set_formatter('html')
+  engine:set_output_format('html')
   citeproc.util.warning_enabled = false
   if fixture.options then
     for key, value in pairs(fixture.options) do

@@ -15,6 +15,7 @@ local Context = require("citeproc-context").Context
 local IrState = require("citeproc-context").IrState
 local YearSuffix = require("citeproc-ir-node").YearSuffix
 -- local OutputFormat = require("citeproc-output").OutputFormat
+local LatexWriter = require("citeproc-output").LatexWriter
 local HtmlWriter = require("citeproc-output").HtmlWriter
 local SortStringFormat = require("citeproc-output").SortStringFormat
 local DisamStringFormat = require("citeproc-output").DisamStringFormat
@@ -50,8 +51,7 @@ function CiteProc.new(sys, style, lang, force_lang)
     o.lang = lang or "en-US"
   end
 
-  -- TODO
-  -- o.formatter = formats.latex
+  o.output_format = LatexWriter:new()
 
   o.opt = {
     -- Similar to citeproc-js's development_extensions.wrap_url_and_doi
@@ -68,6 +68,8 @@ function CiteProc.new(sys, style, lang, force_lang)
     reflist = {},  -- A list
     previous_citation = nil,
     requires_sorting = false,
+    longest_label = "",
+    maxoffset = 0,
   }
 
   o.cite_first_note_numbers = {}
@@ -367,7 +369,7 @@ function CiteProc:build_citation_str(citation)
 end
 
 function CiteProc:build_cluster(citation_items)
-  local output_format = HtmlWriter:new()
+  local output_format = self.output_format
   local irs = {}
   citation_items = self:sorted_citation_items(citation_items)
   for _, cite_item in ipairs(citation_items) do
@@ -476,7 +478,7 @@ function CiteProc:build_cluster(citation_items)
   end
 
   -- util.debug(citation_stream)
-  local str = output_format:output(citation_stream)
+  local str = output_format:output(citation_stream, context)
   str = util.strip(str)
 
   return str
@@ -542,7 +544,7 @@ function CiteProc:build_ambiguous_ir(cite_item, output_format)
   -- Formattings like font-style are ignored for disambiguation.
   local disam_format = DisamStringFormat:new()
   local inlines = ir:flatten(disam_format)
-  local disam_str = disam_format:output(inlines)
+  local disam_str = disam_format:output(inlines, context)
   ir.disam_str = disam_str
 
   if not self.cite_irs_by_output[disam_str] then
@@ -657,7 +659,7 @@ function CiteProc:disambiguate_add_givenname_all_names(cite_ir)
   -- update cite_ir output
   local disam_format = DisamStringFormat:new()
   local inlines = cite_ir:flatten(disam_format)
-  local disam_str = disam_format:output(inlines)
+  local disam_str = disam_format:output(inlines, context)
   cite_ir.disam_str = disam_str
   if not self.cite_irs_by_output[disam_str] then
     self.cite_irs_by_output[disam_str] = {}
@@ -809,7 +811,7 @@ function CiteProc:disambiguate_add_givenname_by_cite(cite_ir)
             person_name_ir_.inlines = person_name_ir_.disam_inlines[disam_variant]
             -- Update cite ir output
             local inlines = ir_:flatten(disam_format)
-            local disam_str = disam_format:output(inlines)
+            local disam_str = disam_format:output(inlines, context)
             ir_.disam_str = disam_str
             if not self.cite_irs_by_output[disam_str] then
               self.cite_irs_by_output[disam_str] = {}
@@ -941,7 +943,7 @@ function CiteProc:disambiguate_add_names(cite_ir)
 
         -- Update ir output
         local inlines = ir_:flatten(disam_format)
-        local disam_str = disam_format:output(inlines)
+        local disam_str = disam_format:output(inlines, context)
         -- util.debug(disam_str)
         ir_.disam_str = disam_str
         if not self.cite_irs_by_output[disam_str] then
@@ -1025,7 +1027,7 @@ function CiteProc:disambiguate_conditionals(cite_ir)
 
         -- Update ir output
         local inlines = ir_:flatten(disam_format)
-        local disam_str = disam_format:output(inlines)
+        local disam_str = disam_format:output(inlines, context)
         -- util.debug("update: " .. ir_.cite_item.id .. ": " .. disam_str)
         ir_.disam_str = disam_str
         if not self.cite_irs_by_output[disam_str] then
@@ -1115,7 +1117,7 @@ function CiteProc:disambiguate_add_year_suffix(cite_ir)
     end
 
     local inlines = ir_:flatten(disam_format)
-    local disam_str = disam_format:output(inlines)
+    local disam_str = disam_format:output(inlines, context)
     -- util.debug("update: " .. ir_.cite_item.id .. ": " .. disam_str)
     ir_.disam_str = disam_str
     if not self.cite_irs_by_output[disam_str] then
@@ -1199,7 +1201,7 @@ function CiteProc:group_cites(irs)
       end)
       if first_names_ir then
         local inlines = first_names_ir:flatten(disam_format)
-        first_names_ir.disam_str = disam_format:output(inlines)
+        first_names_ir.disam_str = disam_format:output(inlines, context)
       end
       ir.first_names_ir = first_names_ir
     end
@@ -1545,19 +1547,16 @@ function CiteProc:makeCitationCluster(citation_items)
 end
 
 function CiteProc:makeBibliography()
-  local output_format = HtmlWriter:new()
-  local html_writer = HtmlWriter:new()
+  if not self.style.bibliography then
+    return {{}, {}}
+  end
 
-  local params = {
-    -- TODO: change to other formats
-    bibstart = html_writer.markups["bibstart"],
-    bibend = html_writer.markups["bibend"],
-  }
+  local output_format = self.output_format
+
   local res = {}
 
-  if not self.style.bibliography then
-    return params, res
-  end
+  self.registry.longest_label = ""
+  self.registry.maxoffset = 0
 
   for _, id in ipairs(self:get_sorted_refs()) do
     local ref = self.registry.registry[id]
@@ -1585,11 +1584,30 @@ function CiteProc:makeBibliography()
     -- The layout output may be empty: sort_OmittedBibRefNonNumericStyle.txt
     if ir then
       local flat = ir:flatten(output_format)
-      local str = output_format:output_bibliography_entry(flat)
+      local str = output_format:output_bibliography_entry(flat, context)
       table.insert(res, str)
     end
-
   end
+
+  local bib_start = self.output_format.markups["bibstart"]
+  local bib_end = self.output_format.markups["bibend"]
+  if type(bib_start) == "function" then
+    bib_start = bib_start(self)
+  end
+  if type(bib_end) == "function" then
+    bib_end = bib_end(self)
+  end
+
+  local params = {
+    hangingindent = self.style.bibliography.hanging_indent,
+    ["second-field-align"] = self.style.bibliography.second_field_align ~= nil,
+    linespacing = self.style.bibliography.line_spacing,
+    entryspacing = self.style.bibliography.entry_spacing,
+    maxoffset = self.registry.maxoffset,
+    bibstart = bib_start,
+    bibend = bib_end,
+    entry_ids = util.clone(self.registry.reflist),
+  }
 
   return {params, res}
 end
@@ -1629,9 +1647,12 @@ function CiteProc:add_bibliography_year_suffix(ir)
 
 end
 
-function CiteProc:set_formatter(format)
-  -- TODO
-  -- self.formatter = formats[format]
+function CiteProc:set_output_format(format)
+  if format == "latex" then
+    self.output_format = LatexWriter:new()
+  elseif format == "html" then
+    self.output_format = HtmlWriter:new()
+  end
 end
 
 function CiteProc:enable_linking()
@@ -1862,6 +1883,15 @@ function CiteProc:get_system_locale(lang)
   locale = Locale:from_node(root_element)
   self.system_locales[lang] = locale
   return locale
+end
+
+
+function CiteProc:get_style_class()
+  if self.style and self.style.class then
+    return self.style.class
+  else
+    return nil
+  end
 end
 
 

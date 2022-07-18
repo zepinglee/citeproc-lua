@@ -221,7 +221,7 @@
       { \seq_use:Nn #2 { , } }
     \prop_put:NnV \l__csl_citation_prop { citationItems } \l__csl_cite_items_tl
     \exp_args:NNV \__csl_process_note_index:Nn \l__csl_note_index_tl \l__csl_citation_id_tl
-    \prop_put:Nnx \l__csl_citation_prop { properties } { noteIndex = { \l__csl_cite_items_tl } }
+    \prop_put:Nnx \l__csl_citation_prop { properties } { noteIndex = { \l__csl_note_index_tl } }
     \tl_clear:N \l__csl_citation_info_tl
     \prop_map_inline:Nn \l__csl_citation_prop
       {
