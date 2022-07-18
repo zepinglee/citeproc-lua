@@ -10,6 +10,7 @@ local Element = require("citeproc-element").Element
 local Rendered = require("citeproc-ir-node").Rendered
 local YearSuffix = require("citeproc-ir-node").YearSuffix
 local PlainText = require("citeproc-output").PlainText
+local Linked = require("citeproc-output").Linked
 local util = require("citeproc-util")
 
 
@@ -88,8 +89,16 @@ function Text:build_variable_ir(engine, state, context)
     text = self:format_number(text, variable, "numeric", context)
   end
 
-  -- util.debug(text)
-  local inlines = self:render_text_inlines(text, context)
+  local inlines
+  if (variable == "URL" and engine.opt.url_link) or
+     (variable == "DOI" and engine.opt.doi_link) or
+     (variable == "PMID" and engine.opt.doi_link) or
+     (variable == "PMID" and engine.opt.doi_link) then
+    inlines = self:render_linked(engine, state, context, variable, text)
+  else
+    inlines = self:render_text_inlines(text, context)
+  end
+
   local ir = Rendered:new(inlines, self)
   ir.group_var = "important"
 
@@ -103,6 +112,34 @@ function Text:build_variable_ir(engine, state, context)
   end
 
   return ir
+end
+
+function Text:render_linked(engine, state, context, variable, text)
+  local href
+  if variable == "URL" then
+    href = text
+  elseif self.affixes and self.affixes.prefix then
+    if string.match(self.affixes.prefix, "https?://") then
+      text = self.affixes.prefix .. text
+      self.affixes.prefix = nil
+      href = text
+    end
+  elseif variable == "DOI" then
+    href = "https://doi.org/" .. text
+  elseif variable == "PMID" then
+    href = "https://www.ncbi.nlm.nih.gov/pubmed/" .. text
+  elseif variable == "PMCID" then
+    href = "https://www.ncbi.nlm.nih.gov/pmc/articles/" .. text
+  end
+  local inlines = {Linked:new(text, href)}
+  local output_format = context.format
+  local localized_quotes = nil
+  if self.quotes then
+    localized_quotes = context:get_localized_quotes()
+  end
+  inlines = output_format:with_format(inlines, self.formatting)
+  inlines = output_format:affixed_quoted(inlines, self.affixes, localized_quotes)
+  return output_format:with_display(inlines, self.display)
 end
 
 function Text:build_year_suffix_ir(engine, state, context)

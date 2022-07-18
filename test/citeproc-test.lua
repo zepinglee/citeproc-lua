@@ -203,6 +203,7 @@ local function parse_fixture(path)
         if section == "INPUT" or
             section == "CITATION-ITEMS" or
             section == "CITATIONS" or
+            section == "OPTIONS" or
             section == "BIBENTRIES" or
             section == "BIBSECTION" or
             section == "ABBREVIATIONS" then
@@ -291,6 +292,11 @@ local function run_test(path)
   local engine = citeproc.new(citeproc_sys, style)
   engine:set_formatter('html')
   citeproc.util.warning_enabled = false
+  if fixture.options then
+    for key, value in pairs(fixture.options) do
+      engine.opt[key] = value
+    end
+  end
 
   local result
 

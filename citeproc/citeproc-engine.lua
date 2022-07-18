@@ -50,6 +50,16 @@ function CiteProc.new(sys, style, lang, force_lang)
     o.lang = lang or "en-US"
   end
 
+  -- TODO
+  -- o.formatter = formats.latex
+
+  o.opt = {
+    -- Similar to citeproc-js's development_extensions.wrap_url_and_doi
+    url_link = false,
+    doi_link = false,  -- also applied to PMID and PMCID
+    title_link = false,
+  }
+
   o.registry = {
     citations_by_id = {},  -- A map
     citation_list = {},  -- A list
@@ -79,10 +89,6 @@ function CiteProc.new(sys, style, lang, force_lang)
 
   o.person_names = {}
   o.person_names_by_output = {}
-
-  -- TODO
-  -- o.formatter = formats.latex
-  o.linking_enabled = false
 
   setmetatable(o, { __index = CiteProc })
   return o
@@ -1629,11 +1635,13 @@ function CiteProc:set_formatter(format)
 end
 
 function CiteProc:enable_linking()
-  self.linking_enabled = true
+  self.opt.url_link = true
+  self.opt.doi_link = true
 end
 
 function CiteProc:disable_linking()
-  self.linking_enabled = false
+  self.opt.url_link = false
+  self.opt.doi_link = false
 end
 
 function CiteProc.create_element_tree(node)

@@ -132,9 +132,9 @@ end
 
 local Linked = InlineElement:derive("Linked")
 
-function Linked:new(inlines, href)
+function Linked:new(value, href)
   local o = InlineElement.new(self)
-  o.inlines = inlines
+  o.value = value
   o.href = href
   setmetatable(o, self)
   return o
@@ -1119,6 +1119,10 @@ function OutputFormat:write_escaped(str)
   return str
 end
 
+function OutputFormat:write_link(inline)
+  return self:write_escaped(inline.value)
+end
+
 
 
 local Markup = OutputFormat:new()
@@ -1242,6 +1246,10 @@ function HtmlWriter:write_display(inline)
   local format_str = self.markups[key]
   res = string.format(format_str, res)
   return res
+end
+
+function HtmlWriter:write_link(inline)
+  return string.format('<a href="%s">%s</a>', inline.href, inline.value)
 end
 
 

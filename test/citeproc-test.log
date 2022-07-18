@@ -37,8 +37,9 @@ textcase            28       0       0       0
 unicode              1       0       0       0
 variables            5       0       0       0
 virtual              1       0       0       0
+wrappers             2       0       0       0
 -------------- ------- ------- ------- -------
-(all)              814      20       0       0
+(all)              816      20       0       0
 
 Failure → test-suite affix_WithCommas.txt
 Passed in:
