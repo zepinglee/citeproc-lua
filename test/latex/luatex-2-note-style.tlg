@@ -12,8 +12,8 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
-> \l__csl_citation_tl=D’Arcus, \emph {Boundaries of Dissent: Protest and State
-Power in the Media Age}..
+> \l__csl_citation_tl=D’Arcus, \textit {Boundaries of Dissent: Protest and
+State Power in the Media Age}..
 <recently read> }
 l. ...}
 ============================================================
@@ -28,7 +28,8 @@ l. ...}
 ============================================================
 TEST 3: Citation with page locator
 ============================================================
-> \l__csl_citation_tl=D’Arcus, 6..
+> \l__csl_citation_tl=D’Arcus, \textit {Boundaries of Dissent: Protest and
+State Power in the Media Age}, 6..
 <recently read> }
 l. ...}
 ============================================================
@@ -49,7 +50,7 @@ l. ...}
 ============================================================
 TEST 6: Citation with prefix and suffix
 ============================================================
-> \l__csl_citation_tl=prefix D’Arcus, \emph {Boundaries of Dissent: Protest
+> \l__csl_citation_tl=prefix D’Arcus, \textit {Boundaries of Dissent: Protest
 and State Power in the Media Age} suffix..
 <recently read> }
 l. ...}

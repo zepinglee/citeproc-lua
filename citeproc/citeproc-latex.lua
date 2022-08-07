@@ -54,6 +54,11 @@ function csl.init(style_name, bib_files, lang)
 end
 
 
+function csl.get_style_class()
+  tex.sprint(csl.style_class)
+end
+
+
 function csl.register_citation_info(citation_info)
   local citation = core.make_citation(citation_info)
   table.insert(csl.citations, citation)
@@ -66,6 +71,8 @@ end
 
 
 function csl.cite(citation_info)
+  -- "citationID={ITEM-UNAVAILABLE@1},citationItems={{id={ITEM-UNAVAILABLE}}},properties={noteIndex={1}}"
+  -- util.debug(citation_info)
   if not csl.engine then
     csl.error("CSL engine is not initialized.")
   end
@@ -82,7 +89,8 @@ function csl.cite(citation_info)
       citation_str = citation_res[2]
     end
   end
-  tex.sprint(citation_str)
+  tex.sprint(string.format("{%s}{%s}", csl.style_class, citation_str))
+  -- tex.sprint(citation_str)
 
   table.insert(csl.citations_pre, {citation.citationID, citation.properties.noteIndex})
 end
@@ -108,10 +116,7 @@ function csl.nocite(ids_string)
       if cite_id == "*" then
         core.uncite_all_items = true
       else
-        if not core.loaded_ids[cite_id] then
-          table.insert(core.ids, cite_id)
-          core.loaded_ids[cite_id] = true
-        end
+        table.insert(core.uncited_ids, cite_id)
       end
     end
   end

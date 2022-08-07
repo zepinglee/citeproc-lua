@@ -13,6 +13,7 @@ local Style = require("citeproc-node-style").Style
 local Locale = require("citeproc-node-locale").Locale
 local Context = require("citeproc-context").Context
 local IrState = require("citeproc-context").IrState
+local Rendered = require("citeproc-ir-node").Rendered
 local YearSuffix = require("citeproc-ir-node").YearSuffix
 -- local OutputFormat = require("citeproc-output").OutputFormat
 local LatexWriter = require("citeproc-output").LatexWriter
@@ -64,8 +65,9 @@ function CiteProc.new(sys, style, lang, force_lang)
     citations_by_id = {},  -- A map
     citation_list = {},  -- A list
     citations_by_item_id = {},  -- A map from item id to a map of citations
-    registry = {},  -- A map
-    reflist = {},  -- A list
+    registry = {},  -- A map of bibliographic meta data
+    reflist = {},  -- list of cited ids
+    uncited_list = {},
     previous_citation = nil,
     requires_sorting = false,
     longest_label = "",
@@ -105,9 +107,20 @@ function CiteProc:updateItems(ids)
   self.cite_irs_by_output = {}
 
   local cite_items = {}
+  local loaded_ids = {}
+
   for _, id in ipairs(ids) do
     table.insert(cite_items, {id = id})
+    loaded_ids[id] = true
   end
+  for _, id in ipairs(self.registry.uncited_list) do
+    if not loaded_ids[id] then
+      table.insert(cite_items, {id = id})
+      loaded_ids[id] = true
+    end
+  end
+
+  -- TODO: optimize this
   self:makeCitationCluster(cite_items)
 
   self.registry.previous_citation = nil
@@ -116,17 +129,53 @@ function CiteProc:updateItems(ids)
   self.note_citations_map = {}
 end
 
-function CiteProc:updateUncitedItems(ids)
-  for _, id in ipairs(ids) do
-    if not self.registry.registry[id] then
-      self:get_item(id)
+function CiteProc:updateUncitedItems(uncited_ids)
+  -- self.registry.reflist = {}
+  self.registry.registry = {}
+  self.registry.uncited_list = {}
+  self.person_names = {}
+  self.person_names_by_output = {}
+  self.disam_irs = {}
+  self.cite_irs_by_output = {}
+
+  local cite_items = {}
+  local loaded_ids = {}
+
+  for _, id in ipairs(self.registry.reflist) do
+    if not loaded_ids[id] then
+      table.insert(cite_items, {id = id})
+      loaded_ids[id] = true
     end
   end
-  -- TODO: disambiguation
+  self.registry.reflist = {}
+
+  for _, id in ipairs(uncited_ids) do
+    if not loaded_ids[id] then
+      table.insert(cite_items, {id = id})
+      loaded_ids[id] = true
+    end
+  end
+
+  loaded_ids = {}
+  for _, id in ipairs(uncited_ids) do
+    if not loaded_ids[id] then
+      table.insert(self.registry.uncited_list, id)
+      loaded_ids[id] = true
+    end
+  end
+
+  -- TODO: optimize this
+  self:makeCitationCluster(cite_items)
+
+  self.registry.previous_citation = nil
+  self.cite_first_note_numbers = {}
+  self.cite_last_note_numbers = {}
+  self.note_citations_map = {}
 end
 
 function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
-  -- util.debug(citation.citationID)
+  -- util.debug(citation)
+  -- util.debug(citationsPre)
   -- Fix missing noteIndex: sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
   if not citation.properties then
     citation.properties = {}
@@ -343,21 +392,14 @@ function CiteProc:build_citation_str(citation)
   for i, cite_item in ipairs(citation.citationItems) do
     cite_item.id = tostring(cite_item.id)
     -- util.debug(cite_item.id)
-    local item_data = self:get_item(cite_item.id)
 
-    if item_data then
-      -- Create a wrapper of the orignal item from registry so that
-      -- it may hold different `locator` or `position` values for cites.
-      local item = setmetatable(cite_item, {__index = item_data})
-
-      -- Use "page" as locator label if missing
-      -- label_PluralWithAmpersand.txt
-      if item.locator and not item.label then
-        item.label = "page"
-      end
-
-      table.insert(items, item)
+    -- Use "page" as locator label if missing
+    -- label_PluralWithAmpersand.txt
+    if cite_item.locator and not cite_item.label then
+      cite_item.label = "page"
     end
+
+    table.insert(items, cite_item)
   end
 
   if self.registry.requires_sorting then
@@ -529,10 +571,17 @@ function CiteProc:build_ambiguous_ir(cite_item, output_format)
   context.format = output_format
   context.id = cite_item.id
   context.cite = cite_item
-  context.reference = self:get_item(cite_item.id)
+  -- context.reference = self:get_item(cite_item.id)
+  context.reference = self.registry.registry[cite_item.id]
 
-  local ir = self.style.citation:build_ir(self, state, context)
-  -- util.debug(ir)
+  local ir
+  if context.reference then
+    ir = self.style.citation:build_ir(self, state, context)
+  else
+    -- The warning has been given in the retrieving procedure.
+    -- util.warning(string.format('Failed to find the entry "%s" in database.', cite_item.id))
+    ir = Rendered:new({Formatted:new({PlainText:new(cite_item.id)}, {["font-weight"] = "bold"})}, self)
+  end
 
   ir.cite_item = cite_item
   ir.reference = context.reference
@@ -1712,7 +1761,7 @@ function CiteProc:_retrieve_item(id)
   local res = {}
   local item = self.sys.retrieveItem(id)
   if not item then
-    util.warning(string.format('Failed to retrieve item "%s"', id))
+    util.warning(string.format('Failed to find entry "%s"', id))
     return nil
   end
 

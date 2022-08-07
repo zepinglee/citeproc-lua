@@ -12,8 +12,7 @@ require("lualibs")
 
 
 core.locale_file_format = "csl-locales-%s.xml"
-core.ids = {}
-core.loaded_ids = {}
+core.uncited_ids = {}
 core.uncite_all_items = false
 
 function core.error(message)
@@ -202,6 +201,14 @@ function core.make_citation(citation_info)
   end
 
   citation.properties = parse_latex_prop(citation.properties)
+  local note_index = citation.properties.noteIndex
+  if not note_index or note_index == "" then
+    citation.properties.noteIndex = 0
+  elseif string.match(note_index, "^%d+$") then
+    citation.properties.noteIndex = tonumber(note_index)
+  else
+    util.error(string.format('Invalid note index "%s".', note_index))
+  end
 
   return citation
 end
@@ -211,7 +218,7 @@ function core.process_citations(engine, citations)
   local citations_pre = {}
 
   -- Save the time of bibliography sorting by update all ids at one time.
-  core.update_item_ids(engine, citations)
+  core.update_uncited_items(engine, citations)
   local citation_strings = {}
 
   for _, citation in ipairs(citations) do
@@ -232,35 +239,29 @@ function core.process_citations(engine, citations)
 end
 
 
-function core.update_item_ids(engine, citations)
+function core.update_uncited_items(engine, citations)
   if core.uncite_all_items then
-    for item_id, _ in pairs(core.bib) do
-      if not core.loaded_ids[item_id] then
-        table.insert(core.ids, item_id)
-        core.loaded_ids[item_id] = true
-      end
+    -- \nocite{*}
+    for id, _ in pairs(core.bib) do
+      table.insert(core.uncited_ids, id)
     end
-  end
-  for _, citation in ipairs(citations) do
-    for _, cite_item in ipairs(citation.citationItems) do
-      local id = cite_item.id
-      if id == "*" then
-        for item_id, _ in pairs(core.bib) do
-          if not core.loaded_ids[item_id] then
-            table.insert(core.ids, item_id)
-            core.loaded_ids[item_id] = true
+  else
+    for _, citation in ipairs(citations) do
+      if citation.citationID == "@nocite" then
+        for _, cite_item in ipairs(citation.citationItems) do
+          table.insert(core.uncited_ids, cite_item.id)
+          if cite_item.id == "*" then
+            for id, _ in pairs(core.bib) do
+              table.insert(core.uncited_ids, id)
+            end
+          else
+            table.insert(core.uncited_ids, cite_item.id)
           end
         end
-      else
-        if not core.loaded_ids[id] then
-          table.insert(core.ids, id)
-          core.loaded_ids[id] = true
-        end
       end
     end
   end
-  engine:updateItems(core.ids)
-  -- TODO: engine:updateUncitedItems(ids)
+  engine:updateUncitedItems(core.uncited_ids)
 end
 
 

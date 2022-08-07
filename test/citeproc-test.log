@@ -8,6 +8,7 @@ date                99       2       0       0
 decorations          7       0       0       0
 disambiguate        64       6       0       0
 display              5       0       0       0
+error                1       0       0       0
 etal                 4       0       0       0
 flipflop            17       1       0       0
 form                 3       0       0       0
@@ -39,7 +40,7 @@ variables            5       0       0       0
 virtual              1       0       0       0
 wrappers             2       0       0       0
 -------------- ------- ------- ------- -------
-(all)              816      20       0       0
+(all)              817      20       0       0
 
 Failure → test-suite affix_WithCommas.txt
 Passed in:

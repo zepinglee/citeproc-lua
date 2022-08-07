@@ -1068,11 +1068,11 @@ end
 
 local function move_around_quote(inlines)
   local idx = 1
-  local len = #inlines
 
-  while idx < len do
+  while idx < #inlines do
     -- Move punctuation into quotes as needed
     local first, punctuation_in_quote = find_right_quoted(inlines[idx])
+
     local second = find_left(inlines[idx+1])
     local success = false
     if first and second then

@@ -70,10 +70,14 @@ function Sort:sort(items, state, context)
     context.reference = context.engine.registry.registry[item.id]
 
     for j, key in ipairs(self.children) do
-      context.sort_key = key
-
-      local key_str = key:eval(context.engine, state, context)
-      key_map[item.id][j] = key_str
+      if context.reference then
+        context.sort_key = key
+        local key_str = key:eval(context.engine, state, context)
+        key_map[item.id][j] = key_str
+      else
+        -- The entry is missing
+        key_map[item.id][j] = false
+      end
     end
     -- To preserve the original order of items with same sort keys
     -- sort_NameImplicitSortOrderAndForm.txt
