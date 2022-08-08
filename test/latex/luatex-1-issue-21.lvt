@@ -1,0 +1,26 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+
+\cslsetup{style = chicago-fullnote-bibliography}
+\addbibresource{test.bib}
+
+
+\begin{document}
+
+\START
+
+% https://github.com/zepinglee/citeproc-lua/issues/21
+
+\TEST{Note citation in list}{
+  \begin{itemize}
+    \item Foo\cite{ITEM-1}.
+    \showcitation
+  \end{itemize}
+}
+
+\end{document}
