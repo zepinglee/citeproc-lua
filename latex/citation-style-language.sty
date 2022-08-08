@@ -1025,6 +1025,19 @@
   }
 
 
+% csquotes
+
+\AtEndOfPackageFile* { csquotes }
+  {
+    \BlockquoteDisable
+      {
+        \cs_set_eq:NN \__csl_make_citation:NN \use_none:nn
+        % \sys_if_engine_luatex:T
+        %   { \lua_now:n { csl.preview_mode = true } }
+      }
+  }
+
+
 % hyperref
 
 % The hyperref package also patches \bibcite but it cannot provide hyperlinks

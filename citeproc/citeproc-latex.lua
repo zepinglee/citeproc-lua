@@ -19,6 +19,8 @@ csl.uncited_id_list = {}
 csl.uncited_id_map = {}
 csl.citations_pre = {}
 
+csl.preview_mode = false  -- Whether to use citeproc:preview_citation
+
 
 function csl.error(str)
   luatexbase.module_error("csl", str)
@@ -89,7 +91,14 @@ function csl.cite(citation_info)
 
   local citation = core.make_citation(citation_info)
 
-  local citation_str = csl.engine:process_citation(citation)
+  local citation_str
+  if csl.preview_mode then
+    -- TODO: preview mode in first pass of \blockquote of csquotes
+    -- citation_str = csl.engine:preview_citation(citation)
+    citation_str = ""
+  else
+    citation_str = csl.engine:process_citation(citation)
+  end
 
   tex.sprint(string.format("{%s}{%s}", csl.style_class, citation_str))
   -- tex.sprint(citation_str)

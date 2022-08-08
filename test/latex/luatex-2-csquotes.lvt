@@ -1,0 +1,38 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\input{csl-test}
+\pagestyle{empty}
+
+\usepackage{citation-style-language}
+
+\usepackage{csquotes}
+\usepackage{lipsum}
+
+\cslsetup{style = chicago-note-bibliography}
+\addbibresource{test.bib}
+
+
+\begin{document}
+
+\START
+\showoutput
+
+% https://github.com/zepinglee/citeproc-lua/issues/21
+
+\enquote{Lorem ipsum.\cite{ITEM-1}}
+
+\blockquote{Lorem ipsum.\cite{ITEM-2}}
+
+\blockquote{%
+  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis.
+  Curabitur dictum gravida mauris.
+  Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
+  Donec vehicula augue eu neque.\cite{ITEM-2}
+}
+
+\clearpage
+
+\end{document}
