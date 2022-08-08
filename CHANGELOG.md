@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fix an infinite loop error when bib entry keys contain hyphens or undercores ([#18](https://github.com/zepinglee/citeproc-lua/issues/18)).
+- Fix incorrect item position in note style ([#20](https://github.com/zepinglee/citeproc-lua/issues/20)).
 
 ## [v0.1.1] - 2022-03-21
 

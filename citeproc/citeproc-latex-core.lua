@@ -204,7 +204,7 @@ function core.make_citation(citation_info)
   local note_index = citation.properties.noteIndex
   if not note_index or note_index == "" then
     citation.properties.noteIndex = 0
-  elseif string.match(note_index, "^%d+$") then
+  elseif type(note_index) == "string" and string.match(note_index, "^%d+$") then
     citation.properties.noteIndex = tonumber(note_index)
   else
     util.error(string.format('Invalid note index "%s".', note_index))
@@ -217,19 +217,13 @@ end
 function core.process_citations(engine, citations)
   local citations_pre = {}
 
-  -- Save the time of bibliography sorting by update all ids at one time.
   core.update_uncited_items(engine, citations)
   local citation_strings = {}
 
   for _, citation in ipairs(citations) do
     if citation.citationID ~= "@nocite" then
-      local res = engine:processCitationCluster(citation, citations_pre, {})
-
-      for _, citation_res in ipairs(res[2]) do
-        local citation_str = citation_res[2]
-        local citation_id = citation_res[3]
-        citation_strings[citation_id] = citation_str
-      end
+      local citation_str = engine:process_citation(citation)
+        citation_strings[citation.citationID] = citation_str
 
       table.insert(citations_pre, {citation.citationID, citation.properties.noteIndex})
     end
@@ -240,6 +234,7 @@ end
 
 
 function core.update_uncited_items(engine, citations)
+  util.debug(core.uncite_all_items)
   if core.uncite_all_items then
     -- \nocite{*}
     for id, _ in pairs(core.bib) do

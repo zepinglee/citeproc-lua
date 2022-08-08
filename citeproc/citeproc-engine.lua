@@ -243,6 +243,49 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
   return {params, output}
 end
 
+-- A variant of processCitationCluster() for easy use with LaTeX.
+-- It should be run after refreshing the registry (updateItems()) with all items
+function CiteProc:process_citation(citation)
+  -- util.debug(citation)
+  -- util.debug(citationsPre)
+  -- Fix missing noteIndex: sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
+  if not citation.properties then
+    citation.properties = {}
+  end
+  if not citation.properties.noteIndex then
+    citation.properties.noteIndex = 0
+  end
+
+  -- Registor citation
+  self.registry.citations_by_id[citation.citationID] = citation
+
+  table.insert(self.registry.citation_list, citation)
+
+  local citation_note_pairs = {}
+  for _, citation_ in ipairs(self.registry.citation_list) do
+    table.insert(citation_note_pairs, {citation_.citationID, citation_.properties.noteIndex})
+  end
+
+  -- update self.registry.citations_by_item_id
+  for _, cite_item in ipairs(citation.citationItems) do
+    if not self.registry.citations_by_item_id[cite_item.id] then
+      self.registry.citations_by_item_id[cite_item.id] = {}
+    end
+    self.registry.citations_by_item_id[cite_item.id][citation.citationID] = true
+  end
+
+  -- self:updateItems(item_ids)
+  for i, cite_item in ipairs(citation.citationItems) do
+    cite_item.id = tostring(cite_item.id)
+    self:get_item(cite_item.id)
+  end
+
+  local tainted_citation_ids = self:get_tainted_citaion_ids(citation_note_pairs)
+  local citation_str = self:build_citation_str(citation)
+
+  return citation_str
+end
+
 
 function CiteProc:get_tainted_citaion_ids(citation_note_pairs)
   local tainted_citation_ids = {}

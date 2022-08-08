@@ -13,7 +13,10 @@ local core = require("citeproc-latex-core")
 
 
 csl.initialized = "false"
-csl.citations = {}
+csl.id_list = {}
+csl.id_map = {}  -- Boolean map for checking if id in list
+csl.uncited_id_list = {}
+csl.uncited_id_map = {}
 csl.citations_pre = {}
 
 
@@ -40,17 +43,19 @@ function csl.init(style_name, bib_files, lang)
   end
 
   -- csl.init is called via \AtBeginDocument and it's executed after
-  -- loading .aux file.  The csl.ids are already registered.
-  csl.citation_strings = core.process_citations(csl.engine, csl.citations)
-  csl.style_class = csl.engine:get_style_class()
+  -- loading .aux file.  The csl.id_list are already registered.
+  csl.engine:updateItems(csl.id_list)
 
-  for _, citation in ipairs(csl.citations) do
-    local citation_id = citation.citationID
-    local citation_str = csl.citation_strings[citation_id]
-    local bibcite_command = string.format("\\bibcite{%s}{{%s}{%s}}", citation.citationID, csl.style_class, citation_str)
-    tex.sprint(bibcite_command)
+  if core.uncite_all_items then
+    for id, _ in pairs(core.bib) do
+      if not csl.uncited_id_map[id] then
+        table.insert(csl.uncited_id_list, id)
+        csl.uncited_id_map[id] = true
+      end
+    end
   end
-
+  csl.engine:updateUncitedItems(csl.uncited_id_list)
+  csl.style_class = csl.engine:get_style_class()
 end
 
 
@@ -61,7 +66,12 @@ end
 
 function csl.register_citation_info(citation_info)
   local citation = core.make_citation(citation_info)
-  table.insert(csl.citations, citation)
+  for _, cite_item in ipairs(citation.citationItems) do
+    if not csl.id_map[cite_item.id] then
+      table.insert(csl.id_list, cite_item.id)
+      csl.id_map[cite_item.id] = true
+    end
+  end
 end
 
 
@@ -79,16 +89,8 @@ function csl.cite(citation_info)
 
   local citation = core.make_citation(citation_info)
 
-  local res = csl.engine:processCitationCluster(citation, csl.citations_pre, {})
+  local citation_str = csl.engine:process_citation(citation)
 
-  local citation_str
-  for _, citation_res in ipairs(res[2]) do
-    local citation_id = citation_res[3]
-    -- csl.citation_strings[citation_id] = citation_res[2]
-    if citation_id == citation.citationID then
-      citation_str = citation_res[2]
-    end
-  end
   tex.sprint(string.format("{%s}{%s}", csl.style_class, citation_str))
   -- tex.sprint(citation_str)
 
@@ -97,26 +99,27 @@ end
 
 
 function csl.nocite(ids_string)
-  local cite_ids = util.split(ids_string, "%s*,%s*")
-  if csl.engine then
-    local ids = {}
-    for _, cite_id in ipairs(cite_ids) do
-      if cite_id == "*" then
-        for item_id, _ in pairs(core.bib) do
-          table.insert(ids, item_id)
+  local uncited_ids = util.split(ids_string, "%s*,%s*")
+  for _, uncited_id in ipairs(uncited_ids) do
+    if uncited_id == "*" then
+      if csl.engine then
+        for id, _ in pairs(core.bib) do
+          if not csl.uncited_id_map[id] then
+            table.insert(csl.uncited_id_list, id)
+            csl.uncited_id_map[id] = true
+          end
         end
+        csl.engine:updateUncitedItems(csl.uncited_id_list)
       else
-        table.insert(ids, cite_id)
-      end
-    end
-    csl.engine:updateUncitedItems(ids)
-  else
-    -- `\nocite` in preamble, where csl.engine is not initialized yet
-    for _, cite_id in ipairs(cite_ids) do
-      if cite_id == "*" then
         core.uncite_all_items = true
-      else
-        table.insert(core.uncited_ids, cite_id)
+      end
+    else
+      if not csl.uncited_id_map[uncited_id] then
+        table.insert(csl.uncited_id_list, uncited_id)
+        csl.uncited_id_map[uncited_id] = true
+        if csl.engine then
+          csl.engine:updateUncitedItems(csl.uncited_id_list)
+        end
       end
     end
   end
@@ -128,16 +131,6 @@ function csl.bibliography()
     csl.error("CSL engine is not initialized.")
     return
   end
-
-  -- if csl.include_all_items then
-  --   for id, _ in pairs(csl.bib) do
-  --     if not csl.loaded_ids[id] then
-  --       table.insert(csl.ids, id)
-  --       csl.loaded_ids[id] = true
-  --     end
-  --   end
-  -- end
-  -- csl.engine:updateItems(csl.ids)
 
   local result = core.make_bibliography(csl.engine)
 

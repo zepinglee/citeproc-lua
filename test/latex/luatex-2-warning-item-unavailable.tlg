@@ -3,6 +3,8 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Item unavailable
 ============================================================
+Module citeproc Warning: Failed to find entry "ITEM-UNAVAILABLE" on input line ...
+0
 > \l__csl_citation_tl=(\textbf {ITEM-UNAVAILABLE}).
 <recently read> }
 l. ...}
