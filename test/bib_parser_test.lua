@@ -2,6 +2,16 @@ require("busted.runner")()
 
 kpse.set_program_name("luatex")
 
+local kpse_searcher = package.searchers[2]
+package.searchers[2] = function(name)
+  local file, err = package.searchpath(name, package.path)
+  if not err then
+    return loadfile(file)
+  end
+  return kpse_searcher(name)
+end
+
+
 local bib = require("citeproc-bib")
 local util = require("citeproc-util")
 

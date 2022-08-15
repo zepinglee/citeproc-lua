@@ -68,9 +68,9 @@ end
 function bib.parse_fields(contents)
   local fields = {}
   local field_patterns = {
-    "^([%w._+-]+)%s*=%s*(%b{}),?%s*(.-)$",
-    '^([%w._+-]+)%s*=%s*"([^"]*)",?%s*(.-)$',
-    "^([%w._+-]+)%s*=%s*(%w+),?%s*(.-)$",
+    "^([^,}%s]+)%s*=%s*(%b{}),?%s*(.-)$",
+    '^([^,}%s]+)%s*=%s*"([^"]*)",?%s*(.-)$',
+    "^([^,}%s]+)%s*=%s*(%w+),?%s*(.-)$",
   }
 
   while #contents > 0 do
@@ -78,6 +78,7 @@ function bib.parse_fields(contents)
     -- This pattern may fail in the case of `title = {foo\}bar}`.
     for pattern_index, pattern in ipairs(field_patterns) do
       field, value, rest = string.match(contents, pattern)
+      field = unicode.utf8.lower(field)
       if value then
         if pattern_index == 1 then
           -- Strip braces "{}"
