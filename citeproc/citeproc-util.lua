@@ -158,7 +158,7 @@ function util.split_multiple(str, seps, include_sep)
   end
 
   if #seps > 1 then
-    table.sort(splits, function(a, b) return a[1] < b[1] end)
+    table.sort(splits, function (a, b) return a[1] < b[1] end)
   end
 
   local res = {}

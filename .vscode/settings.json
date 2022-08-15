@@ -14,5 +14,9 @@
         "describe",
         "it",
         "pending"
-    ]
+    ],
+    "Lua.workspace.library": [
+        "${3rd}/lfs/library"
+    ],
+    "Lua.workspace.checkThirdParty": false
 }

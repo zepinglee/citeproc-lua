@@ -1,8 +1,10 @@
 from collections import OrderedDict
 import json
+from pydoc import doc
 import re
 import os
 import glob
+from telnetlib import theNULL
 from typing import TYPE_CHECKING
 import warnings
 
@@ -16,7 +18,7 @@ import warnings
 class BibData(OrderedDict):
     def __init__(self, path):
         super().__init__({
-            'description': 'Bib CSL mapping',
+            'description': 'BibTeX CSL mapping',
             'types': dict(),
             'fields': dict(),
             'macros': dict(),
@@ -27,6 +29,9 @@ class BibData(OrderedDict):
                 self.update(json.load(f))
         else:
             warnings.warn(f'Invalid path "{path}".')
+
+        self['unicode'] = OrderedDict()
+        self['unicode_commands'] = dict()
 
         self.texmf_dist = None
         if not self.texmf_dist:
@@ -262,6 +267,63 @@ class BibData(OrderedDict):
             #         elif category == 'fields':
             #             print(f'CSL field "{field}" not mapped.')
 
+    def update_unicode(self):
+        utf8ienc_path = os.path.join(self.texmf_dist, 'tex', 'latex',
+                                     'base', 'utf8enc.dfu')
+        with open(utf8ienc_path) as f:
+            lines = f.readlines()
+        for line in lines:
+            line = line.strip()
+            matched = re.match(r'\\DeclareUnicodeCharacter\{(\w+)\}\{(\\.+)\}', line)
+            if not matched:
+                continue
+            code_point = matched.group(1)
+            contents = matched.group(2)
+            if re.search(r'\\cyr', contents, flags=re.IGNORECASE):
+                continue  # Ignore cyrillic
+            contents = contents.replace('\\@tabacckludge', '\\')
+            self['unicode'][code_point] = contents
+
+        # Special commands
+        # self['unicode']['0023'] = '\\#'
+        # self['unicode']['0024'] = '\\$'
+        # self['unicode']['0025'] = '\\%'
+        # self['unicode']['0026'] = '\\&'
+        self['unicode']['005C'] = '\\textbackslash'
+        # self['unicode']['005F'] = '\\_'
+        self['unicode']['2003'] = '\\quad'
+        self['unicode']['FEFF'] = '\\nobreak'
+
+        self['unicode'] = OrderedDict(sorted(self['unicode'].items()))
+
+        for code_point, latex_commands in self['unicode'].items():
+            cmd_arg = re.match(r'^(\\(?:[a-zA-Z]+|[^a-zA-Z]))\s*(.*)$', latex_commands)
+            if cmd_arg:
+                cmd = cmd_arg.group(1).strip()
+                arg = cmd_arg.group(2)
+                # print(cmd, arg)
+                if arg:
+                    if cmd not in self['unicode_commands']:
+                        self['unicode_commands'][cmd] = OrderedDict()
+                    self['unicode_commands'][cmd][arg] = code_point
+                else:
+                    # if cmd in self['unicode_commands']:
+                    #     print(cmd)
+                    self['unicode_commands'][cmd] = code_point
+            else:
+                print(latex_commands)
+
+        # Special processing because of duplicates
+        self['unicode_commands']['\\textendash'] = "2013"
+        self['unicode_commands']['\\textemdash'] = "2014"
+        self['unicode_commands']['\\textlangle'] = "2329"
+        self['unicode_commands']['\\textrangle'] = "232A"
+
+        self['unicode_commands'] = OrderedDict(sorted(self['unicode_commands'].items()))
+        for key, value in self['unicode_commands'].items():
+            if isinstance(value, dict) or isinstance(value, OrderedDict):
+                self['unicode_commands'][key] = OrderedDict(sorted(value.items()))
+
     def sort_keys(self):
         self['types'] = OrderedDict(sorted(self['types'].items()))
         self['fields'] = OrderedDict(sorted(self['fields'].items()))
@@ -272,33 +334,40 @@ class BibData(OrderedDict):
             self['fields'][field] = OrderedDict(sorted(value.items()))
 
     def export_lua(self):
-        res = '-- This file is generated from citeproc-bib-data.json by update-bib-date.py\n\n'
+        res = '-- This file is generated from citeproc-bibtex-data.json by tools/update-bibtex-data.py\n\n'
 
         def to_lua_table(obj, level=0):
             res = ''
             if obj is None:
                 res = "nil"
             elif isinstance(obj, str):
-                res = '"' + obj.replace('"', '\\"') + '"'
+                obj = obj.replace('\\', '\\\\')
+                obj = obj.replace('"', '\\"')
+                res = '"' + obj + '"'
             elif isinstance(obj, dict) or isinstance(obj, OrderedDict):
                 res += '{\n'
                 for key, value in obj.items():
                     if key == "alias" or key == "notes" or key == "source":
                         continue
-                    res += '    ' * (level + 1) + f'["{key}"] = ' + to_lua_table(value, level+1) + ',\n'
-                res += '    ' * level + '}'
+                    key = key.replace('\\', '\\\\')
+                    key = key.replace('"', '\\"')
+                    formatted_key = f'["{key}"]'
+                    if re.match("^[a-zA-Z_][a-zA-Z0-9_]*$", key):
+                        formatted_key = key
+                    res += '  ' * (level + 1) + formatted_key + ' = ' + to_lua_table(value, level+1) + ',\n'
+                res += '  ' * level + '}'
             else:
                 print(obj)
             return res
 
-        res += "return " + to_lua_table(self)
+        res += 'return ' + to_lua_table(self)
         # print(to_lua_table(self))
 
-        with open('citeproc/citeproc-bib-data.lua', 'w') as f:
-            f.write(res)
+        with open('citeproc/citeproc-bibtex-data.lua', 'w') as f:
+            f.write(res + '\n')
 
     def export_markdown(self):
-        res = '# Bib CSL mapping\n'
+        res = '# BibTeX CSL mapping\n'
         for category in ['types', 'fields']:
             if category == 'types':
                 res += '\n\n## Item Types\n'
@@ -341,7 +410,7 @@ class BibData(OrderedDict):
 
 
 if __name__ == '__main__':
-    bib_data_path = 'tools/citeproc-bib-data.json'
+    bib_data_path = 'tools/citeproc-bibtex-data.json'
     bib_data = BibData(bib_data_path)
 
     bib_data.update_bibtex()
@@ -350,6 +419,8 @@ if __name__ == '__main__':
     bib_data.update_alias_mappings()
 
     bib_data.update_all_bst()
+
+    bib_data.update_unicode()
 
     bib_data.check_csl_schema()
     bib_data.sort_keys()

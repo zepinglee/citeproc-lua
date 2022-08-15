@@ -1,4 +1,4 @@
-# Bib CSL mapping
+# BibTeX CSL mapping
 
 
 ## Item Types

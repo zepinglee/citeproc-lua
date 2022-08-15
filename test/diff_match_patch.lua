@@ -1257,7 +1257,7 @@ function _diff_fromDelta(text1, delta)
     if (tokenchar == '+') then
       local invalidDecode = false
       local decoded = gsub(param, '%%(.?.?)',
-          function(c)
+          function (c)
             local n = tonumber(c, 16)
             if (#c ~= 2) or (n == nil) then
               invalidDecode = true
@@ -1787,7 +1787,7 @@ function patch_fromText(textline)
 
       local invalidDecode = false
       local decoded = gsub(line, '%%(.?.?)',
-          function(c)
+          function (c)
             local n = tonumber(c, 16)
             if (#c ~= 2) or (n == nil) then
               invalidDecode = true
@@ -1831,7 +1831,7 @@ end
 -- ---------------------------------------------------------------------------
 
 local patch_meta = {
-  __tostring = function(patch)
+  __tostring = function (patch)
     local buf = {}
     _patch_appendText(patch, buf)
     return tconcat(buf)

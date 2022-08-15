@@ -12,12 +12,12 @@ local colors
 
 if package.config:sub(1,1) == '\\' and not os.getenv("ANSICON") then
   -- Disable colors on Windows.
-  colors = setmetatable({}, {__index = function() return function(s) return s end end})
+  colors = setmetatable({}, {__index = function () return function (s) return s end end})
 else
   colors = require 'term.colors'
 end
 
-return function(options)
+return function (options)
   local busted = require 'busted'
   local handler = require 'busted.outputHandlers.base'()
 
@@ -62,7 +62,7 @@ return function(options)
     return colored(dot, status)
   end
 
-  local pendingDescription = function(pending)
+  local pendingDescription = function (pending)
     local name = pending.name
 
     local string = colors.yellow(s('output.pending')) .. ' → ' ..
@@ -77,7 +77,7 @@ return function(options)
     return string
   end
 
-  local failureMessage = function(failure)
+  local failureMessage = function (failure)
     local string = failure.randomseed and ('Random seed: ' .. failure.randomseed .. '\n') or ''
     if type(failure.message) == 'string' then
       local message = string.gsub(failure.message, "^.-\n", "")
@@ -91,7 +91,7 @@ return function(options)
     return string
   end
 
-  local failureDescription = function(failure, isError)
+  local failureDescription = function (failure, isError)
     local string = colors.red(s('output.failure')) .. ' → '
     if isError then
       string = colors.magenta(s('output.error')) .. ' → '
@@ -107,7 +107,7 @@ return function(options)
     return string
   end
 
-  handler.testEnd = function(element, parent, status, debug)
+  handler.testEnd = function (element, parent, status, debug)
 
     handler.test_count = handler.test_count + 1
 
@@ -228,7 +228,7 @@ return function(options)
     return res
   end
 
-  handler.suiteStart = function(suite, count, total)
+  handler.suiteStart = function (suite, count, total)
     local runString = (total > 1 and '\nRepeating all tests (run %u of %u) . . .\n\n' or '')
     io_write(string_format(runString, count, total))
     io_flush()
@@ -236,7 +236,7 @@ return function(options)
     return nil, true
   end
 
-  handler.suiteEnd = function()
+  handler.suiteEnd = function ()
 
     io_write(get_failures_log())
     io_write("\n")
@@ -247,7 +247,7 @@ return function(options)
     io_write(colors.bright(formattedTime) .. ' ' .. s('output.seconds') .. "\n")
 
     if handler.test_count > 800 then
-      colors = setmetatable({}, {__index = function() return function(s) return s end end})
+      colors = setmetatable({}, {__index = function () return function (s) return s end end})
       local file = io.open("test/citeproc-test.log", "w")
       file:write(get_status_log())
       file:write(get_failures_log())
@@ -257,7 +257,7 @@ return function(options)
     return nil, true
   end
 
-  handler.error = function(element, parent, message, debug)
+  handler.error = function (element, parent, message, debug)
     io_write(errorDot)
     io_flush()
 

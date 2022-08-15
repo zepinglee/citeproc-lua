@@ -483,7 +483,7 @@
 
 \bool_new:N \l__csl_engine_initialized_bool
 
-\prop_set_from_keyval:Nn \l__csl_babel_locale_mapping_prop
+\prop_set_from_keyval:Nn \l__csl_language_code_map_prop
   {
     acadian         = fr-CA,
     american        = en-US,
@@ -677,7 +677,7 @@
       {
         \tl_if_exist:NT \bbl@main@language
           {
-            \prop_get:NVN \l__csl_babel_locale_mapping_prop \bbl@main@language
+            \prop_get:NVN \l__csl_language_code_map_prop \bbl@main@language
               \l__csl_locale_tl
           }
       }

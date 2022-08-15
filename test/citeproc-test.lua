@@ -3,7 +3,7 @@
 kpse.set_program_name("luatex")
 
 local kpse_searcher = package.searchers[2]
-package.searchers[2] = function(name)
+package.searchers[2] = function (name)
   local file, err = package.searchpath(name, package.path)
   if not err then
     return loadfile(file)

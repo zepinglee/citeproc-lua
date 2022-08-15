@@ -7,6 +7,7 @@
 local core = {}
 
 local citeproc = require("citeproc")
+local bibtex  -- = require("citeproc-bibtex")  -- load on demand
 local util = citeproc.util
 require("lualibs")
 
@@ -95,7 +96,9 @@ local function read_data_file(data_file)
   if extension == ".json" then
     csl_items = utilities.json.tolua(contents)
   elseif extension == ".bib" then
-    csl_items = citeproc.parse_bib(contents)
+    bibtex = bibtex or require("citeproc-bibtex")
+    local bib = bibtex.parse(contents)
+    csl_items = bibtex.convert_csl_json(bib)
   end
 
   return file_name, csl_items

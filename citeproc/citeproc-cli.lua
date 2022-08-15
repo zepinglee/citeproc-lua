@@ -10,6 +10,7 @@ local cli = {}
 
 require("lualibs")
 local citeproc = require("citeproc")
+local bibtex  -- = require("citeproc-bibtex")  -- load on demand
 local util = require("citeproc-util")
 local core = require("citeproc-latex-core")
 
@@ -67,13 +68,18 @@ end
 
 local function convert_bib(path, output_path)
   local contents = util.read_file(path)
-  local bib = citeproc.parse_bib(contents)
+  bibtex = bibtex or require("citeproc-bibtex")
+  local bib = bibtex.parse(contents)
+  local data = bibtex.convert_csl_json(bib)
   if not output_path then
     output_path = string.gsub(path, "%.bib$", ".json")
   end
   local file = io.open(output_path, "w")
-  file:write(utilities.json.tojson(bib))
-  file:write('\n')
+  if not file then
+    util.error(string.format('Failed to write "%s".', output_path))
+    return
+  end
+  file:write(utilities.json.tojson(data) .. "\n")
   file:close()
 end
 

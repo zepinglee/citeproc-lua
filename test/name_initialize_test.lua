@@ -1,6 +1,6 @@
 require("busted.runner")()
 
-local name = require("citeproc-node-names").name
+local name = require("citeproc-node-names").Name
 
 
 describe("String split", function ()
@@ -260,10 +260,10 @@ describe("String split", function ()
 
   end)
 
-  -- describe("initialize-with-hyphen = false", function()
+  -- describe("initialize-with-hyphen = false", function ()
   --   context.options["initialize-with-hyphen"] = false
   --   context.initialize = true
-  --   it("initialize", function()
+  --   it("initialize", function ()
   --     assert.equal("J.L.", name:initialize_name("Jean-Luc", ".", context))
   --   end)
   -- end)
