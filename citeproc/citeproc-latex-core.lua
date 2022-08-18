@@ -234,7 +234,7 @@ end
 
 
 function core.update_uncited_items(engine, citations)
-  util.debug(core.uncite_all_items)
+  -- util.debug(core.uncite_all_items)
   if core.uncite_all_items then
     -- \nocite{*}
     for id, _ in pairs(core.bib) do

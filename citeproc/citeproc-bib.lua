@@ -78,8 +78,8 @@ function bib.parse_fields(contents)
     -- This pattern may fail in the case of `title = {foo\}bar}`.
     for pattern_index, pattern in ipairs(field_patterns) do
       field, value, rest = string.match(contents, pattern)
-      field = unicode.utf8.lower(field)
       if value then
+        field = string.lower(field)
         if pattern_index == 1 then
           -- Strip braces "{}"
           value = string.sub(value, 2, -2)
