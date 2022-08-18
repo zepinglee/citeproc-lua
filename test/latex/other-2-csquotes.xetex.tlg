@@ -1,0 +1,276 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line ....
+Completed box being shipped out [1]
+\vbox(633.0+0.0)x407.0
+.\glue 16.0
+.\vbox(617.0+0.0)x345.0, shifted 62.0
+..\vbox(12.0+0.0)x345.0, glue set 12.0fil
+...\glue 0.0 plus 1.0fil
+...\hbox(0.0+0.0)x345.0
+....\hbox(0.0+0.0)x345.0
+..\glue 25.0
+..\glue(\lineskip) 0.0
+..\vbox(550.0+0.0)x345.0, glue set 424.81456fil
+...\write-{}
+...\glue(\topskip) 1.72308
+...\hbox(8.27692+1.93999)x345.0, glue set 255.857fil
+....\hbox(0.0+0.0)x15.0
+....\TU/lmr/m/n/10 “
+....\penalty 10000
+....\glue -0.0002
+....\glue 0.0002
+....\TU/lmr/m/n/10 Lorem
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 ipsum.
+....\penalty 10000
+....\hbox(8.27692+0.0)x4.483
+.....\mathon
+.....\hbox(4.648+0.0)x4.483, shifted -3.62892
+......\TU/lmr/m/n/7 1
+.....\mathoff
+....\TU/lmr/m/n/10 ”
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 1.7831
+...\hbox(8.27692+1.93999)x345.0, glue set 255.857fil
+....\hbox(0.0+0.0)x15.0
+....\TU/lmr/m/n/10 “
+....\penalty 10000
+....\glue -0.0002
+....\glue 0.0002
+....\TU/lmr/m/n/10 Lorem
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 ipsum.
+....\penalty 10000
+....\hbox(8.27692+0.0)x4.483
+.....\mathon
+.....\hbox(4.648+0.0)x4.483, shifted -3.62892
+......\TU/lmr/m/n/7 2
+.....\mathoff
+....\TU/lmr/m/n/10 ”
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 10.0 plus 4.0 minus 5.0
+...\glue -10.0 plus -4.0 minus -5.0
+...\glue 6.0 plus 2.0 minus 4.0
+...\glue(\parskip) 4.0 plus 2.0 minus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 3.12001
+...\hbox(6.94+2.05998)x295.0, glue set 0.1356, shifted 25.0
+....\hbox(0.0+0.0)x0.0
+.....\glue 0.0
+.....\glue -20.0
+.....\glue -5.0
+.....\hbox(0.0+0.0)x20.0, glue set 20.0fil
+......\glue 0.0 plus 1.0fil
+.....\glue 5.0
+....\penalty 0
+....\TU/lmr/m/n/10 Lorem
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 ipsum
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 dolor
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 sit
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 amet,
+....\glue 3.33 plus 2.08124 minus 0.888
+....\TU/lmr/m/n/10 consectetuer
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 adipiscing
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 elit.
+....\glue 4.44 plus 4.99498 minus 0.37
+....\TU/lmr/m/n/10 Ut
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 purus
+....\glue(\rightskip) 0.0
+...\penalty 150
+...\glue(\baselineskip) 2.89001
+...\hbox(7.05+2.05998)x295.0, glue set - 0.82994, shifted 25.0
+....\TU/lmr/m/n/10 elit,
+....\glue 3.33 plus 2.08124 minus 0.888
+....\TU/lmr/m/n/10 vestibulum
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 ut,
+....\glue 3.33 plus 2.08124 minus 0.888
+....\TU/lmr/m/n/10 placerat
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 ac,
+....\glue 3.33 plus 2.08124 minus 0.888
+....\TU/lmr/m/n/10 adipiscing
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 vitae,
+....\glue 3.33 plus 2.08124 minus 0.888
+....\TU/lmr/m/n/10 felis.
+....\glue 4.44 plus 4.99498 minus 0.37
+....\TU/lmr/m/n/10 Curabitur
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 dic-
+....\glue(\rightskip) 0.0
+...\penalty 100
+...\glue(\baselineskip) 3.00002
+...\hbox(6.94+2.05998)x295.0, glue set 0.00229, shifted 25.0
+....\TU/lmr/m/n/10 tum
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 gravida
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 mauris.
+....\glue 4.44 plus 4.99498 minus 0.37
+....\TU/lmr/m/n/10 Nam
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 arcu
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 libero,
+....\glue 3.33 plus 2.08124 minus 0.888
+....\TU/lmr/m/n/10 nonummy
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 eget,
+....\glue 3.33 plus 2.08124 minus 0.888
+....\TU/lmr/m/n/10 consectetuer
+....\glue(\rightskip) 0.0
+...\penalty 150
+...\glue(\baselineskip) 1.6631
+...\hbox(8.27692+2.05998)x295.0, glue set 43.97699fil, shifted 25.0
+....\TU/lmr/m/n/10 id,
+....\glue 3.33 plus 2.08124 minus 0.888
+....\TU/lmr/m/n/10 vulputate
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 a,
+....\glue 3.33 plus 2.08124 minus 0.888
+....\TU/lmr/m/n/10 magna.
+....\glue 4.44 plus 4.99498 minus 0.37
+....\TU/lmr/m/n/10 Donec
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 vehicula
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 augue
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 eu
+....\glue 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 neque.
+....\penalty 10000
+....\hbox(8.27692+0.0)x4.483
+.....\mathon
+.....\hbox(4.648+0.13998)x4.483, shifted -3.62892
+......\TU/lmr/m/n/7 3
+.....\mathoff
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty -51
+...\glue 10.0 plus 3.0 minus 5.0
+...\glue -2.05998
+...\glue 0.0 plus 1.0fil
+...\glue 9.0 plus 4.0 minus 2.0
+...\kern -3.0
+...\rule(0.4+0.0)x137.9979
+...\kern 2.6
+...\hbox(6.81334+2.85002)x345.0, glue set 43.4799fil
+....\hbox(6.81334+0.0)x14.40002, glue set 10.23402fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(6.81334+0.0)x4.166
+......\mathon
+......\hbox(3.99+0.0)x4.166, shifted -2.82333
+.......\TU/lmr/m/n/6 1
+......\mathoff
+....\hbox(6.65+0.0)x0.0
+.....\rule(6.65+0.0)x0.0
+....\TU/lmr/m/n/8 D’Arcus,
+....\glue 2.832 plus 1.76999 minus 0.75519
+....\TU/lmr/m/it/8 Boundaries
+....\glue 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 of
+....\glue 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 Dissent:
+....\glue 4.09601 plus 3.07199 minus 0.512
+....\TU/lmr/m/it/8 Protest
+....\glue 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 and
+....\glue 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 State
+....\glue 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 Power
+....\glue 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 in
+....\glue 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 the
+....\glue 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 Media
+....\glue 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 Age
+....\TU/lmr/m/n/8 .
+....\penalty 10000
+....\rule(0.0+2.85002)x0.0
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\hbox(6.81334+2.85002)x345.0, glue set 26.61594fil
+....\hbox(6.81334+0.0)x14.40002, glue set 10.23402fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(6.81334+0.0)x4.166
+......\mathon
+......\hbox(3.99+0.0)x4.166, shifted -2.82333
+.......\TU/lmr/m/n/6 2
+......\mathoff
+....\hbox(6.65+0.0)x0.0
+.....\rule(6.65+0.0)x0.0
+....\TU/lmr/m/n/8 Bennett,
+....\glue 2.832 plus 1.76999 minus 0.75519
+....\TU/lmr/m/n/8 “Getting
+....\glue 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 Property
+....\glue 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 Right:
+....\glue 3.776 plus 2.832 minus 0.472
+....\TU/lmr/m/n/8 ‘Informal’
+....\glue 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 Mortgages
+....\glue 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 in
+....\glue 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 the
+....\glue 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 Japanese
+....\glue 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 Courts.”
+....\penalty 10000
+....\rule(0.0+2.85002)x0.0
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\hbox(6.81334+2.85002)x345.0, glue set 298.62398fil
+....\hbox(6.81334+0.0)x14.40002, glue set 10.23402fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(6.81334+0.0)x4.166
+......\mathon
+......\hbox(3.99+0.12599)x4.166, shifted -2.82333
+.......\TU/lmr/m/n/6 3
+......\mathoff
+....\hbox(6.65+0.0)x0.0
+.....\rule(6.65+0.0)x0.0
+....\TU/lmr/m/n/8 Bennett.
+....\penalty 10000
+....\rule(0.0+2.85002)x0.0
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue -2.85002
+...\glue 0.0 plus 0.0001fil
+..\glue(\baselineskip) 30.0
+..\hbox(0.0+0.0)x345.0
+...\hbox(0.0+0.0)x345.0
+(other-2-csquotes.aux)

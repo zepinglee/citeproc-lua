@@ -12,23 +12,25 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
-> \l__csl_citation_tl=D’Arcus, \emph {Boundaries of Dissent: Protest and State
-Power in the Media Age}..
+> \l__csl_citation_tl=Bruce D’Arcus, \textit {Boundaries of Dissent: Protest
+and State Power in the Media Age} (Routledge, 2005)..
 <recently read> }
 l. ...}
 ============================================================
 ============================================================
 TEST 2: Multiple cite items in a citation
 ============================================================
-> \l__csl_citation_tl=D’Arcus; Bennett, “Getting Property Right: ‘Informal’
-Mortgages in the Japanese Courts.”.
+> \l__csl_citation_tl=D’Arcus; Frank G. Bennett Jr., “Getting Property Right:
+‘Informal’ Mortgages in the Japanese Courts,” \textit {Pac. Rim L. \& Pol’y
+J.} 18 (August 2009): 463–509..
 <recently read> }
 l. ...}
 ============================================================
 ============================================================
 TEST 3: Citation with page locator
 ============================================================
-> \l__csl_citation_tl=D’Arcus, 6..
+> \l__csl_citation_tl=D’Arcus, \textit {Boundaries of Dissent: Protest and
+State Power in the Media Age}, 6..
 <recently read> }
 l. ...}
 ============================================================
@@ -49,8 +51,7 @@ l. ...}
 ============================================================
 TEST 6: Citation with prefix and suffix
 ============================================================
-> \l__csl_citation_tl=prefix D’Arcus, \emph {Boundaries of Dissent: Protest
-and State Power in the Media Age} suffix..
+> \l__csl_citation_tl=prefix D’Arcus, \textit {Boundaries of Dissent: Protestand State Power in the Media Age} suffix..
 <recently read> }
 l. ...}
 ============================================================
@@ -92,7 +93,24 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 12: Bibilography
+TEST 12: Position first
+============================================================
+> \l__csl_citation_tl=Leslie Lamport, \textit {LaTeX: A Document Preparation
+System: User’s Guide and Reference Manual}, 2nd ed. (Reading, MA, USA:
+Addison-Wesley, 1994)..
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 13: Position subsequent
+============================================================
+> \l__csl_citation_tl=D’Arcus, \textit {Boundaries of Dissent: Protest and
+State Power in the Media Age}..
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 14: Bibilography
 ============================================================
 (other-2-note-style.bbl)
 The comma list \g__csl_bib_items_clist contains the items (without outer

@@ -8,7 +8,6 @@
 \usepackage{citation-style-language}
 
 \usepackage{csquotes}
-\usepackage{lipsum}
 
 \cslsetup{style = chicago-note-bibliography}
 \addbibresource{test.bib}
