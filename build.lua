@@ -9,7 +9,7 @@ docfiledir = "./doc"
 testfiledir = "./test/latex"
 testsuppdir = testfiledir .. "/support"
 
-exefiles = {"**/citeproc-lua.lua"}
+exefiles = {"citeproc-lua.lua", "**/citeproc-lua.lua"}
 installfiles = {
   "**/*.lua",
   "**/*.sty",
@@ -58,27 +58,29 @@ function update_tag(file, content, tagname, tagdate)
   if file == "citation-style-language.sty" then
     return string.gsub(content,
       "\\ProvidesExplPackage %{citation%-style%-language%} %{[^}]+%} %{[^}]+%}",
-      "\\ProvidesExplPackage {citation-style-language} {" .. tagdate .. "} {" .. tagname .. "}")
+      "\\ProvidesExplPackage {citation-style-language} {" .. tagdate .. "} {v" .. tagname .. "}")
   elseif file == "citeproc.lua" then
     return string.gsub(content,
       'citeproc%.__VERSION__ = "' .. version_pattern .. '"',
-      'citeproc.__VERSION__ = "' .. string.sub(tagname, 2) .. '"')
+      'citeproc.__VERSION__ = "' .. tagname .. '"')
   elseif file == "citation-style-language-doc.tex" then
     return string.gsub(content,
       "\\date%{([^}]+)%}",
-      "\\date{" .. tagdate .. " " .. tagname .. "}")
+      "\\date{" .. tagdate .. " v" .. tagname .. "}")
   elseif file == "citeproc-lua.1" then
     return string.gsub(content,
       '%.TH citeproc-lua 1 "' .. version_pattern .. '"\n',
-      '.TH citeproc-lua 1 "' .. string.sub(tagname, 2) .. '"\n')
+      '.TH citeproc-lua 1 "' .. tagname .. '"\n')
   elseif file == "CHANGELOG.md" then
-    local previous = string.match(content, "compare/(v" .. version_pattern .. ")%.%.%.HEAD")
+    local previous = string.match(content, "compare/v(" .. version_pattern .. ")%.%.%.HEAD")
     if tagname == previous then return content end
+    -- print(tagname)
+    -- print(previous)
     content = string.gsub(content,
-      "## %[Unreleased%]", "## [Unreleased]\n\n## [" .. tagname .. "] - " .. tagdate)
+      "## %[Unreleased%]", "## [Unreleased]\n\n## [v" .. tagname .. "] - " .. tagdate)
     content = string.gsub(content,
       "v" .. version_pattern .. "%.%.%.HEAD",
-      tagname .. "...HEAD\n[" .. tagname .. "]: " .. url_prefix .. previous
+      "v" .. tagname .. "...HEAD\n[v" .. tagname .. "]: " .. url_prefix .. "v" .. previous
         .. "..." .. tagname)
     return content
   end
