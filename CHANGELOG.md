@@ -7,17 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- The cite grouping, collapsing, and disambiguation features are now implemented.
+
 ### Changed
 
-- The `citeproc` executable is renamed to `citeproc-lua`.
-- Pakage configuration can also be given in the package loading options.
+- The `citeproc` executable is renamed to `citeproc-lua` to avoid conflicts with other processor implementations.
+- Package configuration can also be given in the package loading options.
 - A warning is raised instead of and error in case of duplicate entry keys ([#14](https://github.com/zepinglee/citeproc-lua/issues/14)).
 
 ### Fixed
 
-- Fix an infinite loop error when bib entry keys contain hyphens or undercores ([#18](https://github.com/zepinglee/citeproc-lua/issues/18)).
+- Fix an infinite loop error when bib entry keys contain hyphens or underscores ([#18](https://github.com/zepinglee/citeproc-lua/issues/18)).
 - Fix incorrect item position in note style ([#20](https://github.com/zepinglee/citeproc-lua/issues/20)).
 - Fix compatibility with `\blockquote` of `csquotes` ([#21](https://github.com/zepinglee/citeproc-lua/issues/21)).
+- Fix non-lowercase field names ([#22](https://github.com/zepinglee/citeproc-lua/issues/22)).
 
 ## [v0.1.1] - 2022-03-21
 

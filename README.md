@@ -16,9 +16,8 @@ both citations and bibliography according to the selected CSL style.
 A LaTeX package (`citation-style-language.sty`) is provided to communicate with
 the processor.
 
-This project is in early development stage and some features of CSL (especially
-collapsing and disambiguation) are not implemented yet. Comments, suggestions
-and bug reports are welcome.
+This project is in early development stage and some features of CSL are not implemented yet.
+Comments, suggestions and bug reports are welcome.
 
 
 ## LaTeX example
