@@ -107,12 +107,12 @@ which is the same as documents with cross references.
 
 \paragraph{Other engines}
 
-For engines other than LuaTeX, the \file{citeproc} executable is required
+For engines other than LuaTeX, the \file{citeproc-lua} executable is required
 to run on the \file{.aux} file to generate the citations and bibliography.
 The general procedure is similar to the traditional BibTeX workflow.
 \begin{enumerate}
   \item Run \file{latex} on \file{example.tex}.
-  \item Run \file{citeproc} on \file{example.aux}.
+  \item Run \file{citeproc-lua} on \file{example.aux}.
     The engine reads the \file{.csl} style, CSL locale files, and
     \file{.bib} database and then writes the processed citations and
       bibliography to \file{example.bbl}.
