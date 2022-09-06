@@ -56,15 +56,42 @@ citeproc-lua example.aux
 pdflatex example.tex
 ```
 
+
+
+## Installation
+
 The above example should work out-of-the-box with TeX Live 2022 or later version.
-For older versions of TeX Live, a manual installation of this package is required.
-The dependencis are listed in [DEPENDS.txt](DEPENDS.txt) and they can be installed via `tlmgr`.
+If you want to install the GitHub develop version of this package,
+you may follow the steps below.
+
+The `citation-style-language` requires the following packages:
+`filehook`, `l3kernel`, `l3packages`, `lua-uca`, `lualibs`,
+`luatex`, `luaxml`, and `url`.
+`l3build` is also required for actually performing the installation.
+Make sure they are already installed in the TeX distribution.
 
 ```bash
-l3build install
+  git clone https://github.com/zepinglee/citeproc-lua  # Clone the repository
+  cd citeproc-lua
+  git submodule update --init --remote                 # Fetch submodules
+  l3build install
 ```
 
-This command installs the `.sty` and `.lua` files to `TEXMFHOME` which is usually `~/texmf` on Linux or `~/Library/texmf` on macOS so that the LaTeX executable can find it.
+These commands install the package files to `TEXMFHOME` which is usually
+`~/texmf` on Linux or `~/Library/texmf` on macOS.
+Besides, the `citeproc-lua` executable needs to be copied to some directory
+in the `PATH` environmental variable so that it can be called directly in the shell.
+For example provided `~/bin` is in `PATH`:
+
+```bash
+cp citeproc/citeproc-lua.lua "~/bin/citeproc-lua"
+```
+
+To uninstall the package from `TEXMFHOME`:
+
+```bash
+l3build uninstall
+```
 
 
 ## License

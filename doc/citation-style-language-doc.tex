@@ -26,7 +26,7 @@
   \lstset{
     basicstyle = \ttfamily\small,
     basewidth  = 0.51em,
-    gobble     = 2,
+    % gobble     = 2,
     language   = bash,
   }
 }{}
@@ -76,6 +76,38 @@ Note that this project is in early development stage and some features of CSL
 are not implemented yet.
 Comments, suggestions, and bug reports are welcome.
 
+
+\section{Installation}
+
+This package is available from TeX Live 2022 or later versions.
+For most users, the easiest way is to install it via |tlmgr|.
+If you want to install the GitHub develop version of this package,
+you may follow the steps below.
+
+The \pkg{citation-style-language} requires the following packages:
+\pkg{filehook}, \pkg{l3kernel}, \pkg{l3packages}, \pkg{lua-uca}, \pkg{lualibs},
+\pkg{luatex}, \pkg{luaxml}, and \pkg{url}.
+\pkg{l3build} is also required for actually performing the installation.
+Make sure they are already installed in the TeX distribution.
+
+\begin{bash}
+  git clone https://github.com/zepinglee/citeproc-lua  # Clone the repository
+  cd citeproc-lua
+  git submodule update --init --remote                 # Fetch submodules
+  l3build install
+\end{bash}
+
+These commands install the package files to |TEXMFHOME| which is usually
+|~/texmf| on Linux or |~/Library/texmf| on macOS.
+Besides, the |citeproc-lua| executable needs to be copied to some directory in
+the |PATH| environmental variable so that it can be called directly in the shell.
+For example provided |~/bin| is in |PATH|:
+
+\begin{bash}
+  cp citeproc/citeproc-lua.lua "~/bin/citeproc-lua"
+\end{bash}
+
+To uninstall the package from |TEXMFHOME|, just run |l3build uninstall|.
 
 \section{Getting started}
 
