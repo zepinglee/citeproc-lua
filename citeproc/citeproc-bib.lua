@@ -148,7 +148,7 @@ function bib.unescape(field, str)
   -- TODO: unicode chars like \"{o}
   str = string.gsub(str, "\\#", "#")
   str = string.gsub(str, "\\%$", "$")
-  str = string.gsub(str, "\\%%", "%")
+  str = string.gsub(str, "\\%%", "%%")
   str = string.gsub(str, "\\&", "&")
   str = string.gsub(str, "\\{", "{")
   str = string.gsub(str, "\\}", "}")
