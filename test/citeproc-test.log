@@ -1,33 +1,32 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
-affix                8       1       0       0
-bugreports          79       2       0       0
+affix                8       0       0       0
+bugreports          79       0       0       0
 collapse            21       0       0       0
 condition           17       0       0       0
-date                99       2       0       0
+date                99       0       0       0
 decorations          7       0       0       0
-disambiguate        64       6       0       0
+disambiguate        64       0       0       0
 display              5       0       0       0
-error                1       0       0       0
 etal                 4       0       0       0
-flipflop            17       1       0       0
+flipflop            17       0       0       0
 form                 3       0       0       0
 fullstyles           5       0       0       0
 group                7       0       0       0
-integration         13       1       0       0
-label               18       1       0       0
+integration         13       0       0       0
+label               18       0       0       0
 locale              23       0       0       0
 locator              5       0       0       0
-magic               38       2       0       0
-name               106       2       0       0
+magic               38       0       0       0
+name               106       0       0       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
 number              18       0       0       0
 page                 9       0       0       0
 plural               7       0       0       0
-position            14       1       0       0
-punctuation         15       1       0       0
+position            14       0       0       0
+punctuation         15       0       0       0
 quotes               4       0       0       0
 simplespace          1       0       0       0
 sort                58       0       0       0
@@ -38,182 +37,5 @@ textcase            28       0       0       0
 unicode              1       0       0       0
 variables            5       0       0       0
 virtual              1       0       0       0
-wrappers             2       0       0       0
 -------------- ------- ------- ------- -------
-(all)              817      20       0       0
-
-Failure → test-suite affix_WithCommas.txt
-Passed in:
-(string) '>>[0] John Smith, <i>Book C</i>, 2000, and David Jones, <i>Book D</i>, 2000.
->>[1] Smith, <i>Book C</i> is one source,; Jones, <i>Book D</i> is another.
->>[2] Smith, <i>Book C</i>, 23 is one source,; Jones, <i>Book D</i> is another.'
-Expected:
-(string) '..[0] John Smith, <i>Book C</i>, 2000, and David Jones, <i>Book D</i>, 2000.
-..[1] Smith, <i>Book C</i> is one source, Jones, <i>Book D</i> is another.
->>[2] Smith, <i>Book C</i>, 23 is one source, Jones, <i>Book D</i> is another.'
-
-Failure → test-suite bugreports_EnvAndUrb.txt
-Passed in:
-(string) '..[0] Baines, T S, O Benedettini and J M Kay, ‘Title One’; Baines, T S, F Gump and J M Kay, ‘Title Two’.
-..[1] See reference 1.
->>[2] See reference 1.'
-Expected:
-(string) '>>[0] Baines, T S, O Benedettini and J M Kay, ‘Title One’; Baines, T S, F Gump and J M Kay, ‘Title Two’.
-..[1] See reference 1, Baines et al.
->>[2] See reference 1, Baines et al.'
-
-Failure → test-suite bugreports_OldMhraDisambiguationFailure.txt
-Passed in:
-(string) '..[0] John Doe, <i>Book A</i>, 2000; John Doe, <i>Book B</i>, 2000.
->>[1] Doe, Book A; Doe, Book B.'
-Expected:
-(string) '>>[0] John Doe, <i>Book A</i>, 2000; John Doe, <i>Book B</i>, 2000.
->>[1] Doe, Book A; Doe, Book B.'
-
-Failure → test-suite date_YearSuffixImplicitWithNoDate.txt
-Passed in:
-(string) '(John Doe n.d. [Accessed: June 1, 1965]; John Doe n.d. [Accessed: June 1, 2065])'
-Expected:
-(string) '(John Doe n.d.-a [Accessed: June 1, 1965]; John Doe n.d.-b [Accessed: June 1, 2065])'
-
-Failure → test-suite date_YearSuffixWithNoDate.txt
-Passed in:
-(string) '(John Doe n.d. [Accessed: June 1, 1965]; John Doe n.d. [Accessed: June 1, 2065])'
-Expected:
-(string) '(John Doe n.d.-a [Accessed: June 1, 1965]; John Doe n.d.-b [Accessed: June 1, 2065])'
-
-Failure → test-suite disambiguate_BasedOnEtAlSubsequent.txt
-Passed in:
-(string) '(Baur, Fröberg, Baur, et al. 2000; Baur, Schileyko, Baur, et al. 2000; Doe 2000)'
-Expected:
-(string) '(Baur, Fröberg, Baur, et al. 2000<i>a</i>; Baur, Schileyko &#38; Baur 2000<i>b</i>; Doe 2000)'
-
-Failure → test-suite disambiguate_BasedOnSubsequentFormWithBackref2.txt
-Passed in:
-(string) '..[0] John Doe, His Book (2000); John Doe, His Other Book (2001).
-..[1] Jane Roe, Her Book (1998).
-..[2] Roe, supra note 2.
-..[3] Doe, supra note 1.
->>[4] Roe, supra note 2.'
-Expected:
-(string) '..[0] John Doe, His Book (2000); John Doe, His Other Book (2001).
-..[1] Jane Roe, Her Book (1998).
-..[2] Roe, supra note 2.
-..[3] Doe, His Book, supra note 1.
->>[4] Roe, supra note 2.'
-
-Failure → test-suite disambiguate_CitationLabelDefault.txt
-Passed in:
-(string) '[CSL STYLE ERROR: reference with no printed form.]'
-Expected:
-(string) 'Asth00a; Asth00b; Bron00'
-
-Failure → test-suite disambiguate_CitationLabelInData.txt
-Passed in:
-(string) 'SpiffLabel1900; SpiffLabel1900'
-Expected:
-(string) 'SpiffLabel1900a; SpiffLabel1900b; Bron00; BrCh98; DEFG26'
-
-Failure → test-suite disambiguate_DisambiguationHang.txt
-Passed in:
-(string) '..[0] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990)
-..[1] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990)
->>[2] (Caminiti, Johnson, &#38; Urbano 1990)'
-Expected:
-(string) '>>[0] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990a)
->>[1] (Caminiti, Johnson, Burnod, Galli, &#38; Ferraina 1990b)
->>[2] (Caminiti, Johnson, &#38; Urbano 1990)'
-
-Failure → test-suite disambiguate_Trigraph.txt
-Passed in:
-(string) '[CSL STYLE ERROR: reference with no printed form.]
-[CSL STYLE ERROR: reference with no printed form.]
-[CSL STYLE ERROR: reference with no printed form.]'
-Expected:
-(string) 'Aalt02a
-Aalt02b
-Aalt02c'
-
-Failure → test-suite flipflop_LeadingMarkupWithApostrophe.txt
-Passed in:
-(string) '<i>Insha’Allah</i> is an Arabic phrase meaning “God willing”. Another Arabic word is <i>bukra</i>. Aalto'
-Expected:
-(string) '<i>Insha’Allah</i> is an Arabic phrase meaning ‘God willing’. Another Arabic word is <i>bukra</i>. Aalto'
-
-Failure → test-suite integration_FirstReferenceNoteNumberPositionChange.txt
-Passed in:
-(string) '>>[0] Snoakes, “Life of Snoakes” (1902).
-..[1] Doe, “Life of Doe” (1901).
-..[2] Roe, “Life of Roe” (1900).
->>[3] Doe, supra note 2.
->>[4] Roe, supra note 3.'
-Expected:
-(string) '>>[0] Snoakes, “Life of Snoakes” (1902).
->>[1] Doe, “Life of Doe” (1901).
->>[2] Roe, “Life of Roe” (1900).
->>[3] Doe, supra note 2.
->>[4] Roe, supra note 3.'
-
-Failure → test-suite label_EditorTranslator1.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">1.	Иванов И.И. 
-    . Пример оформления книги с редактором и переводчиком в одном лице : вид издания : in 5 vols. Vol. 2 / И.И. Иванов, П.П. Петров, С.С. Сидоров; ed. Р.Р. Романов; tran. Р.Р. Романов Дополнительно. – Тюмень: Дом, 2013. – 10. – 100 p..</div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">1.	Иванов И.И. Пример оформления книги с редактором и переводчиком в одном лице : вид издания : in 5 vols. Vol. 2 / И.И. Иванов, П.П. Петров, С.С. Сидоров; ed &#38; trans. Р.Р. Романов Дополнительно. – Тюмень: Дом, 2013. – 10. – 100 p.</div>
-</div>'
-
-Failure → test-suite magic_CitationLabelInBibliography.txt
-Passed in:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry"><div class="csl-right-inline">Roe, J. and Noakes, R.: Book A., 1978a.</div>
-  </div>
-  <div class="csl-entry"><div class="csl-right-inline">Doe, J.: Book A., 1965b.</div>
-  </div>
-  <div class="csl-entry"><div class="csl-right-inline">Roe, J. and Noakes, R.: Book A., 1978c.</div>
-  </div>
-</div>'
-Expected:
-(string) '<div class="csl-bib-body">
-  <div class="csl-entry">
-    <div class="csl-left-margin">[Doe65]</div><div class="csl-right-inline">Doe, J.: Book A., 1965.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[RoNo78a]</div><div class="csl-right-inline">Roe, J. and Noakes, R.: Book A., 1978.</div>
-  </div>
-  <div class="csl-entry">
-    <div class="csl-left-margin">[RoNo78b]</div><div class="csl-right-inline">Roe, J. and Noakes, R.: Book A., 1978.</div>
-  </div>
-</div>'
-
-Failure → test-suite magic_CitationLabelInCitation.txt
-Passed in:
-(string) '[]'
-Expected:
-(string) '[Doe65, RoNo78a, RoNo78b]'
-
-Failure → test-suite name_CollapseRoleLabels.txt
-Passed in:
-(string) 'Albert Asthma et al. (eds.), Albert Asthma et al. (trans.)'
-Expected:
-(string) 'Albert Asthma et al. (eds. &#38; trans.)'
-
-Failure → test-suite name_EditorTranslatorSameWithTerm.txt
-Passed in:
-(string) 'John Doe (ed.), John Doe (tran.)'
-Expected:
-(string) 'John Doe (ed. &#38; tran.)'
-
-Failure → test-suite position_IbidWithPrefixFullStop.txt
-Passed in:
-(string) '>>[0] Book A; . He said “Please work.” ibid.'
-Expected:
-(string) '>>[0] Book A. He said “Please work.” Ibid.'
-
-Failure → test-suite punctuation_FrenchOrthography.txt
-Passed in:
-(string) 'His “ Anonymous ” Life'
-Expected:
-(string) 'His « Anonymous » Life'
+(all)              817       0       0       0

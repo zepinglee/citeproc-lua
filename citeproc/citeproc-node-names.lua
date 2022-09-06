@@ -82,7 +82,7 @@ end
 
 function Names:build_ir(engine, state, context)
   -- names_inheritance: names and name attributes inherited from cs:style
-  --   and cs:citaiton or cs:bibliography
+  --   and cs:citation or cs:bibliography
   -- name_override: names, name, et-al, label elements inherited in substitute element
   local names_inheritance = Names:new()
   names_inheritance.delimiter = context.name_inheritance.names_delimiter

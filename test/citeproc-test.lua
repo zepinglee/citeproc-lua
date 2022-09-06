@@ -15,7 +15,7 @@ end
 require("busted.runner")()
 require("lualibs")
 local lfs = require("lfs")
-local inspect = require("inspect")
+-- local inspect = require("inspect")
 
 local citeproc = require("citeproc")
 local util = require("citeproc-util")
@@ -61,7 +61,7 @@ local function get_skipped_files()
     return skipped_files
   end
   for line in file:lines() do
-    if not util.startswith(line, "#") then
+    if line ~= "" and not util.startswith(line, "#") then
       skipped_files[line] = true
     end
   end
@@ -329,24 +329,24 @@ local function run_test(path)
 end
 
 local function main()
+  local skipped_files = get_skipped_files()
+
   local test_dirs = {
     "./test/test-suite/processor-tests/humans",  -- standard test-suite
-    "./test/overrides",  -- fixture that overrides the standard
-    "./test/local",
+    "./test/overrides",  -- fixtures that override the standard
   }
   local fixture_list = {}
-  local fixture_path = {}
-  for _, test_dir in ipairs(test_dirs) do
+  local fixture_paths = {}
+  for _ ,test_dir in pairs(test_dirs) do
     if path_exists(test_dir) then
       local files = listdir(test_dir)
-      local skipped_files = get_skipped_files()
       for _, file in ipairs(files) do
         if string.match(file, "%.txt$") and not skipped_files[file] then
-          local path = test_dir .. "/" .. file
-          if not fixture_path[file] then
+          if not fixture_paths[file] then
             table.insert(fixture_list, file)
           end
-          fixture_path[file] = path
+          local path = test_dir .. "/" .. file
+          fixture_paths[file] = path
         end
       end
     end
@@ -354,13 +354,28 @@ local function main()
 
   describe("test-suite", function ()
     for _, fixture in ipairs(fixture_list) do
-      local path = fixture_path[fixture] do
+      local path = fixture_paths[fixture] do
         it(fixture, function ()
           run_test(path)
         end)
       end
     end
   end)
+
+  local test_dir = "./test/local"
+  if path_exists(test_dir) then
+    describe("local-fixtures", function ()
+      for _, file in ipairs(listdir(test_dir)) do
+        if string.match(file, "%.txt$") then
+          local path = test_dir .. "/" .. file
+          it(file, function ()
+            run_test(path)
+          end)
+        end
+      end
+    end)
+  end
+
 end
 
 

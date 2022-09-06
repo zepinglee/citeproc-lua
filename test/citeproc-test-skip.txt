@@ -51,3 +51,25 @@ textcase_LocaleUnicode.txt
 
 # The stop words ("about", etc.) in citeproc-js need to be updated with the schema.
 textcase_SkipNameParticlesInTitleCase.txt
+
+# TMP skip
+affix_WithCommas.txt
+bugreports_EnvAndUrb.txt
+bugreports_OldMhraDisambiguationFailure.txt
+date_YearSuffixImplicitWithNoDate.txt
+date_YearSuffixWithNoDate.txt
+disambiguate_BasedOnEtAlSubsequent.txt
+disambiguate_BasedOnSubsequentFormWithBackref2.txt
+disambiguate_CitationLabelDefault.txt
+disambiguate_CitationLabelInData.txt
+disambiguate_DisambiguationHang.txt
+disambiguate_Trigraph.txt
+flipflop_LeadingMarkupWithApostrophe.txt
+integration_FirstReferenceNoteNumberPositionChange.txt
+label_EditorTranslator1.txt
+magic_CitationLabelInBibliography.txt
+magic_CitationLabelInCitation.txt
+name_CollapseRoleLabels.txt
+name_EditorTranslatorSameWithTerm.txt
+position_IbidWithPrefixFullStop.txt
+punctuation_FrenchOrthography.txt

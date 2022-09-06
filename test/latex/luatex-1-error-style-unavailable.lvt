@@ -6,7 +6,7 @@
 
 \usepackage{citation-style-language}
 
-\cslsetup{style = = style-unavailable}
+\cslsetup{style = style-unavailable}
 \addbibresource{test.bib}
 
 

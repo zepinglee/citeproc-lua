@@ -1,0 +1,44 @@
+# The test framework itself
+l3build
+#
+# Required to build formats
+latex-bin
+tex
+xetex
+#
+# Assuming a 'basic' font set up, metafont is required to avoid
+# warnings with some packages and errors with others
+metafont
+mfware
+#
+# Dependencies for citation-style-language
+filehook
+l3kernel
+l3packages
+lua-uca
+lualibs
+luaxml
+url
+#
+# Dependencies for tests
+babel
+babel-english
+babel-french
+carlisle
+csquotes
+iftex
+infwarerr
+kvoptions
+pdftexcmds
+hyperref
+xurl
+#
+# Dependencies for typesetting
+# alphalph
+# amsfonts
+# amsmath
+# booktabs
+# colortbl
+# listings
+# psnfss
+# tools
