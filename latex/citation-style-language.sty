@@ -293,8 +293,8 @@
   % #1: citation info "{<citationID>}{{id=ITEM-1},{id=ITEM-2}}{<noteIndex>}"
   {
     \if@filesw
-      \iow_now:Nn \@auxout
-        { \citation { #1 } }
+      \iow_now:Nx \@auxout
+        { \token_to_str:N \citation { #1 } }
     \fi
   }
 
@@ -398,7 +398,7 @@
   {
     \bibcite {#1} {#2}
     % \if@filesw
-    %   \iow_now:Nn \@auxout { \bibcite {#1} {#2} }
+    %   \iow_now:Nx \@auxout { \token_to_str:N \bibcite {#1} {#2} }
     % \fi
   }
 
@@ -648,7 +648,7 @@
 \cs_new:Npn \__csl_write_aux_bibstyle:n #1
   {
     \if@filesw
-      \iow_now:Nn \@auxout { \bibstyle {#1} }
+      \iow_now:Nx \@auxout { \token_to_str:N \bibstyle {#1} }
     \fi
   }
 
@@ -696,7 +696,7 @@
         \if@filesw
           \iow_now:Nx \@auxout
             {
-              \exp_not:N \csloptions
+              \token_to_str:N \csloptions
                 { \clist_use:Nn \l__csl_options_clist { , } }
             }
         \fi
@@ -734,7 +734,7 @@
 \cs_new:Npn \__csl_write_aux_bibdata:n #1
   {
     \if@filesw
-      \iow_now:Nn \@auxout { \bibdata {#1} }
+      \iow_now:Nx \@auxout { \token_to_str:N \bibdata {#1} }
     \fi
   }
 
