@@ -97,8 +97,7 @@ local function read_data_file(data_file)
     csl_items = utilities.json.tolua(contents)
   elseif extension == ".bib" then
     bibtex = bibtex or require("citeproc-bibtex")
-    local bib = bibtex.parse(contents)
-    csl_items = bibtex.convert_csl_json(bib)
+    csl_items = bibtex.parse(contents)
   end
 
   return file_name, csl_items

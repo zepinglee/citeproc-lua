@@ -69,8 +69,7 @@ end
 local function convert_bib(path, output_path)
   local contents = util.read_file(path)
   bibtex = bibtex or require("citeproc-bibtex")
-  local bib = bibtex.parse(contents)
-  local data = bibtex.convert_csl_json(bib)
+  local data = bibtex.parse(contents)
   if not output_path then
     output_path = string.gsub(path, "%.bib$", ".json")
   end

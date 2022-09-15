@@ -16,7 +16,112 @@ local bibtex = require("citeproc-bibtex")
 local util = require("citeproc-util")
 
 
-describe("BibTeX parser", function ()
+describe("Parsing AST", function ()
+
+  it("entry", function ()
+    local contents = [[
+      @book{lamport86,
+        author    = "Leslie Lamport",
+        title     = "{\LaTeX{}} A Document
+                     Preparation system",
+        publisher = {Addison-Wesley},
+        year      = 1986
+      }
+    ]]
+    local res = bibtex.parse_bibtex_objects(contents)
+    local expected = {
+      {
+        category = "entry",
+        type = "book",
+        key = "lamport86",
+        fields = {
+          author    = {"Leslie Lamport"},
+          title     = {"{\\LaTeX{}} A Document Preparation system"},
+          publisher = {"Addison-Wesley"},
+          year      = {"1986"}
+        },
+      },
+    }
+    assert.same(expected, res)
+  end)
+
+  it("string command", function ()
+    -- btxdoc.pdf, p. 2
+    local contents = [[
+      @STRING( WGA = " World Gnus Almanac" )
+    ]]
+    local res = bibtex.parse_bibtex_objects(contents)
+    local expected = {
+      {
+        category = "string",
+        name = "wga",
+        contents = {
+          " World Gnus Almanac",
+        },
+      },
+    }
+    assert.same(expected, res)
+  end)
+
+  it("string in field value", function ()
+    -- btxdoc.pdf, p. 2
+    local contents = [[
+      @BOOK(almanac-66,
+        title = 1966 # WGA,
+      )
+    ]]
+    local res = bibtex.parse_bibtex_objects(contents)
+    local expected = {
+      {
+        category = "entry",
+        type = "book",
+        key = "almanac-66",
+        fields = {
+          title = {
+            "1966",
+            {
+              category = "string",
+              name = "wga"
+            },
+          },
+        },
+      }
+    }
+    assert.same(expected, res)
+  end)
+
+  it("preamble command", function ()
+    -- btxdoc.pdf, p. 4
+    local contents = [[
+      @PREAMBLE{ "\newcommand{\noopsort}[1]{} "
+               # "\newcommand{\singleletter}[1]{#1} " }
+    ]]
+    local res = bibtex.parse_bibtex_objects(contents)
+    local expected = {
+      {
+        category = "preamble",
+        contents = {
+          "\\newcommand{\\noopsort}[1]{} ",
+          "\\newcommand{\\singleletter}[1]{#1} ",
+        }
+      }
+    }
+    assert.same(expected, res)
+  end)
+
+  -- describe("error report", function ()
+
+  --   it("should throw an error", function ()
+  --     local str = "@book{test\n foo=foo}"
+  --     assert.has_error(function () bibtex.parse_bibtex_objects(str) end)
+  --   end)
+
+  -- end)
+
+end)
+
+
+describe("Parsing BibTeX data", function ()
 
   it("BibTeX entry", function ()
     local contents = [[
@@ -26,10 +131,10 @@ describe("BibTeX parser", function ()
         year   = 1984,
       }
     ]]
-    local res = bibtex.parse(contents)
+    local res = bibtex.parse_bibtex(contents)
     -- util.debug(res.entries[1])
     local expected = {
-      preamble = nil,
+      preamble = "",
       strings = {},
       entries = {
         {
@@ -54,7 +159,7 @@ describe("BibTeX parser", function ()
                      Bar},
       }
     ]]
-    local res = bibtex.parse(contents)
+    local res = bibtex.parse_bibtex(contents)
     local expected = {
       {
         type = "book",
@@ -68,6 +173,37 @@ describe("BibTeX parser", function ()
     assert.same(expected, res.entries)
   end)
 
+  it("string command", function ()
+    -- btxdoc.pdf, p. 4
+    local contents = [[
+      @STRING( WGA = " World Gnus Almanac" )
+    ]]
+    local res = bibtex.parse_bibtex(contents)
+    local expected = {
+      preamble = "",
+      entries = {},
+      strings = {
+        wga = " World Gnus Almanac"
+      },
+    }
+    assert.same(expected, res)
+  end)
+
+  it("preamble command", function ()
+    -- btxdoc.pdf, p. 4
+    local contents = [[
+      @PREAMBLE{ "\newcommand{\noopsort}[1]{} "
+               # "\newcommand{\singleletter}[1]{#1} " }
+    ]]
+    local res = bibtex.parse_bibtex(contents)
+    local expected = {
+      preamble = "\\newcommand{\\noopsort}[1]{} \\newcommand{\\singleletter}[1]{#1} ",
+      entries = {},
+      strings = {},
+    }
+    assert.same(expected, res)
+  end)
+
   it("string concatenation", function ()
     local contents = [[
       @STRING{STOC = " Symposium on the Theory of Computing"}
@@ -76,7 +212,7 @@ describe("BibTeX parser", function ()
         month = mar # ", " # 1,
       }
     ]]
-    local bib = bibtex.parse(contents)
+    local res = bibtex.parse_bibtex(contents)
     local expected = {
       {
         type = "inproceedings",
@@ -87,11 +223,11 @@ describe("BibTeX parser", function ()
         }
       },
     }
-    assert.same(expected, bib.entries)
+    assert.same(expected, res.entries)
   end)
 
 
-  describe("Unicode conversion", function ()
+  describe("convert LaTeX formats to HTML", function ()
 
     it("textbf", function ()
       local str = "foo \\textbf{bar} baz"
@@ -551,8 +687,7 @@ describe("Full BibTeX to CSL-JSON conversion", function ()
         month = jul,
       }
     ]]
-    local bib = bibtex.parse(contents)
-    local res = bibtex.convert_csl_json(bib)
+    local res = bibtex.parse(contents)
     local expected = {
       {
         author = {
@@ -612,8 +747,7 @@ describe("Full BibTeX to CSL-JSON conversion", function ()
         year = {2008}
       }
     ]]
-    local bib = bibtex.parse(contents)
-    local res = bibtex.convert_csl_json(bib)
+    local res = bibtex.parse(contents)
     local expected = {
       {
         id = "Chen2008",
@@ -679,8 +813,7 @@ describe("Full BibTeX to CSL-JSON conversion", function ()
         HAL_VERSION={v1},
       }
     ]]
-    local bib = bibtex.parse(contents)
-    local res = bibtex.convert_csl_json(bib)
+    local res = bibtex.parse(contents)
     local expected = {
       {
         URL = "https://hal.archives-ouvertes.fr/hal-03186401",

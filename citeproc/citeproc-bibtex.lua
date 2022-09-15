@@ -13,12 +13,8 @@ local bibtex = {}
 
 local lpeg = require("lpeg")
 local unicode = require("unicode")
-
+local bibtex_data = require("citeproc-bibtex-data")
 local util = require("citeproc-util")
-
-
-bibtex.bib_data = require("citeproc-bibtex-data")
-
 
 local P = lpeg.P
 local R = lpeg.R
@@ -32,152 +28,154 @@ local Cp = lpeg.Cp
 local Ct = lpeg.Ct
 local V = lpeg.V
 
-
--- bibtex.success_position = 1
 bibtex.strings = {}  -- Stores all the @STRINGs
-for key, value in pairs(bibtex.bib_data.macros) do
+for key, value in pairs(bibtex_data.macros) do
   bibtex.strings[key] = value.value
 end
 
 
+-- Parse BibTeX content and convert to CSL-JSON
+function bibtex.parse(str)
+  local bibliography = bibtex.parse_bibtex(str, bibtex.strings)
+  local csl_json_items = bibtex.convert_csl_json(bibliography)
+  return csl_json_items
+end
+
+
 -- The case-insensitivity trick is taken from <http://boston.conman.org/2020/06/05.1>.
-local function case_insensitive_pattern(str)
+local function ignore_case(str)
   local char = R("AZ", "az") / function (c) return P(c:lower()) + P(c:upper()) end
                + P(1) / function (c) return P(c) end
   return Cf(char^1, function (a, b) return a * b end):match(str)
 end
 
--- The grammar is provided by https://github.com/aclements/biblib .
---[[
-bib_db = comment (command_or_entry comment)*
-comment = [^@]*
-ws = [ \t\n]*
-ident = ![0-9] (![ \t"#%'(),={}] [\x20-\x7f])+
-command_or_entry = '@' ws (comment / preamble / string / entry)
-comment = 'comment'
-preamble = 'preamble' ws ( '{' ws preamble_body ws '}'
-                         / '(' ws preamble_body ws ')' )
-preamble_body = value
-string = 'string' ws ( '{' ws string_body ws '}'
-                     / '(' ws string_body ws ')' )
-string_body = ident ws '=' ws value
-entry = ident ws ( '{' ws key ws entry_body? ws '}'
-                 / '(' ws key_paren ws entry_body? ws ')' )
-key = [^, \t}\n]*
-key_paren = [^, \t\n]*
-entry_body = (',' ws ident ws '=' ws value ws)* ','?
-value = piece (ws '#' ws piece)*
-piece
-    = [0-9]+
-    / '{' balanced* '}'
-    / '"' (!'"' balanced)* '"'
-    / ident
-balanced
-    = '{' balanced* '}'
-    / [^{}]
-]]
-function bibtex.get_bibtex_grammar()
-  -- local function record_success_position()
-  --   return Cmt("", function (subject, position, captures)
-  --     bibtex.success_position = position
-  --     return position, captures
-  --   end)
-  -- end
-
-  -- local function syntax_error()
-  --   return Cmt("", function (subject, position, captures)
-  --     util.error(bibtex.format_syntanx_error(subject, position, file_path))
-  --     return false
-  --   end)
-  -- end
-
   local function normalize_white_space(str)
-    return string.gsub(str, "%s+", " ")
-  end
-
-  local comment = (1 - P"@")^0
-  local space = S(" \t\n")^0
-  local comment_cmd = case_insensitive_pattern("comment")
-  local balanced = P{ "{" * V(1)^0 * "}" + (1 - S"{}") }
-  local ident = (- R"09") * (R"\x20\x7F" - S" \t\"#%'(),={}")^1
-  local piece = (P"{" * C(balanced^0) * P"}")
-                + (P'"' * C((balanced - P'"')^0) * P'"')
-                + C(R("09")^1)
-                + C(ident) / function (name)
-                  local string_name = string.lower(name)
-                  local res = bibtex.strings[string_name]
-                  if res then
-                    return res
-                  else
-                    util.warning(string.format('String name "%s" is undefined."', name))
-                    return ""
-                  end
-                end
-  local value = Cf(Cc("") * piece * (space * P"#" * space * piece)^0, function (a, b)
-    return a .. b
-  end) / normalize_white_space
-  local preamble_body = value / function (str)
-    return {
-      type = "preamble",
-      contents = str,
-    }
-  end
-  local preamble_cmd = case_insensitive_pattern("preamble") * space * (
-    P"{" * space * preamble_body * space * P"}"
-    + P"(" * space * preamble_body * space * P")"
-  )
-  local string_body = (ident / unicode.utf8.lower) * space * P"=" * space * value / function (name, str)
-    local string_name = string.lower(name)
-    bibtex.strings[string_name] = str
-    return {
-      type = "string",
-      name = string_name,
-      contents = str,
-    }
-  end
-  local string_cmd = case_insensitive_pattern("string") * space * (
-    P"{" * space * string_body * space * P"}"
-    + P"(" * space * string_body * space * P")"
-  )
-  local key = (1 - S", \t}\n")^0
-  local key_paren = (1 - S", \t\n")^0
-  local field_value_pair = (ident / unicode.utf8.lower) * space * P"=" * space * value  -- * record_success_position()
-  local entry_body = Cf(Ct"" * (P"," * space * Cg(field_value_pair))^0 * (P",")^-1, rawset)
-  local entry = C(ident) * space * (
-    P"{" * space * C(key) * space * entry_body^-1 * space * (P"}")  -- + syntax_error())
-    + P"(" * space * C(key_paren) * space * entry_body^-1 * space * (P")")  -- + syntax_error())
-  ) / function (entry_type, entry_key, fields)
-    local entry_dict = {
-      type = string.lower(entry_type),
-      key = entry_key,
-      fields = fields
-    }
-    return entry_dict
-  end
-  local command_or_entry = P"@" * space * (comment_cmd + preamble_cmd + string_cmd + entry)
-  -- The P(-1) causes nil parsing result in case of error.
-  local bibtex_grammar = Ct(comment * (command_or_entry * comment)^0) * P(-1) / function (objects)
-    local res = {
-      preamble = nil,
-      strings = {},
-      entries = {},
-    }
-    for _, object in ipairs(objects) do
-      if object.type == "preamble" then
-        if res.preamble then
-          res.preamble = res.preamble .. object.contents
-        else
-          res.preamble = object.contents
-        end
-      elseif object.type == "string" then
-        res.strings[object.name] = object.contents
-      else
-        table.insert(res.entries, object)
-      end
-    end
+    local res = string.gsub(str, "%s+", " ")
     return res
   end
+
+-- Based on the grammar described at <https://github.com/aclements/biblib>.
+function bibtex.get_bibtex_grammar()
+  local comment = (1 - P"@")^0
+  local space = S(" \t\n")^0
+  local comment_cmd = ignore_case("comment")
+  local balanced = P{ "{" * V(1)^0 * "}" + (1 - S"{}") }
+  local ident = (- R"09") * (R"\x20\x7F" - S" \t\"#%'(),={}")^1
+
+  local piece = (P"{" * (balanced^0 / normalize_white_space) * P"}")
+                + (P'"' * ((balanced - P'"')^0 / normalize_white_space) * P'"')
+                + C(R("09")^1)
+                + C(ident) / function (name)
+                  return {
+                    category = "string",
+                    name = string.lower(name),
+                  }
+                end
+  local value = Ct(piece * (space * P"#" * space * piece)^0)
+
+  local string_body = Cg(ident / string.lower, "name") * space * P"=" * space * Cg(value, "contents")
+  local string_cmd = Ct(Cg(Cc"string", "category") * ignore_case("string") * space * (
+    P"{" * space * string_body * space * P"}"
+    + P"(" * space * string_body * space * P")"
+  ))
+
+  local preamble_body = Cg(value, "contents")
+  local preamble_cmd = Ct(Cg(Cc"preamble", "category") * ignore_case("preamble") * space * (
+    P"{" * space * preamble_body * space * P"}"
+    + P"(" * space * preamble_body * space * P")"
+  ))
+
+  local key = (1 - S", \t}\n")^0
+  local key_paren = (1 - S", \t\n")^0
+  local field_value_pair = (ident / string.lower) * space * P"=" * space * value  -- * record_success_position()
+
+  local entry_body = Cf(Ct"" * (P"," * space * Cg(field_value_pair))^0 * (P",")^-1, rawset)
+  local entry = Ct(Cg(Cc"entry", "category") * Cg(ident / string.lower, "type") * space * (
+    P"{" * space * Cg(key, "key") * space * Cg(entry_body, "fields")^-1 * space * (P"}")
+    + P"(" * space * Cg(key_paren, "key") * space * Cg(entry_body, "fields")^-1 * space * (P")")
+  ))
+
+  local command_or_entry = P"@" * space * (comment_cmd + preamble_cmd + string_cmd + entry)
+
+  -- The P(-1) causes nil parsing result in case of error.
+  local bibtex_grammar = Ct(comment * (command_or_entry * comment)^0) * P(-1)
+
   return bibtex_grammar
+end
+
+
+bibtex.bibtex_grammar = bibtex.get_bibtex_grammar()
+
+
+-- Return a list of entries, strings, preamble
+function bibtex.parse_bibtex_objects(str)
+  return bibtex.bibtex_grammar:match(str)
+end
+
+
+local function concat_strings(pieces, strings)
+  local value = ""
+  for _, piece in ipairs(pieces) do
+    if type(piece) == "string" then
+      value = value .. piece
+    elseif type(piece) == "table" and piece.category == "string" then
+      local piece_str = strings[piece.name]
+      if piece_str then
+        value = value .. piece_str
+      else
+        util.warning(string.format('String name "%s" is undefined."', piece.name))
+      end
+    end
+  end
+  value = normalize_white_space(value)
+  return value
+end
+
+
+function bibtex.parse_bibtex(content, strings)
+  if strings then
+    strings = setmetatable({}, {__index = strings})
+  else
+    strings = setmetatable({}, {__index = bibtex.strings})
+  end
+  local bib_objects = bibtex.parse_bibtex_objects(content)
+
+  local res = {
+    entries = {},
+    strings = {},
+    preamble = "",
+  }
+  local exceptions = {}
+  for _, object in ipairs(bib_objects) do
+    if object.category == "entry" then
+      object.category = nil
+      for field, value in pairs(object.fields) do
+        local value_str = concat_strings(value, strings)
+        if field ~= "url" then
+          value_str = bibtex.to_unicode(value_str)
+        end
+        object.fields[field] = value_str
+      end
+      table.insert(res.entries, object)
+
+    elseif object.category == "string" then
+      local string_value = concat_strings(object.contents, strings)
+      strings[object.name] = string_value
+      res.strings[object.name] = string_value
+
+    elseif object.category == "preamble" then
+      res.preamble = res.preamble .. concat_strings(object.contents, strings)
+
+    -- elseif object.category == "comment" then
+    -- Is this really needed?
+
+    elseif object.category == "exception" then
+      -- TODO
+
+    end
+  end
+
+  return res
 end
 
 
@@ -189,47 +187,6 @@ local function get_line_number(str, position)
     end
   end
   return line_number
-end
-
-
--- Returns: {
---   preamble = "...",
---   strings = {
---     ... = ...,
---   },
---   entries = {
---     {
---       type = "article",
---       key = "item-1",
---       fields = {
---         author = "...",
---         title = "...",
---       }
---     }
---   }
--- }
-function bibtex.parse(str)
-  local bibtex_grammar = bibtex.get_bibtex_grammar()
-  -- bibtex.success_position = 1
-  local bibliography = bibtex_grammar:match(str)
-
-  if not bibliography then
-    -- The parsing error was not reported.
-    -- local line, column = get_line_number(str, bibtex.success_position)
-    -- util.error(string.format("Syntax error at line %d", line + 1))
-    util.error(string.format("Syntax error"))
-    return nil
-  end
-
-  for _, entry in ipairs(bibliography.entries) do
-    for field, value in pairs(entry.fields) do
-      if field ~= "url" then
-        entry.fields[field] = bibtex.to_unicode(value)
-      end
-    end
-  end
-
-  return bibliography
 end
 
 
@@ -276,8 +233,8 @@ function bibtex.get_latex_grammar()
   return latex_grammar
 end
 
-
 bibtex.latex_grammar = bibtex.get_latex_grammar()
+
 
 function bibtex.to_unicode(str)
   local tokens = bibtex.latex_grammar:match(str)
@@ -310,6 +267,7 @@ local format_commands_without_argment = {
   ["\\sc"] = {'<span style="font-variant: small-caps;">', '</span>'},
 }
 
+
 function bibtex.unescape_tokens(tokens, brace_level)
   local res = ""
   local skip_token = false
@@ -321,7 +279,7 @@ function bibtex.unescape_tokens(tokens, brace_level)
         res = res .. token
       elseif type(token) == "table" then
         if token.type == "control_sequence" then
-          local code_point = bibtex.bib_data.unicode_commands[token.name]
+          local code_point = bibtex_data.unicode_commands[token.name]
           if code_point then
             local unicode_char
             if type(code_point) == "string" then
@@ -457,7 +415,7 @@ function bibtex.convert_csl_json(bibliography)
     }
 
     -- CSL types
-    local type_data = bibtex.bib_data.types[entry.type]
+    local type_data = bibtex_data.types[entry.type]
     if type_data and type_data.csl then
       item.type = type_data.csl
     end
@@ -480,7 +438,7 @@ end
 
 
 function bibtex.convert_field(bib_field, value)
-  local field_data = bibtex.bib_data.fields[bib_field]
+  local field_data = bibtex_data.fields[bib_field]
   if not field_data then
     return nil, nil
   end
@@ -666,7 +624,7 @@ end
 --   for _, code_point in utf8.codes(str) do
 --     local char = utf8.char(code_point)
 --     if to_lower and brace_level == 0 then
---       char = unicode.utf8.lower(char)
+--       char = string.lower(char)
 --     end
 --     if string.match(char, "%S") then
 --       to_lower = true
@@ -720,7 +678,7 @@ function bibtex.process_special_fields(item, bib_fields)
     item.language = bib_fields.language
   end
   if item.language then
-    local language_code = bibtex.bib_data.language_code_map[item.language]
+    local language_code = bibtex_data.language_code_map[item.language]
     if language_code then
       item.language = language_code
     end
@@ -745,7 +703,7 @@ function bibtex.process_special_fields(item, bib_fields)
   end
 
   -- PMID
-  if bib_fields.eprint and unicode.utf8.lower(bib_fields.eprinttype) == "pubmed" and not item.PMID then
+  if bib_fields.eprint and string.lower(bib_fields.eprinttype) == "pubmed" and not item.PMID then
     item.PMID = bib_fields.eprint
   end
 
