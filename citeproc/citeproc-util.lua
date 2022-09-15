@@ -72,7 +72,8 @@ end
 
 function util.error(message)
   if luatexbase then
-    luatexbase.module_error("citeproc", message)
+    -- luatexbase.module_error("citeproc", message)
+    tex.error("Package citation-style-language Error: " .. message)
   else
     error(message, 2)
   end
