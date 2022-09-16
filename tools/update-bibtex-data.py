@@ -306,6 +306,8 @@ class BibData(OrderedDict):
                     if cmd not in self['unicode_commands']:
                         self['unicode_commands'][cmd] = OrderedDict()
                     self['unicode_commands'][cmd][arg] = code_point
+                    if arg == '\\i':
+                        self['unicode_commands'][cmd]['i'] = code_point
                 else:
                     # if cmd in self['unicode_commands']:
                     #     print(cmd)

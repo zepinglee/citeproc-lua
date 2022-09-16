@@ -57,7 +57,7 @@ end
 -- Based on the grammar described at <https://github.com/aclements/biblib>.
 function bibtex.get_bibtex_grammar()
   local comment = (1 - P"@")^0
-  local space = S(" \t\n")^0
+  local space = S(" \t\r\n")^0
   local comment_cmd = ignore_case("comment")
   local balanced = P{ "{" * V(1)^0 * "}" + (1 - S"{}") }
   local ident = (- R"09") * (R"\x20\x7F" - S" \t\"#%'(),={}")^1
@@ -85,8 +85,8 @@ function bibtex.get_bibtex_grammar()
     + P"(" * space * preamble_body * space * P")"
   ))
 
-  local key = (1 - S", \t}\n")^0
-  local key_paren = (1 - S", \t\n")^0
+  local key = (1 - S", \t}\r\n")^0
+  local key_paren = (1 - S", \t\r\n")^0
   local field_value_pair = (ident / string.lower) * space * P"=" * space * value  -- * record_success_position()
 
   local entry_body = Cf(Ct"" * (P"," * space * Cg(field_value_pair))^0 * (P",")^-1, rawset)
@@ -191,7 +191,7 @@ end
 
 
 function bibtex.get_latex_grammar()
-  local space = S(" \t\n")^0
+  local space = S(" \t\r\n")^0
   local specials = P"\\$" / "$"
                    + P"\\%" / "%"
                    + P"\\&" / "&"

@@ -21,18 +21,6 @@ local citeproc = require("citeproc")
 local util = require("citeproc-util")
 
 
-local function read_file(path)
-  local file = io.open(path, "r")
-  if not file then return nil end
-  local content = file:read("*a")
-  file:close()
-  return content
-end
-
-local function endswith(str, suffix)
-  return string.sub(str, -#suffix) == suffix
-end
-
 local function path_exists(path)
   if pcall(function () lfs.dir(path) end) then
     return true
@@ -276,7 +264,7 @@ local function run_test(path)
         return nil
       end
       local path = "./locales/csl-locales-" .. lang .. ".xml"
-      local content = read_file(path)
+      local content = util.read_file(path)
       if not content then
         return nil
       end

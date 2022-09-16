@@ -50,8 +50,10 @@ jobs:
         run: luarocks install busted
       - name: Test citperoc-lua engine
         run: busted --run=citeproc --output=TAP
+      - name: Test BibTeX entries
+        run: busted test/bibtex-test.lua --output=TAP
       - name: Test BibTeX parser
-        run: busted test/bibtex_test.lua --output=TAP
+        run: busted test/bibtex-parser-test.lua --output=TAP
       # GitHub Actions don't regenerate the test if the key doesn't change, so
       # we integrate a random UUID into the key to keep them different.
       # DO NOT CHANGE THIS

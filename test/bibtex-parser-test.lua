@@ -352,6 +352,13 @@ describe("Parsing BibTeX data", function ()
       assert.same(expected, res)
     end)
 
+    it("Latin Small Letter I with Acute", function ()
+      local str = "Jasmine Ana{\\'i}{\\'i}s"
+      local expected = "Jasmine Anaíís"
+      local res = bibtex.to_unicode(str)
+      assert.same(expected, res)
+    end)
+
   end)
 
 
@@ -719,129 +726,6 @@ describe("Full BibTeX to CSL-JSON conversion", function ()
         },
         title = "One “two” “three” ‘four’ ‘five’",
         type = "article-journal"
-      }
-    }
-    assert.same(expected, res)
-  end)
-
-  it("hyphen in field name", function ()
-    -- https://github.com/zepinglee/citeproc-lua/issues/18
-    local contents = [[
-      @article{Chen2008,
-        abstract = {The myocardial tissue lacks significant intrinsic regenerative capability to replace the lost cells. Therefore, the heart is a major target of research within the field of tissue engineering, which aims to replace infarcted myocardium and enhance cardiac function. The primary objective of this work was to develop a biocompatible, degradable and superelastic heart patch from poly(glycerol sebacate) (PGS). PGS was synthesised at 110, 120 and 130 °C by polycondensation of glycerol and sebacic acid with a mole ratio of 1:1. The investigation was focused on the mechanical and biodegrading behaviours of the developed PGS. PGS materials synthesised at 110, 120 and 130 °C have Young's moduli of 0.056, 0.22 and 1.2 MPa, respectively, which satisfy the mechanical requirements on the materials applied for the heart patch and 3D myocardial tissue engineering construction. Degradation assessment in phosphate buffered saline and Knockout™ DMEM culture medium has demonstrated that the PGS has a wide range of degradability, from being degradable in a couple of weeks to being nearly inert. The matching of physical characteristics to those of the heart, the ability to fine tune degradation rates in biologically relevant media and initial data showing biocompatibility indicate that this material has promise for cardiac tissue engineering applications. {\textcopyright} 2007 Elsevier Ltd. All rights reserved.},
-        author = {Chen, Qi-Zhi and Bismarck, Alexander and Hansen, Ulrich and Junaid, Sarah and Tran, Michael Q. and Harding, Si{\^{a}}n E. and Ali, Nadire N. and Boccaccini, Aldo R.},
-        doi = {10.1016/j.biomaterials.2007.09.010},
-        file = {::},
-        isbn = {0142-9612},
-        issn = {01429612},
-        journal = {Biomaterials},
-        keywords = {Biocompatibility,Degradation,Heart patch,Mechanical property,Myocardial tissue engineering,Poly(glycerol sebacate),human,rat},
-        mendeley-tags = {human,rat},
-        month = {jan},
-        number = {1},
-        pages = {47--57},
-        pmid = {17915309},
-        title = {{Characterisation of a soft elastomer poly(glycerol sebacate) designed to match the mechanical properties of myocardial tissue}},
-        url = {http://linkinghub.elsevier.com/retrieve/pii/S0142961207007156},
-        volume = {29},
-        year = {2008}
-      }
-    ]]
-    local res = bibtex.parse(contents)
-    local expected = {
-      {
-        id = "Chen2008",
-        type = "article-journal",
-        DOI = "10.1016/j.biomaterials.2007.09.010",
-        ISBN = "0142-9612",
-        ISSN = "01429612",
-        URL = "http://linkinghub.elsevier.com/retrieve/pii/S0142961207007156",
-        abstract = "The myocardial tissue lacks significant intrinsic regenerative capability to replace the lost cells. Therefore, the heart is a major target of research within the field of tissue engineering, which aims to replace infarcted myocardium and enhance cardiac function. The primary objective of this work was to develop a biocompatible, degradable and superelastic heart patch from poly(glycerol sebacate) (PGS). PGS was synthesised at 110, 120 and 130 °C by polycondensation of glycerol and sebacic acid with a mole ratio of 1:1. The investigation was focused on the mechanical and biodegrading behaviours of the developed PGS. PGS materials synthesised at 110, 120 and 130 °C have Young’s moduli of 0.056, 0.22 and 1.2 MPa, respectively, which satisfy the mechanical requirements on the materials applied for the heart patch and 3D myocardial tissue engineering construction. Degradation assessment in phosphate buffered saline and Knockout™ DMEM culture medium has demonstrated that the PGS has a wide range of degradability, from being degradable in a couple of weeks to being nearly inert. The matching of physical characteristics to those of the heart, the ability to fine tune degradation rates in biologically relevant media and initial data showing biocompatibility indicate that this material has promise for cardiac tissue engineering applications. © 2007 Elsevier Ltd. All rights reserved.",
-        author = { {
-            family = "Chen",
-            given = "Qi-Zhi"
-          }, {
-            family = "Bismarck",
-            given = "Alexander"
-          }, {
-            family = "Hansen",
-            given = "Ulrich"
-          }, {
-            family = "Junaid",
-            given = "Sarah"
-          }, {
-            family = "Tran",
-            given = "Michael Q."
-          }, {
-            family = "Harding",
-            given = "Siân E."
-          }, {
-            family = "Ali",
-            given = "Nadire N."
-          }, {
-            family = "Boccaccini",
-            given = "Aldo R."
-          } },
-        ["container-title"] = "Biomaterials",
-        issue = "1",
-        issued = {
-          ["date-parts"] = { { 2008 } }
-        },
-        page = "47-57",
-        title = '<span class="nocase">Characterisation of a soft elastomer poly(glycerol sebacate) designed to match the mechanical properties of myocardial tissue</span>',
-        volume = "29"
-      }
-    }
-    assert.same(expected, res)
-  end)
-
-  it("underscore in field name", function ()
-    -- https://github.com/zepinglee/citeproc-lua/issues/22
-    local contents = [[
-      @incollection{haltest,
-        TITLE={{A tale of two funerary traditons: the predynastic cemetery at Kom el-Khilgan (eastern delta)}},
-        AUTHOR={Buchez, N. and Midant-Reynes, B.},
-        URL={https://hal.archives-ouvertes.fr/hal-03186401},
-        BOOKTITLE={{Egypt and its Origins 3. Proceedings of the Third International Conference ''Origin of the State. Predynastic and Early Dynastic Egypt'', London, 27th July-1st August 2008}},
-        EDITOR={Ren{\'e}e F. Friedman and Peter N. Fiske},
-        PUBLISHER={{Peeters}},
-        SERIES={Orientalia Lovaniensia Analecta},
-        VOLUME={205},
-        PAGES={831--858},
-        YEAR={2011},
-        HAL_ID={hal-03186401},
-        HAL_VERSION={v1},
-      }
-    ]]
-    local res = bibtex.parse(contents)
-    local expected = {
-      {
-        URL = "https://hal.archives-ouvertes.fr/hal-03186401",
-        author = { {
-            family = "Buchez",
-            given = "N."
-          }, {
-            family = "Midant-Reynes",
-            given = "B."
-          } },
-        ["collection-title"] = "Orientalia Lovaniensia Analecta",
-        ["container-title"] = '<span class="nocase">Egypt and its Origins 3. Proceedings of the Third International Conference ”Origin of the State. Predynastic and Early Dynastic Egypt”, London, 27th July-1st August 2008</span>',
-        editor = { {
-            family = "Friedman",
-            given = "Renée F."
-          }, {
-            family = "Fiske",
-            given = "Peter N."
-          } },
-        id = "haltest",
-        issued = {
-          ["date-parts"] = { { 2011 } }
-        },
-        page = "831-858",
-        publisher = '<span class="nocase">Peeters</span>',
-        title = '<span class="nocase">A tale of two funerary traditons: the predynastic cemetery at Kom el-Khilgan (eastern delta)</span>',
-        type = "chapter",
-        volume = "205"
       }
     }
     assert.same(expected, res)

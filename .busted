@@ -2,7 +2,7 @@ return {
   _all = {
     lpath = "./citeproc/?.lua",
     lua = "texlua",
-    pattern = {"_test"},
+    pattern = {"%-test"},
     recursive = "off",
   },
   default = {

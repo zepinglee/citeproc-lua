@@ -1,0 +1,38 @@
+[
+ {
+  "URL" : "https://hal.archives-ouvertes.fr/hal-03186401",
+  "author" : [
+   {
+    "family" : "Buchez",
+    "given" : "N."
+   },
+   {
+    "family" : "Midant-Reynes",
+    "given" : "B."
+   }
+  ],
+  "collection-title" : "Orientalia Lovaniensia Analecta",
+  "container-title" : "<span class=\u0022nocase\u0022>Egypt and its Origins 3. Proceedings of the Third International Conference ”Origin of the State. Predynastic and Early Dynastic Egypt”, London, 27th July-1st August 2008</span>",
+  "editor" : [
+   {
+    "family" : "Friedman",
+    "given" : "Renée F."
+   },
+   {
+    "family" : "Fiske",
+    "given" : "Peter N."
+   }
+  ],
+  "id" : "haltest",
+  "issued" : {
+   "date-parts" : [
+    [ 2011 ]
+   ]
+  },
+  "page" : "831-858",
+  "publisher" : "<span class=\u0022nocase\u0022>Peeters</span>",
+  "title" : "<span class=\u0022nocase\u0022>A tale of two funerary traditons: the predynastic cemetery at Kom el-Khilgan (eastern delta)</span>",
+  "type" : "chapter",
+  "volume" : "205"
+ }
+]

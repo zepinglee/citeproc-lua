@@ -973,7 +973,10 @@ function util.read_file(path)
     print(debug.traceback())
   end
   local file = io.open(path, "r")
-  if not file then return nil end
+  if not file then
+    -- util.error(string.format('Failed to read file "%s".', path))
+    return nil
+  end
   local content = file:read("*a")
   file:close()
   return content
