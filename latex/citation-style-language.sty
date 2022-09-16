@@ -418,16 +418,14 @@
           { \msg_warning:nnn { citation-style-language } { bibliography / empty } }
       }
       {
-        \tl_if_empty:NTF \l__csl_bibliography_tl
-          {
-            \file_if_exist_input:nF { \jobname .bbl }
-              {
-                \msg_warning:nnx { citation-style-language } { file / non-exist} { \jobname .bbl }
-              }
-          }
-          { \exp_args:NV \__csl_print_bibliography:n \l__csl_bibliography_tl }
+        \tl_if_empty:NTF \g__csl_bibliography_tl
+          { \msg_warning:nnn { citation-style-language } { bibliography / empty } }
+          { \exp_args:NV \__csl_print_bibliography:n \g__csl_bibliography_tl }
       }
   }
+
+\msg_new:nnn { citation-style-language } { bibliography / empty }
+  { The~ bibliography~ is~ empty.  }
 
 \cs_new:Npn \__csl_print_bibliography:n #1
   {
@@ -435,12 +433,6 @@
       #1
     \end { thebibliography }
   }
-
-\msg_new:nnn { citation-style-language } { bibliography / empty }
-  { The~ bibliography~ is~ empty.  }
-
-\msg_new:nnn { citation-style-language } { file / non-exist }
-  { No~ file~ #1. }
 
 
 \tl_new:N \l__csl_style_tl
@@ -600,8 +592,8 @@
     welsh           = cy-GB,
   }
 
-\tl_new:N \l__csl_bibliography_tl
-\tl_new:N \l__csl_bibliography_setup_tl
+\tl_new:N \g__csl_bibliography_tl
+\tl_new:N \g__csl_bibliography_setup_tl
 
 
 \AtBeginDocument { \__csl_at_begin_document_hook: }
@@ -712,18 +704,27 @@
 
 % Load .bbl at the beginning of document to save one pass of latex.
 % In this procedure, the \cslcite command is processed and the contents
-% of `thebibliography` is stored into \l__csl_bibliography_tl.
+% of `thebibliography` is stored into \g__csl_bibliography_tl.
 \cs_new:Npn \__csl_load_bbl:
   {
     \group_begin:
       \RenewDocumentCommand \cslsetup { m }
-        { \tl_set:Nn \l__csl_bibliography_setup_tl {##1} }
+        { \tl_set:Nn \g__csl_bibliography_setup_tl {##1} }
       \RenewDocumentEnvironment { thebibliography } { m +b }
-        { \tl_set:Nn \l__csl_bibliography_tl { {##1} ##2 } }
+        { \tl_gset:Nn \g__csl_bibliography_tl { {##1} ##2 } }
         { }
-      \file_if_exist_input:n { \jobname .bbl }
+      % The \@input@ prints "No file ....bbl" in the .log file from which
+      % the latexmk decides to run $bibtex or not.
+      \@input@ { \jobname .bbl }
+      % \file_if_exist_input:nF { \jobname .bbl }
+      %   {
+      %     \msg_warning:nnx { citation-style-language } { file / non-exist} { \jobname .bbl }
+      %   }
     \group_end:
   }
+
+% \msg_new:nnn { citation-style-language } { file / non-exist }
+%   { No~ file~ #1. }
 
 
 \DeclareDocumentCommand \bibliographystyle { m }

@@ -17,7 +17,6 @@ l. ...}
 ============================================================
 TEST 3: Bibilography
 ============================================================
-(other-2-utf8.bbl)
 The comma list \g__csl_bib_items_clist contains the items (without outer
 braces):
 >  {ITEM-1}

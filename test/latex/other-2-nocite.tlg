@@ -3,7 +3,6 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Bibilography
 ============================================================
-(other-2-nocite.bbl)
 The comma list \g__csl_bib_items_clist contains the items (without outer
 braces):
 >  {ITEM-1}

@@ -10,7 +10,6 @@ l. ...}
 ============================================================
 TEST 2: Bibilography
 ============================================================
-(other-2-locale-babel.bbl)
 The comma list \g__csl_bib_items_clist contains the items (without outer
 braces):
 >  {ITEM-1}.

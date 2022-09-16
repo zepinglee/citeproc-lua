@@ -113,7 +113,6 @@ l. ...}
 ============================================================
 TEST 14: Bibilography
 ============================================================
-(other-2-note-style.bbl)
 The comma list \g__csl_bib_items_clist contains the items (without outer
 braces):
 >  {ITEM-2}

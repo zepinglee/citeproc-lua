@@ -82,7 +82,6 @@ l. ...}
 ============================================================
 TEST 12: Bibilography
 ============================================================
-(other-2-bibstyle-in-preamble.bbl)
 The comma list \g__csl_bib_items_clist contains the items (without outer
 braces):
 >  {ITEM-2}
