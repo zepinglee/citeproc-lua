@@ -603,7 +603,22 @@
 \tl_new:N \l__csl_bibliography_tl
 \tl_new:N \l__csl_bibliography_setup_tl
 
-\AtBeginDocument
+
+\AtBeginDocument { \__csl_at_begin_document_hook: }
+
+
+\cs_new:Npn \__csl_at_begin_document_hook:
+  {
+    \__csl_write_aux_info:
+    \sys_if_engine_luatex:T
+      {
+        \__csl_initialize_lua_module:
+      }
+    \__csl_load_bbl:
+  }
+
+
+\cs_new:Npn \__csl_write_aux_info:
   {
     \tl_if_empty:NTF \l__csl_style_tl
       { \tl_set_eq:NN \l__csl_style_tl \g__csl_aux_bibstyle_tl }
@@ -615,34 +630,6 @@
           { \clist_use:Nn \l__csl_bib_resources_clist { , } }
       }
     \__csl_write_aux_csl_options:
-    \sys_if_engine_luatex:T
-      {
-        \lua_now:e
-          {
-            csl.init(
-              "\l__csl_style_tl",
-              "\l__csl_bib_resources_clist",
-              "\l__csl_locale_tl"
-            )
-          }
-        \str_if_eq:eeT { \lua_now:n { tex.print(csl.initialized) } } { true }
-          { \bool_set_true:N \l__csl_engine_initialized_bool }
-        \__csl_get_style_class:
-        \@ifpackageloaded { hyperref }
-          { \lua_now:n { csl.enable_linking() } }
-          { }
-      }
-    % Load .bbl at the beginning of document to save one pass of latex.
-    % In this procedure, the \cslcite command is processed and the contents
-    % of `thebibliography` is stored into \l__csl_bibliography_tl.
-    \group_begin:
-      \RenewDocumentCommand \cslsetup { m }
-        { \tl_set:Nn \l__csl_bibliography_setup_tl {#1} }
-      \RenewDocumentEnvironment { thebibliography } { m +b }
-        { \tl_set:Nn \l__csl_bibliography_tl { {#1} #2 } }
-        { }
-      \file_if_exist_input:n { \jobname .bbl }
-    \group_end:
   }
 
 \cs_new:Npn \__csl_write_aux_bibstyle:n #1
@@ -650,6 +637,25 @@
     \if@filesw
       \iow_now:Nx \@auxout { \token_to_str:N \bibstyle {#1} }
     \fi
+  }
+
+
+\cs_new:Npn \__csl_initialize_lua_module:
+  {
+    \lua_now:e
+      {
+        csl.init(
+          "\l__csl_style_tl",
+          "\l__csl_bib_resources_clist",
+          "\l__csl_locale_tl"
+        )
+      }
+    \str_if_eq:eeT { \lua_now:n { tex.print(csl.initialized) } } { true }
+      { \bool_set_true:N \l__csl_engine_initialized_bool }
+    \__csl_get_style_class:
+    \@ifpackageloaded { hyperref }
+      { \lua_now:n { csl.enable_linking() } }
+      { }
   }
 
 
@@ -701,6 +707,22 @@
             }
         \fi
       }
+  }
+
+
+% Load .bbl at the beginning of document to save one pass of latex.
+% In this procedure, the \cslcite command is processed and the contents
+% of `thebibliography` is stored into \l__csl_bibliography_tl.
+\cs_new:Npn \__csl_load_bbl:
+  {
+    \group_begin:
+      \RenewDocumentCommand \cslsetup { m }
+        { \tl_set:Nn \l__csl_bibliography_setup_tl {##1} }
+      \RenewDocumentEnvironment { thebibliography } { m +b }
+        { \tl_set:Nn \l__csl_bibliography_tl { {##1} ##2 } }
+        { }
+      \file_if_exist_input:n { \jobname .bbl }
+    \group_end:
   }
 
 
