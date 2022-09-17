@@ -602,11 +602,13 @@
 \cs_new:Npn \__csl_at_begin_document_hook:
   {
     \__csl_write_aux_info:
-    \sys_if_engine_luatex:T
+    \sys_if_engine_luatex:TF
       {
         \__csl_initialize_lua_module:
       }
-    \__csl_load_bbl:
+      {
+        \__csl_load_bbl:
+      }
   }
 
 

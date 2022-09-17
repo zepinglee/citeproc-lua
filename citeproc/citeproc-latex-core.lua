@@ -134,9 +134,6 @@ function core.make_citeproc_sys(data_files)
     end,
     retrieveItem = function (id)
       local res = core.bib[id]
-      -- if not res then
-      --   core.warning(string.format('Failed to find entry "%s".', id))
-      -- end
       return res
     end
   }
@@ -246,10 +243,12 @@ function core.update_uncited_items(engine, citations)
     for _, citation in ipairs(citations) do
       if citation.citationID == "@nocite" then
         for _, cite_item in ipairs(citation.citationItems) do
-          table.insert(core.uncited_ids, cite_item.id)
           if cite_item.id == "*" then
-            for id, _ in pairs(core.bib) do
-              table.insert(core.uncited_ids, id)
+            if not core.uncite_all_items then
+              for id, _ in pairs(core.bib) do
+                table.insert(core.uncited_ids, id)
+              end
+              core.uncite_all_items = true
             end
           else
             table.insert(core.uncited_ids, cite_item.id)

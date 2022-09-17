@@ -1,5 +1,3 @@
-#!/usr/bin/env texlua
-
 kpse.set_program_name("luatex")
 
 local kpse_searcher = package.searchers[2]

@@ -621,8 +621,6 @@ function CiteProc:build_ambiguous_ir(cite_item, output_format)
   if context.reference then
     ir = self.style.citation:build_ir(self, state, context)
   else
-    -- The warning has been given in the retrieving procedure.
-    -- util.warning(string.format('Failed to find the entry "%s" in database.', cite_item.id))
     ir = Rendered:new({Formatted:new({PlainText:new(cite_item.id)}, {["font-weight"] = "bold"})}, self)
   end
 

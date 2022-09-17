@@ -68,10 +68,24 @@ end
 
 function csl.register_citation_info(citation_info)
   local citation = core.make_citation(citation_info)
-  for _, cite_item in ipairs(citation.citationItems) do
-    if not csl.id_map[cite_item.id] then
-      table.insert(csl.id_list, cite_item.id)
-      csl.id_map[cite_item.id] = true
+  if citation.citationID == "@nocite" then
+    for _, cite_item in ipairs(citation.citationItems) do
+      if cite_item.id == "*" then
+        -- \nocite all items
+        core.uncite_all_items = true
+
+      elseif not csl.uncited_id_map[cite_item.id] then
+        table.insert(csl.uncited_id_list, cite_item.id)
+        csl.uncited_id_map[cite_item.id] = true
+      end
+    end
+
+  else
+    for _, cite_item in ipairs(citation.citationItems) do
+      if not csl.id_map[cite_item.id] then
+        table.insert(csl.id_list, cite_item.id)
+        csl.id_map[cite_item.id] = true
+      end
     end
   end
 end
