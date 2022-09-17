@@ -254,84 +254,84 @@ describe("Parsing BibTeX data", function ()
       assert.same(expected, res)
     end)
 
-    it("with accented letter", function ()
+    it("with accent letter", function ()
       local str = "\\`A "
       local expected = "À "
       local res = bibtex.to_unicode(str)
       assert.same(expected, res)
     end)
 
-    it("with accented letter", function ()
+    it("with accent letter", function ()
       local str = "\\`{A} "
       local expected = "À "
       local res = bibtex.to_unicode(str)
       assert.same(expected, res)
     end)
 
-    it("with accented letter", function ()
+    it("with accent letter", function ()
       local str = "\\` A "
       local expected = "À "
       local res = bibtex.to_unicode(str)
       assert.same(expected, res)
     end)
 
-    it("with accented letter", function ()
+    it("with accent letter", function ()
       local str = "\\` {A} "
       local expected = "À "
       local res = bibtex.to_unicode(str)
       assert.same(expected, res)
     end)
 
-    it("with accented letter", function ()
+    it("with accent letter", function ()
       local str = "{\\`A} "
       local expected = "À "
       local res = bibtex.to_unicode(str)
       assert.same(expected, res)
     end)
 
-    it("with accented letter", function ()
+    it("with accent letter", function ()
       local str = "{\\`{A}} "
       local expected = "À "
       local res = bibtex.to_unicode(str)
       assert.same(expected, res)
     end)
 
-    it("with accented letter", function ()
+    it("with accent letter", function ()
       local str = "{\\` A} "
       local expected = "À "
       local res = bibtex.to_unicode(str)
       assert.same(expected, res)
     end)
 
-    it("with accented letter", function ()
+    it("with accent letter", function ()
       local str = "{\\` {A}} "
       local expected = "À "
       local res = bibtex.to_unicode(str)
       assert.same(expected, res)
     end)
 
-    it("with accented letter", function ()
+    it("with accent letter", function ()
       local str = "\\`\\i "
       local expected = "ì"
       local res = bibtex.to_unicode(str)
       assert.same(expected, res)
     end)
 
-    it("with accented letter", function ()
+    it("with accent letter", function ()
       local str = "\\` \\i "
       local expected = "ì"
       local res = bibtex.to_unicode(str)
       assert.same(expected, res)
     end)
 
-    it("with accented letter", function ()
+    it("with accent letter", function ()
       local str = "\\r ABC"
       local expected = "ÅBC"
       local res = bibtex.to_unicode(str)
       assert.same(expected, res)
     end)
 
-    it("with accented letter", function ()
+    it("with accent letter", function ()
       local str = "\\r{A}BC"
       local expected = "ÅBC"
       local res = bibtex.to_unicode(str)

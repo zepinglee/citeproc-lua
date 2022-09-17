@@ -72,8 +72,14 @@ end
 
 function util.error(message)
   if luatexbase then
+    -- The luatexbase.module_error() prints the traceback, which causes panic
     -- luatexbase.module_error("citeproc", message)
-    tex.error("Package citation-style-language Error: " .. message)
+
+    texio.write_nl("term", "\n")
+    tex.error("Module citeproc Error: " .. message)
+
+    -- tex.print(string.format("\\PackageError{citation-style-language}{%s}{}", message))
+
   else
     error(message, 2)
   end
@@ -83,9 +89,13 @@ util.warning_enabled = true
 
 function util.warning(message)
   if luatexbase then
+    texio.write_nl("term", "\n")
     luatexbase.module_warning("citeproc", message)
+
+    -- tex.print(string.format("\\PackageWarning{citation-style-language}{%s}{}", message))
+
   elseif util.warning_enabled then
-    io.stderr:write(message, "\n")
+    io.stderr:write("Warning: " .. message, "\n")
   end
 end
 
@@ -974,7 +984,7 @@ function util.read_file(path)
   end
   local file = io.open(path, "r")
   if not file then
-    -- util.error(string.format('Failed to read file "%s".', path))
+    -- util.error(string.format('Cannot read file "%s".', path))
     return nil
   end
   local content = file:read("*a")

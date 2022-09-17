@@ -6,14 +6,15 @@
         "*_*.txt": "xml"
     },
     "Lua.diagnostics.globals": [
+        "describe",
+        "it",
         "kpse",
         "lfs",
         "luatexbase",
+        "pending",
         "tex",
-        "utilities",
-        "describe",
-        "it",
-        "pending"
+        "texio",
+        "utilities"
     ],
     "Lua.workspace.library": [
         "${3rd}/lfs/library"

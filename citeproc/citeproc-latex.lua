@@ -22,17 +22,6 @@ csl.citations_pre = {}
 csl.preview_mode = false  -- Whether to use citeproc:preview_citation
 
 
-function csl.error(str)
-  luatexbase.module_error("csl", str)
-end
-function csl.warning(str)
-  luatexbase.module_warning("csl", str)
-end
-function csl.info(str)
-  luatexbase.module_info("csl", str)
-end
-
-
 function csl.init(style_name, bib_files, lang)
   bib_files = util.split(util.strip(bib_files), "%s*,%s*")
 
@@ -151,7 +140,7 @@ end
 
 function csl.bibliography()
   if not csl.engine then
-    csl.error("CSL engine is not initialized.")
+    util.error("CSL engine is not initialized.")
     return
   end
 

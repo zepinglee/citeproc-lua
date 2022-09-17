@@ -16,44 +16,24 @@ core.locale_file_format = "csl-locales-%s.xml"
 core.uncited_ids = {}
 core.uncite_all_items = false
 
-function core.error(message)
-  if luatexbase then
-    luatexbase.module_error("csl", message)
-  else
-    util.error(message)
-  end
-end
-
-function core.warning(message)
-  if luatexbase then
-    luatexbase.module_warning("csl", message)
-  else
-    util.warning(message)
-  end
-end
-
-function core.info(message)
-  if luatexbase then
-    luatexbase.module_info("csl", message)
-  else
-    util.info(message)
-  end
-end
-
 
 function core.read_file(file_name, ftype, file_info)
-  file_info = file_info or "file"
+  if file_info then
+    file_info = util.capitalize(file_info)
+  else
+    file_info = "File"
+  end
   local path = kpse.find_file(file_name, ftype)
   if not path then
     if ftype and not util.endswith(file_name, ftype) then
       file_name = file_name .. ftype
     end
-    core.error(string.format('Cannot find %s "%s"', file_info, file_name))
+    util.error(string.format('%s "%s" not found', file_info, file_name))
     return nil
   end
   local file = io.open(path, "r")
   if not file then
-    core.error(string.format('Cannot open %s "%s"', file_info, path))
+    util.error(string.format('Cannot open %s "%s"', file_info, path))
     return nil
   end
   local contents = file:read("*a")
@@ -86,7 +66,7 @@ local function read_data_file(data_file)
         extension = ".bib"
         contents = core.read_file(data_file, "bib", "database file")
       else
-        core.error(string.format('Cannot find database file "%s"', data_file .. ".json"))
+        util.error(string.format('Cannot find database file "%s"', data_file .. ".json"))
       end
     end
   end
@@ -113,7 +93,7 @@ local function read_data_files(data_files)
     for _, item in ipairs(csl_items) do
       local id = item.id
       if bib[id] then
-        core.warning(string.format('Duplicate entry key "%s" in "%s".', id, file_name))
+        util.warning(string.format('Duplicate entry key "%s" in "%s".', id, file_name))
       else
         bib[id] = item
       end
@@ -145,9 +125,9 @@ function core.init(style_name, data_files, lang)
   if style_name == "" or #data_files == 0 then
     return nil
   end
-  local style = core.read_file(style_name .. ".csl", nil, "style file")
+  local style = core.read_file(style_name .. ".csl", nil, "style")
   if not style then
-    core.error(string.format('Failed to load style "%s.csl"', style_name))
+    util.error(string.format('Failed to load style "%s.csl"', style_name))
     return nil
   end
 

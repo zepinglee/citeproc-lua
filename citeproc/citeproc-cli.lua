@@ -75,7 +75,7 @@ local function convert_bib(path, output_path)
   end
   local file = io.open(output_path, "w")
   if not file then
-    util.error(string.format('Failed to write "%s".', output_path))
+    util.error(string.format('Cannot write "%s".', output_path))
     return
   end
   file:write(utilities.json.tojson(data) .. "\n")
@@ -92,7 +92,7 @@ local function read_aux_file(aux_file)
 
   local file = io.open(aux_file, "r")
   if not file then
-    error(string.format('Failed to open "%s"', aux_file))
+    error(string.format('Cannot read "%s"', aux_file))
     return
   end
   for line in file:lines() do
