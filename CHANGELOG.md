@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.2.1] - 2022-09-18
+
+### Changed
+
+- Rewrite BibTeX parser with `lpeg`. The accent letters are now converted to unicode.
+
+### Fixed
+
+- Fix redundant warning `entry "*" not found`.
+
 ## [v0.2.0] - 2022-08-18
 
 ### Added
@@ -46,7 +56,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial CTAN release.
 
-[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.2.1...HEAD
+[v0.2.1]: https://github.com/zepinglee/citeproc-lua/compare/v0.2.0...0.2.1
 [v0.2.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.1.1...0.2.0
 [v0.1.1]: https://github.com/zepinglee/citeproc-lua/compare/v0.1.0...v0.1.1
 [v0.1.0]: https://github.com/zepinglee/citeproc-lua/releases/tag/v0.1.0

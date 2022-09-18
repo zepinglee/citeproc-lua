@@ -1,3 +1,4 @@
+*.curlopt
 *.hd
 build/
 *-doc.pdf
