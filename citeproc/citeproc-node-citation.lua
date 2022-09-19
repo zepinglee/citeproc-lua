@@ -426,7 +426,7 @@ function Citation:apply_disambiguate_add_givenname_all_names(cite_ir, engine)
   -- update cite_ir output
   local disam_format = DisamStringFormat:new()
   local inlines = cite_ir:flatten(disam_format)
-  local disam_str = disam_format:output(inlines, context)
+  local disam_str = disam_format:output(inlines, nil)
   cite_ir.disam_str = disam_str
   if not engine.cite_irs_by_output[disam_str] then
     engine.cite_irs_by_output[disam_str] = {}
@@ -578,7 +578,7 @@ function Citation:apply_disambiguate_add_givenname_by_cite(cite_ir, engine)
             person_name_ir_.inlines = person_name_ir_.disam_inlines[disam_variant]
             -- Update cite ir output
             local inlines = ir_:flatten(disam_format)
-            local disam_str = disam_format:output(inlines, context)
+            local disam_str = disam_format:output(inlines, nil)
             ir_.disam_str = disam_str
             if not engine.cite_irs_by_output[disam_str] then
               engine.cite_irs_by_output[disam_str] = {}
@@ -710,7 +710,7 @@ function Citation:apply_disambiguate_add_names(cite_ir, engine)
 
         -- Update ir output
         local inlines = ir_:flatten(disam_format)
-        local disam_str = disam_format:output(inlines, context)
+        local disam_str = disam_format:output(inlines, nil)
         -- util.debug(disam_str)
         ir_.disam_str = disam_str
         if not engine.cite_irs_by_output[disam_str] then
@@ -794,7 +794,7 @@ function Citation:apply_disambiguate_conditionals(cite_ir, engine)
 
         -- Update ir output
         local inlines = ir_:flatten(disam_format)
-        local disam_str = disam_format:output(inlines, context)
+        local disam_str = disam_format:output(inlines, nil)
         -- util.debug("update: " .. ir_.cite_item.id .. ": " .. disam_str)
         ir_.disam_str = disam_str
         if not engine.cite_irs_by_output[disam_str] then
@@ -884,7 +884,7 @@ function Citation:apply_disambiguate_add_year_suffix(cite_ir, engine)
     end
 
     local inlines = ir_:flatten(disam_format)
-    local disam_str = disam_format:output(inlines, context)
+    local disam_str = disam_format:output(inlines, nil)
     -- util.debug("update: " .. ir_.cite_item.id .. ": " .. disam_str)
     ir_.disam_str = disam_str
     if not engine.cite_irs_by_output[disam_str] then
@@ -938,7 +938,7 @@ function Citation:group_cites(irs)
       end)
       if first_names_ir then
         local inlines = first_names_ir:flatten(disam_format)
-        first_names_ir.disam_str = disam_format:output(inlines, context)
+        first_names_ir.disam_str = disam_format:output(inlines, nil)
       end
       ir.first_names_ir = first_names_ir
     end
