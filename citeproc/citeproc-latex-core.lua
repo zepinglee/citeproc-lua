@@ -169,9 +169,9 @@ end
 function core.make_citation(citation_info)
   -- `citation_info`: "citationID={ITEM-1@2},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={3}}"
   local citation = parse_latex_prop(citation_info)
-  assert(citation.citationID)
-  assert(citation.citationItems)
-  assert(citation.properties)
+  -- assert(citation.citationID)
+  -- assert(citation.citationItems)
+  -- assert(citation.properties)
 
  citation.citationItems = parse_latex_seq(citation.citationItems)
 

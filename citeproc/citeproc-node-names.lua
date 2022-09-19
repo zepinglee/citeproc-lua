@@ -1041,9 +1041,10 @@ function NamePart:format_text_case(text, context)
   local output_format = context.format
   local inlines = InlineElement:parse(text, context)
   local is_english = context:is_english()
-  if not output_format then
-    print(debug.traceback())
-  end
+  -- if not output_format then
+  --   print(debug.traceback())
+  --   assert(output_format)
+  -- end
   output_format:apply_text_case(inlines, self.text_case, is_english)
 
   inlines = output_format:with_format(inlines, self.formatting)

@@ -90,6 +90,9 @@ function Text:build_variable_ir(engine, state, context)
   end
 
   local inlines
+  -- if not engine.opt then
+  --   print(debug.traceback())
+  -- end
   if (variable == "URL" and engine.opt.url_link) or
      (variable == "DOI" and engine.opt.doi_link) or
      (variable == "PMID" and engine.opt.doi_link) or

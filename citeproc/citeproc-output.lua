@@ -154,9 +154,9 @@ end
 
 function InlineElement:parse(str, context)
   -- Return a list of inlines
-  if type(str) ~= "string" then
-    print(debug.traceback())
-  end
+  -- if type(str) ~= "string" then
+  --   print(debug.traceback())
+  -- end
   local html_str = "<div>" .. str .. "</div>"
   local ok, html = pcall(dom.parse, html_str)
   local inlines
@@ -287,7 +287,7 @@ function InlineElement:parse_quotes(inlines, context)
 
   local elements = text_stack[1]
   if #text_stack > 1 then
-    assert(#text_stack == #quote_stack + 1)
+    -- assert(#text_stack == #quote_stack + 1)
     for i, quote in ipairs(quote_stack) do
       if quote == "'" then
         quote = util.unicode["apostrophe"]
@@ -461,9 +461,9 @@ function OutputFormat:flatten_ir(ir)
 end
 
 function OutputFormat:flatten_seq_ir(ir)
-  if not ir.children then
-    print(debug.traceback())
-  end
+  -- if not ir.children then
+  --   print(debug.traceback())
+  -- end
   if #ir.children == 0 then
     return {}
   end
@@ -876,9 +876,9 @@ function OutputFormat:flip_flop_micro_inlines(inlines, state)
 end
 
 local function find_left(inline)
-  if not inline then
-    print(debug.traceback())
-  end
+  -- if not inline then
+  --   print(debug.traceback())
+  -- end
   if inline._type == "PlainText" then
     return inline
   -- elseif inline._type == "Micro" then
@@ -1432,9 +1432,9 @@ function DisamStringFormat:flatten_ir(ir)
 end
 
 function DisamStringFormat:flatten_seq_ir(ir)
-  if not ir.children then
-    print(debug.traceback())
-  end
+  -- if not ir.children then
+  --   print(debug.traceback())
+  -- end
   if #ir.children == 0 then
     return {}
   end

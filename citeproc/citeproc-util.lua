@@ -56,7 +56,7 @@ function util.to_list(str)
 end
 
 function util.to_ordinal (n)
-  assert(type(n) == "number")
+  -- assert(type(n) == "number")
   local last_digit = n % 10
   if last_digit == 1 and n ~= 11
     then return tostring(n) .. "st"
@@ -237,9 +237,9 @@ end
 
 -- Python list.extend()
 function util.extend(first, second)
-  if not second then
-    print(debug.traceback())
-  end
+  -- if not second then
+  --   print(debug.traceback())
+  -- end
   local l = #first
   for i, element in ipairs(second) do
     first[l + i] = element
@@ -828,7 +828,7 @@ function util.has_cjk_char(s)
 end
 
 function util.convert_roman (number)
-  assert(type(number) == "number")
+  -- assert(type(number) == "number")
   local output = {}
   for _, tuple in ipairs(util.roman_numerals) do
     local letter, value = table.unpack(tuple)
@@ -979,9 +979,9 @@ util.superscripts = {
 -- File IO
 
 function util.read_file(path)
-  if not path then
-    print(debug.traceback())
-  end
+  -- if not path then
+  --   print(debug.traceback())
+  -- end
   local file = io.open(path, "r")
   if not file then
     -- util.error(string.format('Cannot read file "%s".', path))

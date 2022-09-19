@@ -265,7 +265,7 @@ function Context:get_macro(name)
 end
 
 function Context:get_simple_term(name, form, plural)
-  assert(self.locale)
+  -- assert(self.locale)
   return self.locale:get_simple_term(name, form, plural)
 end
 
