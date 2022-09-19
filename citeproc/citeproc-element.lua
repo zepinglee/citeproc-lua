@@ -95,6 +95,34 @@ function Element:process_children_nodes(node)
 
 end
 
+function Element.make_name_inheritance(name, node)
+  name:set_attribute(node, "and")
+  name:set_attribute(node, "delimiter-precedes-et-al")
+  name:set_attribute(node, "delimiter-precedes-last")
+  name:set_number_attribute(node, "et-al-min")
+  name:set_number_attribute(node, "et-al-use-first")
+  name:set_number_attribute(node, "et-al-subsequent-min")
+  name:set_number_attribute(node, "et-al-subsequent-use-first")
+  name:set_bool_attribute(node, "et-al-use-last")
+  name:set_bool_attribute(node, "initialize")
+  name:set_attribute(node, "initialize-with")
+  name:set_attribute(node, "name-as-sort-order")
+  name:set_attribute(node, "sort-separator")
+  local delimiter = node:get_attribute("name-delimiter")
+  if delimiter then
+    name.delimiter = delimiter
+  end
+  local form = node:get_attribute("name-form")
+  if form then
+    name.form = form
+  end
+  local names_delimiter = node:get_attribute("names-delimiter")
+  if names_delimiter then
+    name.names_delimiter = names_delimiter
+  end
+end
+
+
 function Element:build_ir(engine, state, context)
   return self:build_children_ir(engine, state, context)
 end

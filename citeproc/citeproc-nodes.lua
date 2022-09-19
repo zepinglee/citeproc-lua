@@ -5,6 +5,8 @@
 --
 
 local style  = require("citeproc-node-style")
+local citation  = require("citeproc-node-citation")
+local bibliography  = require("citeproc-node-bibliography")
 local locale = require("citeproc-node-locale")
 local layout = require("citeproc-node-layout")
 local text   = require("citeproc-node-text")
@@ -18,8 +20,8 @@ local sort   = require("citeproc-node-sort")
 
 local nodes = {
   ["style"]        = style.Style,
-  ["citation"]     = style.Citation,
-  ["bibliography"] = style.Bibliography,
+  ["citation"]     = citation.Citation,
+  ["bibliography"] = bibliography.Bibliography,
   ["locale"]       = locale.Locale,
   ["term"]         = locale.Term,
   ["layout"]       = layout.Layout,

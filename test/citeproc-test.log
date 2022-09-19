@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       0       0       0
-bugreports          77       0       2       0
+bugreports          79       0       0       0
 collapse            21       0       0       0
 condition           17       0       0       0
 date                99       0       0       0
@@ -15,7 +15,7 @@ fullstyles           5       0       0       0
 group                7       0       0       0
 integration         13       0       0       0
 label               18       0       0       0
-locale              22       0       1       0
+locale              23       0       0       0
 locator              5       0       0       0
 magic               38       0       0       0
 name               106       0       0       0
@@ -38,13 +38,4 @@ unicode              1       0       0       0
 variables            5       0       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              814       0       3       0
-
-Error → test-suite bugreports_DemoPageFullCiteCruftOnSubsequent.txt
-./citeproc/citeproc-util.lua:977: Failed to read file "./locales/csl-locales-en-US-x-sort-ja-alalc97-x-sec-en-x-pri-ja-alalc97.xml".
-
-Error → test-suite bugreports_SimpleBib.txt
-./citeproc/citeproc-util.lua:977: Failed to read file "./locales/csl-locales-en-US-x-sort-ja-alalc97.xml".
-
-Error → test-suite locale_NonExistentLocaleDef.txt
-./citeproc/citeproc-util.lua:977: Failed to read file "./locales/csl-locales-gx.xml".
+(all)              817       0       0       0

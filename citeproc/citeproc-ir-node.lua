@@ -74,6 +74,35 @@ function IrNode:capitalize_first_term()
   end
 end
 
+function IrNode:collect_year_suffix_irs()
+  local year_suffix_irs = {}
+  if self.children then
+    for i, child_ir in ipairs(self.children) do
+      if child_ir._type == "YearSuffix" then
+        table.insert(year_suffix_irs, child_ir)
+      elseif child_ir.children then
+        util.extend(year_suffix_irs,
+          child_ir:collect_year_suffix_irs())
+      end
+    end
+  end
+  return year_suffix_irs
+end
+
+function IrNode:find_first_year_ir()
+  if self.is_year then
+    return self
+  end
+  if self.children then
+    for _, child_ir in ipairs(self.children) do
+      local year_ir = child_ir:find_first_year_ir()
+      if year_ir then
+        return year_ir
+      end
+    end
+  end
+  return nil
+end
 
 
 local Rendered = IrNode:derive("Rendered")
