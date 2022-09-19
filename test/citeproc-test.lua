@@ -355,7 +355,7 @@ local function main()
   if path_exists(test_dir) then
     describe("local-fixtures", function ()
       for _, file in ipairs(listdir(test_dir)) do
-        if string.match(file, "%.txt$") then
+        if string.match(file, "%.txt$") and not skipped_files[file] then
           local path = test_dir .. "/" .. file
           it(file, function ()
             run_test(path)

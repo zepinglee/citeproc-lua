@@ -6,9 +6,12 @@ citation
 From <https://github.com/Juris-M/citeproc-js>.
 
 
+The original output is `>>[0] Kesey’s early work (1962, 1964; cf. <i>Le Guin</i> 1969)`.
+
+
 
 >>===== RESULT =====>>
->>[0] Kesey’s early work (1962, 1964; cf. <i>Le Guin</i> 1969)
+>>[0] Kesey’s early work (1962; 1964; cf. <i>Le Guin</i> 1969)
 <<===== RESULT =====<<
 
 
@@ -26,7 +29,7 @@ From <https://github.com/Juris-M/citeproc-js>.
                 },
                 {
                     "id": "ITEM-3",
-                    "prefix": "cf."
+                    "prefix": "cf. "
                 }
             ],
             "properties": {

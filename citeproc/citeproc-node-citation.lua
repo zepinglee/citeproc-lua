@@ -35,7 +35,7 @@ local Citation = Element:derive("citation", {
 
 function Citation:from_node(node, style)
 
-  local o = Citation:new()
+  local o = self:new()
   o.children = {}
 
   o:process_children_nodes(node)
@@ -119,18 +119,36 @@ function Citation:build_citation_str(citation, engine)
     engine:sort_bibliography()
   end
 
-  local citation_str = self:build_cluster(items, engine)
+  local citation_str = self:build_cluster(items, engine, citation.properties)
   return citation_str
 end
 
-function Citation:build_cluster(citation_items, engine)
+-- Formatting is stripped from the author-only and composite renderings
+-- of the author name
+local function remove_name_formatting(ir)
+  if ir._element == "name" then
+    ir.formatting = nil
+  end
+  if ir.children then
+    for _, child in ipairs(ir.children) do
+      remove_name_formatting(child)
+    end
+  end
+end
+
+function Citation:build_cluster(citation_items, engine, properties)
+  properties = properties or {}
   local output_format = engine.output_format
   local irs = {}
   citation_items = self:sorted_citation_items(citation_items, engine)
   for _, cite_item in ipairs(citation_items) do
-    local ir = self:build_fully_disambiguated_ir(cite_item, output_format, engine)
+    local ir = self:build_fully_disambiguated_ir(cite_item, output_format, engine, properties)
     table.insert(irs, ir)
   end
+
+  -- Special citation forms
+  -- https://citeproc-js.readthedocs.io/en/latest/running.html#special-citation-forms
+  self:_apply_special_citation_form(irs, properties, output_format, engine)
 
   if self.cite_grouping then
     irs = self:group_cites(irs)
@@ -213,7 +231,22 @@ function Citation:build_cluster(citation_items, engine)
   end
   -- util.debug(citation_stream)
 
-  if context.area.layout.affixes then
+  local has_printed_form = true
+  if #citation_items == 0 then
+    -- bugreports_AuthorOnlyFail.txt
+    citation_stream = {PlainText:new("[NO_PRINTED_FORM]")}
+    has_printed_form = false
+  elseif #citation_stream == 0 then
+    -- date_DateNoDateNoTest.txt
+    has_printed_form = false
+    citation_stream = {PlainText:new("[CSL STYLE ERROR: reference with no printed form.]")}
+  elseif #citation_stream == 1 and citation_stream[1].value == "[NO_PRINTED_FORM]" then
+    has_printed_form = false
+  end
+
+  local author_only_mode = (properties.mode == "author-only" or
+    (#citation_items >= 1 and citation_items[1]["author-only"]))
+  if has_printed_form and context.area.layout.affixes and not author_only_mode then
     local affixes = context.area.layout.affixes
     if affixes.prefix then
       table.insert(citation_stream, 1, PlainText:new(affixes.prefix))
@@ -224,15 +257,43 @@ function Citation:build_cluster(citation_items, engine)
   end
   -- util.debug(citation_stream)
 
-  if #citation_stream > 0 and context.area.layout.formatting then
+  if has_printed_form and context.area.layout.formatting then
     citation_stream = {Formatted:new(citation_stream, context.area.layout.formatting)}
   end
 
-  if #citation_stream == 0 then
-    citation_stream = {PlainText:new("[CSL STYLE ERROR: reference with no printed form.]")}
+  if properties.mode == "composite" then
+    local author_ir
+    if irs[1] then
+      author_ir = irs[1].author_ir
+    end
+    if author_ir then
+      local infix = properties.infix
+      if infix then
+        if string.match(infix, "^%w") then
+          -- discretionary_SingleNarrativeCitation.txt
+          infix = " " .. infix
+        end
+        if string.match(infix, "%w$") then
+          infix = infix .. " "
+        end
+        if infix == "" then
+          -- discretionary_AuthorOnlySuppressLocator.txt
+          infix = " "
+        end
+        for i, inline in ipairs(InlineElement:parse(infix, context)) do
+          table.insert(citation_stream, i, inline)
+        end
+      else
+        table.insert(citation_stream, 1, PlainText:new(" "))
+      end
+
+      local author_inlines = author_ir:flatten(output_format)
+      for i, inline in ipairs(author_inlines) do
+        table.insert(citation_stream, i, inline)
+      end
+    end
   end
 
-  -- util.debug(citation_stream)
   local str = output_format:output(citation_stream, context)
   str = util.strip(str)
 
@@ -262,13 +323,14 @@ function Citation:sorted_citation_items(items, engine)
   return items
 end
 
-function Citation:build_fully_disambiguated_ir(cite_item, output_format, engine)
+function Citation:build_fully_disambiguated_ir(cite_item, output_format, engine, properties)
   local cite_ir = self:build_ambiguous_ir(cite_item, output_format, engine)
   -- util.debug(cite_ir)
   cite_ir = self:apply_disambiguate_add_givenname(cite_ir, engine)
   cite_ir = self:apply_disambiguate_add_names(cite_ir, engine)
   cite_ir = self:apply_disambiguate_conditionals(cite_ir, engine)
   cite_ir = self:apply_disambiguate_add_year_suffix(cite_ir, engine)
+
   return cite_ir
 end
 
@@ -928,13 +990,144 @@ local function find_first(ir, check)
   return nil
 end
 
+-- Find the first rendering element and it should be produced by and names element
+local function find_first_names_ir(ir)
+  if ir.first_names_ir then
+    return ir.first_names_ir
+  end
+
+  local first_rendering_ir = find_first(ir, function (ir_)
+    return (ir_._element == "text"
+      or ir_._element == "date"
+      or ir_._element == "number"
+      or ir_._element == "names"
+      or ir_._element == "label")
+      and ir_.group_var ~= "missing"
+  end)
+  local first_names_ir
+  if first_rendering_ir and first_rendering_ir._element == "names" then
+    first_names_ir = first_rendering_ir
+  end
+  if first_names_ir then
+    local disam_format = DisamStringFormat:new()
+    local inlines = first_names_ir:flatten(disam_format)
+    first_names_ir.disam_str = disam_format:output(inlines, nil)
+  end
+  ir.first_names_ir = first_names_ir
+  return first_names_ir
+
+end
+
+function Citation:_apply_special_citation_form(irs, properties, output_format, engine)
+  if properties.mode then
+    if properties.mode == "author-only" then
+      for _, ir in ipairs(irs) do
+        self:_apply_citation_mode_author_only(ir)
+      end
+    elseif properties.mode == "suppress-author" then
+      -- suppress-author mode does not work in note style
+      -- discretionary_FirstReferenceNumberWithIntext.txt
+      if engine.style.class ~= "note" then
+        for _, ir in ipairs(irs) do
+          self:_apply_suppress_author(ir)
+        end
+      end
+
+    elseif properties.mode == "composite" then
+      self:_apply_composite(irs[1], output_format, engine)
+
+    end
+
+  else
+    for _, ir in ipairs(irs) do
+      if ir.cite_item["author-only"] then
+        self:_apply_cite_author_only(ir)
+      elseif ir.cite_item["suppress-author"] then
+        self:_apply_suppress_author(ir)
+      end
+    end
+  end
+end
+
+function Citation:_apply_citation_mode_author_only(ir)
+  -- Used in pr
+  local author_ir = find_first_names_ir(ir)
+
+  if author_ir then
+    remove_name_formatting(author_ir)
+    ir.children = {author_ir}
+  else
+    ir.children = {Rendered:new({PlainText:new("[NO_PRINTED_FORM]")}, self)}
+  end
+  return ir
+end
+
+-- Citation flags with makeCitationCluster
+-- In contrast to Citation flags with processCitationCluster, this funciton
+-- looks for the first rendering element instead of names element.
+-- See discretionary_AuthorOnly.txt
+function Citation:_apply_cite_author_only(ir)
+  local author_ir = find_first(ir, function (ir_)
+    return (ir_._element == "text"
+      or ir_._element == "date"
+      or ir_._element == "number"
+      or ir_._element == "names"
+      or ir_._element == "label")
+      and ir_.group_var ~= "missing"
+  end)
+
+  if author_ir then
+    remove_name_formatting(author_ir)
+    ir.children = {author_ir}
+  else
+    ir.children = {Rendered:new({PlainText:new("[NO_PRINTED_FORM]")}, self)}
+  end
+  return ir
+end
+
+function Citation:_apply_suppress_author(ir)
+  local author_ir = find_first_names_ir(ir)
+  if author_ir then
+    -- util.debug(author_ir)
+    author_ir.collapse_suppressed = true
+  end
+  return ir
+end
+
+function Citation:_apply_composite(ir, output_format, engine)
+  -- local first_names_ir = find_first_names_ir(ir)
+
+  local first_names_ir = find_first_names_ir(ir)
+  if first_names_ir then
+    -- util.debug(first_names_ir)
+    first_names_ir.collapse_suppressed = true
+  end
+
+  local author_ir
+  if engine.style.intext then
+    local properties = {mode = "author-only"}
+    author_ir = engine.style.intext:build_fully_disambiguated_ir(ir.cite_item, output_format, engine, properties)
+  elseif first_names_ir then
+    author_ir = first_names_ir
+  end
+
+  if author_ir then
+    remove_name_formatting(author_ir)
+    ir.author_ir = author_ir
+  else
+    ir.author_ir = Rendered:new({PlainText:new("[NO_PRINTED_FORM]")}, self)
+  end
+
+  return ir
+end
+
 function Citation:group_cites(irs)
   local disam_format = DisamStringFormat:new()
   for _, ir in ipairs(irs) do
     local first_names_ir = ir.first_names_ir
     if not first_names_ir then
       first_names_ir = find_first(ir, function (ir_)
-        return ir_._element == "names"
+        return ir_._element == "names" and ir_.group_var ~= "missing"
       end)
       if first_names_ir then
         local inlines = first_names_ir:flatten(disam_format)
@@ -1056,7 +1249,7 @@ function Citation:collapse_cites_by_year(irs)
     if i == 1 then
       table.insert(cite_groups[#cite_groups], ir)
     elseif name_str and name_str == previous_name_str then
-      -- ir.fist_names_ir was set in the cite grouping stage
+      -- ir.first_names_ir was set in the cite grouping stage
       -- TODO: and not previous cite suffix
       table.insert(cite_groups[#cite_groups], ir)
     else
@@ -1220,8 +1413,15 @@ function Citation:collapse_cites_by_year_suffix_ranged(irs)
 end
 
 
+local InText = Citation:derive("intext", {
+  givenname_disambiguation_rule = "by-cite",
+  cite_group_delimiter = ", ",
+  near_note_distance = 5,
+})
+
 
 citation_module.Citation = Citation
+citation_module.InText = InText
 
 
 return citation_module

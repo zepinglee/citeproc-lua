@@ -170,6 +170,11 @@ end
 function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
   -- util.debug(citation)
   -- util.debug(citationsPre)
+
+  if not citation.citationID then
+    citation.citationID = "CITATION-" .. tostring(#self.registry.citation_list)
+  end
+
   -- Fix missing noteIndex: sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
   if not citation.properties then
     citation.properties = {}
@@ -222,6 +227,7 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
   local output = {}
 
   local tainted_citation_ids = self:get_tainted_citaion_ids(citation_note_pairs)
+  tainted_citation_ids[citation.citationID] = true
   -- util.debug(tainted_citation_ids)
 
   -- params.bibchange = #tainted_citation_ids > 0
@@ -229,7 +235,17 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
     local citation_ = self.registry.citations_by_id[citation_id]
 
     local citation_index = citation_.citation_index
-    local citation_str = self.style.citation:build_citation_str(citation_, self)
+
+    local mode = citation_.properties.mode
+    if mode == "suppress-author" and self.style.class == "note" then
+      mode = nil
+    end
+    local citation_elemement = self.style.citation
+    if mode == "author-only" and self.style.intext then
+      citation_elemement = self.style.intext
+    end
+
+    local citation_str = citation_elemement:build_citation_str(citation_, self)
     table.insert(output, {citation_index, citation_str, citation_id})
   end
 
@@ -304,9 +320,14 @@ function CiteProc:get_tainted_citaion_ids(citation_note_pairs)
 
     local previous_cite
     for _, cite_item in ipairs(citation.citationItems) do
-      tainted = self:set_cite_item_position(cite_item, note_number, previous_cite, previous_citation)
-      self.cite_last_note_numbers[cite_item.id] = note_number
-      previous_cite = cite_item
+      tainted = self:set_cite_item_position(cite_item, note_number, previous_cite, previous_citation, citation)
+
+      -- https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html#citations
+      -- Citations within the main text of the document have a noteIndex of zero.
+      if (self.style.class == "note" and note_number > 0) or citation.properties.mode ~= "author-only" then
+        self.cite_last_note_numbers[cite_item.id] = note_number
+        previous_cite = cite_item
+      end
     end
 
     if tainted then
@@ -317,7 +338,9 @@ function CiteProc:get_tainted_citaion_ids(citation_note_pairs)
       self.note_citations_map[note_number] = {}
     end
     table.insert(self.note_citations_map[note_number], citation.citationID)
-    previous_citation = citation
+    if citation.properties.mode ~= "author-only" then
+      previous_citation = citation
+    end
   end
 
   -- Update tainted citation ids because of citation-number's change
@@ -333,8 +356,19 @@ function CiteProc:get_tainted_citaion_ids(citation_note_pairs)
   return tainted_citation_ids
 end
 
-function CiteProc:set_cite_item_position(cite_item, note_number, previous_cite, previous_citation)
+function CiteProc:set_cite_item_position(cite_item, note_number, previous_cite, previous_citation, citation)
   local position = util.position_map["first"]
+
+  -- https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html#citations
+  -- Citations within the main text of the document have a noteIndex of zero.
+  if self.style.class == "note" and note_number == 0 then
+    cite_item.position_level = position
+    return false
+  elseif citation.properties.mode == "author-only" then
+    -- discretionary_IbidInAuthorDateStyleWithoutIntext.txt
+    cite_item.position_level = position
+    return false
+  end
 
   local first_reference_note_number = self.cite_first_note_numbers[cite_item.id]
   if first_reference_note_number then
@@ -424,7 +458,9 @@ function CiteProc:_get_cite_position(item, preceding_cite)
 end
 
 function CiteProc:makeCitationCluster(citation_items)
+  local special_form = nil
   local items = {}
+
   for i, cite_item in ipairs(citation_items) do
     cite_item.id = tostring(cite_item.id)
     local item_data = self:get_item(cite_item.id)
@@ -437,6 +473,14 @@ function CiteProc:makeCitationCluster(citation_items)
     -- label_PluralWithAmpersand.txt
     if item.locator and not item.label then
       item.label = "page"
+    end
+
+    if not special_form then
+      for _, form in ipairs({"author-only", "suppress-author", "coposite"}) do
+        if cite_item[form] then
+          special_form = form
+        end
+      end
     end
 
     item.position_level = util.position_map["first"]
@@ -469,7 +513,12 @@ function CiteProc:makeCitationCluster(citation_items)
     self:sort_bibliography()
   end
 
-  local res = self.style.citation:build_cluster(items, self)
+  local citation_element = self.style.citation
+  if special_form == "author-only" and self.style.intext then
+    citation_element = self.style.intext
+  end
+
+  local res = citation_element:build_cluster(items, self)
 
   -- local context = {
   --   build = {},

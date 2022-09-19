@@ -876,14 +876,11 @@ function OutputFormat:flip_flop_micro_inlines(inlines, state)
 end
 
 local function find_left(inline)
-  -- if not inline then
-  --   print(debug.traceback())
-  -- end
   if inline._type == "PlainText" then
     return inline
   -- elseif inline._type == "Micro" then
   --   return nil
-  elseif inline.inlines and inline._type~="Quoted" then
+  elseif inline.inlines and #inline.inlines > 0 and inline._type~="Quoted" then
     return find_left(inline.inlines[1])
   else
     return nil

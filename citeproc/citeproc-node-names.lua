@@ -441,9 +441,6 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     ir.group_var = "important"
   end
 
-  ir.formatting = self.formatting
-  ir.affixes = self.affixes
-
   irs = {ir}
 
   if label then
@@ -477,6 +474,10 @@ function Name:build_person_name_ir(name, is_first, context)
 
   local inlines = self:render_person_name(name, is_first, is_latin, is_inverted, context)
   local person_name_ir = PersonNameIr:new(inlines, self)
+
+  -- discretionary_ExampleSeveralAuthorsWithIntext.txt
+  person_name_ir.formatting = self.formatting
+  person_name_ir.affixes = self.affixes
 
   person_name_ir.is_inverted = is_inverted
 

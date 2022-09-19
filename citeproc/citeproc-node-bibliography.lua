@@ -123,7 +123,7 @@ function Bibliography:build_ir(engine, state, context)
   end
 
   if not ir then
-    ir = Rendered:new(PlainText:new("[CSL STYLE ERROR: reference with no printed form.]"), self)
+    ir = Rendered:new({PlainText:new("[CSL STYLE ERROR: reference with no printed form.]")}, self)
   end
   return ir
 end

@@ -1,6 +1,9 @@
 # Citation sorting
 bugreports_ChicagoAuthorDateLooping.txt
 
+# Check tainted citations
+discretionary_AuthorDateAuthorOnlyThenSuppressAuthorNoteStyle.txt
+
 # Incorrect citation sorting and cite-group-delimiter
 disambiguate_InitializeWithButNoDisambiguation.txt
 

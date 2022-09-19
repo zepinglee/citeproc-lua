@@ -33,9 +33,17 @@ function Style:new()
 end
 
 function Style:parse(xml_str)
-  local csl_xml = dom.parse(xml_str)
-  if not csl_xml then
-    error("Failed to parse CSL style.")
+  -- The parsing error is not caught by busted in some situcations and thus it's processed here.
+  -- discretionary_CitationNumberAuthorOnlyThenSuppressAuthor.txt
+  local status, csl_xml = pcall(function () return dom.parse(xml_str) end)
+  if not status or not csl_xml then
+    if csl_xml then
+      local error_message = string.match(csl_xml, "^.-: (.*)$")
+      util.error("CSL parsing error: " .. util.rstrip(error_message))
+    else
+      util.error("CSL parsing error")
+    end
+    return nil
   end
   local style_node = csl_xml:get_path("style")[1]
   if not csl_xml then
@@ -84,6 +92,8 @@ function Style:from_node(node)
       o.citation = child
     elseif element_name == "bibliography" then
       o.bibliography = child
+    elseif element_name == "intext" then
+      o.intext = child
     elseif element_name == "macro" then
       o.macros[child.name] = child
     elseif element_name == "locale" then
