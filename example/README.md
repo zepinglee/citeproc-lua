@@ -24,7 +24,7 @@ lualatex example.tex
 
 The `latexmk` can also be used.
 ```bash
-latexmk -cd -lualatex -bibtex- example/example.tex
+latexmk -cd -lualatex example/example.tex
 ```
 
 For engines other than LuaLaTeX, the `citeproc` executable is required to run as BibTeX.

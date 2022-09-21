@@ -101,7 +101,7 @@ local function read_aux_file(aux_file)
     if match then
       bib_style = string.sub(match, 2, -2)
     else
-      match = string.match(line, "^\\bibdata%s*(%b{})")
+      match = string.match(line, "^\\csl@data%s*(%b{})")
       if match then
         for _, bib in ipairs(util.split(string.sub(match, 2, -2), "%s*,%s*")) do
           table.insert(bib_files, bib)

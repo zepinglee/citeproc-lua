@@ -745,8 +745,11 @@
   { \clist_put_right:Nn \l__csl_bib_resources_clist {#2} }
 
 
+% In earlier time, \bibdata{xxx.json} was used but this causes latexmk unable
+% to find xxx.json.bib and it refuses to run the $bibtex procedure.
+% John Collins suggests using a different command than \bibdata.
 \clist_new:N \g__csl_aux_bib_files_clist
-\cs_set:Npn \bibdata #1
+\cs_new:Npn \csl@data #1
   { \clist_gput_right:Nn \g__csl_aux_bib_files_clist {#1} }
 
 
@@ -759,7 +762,7 @@
 \cs_new:Npn \__csl_write_aux_bibdata:n #1
   {
     \if@filesw
-      \iow_now:Nx \@auxout { \token_to_str:N \bibdata {#1} }
+      \iow_now:Nx \@auxout { \token_to_str:N \csl@data {#1} }
     \fi
   }
 
