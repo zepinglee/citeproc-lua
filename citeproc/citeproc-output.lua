@@ -1256,25 +1256,27 @@ function LatexWriter:write_formatted(inline, context)
 end
 
 function LatexWriter:write_display(inline, context)
-  local plainter_text_writer = output_module.PlainTextWriter:new()
-  local str = plainter_text_writer:write_inline(inline)
-  local len = utf8.len(str)
-  if len > context.engine.registry.maxoffset then
-    context.engine.registry.maxoffset = len
-    context.engine.registry.longest_label = str
+  if inline.div == "left-margin" then
+    local plainter_text_writer = output_module.PlainTextWriter:new()
+    local str = plainter_text_writer:write_inline(inline)
+    local len = utf8.len(str)
+    if len > context.engine.registry.maxoffset then
+      context.engine.registry.maxoffset = len
+      context.engine.registry.longest_label = str
+    end
   end
 
   local res = self:write_children(inline, context)
-  if inline.display == "left-margin" then
+  if inline.div == "left-margin" then
     if string.match(res, "%]") then
       res = "{" .. res .. "}"
     end
     res = string.format("\\bibitem[%s]{%s}\n", res, context.id)
 
-  elseif inline.display == "right-inline" then
+  elseif inline.div == "right-inline" then
     return res
 
-  elseif inline.display == "block" then
+  elseif inline.div == "block" then
     return ""
   end
   return res
@@ -1341,12 +1343,14 @@ function HtmlWriter:write_formatted(inline, context)
 end
 
 function HtmlWriter:write_display(inline, context)
-  local plainter_text_writer = output_module.PlainTextWriter:new()
-  local str = plainter_text_writer:write_inline(inline)
-  local len = utf8.len(str)
-  if len > context.engine.registry.maxoffset then
-    context.engine.registry.maxoffset = len
-    context.engine.registry.longest_label = str
+  if inline.div == "left-margin" then
+    local plainter_text_writer = output_module.PlainTextWriter:new()
+    local str = plainter_text_writer:write_inline(inline)
+    local len = utf8.len(str)
+    if len > context.engine.registry.maxoffset then
+      context.engine.registry.maxoffset = len
+      context.engine.registry.longest_label = str
+    end
   end
 
   if #inline.inlines == 0 then

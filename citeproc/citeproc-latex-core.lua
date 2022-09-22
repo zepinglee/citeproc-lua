@@ -265,6 +265,7 @@ function core.make_bibliography(engine)
     res = res .. bib_options
   end
 
+  -- util.debug(params.bibstart)
   if params.bibstart then
     res = res .. params.bibstart
   end

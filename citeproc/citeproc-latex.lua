@@ -145,6 +145,7 @@ function csl.bibliography()
   end
 
   local result = core.make_bibliography(csl.engine)
+  -- util.debug(result)
 
   tex.print(util.split(result, "\n"))
 end

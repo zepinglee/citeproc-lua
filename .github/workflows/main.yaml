@@ -58,4 +58,4 @@ jobs:
       # we integrate a random UUID into the key to keep them different.
       # DO NOT CHANGE THIS
       - name: Test LaTeX package
-        run: l3build check -q -H
+        run: l3build check -q
