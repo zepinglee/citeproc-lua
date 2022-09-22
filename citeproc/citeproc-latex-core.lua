@@ -196,13 +196,22 @@ end
 function core.process_citations(engine, citations)
   local citations_pre = {}
 
-  core.update_uncited_items(engine, citations)
   local citation_strings = {}
+
+  core.update_cited_and_uncited_ids(engine, citations)
 
   for _, citation in ipairs(citations) do
     if citation.citationID ~= "@nocite" then
+      -- local res = engine:processCitationCluster(citation, citations_pre, {})
+      -- for _, tuple in ipairs(res[2]) do
+      --   local citation_str = tuple[2]
+      --   local citation_id = tuple[3]
+      --   citation_strings[citation_id] = citation_str
+      --   util.debug(citation_str)
+      -- end
+
       local citation_str = engine:process_citation(citation)
-        citation_strings[citation.citationID] = citation_str
+      citation_strings[citation.citationID] = citation_str
 
       table.insert(citations_pre, {citation.citationID, citation.properties.noteIndex})
     end
@@ -211,35 +220,46 @@ function core.process_citations(engine, citations)
   return citation_strings
 end
 
+function core.update_cited_and_uncited_ids(engine, citations)
+  local id_list = {}
+  local id_map = {}  -- Boolean map for checking if id in list
+  local uncited_id_list = {}
+  local uncited_id_map = {}
 
-function core.update_uncited_items(engine, citations)
-  -- util.debug(core.uncite_all_items)
-  if core.uncite_all_items then
-    -- \nocite{*}
-    for id, _ in pairs(core.bib) do
-      table.insert(core.uncited_ids, id)
-    end
-  else
-    for _, citation in ipairs(citations) do
-      if citation.citationID == "@nocite" then
-        for _, cite_item in ipairs(citation.citationItems) do
-          if cite_item.id == "*" then
-            if not core.uncite_all_items then
-              for id, _ in pairs(core.bib) do
-                table.insert(core.uncited_ids, id)
+  for _, citation in ipairs(citations) do
+    if citation.citationID == "@nocite" then
+      for _, cite_item in ipairs(citation.citationItems) do
+        if cite_item.id == "*" then
+          if not core.uncite_all_items then
+            for id, _ in pairs(core.bib) do
+              if not uncited_id_map[id] then
+                table.insert(uncited_id_list, id)
+                uncited_id_map[id] = true
               end
-              core.uncite_all_items = true
             end
-          else
-            table.insert(core.uncited_ids, cite_item.id)
+            core.uncite_all_items = true
           end
+        elseif not uncited_id_map[cite_item.id] then
+          table.insert(uncited_id_list, cite_item.id)
+          uncited_id_map[cite_item.id] = true
         end
       end
+
+    else  -- Real citation
+      for _, cite_item in ipairs(citation.citationItems) do
+        if not id_map[cite_item.id] then
+          table.insert(id_list, cite_item.id)
+          id_map[cite_item.id] = true
+        end
+      end
+
     end
   end
-  engine:updateUncitedItems(core.uncited_ids)
-end
 
+  engine:updateItems(id_list)
+  engine:updateUncitedItems(uncited_id_list)
+
+end
 
 function core.make_bibliography(engine)
   local result = engine:makeBibliography()

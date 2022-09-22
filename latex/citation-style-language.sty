@@ -420,17 +420,23 @@
       {
         \tl_if_empty:NTF \g__csl_bibliography_tl
           { \msg_warning:nnn { citation-style-language } { bibliography / empty } }
-          { \exp_args:NV \__csl_print_bibliography:n \g__csl_bibliography_tl }
+          {
+            \exp_args:NVV \__csl_print_bibliography:nn
+              \g__csl_bibliography_setup_tl \g__csl_bibliography_tl
+          }
       }
   }
 
 \msg_new:nnn { citation-style-language } { bibliography / empty }
   { The~ bibliography~ is~ empty.  }
 
-\cs_new:Npn \__csl_print_bibliography:n #1
+\cs_new:Npn \__csl_print_bibliography:nn #1 #2
   {
-    \begin { thebibliography }
+    \cslsetup{
       #1
+    }
+    \begin { thebibliography }
+      #2
     \end { thebibliography }
   }
 
@@ -711,7 +717,7 @@
   {
     \group_begin:
       \RenewDocumentCommand \cslsetup { m }
-        { \tl_set:Nn \g__csl_bibliography_setup_tl {##1} }
+        { \tl_gset:Nn \g__csl_bibliography_setup_tl {##1} }
       \RenewDocumentEnvironment { thebibliography } { m +b }
         { \tl_gset:Nn \g__csl_bibliography_tl { {##1} ##2 } }
         { }

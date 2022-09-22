@@ -145,6 +145,8 @@ local function process_aux_file(aux_file)
 
   local citation_strings = core.process_citations(engine, citations)
 
+  -- util.debug(citation_strings)
+
   local output_string = ""
 
   for _, citation in ipairs(citations) do

@@ -194,6 +194,9 @@ local function parse_fixture(path)
             section == "BIBSECTION" or
             section == "ABBREVIATIONS" then
           contents = utilities.json.tolua(contents)
+          if not contents then
+            error(string.format('JSON parsing error in "%s"', section))
+          end
         end
         section = string.lower(section)
         section = string.gsub(section, "-", "_")

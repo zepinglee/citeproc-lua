@@ -1191,7 +1191,7 @@ local LatexWriter = Markup:new()
 
 LatexWriter.markups = {
   ["bibstart"] = function (engine)
-    return string.format("\\begin{thebibliography}{%s}\n\n", engine.registry.longest_label)
+    return string.format("\\begin{thebibliography}{%s}\n", engine.registry.longest_label)
   end,
   ["bibend"] = "\\end{thebibliography}",
   ["@font-style/normal"] = "{\\normalshape %s}",
