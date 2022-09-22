@@ -1,0 +1,29 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+
+\cslsetup{style = apa}
+\addbibresource{test.bib}
+
+
+\begin{document}
+
+\START
+
+\newbox\boxa
+\sbox\boxa{\cite{ITEM-1,ITEM-2}}
+
+\showoutput
+
+\TEST{Bibilography format}{
+  \printbibliography
+  \clearpage
+}
+
+\OMIT
+
+\end{document}
