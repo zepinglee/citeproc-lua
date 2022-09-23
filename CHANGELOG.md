@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.2.2] - 2022-09-23
+
 ### Fixed
 
 - `latexmk` can automatically call citeproc-lua when compiling with `pdflatex` or `xelatex` (thanks to [John Collins](http://personal.psu.edu/~jcc8/)).
@@ -61,7 +63,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial CTAN release.
 
-[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.2.2...HEAD
+[v0.2.2]: https://github.com/zepinglee/citeproc-lua/compare/v0.2.1...0.2.2
 [v0.2.1]: https://github.com/zepinglee/citeproc-lua/compare/v0.2.0...0.2.1
 [v0.2.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.1.1...0.2.0
 [v0.1.1]: https://github.com/zepinglee/citeproc-lua/compare/v0.1.0...v0.1.1
