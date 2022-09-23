@@ -414,31 +414,24 @@
     \sys_if_engine_luatex:TF
       {
         \bool_if:NTF \l__csl_engine_initialized_bool
-          { \lua_now:n { csl.bibliography() } }
+          {
+            \__csl_collect_bibliography:n { \lua_now:n { csl.bibliography() } }
+            % \tl_show:N \g__csl_bibliography_tl
+            \tl_use:N \g__csl_bibliography_tl
+          }
           { \msg_warning:nnn { citation-style-language } { bibliography / empty } }
       }
       {
         \tl_if_empty:NTF \g__csl_bibliography_tl
           { \msg_warning:nnn { citation-style-language } { bibliography / empty } }
           {
-            \exp_args:NVV \__csl_print_bibliography:nn
-              \g__csl_bibliography_setup_tl \g__csl_bibliography_tl
+            \tl_use:N \g__csl_bibliography_tl
           }
       }
   }
 
 \msg_new:nnn { citation-style-language } { bibliography / empty }
   { The~ bibliography~ is~ empty.  }
-
-\cs_new:Npn \__csl_print_bibliography:nn #1 #2
-  {
-    \cslsetup{
-      #1
-    }
-    \begin { thebibliography }
-      #2
-    \end { thebibliography }
-  }
 
 
 \tl_new:N \l__csl_style_tl
@@ -715,19 +708,38 @@
 % of `thebibliography` is stored into \g__csl_bibliography_tl.
 \cs_new:Npn \__csl_load_bbl:
   {
+    % The \@input@ prints "No file ....bbl" in the .log file from which
+    % the latexmk decides to run $bibtex or not.
+    \__csl_collect_bibliography:n { \@input@ { \jobname .bbl } }
+    % \file_if_exist_input:nF { \jobname .bbl }
+    %   {
+    %     \msg_warning:nnx { citation-style-language } { file / non-exist} { \jobname .bbl }
+    %   }
+  }
+
+% Collection the bibliography (as well as \cslsetup) into \g__csl_bibliography_setup_tl
+\cs_new:Npn \__csl_collect_bibliography:n #1
+  {
     \group_begin:
       \RenewDocumentCommand \cslsetup { m }
-        { \tl_gset:Nn \g__csl_bibliography_setup_tl {##1} }
+        { \tl_gset:Nn \g__csl_bibliography_setup_tl { \cslsetup { ##1 } } }
       \RenewDocumentEnvironment { thebibliography } { m +b }
-        { \tl_gset:Nn \g__csl_bibliography_tl { {##1} ##2 } }
+        {
+          \tl_gset:Nn \g__csl_bibliography_tl
+            {
+              \begin { thebibliography } {##1}
+                ##2
+              \end { thebibliography }
+            }
+        }
         { }
-      % The \@input@ prints "No file ....bbl" in the .log file from which
-      % the latexmk decides to run $bibtex or not.
-      \@input@ { \jobname .bbl }
-      % \file_if_exist_input:nF { \jobname .bbl }
-      %   {
-      %     \msg_warning:nnx { citation-style-language } { file / non-exist} { \jobname .bbl }
-      %   }
+      % Perform the execution
+      #1
+      \tl_if_empty:NF \g__csl_bibliography_setup_tl
+        {
+          \tl_gput_left:Nn \g__csl_bibliography_tl { \par }
+          \tl_gput_left:NV \g__csl_bibliography_tl \g__csl_bibliography_setup_tl
+        }
     \group_end:
   }
 

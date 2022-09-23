@@ -1209,15 +1209,17 @@ LatexWriter.markups = {
   ["@vertical-align/baseline"] = false,
   ["@cite/entry"] = false,
   ["@bibliography/entry"] = function (str, context)
-    if not string.match(str, "\\bibitem") then
+    if string.match(str, "\\bibitem") then
+      str =  str .. "\n"
+    else
       str =  "\\bibitem{".. context.id .. "}\n" .. str .. "\n"
     end
     return str
   end,
-  ["@display/block"] = false,
-  ["@display/left-margin"] = '\n    <div class="csl-left-margin">%s</div>',
-  ["@display/right-inline"] = '<div class="csl-right-inline">%s</div>\n  ',
-  ["@display/indent"] = '<div class="csl-indent">%s</div>\n  ',
+  -- ["@display/block"] = false,
+  -- ["@display/left-margin"] = '\n    <div class="csl-left-margin">%s</div>',
+  -- ["@display/right-inline"] = '<div class="csl-right-inline">%s</div>',
+  -- ["@display/indent"] = '<div class="csl-indent">%s</div>\n  ',
 }
 
 function LatexWriter:write_escaped(str, context)

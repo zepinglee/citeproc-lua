@@ -3,12 +3,22 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Bibilography
 ============================================================
-The comma list \g__csl_bib_items_clist contains the items (without outer
-braces):
->  {ITEM-2}
->  {ITEM-1}
->  {ITEM-3}
->  {ITEM-4}.
+The sequence \l_tmpa_seq contains the items (without outer braces):
+>  {\cslsetup { hanging-indent = true, line-spacing = 2, entry-spacing = 0, }}
+>  {\begin {thebibliography}{}}
+>  {\bibitem {ITEM-2} Bennett, F. G., Jr. (2009). Getting Property Right:
+“Informal” Mortgages in the Japanese Courts. \textit {Pac. Rim L. \& Pol
+’y
+J.}, \textit {18}, 463–509.}
+>  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of Dissent:
+Protest and State Power in the Media Age}. Routledge.}
+>  {\bibitem {ITEM-3} Lamport, L. (1994). \textit {LaTeX: A Document
+Preparation System: User’s Guide and Reference Manual} (2nd ed.).
+Addison-Wesley.}
+>  {\bibitem {ITEM-4} Mittelbach, F., Goossens, M., Braams, J., Carlisle, D.,
+\& Rowley, C. (2004). \textit {The LaTeX Companion} (2nd ed.).
+Addison-Wesley.}
+>  {\end {thebibliography}}.
 <recently read> }
 l. ...}
 ============================================================

@@ -2,7 +2,7 @@
 
 includetests = {"other-2-*"}
 
-checkengines = {"pdftex", "xetex"}
+checkengines = {"pdftex"}
 stdengine = "pdftex"
 
 checkruns = 2

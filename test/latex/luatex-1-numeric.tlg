@@ -82,11 +82,18 @@ l. ...}
 ============================================================
 TEST 12: Bibilography
 ============================================================
-The comma list \g__csl_bib_items_clist contains the items (without outer
-braces):
->  {ITEM-1}
->  {ITEM-2}
->  {ITEM-3}.
+The sequence \l_tmpa_seq contains the items (without outer braces):
+>  {\cslsetup { line-spacing = 1, entry-spacing = 0, }}
+>  {\begin {thebibliography}{[1]}}
+>  {\bibitem [{[1]}]{ITEM-1} B. D’Arcus, \textit {Boundaries of Dissent:
+Protest and State Power in the Media Age}. Routledge, 2005.}
+>  {\bibitem [{[2]}]{ITEM-2} F. G. Bennett Jr., “Getting Property Right:
+‘Informal’ Mortgages in the Japanese Courts,” \textit {Pac. Rim L. \& Pol’y
+J.}, vol. 18, pp. 463–509, Aug. 2009.}
+>  {\bibitem [{[3]}]{ITEM-3} L. Lamport, \textit {LaTeX: A Document
+Preparation System: User’s Guide and Reference Manual}, 2nd ed. Reading, MA,
+USA: Addison-Wesley, 1994.}
+>  {\end {thebibliography}}.
 <recently read> }
 l. ...}
 ============================================================

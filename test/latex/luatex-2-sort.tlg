@@ -10,13 +10,15 @@ l. ...}
 ============================================================
 TEST 2: Bibilography
 ============================================================
-The comma list \g__csl_bib_items_clist contains the items (without outer
-braces):
->  {ITEM-1}
->  {ITEM-5}
->  {ITEM-3}
->  {ITEM-2}
->  {ITEM-4}.
+The sequence \l_tmpa_seq contains the items (without outer braces):
+>  {\cslsetup { line-spacing = 1, entry-spacing = 1, }}
+>  {\begin {thebibliography}{}}
+>  {\bibitem {ITEM-1} cihla}
+>  {\bibitem {ITEM-5} čáp}
+>  {\bibitem {ITEM-3} hudba}
+>  {\bibitem {ITEM-2} chochol}
+>  {\bibitem {ITEM-4} jasan}
+>  {\end {thebibliography}}.
 <recently read> }
 l. ...}
 ============================================================

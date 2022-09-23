@@ -14,6 +14,7 @@
         "pending",
         "tex",
         "texio",
+        "token",
         "utilities"
     ],
     "Lua.workspace.library": [

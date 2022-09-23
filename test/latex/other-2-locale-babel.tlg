@@ -10,9 +10,11 @@ l. ...}
 ============================================================
 TEST 2: Bibilography
 ============================================================
-The comma list \g__csl_bib_items_clist contains the items (without outer
-braces):
->  {ITEM-1}.
+The sequence \l_tmpa_seq contains the items (without outer braces):
+>  {\cslsetup { line-spacing = 1, entry-spacing = 1, }}
+>  {\begin {thebibliography}{}}
+>  {\bibitem {ITEM-1} French}
+>  {\end {thebibliography}}.
 <recently read> }
 l. ...}
 ============================================================

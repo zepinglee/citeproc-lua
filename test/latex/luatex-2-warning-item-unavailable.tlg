@@ -13,8 +13,10 @@ l. ...}
 TEST 2: Bibilography
 ============================================================
 Package citation-style-language Warning: The bibliography is empty.
-The comma list \g__csl_bib_items_clist is empty
-> .
+The sequence \l_tmpa_seq contains the items (without outer braces):
+>  {\cslsetup { hanging-indent = true, line-spacing = 2, entry-spacing = 0, }}
+>  {\begin {thebibliography}{}}
+>  {\end {thebibliography}}.
 <recently read> }
 l. ...}
 ============================================================

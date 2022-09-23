@@ -147,6 +147,8 @@ function csl.bibliography()
   local result = core.make_bibliography(csl.engine)
   -- util.debug(result)
 
+  -- token.set_macro("g__csl_bibliography_tl", result)
+
   tex.print(util.split(result, "\n"))
 end
 
