@@ -4,7 +4,8 @@ Don't change this file in any respect.
 TEST 1: Bibilography
 ============================================================
 The sequence \l_tmpa_seq contains the items (without outer braces):
->  {\cslsetup { hanging-indent = true, line-spacing = 2, entry-spacing = 0, }}
+>  {\cslsetup { class = in-text, hanging-indent = true, line-spacing = 2,
+entry-spacing = 0, }}
 >  {\begin {thebibliography}{}}
 >  {\bibitem {ITEM-2} Bennett, F. G., Jr. (2009). Getting Property Right:
 “Informal” Mortgages in the Japanese Courts. \textit {Pac. Rim L. \&

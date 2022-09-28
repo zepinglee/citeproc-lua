@@ -83,7 +83,7 @@ l. ...}
 TEST 12: Bibilography
 ============================================================
 The sequence \l_tmpa_seq contains the items (without outer braces):
->  {\cslsetup { line-spacing = 1, entry-spacing = 0, }}
+>  {\cslsetup { class = in-text, line-spacing = 1, entry-spacing = 0, }}
 >  {\begin {thebibliography}{[1]}}
 >  {\bibitem [{[1]}]{ITEM-1} B. D’Arcus, \textit {Boundaries of Dissent:
 Protest and State Power in the Media Age}. Routledge, 2005.}

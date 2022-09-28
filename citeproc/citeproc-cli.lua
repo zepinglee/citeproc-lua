@@ -143,6 +143,12 @@ local function process_aux_file(aux_file)
   end
   local style_class = engine:get_style_class()
 
+  if style_class == "in-text" then
+    for _, citation in ipairs(citations) do
+      citation.properties.noteIndex = 0
+    end
+  end
+
   local citation_strings = core.process_citations(engine, citations)
 
   -- util.debug(citation_strings)
@@ -153,7 +159,7 @@ local function process_aux_file(aux_file)
     local citation_id = citation.citationID
     if citation_id ~= "@nocite" then
       local citation_str = citation_strings[citation_id]
-      output_string = output_string .. string.format("\\cslcite{%s}{{%s}{%s}}\n", citation_id, style_class, citation_str)
+      output_string = output_string .. string.format("\\cslcite{%s}{%s}\n", citation_id, citation_str)
     end
   end
 

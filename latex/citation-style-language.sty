@@ -274,18 +274,31 @@
   }
 
 
+\int_new:N \g__csl_pseudo_note_index_int
+\int_gset:Nn \g__csl_pseudo_note_index_int { 0 }
+
 % Save the note number to \l__csl_note_index_tl
 % TODO: multiple citations in a note
 \cs_new:Npn \__csl_get_note_index:N #1
   % #1: \l__csl_note_index_tl
   {
-    \bool_if:NTF \l__csl_note_style_bool
+    \tl_if_empty:NTF \l__csl_class_tl
       {
+        % The style class (in-text/note) is undetermined.
         \int_set_eq:Nc \l_tmpa_int { c@ \@mpfn }
-        \int_incr:N \l_tmpa_int
+        \int_gincr:N \g__csl_pseudo_note_index_int
+        \int_add:Nn \l_tmpa_int { \g__csl_pseudo_note_index_int }
         \tl_set:Nx #1 { \int_use:N \l_tmpa_int }
       }
-      { \tl_set:Nn #1 { 0 } }
+      {
+        \tl_if_eq:NnTF \l__csl_class_tl { note }
+          {
+            \int_set_eq:Nc \l_tmpa_int { c@ \@mpfn }
+            \int_incr:N \l_tmpa_int
+            \tl_set:Nx #1 { \int_use:N \l_tmpa_int }
+          }
+          { \tl_set:Nx #1 { 0 } }
+      }
   }
 
 
@@ -299,28 +312,12 @@
   }
 
 
-% \cs_new:Npn \__csl_print_citation:n #1
-%   % #1: citation text
-%   {
-%     \bool_if:NTF \l__csl_note_style_bool
-%       {
-%         \footnote {#1}
-%       }
-%       {#1}
-%   }
-
 \cs_new:Npn \__csl_print_citation:n #1
-  % #1: "{<type>}{<citation text>}"
-  { \__csl_print_citation_aux:nn #1 }
-
-\cs_new:Npn \__csl_print_citation_aux:nn #1#2
-  % #1: citation type, "in-text" or "note"
-  % #2: citation text
   {
-    \tl_set:Nn \l__csl_citation_tl {#2}
-    \tl_if_eq:nnTF {#1} { note }
-      { \footnote {#2} }
-      {#2}
+    \tl_set:Nn \l__csl_citation_tl {#1}
+    \tl_if_eq:NnTF \l__csl_class_tl { note }
+      { \footnote {#1} }
+      {#1}
   }
 
 
@@ -435,6 +432,7 @@
 
 
 \tl_new:N \l__csl_style_tl
+\tl_new:N \l__csl_class_tl
 \clist_new:N \l__csl_bib_resources_clist
 \tl_new:N \l__csl_prefix_separator_tl
 \tl_new:N \l__csl_suffix_separator_tl
@@ -450,6 +448,7 @@
 \keys_define:nn { csl }
   {
     style .tl_set:N = \l__csl_style_tl ,
+    class .tl_set:N = \l__csl_class_tl ,
     prefix-separator .tl_set:N = \l__csl_prefix_separator_tl ,
     suffix-separator .tl_set:N = \l__csl_suffix_separator_tl ,
     locale .tl_set:N = \l__csl_locale_tl ,
@@ -652,16 +651,14 @@
   }
 
 
-\str_new:N \l__csl_style_class_str
+% \str_new:N \l__csl_style_class_str
 % In-text (including numeric or author-date) or note style
-\bool_new:N \l__csl_note_style_bool
+% \bool_new:N \l__csl_note_style_bool
 
 \cs_new:Npn \__csl_get_style_class: {
   \bool_if:NT \l__csl_engine_initialized_bool
     {
-      \str_set:Nx \l__csl_style_class_str { \lua_now:n { csl.get_style_class() } }
-      \str_if_eq:VnT \l__csl_style_class_str { note }
-        { \bool_set_true:N \l__csl_note_style_bool }
+      \tl_set:Nx \l__csl_class_tl { \lua_now:n { csl.get_style_class() } }
     }
 }
 
@@ -711,10 +708,8 @@
     % The \@input@ prints "No file ....bbl" in the .log file from which
     % the latexmk decides to run $bibtex or not.
     \__csl_collect_bibliography:n { \@input@ { \jobname .bbl } }
-    % \file_if_exist_input:nF { \jobname .bbl }
-    %   {
-    %     \msg_warning:nnx { citation-style-language } { file / non-exist} { \jobname .bbl }
-    %   }
+    % Execute the \cslsetup part to set the style class.
+    \tl_use:N \g__csl_bibliography_setup_tl
   }
 
 % Collection the bibliography (as well as \cslsetup) into \g__csl_bibliography_setup_tl

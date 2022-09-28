@@ -114,7 +114,8 @@ l. ...}
 TEST 14: Bibilography
 ============================================================
 The sequence \l_tmpa_seq contains the items (without outer braces):
->  {\cslsetup { hanging-indent = true, line-spacing = 1, entry-spacing = 0, }}
+>  {\cslsetup { class = note, hanging-indent = true, line-spacing = 1,
+entry-spacing = 0, }}
 >  {\begin {thebibliography}{}}
 >  {\bibitem {ITEM-2} Bennett, Frank G., Jr. “Getting Property Right:
 ‘Informal’ Mortgages in the Japanese Courts.” \textit {Pac. Rim L. \&

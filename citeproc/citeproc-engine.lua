@@ -291,7 +291,17 @@ function CiteProc:process_citation(citation)
   end
 
   local tainted_citation_ids = self:get_tainted_citaion_ids(citation_note_pairs)
-  local citation_str = self:build_citation_str(citation, self)
+
+  local mode = citation.properties.mode
+  if mode == "suppress-author" and self.style.class == "note" then
+    mode = nil
+  end
+  local citation_elemement = self.style.citation
+  if mode == "author-only" and self.style.intext then
+    citation_elemement = self.style.intext
+  end
+
+  local citation_str = citation_elemement:build_citation_str(citation, self)
 
   return citation_str
 end

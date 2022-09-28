@@ -18,7 +18,8 @@ l. ...}
 TEST 3: Bibilography
 ============================================================
 The sequence \l_tmpa_seq contains the items (without outer braces):
->  {\cslsetup { hanging-indent = true, line-spacing = 2, entry-spacing = 0, }}
+>  {\cslsetup { class = in-text, hanging-indent = true, line-spacing = 2,
+entry-spacing = 0, }}
 >  {\begin {thebibliography}{}}
 >  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of Dissent:
 Protest and State Power in the Media Age}. Routledge.}

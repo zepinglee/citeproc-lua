@@ -103,8 +103,7 @@ function csl.cite(citation_info)
     citation_str = csl.engine:process_citation(citation)
   end
 
-  tex.sprint(string.format("{%s}{%s}", csl.style_class, citation_str))
-  -- tex.sprint(citation_str)
+  tex.sprint(citation_str)
 
   table.insert(csl.citations_pre, {citation.citationID, citation.properties.noteIndex})
 end

@@ -269,21 +269,37 @@ function core.make_bibliography(engine)
 
   local res = ""
 
-  local bib_options = ""
-  if params["hangingindent"] then
-    bib_options = bib_options .. "\n  hanging-indent = true,"
-  end
-  if params["linespacing"] then
-    bib_options = bib_options .. string.format("\n  line-spacing = %d,", params["linespacing"])
-  end
-  if params["entryspacing"] then
-    bib_options = bib_options .. string.format("\n  entry-spacing = %d,", params["entryspacing"])
+  local bib_options = {}
+  bib_options["class"] = engine:get_style_class()
+  local bib_option_list = {"class"}
+
+  local bib_option_map = {
+    ["entry-spacing"] = "entryspacing",
+    ["line-spacing"] = "linespacing",
+    ["hanging-indent"] = "hangingindent",
+  }
+  local bib_option_order = {
+    "class",
+    "hanging-indent",
+    "line-spacing",
+    "entry-spacing",
+  }
+
+  for option, param in pairs(bib_option_map) do
+    if params[param] then
+      bib_options[option] = params[param]
+    end
   end
 
-  if bib_options ~= "" then
-    bib_options = "\\cslsetup{" .. bib_options .. "\n}\n\n"
-    res = res .. bib_options
+  local bib_options_str = "\\cslsetup{\n"
+  for _, option in ipairs(bib_option_order) do
+    local value = bib_options[option]
+    if value then
+      bib_options_str = bib_options_str .. string.format("  %s = %s,\n", option, tostring(value))
+    end
   end
+  bib_options_str = bib_options_str .. "}\n"
+  res = res .. bib_options_str .. "\n"
 
   -- util.debug(params.bibstart)
   if params.bibstart then
