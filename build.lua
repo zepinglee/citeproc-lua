@@ -6,8 +6,8 @@
 module = "citation-style-language"
 
 docfiledir = "./doc"
-testfiledir = "./test/latex"
-testsuppdir = testfiledir .. "/support"
+-- testfiledir = "./test/latex"
+testsuppdir = "./test/latex/support"
 
 exefiles = {"citeproc-lua.lua", "**/citeproc-lua.lua"}
 installfiles = {
@@ -34,14 +34,12 @@ tagfiles = {
 textfiles = {"doc/README.md", "CHANGELOG.md", "DEPENDS.txt"}
 typesetfiles = {"*.tex"}
 
-includetests = {}
-
 checkconfigs = {
   "build",
   "test/latex/config-luatex-1",
   "test/latex/config-luatex-2",
-  "test/latex/config-other-1",
-  "test/latex/config-other-2",
+  "test/latex/config-pdftex-1",
+  "test/latex/config-pdftex-2",
 }
 
 asciiengines = {}

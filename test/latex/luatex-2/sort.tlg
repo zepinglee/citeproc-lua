@@ -1,0 +1,26 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Locale sorting
+============================================================
+> \l__csl_citation_tl=cihla, čáp, hudba, chochol, jasan.
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 2: Bibilography
+============================================================
+The sequence \l_tmpa_seq contains the items (without outer braces):
+>  {\cslsetup { class = in-text, line-spacing = 1, entry-spacing = 1, }}
+>  {\begin {thebibliography}{}}
+>  {\bibitem {ITEM-1} cihla}
+>  {\bibitem {ITEM-5} čáp}
+>  {\bibitem {ITEM-3} hudba}
+>  {\bibitem {ITEM-2} chochol}
+>  {\bibitem {ITEM-4} jasan}
+>  {\end {thebibliography}}.
+<recently read> }
+l. ...}
+============================================================
+[1
+] (sort.aux)

@@ -1,0 +1,109 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+(csl-citation-tests.tex
+============================================================
+TEST 1: Single cite item in a citation
+============================================================
+Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
+(citation-style-language)                on line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 2: Multiple cite items in a citation
+============================================================
+Package citation-style-language Warning: Citation `ITEM-1, ITEM-2' on page 1
+(citation-style-language)                undefined on line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1, ITEM-2}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 3: Citation with page locator
+============================================================
+Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
+(citation-style-language)                on line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 4: Citation with section locator
+============================================================
+Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
+(citation-style-language)                on line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 5: Citation with implicit page locator
+============================================================
+Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
+(citation-style-language)                on line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 6: Citation with prefix and suffix
+============================================================
+Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
+(citation-style-language)                on line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 7: Citation with implicit prefix and suffix
+============================================================
+Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
+(citation-style-language)                on line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 8: Citation with implicit suffix
+============================================================
+Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
+(citation-style-language)                on line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 9: Citation with implicit prefix
+============================================================
+Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
+(citation-style-language)                on line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 10: Multiple cite items with options
+============================================================
+Package citation-style-language Warning: Citation `ITEM-1, ITEM-2' on page 1
+(citation-style-language)                undefined on line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1, ITEM-2}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 11: Item in bibliography but no citation
+============================================================
+> \l__csl_citation_tl=.
+<recently read> }
+l. ...}
+============================================================
+)
+============================================================
+TEST 12: Bibilography
+============================================================
+Package citation-style-language Warning: The bibliography is empty.
+============================================================
+[1
+] (bibstyle.aux)
+LaTeX Warning: There were undefined references.

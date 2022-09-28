@@ -1,6 +1,6 @@
 ---@diagnostic disable: lowercase-global
 
-includetests = {"luatex-2-*"}
+testfiledir = "./test/latex/luatex-2"
 
 checkengines = {"luatex"}
 stdengine = "luatex"

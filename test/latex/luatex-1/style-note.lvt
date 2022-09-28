@@ -1,0 +1,35 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+
+\cslsetup{style = chicago-fullnote-bibliography}
+\addbibresource{test.bib}
+
+
+\begin{document}
+
+\START
+\showoutput
+
+\input{csl-citation-tests}
+
+\TEST{Citation format}{
+  \clearpage
+}
+
+\TEST{Bibilography contents}{
+  \printbibliography
+  \showbibliography
+}
+
+\TEST{Bibilography format}{
+  \clearpage
+}
+
+\OMIT
+
+\end{document}
