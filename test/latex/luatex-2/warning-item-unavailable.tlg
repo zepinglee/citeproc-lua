@@ -5,6 +5,10 @@ TEST 1: Item unavailable
 ============================================================
 Module citeproc Warning: Database entry "ITEM-UNAVAILABLE" not found on input li
 ne 20
+> 
+\l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE@1},citationItems={{id={ITEM-UNAVAILABLE}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
 > \l__csl_citation_tl=(\textbf {ITEM-UNAVAILABLE}).
 <recently read> }
 l. ...}

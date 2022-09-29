@@ -3,6 +3,10 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Babel locale
 ============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
 > \l__csl_citation_tl=French.
 <recently read> }
 l. ...}
