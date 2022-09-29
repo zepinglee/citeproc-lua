@@ -137,7 +137,20 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 11: Uncited entry
+TEST 11: Cite only author
+============================================================
+Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
+(citation-style-language)                on line ....
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 12: Uncited entry
 ============================================================
 > 
 \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
@@ -149,7 +162,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 12: Bibilography
+TEST 13: Bibilography
 ============================================================
 Package citation-style-language Warning: The bibliography is empty.
 ============================================================

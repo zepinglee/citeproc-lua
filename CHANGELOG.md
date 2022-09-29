@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add author only command `\citeauthor`.
+
 ## [v0.2.2] - 2022-09-23
 
 ### Fixed

@@ -117,7 +117,18 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 11: Uncited entry
+TEST 11: Cite only author
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=D’Arcus.
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 12: Uncited entry
 ============================================================
 > 
 \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
@@ -129,7 +140,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 12: Citation format
+TEST 13: Citation format
 ============================================================
 Completed box being shipped out [1]
 \vbox(633.0+0.0)x407.0, direction TLT
@@ -141,7 +152,7 @@ Completed box being shipped out [1]
 ....\hbox(0.0+0.0)x345.0, direction TLT
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 431.95386fil, direction TLT
+..\vbox(550.0+0.0)x345.0, glue set 419.95514fil, direction TLT
 ...\write-{}
 ...\glue(\topskip) 2.5
 ...\hbox(7.5+2.5)x345.0, glue set 272.0fil, direction TLT
@@ -577,7 +588,30 @@ Completed box being shipped out [1]
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
-...\glue -2.5
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.34
+...\hbox(7.16+0.11)x345.0, glue set 290.89001fil, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x15.0, direction TLT
+....\TU/lmr/m/n/10 D
+....\TU/lmr/m/n/10 ’
+....\TU/lmr/m/n/10 A
+....\TU/lmr/m/n/10 r
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/n/10 -
+....\TU/lmr/m/n/10 c
+....\TU/lmr/m/n/10 u
+....\TU/lmr/m/n/10 s
+....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue -0.11
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
 ...\glue 0.0 plus 0.0001fil
@@ -586,7 +620,7 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x345.0, direction TLT
 ============================================================
 ============================================================
-TEST 13: Bibilography contents
+TEST 14: Bibilography contents
 ============================================================
 The sequence \l_tmpa_seq contains the items (without outer braces):
 >  {\cslsetup { class = in-text, hanging-indent = true, line-spacing = 2,
@@ -606,7 +640,7 @@ Addison-Wesley.}
 l. ...}
 ============================================================
 ============================================================
-TEST 14: Bibilography format
+TEST 15: Bibilography format
 ============================================================
 Completed box being shipped out [2]
 \vbox(633.0+0.0)x407.0, direction TLT

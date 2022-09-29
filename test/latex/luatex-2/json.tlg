@@ -117,7 +117,18 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 11: Uncited entry
+TEST 11: Cite only author
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=D’Arcus.
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 12: Uncited entry
 ============================================================
 > 
 \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
@@ -129,7 +140,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 12: Bibilography
+TEST 13: Bibilography
 ============================================================
 The sequence \l_tmpa_seq contains the items (without outer braces):
 >  {\cslsetup { class = in-text, hanging-indent = true, line-spacing = 2,

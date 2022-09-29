@@ -131,7 +131,18 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 11: Uncited entry
+TEST 11: Cite only author
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=Bruce D’Arcus.
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 12: Uncited entry
 ============================================================
 > 
 \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
@@ -143,7 +154,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 12: Citation format
+TEST 13: Citation format
 ============================================================
 Completed box being shipped out [1]
 \vbox(633.0+0.0)x407.0
@@ -155,7 +166,7 @@ Completed box being shipped out [1]
 ....\hbox(0.0+0.0)x345.0
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 301.9177fil
+..\vbox(550.0+0.0)x345.0, glue set 289.91898fil
 ...\write-{}
 ...\glue(\topskip) 1.85997
 ...\hbox(8.14003+0.0)x345.0, glue set 337.18054fil
@@ -302,6 +313,28 @@ Completed box being shipped out [1]
 ......\OT1/cmr/m/n/7 1
 ......\OT1/cmr/m/n/7 0
 .....\mathoff
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 5.05556
+...\hbox(6.94444+0.0)x345.0, glue set 262.11102fil
+....\hbox(0.0+0.0)x15.0
+....\OT1/cmr/m/n/10 B
+....\OT1/cmr/m/n/10 r
+....\OT1/cmr/m/n/10 u
+....\OT1/cmr/m/n/10 c
+....\OT1/cmr/m/n/10 e
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\OT1/cmr/m/n/10 D
+....\OT1/cmr/m/n/10 '
+....\OT1/cmr/m/n/10 A
+....\OT1/cmr/m/n/10 r
+....\OT1/cmr/m/n/10 c
+....\OT1/cmr/m/n/10 u
+....\OT1/cmr/m/n/10 s
 ....\glue 3.33333 plus 1.66666 minus 1.11111
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -1095,7 +1128,7 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x345.0
 ============================================================
 ============================================================
-TEST 13: Bibilography contents
+TEST 14: Bibilography contents
 ============================================================
 The sequence \l_tmpa_seq contains the items (without outer braces):
 >  {\cslsetup { class = note, hanging-indent = true, line-spacing = 1,
@@ -1114,7 +1147,7 @@ Addison-Wesley, 1994.}
 l. ...}
 ============================================================
 ============================================================
-TEST 14: Bibilography format
+TEST 15: Bibilography format
 ============================================================
 Completed box being shipped out [2]
 \vbox(633.0+0.0)x407.0

@@ -52,16 +52,21 @@
 \NewDocumentCommand \cites { }
   { \__csl_cites: }
 
+\NewDocumentCommand \citeauthor { o o m }
+  { \__csl_cite_author:nnn {#1} {#2} {#3} }
+
 
 \seq_new:N \l__csl_cite_keys_seq
 \seq_new:N \l__csl_cite_items_seq
+\prop_clear:N \l__csl_citation_info_prop
 
 \cs_new:Npn \__csl_cite:nnn #1#2#3
   {
     \seq_clear:N \l__csl_cite_keys_seq
     \seq_clear:N \l__csl_cite_items_seq
     \__csl_process_cite_items:nnn {#1} {#2} {#3}
-    \__csl_make_citation:NN \l__csl_cite_keys_seq \l__csl_cite_items_seq
+    \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_cite_items_seq
+    \__csl_make_citation:N \l__csl_citation_info_prop
   }
 
 
@@ -75,11 +80,30 @@
 \NewDocumentCommand \__csl_next_cites:nnn { o o g }
   {
     \tl_if_novalue:nTF {#3}
-      { \__csl_make_citation:NN \l__csl_cite_keys_seq \l__csl_cite_items_seq }
+      {
+        \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_cite_items_seq
+        \__csl_make_citation:N \l__csl_citation_info_prop
+      }
       {
         \__csl_process_cite_items:nnn {#1} {#2} {#3}
         \__csl_next_cites:nnn
       }
+  }
+
+
+\cs_new:Npn \__csl_cite_author:nnn #1#2#3
+  {
+    \seq_clear:N \l__csl_cite_keys_seq
+    \seq_clear:N \l__csl_cite_items_seq
+    \__csl_process_cite_items:nnn {#1} {#2} {#3}
+    \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_cite_items_seq
+    \prop_put:Nnn \l__csl_citation_info_prop { properties }
+      {
+        noteIndex = { 0 } ,
+        mode = { author-only }
+      }
+    \bool_set_false:N \l__csl_note_bool
+    \__csl_make_citation:N \l__csl_citation_info_prop
   }
 
 
@@ -205,25 +229,36 @@
 \tl_new:N \l__csl_citation_id_tl
 \tl_new:N \l__csl_cite_items_tl
 \tl_new:N \l__csl_note_index_tl
+
+% Prepare the citation info and save it to \l__csl_citation_info_prop
+% #1: \l__csl_cite_keys_seq
+% #2: \l__csl_cite_items_seq
+\cs_new:Npn \__csl_process_citation_info:NN #1#2
+  {
+    \prop_clear:N \l__csl_citation_info_prop
+    % citationID
+    \__csl_process_citation_id:NN \l__csl_citation_id_tl #1
+    \prop_put:NnV \l__csl_citation_info_prop { citationID } \l__csl_citation_id_tl
+    % citationItems
+    \tl_set:Nx \l__csl_cite_items_tl
+      { \seq_use:Nn #2 { , } }
+    \prop_put:NnV \l__csl_citation_info_prop { citationItems } \l__csl_cite_items_tl
+    % properties
+    \__csl_get_note_index:N \l__csl_note_index_tl
+    \prop_put:Nnx \l__csl_citation_info_prop { properties } { noteIndex = { \l__csl_note_index_tl } }
+  }
+
+
 \tl_new:N \l__csl_citation_info_tl
 \tl_new:N \l__csl_citation_tl
 \prop_new:N \g__csl_citations_prop
-\prop_clear:N \l__csl_citation_prop
 
-\cs_new:Npn \__csl_make_citation:NN #1#2
-  % #1: \l__csl_cite_keys_seq
-  % #2: \l__csl_cite_items_seq
+% Write citation info to aux and print the citation contents.
+% #1: \l__csl_citation_info_prop
+\cs_new:Npn \__csl_make_citation:N #1
   {
-    \prop_clear:N \l__csl_citation_prop
-    \__csl_process_citation_id:NN \l__csl_citation_id_tl #1
-    \prop_put:NnV \l__csl_citation_prop { citationID } \l__csl_citation_id_tl
-    \tl_set:Nx \l__csl_cite_items_tl
-      { \seq_use:Nn #2 { , } }
-    \prop_put:NnV \l__csl_citation_prop { citationItems } \l__csl_cite_items_tl
-    \__csl_get_note_index:N \l__csl_note_index_tl
-    \prop_put:Nnx \l__csl_citation_prop { properties } { noteIndex = { \l__csl_note_index_tl } }
     \tl_clear:N \l__csl_citation_info_tl
-    \prop_map_inline:Nn \l__csl_citation_prop
+    \prop_map_inline:Nn #1
       {
         \tl_if_empty:NF \l__csl_citation_info_tl
           { \tl_put_right:Nn \l__csl_citation_info_tl { , } }
@@ -260,6 +295,8 @@
   {
     \tl_set:Nx \l__csl_cite_keys_tl
       { \seq_use:Nn #2 { , } }
+    % \prop_show:N \g__csl_citations_count_prop
+    % \tl_show:N \l__csl_cite_keys_tl
     \prop_get:NVNTF \g__csl_citations_count_prop \l__csl_cite_keys_tl
       \l__csl_citation_count_tl
       {
@@ -282,19 +319,19 @@
 \cs_new:Npn \__csl_get_note_index:N #1
   % #1: \l__csl_note_index_tl
   {
-    \tl_if_empty:NTF \l__csl_class_tl
+    \bool_if:NTF \l__csl_note_bool
       {
-        % The style class (in-text/note) is undetermined.
         \int_set_eq:Nc \l_tmpa_int { c@ \@mpfn }
-        \int_gincr:N \g__csl_pseudo_note_index_int
-        \int_add:Nn \l_tmpa_int { \g__csl_pseudo_note_index_int }
+        \int_incr:N \l_tmpa_int
         \tl_set:Nx #1 { \int_use:N \l_tmpa_int }
       }
       {
-        \tl_if_eq:NnTF \l__csl_class_tl { note }
+        \tl_if_empty:NTF \l__csl_class_tl
           {
+            % The style class (in-text/note) is undetermined.
             \int_set_eq:Nc \l_tmpa_int { c@ \@mpfn }
-            \int_incr:N \l_tmpa_int
+            \int_gincr:N \g__csl_pseudo_note_index_int
+            \int_add:Nn \l_tmpa_int { \g__csl_pseudo_note_index_int }
             \tl_set:Nx #1 { \int_use:N \l_tmpa_int }
           }
           { \tl_set:Nx #1 { 0 } }
@@ -315,7 +352,7 @@
 \cs_new:Npn \__csl_print_citation:n #1
   {
     \tl_set:Nn \l__csl_citation_tl {#1}
-    \tl_if_eq:NnTF \l__csl_class_tl { note }
+    \bool_if:NTF \l__csl_note_bool
       { \footnote {#1} }
       {#1}
   }
@@ -433,6 +470,7 @@
 
 \tl_new:N \l__csl_style_tl
 \tl_new:N \l__csl_class_tl
+\bool_new:N \l__csl_note_bool
 \clist_new:N \l__csl_bib_resources_clist
 \tl_new:N \l__csl_prefix_separator_tl
 \tl_new:N \l__csl_suffix_separator_tl
@@ -448,7 +486,12 @@
 \keys_define:nn { csl }
   {
     style .tl_set:N = \l__csl_style_tl ,
-    class .tl_set:N = \l__csl_class_tl ,
+    class .code:n =
+      {
+        \tl_set:Nn \l__csl_class_tl {#1}
+        \tl_if_eq:NnT \l__csl_class_tl { note }
+          { \bool_set_true:N \l__csl_note_bool }
+      } ,
     prefix-separator .tl_set:N = \l__csl_prefix_separator_tl ,
     suffix-separator .tl_set:N = \l__csl_suffix_separator_tl ,
     locale .tl_set:N = \l__csl_locale_tl ,
@@ -659,6 +702,8 @@
   \bool_if:NT \l__csl_engine_initialized_bool
     {
       \tl_set:Nx \l__csl_class_tl { \lua_now:n { csl.get_style_class() } }
+      \tl_if_eq:NnT \l__csl_class_tl { note }
+        { \bool_set_true:N \l__csl_note_bool }
     }
 }
 
@@ -709,7 +754,9 @@
     % the latexmk decides to run $bibtex or not.
     \__csl_collect_bibliography:n { \@input@ { \jobname .bbl } }
     % Execute the \cslsetup part to set the style class.
+    \tl_show:N \g__csl_bibliography_setup_tl
     \tl_use:N \g__csl_bibliography_setup_tl
+    \bool_show:N \l__csl_note_bool
   }
 
 % Collection the bibliography (as well as \cslsetup) into \g__csl_bibliography_setup_tl
@@ -1072,9 +1119,8 @@
   {
     \BlockquoteDisable
       {
-        \cs_set_eq:NN \__csl_make_citation:NN \use_none:nn
-        % \sys_if_engine_luatex:T
-        %   { \lua_now:n { csl.preview_mode = true } }
+        \cs_set_eq:NN \__csl_process_citation_info:NN \use_none:nn
+        \cs_set_eq:NN \__csl_make_citation:N \use_none:n
       }
   }
 
