@@ -47,6 +47,12 @@
 \DeclareDocumentCommand \cite { o o m }
   { \__csl_cite:nnn {#1} {#2} {#3} }
 
+\NewDocumentCommand \parencite { o o m }
+  { \__csl_cite:nnn {#1} {#2} {#3} }
+
+\NewDocumentCommand \citep { o o m }
+  { \__csl_cite:nnn {#1} {#2} {#3} }
+
 \NewDocumentCommand \textcite { o o m }
   { \__csl_text_cite:nnn {#1} {#2} {#3} }
 

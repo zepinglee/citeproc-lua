@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add author only command `\citeauthor`.
 - Add narrative citation commands `\textcite` and `\citet` ([#17](https://github.com/zepinglee/citeproc-lua/issues/17)).
+- Add parenthetical citation commands `\parencite` and `\citep` for compatibility.
 
 ## [v0.2.2] - 2022-09-23
 

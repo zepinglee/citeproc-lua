@@ -310,6 +310,18 @@ recommended.
 If only one optional argument is provided, it is treated as \meta{postnote}.
 The \meta{postnote} is used as a page locator if it consists of only digits.
 
+\begin{function}{\parencite,\citep}
+  \begin{syntax}
+    \cs{parencite}\oarg{options}\marg{keys}
+  \end{syntax}
+\end{function}
+
+The \cs{parencite} and \cs{citep} command are aliases of \cs{cite}.
+They are added for compatibility with \pkg{biblatex} and \pkg{natbib} packages.
+If the citation format defined in the CSL style does not have affixes,
+these commands in \pkg{citation-style-language} do not enclose the output with
+brackets, which is different from other packages.
+
 \begin{function}{\textcite,\citet}
   \begin{syntax}
     \cs{textcite}\oarg{options}\marg{keys}
