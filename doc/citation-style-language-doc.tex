@@ -310,11 +310,20 @@ recommended.
 If only one optional argument is provided, it is treated as \meta{postnote}.
 The \meta{postnote} is used as a page locator if it consists of only digits.
 
-For author-date styles, there are also narrative in-text citations where the
-author names appear in running text and only dates are enclosed in parentheses
-(\cs{citet} in \pkg{natbib} pacakge or \cs{textcite} in \pkg{biblatex}).
-However such cite command in this pakcage is not available at the momment and
-it will be implemented in the next release.
+\begin{function}{\textcite,\citet}
+  \begin{syntax}
+    \cs{textcite}\oarg{options}\marg{keys}
+  \end{syntax}
+\end{function}
+
+\DescribeOption{infix}
+These commands proceduce narrative in-text citation where the author name is
+part of the running text followed by the year in parentheses.
+These commands only work with author-date styles.
+An extra option \opt{infix} can be given to specify the text inserted between
+then author and year parts. For example, “Kesey’s early work (1962)” can be
+produced by |\textcite[infix={'s early work}]{ITEM-1}|.
+By default the infix is a space.
 
 \begin{function}{\cites}
   \begin{syntax}
@@ -331,6 +340,18 @@ scanning process. The following example illustrates its usage.
 \begin{LaTeXdemo}
   \cites[prefix = {See }, page = 6]{key1}[section = 2.3]{key2}\relax [Text]
 \end{LaTeXdemo}
+
+\begin{function}{\citeauthor}
+  \begin{syntax}
+    \cs{citeauthor}\marg{key}
+  \end{syntax}
+\end{function}
+
+This command prints the author name.
+If the orginal citation does not contain the author name (e.g., a numeric
+style), an optional |<intext>| element can be suppplied as a sibling to the
+|<citation>| and |<bibliography>| elements in the CSL style (see
+\href{https://citeproc-js.readthedocs.io/en/latest/running.html#citation-flags-with-processcitationcluster}{citeproc-js's documentation} for details).
 
 \begin{function}{\nocite}
   \begin{syntax}

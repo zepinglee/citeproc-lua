@@ -105,7 +105,30 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 10: Multiple cite items with options
+TEST 10: Narrative citation
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={composite}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=D’Arcus (2005).
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 11: Narrative citation
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@10},citationItems={{id={ITEM-1}}},properties={infix={'s
+early work},noteIndex={0},mode={composite}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=D’Arcus’s early work (2005).
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 12: Multiple cite items with options
 ============================================================
 > 
 \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@2},citationItems={{id={ITEM-1},prefix={See
@@ -117,10 +140,10 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 11: Cite only author
+TEST 13: Cite only author
 ============================================================
 > 
-\l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
+\l__csl_citation_info_tl=citationID={ITEM-1@11},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=D’Arcus.
@@ -128,7 +151,7 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 12: Uncited entry
+TEST 14: Uncited entry
 ============================================================
 > 
 \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
@@ -140,7 +163,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 13: Citation format
+TEST 15: Citation format
 ============================================================
 Completed box being shipped out [1]
 \vbox(633.0+0.0)x407.0
@@ -152,7 +175,7 @@ Completed box being shipped out [1]
 ....\hbox(0.0+0.0)x345.0
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 419.95514fil
+..\vbox(550.0+0.0)x345.0, glue set 395.9577fil
 ...\write-{}
 ...\glue(\topskip) 2.5
 ...\hbox(7.5+2.5)x345.0, glue set 271.99986fil
@@ -443,6 +466,66 @@ Completed box being shipped out [1]
 ...\glue(\parskip) 0.0 plus 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 274.77765fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 D
+....\OT1/cmr/m/n/10 '
+....\OT1/cmr/m/n/10 A
+....\OT1/cmr/m/n/10 r
+....\OT1/cmr/m/n/10 c
+....\OT1/cmr/m/n/10 u
+....\OT1/cmr/m/n/10 s
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\OT1/cmr/m/n/10 (
+....\OT1/cmr/m/n/10 2
+....\OT1/cmr/m/n/10 0
+....\OT1/cmr/m/n/10 0
+....\OT1/cmr/m/n/10 5
+....\OT1/cmr/m/n/10 )
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 218.83311fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 D
+....\OT1/cmr/m/n/10 '
+....\OT1/cmr/m/n/10 A
+....\OT1/cmr/m/n/10 r
+....\OT1/cmr/m/n/10 c
+....\OT1/cmr/m/n/10 u
+....\OT1/cmr/m/n/10 s
+....\OT1/cmr/m/n/10 '
+....\OT1/cmr/m/n/10 s
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\OT1/cmr/m/n/10 e
+....\OT1/cmr/m/n/10 a
+....\OT1/cmr/m/n/10 r
+....\OT1/cmr/m/n/10 l
+....\OT1/cmr/m/n/10 y
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\OT1/cmr/m/n/10 w
+....\kern-0.27779
+....\OT1/cmr/m/n/10 o
+....\OT1/cmr/m/n/10 r
+....\OT1/cmr/m/n/10 k
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\OT1/cmr/m/n/10 (
+....\OT1/cmr/m/n/10 2
+....\OT1/cmr/m/n/10 0
+....\OT1/cmr/m/n/10 0
+....\OT1/cmr/m/n/10 5
+....\OT1/cmr/m/n/10 )
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
 ...\hbox(7.5+2.5)x345.0, glue set 134.36072fil
 ....\hbox(0.0+0.0)x0.0
 ....\OT1/cmr/m/n/10 (
@@ -499,8 +582,8 @@ Completed box being shipped out [1]
 ...\glue(\parskip) 0.0 plus 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\baselineskip) 2.55556
-...\hbox(6.94444+0.0)x345.0, glue set 290.88884fil
-....\hbox(0.0+0.0)x15.0
+...\hbox(6.94444+0.0)x345.0, glue set 305.88884fil
+....\hbox(0.0+0.0)x0.0
 ....\OT1/cmr/m/n/10 D
 ....\OT1/cmr/m/n/10 '
 ....\OT1/cmr/m/n/10 A
@@ -520,7 +603,7 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x345.0
 ============================================================
 ============================================================
-TEST 14: Bibilography contents
+TEST 16: Bibilography contents
 ============================================================
 The sequence \l_tmpa_seq contains the items (without outer braces):
 >  {\cslsetup { class = in-text, hanging-indent = true, line-spacing = 2,
@@ -539,7 +622,7 @@ Addison-Wesley.}
 l. ...}
 ============================================================
 ============================================================
-TEST 15: Bibilography format
+TEST 17: Bibilography format
 ============================================================
 Completed box being shipped out [2]
 \vbox(633.0+0.0)x407.0

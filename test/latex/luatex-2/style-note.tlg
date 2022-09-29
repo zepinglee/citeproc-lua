@@ -118,23 +118,49 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 10: Multiple cite items with options
+TEST 10: Narrative citation
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={composite}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=Bruce D’Arcus \textit {Boundaries of Dissent: Protest
+and State Power in the Media Age} (Routledge, 2005)..
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 11: Narrative citation
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@10},citationItems={{id={ITEM-1}}},properties={infix={'s
+early work},noteIndex={0},mode={composite}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=Bruce D’Arcus’s early work \textit {Boundaries of
+Dissent: Protest and State Power in the Media Age} (Routledge, 2005)..
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 12: Multiple cite items with options
 ============================================================
 > 
 \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@2},citationItems={{id={ITEM-1},prefix={See
-},label={page},locator={6}},{id={ITEM-2},label={figure},locator={2}}},properties={noteIndex={10}}.
+},label={page},locator={6}},{id={ITEM-2},label={figure},locator={2}}},properties={noteIndex={12}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=See D’Arcus, 6; Bennett, “Getting Property Right:
-‘Informal’ Mortgages in the Japanese Courts,” fig. 2..
+> \l__csl_citation_tl=See D’Arcus, \textit {Boundaries of Dissent: Protest and
+State Power in the Media Age}, 6; Bennett, “Getting Property Right: ‘Informal’
+Mortgages in the Japanese Courts,” fig. 2..
 <recently read> }
 l. ...}
 ============================================================
 ============================================================
-TEST 11: Cite only author
+TEST 13: Cite only author
 ============================================================
 > 
-\l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
+\l__csl_citation_info_tl=citationID={ITEM-1@11},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=Bruce D’Arcus.
@@ -142,7 +168,7 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 12: Uncited entry
+TEST 14: Uncited entry
 ============================================================
 > 
 \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
@@ -154,7 +180,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 13: Citation format
+TEST 15: Citation format
 ============================================================
 Completed box being shipped out [1]
 \vbox(633.0+0.0)x407.0, direction TLT
@@ -166,7 +192,7 @@ Completed box being shipped out [1]
 ....\hbox(0.0+0.0)x345.0, direction TLT
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 288.5596fil, direction TLT
+..\vbox(550.0+0.0)x345.0, glue set 226.23953fil, direction TLT
 ...\write-{}
 ...\glue(\topskip) 1.72308
 ...\hbox(8.27692+0.0)x345.0, glue set 337.18701fil, direction TLT
@@ -379,14 +405,58 @@ Completed box being shipped out [1]
 ....\glue(\rightskip) 0.0
 ...\glue(\parskip) 0.0 plus 1.0
 ...\glue(\parskip) 0.0
-...\glue(\baselineskip) 4.84
-...\hbox(7.16+0.11)x345.0, glue set 262.12fil, direction TLT
+...\glue(\baselineskip) 3.72308
+...\hbox(8.27692+0.0)x345.0, glue set 333.20398fil, direction TLT
 ....\localpar
 .....\localinterlinepenalty=0
 .....\localbrokenpenalty=0
 .....\localleftbox=null
 .....\localrightbox=null
-....\hbox(0.0+0.0)x15.0, direction TLT
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\penalty 10000
+....\hbox(8.27692+0.0)x8.466, direction TLT
+.....\mathon
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\hbox(4.648+0.0)x8.466, shifted -3.62892, direction TLT
+......\TU/lmr/m/n/7 1
+......\TU/lmr/m/n/7 1
+.....\mathoff
+....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 3.72308
+...\hbox(8.27692+0.0)x345.0, glue set 333.20398fil, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\penalty 10000
+....\hbox(8.27692+0.0)x8.466, direction TLT
+.....\mathon
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\hbox(4.648+0.0)x8.466, shifted -3.62892, direction TLT
+......\TU/lmr/m/n/7 1
+......\TU/lmr/m/n/7 2
+.....\mathoff
+....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.84
+...\hbox(7.16+0.11)x345.0, glue set 277.12fil, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
 ....\TU/lmr/m/n/10 B
 ....\TU/lmr/m/n/10 r
 ....\TU/lmr/m/n/10 u
@@ -1181,7 +1251,7 @@ Completed box being shipped out [1]
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
-...\hbox(6.81334+1.64)x345.0, glue set - 0.0434, direction TLT
+...\hbox(6.81334+2.0)x345.0, glue set - 0.31465, direction TLT
 ....\localpar
 .....\localinterlinepenalty=0
 .....\localbrokenpenalty=0
@@ -1195,6 +1265,291 @@ Completed box being shipped out [1]
 ......\hbox(3.99+0.126)x7.832, shifted -2.82333, direction TLT
 .......\TU/lmr/m/n/6 1
 .......\TU/lmr/m/n/6 0
+......\mathoff
+....\hbox(6.65+0.0)x0.0, direction TLT
+.....\rule(6.65+0.0)x0.0
+....\TU/lmr/m/n/8 B
+....\TU/lmr/m/n/8 r
+....\TU/lmr/m/n/8 u
+....\TU/lmr/m/n/8 c
+....\TU/lmr/m/n/8 e
+....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 D
+....\TU/lmr/m/n/8 ’
+....\TU/lmr/m/n/8 A
+....\TU/lmr/m/n/8 r
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/n/8 -
+....\TU/lmr/m/n/8 c
+....\TU/lmr/m/n/8 u
+....\TU/lmr/m/n/8 s
+....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/it/8 B
+....\TU/lmr/m/it/8 o
+....\TU/lmr/m/it/8 u
+....\TU/lmr/m/it/8 n
+....\TU/lmr/m/it/8 d
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/it/8 -
+....\TU/lmr/m/it/8 a
+....\TU/lmr/m/it/8 r
+....\TU/lmr/m/it/8 i
+....\TU/lmr/m/it/8 e
+....\TU/lmr/m/it/8 s
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 o
+....\TU/lmr/m/it/8 f
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 D
+....\TU/lmr/m/it/8 i
+....\TU/lmr/m/it/8 s
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/it/8 -
+....\TU/lmr/m/it/8 s
+....\TU/lmr/m/it/8 e
+....\TU/lmr/m/it/8 n
+....\TU/lmr/m/it/8 t
+....\TU/lmr/m/it/8 :
+....\glue(\spaceskip) 4.09601 plus 3.07199 minus 0.512
+....\TU/lmr/m/it/8 P
+....\TU/lmr/m/it/8 r
+....\kern-0.44 (font)
+....\TU/lmr/m/it/8 o
+....\TU/lmr/m/it/8 t
+....\TU/lmr/m/it/8 e
+....\TU/lmr/m/it/8 s
+....\TU/lmr/m/it/8 t
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 a
+....\TU/lmr/m/it/8 n
+....\TU/lmr/m/it/8 d
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 S
+....\TU/lmr/m/it/8 t
+....\TU/lmr/m/it/8 a
+....\TU/lmr/m/it/8 t
+....\TU/lmr/m/it/8 e
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 P
+....\TU/lmr/m/it/8 o
+....\TU/lmr/m/it/8 w
+....\TU/lmr/m/it/8 e
+....\TU/lmr/m/it/8 r
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 i
+....\TU/lmr/m/it/8 n
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 t
+....\TU/lmr/m/it/8 h
+....\TU/lmr/m/it/8 e
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 M
+....\TU/lmr/m/it/8 e
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/it/8 -
+.....= \kern-0.44 (font)
+....\TU/lmr/m/it/8 d
+....\TU/lmr/m/it/8 i
+....\TU/lmr/m/it/8 a
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 A
+....\kern-0.44 (font)
+....\TU/lmr/m/it/8 g
+....\TU/lmr/m/it/8 e
+....\kern0.224 (italic)
+....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 (
+....\TU/lmr/m/n/8 R
+....\TU/lmr/m/n/8 o
+....\TU/lmr/m/n/8 u
+....\TU/lmr/m/n/8 t
+....\TU/lmr/m/n/8 -
+....\discretionary (penalty 50)
+....\glue(\rightskip) 0.0
+...\penalty 500
+...\glue(\baselineskip) 1.5
+...\hbox(6.0+2.85002)x345.0, glue set 298.27197fil, direction TLT
+....\TU/lmr/m/n/8 l
+....\TU/lmr/m/n/8 e
+....\TU/lmr/m/n/8 d
+....\TU/lmr/m/n/8 g
+....\TU/lmr/m/n/8 e
+....\TU/lmr/m/n/8 ,
+....\glue(\spaceskip) 2.832 plus 1.76999 minus 0.75519
+....\TU/lmr/m/n/8 2
+....\TU/lmr/m/n/8 0
+....\TU/lmr/m/n/8 0
+....\TU/lmr/m/n/8 5
+....\TU/lmr/m/n/8 )
+....\TU/lmr/m/n/8 .
+....\penalty 10000
+....\rule(0.0+2.85002)x0.0
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\hbox(6.81334+1.632)x345.0, glue set - 0.5468, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.81334+0.0)x14.40002, glue set 6.56802fil, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(6.81334+0.0)x7.832, direction TLT
+......\mathon
+......\hbox(0.0+0.0)x0.0, direction TLT
+......\hbox(3.99+0.0)x7.832, shifted -2.82333, direction TLT
+.......\TU/lmr/m/n/6 1
+.......\TU/lmr/m/n/6 1
+......\mathoff
+....\hbox(6.65+0.0)x0.0, direction TLT
+.....\rule(6.65+0.0)x0.0
+....\TU/lmr/m/n/8 B
+....\TU/lmr/m/n/8 r
+....\TU/lmr/m/n/8 u
+....\TU/lmr/m/n/8 c
+....\TU/lmr/m/n/8 e
+....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 D
+....\TU/lmr/m/n/8 ’
+....\TU/lmr/m/n/8 A
+....\TU/lmr/m/n/8 r
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/n/8 -
+....\TU/lmr/m/n/8 c
+....\TU/lmr/m/n/8 u
+....\TU/lmr/m/n/8 s
+....\TU/lmr/m/n/8 ’
+....\TU/lmr/m/n/8 s
+....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 e
+....\TU/lmr/m/n/8 a
+....\TU/lmr/m/n/8 r
+....\TU/lmr/m/n/8 l
+....\TU/lmr/m/n/8 y
+....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 w
+....\kern-0.24 (font)
+....\TU/lmr/m/n/8 o
+....\TU/lmr/m/n/8 r
+....\TU/lmr/m/n/8 k
+....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/it/8 B
+....\TU/lmr/m/it/8 o
+....\TU/lmr/m/it/8 u
+....\TU/lmr/m/it/8 n
+....\TU/lmr/m/it/8 d
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/it/8 -
+....\TU/lmr/m/it/8 a
+....\TU/lmr/m/it/8 r
+....\TU/lmr/m/it/8 i
+....\TU/lmr/m/it/8 e
+....\TU/lmr/m/it/8 s
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 o
+....\TU/lmr/m/it/8 f
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 D
+....\TU/lmr/m/it/8 i
+....\TU/lmr/m/it/8 s
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/it/8 -
+....\TU/lmr/m/it/8 s
+....\TU/lmr/m/it/8 e
+....\TU/lmr/m/it/8 n
+....\TU/lmr/m/it/8 t
+....\TU/lmr/m/it/8 :
+....\glue(\spaceskip) 4.09601 plus 3.07199 minus 0.512
+....\TU/lmr/m/it/8 P
+....\TU/lmr/m/it/8 r
+....\kern-0.44 (font)
+....\TU/lmr/m/it/8 o
+....\TU/lmr/m/it/8 t
+....\TU/lmr/m/it/8 e
+....\TU/lmr/m/it/8 s
+....\TU/lmr/m/it/8 t
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 a
+....\TU/lmr/m/it/8 n
+....\TU/lmr/m/it/8 d
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 S
+....\TU/lmr/m/it/8 t
+....\TU/lmr/m/it/8 a
+....\TU/lmr/m/it/8 t
+....\TU/lmr/m/it/8 e
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 P
+....\TU/lmr/m/it/8 o
+....\TU/lmr/m/it/8 w
+....\TU/lmr/m/it/8 e
+....\TU/lmr/m/it/8 r
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 i
+....\TU/lmr/m/it/8 n
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 t
+....\TU/lmr/m/it/8 h
+....\TU/lmr/m/it/8 e
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 M
+....\TU/lmr/m/it/8 e
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/it/8 -
+.....= \kern-0.44 (font)
+....\TU/lmr/m/it/8 d
+....\TU/lmr/m/it/8 i
+....\TU/lmr/m/it/8 a
+....\glue(\rightskip) 0.0
+...\penalty 400
+...\glue(\baselineskip) 1.868
+...\hbox(6.0+2.85002)x345.0, glue set 259.544fil, direction TLT
+....\TU/lmr/m/it/8 A
+....\kern-0.44 (font)
+....\TU/lmr/m/it/8 g
+....\TU/lmr/m/it/8 e
+....\kern0.224 (italic)
+....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 (
+....\TU/lmr/m/n/8 R
+....\TU/lmr/m/n/8 o
+....\TU/lmr/m/n/8 u
+....\TU/lmr/m/n/8 t
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/n/8 -
+....\TU/lmr/m/n/8 l
+....\TU/lmr/m/n/8 e
+....\TU/lmr/m/n/8 d
+....\TU/lmr/m/n/8 g
+....\TU/lmr/m/n/8 e
+....\TU/lmr/m/n/8 ,
+....\glue(\spaceskip) 2.832 plus 1.76999 minus 0.75519
+....\TU/lmr/m/n/8 2
+....\TU/lmr/m/n/8 0
+....\TU/lmr/m/n/8 0
+....\TU/lmr/m/n/8 5
+....\TU/lmr/m/n/8 )
+....\TU/lmr/m/n/8 .
+....\penalty 10000
+....\rule(0.0+2.85002)x0.0
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\hbox(6.81334+1.632)x345.0, glue set 0.86656, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(6.81334+0.0)x14.40002, glue set 6.56802fil, direction TLT
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\hbox(6.81334+0.0)x7.832, direction TLT
+......\mathon
+......\hbox(0.0+0.0)x0.0, direction TLT
+......\hbox(3.99+0.0)x7.832, shifted -2.82333, direction TLT
+.......\TU/lmr/m/n/6 1
+.......\TU/lmr/m/n/6 2
 ......\mathoff
 ....\hbox(6.65+0.0)x0.0, direction TLT
 .....\rule(6.65+0.0)x0.0
@@ -1213,9 +1568,86 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/8 s
 ....\TU/lmr/m/n/8 ,
 ....\glue(\spaceskip) 2.832 plus 1.76999 minus 0.75519
+....\TU/lmr/m/it/8 B
+....\TU/lmr/m/it/8 o
+....\TU/lmr/m/it/8 u
+....\TU/lmr/m/it/8 n
+....\TU/lmr/m/it/8 d
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/it/8 -
+....\TU/lmr/m/it/8 a
+....\TU/lmr/m/it/8 r
+....\TU/lmr/m/it/8 i
+....\TU/lmr/m/it/8 e
+....\TU/lmr/m/it/8 s
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 o
+....\TU/lmr/m/it/8 f
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 D
+....\TU/lmr/m/it/8 i
+....\TU/lmr/m/it/8 s
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/it/8 -
+....\TU/lmr/m/it/8 s
+....\TU/lmr/m/it/8 e
+....\TU/lmr/m/it/8 n
+....\TU/lmr/m/it/8 t
+....\TU/lmr/m/it/8 :
+....\glue(\spaceskip) 4.09601 plus 3.07199 minus 0.512
+....\TU/lmr/m/it/8 P
+....\TU/lmr/m/it/8 r
+....\kern-0.44 (font)
+....\TU/lmr/m/it/8 o
+....\TU/lmr/m/it/8 t
+....\TU/lmr/m/it/8 e
+....\TU/lmr/m/it/8 s
+....\TU/lmr/m/it/8 t
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 a
+....\TU/lmr/m/it/8 n
+....\TU/lmr/m/it/8 d
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 S
+....\TU/lmr/m/it/8 t
+....\TU/lmr/m/it/8 a
+....\TU/lmr/m/it/8 t
+....\TU/lmr/m/it/8 e
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 P
+....\TU/lmr/m/it/8 o
+....\TU/lmr/m/it/8 w
+....\TU/lmr/m/it/8 e
+....\TU/lmr/m/it/8 r
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 i
+....\TU/lmr/m/it/8 n
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 t
+....\TU/lmr/m/it/8 h
+....\TU/lmr/m/it/8 e
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 M
+....\TU/lmr/m/it/8 e
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/it/8 -
+.....= \kern-0.44 (font)
+....\TU/lmr/m/it/8 d
+....\TU/lmr/m/it/8 i
+....\TU/lmr/m/it/8 a
+....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+....\TU/lmr/m/it/8 A
+....\kern-0.44 (font)
+....\TU/lmr/m/it/8 g
+....\TU/lmr/m/it/8 e
+....\TU/lmr/m/n/8 ,
+....\glue(\spaceskip) 2.832 plus 1.76999 minus 0.75519
 ....\TU/lmr/m/n/8 6
 ....\TU/lmr/m/n/8 ;
-....\glue(\spaceskip) 2.832 plus 2.124 minus 0.62933
+....\glue(\rightskip) 0.0
+...\penalty 400
+...\glue(\baselineskip) 2.236
+...\hbox(5.632+2.85002)x345.0, glue set 15.28793fil, direction TLT
 ....\TU/lmr/m/n/8 B
 ....\TU/lmr/m/n/8 e
 ....\TU/lmr/m/n/8 n
@@ -1301,10 +1733,7 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/8 e
 ....\TU/lmr/m/n/8 s
 ....\TU/lmr/m/n/8 e
-....\glue(\rightskip) 0.0
-...\penalty 400
-...\glue(\baselineskip) 2.228
-...\hbox(5.632+2.85002)x345.0, glue set 289.008fil, direction TLT
+....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
 ....\TU/lmr/m/n/8 C
 ....\TU/lmr/m/n/8 o
 ....\TU/lmr/m/n/8 u
@@ -1332,7 +1761,7 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x345.0, direction TLT
 ============================================================
 ============================================================
-TEST 14: Bibilography contents
+TEST 16: Bibilography contents
 ============================================================
 The sequence \l_tmpa_seq contains the items (without outer braces):
 >  {\cslsetup { class = note, hanging-indent = true, line-spacing = 1,
@@ -1351,7 +1780,7 @@ Addison-Wesley, 1994.}
 l. ...}
 ============================================================
 ============================================================
-TEST 15: Bibilography format
+TEST 17: Bibilography format
 ============================================================
 Completed box being shipped out [2]
 \vbox(633.0+0.0)x407.0, direction TLT

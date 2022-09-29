@@ -173,7 +173,7 @@ function core.make_citation(citation_info)
   -- assert(citation.citationItems)
   -- assert(citation.properties)
 
- citation.citationItems = parse_latex_seq(citation.citationItems)
+  citation.citationItems = parse_latex_seq(citation.citationItems)
 
   for i, item in ipairs(citation.citationItems) do
     citation.citationItems[i] = parse_latex_prop(item)

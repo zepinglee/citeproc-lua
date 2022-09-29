@@ -47,6 +47,12 @@
 \DeclareDocumentCommand \cite { o o m }
   { \__csl_cite:nnn {#1} {#2} {#3} }
 
+\NewDocumentCommand \textcite { o o m }
+  { \__csl_text_cite:nnn {#1} {#2} {#3} }
+
+\NewDocumentCommand \citet { o o m }
+  { \__csl_text_cite:nnn {#1} {#2} {#3} }
+
 
 % \cites[⟨prenote⟩][⟨postnote⟩]{⟨key⟩}...[⟨prenote⟩][⟨postnote⟩]{⟨key⟩}
 \NewDocumentCommand \cites { }
@@ -57,15 +63,31 @@
 
 
 \seq_new:N \l__csl_cite_keys_seq
-\seq_new:N \l__csl_cite_items_seq
-\prop_clear:N \l__csl_citation_info_prop
+\seq_new:N \l__csl_citation_items_seq
+\prop_new:N \l__csl_citation_properties_prop
+\prop_new:N \l__csl_citation_info_prop
 
 \cs_new:Npn \__csl_cite:nnn #1#2#3
   {
     \seq_clear:N \l__csl_cite_keys_seq
-    \seq_clear:N \l__csl_cite_items_seq
-    \__csl_process_cite_items:nnn {#1} {#2} {#3}
-    \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_cite_items_seq
+    \seq_clear:N \l__csl_citation_items_seq
+    \prop_clear:N \l__csl_citation_properties_prop
+    \__csl_process_cite_input:nnn {#1} {#2} {#3}
+    \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
+    \__csl_make_citation:N \l__csl_citation_info_prop
+  }
+
+
+\cs_new:Npn \__csl_text_cite:nnn #1#2#3
+  {
+    \seq_clear:N \l__csl_cite_keys_seq
+    \seq_clear:N \l__csl_citation_items_seq
+    \prop_clear:N \l__csl_citation_properties_prop
+    \__csl_process_cite_input:nnn {#1} {#2} {#3}
+    \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
+    \prop_put:Nnn \l__csl_citation_properties_prop { noteIndex } { 0 }
+    \prop_put:Nnn \l__csl_citation_properties_prop { mode } { composite }
+    % \bool_set_false:N \l__csl_note_bool
     \__csl_make_citation:N \l__csl_citation_info_prop
   }
 
@@ -73,7 +95,8 @@
 \cs_new:Npn \__csl_cites:
   {
     \seq_clear:N \l__csl_cite_keys_seq
-    \seq_clear:N \l__csl_cite_items_seq
+    \seq_clear:N \l__csl_citation_items_seq
+    \prop_clear:N \l__csl_citation_properties_prop
     \__csl_next_cites:nnn
   }
 
@@ -81,11 +104,11 @@
   {
     \tl_if_novalue:nTF {#3}
       {
-        \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_cite_items_seq
+        \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
         \__csl_make_citation:N \l__csl_citation_info_prop
       }
       {
-        \__csl_process_cite_items:nnn {#1} {#2} {#3}
+        \__csl_process_cite_input:nnn {#1} {#2} {#3}
         \__csl_next_cites:nnn
       }
   }
@@ -94,35 +117,33 @@
 \cs_new:Npn \__csl_cite_author:nnn #1#2#3
   {
     \seq_clear:N \l__csl_cite_keys_seq
-    \seq_clear:N \l__csl_cite_items_seq
-    \__csl_process_cite_items:nnn {#1} {#2} {#3}
-    \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_cite_items_seq
-    \prop_put:Nnn \l__csl_citation_info_prop { properties }
-      {
-        noteIndex = { 0 } ,
-        mode = { author-only }
-      }
+    \seq_clear:N \l__csl_citation_items_seq
+    \prop_clear:N \l__csl_citation_properties_prop
+    \__csl_process_cite_input:nnn {#1} {#2} {#3}
+    \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
+    \prop_put:Nnn \l__csl_citation_properties_prop { noteIndex } { 0 }
+    \prop_put:Nnn \l__csl_citation_properties_prop { mode } { author-only }
     \bool_set_false:N \l__csl_note_bool
     \__csl_make_citation:N \l__csl_citation_info_prop
   }
 
 
 % Appends the cite key into \l__csl_cite_keys_seq and cite-items into
-% \l__csl_cite_items_seq
+% \l__csl_citation_items_seq
 % #1, #2: prenote/postnote
 % #3: keys
-\cs_new:Npn \__csl_process_cite_items:nnn #1#2#3
+\cs_new:Npn \__csl_process_cite_input:nnn #1#2#3
   {
     \tl_if_novalue:nTF {#2}
       {
         \tl_if_novalue:nTF {#1}
-          { \__csl_process_cite_items_aux:nnn { } { } {#3} }
-          { \__csl_process_cite_items_aux:nnn { } {#1} {#3} }
+          { \__csl_process_cite_input_aux:nnn { } { } {#3} }
+          { \__csl_process_cite_input_aux:nnn { } {#1} {#3} }
       }
-      { \__csl_process_cite_items_aux:nnn {#1} {#2} {#3} }
+      { \__csl_process_cite_input_aux:nnn {#1} {#2} {#3} }
   }
 
-\cs_new:Npn \__csl_process_cite_items_aux:nnn #1#2#3
+\cs_new:Npn \__csl_process_cite_input_aux:nnn #1#2#3
   % #1: prenote, #2: postnote, #3: keys
   % Return: "{id={ITEM-1},{locator=6},...}, {id={ITEM-2},...}, ..."
   {
@@ -144,7 +165,7 @@
 
 \cs_new:Npn \__csl_process_cite_item:nnn #1#2#3
   % #1: prenote, #2: postnote, #3: key
-  % Save "{id={ITEM},locator={42},label={page}}" into \l__csl_cite_items_seq
+  % Save "{id={ITEM},locator={42},label={page}}" into \l__csl_citation_items_seq
   {
     \prop_clear:N \l__csl_cite_item_prop
     \prop_put:Nnn \l__csl_cite_item_prop { id } {#3}
@@ -172,11 +193,10 @@
               }
           }
       }
-    \seq_clear:N \l_tmpa_seq
-    \prop_map_inline:Nn \l__csl_cite_item_prop
-      { \seq_put_right:Nn \l_tmpa_seq { ##1 = {##2} } }
-    \seq_put_right:Nx \l__csl_cite_items_seq
-      { { \seq_use:Nn \l_tmpa_seq { , } } }
+    \__csl_serialize_prop:NN \l__csl_cite_item_prop \l_tmpa_tl
+    \tl_put_left:NV \l_tmpa_tl { \c_left_brace_str }
+    \tl_put_right:NV \l_tmpa_tl { \c_right_brace_str }
+    \seq_put_right:NV \l__csl_citation_items_seq \l_tmpa_tl
   }
 
 \cs_new:Npn \__csl_set_locator:nn #1#2
@@ -223,6 +243,8 @@
     verse           .code:n = { \__csl_set_locator:nn { verse           } {#1} } ,
     version         .code:n = { \__csl_set_locator:nn { version         } {#1} } ,
     volume          .code:n = { \__csl_set_locator:nn { volume          } {#1} } ,
+    % Citation properties
+    infix           .prop_put:N = \l__csl_citation_properties_prop,
   }
 
 
@@ -230,22 +252,17 @@
 \tl_new:N \l__csl_cite_items_tl
 \tl_new:N \l__csl_note_index_tl
 
-% Prepare the citation info and save it to \l__csl_citation_info_prop
+% Load the cite keys and prepare:
+%   - \l__csl_citation_id_tl
+%   - \l__csl_citation_properties_prop
+%
 % #1: \l__csl_cite_keys_seq
-% #2: \l__csl_cite_items_seq
+% #2: \l__csl_citation_items_seq
 \cs_new:Npn \__csl_process_citation_info:NN #1#2
   {
-    \prop_clear:N \l__csl_citation_info_prop
-    % citationID
     \__csl_process_citation_id:NN \l__csl_citation_id_tl #1
-    \prop_put:NnV \l__csl_citation_info_prop { citationID } \l__csl_citation_id_tl
-    % citationItems
-    \tl_set:Nx \l__csl_cite_items_tl
-      { \seq_use:Nn #2 { , } }
-    \prop_put:NnV \l__csl_citation_info_prop { citationItems } \l__csl_cite_items_tl
-    % properties
     \__csl_get_note_index:N \l__csl_note_index_tl
-    \prop_put:Nnx \l__csl_citation_info_prop { properties } { noteIndex = { \l__csl_note_index_tl } }
+    \prop_put:NnV \l__csl_citation_properties_prop { noteIndex } \l__csl_note_index_tl
   }
 
 
@@ -253,18 +270,25 @@
 \tl_new:N \l__csl_citation_tl
 \prop_new:N \g__csl_citations_prop
 
+\tl_new:N \l__csl_citation_properties_tl
+
 % Write citation info to aux and print the citation contents.
 % #1: \l__csl_citation_info_prop
 \cs_new:Npn \__csl_make_citation:N #1
   {
-    \tl_clear:N \l__csl_citation_info_tl
-    \prop_map_inline:Nn #1
-      {
-        \tl_if_empty:NF \l__csl_citation_info_tl
-          { \tl_put_right:Nn \l__csl_citation_info_tl { , } }
-        \tl_put_right:Nn \l__csl_citation_info_tl { ##1 = { ##2 } }
-      }
+    \prop_clear:N \l__csl_citation_info_prop
+    % citationID
+    \prop_put:NnV \l__csl_citation_info_prop { citationID } \l__csl_citation_id_tl
+    % citationItems
+    \__csl_serialize_seq:NN \l__csl_citation_items_seq \l__csl_cite_items_tl
+    \prop_put:NnV \l__csl_citation_info_prop { citationItems } \l__csl_cite_items_tl
+    % properties
+    \__csl_serialize_prop:NN \l__csl_citation_properties_prop \l__csl_citation_properties_tl
+    \prop_put:NnV \l__csl_citation_info_prop { properties } \l__csl_citation_properties_tl
+    \__csl_serialize_prop:NN \l__csl_citation_info_prop \l__csl_citation_info_tl
+    % Write to .aux file
     \exp_args:NV \__csl_write_aux_citation:n \l__csl_citation_info_tl
+    % Print the citation string
     \prop_get:NVNTF \g__csl_citations_prop \l__csl_citation_id_tl
       \l__csl_citation_tl
       { \exp_args:NV \__csl_print_citation:n \l__csl_citation_tl }
@@ -282,6 +306,31 @@
       }
   }
 
+% #1: seq
+% #2: tl
+\cs_new:Npn \__csl_serialize_seq:NN #1#2
+  {
+    \tl_clear:N #2
+    \seq_map_inline:Nn #1
+      {
+        \tl_if_empty:NF #2
+          { \tl_put_right:Nn #2 { , } }
+        \tl_put_right:Nn #2 { ##1 }
+      }
+  }
+
+% #1: prop
+% #2: tl
+\cs_new:Npn \__csl_serialize_prop:NN #1#2
+  {
+    \tl_clear:N #2
+    \prop_map_inline:Nn #1
+      {
+        \tl_if_empty:NF #2
+          { \tl_put_right:Nn #2 { , } }
+        \tl_put_right:Nn #2 { ##1 = { ##2 } }
+      }
+  }
 
 \tl_new:N \l__csl_cite_keys_tl
 \tl_new:N \l__csl_citation_count_tl
@@ -380,10 +429,10 @@
 \cs_new:Npn \__csl_no_cite:n #1
   {
     \seq_clear:N \l__csl_cite_keys_seq
-    \seq_clear:N \l__csl_cite_items_seq
-    \__csl_process_cite_items:nnn { } { } {#1}
+    \seq_clear:N \l__csl_citation_items_seq
+    \__csl_process_cite_input:nnn { } { } {#1}
     \tl_set:Nx \l__csl_cite_items_tl
-      { \seq_use:Nn \l__csl_cite_items_seq { , } }
+      { \seq_use:Nn \l__csl_citation_items_seq { , } }
     \tl_set:Nx \l__csl_citation_info_tl
       {
         citationID    = { @nocite } ,

@@ -123,26 +123,12 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 10: Multiple cite items with options
-============================================================
-Package citation-style-language Warning: Citation `ITEM-1, ITEM-2' on page 1
-(citation-style-language)                undefined on line ....
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@2},citationItems={{id={ITEM-1},prefix={See
-},label={page},locator={6}},{id={ITEM-2},label={figure},locator={2}}},properties={noteIndex={10}}.
-<recently read> }
-l. ...}
-> \l__csl_citation_tl=[\textbf {ITEM-1, ITEM-2}].
-<recently read> }
-l. ...}
-============================================================
-============================================================
-TEST 11: Cite only author
+TEST 10: Narrative citation
 ============================================================
 Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
 (citation-style-language)                on line ....
 > 
-\l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
+\l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={composite}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
@@ -150,7 +136,48 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 12: Uncited entry
+TEST 11: Narrative citation
+============================================================
+Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
+(citation-style-language)                on line ....
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@10},citationItems={{id={ITEM-1}}},properties={infix={'s
+early work},noteIndex={0},mode={composite}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 12: Multiple cite items with options
+============================================================
+Package citation-style-language Warning: Citation `ITEM-1, ITEM-2' on page 1
+(citation-style-language)                undefined on line ....
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@2},citationItems={{id={ITEM-1},prefix={See
+},label={page},locator={6}},{id={ITEM-2},label={figure},locator={2}}},properties={noteIndex={12}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=[\textbf {ITEM-1, ITEM-2}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 13: Cite only author
+============================================================
+Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
+(citation-style-language)                on line ....
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@11},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 14: Uncited entry
 ============================================================
 > 
 \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
@@ -162,7 +189,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 13: Bibilography
+TEST 15: Bibilography
 ============================================================
 Package citation-style-language Warning: The bibliography is empty.
 ============================================================

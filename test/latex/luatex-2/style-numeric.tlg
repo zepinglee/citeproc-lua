@@ -105,7 +105,30 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 10: Multiple cite items with options
+TEST 10: Narrative citation
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={composite}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=[NO\_PRINTED\_FORM] [1].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 11: Narrative citation
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@10},citationItems={{id={ITEM-1}}},properties={infix={'s
+early work},noteIndex={0},mode={composite}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=[NO\_PRINTED\_FORM]’s early work [1].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 12: Multiple cite items with options
 ============================================================
 > 
 \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@2},citationItems={{id={ITEM-1},prefix={See
@@ -117,10 +140,10 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 11: Cite only author
+TEST 13: Cite only author
 ============================================================
 > 
-\l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
+\l__csl_citation_info_tl=citationID={ITEM-1@11},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=[NO\_PRINTED\_FORM].
@@ -128,7 +151,7 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 12: Uncited entry
+TEST 14: Uncited entry
 ============================================================
 > 
 \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
@@ -140,7 +163,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 13: Citation format
+TEST 15: Citation format
 ============================================================
 Completed box being shipped out [1]
 \vbox(633.0+0.0)x407.0, direction TLT
@@ -152,7 +175,7 @@ Completed box being shipped out [1]
 ....\hbox(0.0+0.0)x345.0, direction TLT
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 419.95514fil, direction TLT
+..\vbox(550.0+0.0)x345.0, glue set 395.9577fil, direction TLT
 ...\write-{}
 ...\glue(\topskip) 2.5
 ...\hbox(7.5+2.5)x345.0, glue set 331.10999fil, direction TLT
@@ -388,6 +411,92 @@ Completed box being shipped out [1]
 ...\glue(\parskip) 0.0 plus 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 214.43001fil, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\TU/lmr/m/n/10 [
+....\TU/lmr/m/n/10 N
+....\TU/lmr/m/n/10 O
+....\TU/lmr/m/n/10 _
+....\TU/lmr/m/n/10 P
+....\TU/lmr/m/n/10 R
+....\TU/lmr/m/n/10 I
+....\TU/lmr/m/n/10 N
+....\TU/lmr/m/n/10 T
+....\TU/lmr/m/n/10 E
+....\TU/lmr/m/n/10 D
+....\TU/lmr/m/n/10 _
+....\TU/lmr/m/n/10 F
+....\kern-0.28 (font)
+....\TU/lmr/m/n/10 O
+....\TU/lmr/m/n/10 R
+....\TU/lmr/m/n/10 M
+....\TU/lmr/m/n/10 ]
+....\glue(\spaceskip) 3.33 plus 1.66331 minus 1.1111
+....\TU/lmr/m/n/10 [
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 ]
+....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 158.49fil, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\TU/lmr/m/n/10 [
+....\TU/lmr/m/n/10 N
+....\TU/lmr/m/n/10 O
+....\TU/lmr/m/n/10 _
+....\TU/lmr/m/n/10 P
+....\TU/lmr/m/n/10 R
+....\TU/lmr/m/n/10 I
+....\TU/lmr/m/n/10 N
+....\TU/lmr/m/n/10 T
+....\TU/lmr/m/n/10 E
+....\TU/lmr/m/n/10 D
+....\TU/lmr/m/n/10 _
+....\TU/lmr/m/n/10 F
+....\kern-0.28 (font)
+....\TU/lmr/m/n/10 O
+....\TU/lmr/m/n/10 R
+....\TU/lmr/m/n/10 M
+....\TU/lmr/m/n/10 ]
+....\TU/lmr/m/n/10 ’
+....\TU/lmr/m/n/10 s
+....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 e
+....\TU/lmr/m/n/10 a
+....\TU/lmr/m/n/10 r
+....\TU/lmr/m/n/10 l
+....\TU/lmr/m/n/10 y
+....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 w
+....\kern-0.28 (font)
+....\TU/lmr/m/n/10 o
+....\TU/lmr/m/n/10 r
+....\TU/lmr/m/n/10 k
+....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+....\TU/lmr/m/n/10 [
+....\TU/lmr/m/n/10 1
+....\TU/lmr/m/n/10 ]
+....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
 ...\hbox(7.5+2.5)x345.0, glue set 240.14fil, direction TLT
 ....\localpar
 .....\localinterlinepenalty=0
@@ -428,13 +537,13 @@ Completed box being shipped out [1]
 ...\glue(\parskip) 0.0 plus 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\baselineskip) 2.0
-...\hbox(7.5+2.5)x345.0, glue set 213.32fil, direction TLT
+...\hbox(7.5+2.5)x345.0, glue set 228.32fil, direction TLT
 ....\localpar
 .....\localinterlinepenalty=0
 .....\localbrokenpenalty=0
 .....\localleftbox=null
 .....\localrightbox=null
-....\hbox(0.0+0.0)x15.0, direction TLT
+....\hbox(0.0+0.0)x0.0, direction TLT
 ....\TU/lmr/m/n/10 [
 ....\TU/lmr/m/n/10 N
 ....\TU/lmr/m/n/10 O
@@ -466,7 +575,7 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x345.0, direction TLT
 ============================================================
 ============================================================
-TEST 14: Bibilography contents
+TEST 16: Bibilography contents
 ============================================================
 The sequence \l_tmpa_seq contains the items (without outer braces):
 >  {\cslsetup { class = in-text, line-spacing = 1, entry-spacing = 0, }}
@@ -484,7 +593,7 @@ USA: Addison-Wesley, 1994.}
 l. ...}
 ============================================================
 ============================================================
-TEST 15: Bibilography format
+TEST 17: Bibilography format
 ============================================================
 Completed box being shipped out [2]
 \vbox(633.0+0.0)x407.0, direction TLT

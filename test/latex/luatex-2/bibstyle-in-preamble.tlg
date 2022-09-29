@@ -105,7 +105,30 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 10: Multiple cite items with options
+TEST 10: Narrative citation
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={composite}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=D’Arcus (2005).
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 11: Narrative citation
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@10},citationItems={{id={ITEM-1}}},properties={infix={'s
+early work},noteIndex={0},mode={composite}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=D’Arcus’s early work (2005).
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 12: Multiple cite items with options
 ============================================================
 > 
 \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@2},citationItems={{id={ITEM-1},prefix={See
@@ -117,10 +140,10 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 11: Cite only author
+TEST 13: Cite only author
 ============================================================
 > 
-\l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
+\l__csl_citation_info_tl=citationID={ITEM-1@11},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=D’Arcus.
@@ -128,7 +151,7 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 12: Uncited entry
+TEST 14: Uncited entry
 ============================================================
 > 
 \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
@@ -140,7 +163,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 13: Bibilography
+TEST 15: Bibilography
 ============================================================
 The sequence \l_tmpa_seq contains the items (without outer braces):
 >  {\cslsetup { class = in-text, hanging-indent = true, line-spacing = 2,
