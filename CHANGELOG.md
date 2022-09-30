@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add narrative citation commands `\textcite` and `\citet` ([#17](https://github.com/zepinglee/citeproc-lua/issues/17)).
 - Add parenthetical citation commands `\parencite` and `\citep` for compatibility.
 
+### Changed
+
+- The "-locator" suffixes are removed from the `article-locator` and `title-locator` options.
+
 ## [v0.2.2] - 2022-09-23
 
 ### Fixed
