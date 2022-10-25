@@ -3,6 +3,12 @@
 return {
   description = "BibTeX CSL mapping",
   types = {
+    abstract = {
+      csl = nil,
+    },
+    ancienttext = {
+      csl = "classic",
+    },
     archival = {
       csl = "collection",
     },
@@ -11,6 +17,15 @@ return {
     },
     article = {
       csl = "article-journal",
+    },
+    ["article-journal"] = {
+      csl = "article-journal",
+    },
+    ["article-magazine"] = {
+      csl = "article-magazine",
+    },
+    ["article-newspaper"] = {
+      csl = "article-newspaper",
     },
     artifactdataset = {
       csl = "dataset",
@@ -33,20 +48,80 @@ return {
     bibnote = {
       csl = nil,
     },
+    bill = {
+      csl = "bill",
+    },
     book = {
       csl = "book",
+    },
+    bookinarticle = {
+      csl = nil,
     },
     bookinbook = {
       csl = "chapter",
     },
+    bookincollection = {
+      csl = nil,
+    },
+    bookininarticle = {
+      csl = nil,
+    },
+    bookininbook = {
+      csl = nil,
+    },
+    bookinincollection = {
+      csl = nil,
+    },
+    bookininproceedings = {
+      csl = nil,
+    },
+    bookininreference = {
+      csl = nil,
+    },
+    bookinjournal = {
+      csl = nil,
+    },
+    bookinmathesis = {
+      csl = nil,
+    },
+    bookinphdthesis = {
+      csl = nil,
+    },
+    bookinproceedings = {
+      csl = nil,
+    },
+    bookinreference = {
+      csl = nil,
+    },
+    bookinthesis = {
+      csl = nil,
+    },
     booklet = {
       csl = "pamphlet",
+    },
+    broadcast = {
+      csl = "broadcast",
     },
     brochure = {
       csl = "pamphlet",
     },
-    cconference = {
+    catalog = {
       csl = nil,
+    },
+    cconference = {
+      csl = "paper-conference",
+    },
+    chapter = {
+      csl = "chapter",
+    },
+    classic = {
+      csl = "classic",
+    },
+    classictext = {
+      csl = "classic",
+    },
+    codefragment = {
+      csl = "software",
     },
     collection = {
       csl = "book",
@@ -60,8 +135,17 @@ return {
     commented = {
       csl = nil,
     },
+    committee = {
+      csl = nil,
+    },
     conference = {
       csl = "paper-conference",
+    },
+    conferencepaper = {
+      csl = "paper-conference",
+    },
+    constitution = {
+      csl = "legislation",
     },
     ctan = {
       csl = "software",
@@ -84,11 +168,17 @@ return {
     customf = {
       csl = nil,
     },
+    data = {
+      csl = nil,
+    },
     database = {
       csl = "dataset",
     },
     dataset = {
       csl = "dataset",
+    },
+    degree = {
+      csl = nil,
     },
     dictionary = {
       csl = "book",
@@ -96,20 +186,50 @@ return {
     docthesis = {
       csl = "thesis",
     },
+    document = {
+      csl = "document",
+    },
     electronic = {
       csl = "webpage",
+    },
+    entry = {
+      csl = "entry",
+    },
+    ["entry-dictionary"] = {
+      csl = "entry-dictionary",
+    },
+    ["entry-encyclopedia"] = {
+      csl = "entry-encyclopedia",
     },
     eulegislation = {
       csl = "legislation",
     },
+    event = {
+      csl = "event",
+    },
+    exhibcatalog = {
+      csl = nil,
+    },
+    figure = {
+      csl = "figure",
+    },
     footnote = {
+      csl = nil,
+    },
+    funding = {
       csl = nil,
     },
     game = {
       csl = "software",
     },
+    gitcommit = {
+      csl = nil,
+    },
     govpub = {
       csl = "regulation",
+    },
+    graphic = {
+      csl = "graphic",
     },
     habthesis = {
       csl = "thesis",
@@ -117,20 +237,68 @@ return {
     heading = {
       csl = nil,
     },
+    hearing = {
+      csl = "hearing",
+    },
     hidden = {
       csl = nil,
     },
     image = {
       csl = "graphic",
     },
+    inarticle = {
+      csl = nil,
+    },
+    inaudio = {
+      csl = nil,
+    },
     inbook = {
       csl = "chapter",
+    },
+    incatalog = {
+      csl = nil,
     },
     incollection = {
       csl = "chapter",
     },
+    incommentary = {
+      csl = nil,
+    },
+    inexhibcatalog = {
+      csl = nil,
+    },
+    ininarticle = {
+      csl = nil,
+    },
+    ininbook = {
+      csl = nil,
+    },
+    inincollection = {
+      csl = nil,
+    },
+    ininproceedings = {
+      csl = nil,
+    },
+    ininreference = {
+      csl = nil,
+    },
+    inlexicon = {
+      csl = nil,
+    },
     inloosecollection = {
       csl = "chapter",
+    },
+    inmathesis = {
+      csl = nil,
+    },
+    inmovie = {
+      csl = nil,
+    },
+    inmusic = {
+      csl = nil,
+    },
+    inphdthesis = {
+      csl = nil,
     },
     inpress = {
       csl = "article",
@@ -147,6 +315,15 @@ return {
     internet = {
       csl = "webpage",
     },
+    interview = {
+      csl = "interview",
+    },
+    inthesis = {
+      csl = nil,
+    },
+    invideo = {
+      csl = nil,
+    },
     journalpart = {
       csl = nil,
     },
@@ -154,18 +331,30 @@ return {
       csl = "periodical",
     },
     jurisdiction = {
-      csl = nil,
+      csl = "legal_case",
     },
     jurthesis = {
       csl = "thesis",
     },
+    legadminmaterial = {
+      csl = "regulation",
+    },
     legal = {
       csl = "treaty",
+    },
+    legal_case = {
+      csl = "legal_case",
     },
     legislation = {
       csl = "legislation",
     },
+    legmaterial = {
+      csl = "legislation",
+    },
     letter = {
+      csl = "personal_communication",
+    },
+    letters = {
       csl = "personal_communication",
     },
     lexicon = {
@@ -176,6 +365,9 @@ return {
     },
     manual = {
       csl = "report",
+    },
+    manuscript = {
+      csl = "manuscript",
     },
     map = {
       csl = "map",
@@ -192,11 +384,17 @@ return {
     misc = {
       csl = "document",
     },
+    mlasource = {
+      csl = nil,
+    },
     monograph = {
       csl = "book",
     },
     monography = {
       csl = "book",
+    },
+    motion_picture = {
+      csl = "motion_picture",
     },
     movie = {
       csl = "motion_picture",
@@ -204,11 +402,20 @@ return {
     music = {
       csl = "song",
     },
+    musical_score = {
+      csl = "musical_score",
+    },
     mvbook = {
       csl = "book",
     },
     mvcollection = {
       csl = "book",
+    },
+    mvcommentary = {
+      csl = nil,
+    },
+    mvlexicon = {
+      csl = nil,
     },
     mvproceedings = {
       csl = "book",
@@ -216,7 +423,13 @@ return {
     mvreference = {
       csl = "book",
     },
+    nameonly = {
+      csl = nil,
+    },
     news = {
+      csl = "article-newspaper",
+    },
+    newsarticle = {
       csl = "article-newspaper",
     },
     newspaper = {
@@ -228,6 +441,12 @@ return {
     other = {
       csl = nil,
     },
+    pamphlet = {
+      csl = "pamphlet",
+    },
+    ["paper-conference"] = {
+      csl = "paper-conference",
+    },
     patent = {
       csl = "patent",
     },
@@ -237,8 +456,17 @@ return {
     periodical = {
       csl = "periodical",
     },
+    personal_communication = {
+      csl = "personal_communication",
+    },
     phdthesis = {
       csl = "thesis",
+    },
+    post = {
+      csl = "post",
+    },
+    ["post-weblog"] = {
+      csl = "post-weblog",
     },
     preamble = {
       csl = nil,
@@ -258,6 +486,9 @@ return {
     reference = {
       csl = "book",
     },
+    regulation = {
+      csl = "regulation",
+    },
     report = {
       csl = "report",
     },
@@ -266,6 +497,15 @@ return {
     },
     review = {
       csl = "review",
+    },
+    ["review-book"] = {
+      csl = "review-book",
+    },
+    school = {
+      csl = nil,
+    },
+    seminarpaper = {
+      csl = nil,
     },
     set = {
       csl = nil,
@@ -276,10 +516,25 @@ return {
     software = {
       csl = "software",
     },
+    softwaremodule = {
+      csl = "software",
+    },
+    softwareversion = {
+      csl = nil,
+    },
+    song = {
+      csl = "song",
+    },
+    speech = {
+      csl = "speech",
+    },
     standard = {
       csl = "standard",
     },
     string = {
+      csl = nil,
+    },
+    student = {
       csl = nil,
     },
     suppbook = {
@@ -291,6 +546,12 @@ return {
     suppperiodical = {
       csl = "article",
     },
+    talk = {
+      csl = "speech",
+    },
+    teaching = {
+      csl = nil,
+    },
     techreport = {
       csl = "report",
     },
@@ -299,6 +560,9 @@ return {
     },
     thesis = {
       csl = "thesis",
+    },
+    treaty = {
+      csl = "treaty",
     },
     uklegislation = {
       csl = "legislation",
@@ -313,7 +577,7 @@ return {
       csl = "webpage",
     },
     website = {
-      csl = nil,
+      csl = "webpage",
     },
     www = {
       csl = "webpage",
@@ -327,11 +591,27 @@ return {
       csl = "abstract",
       type = "literal",
     },
+    abstractloc = {
+      csl = nil,
+      type = "literal",
+    },
+    abstracturl = {
+      csl = nil,
+      type = "verbatim",
+    },
+    accessed = {
+      csl = "accessed",
+    },
     account = {
       csl = nil,
     },
     acronym = {
       csl = nil,
+      type = "literal",
+    },
+    actor = {
+      csl = "performer",
+      type = "name",
     },
     add = {
       csl = nil,
@@ -352,10 +632,27 @@ return {
     },
     advisor = {
       csl = nil,
+      type = "name",
     },
     afterword = {
       csl = nil,
       type = "name",
+    },
+    alternatetitle = {
+      csl = nil,
+      type = "literal",
+    },
+    alternatetitlescript = {
+      csl = nil,
+      type = "literal",
+    },
+    amendment = {
+      csl = nil,
+      type = "literal",
+    },
+    amount = {
+      csl = nil,
+      type = "integer",
     },
     annotate = {
       csl = "note",
@@ -375,11 +672,32 @@ return {
     annotelanguage = {
       csl = nil,
     },
+    anonstring = {
+      csl = nil,
+      type = "name",
+    },
+    appentry = {
+      csl = nil,
+      type = "literal",
+    },
     applicant = {
       csl = nil,
     },
+    arachne = {
+      csl = nil,
+      type = "verbatim",
+    },
     archive = {
       csl = "archive",
+    },
+    ["archive-place"] = {
+      csl = "archive-place",
+    },
+    archive_collection = {
+      csl = "archive_collection",
+    },
+    archive_location = {
+      csl = "archive_location",
     },
     archiveprefix = {
       csl = "archive",
@@ -388,8 +706,21 @@ return {
     archname = {
       csl = "archive",
     },
+    arthist = {
+      csl = nil,
+      type = "integer",
+    },
+    arthistdate = {
+      csl = nil,
+      type = "date",
+    },
+    article = {
+      csl = nil,
+      type = "literal",
+    },
     articleno = {
       csl = nil,
+      type = "literal",
     },
     arxiv = {
       csl = nil,
@@ -401,15 +732,26 @@ return {
       csl = "author",
       type = "name",
     },
+    authoraddon = {
+      csl = nil,
+      type = "name",
+    },
     authorcountry = {
       csl = nil,
+      type = "literal",
     },
     authorfa = {
       csl = nil,
     },
+    authority = {
+      csl = "authority",
+    },
     authortype = {
       csl = nil,
       type = "key",
+    },
+    ["available-date"] = {
+      csl = "available-date",
     },
     bibsource = {
       csl = nil,
@@ -426,15 +768,91 @@ return {
     birthyear = {
       csl = nil,
     },
-    bookaddress = {
+    blogsubtitle = {
       csl = nil,
+      type = "literal",
+    },
+    blogtitle = {
+      csl = "title",
+      type = "literal",
+    },
+    blogtitleaddon = {
+      csl = nil,
+      type = "literal",
+    },
+    book = {
+      csl = nil,
+      type = "range",
+    },
+    bookaddress = {
+      csl = "publisher-place",
+    },
+    bookafterword = {
+      csl = nil,
+      type = "name",
+    },
+    bookannotator = {
+      csl = nil,
+      type = "name",
     },
     bookauthor = {
       csl = "container-author",
       type = "name",
     },
+    bookauthortype = {
+      csl = nil,
+      type = "literal",
+    },
+    bookbooksubtitle = {
+      csl = nil,
+      type = "literal",
+    },
+    bookbooktitle = {
+      csl = nil,
+      type = "literal",
+    },
+    bookbooktitleaddon = {
+      csl = nil,
+      type = "literal",
+    },
+    bookbooktitlekey = {
+      csl = nil,
+      type = "key",
+    },
+    bookbookvolume = {
+      csl = nil,
+      type = "literal",
+    },
+    bookcommentator = {
+      csl = nil,
+      type = "name",
+    },
+    bookcredits = {
+      csl = nil,
+      type = "literal",
+    },
+    bookeditor = {
+      csl = "editor",
+      type = "name",
+    },
+    bookforeword = {
+      csl = nil,
+      type = "name",
+    },
+    bookineditor = {
+      csl = nil,
+      type = "name",
+    },
+    bookintroduction = {
+      csl = nil,
+      type = "name",
+    },
     booklanguage = {
       csl = nil,
+    },
+    bookoriglanguage = {
+      csl = nil,
+      type = "key",
     },
     bookpages = {
       csl = nil,
@@ -442,6 +860,10 @@ return {
     bookpagination = {
       csl = nil,
       type = "key",
+    },
+    books = {
+      csl = nil,
+      type = "literal",
     },
     booksubtitle = {
       csl = nil,
@@ -455,6 +877,29 @@ return {
       csl = nil,
       type = "literal",
     },
+    booktitlekey = {
+      csl = nil,
+      type = "key",
+    },
+    booktitlenote = {
+      csl = nil,
+      type = "literal",
+    },
+    booktranslator = {
+      csl = "translator",
+      type = "name",
+    },
+    bookvolume = {
+      csl = nil,
+      type = "literal",
+    },
+    bookyear = {
+      csl = nil,
+      type = "literal",
+    },
+    ["call-number"] = {
+      csl = "call-number",
+    },
     caption = {
       csl = nil,
     },
@@ -467,6 +912,10 @@ return {
     casenumber = {
       csl = nil,
     },
+    catalog = {
+      csl = nil,
+      type = "literal",
+    },
     category = {
       csl = nil,
     },
@@ -474,10 +923,17 @@ return {
       csl = nil,
     },
     chair = {
-      csl = nil,
+      csl = "chair",
     },
     chapter = {
       csl = "chapter-number",
+      type = "literal",
+    },
+    ["chapter-number"] = {
+      csl = "chapter-number",
+    },
+    citation = {
+      csl = nil,
       type = "literal",
     },
     citedate = {
@@ -485,6 +941,18 @@ return {
     },
     city = {
       csl = nil,
+    },
+    classes = {
+      csl = nil,
+      type = "entrykey",
+    },
+    claves = {
+      csl = nil,
+      type = "literal",
+    },
+    claves_definition = {
+      csl = nil,
+      type = "literal",
     },
     code = {
       csl = nil,
@@ -494,9 +962,27 @@ return {
     },
     collaboration = {
       csl = nil,
+      type = "literal",
     },
     collator = {
       csl = nil,
+    },
+    collection = {
+      csl = nil,
+      type = "literal",
+    },
+    ["collection-editor"] = {
+      csl = "collection-editor",
+    },
+    ["collection-number"] = {
+      csl = "collection-number",
+    },
+    ["collection-title"] = {
+      csl = "collection-title",
+    },
+    columns = {
+      csl = nil,
+      type = "literal",
     },
     commentator = {
       csl = nil,
@@ -505,8 +991,23 @@ return {
     commit = {
       csl = nil,
     },
-    compiler = {
+    commithash = {
       csl = nil,
+      type = "literal",
+    },
+    committee = {
+      csl = nil,
+      type = "name",
+    },
+    compiler = {
+      csl = "compiler",
+    },
+    composer = {
+      csl = "composer",
+    },
+    concentration = {
+      csl = nil,
+      type = "literal",
     },
     condition = {
       csl = nil,
@@ -520,42 +1021,57 @@ return {
     ["conference-year"] = {
       csl = nil,
     },
+    ["container-author"] = {
+      csl = "container-author",
+    },
+    ["container-title"] = {
+      csl = "container-title",
+    },
+    ["container-title-short"] = {
+      csl = "container-title-short",
+    },
+    contents = {
+      csl = nil,
+      type = "literal",
+    },
+    contributor = {
+      csl = "contributor",
+    },
+    contributora = {
+      csl = nil,
+      type = "literal",
+    },
+    contributorb = {
+      csl = nil,
+      type = "literal",
+    },
+    copublisher = {
+      csl = nil,
+      type = "literal",
+    },
     copy = {
       csl = nil,
     },
     country = {
-      csl = nil,
+      csl = "jurisdiction",
     },
     credits = {
       csl = nil,
+      type = "literal",
     },
     crossref = {
       csl = nil,
       type = "entrykey",
     },
-    ["ctrl-article-title"] = {
-      csl = nil,
+    curator = {
+      csl = "curator",
     },
-    ["ctrl-chapter-title"] = {
+    currency = {
       csl = nil,
+      type = "literal",
     },
-    ["ctrl-doi"] = {
-      csl = nil,
-    },
-    ["ctrl-etal-firstonly"] = {
-      csl = nil,
-    },
-    ["ctrl-etal-number"] = {
-      csl = nil,
-    },
-    ["ctrl-link-doi"] = {
-      csl = nil,
-    },
-    ["ctrl-use-doi-all"] = {
-      csl = nil,
-    },
-    ["ctrl-use-title"] = {
-      csl = nil,
+    custom = {
+      csl = "custom",
     },
     dataset = {
       csl = nil,
@@ -564,17 +1080,58 @@ return {
       csl = "issued",
       type = "date",
     },
+    ["date+an"] = {
+      csl = nil,
+      type = "literal",
+    },
+    datea = {
+      csl = nil,
+      type = "literal",
+    },
+    dateaddon = {
+      csl = nil,
+      type = "literal",
+    },
+    dateb = {
+      csl = nil,
+      type = "literal",
+    },
+    datetype = {
+      csl = nil,
+      type = "literal",
+    },
+    dating = {
+      csl = nil,
+      type = "literal",
+    },
     day = {
       csl = nil,
     },
     dayfiled = {
       csl = nil,
     },
+    decision = {
+      csl = nil,
+      type = "literal",
+    },
+    decisionname = {
+      csl = nil,
+      type = "literal",
+    },
     definition = {
       csl = nil,
     },
+    degree = {
+      csl = nil,
+      type = "literal",
+    },
+    degreelist = {
+      csl = nil,
+      type = "entrykey",
+    },
     department = {
       csl = nil,
+      type = "literal",
     },
     description = {
       csl = nil,
@@ -583,10 +1140,21 @@ return {
       csl = nil,
     },
     dimensions = {
-      csl = nil,
+      csl = "dimensions",
+    },
+    director = {
+      csl = "director",
+      type = "name",
     },
     dissyear = {
       csl = nil,
+    },
+    distinctURL = {
+      csl = nil,
+      type = "literal",
+    },
+    division = {
+      csl = "division",
     },
     doi = {
       csl = "DOI",
@@ -598,8 +1166,20 @@ return {
     dummy = {
       csl = nil,
     },
+    duration = {
+      csl = nil,
+      type = "literal",
+    },
+    durationtype = {
+      csl = nil,
+      type = "literal",
+    },
     edition = {
       csl = "edition",
+      type = "literal",
+    },
+    editioncredits = {
+      csl = nil,
       type = "literal",
     },
     editor = {
@@ -607,6 +1187,14 @@ return {
       type = "name",
     },
     editora = {
+      csl = nil,
+      type = "name",
+    },
+    editoraaddon = {
+      csl = nil,
+      type = "literal",
+    },
+    editoraddon = {
       csl = nil,
       type = "name",
     },
@@ -630,6 +1218,9 @@ return {
       csl = nil,
       type = "key",
     },
+    ["editorial-director"] = {
+      csl = "editorial-director",
+    },
     editortype = {
       csl = nil,
       type = "key",
@@ -641,6 +1232,10 @@ return {
     email = {
       csl = nil,
     },
+    endbookyear = {
+      csl = nil,
+      type = "literal",
+    },
     endnumber = {
       csl = nil,
     },
@@ -649,6 +1244,10 @@ return {
     },
     endyear = {
       csl = nil,
+    },
+    englishabstract = {
+      csl = nil,
+      type = "literal",
     },
     englishtitle = {
       csl = nil,
@@ -672,12 +1271,28 @@ return {
       csl = nil,
       type = "literal",
     },
+    eprintdate = {
+      csl = nil,
+      type = "date",
+    },
+    eprintday = {
+      csl = nil,
+      type = "datepart",
+    },
+    eprintmonth = {
+      csl = nil,
+      type = "datepart",
+    },
     eprints = {
       csl = nil,
     },
     eprinttype = {
       csl = "archive",
       type = "literal",
+    },
+    eprintyear = {
+      csl = nil,
+      type = "datepart",
     },
     erratumeid = {
       csl = nil,
@@ -697,9 +1312,33 @@ return {
     erratumyear = {
       csl = nil,
     },
+    event = {
+      csl = "event-title",
+    },
+    ["event-date"] = {
+      csl = "event-date",
+    },
+    ["event-place"] = {
+      csl = "event-place",
+    },
+    ["event-title"] = {
+      csl = "event-title",
+    },
     eventdate = {
       csl = "event-date",
       type = "date",
+    },
+    eventdatelanguage = {
+      csl = nil,
+      type = "verbatim",
+    },
+    eventnumber = {
+      csl = nil,
+      type = "integer",
+    },
+    eventsubtitle = {
+      csl = nil,
+      type = "literal",
     },
     eventtitle = {
       csl = "event-title",
@@ -709,12 +1348,63 @@ return {
       csl = nil,
       type = "literal",
     },
+    eventtype = {
+      csl = nil,
+      type = "literal",
+    },
     eventyear = {
       csl = nil,
+    },
+    execdirector = {
+      csl = "director",
+      type = "name",
+    },
+    execproducer = {
+      csl = "executive-producer",
+      type = "name",
     },
     execute = {
       csl = nil,
       type = "code",
+    },
+    ["executive-producer"] = {
+      csl = "executive-producer",
+    },
+    exhibfirstdate = {
+      csl = "event-date",
+      type = "date",
+    },
+    exhibfirstlocation = {
+      csl = "event-place",
+      type = "literal",
+    },
+    exhibfirstmuseum = {
+      csl = nil,
+      type = "literal",
+    },
+    exhibseconddate = {
+      csl = nil,
+      type = "date",
+    },
+    exhibsecondlocation = {
+      csl = nil,
+      type = "literal",
+    },
+    exhibsecondmuseum = {
+      csl = nil,
+      type = "literal",
+    },
+    exhibthirddate = {
+      csl = nil,
+      type = "date",
+    },
+    exhibthirdlocation = {
+      csl = nil,
+      type = "literal",
+    },
+    exhibthirdmuseum = {
+      csl = nil,
+      type = "literal",
     },
     faddress = {
       csl = nil,
@@ -724,6 +1414,14 @@ return {
     },
     fax = {
       csl = nil,
+    },
+    festschrift = {
+      csl = nil,
+      type = "name",
+    },
+    festschriftaddon = {
+      csl = nil,
+      type = "literal",
     },
     file = {
       csl = nil,
@@ -751,8 +1449,20 @@ return {
     fpublisher = {
       csl = nil,
     },
+    frenchabstract = {
+      csl = nil,
+      type = "literal",
+    },
     ftitle = {
       csl = nil,
+    },
+    fulleventdate = {
+      csl = nil,
+      type = "date",
+    },
+    funder = {
+      csl = nil,
+      type = "literal",
     },
     furtherresp = {
       csl = nil,
@@ -764,14 +1474,37 @@ return {
       csl = nil,
       type = "literal",
     },
+    genre = {
+      csl = "genre",
+    },
     germanpages = {
       csl = nil,
+    },
+    gpa = {
+      csl = nil,
+      type = "literal",
     },
     group = {
       csl = nil,
     },
+    guest = {
+      csl = "guest",
+    },
+    hal_id = {
+      csl = nil,
+      type = "verbatim",
+    },
+    hal_version = {
+      csl = "version",
+      type = "verbatim",
+    },
+    handle = {
+      csl = nil,
+      type = "literal",
+    },
     heading = {
       csl = nil,
+      type = "literal",
     },
     hereafter = {
       csl = nil,
@@ -779,6 +1512,13 @@ return {
     holder = {
       csl = nil,
       type = "name",
+    },
+    honors = {
+      csl = nil,
+      type = "literal",
+    },
+    host = {
+      csl = "host",
     },
     howcited = {
       csl = nil,
@@ -802,7 +1542,23 @@ return {
       csl = nil,
     },
     illustrator = {
+      csl = "illustrator",
+    },
+    impactfactor = {
       csl = nil,
+      type = "literal",
+    },
+    inafterword = {
+      csl = nil,
+      type = "name",
+    },
+    inannotator = {
+      csl = nil,
+      type = "name",
+    },
+    incommentator = {
+      csl = nil,
+      type = "name",
     },
     indexsorttitle = {
       csl = nil,
@@ -812,8 +1568,35 @@ return {
       csl = nil,
       type = "literal",
     },
+    ineditor = {
+      csl = nil,
+      type = "name",
+    },
+    inforeword = {
+      csl = nil,
+      type = "name",
+    },
+    inintroduction = {
+      csl = nil,
+      type = "name",
+    },
     institution = {
       csl = "publisher",
+      type = "literal",
+    },
+    interviewee = {
+      csl = nil,
+      type = "name",
+    },
+    interviewer = {
+      csl = "interviewer",
+    },
+    intranslator = {
+      csl = nil,
+      type = "name",
+    },
+    introducedin = {
+      csl = nil,
       type = "literal",
     },
     introduction = {
@@ -824,10 +1607,11 @@ return {
       csl = nil,
     },
     inventor = {
-      csl = nil,
+      csl = "author",
     },
     ipc = {
       csl = nil,
+      type = "literal",
     },
     isan = {
       csl = nil,
@@ -862,6 +1646,13 @@ return {
       csl = "issue",
       type = "literal",
     },
+    issued = {
+      csl = "issued",
+    },
+    issues = {
+      csl = nil,
+      type = "literal",
+    },
     issuesubtitle = {
       csl = nil,
       type = "literal",
@@ -881,9 +1672,20 @@ return {
     jfmnumber = {
       csl = nil,
     },
+    jointauthor = {
+      csl = nil,
+      type = "name",
+    },
+    jointauthortype = {
+      csl = nil,
+      type = "literal",
+    },
     journal = {
       csl = "container-title",
       type = "literal",
+    },
+    journalabbreviation = {
+      csl = "container-title-short",
     },
     journalsubtitle = {
       csl = nil,
@@ -900,15 +1702,29 @@ return {
       csl = nil,
       type = "literal",
     },
+    journalyear = {
+      csl = nil,
+      type = "literal",
+    },
+    jstor = {
+      csl = nil,
+      type = "verbatim",
+    },
     juraauthor = {
       csl = nil,
     },
     juratitle = {
       csl = nil,
     },
+    jurisdiction = {
+      csl = "jurisdiction",
+    },
     key = {
       csl = nil,
       type = "literal",
+    },
+    keyword = {
+      csl = "keyword",
     },
     keywords = {
       csl = nil,
@@ -935,15 +1751,28 @@ return {
     },
     lastaccessed = {
       csl = "accessed",
+      type = "literal",
     },
     lastchecked = {
       csl = "accessed",
+    },
+    layer = {
+      csl = nil,
+      type = "literal",
     },
     lccn = {
       csl = nil,
     },
     library = {
       csl = nil,
+      type = "literal",
+    },
+    librarylocation = {
+      csl = "archive-place",
+      type = "literal",
+    },
+    license = {
+      csl = "license",
       type = "literal",
     },
     lista = {
@@ -977,6 +1806,14 @@ return {
       csl = "publisher-place",
       type = "literal",
     },
+    locationa = {
+      csl = nil,
+      type = "literal",
+    },
+    locationb = {
+      csl = nil,
+      type = "literal",
+    },
     madadurltest = {
       csl = nil,
     },
@@ -986,15 +1823,39 @@ return {
     main1 = {
       csl = nil,
     },
+    mainauthor = {
+      csl = nil,
+      type = "name",
+    },
+    maineditor = {
+      csl = nil,
+      type = "name",
+    },
     mainsubtitle = {
       csl = nil,
       type = "literal",
+    },
+    maintainer = {
+      csl = nil,
+      type = "name",
     },
     maintitle = {
       csl = nil,
       type = "literal",
     },
     maintitleaddon = {
+      csl = nil,
+      type = "literal",
+    },
+    maintitlenote = {
+      csl = nil,
+      type = "literal",
+    },
+    maintranslator = {
+      csl = nil,
+      type = "name",
+    },
+    major = {
       csl = nil,
       type = "literal",
     },
@@ -1015,12 +1876,17 @@ return {
     },
     media = {
       csl = "medium",
+      type = "key",
     },
     medium = {
       csl = "medium",
     },
     meeting = {
       csl = nil,
+    },
+    minor = {
+      csl = nil,
+      type = "literal",
     },
     misctitle = {
       csl = nil,
@@ -1044,8 +1910,17 @@ return {
     mrnumber = {
       csl = nil,
     },
+    multieventdate = {
+      csl = nil,
+      type = "literal",
+    },
+    multivenue = {
+      csl = nil,
+      type = "literal",
+    },
     name = {
       csl = nil,
+      type = "name",
     },
     namea = {
       csl = nil,
@@ -1075,6 +1950,10 @@ return {
       csl = nil,
       type = "key",
     },
+    narrator = {
+      csl = "narrator",
+      type = "name",
+    },
     nationality = {
       csl = nil,
     },
@@ -1084,8 +1963,13 @@ return {
     newpage = {
       csl = nil,
     },
+    newsdate = {
+      csl = nil,
+      type = "date",
+    },
     newspaper = {
       csl = "container-title",
+      type = "literal",
     },
     nickname = {
       csl = nil,
@@ -1119,18 +2003,57 @@ return {
       csl = "number",
       type = "literal",
     },
-    numpages = {
+    ["number-of-pages"] = {
+      csl = "number-of-pages",
+    },
+    ["number-of-volumes"] = {
+      csl = "number-of-volumes",
+    },
+    numbera = {
       csl = nil,
+      type = "literal",
+    },
+    numberb = {
+      csl = nil,
+      type = "literal",
+    },
+    numcites = {
+      csl = nil,
+      type = "integer",
+    },
+    numlectures = {
+      csl = nil,
+      type = "integer",
+    },
+    numpages = {
+      csl = "number-of-pages",
+      type = "literal",
+    },
+    numstudents = {
+      csl = nil,
+      type = "integer",
     },
     oaddress = {
+      csl = "original-publisher-place",
+    },
+    officialpages = {
       csl = nil,
+      type = "literal",
+    },
+    officialvolume = {
+      csl = nil,
+      type = "literal",
+    },
+    openaccess = {
+      csl = nil,
+      type = "literal",
     },
     options = {
       csl = nil,
       type = "option",
     },
     opublisher = {
-      csl = nil,
+      csl = "original-publisher",
     },
     ["org-short"] = {
       csl = nil,
@@ -1139,9 +2062,39 @@ return {
       csl = "publisher",
       type = "literal",
     },
+    organizer = {
+      csl = "organizer",
+    },
     origdate = {
       csl = "original-date",
       type = "date",
+    },
+    ["origdate+an"] = {
+      csl = nil,
+      type = "literal",
+    },
+    origdatetype = {
+      csl = nil,
+      type = "literal",
+    },
+    origin = {
+      csl = nil,
+      type = "literal",
+    },
+    ["original-author"] = {
+      csl = "original-author",
+    },
+    ["original-date"] = {
+      csl = "original-date",
+    },
+    ["original-publisher"] = {
+      csl = "original-publisher",
+    },
+    ["original-publisher-place"] = {
+      csl = "original-publisher-place",
+    },
+    ["original-title"] = {
+      csl = "original-title",
     },
     originaladdress = {
       csl = "original-publisher-place",
@@ -1185,12 +2138,23 @@ return {
       csl = "original-publisher",
       type = "literal",
     },
+    origrealdate = {
+      csl = nil,
+      type = "date",
+    },
     origtitle = {
       csl = "original-title",
       type = "literal",
     },
+    owner = {
+      csl = nil,
+      type = "name",
+    },
     oyear = {
       csl = nil,
+    },
+    page = {
+      csl = "page",
     },
     pagename = {
       csl = nil,
@@ -1210,9 +2174,40 @@ return {
     paper = {
       csl = nil,
     },
+    pardate = {
+      csl = nil,
+      type = "date",
+    },
+    parpages = {
+      csl = nil,
+      type = "range",
+    },
+    parreporter = {
+      csl = nil,
+      type = "literal",
+    },
+    parseries = {
+      csl = nil,
+      type = "literal",
+    },
     part = {
       csl = "part",
       type = "literal",
+    },
+    ["part-title"] = {
+      csl = "part-title",
+    },
+    parts = {
+      csl = nil,
+      type = "literal",
+    },
+    parttitle = {
+      csl = nil,
+      type = "literal",
+    },
+    parvolume = {
+      csl = nil,
+      type = "integer",
     },
     patentid = {
       csl = nil,
@@ -1220,6 +2215,13 @@ return {
     pdf = {
       csl = nil,
       type = "verbatim",
+    },
+    peerreview = {
+      csl = nil,
+      type = "literal",
+    },
+    performer = {
+      csl = "performer",
     },
     phone = {
       csl = nil,
@@ -1230,17 +2232,35 @@ return {
     pii = {
       csl = nil,
     },
+    pmc = {
+      csl = nil,
+      type = "literal",
+    },
     pmcid = {
       csl = "PMCID",
+      type = "literal",
+    },
+    pmid = {
+      csl = "PMID",
+      type = "literal",
     },
     prebibitem = {
       csl = nil,
     },
     preface = {
       csl = nil,
+      type = "name",
     },
     preprint = {
       csl = nil,
+    },
+    presentationtype = {
+      csl = nil,
+      type = "literal",
+    },
+    presenter = {
+      csl = nil,
+      type = "name",
     },
     presort = {
       csl = nil,
@@ -1256,34 +2276,91 @@ return {
     printing = {
       csl = nil,
     },
+    ["printing-number"] = {
+      csl = "printing-number",
+    },
     prioritycountry = {
       csl = nil,
+      type = "literal",
     },
     prioritydate = {
       csl = nil,
+      type = "date",
     },
     prioritynumber = {
       csl = nil,
+      type = "literal",
+    },
+    producer = {
+      csl = "producer",
+      type = "name",
+    },
+    production = {
+      csl = nil,
+      type = "literal",
+    },
+    protocollessurl = {
+      csl = nil,
+      type = "uri",
     },
     pseudonym = {
       csl = nil,
     },
     publication = {
       csl = nil,
+      type = "literal",
     },
     publicationdate = {
       csl = nil,
+      type = "date",
+    },
+    publicprice = {
+      csl = nil,
+      type = "literal",
     },
     publisher = {
       csl = "publisher",
+      type = "literal",
+    },
+    ["publisher-place"] = {
+      csl = "publisher-place",
+    },
+    publishera = {
+      csl = nil,
+      type = "literal",
+    },
+    publisherb = {
+      csl = nil,
       type = "literal",
     },
     pubmed = {
       csl = "PMID",
     },
     pubstate = {
-      csl = nil,
+      csl = "status",
       type = "key",
+    },
+    rawauthor = {
+      csl = nil,
+      type = "literal",
+    },
+    realauthor = {
+      csl = nil,
+      type = "name",
+    },
+    realdate = {
+      csl = nil,
+      type = "date",
+    },
+    realeditor = {
+      csl = nil,
+      type = "name",
+    },
+    recipient = {
+      csl = "recipient",
+    },
+    references = {
+      csl = "references",
     },
     related = {
       csl = nil,
@@ -1301,6 +2378,14 @@ return {
       csl = nil,
       type = "literal",
     },
+    reportnumber = {
+      csl = nil,
+      type = "literal",
+    },
+    repository = {
+      csl = nil,
+      type = "uri",
+    },
     ["reprinted-from"] = {
       csl = nil,
     },
@@ -1316,32 +2401,128 @@ return {
     },
     requestnumber = {
       csl = nil,
+      type = "literal",
     },
     responsible = {
       csl = nil,
     },
+    revdauthor = {
+      csl = nil,
+      type = "name",
+    },
+    revdeditor = {
+      csl = nil,
+      type = "name",
+    },
+    revdshorttitle = {
+      csl = nil,
+      type = "literal",
+    },
+    revdsubtitle = {
+      csl = nil,
+      type = "literal",
+    },
+    revdtitle = {
+      csl = nil,
+      type = "literal",
+    },
+    revdtitleaddon = {
+      csl = nil,
+      type = "literal",
+    },
     review = {
       csl = nil,
     },
+    ["reviewed-author"] = {
+      csl = "reviewed-author",
+    },
+    ["reviewed-genre"] = {
+      csl = "reviewed-genre",
+    },
+    ["reviewed-title"] = {
+      csl = "reviewed-title",
+    },
+    reviewer = {
+      csl = nil,
+      type = "name",
+    },
+    reviewerinstitution = {
+      csl = nil,
+      type = "literal",
+    },
     revision = {
       csl = nil,
+    },
+    role = {
+      csl = nil,
+      type = "key",
+    },
+    scale = {
+      csl = "scale",
     },
     school = {
       csl = "publisher",
       type = "literal",
     },
+    science = {
+      csl = nil,
+      type = "literal",
+    },
     score = {
       csl = nil,
     },
-    section = {
+    scribe = {
       csl = nil,
+      type = "name",
+    },
+    script = {
+      csl = nil,
+      type = "literal",
+    },
+    ["script-writer"] = {
+      csl = "script-writer",
+    },
+    scriptwriter = {
+      csl = nil,
+      type = "name",
+    },
+    section = {
+      csl = "section",
+      type = "literal",
+    },
+    semesters = {
+      csl = nil,
+      type = "entrykey",
     },
     series = {
       csl = "collection-title",
       type = "literal",
     },
+    ["series-creator"] = {
+      csl = "series-creator",
+    },
+    seriesaddon = {
+      csl = nil,
+      type = "literal",
+    },
     seriesedition = {
       csl = nil,
+    },
+    serieseditor = {
+      csl = nil,
+      type = "name",
+    },
+    seriesseries = {
+      csl = nil,
+      type = "literal",
+    },
+    setlabel = {
+      csl = nil,
+      type = "literal",
+    },
+    shelfmark = {
+      csl = nil,
+      type = "literal",
     },
     short = {
       csl = nil,
@@ -1353,9 +2534,29 @@ return {
       csl = nil,
       type = "name",
     },
+    shortblog = {
+      csl = nil,
+      type = "literal",
+    },
+    shortbookauthor = {
+      csl = nil,
+      type = "name",
+    },
+    shortbooktitle = {
+      csl = nil,
+      type = "literal",
+    },
+    shortcollection = {
+      csl = nil,
+      type = "literal",
+    },
     shorteditor = {
       csl = nil,
       type = "name",
+    },
+    shortform = {
+      csl = nil,
+      type = "literal",
     },
     shorthand = {
       csl = nil,
@@ -1365,8 +2566,32 @@ return {
       csl = nil,
       type = "literal",
     },
+    shortissuetitle = {
+      csl = nil,
+      type = "literal",
+    },
     shortjournal = {
       csl = "container-title-short",
+      type = "literal",
+    },
+    shortlabeltitle = {
+      csl = nil,
+      type = "literal",
+    },
+    shortlibrary = {
+      csl = nil,
+      type = "literal",
+    },
+    shortmaintitle = {
+      csl = nil,
+      type = "literal",
+    },
+    shortorganization = {
+      csl = nil,
+      type = "literal",
+    },
+    shortserie = {
+      csl = nil,
       type = "literal",
     },
     shortseries = {
@@ -1376,9 +2601,21 @@ return {
     shortsubarchive = {
       csl = nil,
     },
+    shortsubseries = {
+      csl = nil,
+      type = "literal",
+    },
+    shortsubsubseries = {
+      csl = nil,
+      type = "literal",
+    },
     shorttitle = {
       csl = "title-short",
       type = "literal",
+    },
+    shorttranslator = {
+      csl = nil,
+      type = "name",
     },
     shorturl = {
       csl = nil,
@@ -1395,11 +2632,19 @@ return {
     sig4 = {
       csl = nil,
     },
+    sign = {
+      csl = nil,
+      type = "literal",
+    },
     size = {
       csl = nil,
     },
     slaccitation = {
       csl = nil,
+    },
+    smfprice = {
+      csl = nil,
+      type = "literal",
     },
     ["sort-short"] = {
       csl = nil,
@@ -1418,11 +2663,19 @@ return {
       csl = nil,
       type = "name",
     },
+    sortshelfmark = {
+      csl = nil,
+      type = "literal",
+    },
     sortshorthand = {
       csl = nil,
       type = "literal",
     },
     sorttitle = {
+      csl = nil,
+      type = "literal",
+    },
+    sortvolume = {
       csl = nil,
       type = "literal",
     },
@@ -1433,8 +2686,17 @@ return {
     source1 = {
       csl = nil,
     },
+    specdata = {
+      csl = nil,
+      type = "literal",
+    },
+    speciality = {
+      csl = nil,
+      type = "literal",
+    },
     specialitycode = {
       csl = nil,
+      type = "literal",
     },
     ssedition = {
       csl = nil,
@@ -1455,10 +2717,11 @@ return {
       csl = nil,
     },
     status = {
-      csl = nil,
+      csl = "status",
+      type = "key",
     },
     stdcode = {
-      csl = nil,
+      csl = "number",
     },
     stitle = {
       csl = nil,
@@ -1469,15 +2732,85 @@ return {
     subarchive = {
       csl = nil,
     },
+    submitted = {
+      csl = "submitted",
+    },
+    subnumber = {
+      csl = nil,
+      type = "integer",
+    },
+    subseries = {
+      csl = nil,
+      type = "literal",
+    },
+    subsubnumber = {
+      csl = nil,
+      type = "literal",
+    },
+    subsubseries = {
+      csl = nil,
+      type = "literal",
+    },
     subtitle = {
       csl = nil,
       type = "literal",
     },
+    summarytitle = {
+      csl = nil,
+      type = "literal",
+    },
+    supervisor = {
+      csl = nil,
+      type = "name",
+    },
+    supplement = {
+      csl = "supplement",
+    },
+    supplemental = {
+      csl = nil,
+      type = "literal",
+    },
+    supplementala = {
+      csl = nil,
+      type = "literal",
+    },
+    supplementalb = {
+      csl = nil,
+      type = "literal",
+    },
+    support = {
+      csl = nil,
+      type = "literal",
+    },
+    swhid = {
+      csl = nil,
+      type = "verbatim",
+    },
+    swhidcore = {
+      csl = nil,
+      type = "verbatim",
+    },
     symposium = {
       csl = nil,
     },
+    systemreq = {
+      csl = nil,
+      type = "literal",
+    },
     text = {
       csl = nil,
+    },
+    thesisdate = {
+      csl = nil,
+      type = "date",
+    },
+    thesistype = {
+      csl = nil,
+      type = "verbatim",
+    },
+    thumbnail = {
+      csl = nil,
+      type = "verbatim",
     },
     timestamp = {
       csl = nil,
@@ -1486,12 +2819,36 @@ return {
       csl = "title",
       type = "literal",
     },
+    ["title-short"] = {
+      csl = "title-short",
+    },
+    titlea = {
+      csl = nil,
+      type = "literal",
+    },
     titleaddon = {
       csl = nil,
       type = "literal",
     },
+    titleb = {
+      csl = nil,
+      type = "literal",
+    },
+    titleisdescription = {
+      csl = nil,
+      type = "literal",
+    },
+    titlekey = {
+      csl = nil,
+      type = "key",
+    },
     titlenote = {
       csl = nil,
+      type = "literal",
+    },
+    titletype = {
+      csl = nil,
+      type = "literal",
     },
     totalpages = {
       csl = nil,
@@ -1508,6 +2865,26 @@ return {
     translator = {
       csl = "translator",
       type = "name",
+    },
+    translatora = {
+      csl = nil,
+      type = "name",
+    },
+    translatoratype = {
+      csl = nil,
+      type = "key",
+    },
+    translatorb = {
+      csl = nil,
+      type = "name",
+    },
+    translatorbtype = {
+      csl = nil,
+      type = "key",
+    },
+    translatortype = {
+      csl = nil,
+      type = "key",
     },
     transnumber = {
       csl = nil,
@@ -1528,11 +2905,19 @@ return {
       csl = "genre",
       type = "key",
     },
+    typeaddon = {
+      csl = nil,
+      type = "literal",
+    },
     typeoflit = {
       csl = nil,
     },
     umfnumber = {
       csl = nil,
+    },
+    update = {
+      csl = nil,
+      type = "date",
     },
     updated = {
       csl = nil,
@@ -1548,17 +2933,26 @@ return {
       csl = "accessed",
       type = "date",
     },
+    urldescription = {
+      csl = nil,
+      type = "literal",
+    },
     urlnewline = {
       csl = nil,
+    },
+    urls = {
+      csl = nil,
+      type = "uri",
     },
     urltype = {
       csl = nil,
     },
     urlyear = {
-      csl = nil,
+      csl = "accessed",
     },
     urn = {
       csl = nil,
+      type = "verbatim",
     },
     usera = {
       csl = nil,
@@ -1581,6 +2975,10 @@ return {
       type = "literal",
     },
     userf = {
+      csl = nil,
+      type = "literal",
+    },
+    usualtitle = {
       csl = nil,
       type = "literal",
     },
@@ -1607,25 +3005,123 @@ return {
       csl = "version",
       type = "literal",
     },
+    versiona = {
+      csl = nil,
+      type = "literal",
+    },
+    versionb = {
+      csl = nil,
+      type = "literal",
+    },
     versiontype = {
       csl = nil,
     },
     volformat = {
       csl = nil,
     },
+    volsorder = {
+      csl = nil,
+      type = "literal",
+    },
     volume = {
       csl = "volume",
       type = "integer",
+    },
+    ["volume-title"] = {
+      csl = "volume-title",
+    },
+    ["volume-title-short"] = {
+      csl = "volume-title-short",
     },
     volumes = {
       csl = "number-of-volumes",
       type = "integer",
     },
     volumetitle = {
+      csl = "volume-title",
+    },
+    with = {
       csl = nil,
+      type = "name",
+    },
+    withauthor = {
+      csl = nil,
+      type = "name",
+    },
+    withauthortype = {
+      csl = nil,
+      type = "literal",
+    },
+    withbookauthor = {
+      csl = nil,
+      type = "name",
+    },
+    withbookauthortype = {
+      csl = nil,
+      type = "literal",
+    },
+    withbookeditor = {
+      csl = nil,
+      type = "name",
+    },
+    withbookeditortype = {
+      csl = nil,
+      type = "literal",
+    },
+    withbooktranslator = {
+      csl = nil,
+      type = "name",
+    },
+    withbooktranslatortype = {
+      csl = nil,
+      type = "literal",
+    },
+    witheditor = {
+      csl = nil,
+      type = "name",
+    },
+    witheditortype = {
+      csl = nil,
+      type = "literal",
+    },
+    withmainauthor = {
+      csl = nil,
+      type = "name",
+    },
+    withmainauthortype = {
+      csl = nil,
+      type = "literal",
+    },
+    withmaineditor = {
+      csl = nil,
+      type = "name",
+    },
+    withmaineditortype = {
+      csl = nil,
+      type = "literal",
+    },
+    withmaintranslator = {
+      csl = nil,
+      type = "name",
+    },
+    withmaintranslatortype = {
+      csl = nil,
+      type = "literal",
+    },
+    withtranslator = {
+      csl = nil,
+      type = "name",
+    },
+    withtranslatortype = {
+      csl = nil,
+      type = "literal",
     },
     word = {
       csl = nil,
+    },
+    writer = {
+      csl = nil,
+      type = "name",
     },
     xdata = {
       csl = nil,
@@ -1653,6 +3149,10 @@ return {
     },
     zblnumber = {
       csl = nil,
+    },
+    zenon = {
+      csl = nil,
+      type = "verbatim",
     },
     zip = {
       csl = nil,

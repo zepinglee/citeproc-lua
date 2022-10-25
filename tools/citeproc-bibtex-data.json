@@ -1,19 +1,39 @@
 {
     "description": "BibTeX CSL mapping",
     "types": {
+        "abstract": {
+            "csl": null,
+            "source": "biblatex-cv.dbx"
+        },
+        "ancienttext": {
+            "csl": "classic",
+            "source": "sbl.dbx"
+        },
         "archival": {
             "csl": "collection",
+            "notes": "New in CSL v1.0.2.",
             "source": "jurabib.bst"
         },
         "archive": {
             "csl": "collection",
-            "notes": "New in CSL v1.0.2.",
             "source": "gbt7714-numerical.bst"
         },
         "article": {
             "csl": "article-journal",
             "notes": "May also be `article-magazine` or `article-newspaper` depending upon the field `entrysubtype`.",
             "source": "bibtex"
+        },
+        "article-journal": {
+            "csl": "article-journal",
+            "source": "csl"
+        },
+        "article-magazine": {
+            "csl": "article-magazine",
+            "source": "csl"
+        },
+        "article-newspaper": {
+            "csl": "article-newspaper",
+            "source": "csl"
         },
         "artifactdataset": {
             "csl": "dataset",
@@ -45,25 +65,105 @@
             "notes": "Not supported.",
             "source": "biblatex"
         },
+        "bill": {
+            "csl": "bill",
+            "source": "csl"
+        },
         "book": {
             "csl": "book",
             "source": "bibtex"
+        },
+        "bookinarticle": {
+            "csl": null,
+            "source": "bookinother.dbx"
         },
         "bookinbook": {
             "csl": "chapter",
             "source": "biblatex"
         },
+        "bookincollection": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookininarticle": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookininbook": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookinincollection": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookininproceedings": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookininreference": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookinjournal": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookinmathesis": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookinphdthesis": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookinproceedings": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookinreference": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookinthesis": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
         "booklet": {
             "csl": "pamphlet",
             "source": "bibtex"
+        },
+        "broadcast": {
+            "csl": "broadcast",
+            "source": "csl"
         },
         "brochure": {
             "csl": "pamphlet",
             "source": "thesnumb.bst"
         },
-        "cconference": {
+        "catalog": {
             "csl": null,
+            "source": "arthistory-bonn.dbx"
+        },
+        "cconference": {
+            "csl": "paper-conference",
             "source": "seuthesis.bst"
+        },
+        "chapter": {
+            "csl": "chapter",
+            "source": "csl"
+        },
+        "classic": {
+            "csl": "classic",
+            "source": "csl"
+        },
+        "classictext": {
+            "csl": "classic",
+            "source": "sbl.dbx"
+        },
+        "codefragment": {
+            "csl": "software",
+            "source": "software.dbx"
         },
         "collection": {
             "csl": "book",
@@ -83,10 +183,22 @@
             "csl": null,
             "source": "jurabib.bst"
         },
+        "committee": {
+            "csl": null,
+            "source": "biblatex-cv.dbx"
+        },
         "conference": {
             "alias": "inproceedings",
             "csl": "paper-conference",
             "source": "bibtex"
+        },
+        "conferencepaper": {
+            "csl": "paper-conference",
+            "source": "sbl.dbx"
+        },
+        "constitution": {
+            "csl": "legislation",
+            "source": "apa.dbx"
         },
         "ctan": {
             "csl": "software",
@@ -116,6 +228,10 @@
             "csl": null,
             "source": "biblatex"
         },
+        "data": {
+            "csl": null,
+            "source": "apa6.dbx"
+        },
         "database": {
             "csl": "dataset",
             "source": "gbt7714-numerical.bst"
@@ -123,6 +239,10 @@
         "dataset": {
             "csl": "dataset",
             "source": "biblatex"
+        },
+        "degree": {
+            "csl": null,
+            "source": "biblatex-cv.dbx"
         },
         "dictionary": {
             "csl": "book",
@@ -132,26 +252,66 @@
             "csl": "thesis",
             "source": "gost2003.bst"
         },
+        "document": {
+            "csl": "document",
+            "source": "csl"
+        },
         "electronic": {
             "alias": "online",
             "csl": "webpage",
             "source": "biblatex"
         },
+        "entry": {
+            "csl": "entry",
+            "source": "csl"
+        },
+        "entry-dictionary": {
+            "csl": "entry-dictionary",
+            "source": "csl"
+        },
+        "entry-encyclopedia": {
+            "csl": "entry-encyclopedia",
+            "source": "csl"
+        },
         "eulegislation": {
             "csl": "legislation",
             "source": "bath.bst"
+        },
+        "event": {
+            "csl": "event",
+            "source": "csl"
+        },
+        "exhibcatalog": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx"
+        },
+        "figure": {
+            "csl": "figure",
+            "source": "csl"
         },
         "footnote": {
             "csl": null,
             "source": "apsrev4-2.bst"
         },
+        "funding": {
+            "csl": null,
+            "source": "biblatex-cv.dbx"
+        },
         "game": {
             "csl": "software",
             "source": "ACM-Reference-Format.bst"
         },
+        "gitcommit": {
+            "csl": null,
+            "source": "gitlog.dbx"
+        },
         "govpub": {
             "csl": "regulation",
             "source": "thesnumb.bst"
+        },
+        "graphic": {
+            "csl": "graphic",
+            "source": "csl"
         },
         "habthesis": {
             "csl": "thesis",
@@ -161,6 +321,10 @@
             "csl": null,
             "source": "bookdb.bst"
         },
+        "hearing": {
+            "csl": "hearing",
+            "source": "csl"
+        },
         "hidden": {
             "csl": null,
             "source": "abntex2-alf.bst"
@@ -169,17 +333,77 @@
             "csl": "graphic",
             "source": "biblatex"
         },
+        "inarticle": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "inaudio": {
+            "csl": null,
+            "source": "oxalph.dbx"
+        },
         "inbook": {
             "csl": "chapter",
             "source": "bibtex"
+        },
+        "incatalog": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx"
         },
         "incollection": {
             "csl": "chapter",
             "source": "bibtex"
         },
+        "incommentary": {
+            "csl": null,
+            "source": "sbl.dbx"
+        },
+        "inexhibcatalog": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx"
+        },
+        "ininarticle": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "ininbook": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "inincollection": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "ininproceedings": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "ininreference": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "inlexicon": {
+            "csl": null,
+            "source": "sbl.dbx"
+        },
         "inloosecollection": {
             "csl": "chapter",
             "source": "resphilosophica.bst"
+        },
+        "inmathesis": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "inmovie": {
+            "csl": null,
+            "source": "oxalph.dbx"
+        },
+        "inmusic": {
+            "csl": null,
+            "source": "oxalph.dbx"
+        },
+        "inphdthesis": {
+            "csl": null,
+            "source": "bookinother.dbx"
         },
         "inpress": {
             "csl": "article",
@@ -203,6 +427,18 @@
             "csl": "webpage",
             "source": "IEEEtran.bst"
         },
+        "interview": {
+            "csl": "interview",
+            "source": "csl"
+        },
+        "inthesis": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "invideo": {
+            "csl": null,
+            "source": "oxalph.dbx"
+        },
         "journalpart": {
             "csl": null,
             "source": "abntex2-alf.bst"
@@ -212,7 +448,7 @@
             "source": "bestpapers-export.bst"
         },
         "jurisdiction": {
-            "csl": null,
+            "csl": "legal_case",
             "notes": "\"Court decisions, court recordings, and similar things.\"",
             "source": "biblatex"
         },
@@ -220,19 +456,35 @@
             "csl": "thesis",
             "source": "jurabib.bst"
         },
+        "legadminmaterial": {
+            "csl": "regulation",
+            "source": "apa.dbx"
+        },
         "legal": {
             "csl": "treaty",
             "notes": "\"Legal documents such as treaties.\"",
             "source": "biblatex"
+        },
+        "legal_case": {
+            "csl": "legal_case",
+            "source": "csl"
         },
         "legislation": {
             "csl": "legislation",
             "notes": "\"Laws, bills, legislative proposals, and similar things.\" May also be `bill`",
             "source": "biblatex"
         },
+        "legmaterial": {
+            "csl": "legislation",
+            "source": "apa.dbx"
+        },
         "letter": {
             "csl": "personal_communication",
             "source": "biblatex"
+        },
+        "letters": {
+            "csl": "personal_communication",
+            "source": "apa6.dbx"
         },
         "lexicon": {
             "csl": "book",
@@ -246,6 +498,10 @@
             "csl": "report",
             "notes": "CSL's `report` is also used for manuals and similar technical documentation (e.g. a software, instrument, or test manual).",
             "source": "bibtex"
+        },
+        "manuscript": {
+            "csl": "manuscript",
+            "source": "manuscripts-shared.dbx"
         },
         "map": {
             "csl": "map",
@@ -269,6 +525,10 @@
             "notes": "New in CSL v1.0.2.",
             "source": "bibtex"
         },
+        "mlasource": {
+            "csl": null,
+            "source": "mla.dbx"
+        },
         "monograph": {
             "csl": "book",
             "source": "gbt7714-numerical.bst"
@@ -276,6 +536,10 @@
         "monography": {
             "csl": "book",
             "source": "abntex2-alf.bst"
+        },
+        "motion_picture": {
+            "csl": "motion_picture",
+            "source": "csl"
         },
         "movie": {
             "csl": "motion_picture",
@@ -285,6 +549,10 @@
             "csl": "song",
             "source": "biblatex"
         },
+        "musical_score": {
+            "csl": "musical_score",
+            "source": "csl"
+        },
         "mvbook": {
             "csl": "book",
             "source": "biblatex"
@@ -292,6 +560,14 @@
         "mvcollection": {
             "csl": "book",
             "source": "biblatex"
+        },
+        "mvcommentary": {
+            "csl": null,
+            "source": "sbl.dbx"
+        },
+        "mvlexicon": {
+            "csl": null,
+            "source": "sbl.dbx"
         },
         "mvproceedings": {
             "csl": "book",
@@ -301,9 +577,17 @@
             "csl": "book",
             "source": "biblatex"
         },
+        "nameonly": {
+            "csl": null,
+            "source": "apa.dbx"
+        },
         "news": {
             "csl": "article-newspaper",
             "source": "seuthesix.bst"
+        },
+        "newsarticle": {
+            "csl": "article-newspaper",
+            "source": "apa6.dbx"
         },
         "newspaper": {
             "csl": "article-newspaper",
@@ -316,6 +600,14 @@
         "other": {
             "csl": null,
             "source": "bjnano.bst"
+        },
+        "pamphlet": {
+            "csl": "pamphlet",
+            "source": "csl"
+        },
+        "paper-conference": {
+            "csl": "paper-conference",
+            "source": "csl"
         },
         "patent": {
             "csl": "patent",
@@ -331,10 +623,22 @@
             "notes": "New in CSL v1.0.2.",
             "source": "biblatex"
         },
+        "personal_communication": {
+            "csl": "personal_communication",
+            "source": "csl"
+        },
         "phdthesis": {
             "alias": "thesis",
             "csl": "thesis",
             "source": "bibtex"
+        },
+        "post": {
+            "csl": "post",
+            "source": "csl"
+        },
+        "post-weblog": {
+            "csl": "post-weblog",
+            "source": "csl"
         },
         "preamble": {
             "csl": null,
@@ -363,6 +667,10 @@
             "csl": "book",
             "source": "biblatex"
         },
+        "regulation": {
+            "csl": "regulation",
+            "source": "csl"
+        },
         "report": {
             "csl": "report",
             "source": "biblatex"
@@ -375,6 +683,18 @@
             "csl": "review",
             "notes": "\"A more specific variant of the `@article` type\"",
             "source": "biblatex"
+        },
+        "review-book": {
+            "csl": "review-book",
+            "source": "csl"
+        },
+        "school": {
+            "csl": null,
+            "source": "biblatex-cv.dbx"
+        },
+        "seminarpaper": {
+            "csl": null,
+            "source": "sbl.dbx"
         },
         "set": {
             "csl": null,
@@ -390,6 +710,22 @@
             "notes": "New in CSL v1.0.2.",
             "source": "biblatex"
         },
+        "softwaremodule": {
+            "csl": "software",
+            "source": "software.dbx"
+        },
+        "softwareversion": {
+            "csl": null,
+            "source": "software.dbx"
+        },
+        "song": {
+            "csl": "song",
+            "source": "csl"
+        },
+        "speech": {
+            "csl": "speech",
+            "source": "csl"
+        },
         "standard": {
             "csl": "standard",
             "notes": "New in CSL v1.0.2.",
@@ -399,6 +735,10 @@
             "csl": null,
             "notes": "Special entry type for defining abbreviations",
             "source": "bibtex"
+        },
+        "student": {
+            "csl": null,
+            "source": "biblatex-cv.dbx"
         },
         "suppbook": {
             "csl": "chapter",
@@ -415,6 +755,14 @@
             "notes": "see `article`",
             "source": "biblatex"
         },
+        "talk": {
+            "csl": "speech",
+            "source": "archaeologie.dbx"
+        },
+        "teaching": {
+            "csl": null,
+            "source": "biblatex-cv.dbx"
+        },
         "techreport": {
             "alias": "report",
             "csl": "report",
@@ -428,6 +776,10 @@
         "thesis": {
             "csl": "thesis",
             "source": "biblatex"
+        },
+        "treaty": {
+            "csl": "treaty",
+            "source": "csl"
         },
         "uklegislation": {
             "csl": "legislation",
@@ -447,7 +799,7 @@
             "source": "IEEEtran.bst"
         },
         "website": {
-            "csl": null,
+            "csl": "webpage",
             "source": "quantum.bst"
         },
         "www": {
@@ -467,13 +819,33 @@
             "source": "biblatex",
             "type": "literal"
         },
+        "abstractloc": {
+            "csl": null,
+            "source": "apa6.dbx",
+            "type": "literal"
+        },
+        "abstracturl": {
+            "csl": null,
+            "source": "apa6.dbx",
+            "type": "verbatim"
+        },
+        "accessed": {
+            "csl": "accessed",
+            "source": "csl"
+        },
         "account": {
             "csl": null,
             "source": "address-html.bst"
         },
         "acronym": {
             "csl": null,
-            "source": "export.bst"
+            "source": "export.bst",
+            "type": "literal"
+        },
+        "actor": {
+            "csl": "performer",
+            "source": "fiwi.dbx",
+            "type": "name"
         },
         "add": {
             "csl": null,
@@ -501,13 +873,34 @@
         },
         "advisor": {
             "csl": null,
-            "source": "ACM-Reference-Format.bst"
+            "source": "ACM-Reference-Format.bst",
+            "type": "name"
         },
         "afterword": {
             "csl": null,
             "notes": "Not supported.",
             "source": "biblatex",
             "type": "name"
+        },
+        "alternatetitle": {
+            "csl": null,
+            "source": "fiwi.dbx",
+            "type": "literal"
+        },
+        "alternatetitlescript": {
+            "csl": null,
+            "source": "fiwi.dbx",
+            "type": "literal"
+        },
+        "amendment": {
+            "csl": null,
+            "source": "apa.dbx",
+            "type": "literal"
+        },
+        "amount": {
+            "csl": null,
+            "source": "biblatex-cv.dbx",
+            "type": "integer"
         },
         "annotate": {
             "csl": "note",
@@ -534,13 +927,40 @@
             "csl": null,
             "source": "bababbr3-fl.bst"
         },
+        "anonstring": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "name"
+        },
+        "appentry": {
+            "csl": null,
+            "source": "apa.dbx",
+            "type": "literal"
+        },
         "applicant": {
             "csl": null,
             "source": "seuthesix.bst"
         },
+        "arachne": {
+            "csl": null,
+            "source": "archaeologie.dbx",
+            "type": "verbatim"
+        },
         "archive": {
             "csl": "archive",
             "source": "apsrev4-2.bst"
+        },
+        "archive-place": {
+            "csl": "archive-place",
+            "source": "csl"
+        },
+        "archive_collection": {
+            "csl": "archive_collection",
+            "source": "csl"
+        },
+        "archive_location": {
+            "csl": "archive_location",
+            "source": "csl"
         },
         "archiveprefix": {
             "alias": "eprinttype",
@@ -552,9 +972,26 @@
             "csl": "archive",
             "source": "jurabib.bst"
         },
+        "arthist": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx",
+            "type": "integer"
+        },
+        "arthistdate": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx",
+            "type": "date"
+        },
+        "article": {
+            "csl": null,
+            "notes": "Should be prepended to the section field (e.g., article I section 3)",
+            "source": "apa.dbx",
+            "type": "literal"
+        },
         "articleno": {
             "csl": null,
-            "source": "ACM-Reference-Format.bst"
+            "source": "ACM-Reference-Format.bst",
+            "type": "literal"
         },
         "arxiv": {
             "csl": null,
@@ -569,18 +1006,32 @@
             "source": "bibtex",
             "type": "name"
         },
+        "authoraddon": {
+            "csl": null,
+            "source": "oxalph.dbx",
+            "type": "name"
+        },
         "authorcountry": {
             "csl": null,
-            "source": "gost2003.bst"
+            "source": "gost2003.bst",
+            "type": "literal"
         },
         "authorfa": {
             "csl": null,
             "source": "asa-fa.bst"
         },
+        "authority": {
+            "csl": "authority",
+            "source": "csl"
+        },
         "authortype": {
             "csl": null,
             "source": "biblatex",
             "type": "key"
+        },
+        "available-date": {
+            "csl": "available-date",
+            "source": "csl"
         },
         "bibsource": {
             "csl": null,
@@ -602,18 +1053,113 @@
             "csl": null,
             "source": "address-html.bst"
         },
-        "bookaddress": {
+        "blogsubtitle": {
             "csl": null,
+            "source": "windycity.dbx",
+            "type": "literal"
+        },
+        "blogtitle": {
+            "csl": "title",
+            "source": "windycity.dbx",
+            "type": "literal"
+        },
+        "blogtitleaddon": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "literal"
+        },
+        "book": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "range"
+        },
+        "bookaddress": {
+            "csl": "publisher-place",
             "source": "apsrev4-2.bst"
+        },
+        "bookafterword": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "name"
+        },
+        "bookannotator": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "name"
         },
         "bookauthor": {
             "csl": "container-author",
             "source": "biblatex",
             "type": "name"
         },
+        "bookauthortype": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "literal"
+        },
+        "bookbooksubtitle": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "literal"
+        },
+        "bookbooktitle": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "literal"
+        },
+        "bookbooktitleaddon": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "literal"
+        },
+        "bookbooktitlekey": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "key"
+        },
+        "bookbookvolume": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "literal"
+        },
+        "bookcommentator": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "name"
+        },
+        "bookcredits": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "literal"
+        },
+        "bookeditor": {
+            "csl": "editor",
+            "source": "bookinother.dbx",
+            "type": "name"
+        },
+        "bookforeword": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "name"
+        },
+        "bookineditor": {
+            "csl": null,
+            "source": "bookinother.dbx",
+            "type": "name"
+        },
+        "bookintroduction": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "name"
+        },
         "booklanguage": {
             "csl": null,
             "source": "gost2003.bst"
+        },
+        "bookoriglanguage": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "key"
         },
         "bookpages": {
             "csl": null,
@@ -623,6 +1169,11 @@
             "csl": null,
             "source": "biblatex",
             "type": "key"
+        },
+        "books": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "literal"
         },
         "booksubtitle": {
             "csl": null,
@@ -638,6 +1189,35 @@
             "csl": null,
             "source": "biblatex",
             "type": "literal"
+        },
+        "booktitlekey": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "key"
+        },
+        "booktitlenote": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "literal"
+        },
+        "booktranslator": {
+            "csl": "translator",
+            "source": "biblatex-gost.dbx",
+            "type": "name"
+        },
+        "bookvolume": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "literal"
+        },
+        "bookyear": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "literal"
+        },
+        "call-number": {
+            "csl": "call-number",
+            "source": "csl"
         },
         "caption": {
             "csl": null,
@@ -655,6 +1235,11 @@
             "csl": null,
             "source": "bath.bst"
         },
+        "catalog": {
+            "csl": null,
+            "source": "oxalph.dbx",
+            "type": "literal"
+        },
         "category": {
             "csl": null,
             "source": "bookdb.bst"
@@ -664,12 +1249,21 @@
             "source": "address-html.bst"
         },
         "chair": {
-            "csl": null,
+            "csl": "chair",
             "source": "apacite.bst"
         },
         "chapter": {
             "csl": "chapter-number",
             "source": "bibtex",
+            "type": "literal"
+        },
+        "chapter-number": {
+            "csl": "chapter-number",
+            "source": "csl"
+        },
+        "citation": {
+            "csl": null,
+            "source": "apa.dbx",
             "type": "literal"
         },
         "citedate": {
@@ -679,6 +1273,21 @@
         "city": {
             "csl": null,
             "source": "ACM-Reference-Format.bst"
+        },
+        "classes": {
+            "csl": null,
+            "source": "biblatex-cv.dbx",
+            "type": "entrykey"
+        },
+        "claves": {
+            "csl": null,
+            "source": "claves.dbx",
+            "type": "literal"
+        },
+        "claves_definition": {
+            "csl": null,
+            "source": "claves.dbx",
+            "type": "literal"
         },
         "code": {
             "csl": null,
@@ -690,11 +1299,34 @@
         },
         "collaboration": {
             "csl": null,
-            "source": "apsrev4-2.bst"
+            "source": "apsrev4-2.bst",
+            "type": "literal"
         },
         "collator": {
             "csl": null,
             "source": "bookdb.bst"
+        },
+        "collection": {
+            "csl": null,
+            "source": "bath.dbx",
+            "type": "literal"
+        },
+        "collection-editor": {
+            "csl": "collection-editor",
+            "source": "csl"
+        },
+        "collection-number": {
+            "csl": "collection-number",
+            "source": "csl"
+        },
+        "collection-title": {
+            "csl": "collection-title",
+            "source": "csl"
+        },
+        "columns": {
+            "csl": null,
+            "source": "manuscripts-shared.dbx",
+            "type": "literal"
         },
         "commentator": {
             "csl": null,
@@ -705,9 +1337,28 @@
             "csl": null,
             "source": "quantum.bst"
         },
-        "compiler": {
+        "commithash": {
             "csl": null,
+            "source": "gitlog.dbx",
+            "type": "literal"
+        },
+        "committee": {
+            "csl": null,
+            "source": "biblatex-cv.dbx",
+            "type": "name"
+        },
+        "compiler": {
+            "csl": "compiler",
             "source": "gost2003.bst"
+        },
+        "composer": {
+            "csl": "composer",
+            "source": "csl"
+        },
+        "concentration": {
+            "csl": null,
+            "source": "biblatex-cv.dbx",
+            "type": "literal"
         },
         "condition": {
             "csl": null,
@@ -725,17 +1376,54 @@
             "csl": null,
             "source": "abntex2-alf.bst"
         },
+        "container-author": {
+            "csl": "container-author",
+            "source": "csl"
+        },
+        "container-title": {
+            "csl": "container-title",
+            "source": "csl"
+        },
+        "container-title-short": {
+            "csl": "container-title-short",
+            "source": "csl"
+        },
+        "contents": {
+            "csl": null,
+            "source": "manuscripts-shared.dbx",
+            "type": "literal"
+        },
+        "contributor": {
+            "csl": "contributor",
+            "source": "csl"
+        },
+        "contributora": {
+            "csl": null,
+            "source": "mla.dbx",
+            "type": "literal"
+        },
+        "contributorb": {
+            "csl": null,
+            "source": "mla.dbx",
+            "type": "literal"
+        },
+        "copublisher": {
+            "csl": null,
+            "source": "gzt.dbx",
+            "type": "literal"
+        },
         "copy": {
             "csl": null,
             "source": "bookdb.bst"
         },
         "country": {
-            "csl": null,
+            "csl": "jurisdiction",
             "source": "adrbirthday.bst"
         },
         "credits": {
             "csl": null,
-            "source": "gost2003.bst"
+            "source": "gost2003.bst",
+            "type": "literal"
         },
         "crossref": {
             "csl": null,
@@ -743,37 +1431,18 @@
             "source": "biblatex",
             "type": "entrykey"
         },
-        "ctrl-article-title": {
-            "csl": null,
-            "source": "achemso.bst"
+        "curator": {
+            "csl": "curator",
+            "source": "csl"
         },
-        "ctrl-chapter-title": {
+        "currency": {
             "csl": null,
-            "source": "achemso.bst"
+            "source": "biblatex-cv.dbx",
+            "type": "literal"
         },
-        "ctrl-doi": {
-            "csl": null,
-            "source": "achemso.bst"
-        },
-        "ctrl-etal-firstonly": {
-            "csl": null,
-            "source": "achemso.bst"
-        },
-        "ctrl-etal-number": {
-            "csl": null,
-            "source": "achemso.bst"
-        },
-        "ctrl-link-doi": {
-            "csl": null,
-            "source": "angew.bst"
-        },
-        "ctrl-use-doi-all": {
-            "csl": null,
-            "source": "angew.bst"
-        },
-        "ctrl-use-title": {
-            "csl": null,
-            "source": "achemso.bst"
+        "custom": {
+            "csl": "custom",
+            "source": "csl"
         },
         "dataset": {
             "csl": null,
@@ -784,6 +1453,36 @@
             "source": "biblatex",
             "type": "date"
         },
+        "date+an": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "literal"
+        },
+        "datea": {
+            "csl": null,
+            "source": "mla.dbx",
+            "type": "literal"
+        },
+        "dateaddon": {
+            "csl": null,
+            "source": "iso-alphabetic.dbx",
+            "type": "literal"
+        },
+        "dateb": {
+            "csl": null,
+            "source": "mla.dbx",
+            "type": "literal"
+        },
+        "datetype": {
+            "csl": null,
+            "source": "oxalph.dbx",
+            "type": "literal"
+        },
+        "dating": {
+            "csl": null,
+            "source": "manuscripts-shared.dbx",
+            "type": "literal"
+        },
         "day": {
             "csl": null,
             "source": "apacite.bst"
@@ -792,13 +1491,36 @@
             "csl": null,
             "source": "IEEEtran.bst"
         },
+        "decision": {
+            "alias": "usera",
+            "csl": null,
+            "source": "biblatex-juradiss.dbx",
+            "type": "literal"
+        },
+        "decisionname": {
+            "alias": "userf",
+            "csl": null,
+            "source": "biblatex-juradiss.dbx",
+            "type": "literal"
+        },
         "definition": {
             "csl": null,
             "source": "glsplain.bst"
         },
+        "degree": {
+            "csl": null,
+            "source": "biblatex-cv.dbx",
+            "type": "literal"
+        },
+        "degreelist": {
+            "csl": null,
+            "source": "biblatex-cv.dbx",
+            "type": "entrykey"
+        },
         "department": {
             "csl": null,
-            "source": "ametsoc2014.bst"
+            "source": "ametsoc2014.bst",
+            "type": "literal"
         },
         "description": {
             "csl": null,
@@ -809,12 +1531,26 @@
             "source": "thesnumb.bst"
         },
         "dimensions": {
-            "csl": null,
+            "csl": "dimensions",
             "source": "abntex2-alf.bst"
+        },
+        "director": {
+            "csl": "director",
+            "source": "apa6.dbx",
+            "type": "name"
         },
         "dissyear": {
             "csl": null,
             "source": "jurabib.bst"
+        },
+        "distinctURL": {
+            "csl": null,
+            "source": "acmdatamodel.dbx",
+            "type": "literal"
+        },
+        "division": {
+            "csl": "division",
+            "source": "csl"
         },
         "doi": {
             "csl": "DOI",
@@ -829,9 +1565,24 @@
             "csl": null,
             "source": "expcites.bst"
         },
+        "duration": {
+            "csl": null,
+            "source": "fiwi.dbx",
+            "type": "literal"
+        },
+        "durationtype": {
+            "csl": null,
+            "source": "fiwi.dbx",
+            "type": "literal"
+        },
         "edition": {
             "csl": "edition",
             "source": "bibtex",
+            "type": "literal"
+        },
+        "editioncredits": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
             "type": "literal"
         },
         "editor": {
@@ -842,6 +1593,16 @@
         "editora": {
             "csl": null,
             "source": "biblatex",
+            "type": "name"
+        },
+        "editoraaddon": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "literal"
+        },
+        "editoraddon": {
+            "csl": null,
+            "source": "oxalph.dbx",
             "type": "name"
         },
         "editoratype": {
@@ -869,6 +1630,10 @@
             "source": "biblatex",
             "type": "key"
         },
+        "editorial-director": {
+            "csl": "editorial-director",
+            "source": "csl"
+        },
         "editortype": {
             "csl": null,
             "source": "biblatex",
@@ -883,6 +1648,11 @@
             "csl": null,
             "source": "adrbirthday.bst"
         },
+        "endbookyear": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "literal"
+        },
         "endnumber": {
             "csl": null,
             "source": "seuthesis.bst"
@@ -894,6 +1664,11 @@
         "endyear": {
             "csl": null,
             "source": "seuthesis.bst"
+        },
+        "englishabstract": {
+            "csl": null,
+            "source": "gzt.dbx",
+            "type": "literal"
         },
         "englishtitle": {
             "csl": null,
@@ -926,6 +1701,21 @@
             "source": "biblatex",
             "type": "literal"
         },
+        "eprintdate": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "date"
+        },
+        "eprintday": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "datepart"
+        },
+        "eprintmonth": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "datepart"
+        },
         "eprints": {
             "csl": null,
             "source": "databib.bst"
@@ -934,6 +1724,11 @@
             "csl": "archive",
             "source": "biblatex",
             "type": "literal"
+        },
+        "eprintyear": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "datepart"
         },
         "erratumeid": {
             "csl": null,
@@ -959,10 +1754,41 @@
             "csl": null,
             "source": "ChemCommun.bst"
         },
+        "event": {
+            "csl": "event-title",
+            "source": "csl"
+        },
+        "event-date": {
+            "csl": "event-date",
+            "source": "csl"
+        },
+        "event-place": {
+            "csl": "event-place",
+            "source": "csl"
+        },
+        "event-title": {
+            "csl": "event-title",
+            "source": "csl"
+        },
         "eventdate": {
             "csl": "event-date",
             "source": "biblatex",
             "type": "date"
+        },
+        "eventdatelanguage": {
+            "csl": null,
+            "source": "archaeologie.dbx",
+            "type": "verbatim"
+        },
+        "eventnumber": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "integer"
+        },
+        "eventsubtitle": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx",
+            "type": "literal"
         },
         "eventtitle": {
             "csl": "event-title",
@@ -975,15 +1801,79 @@
             "source": "biblatex",
             "type": "literal"
         },
+        "eventtype": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "literal"
+        },
         "eventyear": {
             "csl": null,
             "source": "bath.bst"
+        },
+        "execdirector": {
+            "csl": "director",
+            "source": "apa.dbx",
+            "type": "name"
+        },
+        "execproducer": {
+            "csl": "executive-producer",
+            "source": "apa.dbx",
+            "type": "name"
         },
         "execute": {
             "csl": null,
             "notes": "Not supported.",
             "source": "biblatex",
             "type": "code"
+        },
+        "executive-producer": {
+            "csl": "executive-producer",
+            "source": "csl"
+        },
+        "exhibfirstdate": {
+            "csl": "event-date",
+            "source": "arthistory-bonn.dbx",
+            "type": "date"
+        },
+        "exhibfirstlocation": {
+            "csl": "event-place",
+            "source": "arthistory-bonn.dbx",
+            "type": "literal"
+        },
+        "exhibfirstmuseum": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx",
+            "type": "literal"
+        },
+        "exhibseconddate": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx",
+            "type": "date"
+        },
+        "exhibsecondlocation": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx",
+            "type": "literal"
+        },
+        "exhibsecondmuseum": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx",
+            "type": "literal"
+        },
+        "exhibthirddate": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx",
+            "type": "date"
+        },
+        "exhibthirdlocation": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx",
+            "type": "literal"
+        },
+        "exhibthirdmuseum": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx",
+            "type": "literal"
         },
         "faddress": {
             "csl": null,
@@ -996,6 +1886,16 @@
         "fax": {
             "csl": null,
             "source": "adrbirthday.bst"
+        },
+        "festschrift": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "name"
+        },
+        "festschriftaddon": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "literal"
         },
         "file": {
             "csl": null,
@@ -1031,9 +1931,24 @@
             "csl": null,
             "source": "achicago.bst"
         },
+        "frenchabstract": {
+            "csl": null,
+            "source": "gzt.dbx",
+            "type": "literal"
+        },
         "ftitle": {
             "csl": null,
             "source": "achicago.bst"
+        },
+        "fulleventdate": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "date"
+        },
+        "funder": {
+            "csl": null,
+            "source": "biblatex-cv.dbx",
+            "type": "literal"
         },
         "furtherresp": {
             "csl": null,
@@ -1049,17 +1964,46 @@
             "source": "biblatex",
             "type": "literal"
         },
+        "genre": {
+            "csl": "genre",
+            "source": "csl"
+        },
         "germanpages": {
             "csl": null,
             "source": "ChemCommun.bst"
+        },
+        "gpa": {
+            "csl": null,
+            "source": "biblatex-cv.dbx",
+            "type": "literal"
         },
         "group": {
             "csl": null,
             "source": "glsplain.bst"
         },
+        "guest": {
+            "csl": "guest",
+            "source": "csl"
+        },
+        "hal_id": {
+            "csl": null,
+            "source": "software.dbx",
+            "type": "verbatim"
+        },
+        "hal_version": {
+            "csl": "version",
+            "source": "software.dbx",
+            "type": "verbatim"
+        },
+        "handle": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "literal"
+        },
         "heading": {
             "csl": null,
-            "source": "glsplain.bst"
+            "source": "glsplain.bst",
+            "type": "literal"
         },
         "hereafter": {
             "csl": null,
@@ -1069,6 +2013,15 @@
             "csl": null,
             "source": "biblatex",
             "type": "name"
+        },
+        "honors": {
+            "csl": null,
+            "source": "biblatex-cv.dbx",
+            "type": "literal"
+        },
+        "host": {
+            "csl": "host",
+            "source": "csl"
         },
         "howcited": {
             "csl": null,
@@ -1100,8 +2053,28 @@
             "source": "bookdb.bst"
         },
         "illustrator": {
-            "csl": null,
+            "csl": "illustrator",
             "source": "achicago.bst"
+        },
+        "impactfactor": {
+            "csl": null,
+            "source": "publist.dbx",
+            "type": "literal"
+        },
+        "inafterword": {
+            "csl": null,
+            "source": "archaeologie.dbx",
+            "type": "name"
+        },
+        "inannotator": {
+            "csl": null,
+            "source": "archaeologie.dbx",
+            "type": "name"
+        },
+        "incommentator": {
+            "csl": null,
+            "source": "archaeologie.dbx",
+            "type": "name"
         },
         "indexsorttitle": {
             "csl": null,
@@ -1114,9 +2087,43 @@
             "source": "biblatex",
             "type": "literal"
         },
+        "ineditor": {
+            "csl": null,
+            "source": "archaeologie.dbx",
+            "type": "name"
+        },
+        "inforeword": {
+            "csl": null,
+            "source": "archaeologie.dbx",
+            "type": "name"
+        },
+        "inintroduction": {
+            "csl": null,
+            "source": "archaeologie.dbx",
+            "type": "name"
+        },
         "institution": {
             "csl": "publisher",
             "source": "bibtex",
+            "type": "literal"
+        },
+        "interviewee": {
+            "csl": null,
+            "source": "gzt.dbx",
+            "type": "name"
+        },
+        "interviewer": {
+            "csl": "interviewer",
+            "source": "csl"
+        },
+        "intranslator": {
+            "csl": null,
+            "source": "archaeologie.dbx",
+            "type": "name"
+        },
+        "introducedin": {
+            "csl": null,
+            "source": "software.dbx",
             "type": "literal"
         },
         "introduction": {
@@ -1129,12 +2136,13 @@
             "source": "IEEEtran.bst"
         },
         "inventor": {
-            "csl": null,
+            "csl": "author",
             "source": "vancouver.bst"
         },
         "ipc": {
             "csl": null,
-            "source": "gost2003.bst"
+            "source": "gost2003.bst",
+            "type": "literal"
         },
         "isan": {
             "csl": null,
@@ -1178,6 +2186,15 @@
             "source": "biblatex",
             "type": "literal"
         },
+        "issued": {
+            "csl": "issued",
+            "source": "csl"
+        },
+        "issues": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "literal"
+        },
         "issuesubtitle": {
             "csl": null,
             "source": "biblatex",
@@ -1202,11 +2219,25 @@
             "csl": null,
             "source": "aomalpha.bst"
         },
+        "jointauthor": {
+            "csl": null,
+            "source": "oxalph.dbx",
+            "type": "name"
+        },
+        "jointauthortype": {
+            "csl": null,
+            "source": "oxalph.dbx",
+            "type": "literal"
+        },
         "journal": {
             "alias": "journaltitle",
             "csl": "container-title",
             "source": "bibtex",
             "type": "literal"
+        },
+        "journalabbreviation": {
+            "csl": "container-title-short",
+            "source": "csl"
         },
         "journalsubtitle": {
             "csl": null,
@@ -1228,6 +2259,17 @@
             "source": "biblatex",
             "type": "literal"
         },
+        "journalyear": {
+            "alias": "usere",
+            "csl": null,
+            "source": "biblatex-juradiss.dbx",
+            "type": "literal"
+        },
+        "jstor": {
+            "csl": null,
+            "source": "archaeologie.dbx",
+            "type": "verbatim"
+        },
         "juraauthor": {
             "csl": null,
             "source": "jox.bst"
@@ -1236,12 +2278,20 @@
             "csl": null,
             "source": "jox.bst"
         },
+        "jurisdiction": {
+            "csl": "jurisdiction",
+            "source": "csl"
+        },
         "key": {
             "alias": "sortkey",
             "csl": null,
             "notes": "Not supported.",
             "source": "bibtex",
             "type": "literal"
+        },
+        "keyword": {
+            "csl": "keyword",
+            "source": "csl"
         },
         "keywords": {
             "csl": null,
@@ -1276,11 +2326,17 @@
         },
         "lastaccessed": {
             "csl": "accessed",
-            "source": "ACM-Reference-Format.bst"
+            "source": "ACM-Reference-Format.bst",
+            "type": "literal"
         },
         "lastchecked": {
             "csl": "accessed",
             "source": "apacite.bst"
+        },
+        "layer": {
+            "csl": null,
+            "source": "manuscripts-shared.dbx",
+            "type": "literal"
         },
         "lccn": {
             "csl": null,
@@ -1289,6 +2345,16 @@
         "library": {
             "csl": null,
             "source": "biblatex",
+            "type": "literal"
+        },
+        "librarylocation": {
+            "csl": "archive-place",
+            "source": "fiwi.dbx",
+            "type": "literal"
+        },
+        "license": {
+            "csl": "license",
+            "source": "software.dbx",
             "type": "literal"
         },
         "lista": {
@@ -1330,6 +2396,16 @@
             "source": "biblatex",
             "type": "literal"
         },
+        "locationa": {
+            "csl": null,
+            "source": "mla.dbx",
+            "type": "literal"
+        },
+        "locationb": {
+            "csl": null,
+            "source": "mla.dbx",
+            "type": "literal"
+        },
         "madadurltest": {
             "csl": null,
             "source": "alpha-persian.bst"
@@ -1342,10 +2418,25 @@
             "csl": null,
             "source": "figbib1.bst"
         },
+        "mainauthor": {
+            "csl": null,
+            "source": "bookinother.dbx",
+            "type": "name"
+        },
+        "maineditor": {
+            "csl": null,
+            "source": "morenames.dbx",
+            "type": "name"
+        },
         "mainsubtitle": {
             "csl": null,
             "source": "biblatex",
             "type": "literal"
+        },
+        "maintainer": {
+            "csl": null,
+            "source": "cnltx.dbx",
+            "type": "name"
         },
         "maintitle": {
             "csl": null,
@@ -1355,6 +2446,21 @@
         "maintitleaddon": {
             "csl": null,
             "source": "biblatex",
+            "type": "literal"
+        },
+        "maintitlenote": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "literal"
+        },
+        "maintranslator": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "name"
+        },
+        "major": {
+            "csl": null,
+            "source": "biblatex-cv.dbx",
             "type": "literal"
         },
         "majorcode": {
@@ -1379,7 +2485,8 @@
         },
         "media": {
             "csl": "medium",
-            "source": "gost2003.bst"
+            "source": "gost2003.bst",
+            "type": "key"
         },
         "medium": {
             "csl": "medium",
@@ -1388,6 +2495,11 @@
         "meeting": {
             "csl": null,
             "source": "amsra.bst"
+        },
+        "minor": {
+            "csl": null,
+            "source": "biblatex-cv.dbx",
+            "type": "literal"
         },
         "misctitle": {
             "csl": null,
@@ -1419,9 +2531,20 @@
             "csl": null,
             "source": "amsplain.bst"
         },
+        "multieventdate": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "literal"
+        },
+        "multivenue": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "literal"
+        },
         "name": {
             "csl": null,
-            "source": "adrbirthday.bst"
+            "source": "adrbirthday.bst",
+            "type": "name"
         },
         "namea": {
             "csl": null,
@@ -1458,6 +2581,11 @@
             "source": "biblatex",
             "type": "key"
         },
+        "narrator": {
+            "csl": "narrator",
+            "source": "apa.dbx",
+            "type": "name"
+        },
         "nationality": {
             "csl": null,
             "source": "IEEEtran.bst"
@@ -1470,9 +2598,15 @@
             "csl": null,
             "source": "tugboat.bst"
         },
+        "newsdate": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "date"
+        },
         "newspaper": {
             "csl": "container-title",
-            "source": "seuthesix.bst"
+            "source": "seuthesix.bst",
+            "type": "literal"
         },
         "nickname": {
             "csl": null,
@@ -1517,13 +2651,64 @@
             "source": "bibtex",
             "type": "literal"
         },
-        "numpages": {
+        "number-of-pages": {
+            "csl": "number-of-pages",
+            "source": "csl"
+        },
+        "number-of-volumes": {
+            "csl": "number-of-volumes",
+            "source": "csl"
+        },
+        "numbera": {
             "csl": null,
-            "source": "ACM-Reference-Format.bst"
+            "source": "mla.dbx",
+            "type": "literal"
+        },
+        "numberb": {
+            "csl": null,
+            "source": "mla.dbx",
+            "type": "literal"
+        },
+        "numcites": {
+            "csl": null,
+            "source": "biblatex-cv.dbx",
+            "type": "integer"
+        },
+        "numlectures": {
+            "csl": null,
+            "source": "biblatex-cv.dbx",
+            "type": "integer"
+        },
+        "numpages": {
+            "csl": "number-of-pages",
+            "source": "ACM-Reference-Format.bst",
+            "type": "literal"
+        },
+        "numstudents": {
+            "csl": null,
+            "source": "biblatex-cv.dbx",
+            "type": "integer"
         },
         "oaddress": {
-            "csl": null,
+            "csl": "original-publisher-place",
             "source": "achicago.bst"
+        },
+        "officialpages": {
+            "alias": "userd",
+            "csl": null,
+            "source": "biblatex-juradiss.dbx",
+            "type": "literal"
+        },
+        "officialvolume": {
+            "alias": "userc",
+            "csl": null,
+            "source": "biblatex-juradiss.dbx",
+            "type": "literal"
+        },
+        "openaccess": {
+            "csl": null,
+            "source": "publist.dbx",
+            "type": "literal"
         },
         "options": {
             "csl": null,
@@ -1532,7 +2717,7 @@
             "type": "option"
         },
         "opublisher": {
-            "csl": null,
+            "csl": "original-publisher",
             "source": "achicago.bst"
         },
         "org-short": {
@@ -1545,10 +2730,49 @@
             "source": "bibtex",
             "type": "literal"
         },
+        "organizer": {
+            "csl": "organizer",
+            "source": "csl"
+        },
         "origdate": {
             "csl": "original-date",
             "source": "biblatex",
             "type": "date"
+        },
+        "origdate+an": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "literal"
+        },
+        "origdatetype": {
+            "csl": null,
+            "source": "oxalph.dbx",
+            "type": "literal"
+        },
+        "origin": {
+            "csl": null,
+            "source": "manuscripts-shared.dbx",
+            "type": "literal"
+        },
+        "original-author": {
+            "csl": "original-author",
+            "source": "csl"
+        },
+        "original-date": {
+            "csl": "original-date",
+            "source": "csl"
+        },
+        "original-publisher": {
+            "csl": "original-publisher",
+            "source": "csl"
+        },
+        "original-publisher-place": {
+            "csl": "original-publisher-place",
+            "source": "csl"
+        },
+        "original-title": {
+            "csl": "original-title",
+            "source": "csl"
         },
         "originaladdress": {
             "csl": "original-publisher-place",
@@ -1605,14 +2829,28 @@
             "source": "biblatex",
             "type": "literal"
         },
+        "origrealdate": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "date"
+        },
         "origtitle": {
             "csl": "original-title",
             "source": "biblatex",
             "type": "literal"
         },
+        "owner": {
+            "csl": null,
+            "source": "manuscripts-shared.dbx",
+            "type": "name"
+        },
         "oyear": {
             "csl": null,
             "source": "achicago.bst"
+        },
+        "page": {
+            "csl": "page",
+            "source": "csl"
         },
         "pagename": {
             "csl": null,
@@ -1637,10 +2875,49 @@
             "csl": null,
             "source": "IEEEtran.bst"
         },
+        "pardate": {
+            "csl": null,
+            "source": "oxalph.dbx",
+            "type": "date"
+        },
+        "parpages": {
+            "csl": null,
+            "source": "oxalph.dbx",
+            "type": "range"
+        },
+        "parreporter": {
+            "csl": null,
+            "source": "oxalph.dbx",
+            "type": "literal"
+        },
+        "parseries": {
+            "csl": null,
+            "source": "oxalph.dbx",
+            "type": "literal"
+        },
         "part": {
             "csl": "part",
             "source": "biblatex",
             "type": "literal"
+        },
+        "part-title": {
+            "csl": "part-title",
+            "source": "csl"
+        },
+        "parts": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "literal"
+        },
+        "parttitle": {
+            "csl": null,
+            "source": "fiwi.dbx",
+            "type": "literal"
+        },
+        "parvolume": {
+            "csl": null,
+            "source": "oxalph.dbx",
+            "type": "integer"
         },
         "patentid": {
             "csl": null,
@@ -1651,6 +2928,15 @@
             "csl": null,
             "source": "biblatex",
             "type": "verbatim"
+        },
+        "peerreview": {
+            "csl": null,
+            "source": "publist.dbx",
+            "type": "literal"
+        },
+        "performer": {
+            "csl": "performer",
+            "source": "csl"
         },
         "phone": {
             "csl": null,
@@ -1664,9 +2950,20 @@
             "csl": null,
             "source": "amsra.bst"
         },
+        "pmc": {
+            "csl": null,
+            "source": "hep-bibliography.dbx",
+            "type": "literal"
+        },
         "pmcid": {
             "csl": "PMCID",
-            "source": "apacite.bst"
+            "source": "apacite.bst",
+            "type": "literal"
+        },
+        "pmid": {
+            "csl": "PMID",
+            "source": "hep-bibliography.dbx",
+            "type": "literal"
         },
         "prebibitem": {
             "csl": null,
@@ -1674,11 +2971,22 @@
         },
         "preface": {
             "csl": null,
-            "source": "bookdb.bst"
+            "source": "bookdb.bst",
+            "type": "name"
         },
         "preprint": {
             "csl": null,
             "source": "amsra.bst"
+        },
+        "presentationtype": {
+            "csl": null,
+            "source": "biblatex-cv.dbx",
+            "type": "literal"
+        },
+        "presenter": {
+            "csl": null,
+            "source": "biblatex-cv.dbx",
+            "type": "name"
         },
         "presort": {
             "csl": null,
@@ -1700,17 +3008,39 @@
             "csl": null,
             "source": "dk-abbrv.bst"
         },
+        "printing-number": {
+            "csl": "printing-number",
+            "source": "csl"
+        },
         "prioritycountry": {
             "csl": null,
-            "source": "gost2003.bst"
+            "source": "gost2003.bst",
+            "type": "literal"
         },
         "prioritydate": {
             "csl": null,
-            "source": "gost2003.bst"
+            "source": "gost2003.bst",
+            "type": "date"
         },
         "prioritynumber": {
             "csl": null,
-            "source": "gost2003.bst"
+            "source": "gost2003.bst",
+            "type": "literal"
+        },
+        "producer": {
+            "csl": "producer",
+            "source": "apa6.dbx",
+            "type": "name"
+        },
+        "production": {
+            "csl": null,
+            "source": "fiwi.dbx",
+            "type": "literal"
+        },
+        "protocollessurl": {
+            "csl": null,
+            "source": "hep-bibliography.dbx",
+            "type": "uri"
         },
         "pseudonym": {
             "csl": null,
@@ -1718,15 +3048,36 @@
         },
         "publication": {
             "csl": null,
-            "source": "gost2003.bst"
+            "source": "gost2003.bst",
+            "type": "literal"
         },
         "publicationdate": {
             "csl": null,
-            "source": "gost2003.bst"
+            "source": "gost2003.bst",
+            "type": "date"
+        },
+        "publicprice": {
+            "csl": null,
+            "source": "gzt.dbx",
+            "type": "literal"
         },
         "publisher": {
             "csl": "publisher",
             "source": "bibtex",
+            "type": "literal"
+        },
+        "publisher-place": {
+            "csl": "publisher-place",
+            "source": "csl"
+        },
+        "publishera": {
+            "csl": null,
+            "source": "mla.dbx",
+            "type": "literal"
+        },
+        "publisherb": {
+            "csl": null,
+            "source": "mla.dbx",
             "type": "literal"
         },
         "pubmed": {
@@ -1734,9 +3085,38 @@
             "source": "urlbst"
         },
         "pubstate": {
-            "csl": null,
+            "csl": "status",
+            "notes": "The publication state of the work, e. g., ‘in press’.",
             "source": "biblatex",
             "type": "key"
+        },
+        "rawauthor": {
+            "csl": null,
+            "source": "oxalph.dbx",
+            "type": "literal"
+        },
+        "realauthor": {
+            "csl": null,
+            "source": "realauthor.dbx",
+            "type": "name"
+        },
+        "realdate": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "date"
+        },
+        "realeditor": {
+            "csl": null,
+            "source": "realauthor.dbx",
+            "type": "name"
+        },
+        "recipient": {
+            "csl": "recipient",
+            "source": "csl"
+        },
+        "references": {
+            "csl": "references",
+            "source": "csl"
         },
         "related": {
             "csl": null,
@@ -1762,6 +3142,16 @@
             "source": "biblatex",
             "type": "literal"
         },
+        "reportnumber": {
+            "csl": null,
+            "source": "hep-bibliography.dbx",
+            "type": "literal"
+        },
+        "repository": {
+            "csl": null,
+            "source": "software.dbx",
+            "type": "uri"
+        },
         "reprinted-from": {
             "csl": null,
             "source": "abntex2-alf.bst"
@@ -1781,19 +3171,81 @@
         },
         "requestnumber": {
             "csl": null,
-            "source": "gost2003.bst"
+            "source": "gost2003.bst",
+            "type": "literal"
         },
         "responsible": {
             "csl": null,
             "source": "rusnat.bst"
         },
+        "revdauthor": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "name"
+        },
+        "revdeditor": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "name"
+        },
+        "revdshorttitle": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "literal"
+        },
+        "revdsubtitle": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "literal"
+        },
+        "revdtitle": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "literal"
+        },
+        "revdtitleaddon": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "literal"
+        },
         "review": {
             "csl": null,
             "source": "amsra.bst"
         },
+        "reviewed-author": {
+            "csl": "reviewed-author",
+            "source": "csl"
+        },
+        "reviewed-genre": {
+            "csl": "reviewed-genre",
+            "source": "csl"
+        },
+        "reviewed-title": {
+            "csl": "reviewed-title",
+            "source": "csl"
+        },
+        "reviewer": {
+            "csl": null,
+            "source": "gzt.dbx",
+            "type": "name"
+        },
+        "reviewerinstitution": {
+            "csl": null,
+            "source": "gzt.dbx",
+            "type": "literal"
+        },
         "revision": {
             "csl": null,
             "source": "IEEEtran.bst"
+        },
+        "role": {
+            "csl": null,
+            "source": "biblatex-cv.dbx",
+            "type": "key"
+        },
+        "scale": {
+            "csl": "scale",
+            "source": "csl"
         },
         "school": {
             "alias": "institution",
@@ -1801,22 +3253,81 @@
             "source": "bibtex",
             "type": "literal"
         },
+        "science": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "literal"
+        },
         "score": {
             "csl": null,
             "source": "bestpapers-export.bst"
         },
-        "section": {
+        "scribe": {
             "csl": null,
-            "source": "abntex2-alf.bst"
+            "source": "oxalph.dbx",
+            "type": "name"
+        },
+        "script": {
+            "csl": null,
+            "source": "manuscripts-shared.dbx",
+            "type": "literal"
+        },
+        "script-writer": {
+            "csl": "script-writer",
+            "source": "csl"
+        },
+        "scriptwriter": {
+            "csl": null,
+            "source": "fiwi.dbx",
+            "type": "name"
+        },
+        "section": {
+            "csl": "section",
+            "source": "abntex2-alf.bst",
+            "type": "literal"
+        },
+        "semesters": {
+            "csl": null,
+            "source": "biblatex-cv.dbx",
+            "type": "entrykey"
         },
         "series": {
             "csl": "collection-title",
             "source": "bibtex",
             "type": "literal"
         },
+        "series-creator": {
+            "csl": "series-creator",
+            "source": "csl"
+        },
+        "seriesaddon": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "literal"
+        },
         "seriesedition": {
             "csl": null,
             "source": "achicago.bst"
+        },
+        "serieseditor": {
+            "csl": null,
+            "source": "oxalph.dbx",
+            "type": "name"
+        },
+        "seriesseries": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "literal"
+        },
+        "setlabel": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "literal"
+        },
+        "shelfmark": {
+            "csl": null,
+            "source": "bath.dbx",
+            "type": "literal"
         },
         "short": {
             "csl": null,
@@ -1831,10 +3342,35 @@
             "source": "biblatex",
             "type": "name"
         },
+        "shortblog": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "literal"
+        },
+        "shortbookauthor": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "name"
+        },
+        "shortbooktitle": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "literal"
+        },
+        "shortcollection": {
+            "csl": null,
+            "source": "manuscripts-shared.dbx",
+            "type": "literal"
+        },
         "shorteditor": {
             "csl": null,
             "source": "biblatex",
             "type": "name"
+        },
+        "shortform": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "literal"
         },
         "shorthand": {
             "csl": null,
@@ -1848,9 +3384,39 @@
             "source": "biblatex",
             "type": "literal"
         },
+        "shortissuetitle": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "literal"
+        },
         "shortjournal": {
             "csl": "container-title-short",
             "source": "biblatex",
+            "type": "literal"
+        },
+        "shortlabeltitle": {
+            "csl": null,
+            "source": "oxalph.dbx",
+            "type": "literal"
+        },
+        "shortlibrary": {
+            "csl": null,
+            "source": "manuscripts-shared.dbx",
+            "type": "literal"
+        },
+        "shortmaintitle": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "literal"
+        },
+        "shortorganization": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "literal"
+        },
+        "shortserie": {
+            "csl": null,
+            "source": "lncs.dbx",
             "type": "literal"
         },
         "shortseries": {
@@ -1862,10 +3428,25 @@
             "csl": null,
             "source": "jurabib.bst"
         },
+        "shortsubseries": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "literal"
+        },
+        "shortsubsubseries": {
+            "csl": null,
+            "source": "subseries.dbx",
+            "type": "literal"
+        },
         "shorttitle": {
             "csl": "title-short",
             "source": "biblatex",
             "type": "literal"
+        },
+        "shorttranslator": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "name"
         },
         "shorturl": {
             "csl": null,
@@ -1887,6 +3468,12 @@
             "csl": null,
             "source": "jurabib.bst"
         },
+        "sign": {
+            "alias": "userb",
+            "csl": null,
+            "source": "biblatex-juradiss.dbx",
+            "type": "literal"
+        },
         "size": {
             "csl": null,
             "source": "bookdb.bst"
@@ -1894,6 +3481,11 @@
         "slaccitation": {
             "csl": null,
             "source": "apsrev4-2.bst"
+        },
+        "smfprice": {
+            "csl": null,
+            "source": "gzt.dbx",
+            "type": "literal"
         },
         "sort-short": {
             "csl": null,
@@ -1919,6 +3511,11 @@
             "source": "biblatex",
             "type": "name"
         },
+        "sortshelfmark": {
+            "csl": null,
+            "source": "manuscripts-shared.dbx",
+            "type": "literal"
+        },
         "sortshorthand": {
             "csl": null,
             "notes": "Not supported.",
@@ -1931,22 +3528,39 @@
             "source": "biblatex",
             "type": "literal"
         },
+        "sortvolume": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "literal"
+        },
         "sortyear": {
             "csl": null,
             "source": "biblatex",
             "type": "integer"
         },
         "source": {
-            "csl": null,
-            "source": "figbib.bst"
+            "csl": "source",
+            "source": "figbib.bst",
+            "type": "literal"
         },
         "source1": {
             "csl": null,
             "source": "figbib1.bst"
         },
+        "specdata": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "literal"
+        },
+        "speciality": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "literal"
+        },
         "specialitycode": {
             "csl": null,
-            "source": "gost2003.bst"
+            "source": "gost2003.bst",
+            "type": "literal"
         },
         "ssedition": {
             "csl": null,
@@ -1973,11 +3587,12 @@
             "source": "address-html.bst"
         },
         "status": {
-            "csl": null,
-            "source": "amsra.bst"
+            "csl": "status",
+            "source": "amsra.bst",
+            "type": "key"
         },
         "stdcode": {
-            "csl": null,
+            "csl": "number",
             "source": "seuthesix.bst"
         },
         "stitle": {
@@ -1992,18 +3607,106 @@
             "csl": null,
             "source": "jurabib.bst"
         },
+        "submitted": {
+            "csl": "submitted",
+            "source": "csl"
+        },
+        "subnumber": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "integer"
+        },
+        "subseries": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "literal"
+        },
+        "subsubnumber": {
+            "csl": null,
+            "source": "subseries.dbx",
+            "type": "literal"
+        },
+        "subsubseries": {
+            "csl": null,
+            "source": "subseries.dbx",
+            "type": "literal"
+        },
         "subtitle": {
             "csl": null,
             "source": "biblatex",
             "type": "literal"
         },
+        "summarytitle": {
+            "csl": null,
+            "source": "aefkw.dbx",
+            "type": "literal"
+        },
+        "supervisor": {
+            "csl": null,
+            "source": "iso-alphabetic.dbx",
+            "type": "name"
+        },
+        "supplement": {
+            "csl": "supplement",
+            "source": "csl"
+        },
+        "supplemental": {
+            "csl": null,
+            "source": "mla.dbx",
+            "type": "literal"
+        },
+        "supplementala": {
+            "csl": null,
+            "source": "mla.dbx",
+            "type": "literal"
+        },
+        "supplementalb": {
+            "csl": null,
+            "source": "mla.dbx",
+            "type": "literal"
+        },
+        "support": {
+            "csl": null,
+            "source": "manuscripts-shared.dbx",
+            "type": "literal"
+        },
+        "swhid": {
+            "csl": null,
+            "source": "software.dbx",
+            "type": "verbatim"
+        },
+        "swhidcore": {
+            "csl": null,
+            "source": "software.dbx",
+            "type": "verbatim"
+        },
         "symposium": {
             "csl": null,
             "source": "apacite.bst"
         },
+        "systemreq": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "literal"
+        },
         "text": {
             "csl": null,
             "source": "apacite.bst"
+        },
+        "thesisdate": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx",
+            "type": "date"
+        },
+        "thesistype": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx",
+            "type": "verbatim"
+        },
+        "thumbnail": {
+            "csl": null,
+            "source": "gzt.dbx",
+            "type": "verbatim"
         },
         "timestamp": {
             "csl": null,
@@ -2014,14 +3717,44 @@
             "source": "bibtex",
             "type": "literal"
         },
+        "title-short": {
+            "csl": "title-short",
+            "source": "csl"
+        },
+        "titlea": {
+            "csl": null,
+            "source": "mla.dbx",
+            "type": "literal"
+        },
         "titleaddon": {
             "csl": null,
             "source": "biblatex",
             "type": "literal"
         },
+        "titleb": {
+            "csl": null,
+            "source": "mla.dbx",
+            "type": "literal"
+        },
+        "titleisdescription": {
+            "csl": null,
+            "source": "apa6.dbx",
+            "type": "literal"
+        },
+        "titlekey": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "key"
+        },
         "titlenote": {
             "csl": null,
-            "source": "aomalpha.bst"
+            "source": "aomalpha.bst",
+            "type": "literal"
+        },
+        "titletype": {
+            "csl": null,
+            "source": "mla.dbx",
+            "type": "literal"
         },
         "totalpages": {
             "csl": null,
@@ -2043,6 +3776,31 @@
             "csl": "translator",
             "source": "biblatex",
             "type": "name"
+        },
+        "translatora": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "name"
+        },
+        "translatoratype": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "key"
+        },
+        "translatorb": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "name"
+        },
+        "translatorbtype": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "key"
+        },
+        "translatortype": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "key"
         },
         "transnumber": {
             "csl": null,
@@ -2069,6 +3827,11 @@
             "source": "bibtex",
             "type": "key"
         },
+        "typeaddon": {
+            "csl": null,
+            "source": "windycity.dbx",
+            "type": "literal"
+        },
         "typeoflit": {
             "csl": null,
             "source": "seuthesis.bst"
@@ -2076,6 +3839,11 @@
         "umfnumber": {
             "csl": null,
             "source": "thesnumb.bst"
+        },
+        "update": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "date"
         },
         "updated": {
             "csl": null,
@@ -2095,21 +3863,32 @@
             "source": "biblatex",
             "type": "date"
         },
+        "urldescription": {
+            "csl": null,
+            "source": "apa6.dbx",
+            "type": "literal"
+        },
         "urlnewline": {
             "csl": null,
             "source": "tugboat.bst"
+        },
+        "urls": {
+            "csl": null,
+            "source": "acmdatamodel.dbx",
+            "type": "uri"
         },
         "urltype": {
             "csl": null,
             "source": "asmeconf.bst"
         },
         "urlyear": {
-            "csl": null,
+            "csl": "accessed",
             "source": "bath.bst"
         },
         "urn": {
             "csl": null,
-            "source": "export.bst"
+            "source": "export.bst",
+            "type": "verbatim"
         },
         "usera": {
             "csl": null,
@@ -2141,6 +3920,11 @@
             "source": "biblatex",
             "type": "literal"
         },
+        "usualtitle": {
+            "csl": null,
+            "source": "manuscripts-shared.dbx",
+            "type": "literal"
+        },
         "value": {
             "csl": null,
             "source": "bookdb.bst"
@@ -2170,6 +3954,16 @@
             "source": "biblatex",
             "type": "literal"
         },
+        "versiona": {
+            "csl": null,
+            "source": "mla.dbx",
+            "type": "literal"
+        },
+        "versionb": {
+            "csl": null,
+            "source": "mla.dbx",
+            "type": "literal"
+        },
         "versiontype": {
             "csl": null,
             "source": "asmeconf.bst"
@@ -2178,10 +3972,23 @@
             "csl": null,
             "source": "jox.bst"
         },
+        "volsorder": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "literal"
+        },
         "volume": {
             "csl": "volume",
             "source": "bibtex",
             "type": "integer"
+        },
+        "volume-title": {
+            "csl": "volume-title",
+            "source": "csl"
+        },
+        "volume-title-short": {
+            "csl": "volume-title-short",
+            "source": "csl"
         },
         "volumes": {
             "csl": "number-of-volumes",
@@ -2189,12 +3996,112 @@
             "type": "integer"
         },
         "volumetitle": {
-            "csl": null,
+            "csl": "volume-title",
             "source": "iopart-num.bst"
+        },
+        "with": {
+            "csl": null,
+            "source": "apa.dbx",
+            "type": "name"
+        },
+        "withauthor": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "name"
+        },
+        "withauthortype": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "literal"
+        },
+        "withbookauthor": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "name"
+        },
+        "withbookauthortype": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "literal"
+        },
+        "withbookeditor": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "name"
+        },
+        "withbookeditortype": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "literal"
+        },
+        "withbooktranslator": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "name"
+        },
+        "withbooktranslatortype": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "literal"
+        },
+        "witheditor": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "name"
+        },
+        "witheditortype": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "literal"
+        },
+        "withmainauthor": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "name"
+        },
+        "withmainauthortype": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "literal"
+        },
+        "withmaineditor": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "name"
+        },
+        "withmaineditortype": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "literal"
+        },
+        "withmaintranslator": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "name"
+        },
+        "withmaintranslatortype": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "literal"
+        },
+        "withtranslator": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "name"
+        },
+        "withtranslatortype": {
+            "csl": null,
+            "source": "sbl.dbx",
+            "type": "literal"
         },
         "word": {
             "csl": null,
             "source": "vancouver.bst"
+        },
+        "writer": {
+            "csl": null,
+            "source": "apa6.dbx",
+            "type": "name"
         },
         "xdata": {
             "csl": null,
@@ -2233,6 +4140,11 @@
         "zblnumber": {
             "csl": null,
             "source": "aomalpha.bst"
+        },
+        "zenon": {
+            "csl": null,
+            "source": "archaeologie.dbx",
+            "type": "verbatim"
         },
         "zip": {
             "csl": null,

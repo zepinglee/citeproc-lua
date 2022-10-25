@@ -1,11 +1,8 @@
 from collections import OrderedDict
 import json
-from pydoc import doc
 import re
 import os
 import glob
-from telnetlib import theNULL
-from typing import TYPE_CHECKING
 import warnings
 
 # References:
@@ -16,6 +13,7 @@ import warnings
 
 
 class BibData(OrderedDict):
+
     def __init__(self, path):
         super().__init__({
             'description': 'BibTeX CSL mapping',
@@ -42,7 +40,7 @@ class BibData(OrderedDict):
         self.skip_field_prefixes = [
             'CTL',
             'abnt-',
-            'abnt-',
+            'ctrl-',
             'p.',
             'r.',
             'w.',
@@ -74,7 +72,8 @@ class BibData(OrderedDict):
             contents = f.read()
 
         functions = dict()
-        for match in re.finditer(r'FUNCTION\s*\{\s*(\w+)\s*\}\s*\{\s*([^}]*)\s*\}', contents):
+        for match in re.finditer(
+                r'FUNCTION\s*\{\s*(\w+)\s*\}\s*\{\s*([^}]*)\s*\}', contents):
             name = match.group(1).lower()
             body = match.group(2)
             functions[name] = body
@@ -124,7 +123,8 @@ class BibData(OrderedDict):
 
         if source == 'bibtex':
             for match in re.finditer(
-                    r'MACRO\s*\{\s*(\S+)\s*\}\s*\{\s*"([^"]*)"\s*\}', contents):
+                    r'MACRO\s*\{\s*(\S+)\s*\}\s*\{\s*"([^"]*)"\s*\}',
+                    contents):
                 macro = match.group(1)
                 value = match.group(2)
                 if macro not in self['macros']:
@@ -133,13 +133,42 @@ class BibData(OrderedDict):
                         'source': source,
                     }
 
+    def update_all_bst(self):
+        paths = glob.glob(
+            os.path.join(self.texmf_dist, 'bibtex', 'bst', '**', '*.bst'))
+        for file_name in [
+                'plainnat.bst',
+                'apacite.bst',
+                'chicago.bst',
+                'IEEEtran.bst',
+                'vancouver.bst',
+                'amsplain.bst',
+                'biblatex.bst',
+                'cell.bst',
+                'elsarticle-num.bst',
+                'apsrev4-2.bst',
+                'tugboat.bst',
+                'plainurl.bst',
+                'gbt7714-numerical.bst',
+        ]:
+            self.update_bst(file_name)
+
+        for path in sorted(paths):
+            try:
+                self.update_bst(path)
+            except UnicodeDecodeError:
+                continue
+
     def update_biblatex(self):
         if not self.texmf_dist:
             return
         source = 'biblatex'
-        biblatex_path = os.path.join(self.texmf_dist, 'tex', 'latex',
-                                     'biblatex')
-        with open(os.path.join(biblatex_path, 'blx-dm.def')) as f:
+        biblatex_path = os.path.join(self.texmf_dist, 'tex', 'latex', 'biblatex')
+        self.update_biblatex_style(os.path.join(biblatex_path, 'blx-dm.def'), source)
+        self.update_biblatex_style(os.path.join(biblatex_path, 'biblatex.def'), source)
+
+    def update_biblatex_style(self, path, source):
+        with open(path) as f:
             contents = f.read()
 
         for match in re.finditer(
@@ -147,7 +176,7 @@ class BibData(OrderedDict):
                 contents):
             for entry_type in match.group(2).split(','):
                 entry_type = entry_type.strip()
-                if entry_type not in self['types']:
+                if entry_type and entry_type not in self['types']:
                     self['types'][entry_type] = {
                         'csl': None,
                         'source': source,
@@ -158,7 +187,10 @@ class BibData(OrderedDict):
                 contents):
             field_type = re.search(r'datatype=(\w+)', match.group(2)).group(1)
             for field in match.group(3).split(','):
+                field = re.sub(r'[^\n]\r?\n\s*', '', field)
                 field = field.strip()
+                if field in ['', '#1deleted'] :
+                    continue
                 if field not in self['fields']:
                     self['fields'][field] = {
                         'csl': None,
@@ -167,10 +199,7 @@ class BibData(OrderedDict):
                 if 'type' not in self['fields'][field]:
                     self['fields'][field]['type'] = field_type
 
-        with open(os.path.join(biblatex_path, 'biblatex.def')) as f:
-            contents = f.read()
-
-        for match in re.finditer(r'typesource=(\w+),\s*typetarget=(\w+)',
+        for match in re.finditer(r'typesource=([a-zA-Z0-9:_+-]+),\s*typetarget=([a-zA-Z0-9:_+-]+)',
                                  contents):
             entry_type = match.group(1)
             target = match.group(2)
@@ -182,7 +211,7 @@ class BibData(OrderedDict):
             if 'alias' not in self['types'][entry_type]:
                 self['types'][entry_type]['alias'] = target
 
-        for match in re.finditer(r'fieldsource=(\w+),\s*fieldtarget=(\w+)',
+        for match in re.finditer(r'fieldsource=([a-zA-Z0-9:_+-]+),\s*fieldtarget=([a-zA-Z0-9:_+-]+)',
                                  contents):
             field = match.group(1)
             target = match.group(2)
@@ -194,18 +223,13 @@ class BibData(OrderedDict):
             if 'alias' not in self['fields'][field]:
                 self['fields'][field]['alias'] = target
 
-    def update_all_bst(self):
-        paths = glob.glob(os.path.join(self.texmf_dist, 'bibtex', 'bst', '**' , '*.bst'))
-        for file_name in ['plainnat.bst', 'apacite.bst', 'chicago.bst',
-            'IEEEtran.bst', 'vancouver.bst', 'amsplain.bst', 'biblatex.bst',
-            'cell.bst', 'elsarticle-num.bst', 'apsrev4-2.bst', 'tugboat.bst',
-            'plainurl.bst', 'gbt7714-numerical.bst',
-        ]:
-            self.update_bst(file_name)
-
+    def update_all_biblatex_styles(self):
+        paths = glob.glob(
+            os.path.join(self.texmf_dist, 'tex', 'latex', '**', '*.dbx'))
         for path in sorted(paths):
+            source = os.path.split(path)[1]
             try:
-                self.update_bst(path)
+                self.update_biblatex_style(path, source)
             except UnicodeDecodeError:
                 continue
 
@@ -242,16 +266,14 @@ class BibData(OrderedDict):
             elif category == 'fields':
                 csl_fields = csl_data['items']['properties'].keys()
 
-            csl_mapped_fields = dict()
-            for field in csl_fields:
-                csl_mapped_fields[field] = False
+            csl_mapped_fields = set()
 
             for field, value in self[category].items():
                 if 'csl' not in value:
                     print(f'Empty CSL mapping in "{field}".')
                     continue
                 target = value['csl']
-                csl_mapped_fields[target] = True
+                csl_mapped_fields.add(target)
 
                 if target and target not in csl_fields:
                     if category == 'types':
@@ -259,22 +281,65 @@ class BibData(OrderedDict):
                     # elif category == 'fields':
                     #     print(f'Invalid CSL field "{target}".')
 
-            # # Check unmapped CSL fields.
-            # for field, mapped in csl_mapped_fields.items():
-            #     if not mapped:
-            #         if category == 'types':
-            #             print(f'CSL type "{field}" not mapped.')
-            #         elif category == 'fields':
-            #             print(f'CSL field "{field}" not mapped.')
+            unmapped_fields = [
+                field for field in csl_fields if field not in csl_mapped_fields
+            ]
+            ignored_fields = [
+                'categories',
+                'citation-key',
+                'citation-label',
+                'citation-number',
+                'event',
+                'first-reference-note-number',
+                'id',
+                'journalAbbreviation',
+                'locator',
+                'page-first',
+                'printing',
+                'shortTitle',
+                'type',
+                'year-suffix',
+            ]
+
+            category_name = 'type'
+            if category == 'fields':
+                category_name = 'field'
+
+            # Check unmapped CSL fields.
+            for field in sorted(unmapped_fields):
+                if category == 'types':
+                    print(f'CSL type "{field}" not mapped to.')
+                elif category == 'fields':
+                    if field not in ignored_fields:
+                        # print(f'"{field}": {{"csl": "{field}", "source": "csl"}},')
+                        print(f'Waring: CSL field "{field}" not mapped to.')
+
+            for field in sorted(csl_fields):
+                if field.lower() in self[category]:
+                    target = self[category][field.lower()]['csl']
+                    if target != field and field not in ignored_fields:
+                        print(
+                            f'Warning: BibTeX {category_name} "{field}" is mapped to "{target}".'
+                        )
+                else:
+                    # print(field)
+                    if field not in ignored_fields:
+                        print(
+                            f'Waring: CSL {category_name} "{field}" is unavailable in BibTeX.'
+                        )
+                        # print(
+                        #     f'"{field.lower()}": {{"csl": "{field}", "source": "csl"}},'
+                        # )
 
     def update_unicode(self):
-        utf8ienc_path = os.path.join(self.texmf_dist, 'tex', 'latex',
-                                     'base', 'utf8enc.dfu')
+        utf8ienc_path = os.path.join(self.texmf_dist, 'tex', 'latex', 'base',
+                                     'utf8enc.dfu')
         with open(utf8ienc_path) as f:
             lines = f.readlines()
         for line in lines:
             line = line.strip()
-            matched = re.match(r'\\DeclareUnicodeCharacter\{(\w+)\}\{(\\.+)\}', line)
+            matched = re.match(r'\\DeclareUnicodeCharacter\{(\w+)\}\{(\\.+)\}',
+                               line)
             if not matched:
                 continue
             code_point = matched.group(1)
@@ -297,7 +362,8 @@ class BibData(OrderedDict):
         self['unicode'] = OrderedDict(sorted(self['unicode'].items()))
 
         for code_point, latex_commands in self['unicode'].items():
-            cmd_arg = re.match(r'^(\\(?:[a-zA-Z]+|[^a-zA-Z]))\s*(.*)$', latex_commands)
+            cmd_arg = re.match(r'^(\\(?:[a-zA-Z]+|[^a-zA-Z]))\s*(.*)$',
+                               latex_commands)
             if cmd_arg:
                 cmd = cmd_arg.group(1).strip()
                 arg = cmd_arg.group(2)
@@ -321,10 +387,12 @@ class BibData(OrderedDict):
         self['unicode_commands']['\\textlangle'] = "2329"
         self['unicode_commands']['\\textrangle'] = "232A"
 
-        self['unicode_commands'] = OrderedDict(sorted(self['unicode_commands'].items()))
+        self['unicode_commands'] = OrderedDict(
+            sorted(self['unicode_commands'].items()))
         for key, value in self['unicode_commands'].items():
             if isinstance(value, dict) or isinstance(value, OrderedDict):
-                self['unicode_commands'][key] = OrderedDict(sorted(value.items()))
+                self['unicode_commands'][key] = OrderedDict(
+                    sorted(value.items()))
 
     def sort_keys(self):
         self['types'] = OrderedDict(sorted(self['types'].items()))
@@ -356,7 +424,9 @@ class BibData(OrderedDict):
                     formatted_key = f'["{key}"]'
                     if re.match("^[a-zA-Z_][a-zA-Z0-9_]*$", key):
                         formatted_key = key
-                    res += '  ' * (level + 1) + formatted_key + ' = ' + to_lua_table(value, level+1) + ',\n'
+                    res += '  ' * (level +
+                                   1) + formatted_key + ' = ' + to_lua_table(
+                                       value, level + 1) + ',\n'
                 res += '  ' * level + '}'
             else:
                 print(obj)
@@ -375,7 +445,7 @@ class BibData(OrderedDict):
                 res += '\n\n## Item Types\n'
             elif category == 'fields':
                 res += '\n\n## Fields\n'
-            res += '\nBib|CSL|Notes\n-|-|-\n'
+            res += '\nBib(La)TeX | CSL | Notes\n--- | --- | ---\n'
 
             for field, contents in self[category].items():
                 if contents['source'] not in ['bibtex', 'biblatex']:
@@ -404,7 +474,7 @@ class BibData(OrderedDict):
                         alias = '@' + alias
                     notes = f'Alias for `{alias}`. ' + notes
                 notes = notes.strip()
-                line = f'{field}|{target}|{notes}\n'
+                line = f'{field} | {target} | {notes}\n'
                 res += line
 
         with open('tools/bib-csl-mapping.md', 'w') as f:
@@ -421,6 +491,7 @@ if __name__ == '__main__':
     bib_data.update_alias_mappings()
 
     bib_data.update_all_bst()
+    bib_data.update_all_biblatex_styles()
 
     bib_data.update_unicode()
 
@@ -430,5 +501,5 @@ if __name__ == '__main__':
     bib_data.export_markdown()
 
     with open(bib_data_path, 'w') as f:
-        json.dump(bib_data, f, indent=4)
+        json.dump(bib_data, f, indent=4, ensure_ascii=False)
         f.write('\n')
