@@ -307,7 +307,7 @@ function util.is_numeric (str)
     if not string.match(w, "^%a*%d+%a*$") and
         not string.match(w, "^[MDCLXVI]+$") and
         not string.match(w, "^[mdclxvi]+$") then
-      -- Roman number withou validation
+      -- Roman number without validation
       return false
     end
   end

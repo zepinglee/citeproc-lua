@@ -458,7 +458,8 @@ end
 function Element:format_ordinal_number_parts(number_parts, form, gender, context)
   for i = 1, 2 do
     local part = number_parts[i]
-    if string.match(part, "%d+") then
+    -- Values like "2nd" are kept the in the original form.
+    if string.match(part, "^%d+$") then
       local number = tonumber(part)
       if form == "long-ordinal" and number >= 1 and number <= 10 then
         number_parts[i] = context:get_simple_term(string.format("long-ordinal-%02d", number))

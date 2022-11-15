@@ -70,7 +70,9 @@ function Label:_is_variable_plural(variable, context)
     return #variable > 1
   elseif variable_type == "number" then
     if util.startswith(variable, "number-of-") then
-      return tonumber(value) > 1
+      -- Issue #27: "number-of-pages": "91–129"
+      value = string.match(tostring(value), "%d+")
+      return value and tonumber(value) > 1
     else
       value = tostring(value)
       -- label_CollapsedPageNumberPluralDetection.txt
