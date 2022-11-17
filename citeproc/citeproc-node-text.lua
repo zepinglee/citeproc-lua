@@ -93,10 +93,8 @@ function Text:build_variable_ir(engine, state, context)
   -- if not engine.opt then
   --   print(debug.traceback())
   -- end
-  if (variable == "URL" and engine.opt.url_link) or
-     (variable == "DOI" and engine.opt.doi_link) or
-     (variable == "PMID" and engine.opt.doi_link) or
-     (variable == "PMID" and engine.opt.doi_link) then
+  if engine.opt.wrap_url_and_doi and (variable == "URL" or variable == "DOI" or
+      variable == "PMID" or variable == "PMID") then
     inlines = self:render_linked(engine, state, context, variable, text)
   else
     inlines = self:render_text_inlines(text, context)
@@ -119,14 +117,13 @@ end
 
 function Text:render_linked(engine, state, context, variable, text)
   local href
+  local url_prefix = false  -- The prefix is used as part of the URL.
   if variable == "URL" then
     href = text
-  elseif self.affixes and self.affixes.prefix then
-    if string.match(self.affixes.prefix, "https?://") then
-      text = self.affixes.prefix .. text
-      self.affixes.prefix = nil
-      href = text
-    end
+  elseif self.affixes and self.affixes.prefix and string.match(self.affixes.prefix, "https?://") then
+    text = self.affixes.prefix .. text
+    href = text
+    url_prefix = true
   elseif variable == "DOI" then
     href = "https://doi.org/" .. text
   elseif variable == "PMID" then
@@ -134,6 +131,7 @@ function Text:render_linked(engine, state, context, variable, text)
   elseif variable == "PMCID" then
     href = "https://www.ncbi.nlm.nih.gov/pmc/articles/" .. text
   end
+
   local inlines = {Linked:new(text, href)}
   local output_format = context.format
   local localized_quotes = nil
@@ -142,6 +140,9 @@ function Text:render_linked(engine, state, context, variable, text)
   end
   inlines = output_format:with_format(inlines, self.formatting)
   inlines = output_format:affixed_quoted(inlines, self.affixes, localized_quotes)
+  if url_prefix then
+    table.remove(inlines, 1)
+  end
   return output_format:with_display(inlines, self.display)
 end
 

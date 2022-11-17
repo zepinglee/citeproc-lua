@@ -50,8 +50,7 @@ function CiteProc.new(sys, style, lang, force_lang)
 
   o.opt = {
     -- Similar to citeproc-js's development_extensions.wrap_url_and_doi
-    url_link = false,
-    doi_link = false,  -- also applied to PMID and PMCID
+    wrap_url_and_doi = false,
     title_link = false,
   }
 
@@ -600,13 +599,11 @@ function CiteProc:set_output_format(format)
 end
 
 function CiteProc:enable_linking()
-  self.opt.url_link = true
-  self.opt.doi_link = true
+  self.opt.wrap_url_and_doi = true
 end
 
 function CiteProc:disable_linking()
-  self.opt.url_link = false
-  self.opt.doi_link = false
+  self.opt.wrap_url_and_doi = false
 end
 
 function CiteProc.create_element_tree(node)

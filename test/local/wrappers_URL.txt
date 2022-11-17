@@ -5,8 +5,7 @@ citation
 
 >>===== OPTIONS =====>>
 {
-    "url_link": true,
-    "doi_link": true
+    "wrap_url_and_doi": true
 }
 <<===== OPTIONS =====<<
 
