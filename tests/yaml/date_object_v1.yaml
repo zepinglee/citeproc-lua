@@ -1,0 +1,10 @@
+---
+- id: one
+  type: book
+  issued:
+    date-parts:
+    - - 2000
+      - 3
+      - 10
+    circa: 'true'
+  title: The Title

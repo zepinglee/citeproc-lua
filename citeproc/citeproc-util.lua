@@ -1157,17 +1157,46 @@ function util.write_file(text, path)
 end
 
 
-function util.parse_iso_date(str)
-  local date
-  local date_parts = util.split(str, "/")
-  if #date_parts <= 2 then
-    date = {["date-parts"] = {}}
-    for _, date_part in ipairs(date_parts) do
-      table.insert(date["date-parts"], util.split(date_part, "%-"))
+function util.parse_edtf(str)
+  local date = {["date-parts"] = {}}
+  local range_parts = util.split(str, "/")
+  for i, range_part in ipairs(range_parts) do
+    if i > 2 then
+      break
     end
-  end
-  if not date then
-    date = {literal = str}
+    date["date-parts"][i] = {}
+    local negative_year = false
+    if string.match(range_part, "^Y%-") then
+      negative_year = true
+    end
+    range_part = string.gsub(range_part, "^Y[+-]?", "")
+    if string.match(range_part, "[?~%%]$") then
+      date.circa = true
+      range_part = string.gsub(range_part, "[?~%%]$", "")
+    end
+    range_part = string.gsub(range_part, "T.*$", "")
+    for j, date_part in ipairs(util.split(range_part, "%-")) do
+      if j > 3 then
+        break
+      end
+      if string.match(date_part, "X") then
+        date.circa = true
+        date_part = string.gsub(date_part, "X", "0")
+      end
+      if string.match(date_part, "^%d+$") then
+        date_part = tonumber(date_part)
+        if date_part > 0 then
+          date["date-parts"][i][j] = date_part
+        else
+          break
+        end
+      else
+        return nil
+      end
+    end
+    if negative_year then
+      date["date-parts"][i][1] = - date["date-parts"][i][1]
+    end
   end
   return date
 end

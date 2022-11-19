@@ -243,24 +243,19 @@ By default, it is 1 em (with respect to the \opt{bib-font} size if set).
 
 \begin{function}{\addbibresource}
   \begin{syntax}
-    \cs{addbibresource}\oarg{options}\marg{resource}
+    \cs{addbibresource}\marg{resource}
   \end{syntax}
 \end{function}
 
-The \cs{addbibresource} command adds the contents of \meta{resource} into the
-bibliographic metadata.
-The \meta{resource} may be a CSL-JSON file or the Bib(La)TeX \file{.bib} file.
-CSL-JSON \footnote{\url{https://github.com/citation-style-language/schema\#csl-json-schema}}
-is the default data model defined by CSL.
-Its contents are usually exported from Zotero.
-The traditional \file{.bib} file is converted to CSL-JSON internally for
-further processing.
-The mapping of entry-types and fields between them is detailed in the GitHub wiki
-page\footnote{\url{https://github.com/zepinglee/citeproc-lua/wiki/Bib-CSL-mapping}}.
-Note that only UTF-8 encoding is supported in the \meta{resource} file.
+The \cs{addbibresource} command loads bibliographic data from \meta{resource}
+file. CSL-JSON is the preferred format especially when the data is exported
+from a reference manager like Zotero.  Other formats like CSL-YAML and
+Bib(La)TeX (for compatibility) are also supported but they need to be converted
+to CSL-JSON for internal processing. Note that the files must be specified with
+their extension names and the content should be encoded in UTF-8.
 \begin{LaTeXdemo}
-  \addbibresource{data-file.json}
-  \addbibresource{bib-file.bib}
+  \addbibresource{file1.json}
+  \addbibresource{file2.yaml, file3.bib}
 \end{LaTeXdemo}
 
 

@@ -1,0 +1,26 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+
+\cslsetup{
+  regression-test = true,
+  style = apa,
+}
+\addbibresource{test.yaml}
+
+
+\begin{document}
+
+\START
+
+\input{csl-citation-tests}
+
+\TEST{Bibilography}{
+  \printbibliography
+}
+
+\end{document}

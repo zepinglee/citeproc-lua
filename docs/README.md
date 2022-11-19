@@ -27,7 +27,7 @@ A full LaTeX example is in the [`examples/`](examples) directory.
 
 \usepackage{citation-style-language}
 \cslsetup{style = apa}
-\addbibresource{example.bib}
+\addbibresource{example.json}  % or example.bib or example.yaml
 
 \begin{document}
 

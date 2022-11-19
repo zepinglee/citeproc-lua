@@ -7,6 +7,7 @@
 local core = {}
 
 local citeproc = require("citeproc")
+local yaml  -- = require("citeproc-yaml")  -- load on demand
 local bibtex2csl  -- = require("citeproc-bibtex-parser")  -- load on demand
 local unicode =  require("citeproc-unicode")
 local util = citeproc.util
@@ -55,6 +56,9 @@ local function read_data_file(data_file)
   if util.endswith(data_file, ".json") then
     extension = ".json"
     contents = core.read_file(data_file, nil, "database file")
+  elseif string.match(data_file, "%.ya?ml$") then
+    extension = ".yaml"
+    contents = core.read_file(data_file, nil, "database file")
   elseif util.endswith(data_file, ".bib") then
     extension = ".bib"
     contents = core.read_file(data_file, "bib", "database file")
@@ -65,13 +69,20 @@ local function read_data_file(data_file)
       extension = ".json"
       contents = core.read_file(data_file .. ".json", nil, "database file")
     else
-      path = kpse.find_file(data_file, "bib")
+      path = kpse.find_file(data_file .. ".yaml") or kpse.find_file(data_file .. ".yml")
       if path then
-        file_name = data_file .. ".bib"
-        extension = ".bib"
-        contents = core.read_file(data_file, "bib", "database file")
+        extension = string.match(path, ".*(%.%w+)$")
+        file_name = data_file .. extension
+        contents = core.read_file(path, nil, "database file")
       else
-        util.error(string.format('Cannot find database file "%s"', data_file .. ".json"))
+        path = kpse.find_file(data_file, "bib")
+        if path then
+          file_name = data_file .. ".bib"
+          extension = ".bib"
+          contents = core.read_file(data_file, "bib", "database file")
+        else
+          util.error(string.format('Cannot find database file "%s"', data_file .. ".json"))
+        end
       end
     end
   end
@@ -93,6 +104,9 @@ local function read_data_file(data_file)
       util.error(string.format('JSON decoding error in file "%s"', data_file))
       csl_items = {}
     end
+  elseif extension == ".yaml" or extension == ".yml" then
+    yaml = yaml or require("citeproc-yaml")
+    csl_items = yaml.parse(contents)
   elseif extension == ".bib" then
     bibtex2csl = bibtex2csl or require("citeproc-bibtex2csl")
     csl_items = bibtex2csl.parse_bibtex_to_csl(contents, true, true, true, true)

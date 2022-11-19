@@ -984,7 +984,7 @@ function CiteProc:process_extra_note(item)
           if variable_type == "number" then
             item[field] = value
           elseif variable_type == "date" then
-            item[field] = util.parse_iso_date(value)
+            item[field] = util.parse_edtf(value)
           elseif variable_type == "name" then
             if not note_fields[field] then
               note_fields[field] = {}

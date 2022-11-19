@@ -8,7 +8,6 @@
 				"given": "Bruce"
 			}
 		],
-		"citation-key": "ITEM-1",
 		"issued": {
 			"date-parts": [
 				[
@@ -32,7 +31,6 @@
 				"suffix": "Jr."
 			}
 		],
-		"citation-key": "ITEM-2",
 		"container-title": "Pac. Rim L. & Pol’y J.",
 		"issued": {
 			"date-parts": [
@@ -43,8 +41,8 @@
 			]
 		},
 		"page": "463-509",
-		"title": "Getting property right: “informal” mortgages in the Japanese courts",
-		"volume": "18"
+		"title": "Getting property right: “Informal” mortgages in the Japanese courts",
+		"volume": 18
 	},
 	{
 		"id": "ITEM-3",
@@ -55,8 +53,8 @@
 				"given": "Leslie"
 			}
 		],
-		"citation-key": "ITEM-3",
-		"edition": "2",
+		"edition": 2,
+		"ISBN": "0-201-52983-1",
 		"issued": {
 			"date-parts": [
 				[
@@ -93,8 +91,8 @@
 				"given": "Chris"
 			}
 		],
-		"citation-key": "ITEM-4",
-		"edition": "2",
+		"edition": 2,
+		"ISBN": "0-201-36299-6",
 		"issued": {
 			"date-parts": [
 				[

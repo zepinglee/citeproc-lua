@@ -27,7 +27,6 @@
     "Lua.diagnostics.globals": [
         "describe",
         "it",
-        "pending",
-        "utilities"
+        "pending"
     ]
 }

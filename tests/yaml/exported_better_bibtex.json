@@ -18,7 +18,6 @@
 				]
 			]
 		},
-		"note": "The apostrophe in Bruce’s name appears in proper typeset form.",
 		"publisher": "Routledge",
 		"title": "Boundaries of dissent: Protest and state power in the media age"
 	},
@@ -34,6 +33,7 @@
 		],
 		"citation-key": "ITEM-2",
 		"container-title": "Pac. Rim L. & Pol’y J.",
+		"container-title-short": "Pac Rim Pol J",
 		"issued": {
 			"date-parts": [
 				[
@@ -43,7 +43,7 @@
 			]
 		},
 		"page": "463-509",
-		"title": "Getting property right: “informal” mortgages in the Japanese courts",
+		"title": "Getting property right: “Informal” mortgages in the Japanese courts",
 		"volume": "18"
 	},
 	{
@@ -57,6 +57,8 @@
 		],
 		"citation-key": "ITEM-3",
 		"edition": "2",
+		"event-place": "Reading, MA, USA",
+		"ISBN": "0-201-52983-1",
 		"issued": {
 			"date-parts": [
 				[
@@ -95,6 +97,8 @@
 		],
 		"citation-key": "ITEM-4",
 		"edition": "2",
+		"event-place": "Reading, MA, USA",
+		"ISBN": "0-201-36299-6",
 		"issued": {
 			"date-parts": [
 				[

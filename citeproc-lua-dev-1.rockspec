@@ -13,6 +13,7 @@ description = {
 }
 dependencies = {
    "lua >= 5.3",
+   "api7-lua-tinyyaml>=0.4.3",
    "datafile >= 0.8",
    "lpeg >= 1.0.2",
    -- "lua-uca >= 0.1",
@@ -73,7 +74,8 @@ build = {
       ["citeproc.nodes"] = "citeproc/citeproc-nodes.lua",
       ["citeproc.output"] = "citeproc/citeproc-output.lua",
       ["citeproc.unicode"] = "citeproc/citeproc-unicode.lua",
-      ["citeproc.util"] = "citeproc/citeproc-util.lua"
+      ["citeproc.util"] = "citeproc/citeproc-util.lua",
+      ["citeproc.yaml"] = "citeproc/citeproc-yaml.lua"
    },
    copy_directories = {
       "submodules/unicode-data"
