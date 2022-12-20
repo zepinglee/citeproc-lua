@@ -1,0 +1,59 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\begin{filecontents}[overwrite, noheader]{\jobname.json}
+[
+    {
+        "id": "ITEM-1",
+        "type": "book",
+        "author": [
+            {
+                "family": "Doe",
+                "given": "John"
+            }
+        ],
+        "title": "Foo #1 & 20% of bar",
+        "URL": "https://abc.zyx/foo%20bar#baz",
+        "issued": {
+            "date-parts": [
+                [
+                    "2007"
+                ]
+            ]
+        }
+    }
+]
+\end{filecontents}
+
+\usepackage{citation-style-language}
+\cslsetup{
+  regression-test = true,
+  style = chicago-fullnote-bibliography,
+}
+\addbibresource{\jobname.json}
+
+\usepackage{hyperref}
+
+
+\begin{document}
+
+\START
+\showoutput
+
+\TEST{Citation with URL}{
+  Test\cite{ITEM-1}
+}
+
+Foo \#30  % bar
+
+\TEST{Citation page output}{
+  \clearpage
+}
+
+
+\TEST{Bibliography with URL}{
+  \printbibliography
+}
+
+\end{document}

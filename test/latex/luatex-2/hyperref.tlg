@@ -1,13 +1,17 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\cite{ITEM-1}
+> \l__csl_citation_tl=citation.
+<recently read> }
+l. ...\cite{ITEM-1}
 ============================================================
-TEST 1: Bibilography
+TEST 1: Bibliography
 ============================================================
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line ....
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line ....
-The sequence \l_tmpa_seq contains the items (without outer braces):
+The sequence \l__csl_bibliography_seq contains the items (without outer
+braces):
 >  {\cslsetup { class = in-text, line-spacing = 1, entry-spacing = 1, }}
 >  {\begin {thebibliography}{}}
 >  {\bibitem {ITEM-1} URL: \url {https://arxiv.org/abs/1702.01006}, DOI: \href
@@ -17,6 +21,10 @@ The sequence \l_tmpa_seq contains the items (without outer braces):
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
 ============================================================
 [1
 ] (hyperref.aux)

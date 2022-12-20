@@ -8,7 +8,10 @@
 
 \usepackage{citation-style-language}
 
-\cslsetup{style = locale-test}
+\cslsetup{
+  regression-test = true,
+  style = locale-test,
+}
 \addbibresource{test.bib}
 
 
@@ -18,13 +21,11 @@
 
 \TEST{Babel locale}{
   \cite{ITEM-1}
-  \showcitation
 }
 
 
-\TEST{Bibilography}{
+\TEST{Bibliography}{
   \printbibliography
-  \showbibliography
 }
 
 \end{document}

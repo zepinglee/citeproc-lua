@@ -1,0 +1,111 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Citation with URL
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...}
+Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
+(citation-style-language)                on line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 2: Citation page output
+============================================================
+Completed box being shipped out [1]
+\vbox(633.0+0.0)x407.0
+.\hbox(0.0+0.0)x0.0
+.\vbox(0.0+0.0)x0.0, glue set - 14.99626fil
+..\kern 0.0
+..\kern 16.0
+..\kern -1.00374
+..\hbox(0.0+0.0)x0.0, glue set - 60.99626fil
+...\kern 0.0
+...\kern 62.0
+...\kern -1.00374
+...\pdfdest name{page.1} xyz
+...\penalty 10000
+...\glue 0.0 plus 1.0fil minus 1.0fil
+..\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue(\lineskip) 0.0
+.\vbox(633.0+0.0)x407.0
+..\glue 16.0
+..\vbox(617.0+0.0)x345.0, shifted 62.0
+...\vbox(12.0+0.0)x345.0, glue set 12.0fil
+....\glue 0.0 plus 1.0fil
+....\hbox(0.0+0.0)x345.0
+.....\hbox(0.0+0.0)x345.0
+...\glue 25.0
+...\glue(\lineskip) 0.0
+...\vbox(550.0+0.0)x345.0, glue set 527.9436fil
+....\write-{}
+....\pdfdest name{Doc-Start} xyz
+....\glue(\topskip) 2.5
+....\hbox(7.5+2.5)x345.0, glue set 262.02798fil
+.....\hbox(0.0+0.0)x15.0
+.....\OT1/cmr/m/n/10 T
+.....\kern-0.83334
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 s
+.....\OT1/cmr/m/n/10 t
+.....\OT1/cmr/m/n/10 [
+.....\kern 0.0
+.....\OT1/cmr/bx/n/10 I
+.....\OT1/cmr/bx/n/10 T
+.....\OT1/cmr/bx/n/10 E
+.....\OT1/cmr/bx/n/10 M
+.....\OT1/cmr/bx/n/10 -
+.....\discretionary
+.....\OT1/cmr/bx/n/10 1
+.....\kern 0.0
+.....\OT1/cmr/m/n/10 ]
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 2.55556
+....\hbox(6.94444+1.94443)x345.0, glue set 292.36101fil
+.....\hbox(0.0+0.0)x15.0
+.....\OT1/cmr/m/n/10 F
+.....\kern-0.83334
+.....\OT1/cmr/m/n/10 o
+.....\kern0.27779
+.....\OT1/cmr/m/n/10 o
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 #
+.....\OT1/cmr/m/n/10 3
+.....\OT1/cmr/m/n/10 0
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue -1.94443
+....\glue 0.0 plus 1.0fil
+....\glue 0.0
+....\glue 0.0 plus 0.0001fil
+...\glue(\baselineskip) 23.55556
+...\hbox(6.44444+0.0)x345.0
+....\hbox(6.44444+0.0)x345.0, glue set 170.0fil
+.....\glue 0.0 plus 1.0fil
+.....\OT1/cmr/m/n/10 1
+.....\glue 0.0 plus 1.0fil
+.\kern 0.0
+============================================================
+============================================================
+TEST 3: Bibliography with URL
+============================================================
+Package citation-style-language Warning: The bibliography is empty.
+============================================================
+(issue-30.aux)
+LaTeX Warning: There were undefined references.
+Package rerunfilecheck Warning: File `issue-30.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+Package rerunfilecheck Info: Checksums for `issue-30.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.

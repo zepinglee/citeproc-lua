@@ -8,7 +8,10 @@
 \usepackage{xurl}
 \usepackage{hyperref}
 
-\cslsetup{style = hyperref-test}
+\cslsetup{
+  regression-test = true,
+  style = hyperref-test,
+}
 \addbibresource{hyperref-test.bib}
 
 
@@ -18,9 +21,8 @@
 
 \cite{ITEM-1}
 
-\TEST{Bibilography}{
+\TEST{Bibliography}{
   \printbibliography
-  \showbibliography
 }
 
 \end{document}

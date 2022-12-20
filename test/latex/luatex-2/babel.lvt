@@ -8,7 +8,10 @@
 
 \usepackage[english]{babel}
 
-\cslsetup{style = apa}
+\cslsetup{
+  regression-test = true,
+  style = apa,
+}
 \addbibresource{test.bib}
 
 
@@ -18,9 +21,8 @@
 
 \input{csl-citation-tests}
 
-\TEST{Bibilography}{
+\TEST{Bibliography}{
   \printbibliography
-  \showbibliography
 }
 
 \end{document}

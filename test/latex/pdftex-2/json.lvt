@@ -6,7 +6,10 @@
 
 \usepackage{citation-style-language}
 
-\cslsetup{style = apa}
+\cslsetup{
+  regression-test = true,
+  style = apa,
+}
 \addbibresource{test.json}
 
 
@@ -16,9 +19,8 @@
 
 \input{csl-citation-tests}
 
-\TEST{Bibilography}{
+\TEST{Bibliography}{
   \printbibliography
-  \showbibliography
 }
 
 \end{document}

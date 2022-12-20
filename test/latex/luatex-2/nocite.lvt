@@ -6,7 +6,10 @@
 
 \usepackage{citation-style-language}
 
-\cslsetup{style = apa}
+\cslsetup{
+  regression-test = true,
+  style = apa,
+}
 \addbibresource{test.bib}
 
 \nocite{ITEM-1}
@@ -18,9 +21,8 @@
 
 \START
 
-\TEST{Bibilography}{
+\TEST{Bibliography}{
   \printbibliography
-  \showbibliography
 }
 
 \end{document}

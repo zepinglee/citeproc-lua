@@ -1,0 +1,487 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Citation with URL
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=John Doe, \textit {Foo \#1 \& 20\% of Bar}, 2007, \url
+{https://abc.zyx/foo%20bar#baz}..
+<recently read> }
+l. ...}
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line ....
+============================================================
+============================================================
+TEST 2: Citation page output
+============================================================
+Completed box being shipped out [1]
+\vbox(633.0+0.0)x407.0, direction TLT
+.\hbox(0.0+0.0)x0.0, direction TLT
+.\vbox(0.0+0.0)x0.0, glue set - 14.99626fil, direction TLT
+..\kern0.0
+..\kern16.0
+..\kern-1.00374
+..\hbox(0.0+0.0)x0.0, glue set - 60.99626fil, direction TLT
+...\kern0.0
+...\kern62.0
+...\kern-1.00374
+...\pdfdest name{page.1} xyz
+...\penalty 10000
+...\glue 0.0 plus 1.0fil minus 1.0fil
+..\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue(\lineskip) 0.0
+.\vbox(633.0+0.0)x407.0, direction TLT
+..\glue 16.0
+..\vbox(617.0+0.0)x345.0, shifted 62.0, direction TLT
+...\vbox(12.0+0.0)x345.0, glue set 12.0fil, direction TLT
+....\glue 0.0 plus 1.0fil
+....\hbox(0.0+0.0)x345.0, direction TLT
+.....\hbox(0.0+0.0)x345.0, direction TLT
+...\glue 25.0
+...\glue(\lineskip) 0.0
+...\vbox(550.0+0.0)x345.0, glue set 512.13196fil, direction TLT
+....\write-{}
+....\pdfdest name{Doc-Start} xyz
+....\glue(\topskip) 1.72308
+....\hbox(8.27692+0.11)x345.0, glue set 303.52698fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x15.0, direction TLT
+.....\TU/lmr/m/n/10 T
+.....\kern-0.83 (font)
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 t
+.....\penalty 10000
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[1 0 0]} action goto name{Hfootnote.1}
+.....\hbox(8.27692+0.0)x4.483, direction TLT
+......\mathon
+......\hbox(0.0+0.0)x0.0, direction TLT
+......\hbox(4.648+0.0)x4.483, shifted -3.62892, direction TLT
+.......\TU/lmr/m/n/7 1
+......\mathoff
+.....\pdfendlink
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 4.95
+....\hbox(6.94+1.94)x345.0, glue set 292.35999fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x15.0, direction TLT
+.....\TU/lmr/m/n/10 F
+.....\kern-0.83 (font)
+.....\TU/lmr/m/n/10 o
+.....\kern0.28 (font)
+.....\TU/lmr/m/n/10 o
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 #
+.....\TU/lmr/m/n/10 3
+.....\TU/lmr/m/n/10 0
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue -1.94
+....\glue 0.0 plus 1.0fil
+....\glue 9.0 plus 4.0 minus 2.0
+....\kern-3.0
+....\rule(0.4+0.0)x137.9979
+....\kern2.6
+....\hbox(6.81334+2.85002)x345.0, glue set 53.30391fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(6.81334+0.0)x14.40002, glue set 10.23402fil, direction TLT
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\hbox(6.81334+0.0)x4.166, direction TLT
+.......\mathon
+.......\hbox(0.0+0.0)x0.0, direction TLT
+.......\hbox(3.99+0.0)x4.166, shifted -2.82333, direction TLT
+........\TU/lmr/m/n/6 1
+.......\mathoff
+.....\hbox(6.65+0.0)x0.0, direction TLT
+......\rule(6.65+0.0)x0.0
+.....\penalty 10000
+.....\hbox(0.0+0.0)x0.0, direction TLT
+......\hbox(0.0+0.0)x0.0, shifted -9.5, direction TLT
+.......\pdfdest name{Hfootnote.1} xyz
+.......\penalty 10000
+.....\TU/lmr/m/n/8 J
+.....\TU/lmr/m/n/8 o
+.....\TU/lmr/m/n/8 h
+.....\TU/lmr/m/n/8 n
+.....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.....\TU/lmr/m/n/8 D
+.....\TU/lmr/m/n/8 o
+.....\kern0.24 (font)
+.....\TU/lmr/m/n/8 e
+.....\TU/lmr/m/n/8 ,
+.....\glue(\spaceskip) 2.832 plus 1.76999 minus 0.75519
+.....\TU/lmr/m/it/8 F
+.....\kern-0.656 (font)
+.....\TU/lmr/m/it/8 o
+.....\kern-0.44 (font)
+.....\TU/lmr/m/it/8 o
+.....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+.....\TU/lmr/m/it/8 #
+.....\TU/lmr/m/it/8 1
+.....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+.....\TU/lmr/m/it/8 &
+.....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+.....\TU/lmr/m/it/8 2
+.....\TU/lmr/m/it/8 0
+.....\TU/lmr/m/it/8 %
+.....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+.....\TU/lmr/m/it/8 o
+.....\TU/lmr/m/it/8 f
+.....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+.....\TU/lmr/m/it/8 B
+.....\TU/lmr/m/it/8 a
+.....\TU/lmr/m/it/8 r
+.....\TU/lmr/m/n/8 ,
+.....\glue(\spaceskip) 2.832 plus 1.76999 minus 0.75519
+.....\TU/lmr/m/n/8 2
+.....\TU/lmr/m/n/8 0
+.....\TU/lmr/m/n/8 0
+.....\TU/lmr/m/n/8 7
+.....\TU/lmr/m/n/8 ,
+.....\glue(\spaceskip) 2.832 plus 1.76999 minus 0.75519
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 1]} action user{/Subtype/Link/A<</Type/Action/S/URI/URI(https://abc.zyx/foo%20bar#baz\ETC.}
+.....\mathon
+.....\TU/lmtt/m/n/8 h
+.....\TU/lmtt/m/n/8 t
+.....\TU/lmtt/m/n/8 t
+.....\TU/lmtt/m/n/8 p
+.....\TU/lmtt/m/n/8 s
+.....\glue(\thickmuskip) 0.0
+.....\TU/lmtt/m/n/8 :
+.....\penalty 500
+.....\glue(\thickmuskip) 0.0
+.....\TU/lmtt/m/n/8 /
+.....\glue(\medmuskip) 0.0
+.....\TU/lmtt/m/n/8 /
+.....\penalty 700
+.....\glue(\medmuskip) 0.0
+.....\TU/lmtt/m/n/8 a
+.....\TU/lmtt/m/n/8 b
+.....\TU/lmtt/m/n/8 c
+.....\glue(\medmuskip) 0.0
+.....\TU/lmtt/m/n/8 .
+.....\penalty 700
+.....\glue(\medmuskip) 0.0
+.....\TU/lmtt/m/n/8 z
+.....\TU/lmtt/m/n/8 y
+.....\TU/lmtt/m/n/8 x
+.....\glue(\medmuskip) 0.0
+.....\TU/lmtt/m/n/8 /
+.....\penalty 700
+.....\glue(\medmuskip) 0.0
+.....\TU/lmtt/m/n/8 f
+.....\TU/lmtt/m/n/8 o
+.....\TU/lmtt/m/n/8 o
+.....\glue(\medmuskip) 0.0
+.....\TU/lmtt/m/n/8 %
+.....\penalty 700
+.....\glue(\medmuskip) 0.0
+.....\TU/lmtt/m/n/8 2
+.....\TU/lmtt/m/n/8 0
+.....\TU/lmtt/m/n/8 b
+.....\TU/lmtt/m/n/8 a
+.....\TU/lmtt/m/n/8 r
+.....\glue(\medmuskip) 0.0
+.....\TU/lmtt/m/n/8 #
+.....\penalty 700
+.....\glue(\medmuskip) 0.0
+.....\TU/lmtt/m/n/8 b
+.....\TU/lmtt/m/n/8 a
+.....\TU/lmtt/m/n/8 z
+.....\mathoff
+.....\pdfendlink
+.....\TU/lmr/m/n/8 .
+.....\penalty 10000
+.....\rule(0.0+2.85002)x0.0
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue -2.85002
+....\glue 0.0 plus 0.0001fil
+...\glue(\baselineskip) 23.34
+...\hbox(6.66+0.0)x345.0, direction TLT
+....\hbox(6.66+0.0)x345.0, glue set 170.0fil, direction TLT
+.....\glue 0.0 plus 1.0fil
+.....\TU/lmr/m/n/10 1
+.....\glue 0.0 plus 1.0fil
+.\kern0.0
+============================================================
+============================================================
+TEST 3: Bibliography with URL
+============================================================
+The sequence \l__csl_bibliography_seq contains the items (without outer
+braces):
+>  {\cslsetup { class = note, hanging-indent = true, line-spacing = 1,
+entry-spacing = 0, }}
+>  {\begin {thebibliography}{}}
+>  {\bibitem {ITEM-1} Doe, John. \textit {Foo \#1 \& 20\% of Bar}, 2007. \url
+{https://abc.zyx/foo%20bar#baz}.}
+>  {\end {thebibliography}}.
+<recently read> }
+l. ...}
+============================================================
+Completed box being shipped out [2]
+\vbox(633.0+0.0)x407.0, direction TLT
+.\vbox(0.0+0.0)x0.0, glue set - 14.99626fil, direction TLT
+..\kern0.0
+..\kern16.0
+..\kern-1.00374
+..\hbox(0.0+0.0)x0.0, glue set - 60.99626fil, direction TLT
+...\kern0.0
+...\kern62.0
+...\kern-1.00374
+...\pdfdest name{page.2} xyz
+...\penalty 10000
+...\glue 0.0 plus 1.0fil minus 1.0fil
+..\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue(\lineskip) 0.0
+.\vbox(633.0+0.0)x407.0, direction TLT
+..\glue 16.0
+..\vbox(617.0+0.0)x345.0, shifted 62.0, direction TLT
+...\vbox(12.0+0.0)x345.0, glue set 12.0fil, direction TLT
+....\glue 0.0 plus 1.0fil
+....\hbox(0.0+0.0)x345.0, direction TLT
+.....\hbox(0.0+0.0)x345.0, direction TLT
+...\glue 25.0
+...\glue(\lineskip) 0.0
+...\vbox(550.0+0.0)x345.0, glue set 507.95276fil, direction TLT
+....\write-{}
+....\glue(\topskip) 0.0
+....\hbox(10.08+0.1728)x345.0, glue set 269.19846fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+......\glue 0.0
+.....\hbox(0.0+0.0)x0.0, direction TLT
+......\kern0.0
+......\penalty 10000
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\hbox(0.0+0.0)x0.0, shifted -18.0, direction TLT
+........\pdfdest name{section*.1} xyz
+........\penalty 10000
+......\glue 0.0 plus 1.0fil minus 1.0fil
+.....\TU/lmr/bx/n/14.4 R
+.....\TU/lmr/bx/n/14.4 e
+.....\TU/lmr/bx/n/14.4 f
+.....\discretionary (penalty 50)
+......< \TU/lmr/bx/n/14.4 -
+.....\TU/lmr/bx/n/14.4 e
+.....\TU/lmr/bx/n/14.4 r
+.....\discretionary (penalty 50)
+......< \TU/lmr/bx/n/14.4 -
+.....\TU/lmr/bx/n/14.4 e
+.....\TU/lmr/bx/n/14.4 n
+.....\TU/lmr/bx/n/14.4 c
+.....\TU/lmr/bx/n/14.4 e
+.....\TU/lmr/bx/n/14.4 s
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\penalty 10000
+....\glue 9.913 plus 0.86198
+....\glue(\parskip) 0.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 4.3272
+....\hbox(7.5+2.5)x335.0, glue set 19.28001fil, shifted 10.0, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x-10.0, direction TLT
+......\glue -10.0
+......\glue -20.0
+......\glue -5.0
+......\hbox(0.0+0.0)x20.0, glue set 20.0fil, direction TLT
+.......\glue 0.0 plus 1.0fil
+......\glue 5.0
+.....\penalty 0
+.....\TU/lmr/m/n/10 D
+.....\TU/lmr/m/n/10 o
+.....\kern0.28 (font)
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 J
+.....\TU/lmr/m/n/10 o
+.....\TU/lmr/m/n/10 h
+.....\TU/lmr/m/n/10 n
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/it/10 F
+.....\kern-0.77 (font)
+.....\TU/lmr/m/it/10 o
+.....\kern-0.51 (font)
+.....\TU/lmr/m/it/10 o
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 #
+.....\TU/lmr/m/it/10 1
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 &
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 2
+.....\TU/lmr/m/it/10 0
+.....\TU/lmr/m/it/10 %
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 o
+.....\TU/lmr/m/it/10 f
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 B
+.....\TU/lmr/m/it/10 a
+.....\TU/lmr/m/it/10 r
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 2
+.....\TU/lmr/m/n/10 0
+.....\TU/lmr/m/n/10 0
+.....\TU/lmr/m/n/10 7
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 1]} action user{/Subtype/Link/A<</Type/Action/S/URI/URI(https://abc.zyx/foo%20bar#baz\ETC.}
+.....\mathon
+.....\TU/lmr/m/n/10 h
+.....\glue 0.0
+.....\penalty 8000
+.....\TU/lmr/m/n/10 t
+.....\glue 0.0
+.....\penalty 8000
+.....\TU/lmr/m/n/10 t
+.....\glue 0.0
+.....\penalty 8000
+.....\TU/lmr/m/n/10 p
+.....\glue 0.0
+.....\penalty 8000
+.....\TU/lmr/m/n/10 s
+.....\glue 0.0
+.....\penalty 8000
+.....\glue(\thickmuskip) 0.0 plus 1.66663
+.....\TU/lmr/m/n/10 :
+.....\penalty 100
+.....\glue(\thickmuskip) 0.0 plus 1.66663
+.....\TU/lmr/m/n/10 /
+.....\glue(\medmuskip) 0.0 plus 1.66663
+.....\TU/lmr/m/n/10 /
+.....\penalty 200
+.....\glue(\medmuskip) 0.0 plus 1.66663
+.....\TU/lmr/m/n/10 a
+.....\glue 0.0
+.....\penalty 8000
+.....\TU/lmr/m/n/10 b
+.....\glue 0.0
+.....\penalty 8000
+.....\TU/lmr/m/n/10 c
+.....\glue 0.0
+.....\penalty 8000
+.....\glue(\medmuskip) 0.0 plus 1.66663
+.....\TU/lmr/m/n/10 .
+.....\penalty 200
+.....\glue(\medmuskip) 0.0 plus 1.66663
+.....\TU/lmr/m/n/10 z
+.....\glue 0.0
+.....\penalty 8000
+.....\TU/lmr/m/n/10 y
+.....\glue 0.0
+.....\penalty 8000
+.....\TU/lmr/m/n/10 x
+.....\glue 0.0
+.....\penalty 8000
+.....\glue(\medmuskip) 0.0 plus 1.66663
+.....\TU/lmr/m/n/10 /
+.....\penalty 200
+.....\glue(\medmuskip) 0.0 plus 1.66663
+.....\TU/lmr/m/n/10 f
+.....\glue 0.0
+.....\penalty 8000
+.....\TU/lmr/m/n/10 o
+.....\glue 0.0
+.....\penalty 8000
+.....\TU/lmr/m/n/10 o
+.....\glue 0.0
+.....\penalty 8000
+.....\glue(\medmuskip) 0.0 plus 1.66663
+.....\TU/lmr/m/n/10 %
+.....\penalty 200
+.....\glue(\medmuskip) 0.0 plus 1.66663
+.....\TU/lmr/m/n/10 2
+.....\glue 0.0
+.....\penalty 9000
+.....\TU/lmr/m/n/10 0
+.....\glue 0.0
+.....\penalty 9000
+.....\TU/lmr/m/n/10 b
+.....\glue 0.0
+.....\penalty 8000
+.....\TU/lmr/m/n/10 a
+.....\glue 0.0
+.....\penalty 8000
+.....\TU/lmr/m/n/10 r
+.....\glue 0.0
+.....\penalty 8000
+.....\glue(\medmuskip) 0.0 plus 1.66663
+.....\TU/lmr/m/n/10 #
+.....\penalty 200
+.....\glue(\medmuskip) 0.0 plus 1.66663
+.....\TU/lmr/m/n/10 b
+.....\glue 0.0
+.....\penalty 8000
+.....\TU/lmr/m/n/10 a
+.....\glue 0.0
+.....\penalty 8000
+.....\TU/lmr/m/n/10 z
+.....\glue 0.0
+.....\penalty 8000
+.....\mathoff
+.....\pdfendlink
+.....\TU/lmr/m/n/10 .
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\penalty -51
+....\glue 10.0 plus 3.0 minus 5.0
+....\glue -2.5
+....\glue 0.0 plus 1.0fil
+....\glue 0.0
+....\glue 0.0 plus 0.0001fil
+...\glue(\baselineskip) 23.34
+...\hbox(6.66+0.0)x345.0, direction TLT
+....\hbox(6.66+0.0)x345.0, glue set 170.0fil, direction TLT
+.....\glue 0.0 plus 1.0fil
+.....\TU/lmr/m/n/10 2
+.....\glue 0.0 plus 1.0fil
+(issue-30.aux)
+Package rerunfilecheck Warning: File `issue-30.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+Package rerunfilecheck Info: Checksums for `issue-30.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.

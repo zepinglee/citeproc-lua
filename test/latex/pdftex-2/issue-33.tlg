@@ -3,14 +3,6 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: LaTeX markup in prefix
 ============================================================
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line ....
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line ....
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line ....
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line ....
 > 
 \l__csl_citation_info_tl=citationID={Williams1992-Heaven20@1},citationItems={{id={Williams1992-Heaven20},prefix={See
 the \textit {opposite} view in
@@ -23,6 +15,14 @@ l. ...}
 {https://digitalcollections.dordt.edu/pro_rege}..
 <recently read> }
 l. ...}
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line ....
 ============================================================
 [1
 ] (issue-33.aux)

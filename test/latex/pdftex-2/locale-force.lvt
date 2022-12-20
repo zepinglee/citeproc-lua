@@ -8,6 +8,7 @@
 \usepackage{citation-style-language}
 
 \cslsetup{
+  regression-test = true,
   style  = locale-force,
   locale = zh-CN,
 }
@@ -20,13 +21,11 @@
 
 \TEST{Force locale}{
   \cite{ITEM-1}
-  \showcitation
 }
 
 
-\TEST{Bibilography}{
+\TEST{Bibliography}{
   \printbibliography
-  \showbibliography
 }
 
 \end{document}

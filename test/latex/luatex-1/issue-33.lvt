@@ -43,19 +43,23 @@
 \input{csl-test}
 
 \usepackage{citation-style-language}
-\cslsetup{style = chicago-fullnote-bibliography}
+
+\cslsetup{
+  regression-test = true,
+  style = chicago-fullnote-bibliography,
+}
 \addbibresource{\jobname.json}
 
 % \usepackage{hyperref}
+
 
 \begin{document}
 
 \START
 
 \TEST{LaTeX markup in prefix}{
-  test.\cite[prefix = {See the \textit{opposite} view in },
+  test. \cite[prefix = {See the \textit{opposite} view in },
   page = 1]{Williams1992-Heaven20}
-  \showcitation
 }
 
 \end{document}

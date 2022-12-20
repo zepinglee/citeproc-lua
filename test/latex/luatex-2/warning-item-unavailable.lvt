@@ -6,7 +6,10 @@
 
 \usepackage{citation-style-language}
 
-\cslsetup{style = apa}
+\cslsetup{
+  regression-test = true,
+  style = apa,
+}
 \addbibresource{test.bib}
 
 
@@ -16,12 +19,10 @@
 
 \TEST{Item unavailable}{
   \cite{ITEM-UNAVAILABLE}
-  \showcitation
 }
 
-\TEST{Bibilography}{
+\TEST{Bibliography}{
   \printbibliography
-  \showbibliography
 }
 
 \end{document}

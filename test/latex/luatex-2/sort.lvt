@@ -7,6 +7,7 @@
 \usepackage{citation-style-language}
 
 \cslsetup{
+  regression-test = true,
   style  = sort,
   locale = cs-CZ,
 }
@@ -19,13 +20,11 @@
 
 \TEST{Locale sorting}{
   \cite{ITEM-1,ITEM-2,ITEM-3,ITEM-4,ITEM-5}
-  \showcitation
 }
 
 
-\TEST{Bibilography}{
+\TEST{Bibliography}{
   \printbibliography
-  \showbibliography
 }
 
 \end{document}

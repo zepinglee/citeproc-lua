@@ -12,9 +12,10 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 2: Bibilography
+TEST 2: Bibliography
 ============================================================
-The sequence \l_tmpa_seq contains the items (without outer braces):
+The sequence \l__csl_bibliography_seq contains the items (without outer
+braces):
 >  {\cslsetup { class = in-text, line-spacing = 1, entry-spacing = 1, }}
 >  {\begin {thebibliography}{}}
 >  {\bibitem {ITEM-1} Chinese}

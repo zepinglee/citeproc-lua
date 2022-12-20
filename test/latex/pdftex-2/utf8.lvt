@@ -6,7 +6,10 @@
 
 \usepackage{citation-style-language}
 
-\cslsetup{style = apa}
+\cslsetup{
+  regression-test = true,
+  style = apa,
+}
 \addbibresource{test.bib}
 
 
@@ -18,17 +21,14 @@
 
 \TEST{Unicode apostrophe}{
   \cite{ITEM-1}
-  \showcitation
 }
 
 \TEST{Non-break space}{
   \cite{ITEM-4}
-  \showcitation
 }
 
-\TEST{Bibilography}{
+\TEST{Bibliography}{
   \printbibliography
-  \showbibliography
 }
 
 \end{document}

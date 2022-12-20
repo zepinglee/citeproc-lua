@@ -4,14 +4,6 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Single cite item in a citation
 ============================================================
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line ....
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line ....
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line ....
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line ....
 > 
 \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
 <recently read> }
@@ -20,6 +12,14 @@ l. ...}
 and State Power in the Media Age} (Routledge, 2005)..
 <recently read> }
 l. ...}
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line ....
 ============================================================
 ============================================================
 TEST 2: Multiple cite items in a citation
@@ -1761,9 +1761,10 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x345.0, direction TLT
 ============================================================
 ============================================================
-TEST 16: Bibilography contents
+TEST 16: Bibliography contents
 ============================================================
-The sequence \l_tmpa_seq contains the items (without outer braces):
+The sequence \l__csl_bibliography_seq contains the items (without outer
+braces):
 >  {\cslsetup { class = note, hanging-indent = true, line-spacing = 1,
 entry-spacing = 0, }}
 >  {\begin {thebibliography}{}}
@@ -1780,7 +1781,7 @@ Addison-Wesley, 1994.}
 l. ...}
 ============================================================
 ============================================================
-TEST 17: Bibilography format
+TEST 17: Bibliography format
 ============================================================
 Completed box being shipped out [2]
 \vbox(633.0+0.0)x407.0, direction TLT
@@ -2355,3 +2356,4 @@ Completed box being shipped out [2]
 ..\hbox(0.0+0.0)x345.0, direction TLT
 ...\hbox(0.0+0.0)x345.0, direction TLT
 ============================================================
+(style-note.aux)

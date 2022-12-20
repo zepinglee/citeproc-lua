@@ -1,70 +1,56 @@
 
 \TEST{Single cite item in a citation}{
   \cite{ITEM-1}
-  \showcitation
 }
 
 \TEST{Multiple cite items in a citation}{
   \cite{ITEM-1, ITEM-2}
-  \showcitation
 }
 
 \TEST{Citation with page locator}{
   \cite[page = 6]{ITEM-1}
-  \showcitation
 }
 
 \TEST{Citation with section locator}{
   \cite[section = 2.3]{ITEM-1}
-  \showcitation
 }
 
 \TEST{Citation with implicit page locator}{
   \cite[6]{ITEM-1}
-  \showcitation
 }
 
 \TEST{Citation with prefix and suffix}{
   \cite[prefix = {prefix }, suffix = { suffix}]{ITEM-1}
-  \showcitation
 }
 
 \TEST{Citation with implicit prefix and suffix}{
   \cite[prefix][suffix]{ITEM-1}
-  \showcitation
 }
 
 \TEST{Citation with implicit suffix}{
   \cite[suffix]{ITEM-1}
-  \showcitation
 }
 
 \TEST{Citation with implicit prefix}{
   \cite[prefix][]{ITEM-1}
-  \showcitation
 }
 
 \TEST{Narrative citation}{
   \textcite{ITEM-1}
-  \showcitation
 }
 
 \TEST{Narrative citation}{
   \textcite[infix='s early work]{ITEM-1}
-  \showcitation
 }
 
 \TEST{Multiple cite items with options}{
   \cites[See][page = 6]{ITEM-1}[figure = 2]{ITEM-2}
-  \showcitation
 }
 
 \TEST{Cite only author}{
   \citeauthor{ITEM-1}
-  \showcitation
 }
 
 \TEST{Uncited entry}{
   \nocite{ITEM-3}
-  \showcitation
 }

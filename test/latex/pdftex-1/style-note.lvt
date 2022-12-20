@@ -6,7 +6,10 @@
 
 \usepackage{citation-style-language}
 
-\cslsetup{style = chicago-fullnote-bibliography}
+\cslsetup{
+  regression-test = true,
+  style = chicago-fullnote-bibliography,
+}
 \addbibresource{test.bib}
 
 
@@ -21,15 +24,12 @@
   \clearpage
 }
 
-\TEST{Bibilography contents}{
+\TEST{Bibliography contents}{
   \printbibliography
-  \showbibliography
 }
 
-\TEST{Bibilography format}{
+\TEST{Bibliography format}{
   \clearpage
 }
-
-\OMIT
 
 \end{document}

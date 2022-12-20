@@ -34,6 +34,15 @@
   }
   \__csl_load_check:n
 
+
+% Check l3build regression-test
+\bool_new:N \l__csl_regression_test_bool
+% \if_meaning:w \ASSERT \@undefined
+% \else
+%   \bool_set_true:N \l__csl_regression_test_bool
+% \fi
+
+
 \sys_if_engine_luatex:T
   { \lua_now:n { csl = require("citeproc-latex") } }
 
@@ -296,18 +305,24 @@
     % Write to .aux file
     % \tl_show:N \l__csl_citation_info_tl
     \exp_args:NV \__csl_write_aux_citation:n \l__csl_citation_info_tl
+    \bool_if:NT \l__csl_regression_test_bool
+      { \tl_show:N \l__csl_citation_info_tl }
     % Print the citation string
     \prop_get:NVNTF \g__csl_citations_prop \l__csl_citation_id_tl
       \l__csl_citation_tl
-      { \exp_args:NV \__csl_print_citation:n \l__csl_citation_tl }
+      { \__csl_print_citation:N \l__csl_citation_tl }
       {
         \bool_if:NTF \l__csl_engine_initialized_bool
           {
             % \tl_show:N \l__csl_citation_info_tl
             % \tl_set:Nf \l__csl_citation_tl
             %   { \exp_args:NV \__csl_cite_aux:n \l__csl_citation_info_tl }
-            \exp_args:NV \__csl_cite_aux:n \l__csl_citation_info_tl
-            \exp_args:NV \__csl_print_citation:n \l__csl_citation_tl
+            \group_begin:
+              \char_set_catcode_other:N \%
+              \char_set_catcode_other:N \#
+              \exp_args:NV \__csl_cite_aux:n \l__csl_citation_info_tl
+              \__csl_print_citation:N \l__csl_citation_tl
+            \group_end:
           }
           {
             \exp_args:Nx \__csl_print_undefined_citation:n
@@ -317,9 +332,7 @@
   }
 
 \cs_new:Npn \__csl_cite_aux:n #1
-  {
-    \lua_now:e { csl.cite("\lua_escape:n {#1}") }
-  }
+  { \lua_now:e { csl.cite("\lua_escape:n {#1}") } }
 
 % #1: seq
 % #2: tl
@@ -412,9 +425,11 @@
   }
 
 
-\cs_new:Npn \__csl_print_citation:n #1
+% #1: \l__csl_citation_tl
+\cs_new:Npn \__csl_print_citation:N #1
   {
-    \tl_set:Nn \l__csl_citation_tl {#1}
+    \bool_if:NT \l__csl_regression_test_bool
+      { \tl_show:N #1 }
     \bool_if:NTF \l__csl_note_bool
       { \footnote {#1} }
       {#1}
@@ -424,9 +439,11 @@
 \cs_new:Npn \__csl_print_undefined_citation:n #1
   % #1: keys
   {
-    \tl_set:Nn \l__csl_citation_tl { [ \textbf {#1} ] }
     \G@refundefinedtrue
     \msg_warning:nnn { citation-style-language } { citation / undefined } {#1}
+    \tl_set:Nn \l__csl_citation_tl { [ \textbf {#1} ] }
+    \bool_if:NT \l__csl_regression_test_bool
+      { \tl_show:N \l__csl_citation_tl }
     \group_begin:
       \reset@font [ \textbf {#1} ]
     \group_end:
@@ -453,9 +470,14 @@
         citationItems = { \l__csl_cite_items_tl } ,
         properties    = { noteIndex = { 0 } }
       }
+    \bool_if:NT \l__csl_regression_test_bool
+      { \tl_show:N \l__csl_citation_info_tl }
     \exp_args:NV \__csl_no_cite_write_aux:n \l__csl_citation_info_tl
     \sys_if_engine_luatex:T
       { \lua_now:n { csl.nocite("#1") } }
+    \tl_clear:N \l__csl_citation_tl
+    \bool_if:NT \l__csl_regression_test_bool
+      { \tl_show:N \l__csl_citation_tl }
 }
 
 
@@ -466,9 +488,7 @@
         \AtBeginDocument
           { \exp_args:Nx \__csl_write_aux_citation:n { #1 } }
       }
-      {
-        \exp_args:Nx \__csl_write_aux_citation:n { #1 }
-      }
+      { \exp_args:Nx \__csl_write_aux_citation:n { #1 } }
   }
 
 
@@ -508,22 +528,22 @@
 
 \NewDocumentCommand \printbibliography { O { } }
   {
-    \sys_if_engine_luatex:TF
+    \sys_if_engine_luatex:T
       {
-        \bool_if:NTF \l__csl_engine_initialized_bool
+        \bool_if:NT \l__csl_engine_initialized_bool
           {
             \__csl_collect_bibliography:n { \lua_now:n { csl.bibliography() } }
-            % \tl_show:N \g__csl_bibliography_tl
-            \tl_use:N \g__csl_bibliography_tl
           }
-          { \msg_warning:nnn { citation-style-language } { bibliography / empty } }
       }
+    \tl_if_empty:NTF \g__csl_bibliography_tl
+      { \msg_warning:nn { citation-style-language } { bibliography / empty } }
       {
-        \tl_if_empty:NTF \g__csl_bibliography_tl
-          { \msg_warning:nnn { citation-style-language } { bibliography / empty } }
+        \bool_if:NT \l__csl_regression_test_bool
           {
-            \tl_use:N \g__csl_bibliography_tl
+            \seq_set_split:NnV \l__csl_bibliography_seq { \par } \g__csl_bibliography_tl
+            \seq_show:N \l__csl_bibliography_seq
           }
+        \tl_use:N \g__csl_bibliography_tl
       }
   }
 
@@ -548,6 +568,7 @@
 
 \keys_define:nn { csl }
   {
+    regression-test .bool_set:N = \l__csl_regression_test_bool ,
     style .tl_set:N = \l__csl_style_tl ,
     class .code:n =
       {
@@ -698,6 +719,7 @@
 
 \tl_new:N \g__csl_bibliography_tl
 \tl_new:N \g__csl_bibliography_setup_tl
+\seq_new:N \l__csl_bibliography_seq
 
 
 \AtBeginDocument { \__csl_at_begin_document_hook: }
@@ -707,12 +729,8 @@
   {
     \__csl_write_aux_info:
     \sys_if_engine_luatex:TF
-      {
-        \__csl_initialize_lua_module:
-      }
-      {
-        \__csl_load_bbl:
-      }
+      { \__csl_initialize_lua_module: }
+      { \__csl_load_bbl: }
   }
 
 
@@ -828,6 +846,9 @@
 \cs_new:Npn \__csl_collect_bibliography:n #1
   {
     \group_begin:
+      % URLs may contain "%" and "#" characters.
+      \char_set_catcode_other:N \%
+      \char_set_catcode_other:N \#
       \RenewDocumentCommand \cslsetup { m }
         { \tl_gset:Nn \g__csl_bibliography_setup_tl { \cslsetup { ##1 } } }
       \RenewDocumentEnvironment { thebibliography } { m +b }
@@ -1151,7 +1172,7 @@
   {
     \l__csl_bib_postamble_tl
     \tl_set:Nn \@noitemerr
-      { \msg_warning:nnn { citation-style-language } { bibliography / empty } }
+      { \msg_warning:nn { citation-style-language } { bibliography / empty } }
     \endlist
     \__csl_reset_bib_format:
   }

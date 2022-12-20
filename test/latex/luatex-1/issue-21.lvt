@@ -6,7 +6,10 @@
 
 \usepackage{citation-style-language}
 
-\cslsetup{style = chicago-fullnote-bibliography}
+\cslsetup{
+  regression-test = true,
+  style = chicago-fullnote-bibliography,
+}
 \addbibresource{test.bib}
 
 
@@ -19,7 +22,6 @@
 \TEST{Note citation in list}{
   \begin{itemize}
     \item Foo\cite{ITEM-1}.
-    \showcitation
   \end{itemize}
 }
 

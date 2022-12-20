@@ -8,7 +8,10 @@
 
 \usepackage{csquotes}
 
-\cslsetup{style = chicago-fullnote-bibliography}
+\cslsetup{
+  regression-test = true,
+  style = chicago-fullnote-bibliography,
+}
 \addbibresource{test.bib}
 
 

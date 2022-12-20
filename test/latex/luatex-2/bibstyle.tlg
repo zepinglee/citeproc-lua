@@ -163,9 +163,10 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 15: Bibilography
+TEST 15: Bibliography
 ============================================================
-The sequence \l_tmpa_seq contains the items (without outer braces):
+The sequence \l__csl_bibliography_seq contains the items (without outer
+braces):
 >  {\cslsetup { class = in-text, hanging-indent = true, line-spacing = 2,
 entry-spacing = 0, }}
 >  {\begin {thebibliography}{}}

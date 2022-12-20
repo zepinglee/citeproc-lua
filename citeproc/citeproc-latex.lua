@@ -91,6 +91,7 @@ function csl.cite(citation_info)
     csl.error("CSL engine is not initialized.")
   end
 
+  -- util.debub(citation_info)
   local citation = core.make_citation(citation_info)
 
   local citation_str
@@ -102,7 +103,10 @@ function csl.cite(citation_info)
     citation_str = csl.engine:process_citation(citation)
   end
 
+  -- util.debug(citation_str)
   -- tex.sprint(citation_str)
+  -- tex.setcatcode(35, 12)  -- #
+  -- tex.setcatcode(37, 12)  -- %
   token.set_macro("l__csl_citation_tl", citation_str)
 
   table.insert(csl.citations_pre, {citation.citationID, citation.properties.noteIndex})

@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix an error in checking the plurity of `number-of-pages` ([#27](https://github.com/zepinglee/citeproc-lua/issues/27)).
 - Fix an error in converting value `"2nd"` to its ordinal form ([#27](https://github.com/zepinglee/citeproc-lua/issues/27)).
 - Fix missing DOI prefix when used with `hyperref` ([#28](https://github.com/zepinglee/citeproc-lua/issues/28)).
+- Fix special characters (`#` and `%`) in URL ([#30](https://github.com/zepinglee/citeproc-lua/issues/30)).
 
 ## [v0.2.2] - 2022-09-23
 

@@ -6,6 +6,10 @@
 
 \usepackage{citation-style-language}
 
+\cslsetup{
+  regression-test = true,
+}
+
 \bibliographystyle{apa}
 
 
@@ -15,9 +19,8 @@
 
 \input{csl-citation-tests}
 
-\TEST{Bibilography}{
+\TEST{Bibliography}{
   \bibliography{test}
-  \showbibliography
 }
 
 \end{document}

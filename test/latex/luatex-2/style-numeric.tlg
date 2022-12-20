@@ -575,9 +575,10 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x345.0, direction TLT
 ============================================================
 ============================================================
-TEST 16: Bibilography contents
+TEST 16: Bibliography contents
 ============================================================
-The sequence \l_tmpa_seq contains the items (without outer braces):
+The sequence \l__csl_bibliography_seq contains the items (without outer
+braces):
 >  {\cslsetup { class = in-text, line-spacing = 1, entry-spacing = 0, }}
 >  {\begin {thebibliography}{[1]}}
 >  {\bibitem [{[1]}]{ITEM-1} B. D’Arcus, \textit {Boundaries of Dissent:
@@ -593,7 +594,7 @@ USA: Addison-Wesley, 1994.}
 l. ...}
 ============================================================
 ============================================================
-TEST 17: Bibilography format
+TEST 17: Bibliography format
 ============================================================
 Completed box being shipped out [2]
 \vbox(633.0+0.0)x407.0, direction TLT
@@ -1170,3 +1171,4 @@ Completed box being shipped out [2]
 ..\hbox(0.0+0.0)x345.0, direction TLT
 ...\hbox(0.0+0.0)x345.0, direction TLT
 ============================================================
+(style-numeric.aux)
