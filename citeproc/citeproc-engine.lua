@@ -14,6 +14,7 @@ local Style = require("citeproc-node-style").Style
 local Locale = require("citeproc-node-locale").Locale
 local Context = require("citeproc-context").Context
 local IrState = require("citeproc-context").IrState
+local InlineElement = require("citeproc-output").InlineElement
 -- local OutputFormat = require("citeproc-output").OutputFormat
 local LatexWriter = require("citeproc-output").LatexWriter
 local HtmlWriter = require("citeproc-output").HtmlWriter
@@ -166,21 +167,10 @@ function CiteProc:updateUncitedItems(uncited_ids)
   self.note_citations_map = {}
 end
 
+
 function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
   -- util.debug(citation)
-  -- util.debug(citationsPre)
-
-  if not citation.citationID then
-    citation.citationID = "CITATION-" .. tostring(#self.registry.citation_list)
-  end
-
-  -- Fix missing noteIndex: sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
-  if not citation.properties then
-    citation.properties = {}
-  end
-  if not citation.properties.noteIndex then
-    citation.properties.noteIndex = 0
-  end
+  citation = self:normalize_citation_input(citation)
 
   -- Registor citation
   self.registry.citations_by_id[citation.citationID] = citation
@@ -248,8 +238,62 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
     table.insert(output, {citation_index, citation_str, citation_id})
   end
 
-  -- util.debug(output)
   return {params, output}
+end
+
+function CiteProc:normalize_citation_input(citation)
+  citation = util.deep_copy(citation)
+
+  if not citation.citationID then
+    citation.citationID = "CITATION-" .. tostring(#self.registry.citation_list)
+  end
+
+  if not citation.citationItems then
+    citation.citationItems = {}
+  end
+  for i, cite_item in ipairs(citation.citationItems) do
+    citation.citationItems[i] = self:normalize_cite_item(cite_item)
+  end
+
+  -- Fix missing noteIndex: sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
+  if not citation.properties then
+    citation.properties = {}
+  end
+  if not citation.properties.noteIndex then
+    citation.properties.noteIndex = 0
+  end
+
+  return citation
+end
+
+function CiteProc:normalize_cite_item(cite_item)
+  -- Shallow copy
+  cite_item = util.clone(cite_item)
+  cite_item.id = tostring(cite_item.id)
+
+  -- Use "page" as locator label if missing
+  -- label_PluralWithAmpersand.txt
+  if cite_item.locator and not cite_item.label then
+    cite_item.label = "page"
+  end
+
+  if cite_item.prefix then
+    -- Assert CSL rich-text or HTML-like tagged string
+    if cite_item.prefix == "" then
+      cite_item.prefix = nil
+    else
+      cite_item.prefix = InlineElement:parse(cite_item.prefix)
+    end
+  end
+  if cite_item.suffix then
+    if cite_item.suffix == "" then
+      cite_item.suffix = nil
+    else
+      cite_item.suffix = InlineElement:parse(cite_item.suffix)
+    end
+  end
+
+  return cite_item
 end
 
 -- A variant of processCitationCluster() for easy use with LaTeX.
@@ -258,12 +302,8 @@ function CiteProc:process_citation(citation)
   -- util.debug(citation)
   -- util.debug(citationsPre)
   -- Fix missing noteIndex: sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
-  if not citation.properties then
-    citation.properties = {}
-  end
-  if not citation.properties.noteIndex then
-    citation.properties.noteIndex = 0
-  end
+
+  citation = self:normalize_citation_input(citation)
 
   -- Registor citation
   self.registry.citations_by_id[citation.citationID] = citation
@@ -285,7 +325,6 @@ function CiteProc:process_citation(citation)
 
   -- self:updateItems(item_ids)
   for i, cite_item in ipairs(citation.citationItems) do
-    cite_item.id = tostring(cite_item.id)
     self:get_item(cite_item.id)
   end
 
@@ -471,18 +510,12 @@ function CiteProc:makeCitationCluster(citation_items)
   local items = {}
 
   for i, cite_item in ipairs(citation_items) do
-    cite_item.id = tostring(cite_item.id)
+    cite_item = self:normalize_cite_item(cite_item)
     local item_data = self:get_item(cite_item.id)
 
     -- Create a wrapper of the orignal item from registry so that
     -- it may hold different `locator` or `position` values for cites.
     local item = setmetatable(cite_item, {__index = item_data})
-
-    -- Use "page" as locator label if missing
-    -- label_PluralWithAmpersand.txt
-    if item.locator and not item.label then
-      item.label = "page"
-    end
 
     if not special_form then
       for _, form in ipairs({"author-only", "suppress-author", "coposite"}) do
@@ -657,6 +690,7 @@ function CiteProc:_retrieve_item(id)
     return nil
   end
 
+  -- TODO: normalize data input
   item.id = tostring(item.id)
 
   for key, value in pairs(item) do

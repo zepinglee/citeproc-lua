@@ -10,6 +10,7 @@ local citeproc = require("citeproc")
 local bibtex  -- = require("citeproc-bibtex")  -- load on demand
 local util = citeproc.util
 require("lualibs")
+local latex_parser = require("citeproc-latex-parser")
 
 
 core.locale_file_format = "csl-locales-%s.xml"
@@ -176,7 +177,14 @@ function core.make_citation(citation_info)
   citation.citationItems = parse_latex_seq(citation.citationItems)
 
   for i, item in ipairs(citation.citationItems) do
-    citation.citationItems[i] = parse_latex_prop(item)
+    local citation_item = parse_latex_prop(item)
+    if citation_item.prefix then
+      citation_item.prefix = latex_parser.convert_latex_to_rich_text(citation_item.prefix)
+    end
+    if citation_item.suffix then
+      citation_item.suffix = latex_parser.convert_latex_to_rich_text(citation_item.suffix)
+    end
+    citation.citationItems[i] = citation_item
   end
 
   citation.properties = parse_latex_prop(citation.properties)

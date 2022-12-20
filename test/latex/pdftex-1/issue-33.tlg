@@ -1,0 +1,20 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: LaTeX markup in prefix
+============================================================
+Package citation-style-language Warning: Citation `Williams1992-Heaven20' on
+(citation-style-language)                page 1 undefined on line ....
+> 
+\l__csl_citation_info_tl=citationID={Williams1992-Heaven20@1},citationItems={{id={Williams1992-Heaven20},prefix={See
+the \textit {opposite} view in
+},label={page},locator={1}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=[\textbf {Williams1992-Heaven20}].
+<recently read> }
+l. ...}
+============================================================
+[1
+] (issue-33.aux)
+LaTeX Warning: There were undefined references.

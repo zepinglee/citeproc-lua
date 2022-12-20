@@ -110,6 +110,36 @@ function Quoted:new(inlines, localized_quotes)
 end
 
 
+local Code = InlineElement:derive("Code")
+
+function Code:new(value)
+  local o = InlineElement.new(self)
+  o.value = value
+  setmetatable(o, self)
+  return o
+end
+
+
+local MathML = InlineElement:derive("MathML")
+
+function MathML:new(value)
+  local o = InlineElement.new(self)
+  o.value = value
+  setmetatable(o, self)
+  return o
+end
+
+
+local MathTeX = InlineElement:derive("MathTeX")
+
+function MathTeX:new(value)
+  local o = InlineElement.new(self)
+  o.value = value
+  setmetatable(o, self)
+  return o
+end
+
+
 local NoCase = InlineElement:derive("NoCase")
 
 function NoCase:new(inlines)
@@ -152,7 +182,91 @@ function Div:new(inlines, display)
 end
 
 
-function InlineElement:parse(str, context)
+function InlineElement:parse(text, context)
+  local text_type = type(text)
+  local inlines
+  if text_type == "table" then
+    -- CSL rich text
+    inlines = self:parse_csl_rich_text(text)
+  elseif text_type == "string" then
+    -- String with HTML-like formatting tags
+    inlines = self:parse_html_tags(text, context)
+  elseif text_type == "number" then
+    inlines = {PlainText:new(tostring(text))}
+  else
+    util.error("Invalid text type")
+  end
+  return inlines
+end
+
+function InlineElement:parse_csl_rich_text(text)
+  -- Example: [
+  --   "A title with a",
+  --   {
+  --     "quote": "quoted string."
+  --   }
+  -- ]
+  local inlines = {}
+
+  local text_type = type(text)
+  if text_type == "string" then
+    table.insert(inlines, PlainText:new(text))
+  elseif text_type == "table" then
+    for _, subtext in ipairs(text) do
+      local subtext_type = type(subtext)
+      local inline
+      if subtext_type == "string" then
+        inline = PlainText:new(subtext)
+      elseif subtext_type == "table" then
+        local format
+        local content
+        for format_, content_ in pairs(subtext) do
+          format = format_
+          content = content_
+        end
+        if format == "bold" then
+          inline = Formatted:new(self:parse_csl_rich_text(content), {["font-weight"] = "bold"})
+        elseif format == "code" then
+          if type(content) ~= "string" then
+            util.error("Invalid rich text content.")
+          end
+          inline = Code:new(content)
+        elseif format == "italic" then
+          inline = Formatted:new(self:parse_csl_rich_text(content), {["font-style"] = "italic"})
+        elseif format == "math-ml" then
+          if type(content) ~= "string" then
+            util.error("Invalid rich text content.")
+          end
+          inline = Code:new(content)
+        elseif format == "math-tex" then
+          if type(content) ~= "string" then
+            util.error("Invalid rich text content.")
+          end
+          inline = Code:new(content)
+        elseif format == "preserve" then
+          inline = NoCase:new(self:parse_csl_rich_text(content))
+        elseif format == "quote" then
+          inline = Quoted:new(self:parse_csl_rich_text(content))
+        elseif format == "sc" then
+          inline = Formatted:new(self:parse_csl_rich_text(content), {["font-variant"] = "small-caps"})
+        elseif format == "strike" then
+          inline = Formatted:new(self:parse_csl_rich_text(content), {["strike-through"] = true})
+        elseif format == "sub" then
+          inline = Formatted:new(self:parse_csl_rich_text(content), {["font-variant"] = "small-caps"})
+        elseif format == "sup" then
+          inline = Formatted:new(self:parse_csl_rich_text(content), {["font-variant"] = "small-caps"})
+        end
+      end
+      table.insert(inlines, inline)
+    end
+  else
+    util.error("Invalid text type")
+  end
+
+  return inlines
+end
+
+function InlineElement:parse_html_tags(str, context)
   -- Return a list of inlines
   -- if type(str) ~= "string" then
   --   print(debug.traceback())
@@ -219,7 +333,12 @@ function InlineElement:parse_quotes(inlines, context)
   local quote_stack = {}
   local text_stack = {{}}
 
-  local localized_quotes = context:get_localized_quotes()
+  local localized_quotes
+  if context then
+    localized_quotes = context:get_localized_quotes()
+  else
+    localized_quotes = LocalizedQuotes:new()
+  end
 
   for _, fragment in ipairs(quote_fragments) do
     local top_text_list = text_stack[#text_stack]
@@ -428,8 +547,10 @@ function InlineElement:capitalize_first_term()
   -- util.debug(self)
   if self._type == "PlainText" then
     self.value = util.capitalize(self.value)
-  elseif self.inlines[1] then
+  elseif self._type ~= "Code" and self._type ~= "MathML" and self._type ~= "MathTeX" then
+    if self.inlines[1] then
     self.inlines[1]:capitalize_first_term()
+    end
   end
 end
 
@@ -563,6 +684,9 @@ function OutputFormat:apply_text_case_inner(inlines, text_case, seen_one, is_upp
       seen_one = seen_one or string_contains_word(inline.value)
     elseif inline._type == "NoCase" or
            inline._type == "NoDecor" or
+           inline._type == "Code" or
+           inline._type == "MathML" or
+           inline._type == "MathTeX" or
            (inline._type == "Formatted" and inline.formatting["font-variant"] == "small-caps") or
            (inline._type == "Formatted" and inline.formatting["vertical-align"] == "sup") or
            (inline._type == "Formatted" and inline.formatting["vertical-align"] == "sub") then
@@ -813,6 +937,11 @@ function OutputFormat:flip_flop(inlines, state)
         end
       end
 
+    elseif inline._type == "Code" or
+        inline._type == "MathML" or
+        inline._type == "MathTeX" then
+      return
+
     elseif inline.inlines then  -- Div, ...
       self:flip_flop(inline.inlines, state)
     end
@@ -868,6 +997,11 @@ function OutputFormat:flip_flop_micro_inlines(inlines, state)
           inline.formatting[attr] = value
         end
       end
+
+    elseif inline._type == "Code" or
+        inline._type == "MathML" or
+        inline._type == "MathTeX" then
+      return
 
     elseif inline.inlines then  -- Div, ...
       self:flip_flop_micro_inlines(inline.inlines, state)
@@ -1155,6 +1289,15 @@ function Markup:write_inline(inline, context)
     elseif inline._type == "Linked" then
       return self:write_link(inline, context)
 
+    elseif inline._type == "Code" then
+      return self:write_code(inline.inlines)
+
+    elseif inline._type == "MathML" then
+      return self:write_mathml(inline.inlines)
+
+    elseif inline._type == "MathTeX" then
+      return self:write_math_tex(inline.inlines)
+
     elseif inline._type == "NoCase" or inline._type == "NoDecor" then
       return self:write_inlines(inline.inlines)
 
@@ -1283,10 +1426,26 @@ end
 
 function LatexWriter:write_link(inline, context)
   if inline.href == inline.value then
+    -- URL
     return string.format("\\url{%s}", inline.value)
+  elseif context.engine.opt.wrap_url_and_doi then
+    return string.format("\\href{%s}{%s}", inline.href, self:write_escaped(inline.value, context))
   else
-    return string.format("\\href{%s}{%s}", inline.href, inline.value)
+    return self:write_escaped(inline.value, context)
   end
+end
+
+function LatexWriter:write_code(inline, context)
+  return inline.value
+end
+
+function LatexWriter:write_mathml(inline, context)
+  util.error("MathML is not supported in LaTeX output.")
+  return ""
+end
+
+function LatexWriter:write_math_tex(inline, context)
+  return string.format("$%s$", inline.value)
 end
 
 
@@ -1368,7 +1527,25 @@ function HtmlWriter:write_display(inline, context)
 end
 
 function HtmlWriter:write_link(inline, context)
-  return string.format('<a href="%s">%s</a>', inline.href, inline.value)
+  local content = self:write_escaped(inline.value, context)
+  if context.engine.opt.wrap_url_and_doi then
+    local href = self:write_escaped(inline.href, context)
+    return string.format('<a href="%s">%s</a>', href, content)
+  else
+    return content
+  end
+end
+
+function HtmlWriter:write_code(inline, context)
+  return string.format("<code>%s</code>", inline.value)
+end
+
+function HtmlWriter:write_mathml(inline, context)
+  return string.format('<math xmlns="http://www.w3.org/1998/Math/MathML">%s</math>', inline.value)
+end
+
+function HtmlWriter:write_math_tex(inline, context)
+  return string.format("<code>$%s$</code>", self:write_escaped(inline.value, context))
 end
 
 
@@ -1451,6 +1628,18 @@ function DisamStringFormat:flatten_seq_ir(ir)
   return inlines
 end
 
+
+function InlineElement.has_space(inlines)
+  local str = DisamStringFormat:output(inlines)
+  if not str then
+    return false
+  end
+  if string.match(util.strip(str), "%s") then
+    return true
+  else
+    return false
+  end
+end
 
 output_module.move_in_puncts = {
   ["."] = true,

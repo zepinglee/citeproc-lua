@@ -1,0 +1,28 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: LaTeX markup in prefix
+============================================================
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line ....
+> 
+\l__csl_citation_info_tl=citationID={Williams1992-Heaven20@1},citationItems={{id={Williams1992-Heaven20},prefix={See
+the \textit {opposite} view in
+},label={page},locator={1}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=See the \textit {opposite} view in Michael Williams,
+“Of Heaven and History: The Verticalist Eschatology of Geerhardus Vos,”
+\textit {Pro Rege} 20, no. 3 (1992): 1, \url
+{https://digitalcollections.dordt.edu/pro_rege}..
+<recently read> }
+l. ...}
+============================================================
+[1
+] (issue-33.aux)

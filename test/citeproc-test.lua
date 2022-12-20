@@ -94,6 +94,12 @@ local function test_citations(engine, fixture)
     local citations_pre = citation_cluster[2]
     local citations_post = citation_cluster[3]
 
+    -- bugreports_NumericStyleFirstRefMultipleCiteFailure.txt
+    -- Empty citationID
+    if not citation.citationID then
+      citation.citationID = "CITATION-" .. tostring(i)
+    end
+
     local res = engine:processCitationCluster(citation, citations_pre, citations_post)
 
     for citation_id, citation_output in pairs(output) do

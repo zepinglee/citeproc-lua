@@ -87,7 +87,6 @@ end
 
 function csl.cite(citation_info)
   -- "citationID={ITEM-UNAVAILABLE@1},citationItems={{id={ITEM-UNAVAILABLE}}},properties={noteIndex={1}}"
-  -- util.debug(citation_info)
   if not csl.engine then
     csl.error("CSL engine is not initialized.")
   end
@@ -103,7 +102,8 @@ function csl.cite(citation_info)
     citation_str = csl.engine:process_citation(citation)
   end
 
-  tex.sprint(citation_str)
+  -- tex.sprint(citation_str)
+  token.set_macro("l__csl_citation_tl", citation_str)
 
   table.insert(csl.citations_pre, {citation.citationID, citation.properties.noteIndex})
 end

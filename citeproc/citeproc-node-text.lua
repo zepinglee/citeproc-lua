@@ -93,8 +93,9 @@ function Text:build_variable_ir(engine, state, context)
   -- if not engine.opt then
   --   print(debug.traceback())
   -- end
-  if engine.opt.wrap_url_and_doi and (variable == "URL" or variable == "DOI" or
-      variable == "PMID" or variable == "PMID") then
+  -- if engine.opt.wrap_url_and_doi and (variable == "URL" or variable == "DOI" or
+  --     variable == "PMID" or variable == "PMID") then
+  if variable == "URL" or variable == "DOI" or variable == "PMID" or variable == "PMID" then
     inlines = self:render_linked(engine, state, context, variable, text)
   else
     inlines = self:render_text_inlines(text, context)

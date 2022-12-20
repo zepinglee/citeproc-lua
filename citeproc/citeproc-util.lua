@@ -11,6 +11,21 @@ local inspect  -- only load it when debugging
 
 local util = {}
 
+-- Deep copy
+function util.deep_copy(obj)
+  local res
+  if type(obj) == "table" then
+    res = {}
+    for key, value in pairs(obj) do
+      res[key] = util.deep_copy(value)
+    end
+  else
+    res = obj
+  end
+  return res
+end
+
+-- Shallow copy
 function util.clone(obj)
   if type(obj) == "table" then
     local res = {}
@@ -262,17 +277,17 @@ end
 
 function util.lstrip (str)
   if not str then
-    return nil
+    error("Invalid input")
   end
-  local res = string.gsub(str, "^%s+", "")
+  local res = string.gsub(str, "^%s*", "")
   return res
 end
 
 function util.rstrip (str)
   if not str then
-    return nil
+    error("Invalid input")
   end
-  local res = string.gsub(str, "%s+$", "")
+  local res = string.gsub(str, "%s*$", "")
   return res
 end
 
@@ -280,16 +295,16 @@ function util.strip (str)
   return util.lstrip(util.rstrip(str))
 end
 
-function util.startswith (str, prefix)
-  if not str then
-    return false
+function util.startswith(str, prefix)
+  if not str or type(str) ~= "string" then
+    print(debug.traceback())
   end
   return string.sub(str, 1, #prefix) == prefix
 end
 
-function util.endswith (str, suffix)
-  if not str then
-    return false
+function util.endswith(str, suffix)
+  if not str or type(str) ~= "string" then
+    print(debug.traceback())
   end
   return string.sub(str, -#suffix) == suffix
 end

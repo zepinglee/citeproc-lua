@@ -100,26 +100,11 @@ function Citation:from_node(node, style)
 end
 
 function Citation:build_citation_str(citation, engine)
-  -- util.debug(citation.citationID)
-  local items = {}
-  for i, cite_item in ipairs(citation.citationItems) do
-    cite_item.id = tostring(cite_item.id)
-    -- util.debug(cite_item.id)
-
-    -- Use "page" as locator label if missing
-    -- label_PluralWithAmpersand.txt
-    if cite_item.locator and not cite_item.label then
-      cite_item.label = "page"
-    end
-
-    table.insert(items, cite_item)
-  end
-
   if engine.registry.requires_sorting then
     engine:sort_bibliography()
   end
 
-  local citation_str = self:build_cluster(items, engine, citation.properties)
+  local citation_str = self:build_cluster(citation.citationItems, engine, citation.properties)
   return citation_str
 end
 
@@ -173,7 +158,9 @@ function Citation:build_cluster(citation_items, engine, properties)
       -- end
     local prefix = citation_items[i].prefix
     if prefix then
-      if prefix and string.match(prefix, "[.!?]%s*$") and #util.split(util.strip(prefix)) > 1 then
+      -- Prefix is inlines
+      local right_most_str = prefix[#prefix]:get_right_most_string()
+      if string.match(right_most_str, "[.!?]%s*$") and InlineElement.has_space(prefix) then
         ir:capitalize_first_term()
       end
     else
@@ -210,13 +197,19 @@ function Citation:build_cluster(citation_items, engine, properties)
         if previous_ir then
           if previous_ir.own_delimiter then
             table.insert(citation_stream, PlainText:new(previous_ir.own_delimiter))
-          elseif citation_delimiter and not (cite_prefix and util.startswith(cite_prefix, ",")) then
-            table.insert(citation_stream, PlainText:new(citation_delimiter))
+          else
+            local left_most_str
+            if cite_prefix then
+              left_most_str = cite_prefix[1]:get_left_most_string()
+            end
+            if citation_delimiter and not (cite_prefix and util.startswith(left_most_str, ",")) then
+              table.insert(citation_stream, PlainText:new(citation_delimiter))
+            end
           end
         end
 
         if cite_prefix then
-          table.insert(citation_stream, Micro:new(InlineElement:parse(cite_prefix, context)))
+          table.insert(citation_stream, Micro:new(cite_prefix))
         end
 
         -- util.debug(ir)
@@ -224,12 +217,11 @@ function Citation:build_cluster(citation_items, engine, properties)
         previous_ir = ir
 
         if cite_suffix then
-          table.insert(citation_stream, Micro:new(InlineElement:parse(cite_suffix, context)))
+          table.insert(citation_stream, Micro:new(cite_suffix))
         end
       end
     end
   end
-  -- util.debug(citation_stream)
 
   local has_printed_form = true
   if #citation_items == 0 then
@@ -255,7 +247,6 @@ function Citation:build_cluster(citation_items, engine, properties)
       table.insert(citation_stream, PlainText:new(affixes.suffix))
     end
   end
-  -- util.debug(citation_stream)
 
   if has_printed_form and context.area.layout.formatting then
     citation_stream = {Formatted:new(citation_stream, context.area.layout.formatting)}
@@ -336,7 +327,6 @@ end
 
 function Citation:build_ambiguous_ir(cite_item, output_format, engine)
   local state = IrState:new(engine.style)
-  cite_item.id = tostring(cite_item.id)
   local context = Context:new()
   context.engine = engine
   context.style = engine.style

@@ -1,0 +1,61 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\begin{filecontents}[overwrite, noheader]{\jobname.json}
+[
+    {
+        "id": "Williams1992-Heaven20",
+        "type": "article-journal",
+        "author": [
+            {
+                "family": "Williams",
+                "given": "Michael"
+            }
+        ],
+        "title": "Of Heaven and History: The Verticalist Eschatology of Geerhardus Vos",
+        "title-short": "Heaven and History",
+        "volume": "20",
+        "issue": "3",
+        "container-title": "Pro Rege",
+        "page": "9-18",
+        "URL": "https://digitalcollections.dordt.edu/pro_rege",
+        "issued": {
+            "date-parts": [
+                [
+                    "1992"
+                ]
+            ]
+        },
+        "accessed": {
+            "date-parts": [
+                [
+                    "2022",
+                    "12",
+                    "13"
+                ]
+            ]
+        }
+    }
+]
+\end{filecontents}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+\cslsetup{style = chicago-fullnote-bibliography}
+\addbibresource{\jobname.json}
+
+% \usepackage{hyperref}
+
+\begin{document}
+
+\START
+
+\TEST{LaTeX markup in prefix}{
+  test.\cite[prefix = {See the \textit{opposite} view in },
+  page = 1]{Williams1992-Heaven20}
+  \showcitation
+}
+
+\end{document}

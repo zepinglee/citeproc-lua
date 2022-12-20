@@ -294,6 +294,7 @@
     \prop_put:NnV \l__csl_citation_info_prop { properties } \l__csl_citation_properties_tl
     \__csl_serialize_prop:NN \l__csl_citation_info_prop \l__csl_citation_info_tl
     % Write to .aux file
+    % \tl_show:N \l__csl_citation_info_tl
     \exp_args:NV \__csl_write_aux_citation:n \l__csl_citation_info_tl
     % Print the citation string
     \prop_get:NVNTF \g__csl_citations_prop \l__csl_citation_id_tl
@@ -302,8 +303,10 @@
       {
         \bool_if:NTF \l__csl_engine_initialized_bool
           {
-            \tl_set:Nf \l__csl_citation_tl
-              { \lua_now:e { csl.cite("\l__csl_citation_info_tl") } }
+            % \tl_show:N \l__csl_citation_info_tl
+            % \tl_set:Nf \l__csl_citation_tl
+            %   { \exp_args:NV \__csl_cite_aux:n \l__csl_citation_info_tl }
+            \exp_args:NV \__csl_cite_aux:n \l__csl_citation_info_tl
             \exp_args:NV \__csl_print_citation:n \l__csl_citation_tl
           }
           {
@@ -311,6 +314,11 @@
               { \seq_use:Nn \l__csl_cite_keys_seq { ,~ } }
           }
       }
+  }
+
+\cs_new:Npn \__csl_cite_aux:n #1
+  {
+    \lua_now:e { csl.cite("\lua_escape:n {#1}") }
   }
 
 % #1: seq
@@ -399,8 +407,7 @@
   % #1: citation info "{<citationID>}{{id=ITEM-1},{id=ITEM-2}}{<noteIndex>}"
   {
     \if@filesw
-      \iow_now:Nx \@auxout
-        { \token_to_str:N \citation { #1 } }
+      \iow_now:Nn \@auxout { \citation {#1} }
     \fi
   }
 
@@ -486,10 +493,10 @@
 
 \cs_new:Npn \cslcite #1#2
   {
-    \bibcite {#1} {#2}
     % \if@filesw
-    %   \iow_now:Nx \@auxout { \token_to_str:N \bibcite {#1} {#2} }
+    %   \iow_now:Nn \@auxout { \bibcite {#1} {#2} }
     % \fi
+    \bibcite {#1} {#2}
   }
 
 
@@ -790,14 +797,16 @@
     % write to aux file
     \prop_if_empty:NF \l__csl_options_clist
       {
-        \if@filesw
-          \iow_now:Nx \@auxout
-            {
-              \token_to_str:N \csloptions
-                { \clist_use:Nn \l__csl_options_clist { , } }
-            }
-        \fi
+        \exp_args:Nx \__csl_write_aux_options:n
+          { \clist_use:Nn \l__csl_options_clist { , } }
       }
+  }
+
+\cs_new:Npn \__csl_write_aux_options:n #1
+  {
+    \if@filesw
+      \iow_now:Nn \@auxout { \csloptions {#1} }
+    \fi
   }
 
 
@@ -810,9 +819,9 @@
     % the latexmk decides to run $bibtex or not.
     \__csl_collect_bibliography:n { \@input@ { \jobname .bbl } }
     % Execute the \cslsetup part to set the style class.
-    \tl_show:N \g__csl_bibliography_setup_tl
+    % \tl_show:N \g__csl_bibliography_setup_tl
     \tl_use:N \g__csl_bibliography_setup_tl
-    \bool_show:N \l__csl_note_bool
+    % \bool_show:N \l__csl_note_bool
   }
 
 % Collection the bibliography (as well as \cslsetup) into \g__csl_bibliography_setup_tl
@@ -878,6 +887,7 @@
 \cs_new:Npn \__csl_write_aux_bibdata:n #1
   {
     \if@filesw
+      % Full expansion for files like \jobname.bib
       \iow_now:Nx \@auxout { \token_to_str:N \csl@data {#1} }
     \fi
   }
