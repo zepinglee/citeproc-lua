@@ -41,3 +41,13 @@ jobs:
         run: busted test/latex-parser-test.lua --output=TAP
       - name: Test LaTeX package
         run: l3build check -q
+      - name: Run examples
+        run: |
+          l3build install
+          cd example
+          pdflatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
+          "$(kpsewhich -var-value=TEXMFHOME)"/scripts/citation-style-language/citeproc-lua.lua example.aux
+          pdflatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
+          rm example.aux example.bbl
+          lualatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
+          lualatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
