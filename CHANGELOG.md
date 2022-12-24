@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - The "-locator" suffixes are removed from the `article-locator` and `title-locator` options.
+- The LaTeX markups in citation prefix is now correctly precessed ([#33](https://github.com/zepinglee/citeproc-lua/issues/33)).
 
 ### Fixed
 
