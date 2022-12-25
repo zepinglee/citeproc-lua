@@ -153,18 +153,13 @@ local function test_bibliography(engine, fixture)
     pending("bibentries")
   end
 
-  if fixture.bibsection then
-    -- TODO
-    pending("bibsection")
-  end
-
   if fixture.citations then
     test_citations(engine, fixture)
   else
     test_citation_items(engine, fixture)
   end
 
-  local result = engine:makeBibliography()
+  local result = engine:makeBibliography(fixture.bibsection)
   local params = result[1]
   local entries = result[2]
   local res = params.bibstart

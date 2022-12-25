@@ -578,7 +578,9 @@ function CiteProc:makeCitationCluster(citation_items)
   return res
 end
 
-function CiteProc:makeBibliography()
+function CiteProc:makeBibliography(bibsection)
+  -- The bibsection works as a filter described in
+  -- <https://citeproc-js.readthedocs.io/en/latest/running.html#selective-output-with-makebibliography>.
   if not self.style.bibliography then
     return {{}, {}}
   end
@@ -588,7 +590,11 @@ function CiteProc:makeBibliography()
   self.registry.longest_label = ""
   self.registry.maxoffset = 0
 
-  for _, id in ipairs(self:get_sorted_refs()) do
+  local ids = self:get_sorted_refs()
+  if bibsection then
+    ids = self:filter_with_bibsection(ids, bibsection)
+  end
+  for _, id in ipairs(ids) do
     local str = self.style.bibliography:build_bibliography_str(id, self)
     table.insert(res, str)
   end
@@ -621,6 +627,14 @@ function CiteProc:get_sorted_refs()
     self:sort_bibliography()
   end
   return self.registry.reflist
+end
+
+function CiteProc:filter_with_bibsection(ids, bibsection)
+  local res = {}
+  for _, id in ipairs(ids) do
+    table.insert(res, id)
+  end
+  return res
 end
 
 function CiteProc:set_output_format(format)
