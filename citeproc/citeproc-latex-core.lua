@@ -75,7 +75,13 @@ local function read_data_file(data_file)
   local csl_items = nil
 
   if extension == ".json" then
-    csl_items = utilities.json.tolua(contents)
+    local status, res = pcall(utilities.json.tolua, contents)
+    if status and res then
+      csl_items = res
+    else
+      util.error(string.format('JSON decoding error in file "%s"', data_file))
+      csl_items = {}
+    end
   elseif extension == ".bib" then
     bibtex = bibtex or require("citeproc-bibtex")
     csl_items = bibtex.parse(contents)
