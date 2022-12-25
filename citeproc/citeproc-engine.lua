@@ -630,9 +630,116 @@ function CiteProc:get_sorted_refs()
 end
 
 function CiteProc:filter_with_bibsection(ids, bibsection)
+  if bibsection.quash then
+    return self:filter_quash(ids, bibsection)
+  elseif bibsection.select then
+    return self:filter_select(ids, bibsection)
+  elseif bibsection.include then
+    return self:filter_include(ids, bibsection)
+  elseif bibsection.exclude then
+    return self:filter_exclude(ids, bibsection)
+  else
+    return ids
+  end
+end
+
+function CiteProc:match_bibsection_object(item, bibsection_object)
+  local field = bibsection_object.field
+  local value = bibsection_object.value
+  -- util.debug(item.id)
+  -- util.debug(field)
+  -- util.debug(value)
+  -- util.debug(item[field])
+  local match = false
+  if value == "" then
+    if not item[field] or item[field] == "" then
+      match = true
+    end
+  else
+    if type(item[field]) == "table" then
+      if util.in_list(value, item[field]) then
+        match = true
+      end
+    elseif item[field] == value then
+      match = true
+    end
+  end
+  -- util.debug(match)
+  return match
+end
+
+function CiteProc:filter_select(ids, bibsection)
+  -- Include the item if, and only if, all of the objects match.
   local res = {}
   for _, id in ipairs(ids) do
-    table.insert(res, id)
+    local item = self.registry.registry[id]
+    local match = true
+    for _, bibsection_object in ipairs(bibsection.select) do
+      if not self:match_bibsection_object(item, bibsection_object) then
+        match = false
+        break
+      end
+    end
+    if match then
+      table.insert(res, id)
+    end
+  end
+  return res
+end
+
+function CiteProc:filter_include(ids, bibsection)
+  -- Include the item if any of the objects match.
+  local res = {}
+  for _, id in ipairs(ids) do
+    local item = self.registry.registry[id]
+    local match = false
+    for _, bibsection_object in ipairs(bibsection.include) do
+      if self:match_bibsection_object(item, bibsection_object) then
+        match = true
+        break
+      end
+    end
+    if match then
+      table.insert(res, id)
+    end
+  end
+  return res
+end
+
+function CiteProc:filter_exclude(ids, bibsection)
+  -- Include the item if none of the objects match.
+  local res = {}
+  for _, id in ipairs(ids) do
+    local item = self.registry.registry[id]
+    local match = false
+    for _, bibsection_object in ipairs(bibsection.exclude) do
+      if self:match_bibsection_object(item, bibsection_object) then
+        match = true
+        break
+      end
+    end
+    if not match then
+      table.insert(res, id)
+    end
+  end
+  return res
+end
+
+function CiteProc:filter_quash(ids, bibsection)
+  -- Skip the item if all of the objects match.
+  local res = {}
+  for _, id in ipairs(ids) do
+    local item = self.registry.registry[id]
+    local match = true
+    for _, bibsection_object in ipairs(bibsection.quash) do
+      if not self:match_bibsection_object(item, bibsection_object) then
+        match = false
+        break
+      end
+    end
+    if not match then
+      table.insert(res, id)
+    end
   end
   return res
 end
