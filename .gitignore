@@ -4,6 +4,7 @@ build/
 *-doc.pdf
 *-ctan/
 *.tds/
+ctan.ann
 example/example.pdf
 
 

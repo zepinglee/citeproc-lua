@@ -9,7 +9,7 @@ local citeproc = {}
 local engine = require("citeproc-engine")
 local util = require("citeproc-util")
 
-citeproc.__VERSION__ = "0.2.2"
+citeproc.__VERSION__ = "0.3.0"
 
 citeproc.new = engine.CiteProc.new
 citeproc.util = util
