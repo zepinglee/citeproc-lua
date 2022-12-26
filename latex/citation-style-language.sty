@@ -529,13 +529,12 @@
 \keys_define:nn { csl / bibliography }
   {
     type        .code:n = \__csl_add_filter_condition:nn { type } {#1} ,
-    nottype     .code:n = \__csl_add_filter_condition_negative:nn { type } {#1} ,
-    subtype     .code:n = \__csl_add_filter_condition:nn { subtype } {#1} ,
-    notsubtype  .code:n = \__csl_add_filter_condition_negative:nn { subtype } {#1} ,
+    nottype     .code:n = \__csl_add_filter_condition_negative:nn { type } {#1} , % subtype     .code:n = \__csl_add_filter_condition:nn { subtype } {#1} ,
+    % notsubtype  .code:n = \__csl_add_filter_condition_negative:nn { subtype } {#1} ,
     keyword     .code:n = \__csl_add_filter_condition:nn { keyword } {#1} ,
     notkeyword  .code:n = \__csl_add_filter_condition_negative:nn { keyword } {#1} ,
-    category    .code:n = \__csl_add_filter_condition:nn { category } {#1} ,
-    notcategory .code:n = \__csl_add_filter_condition_negative:nn { category } {#1} ,
+    category    .code:n = \__csl_add_filter_condition:nn { categories } {#1} ,
+    notcategory .code:n = \__csl_add_filter_condition_negative:nn { categories } {#1} ,
     % filter .tl_set:N = \l__csl_bibliography_nottype_tl ,
   }
 
@@ -547,7 +546,7 @@
     \seq_put_right:Nn \l__bibliography_filter_conditions_seq
       {
         {
-          field = #1,
+          field = #1 ,
           value = #2
         }
       }
@@ -568,18 +567,46 @@
 
 \NewDocumentCommand \printbibliography { O { } }
   {
+    % Set categories
+    \prop_if_empty:NF \l__csl_categories_prop
+      {
+        \tl_clear:N \l_tmpa_tl
+        \prop_map_inline:Nn \l__csl_categories_prop
+          {
+            \tl_if_empty:NF \l_tmpa_tl
+              { \tl_put_right:Nn \l_tmpa_tl { , } }
+            \tl_put_right:Nn \l_tmpa_tl { ##1 = {##2} }
+          }
+        \sys_if_engine_luatex:T
+          { \lua_now:e { csl.set_categories("\l_tmpa_tl") } }
+          {
+            \tl_put_left:Nx \l_tmpa_tl { categories = \c_left_brace_str }
+            \tl_put_right:NV \l_tmpa_tl \c_right_brace_str
+            \exp_args:NV \__csl_write_aux_options:n \l_tmpa_tl
+          }
+      }
+    % Bibliography filter
     \seq_clear:N \l__bibliography_filter_conditions_seq
     \keys_set:nn { csl / bibliography } {#1}
     \tl_clear:N \l__bibliography_filter_conditions_tl
     \seq_if_empty:NF \l__bibliography_filter_conditions_seq
       {
-        \tl_set:Nn \l__bibliography_filter_conditions_tl
+        \tl_set:Nx \l__bibliography_filter_conditions_tl
           { select = \c_left_brace_str }
         \tl_put_right:Nx \l__bibliography_filter_conditions_tl
           { \seq_use:Nn \l__bibliography_filter_conditions_seq { , } }
-        \tl_put_right:Nn \l__bibliography_filter_conditions_tl
+        \tl_put_right:NV \l__bibliography_filter_conditions_tl
           { \c_right_brace_str }
+        % Write to aux file
+        \sys_if_engine_luatex:F
+          {
+            \tl_set:Nx \l_tmpa_tl { bib-filter = \c_left_brace_str }
+            \tl_put_right:NV \l_tmpa_tl { \l__bibliography_filter_conditions_tl }
+            \tl_put_right:NV \l_tmpa_tl { \c_right_brace_str }
+            \exp_args:NV \__csl_write_aux_options:n \l_tmpa_tl
+          }
       }
+    % Collect the bibliography to token list
     \sys_if_engine_luatex:T
       {
         \bool_if:NT \l__csl_engine_initialized_bool
@@ -591,6 +618,7 @@
               }
           }
       }
+    % Print the bibliography
     \tl_if_empty:NTF \g__csl_bibliography_tl
       { \msg_warning:nn { citation-style-language } { bibliography / empty } }
       {
@@ -1233,6 +1261,36 @@
     \__csl_reset_bib_format:
   }
 
+
+% Bibliography Categories
+
+\prop_new:N \l__csl_categories_prop
+
+% \DeclareBibliographyCategory{⟨category⟩}
+\NewDocumentCommand \DeclareBibliographyCategory { m }
+  {
+    \prop_put:Nnn \l__csl_categories_prop { #1 } { }
+  }
+
+% \addtocategory{⟨category⟩}{⟨keys⟩}
+\NewDocumentCommand \addtocategory { m m }
+  {
+    \prop_get:NnNTF \l__csl_categories_prop {#1} \l_tmpa_tl
+      {
+        \tl_if_empty:NF \l_tmpa_tl
+          { \tl_put_right:Nn \l_tmpa_tl { , } }
+        \tl_put_right:Nn \l_tmpa_tl {#2}
+        \prop_put:NnV \l__csl_categories_prop {#1} \l_tmpa_tl
+      }
+      {
+        \msg_error:nnn { citation-style-language } { category-not-declared }
+          {#1}
+      }
+  }
+
+
+\msg_new:nnn { citation-style-language } { category-not-declared }
+  { Category~ '#1'~ not~ declared. }
 
 
 % Compatibilities with other packages

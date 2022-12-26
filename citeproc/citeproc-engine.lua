@@ -664,10 +664,10 @@ function CiteProc:match_bibsection_object(item, bibsection_object)
       match = true
     end
   end
-  -- util.debug(match)
   if bibsection_object.negative then
     match = not match
   end
+  -- util.debug(match)
   return match
 end
 

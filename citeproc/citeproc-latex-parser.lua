@@ -302,6 +302,9 @@ function latex_parser.parse_prop(str)
   local pair = C(key) * space * P"=" * space * value * (P(",") * space)^-1
   local prop = Cf(Ct"" * space * Cg(pair)^0, rawset)
 
+  if not str then
+    print(debug.traceback())
+  end
   return prop:match(str)
 end
 

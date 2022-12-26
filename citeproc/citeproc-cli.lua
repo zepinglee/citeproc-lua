@@ -13,6 +13,7 @@ local citeproc = require("citeproc")
 local bibtex  -- = require("citeproc-bibtex")  -- load on demand
 local util = require("citeproc-util")
 local core = require("citeproc-latex-core")
+local latex_parser = require("citeproc-latex-parser")
 
 
 local function getopt( arg, options )
@@ -97,6 +98,7 @@ local function read_aux_file(aux_file)
   end
   for line in file:lines() do
     local match
+    -- TODO: Use lpeg-based method and detect multiple lines
     match = string.match(line, "^\\bibstyle%s*(%b{})")
     if match then
       bib_style = string.sub(match, 2, -2)
@@ -114,7 +116,8 @@ local function read_aux_file(aux_file)
         else
           match = string.match(line, "^\\csloptions%s*(%b{})")
           if match then
-            for key, value in string.gmatch(match, "([%w-]+)=(%w+)") do
+            local options = latex_parser.parse_prop(string.sub(match, 2, -2))
+            for key, value in pairs(options) do
               csl_options[key] = value
             end
           end
@@ -138,7 +141,7 @@ local function process_aux_file(aux_file)
   local lang = csl_options.locale
 
   local engine = core.init(style_name, bib_files, lang)
-  if csl_options.linking == "true" then
+  if csl_options.linking then
     engine:enable_linking()
   end
   local style_class = engine:get_style_class()
@@ -164,8 +167,14 @@ local function process_aux_file(aux_file)
   end
 
   output_string = output_string .. "\n"
+  local categories_str = csl_options["categories"]
+  if categories_str then
+    core.set_categories(engine, categories_str)
+  end
 
-  local result = core.make_bibliography(engine)
+  local filter_str = csl_options["bib-filter"]
+
+  local result = core.make_bibliography(engine, filter_str)
   output_string = output_string .. result
 
   local output_path = string.gsub(aux_file, "%.aux$", ".bbl")

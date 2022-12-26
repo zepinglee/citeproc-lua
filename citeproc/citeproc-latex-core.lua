@@ -276,7 +276,7 @@ function core.update_cited_and_uncited_ids(engine, citations)
 end
 
 function core.parser_filter(filter_str)
-  util.debug(filter_str)
+  -- util.debug(filter_str)
   local filter = latex_parser.parse_prop(filter_str)
   for filter_type, conditions in pairs(filter) do
     conditions = latex_parser.parse_seq(conditions)
@@ -285,11 +285,14 @@ function core.parser_filter(filter_str)
       conditions[i] = latex_parser.parse_prop(condition)
     end
   end
-  util.debug(filter)
   return filter
 end
 
-function core.make_bibliography(engine, filter)
+function core.make_bibliography(engine, filter_str)
+  local filter
+  if filter_str then
+    filter = core.parser_filter(filter_str)
+  end
   local result = engine:makeBibliography(filter)
 
   local params = result[1]
@@ -342,6 +345,34 @@ function core.make_bibliography(engine, filter)
     res = res .. "\n" .. params.bibend
   end
   return res
+end
+
+
+function core.set_categories(engine, categories_str)
+  -- util.debug(categories_str)
+  local category_dict = latex_parser.parse_prop(categories_str)
+  for category, keys in pairs(category_dict) do
+    category_dict[category] = latex_parser.parse_seq(keys)
+  end
+  for category, keys in pairs(category_dict) do
+    for _, key in ipairs(keys) do
+      local item = engine.registry.registry[key]
+      if item then
+        if not item.categories then
+          item.categories = {}
+        end
+        if not util.in_list(category, item.categories) then
+          table.insert(item.categories, category)
+        end
+      else
+        util.error(string.format("Invalid citation key '%s'.", key))
+      end
+    end
+  end
+  -- for id, item in pairs(csl.engine.registry.registry) do
+  --   util.debug(id)
+  --   util.debug(item.categories)
+  -- end
 end
 
 

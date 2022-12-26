@@ -10,6 +10,7 @@ local citeproc = require("citeproc")
 local util = citeproc.util
 require("lualibs")
 local core = require("citeproc-latex-core")
+local latex_parser = require("citeproc-latex-parser")
 
 
 csl.initialized = "false"
@@ -147,14 +148,18 @@ function csl.bibliography(filter_str)
     return
   end
 
-  local filter = core.parser_filter(filter_str)
-
-  local result = core.make_bibliography(csl.engine, filter)
+  -- util.debug(filter)
+  local result = core.make_bibliography(csl.engine, filter_str)
   -- util.debug(result)
 
   -- token.set_macro("g__csl_bibliography_tl", result)
 
   tex.print(util.split(result, "\n"))
+end
+
+
+function csl.set_categories(categories_str)
+  core.set_categories(csl.engine, categories_str)
 end
 
 

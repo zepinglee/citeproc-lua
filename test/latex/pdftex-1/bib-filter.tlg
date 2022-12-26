@@ -4,11 +4,13 @@ Don't change this file in any respect.
 TEST 1: Citations
 ============================================================
 > 
-\l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2,ITEM-3,ITEM-4@1},citationItems={{id={ITEM-1}},{id={ITEM-2}},{id={ITEM-3}},{id={ITEM-4}}},properties={noteIndex={0}}.
+\l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2,ITEM-3,ITEM-4@1},citationItems={{id={ITEM-1}},{id={ITEM-2}},{id={ITEM-3}},{id={ITEM-4}}},properties={noteIndex={1}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=(Bennett, 2009; D’Arcus, 2005; Lamport, 1994; Mittelbach
-et al., 2004).
+Package citation-style-language Warning: Citation `ITEM-1, ITEM-2, ITEM-3,
+(citation-style-language)                ITEM-4' on page 1 undefined on line
+(citation-style-language)                136.
+> \l__csl_citation_tl=[\textbf {ITEM-1, ITEM-2, ITEM-3, ITEM-4}].
 <recently read> }
 l. ...}
 ============================================================
@@ -26,16 +28,8 @@ If that doesn't work, type X <return> to quit.
 ============================================================
 TEST 3: Bibliography with filter
 ============================================================
-The sequence \l__csl_bibliography_seq contains the items (without outer
-braces):
->  {\cslsetup { class = in-text, hanging-indent = true, line-spacing = 2,
-entry-spacing = 0, }}
->  {\begin {thebibliography}{}}
->  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of dissent:
-Protest and state power in the media age}. Routledge.}
->  {\end {thebibliography}}.
-<recently read> }
-l. ...}
+Package citation-style-language Warning: The bibliography is empty.
 ============================================================
 [1
 ] (bib-filter.aux)
+LaTeX Warning: There were undefined references.
