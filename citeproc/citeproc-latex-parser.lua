@@ -256,4 +256,54 @@ function latex_parser.convert_ast_to_rich_text(tokens)
   return res
 end
 
+
+function latex_parser.parse_seq(str)
+  local P = lpeg.P
+  local R = lpeg.R
+  local S = lpeg.S
+  local C = lpeg.C
+  local Cc = lpeg.Cc
+  local Cf = lpeg.Cf
+  local Cg = lpeg.Cg
+  local Cmt = lpeg.Cmt
+  local Cp = lpeg.Cp
+  local Ct = lpeg.Ct
+  local V = lpeg.V
+
+  local balanced = P{"{" * V(1) ^ 0 * "}" + (P"\\{" + P"\\}" + 1 - S"{}")}
+  local item = P"{" * C(balanced^0) * P"}" + C((balanced - P",")^1)
+  local seq = Ct((item * P(",")^-1)^0)
+
+  return seq:match(str)
+end
+
+function latex_parser.parse_prop(str)
+  local P = lpeg.P
+  local R = lpeg.R
+  local S = lpeg.S
+  local C = lpeg.C
+  local Cf = lpeg.Cf
+  local Cg = lpeg.Cg
+  local Ct = lpeg.Ct
+  local V = lpeg.V
+
+  local balanced = P{"{" * V(1)^0 * "}" + (P"\\{" + P"\\}" + 1 - S"{}")}
+  local key = (R"09" + R"AZ" + R"az" + S"-_./")^1
+  local value = (P"{" * C(balanced^0) * P"}" + C((balanced - S",=")^0)) / function (s)
+    if s == "true" then
+      return true
+    elseif s == "false" then
+      return false
+    else
+      return s
+    end
+  end
+  local space = S(" \t\r\n")^0
+  local pair = C(key) * space * P"=" * space * value * (P(",") * space)^-1
+  local prop = Cf(Ct"" * space * Cg(pair)^0, rawset)
+
+  return prop:match(str)
+end
+
+
 return latex_parser

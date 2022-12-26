@@ -665,6 +665,9 @@ function CiteProc:match_bibsection_object(item, bibsection_object)
     end
   end
   -- util.debug(match)
+  if bibsection_object.negative then
+    match = not match
+  end
   return match
 end
 

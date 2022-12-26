@@ -141,13 +141,15 @@ function csl.nocite(ids_string)
 end
 
 
-function csl.bibliography()
+function csl.bibliography(filter_str)
   if not csl.engine then
     util.error("CSL engine is not initialized.")
     return
   end
 
-  local result = core.make_bibliography(csl.engine)
+  local filter = core.parser_filter(filter_str)
+
+  local result = core.make_bibliography(csl.engine, filter)
   -- util.debug(result)
 
   -- token.set_macro("g__csl_bibliography_tl", result)

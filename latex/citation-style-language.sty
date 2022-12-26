@@ -526,13 +526,69 @@
 \cs_set_eq:NN \bibcite \__csl_bibcite:nn
 
 
+\keys_define:nn { csl / bibliography }
+  {
+    type        .code:n = \__csl_add_filter_condition:nn { type } {#1} ,
+    nottype     .code:n = \__csl_add_filter_condition_negative:nn { type } {#1} ,
+    subtype     .code:n = \__csl_add_filter_condition:nn { subtype } {#1} ,
+    notsubtype  .code:n = \__csl_add_filter_condition_negative:nn { subtype } {#1} ,
+    keyword     .code:n = \__csl_add_filter_condition:nn { keyword } {#1} ,
+    notkeyword  .code:n = \__csl_add_filter_condition_negative:nn { keyword } {#1} ,
+    category    .code:n = \__csl_add_filter_condition:nn { category } {#1} ,
+    notcategory .code:n = \__csl_add_filter_condition_negative:nn { category } {#1} ,
+    % filter .tl_set:N = \l__csl_bibliography_nottype_tl ,
+  }
+
+\seq_new:N \l__bibliography_filter_conditions_seq
+\tl_new:N \l__bibliography_filter_conditions_tl
+
+\cs_new:Npn \__csl_add_filter_condition:nn #1#2
+  {
+    \seq_put_right:Nn \l__bibliography_filter_conditions_seq
+      {
+        {
+          field = #1,
+          value = #2
+        }
+      }
+  }
+
+\cs_new:Npn \__csl_add_filter_condition_negative:nn #1#2
+  {
+    \seq_put_right:Nn \l__bibliography_filter_conditions_seq
+      {
+        {
+          field = #1,
+          value = #2,
+          negative = true
+        }
+      }
+  }
+
+
 \NewDocumentCommand \printbibliography { O { } }
   {
+    \seq_clear:N \l__bibliography_filter_conditions_seq
+    \keys_set:nn { csl / bibliography } {#1}
+    \tl_clear:N \l__bibliography_filter_conditions_tl
+    \seq_if_empty:NF \l__bibliography_filter_conditions_seq
+      {
+        \tl_set:Nn \l__bibliography_filter_conditions_tl
+          { select = \c_left_brace_str }
+        \tl_put_right:Nx \l__bibliography_filter_conditions_tl
+          { \seq_use:Nn \l__bibliography_filter_conditions_seq { , } }
+        \tl_put_right:Nn \l__bibliography_filter_conditions_tl
+          { \c_right_brace_str }
+      }
     \sys_if_engine_luatex:T
       {
         \bool_if:NT \l__csl_engine_initialized_bool
           {
-            \__csl_collect_bibliography:n { \lua_now:n { csl.bibliography() } }
+            \__csl_collect_bibliography:n
+              {
+                \lua_now:e
+                  { csl.bibliography("\l__bibliography_filter_conditions_tl") }
+              }
           }
       }
     \tl_if_empty:NTF \g__csl_bibliography_tl

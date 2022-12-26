@@ -1,3 +1,8 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\begin{filecontents}[overwrite, noheader]{\jobname.json}
 [
     {
         "id": "ITEM-1",
@@ -107,3 +112,28 @@
         "title": "The LaTeX companion"
     }
 ]
+\end{filecontents}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+\cslsetup{
+  regression-test = true,
+  style = apa,
+}
+\addbibresource{\jobname.json}
+
+
+\begin{document}
+
+\START
+
+\TEST{Citations}{
+  \cite{ITEM-1,ITEM-2,ITEM-3,ITEM-4}
+}
+
+\TEST{Bibliography with filter}{
+  \printbibliography[type = book, nottype = article-journal]
+}
+
+\end{document}

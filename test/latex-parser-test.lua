@@ -74,3 +74,38 @@ describe("Coverting LaTeX to CSL rich text", function()
   end)
 
 end)
+
+
+describe("Parsing simple LaTeX keys", function()
+
+  it("seq", function ()
+    local str = "{field=type,value=book},{field=type,value=article-journal,negative=true}"
+    local res = latex_parser.parse_seq(str)
+    local expected = {
+      "field=type,value=book",
+      "field=type,value=article-journal,negative=true"
+    }
+    assert.same(expected, res)
+  end)
+
+  it("prop", function ()
+    local str = "field=type,value=book,"
+    local res = latex_parser.parse_prop(str)
+    local expected = {
+      field = "type",
+      value = "book",
+    }
+    assert.same(expected, res)
+  end)
+
+  it("prop with braces", function ()
+    local str = "field={type},value=book"
+    local res = latex_parser.parse_prop(str)
+    local expected = {
+      field = "type",
+      value = "book",
+    }
+    assert.same(expected, res)
+  end)
+
+end)
