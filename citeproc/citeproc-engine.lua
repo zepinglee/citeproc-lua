@@ -660,6 +660,10 @@ function CiteProc:match_bibsection_object(item, bibsection_object)
       if util.in_list(value, item[field]) then
         match = true
       end
+    elseif field == "keyword" then
+      if item.keyword and util.in_list(value, util.split(item.keyword, "%s*[;,]%s*")) then
+        match = true
+      end
     elseif item[field] == value then
       match = true
     end
