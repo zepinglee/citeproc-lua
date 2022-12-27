@@ -17,7 +17,8 @@ braces):
 >  {\bibitem {ITEM-1} URL: \url {https://arxiv.org/abs/1702.01006}, DOI: \href
 {https://doi.org/10.1101/088278}{10.1101/088278}, URL of DOI: \url
 {https://doi.org/10.1101/088278}, PMID: \href
-{https://www.ncbi.nlm.nih.gov/pubmed/19204236}{19204236}, PMCID: PMC2653214}
+{https://www.ncbi.nlm.nih.gov/pubmed/19204236}{19204236}, PMCID: \href
+{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2653214}{PMC2653214}}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}

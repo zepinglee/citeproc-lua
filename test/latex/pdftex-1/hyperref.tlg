@@ -1,0 +1,25 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...\cite{ITEM-1}
+Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
+(citation-style-language)                on line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...\cite{ITEM-1}
+============================================================
+TEST 1: Bibliography
+============================================================
+Package citation-style-language Warning: The bibliography is empty.
+============================================================
+[1
+] (hyperref.aux)
+LaTeX Warning: There were undefined references.
+Package rerunfilecheck Warning: File `hyperref.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+Package rerunfilecheck Info: Checksums for `hyperref.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
