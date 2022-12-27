@@ -52,8 +52,8 @@ Completed box being shipped out [1]
 ....\write-{}
 ....\pdfdest name{Doc-Start} xyz
 ....\glue(\topskip) 1.85997
-....\hbox(8.14003+0.0)x345.0, glue set 303.51387fil
-.....\hbox(0.0+0.0)x15.0
+....\hbox(8.14003+0.0)x345.0, glue set 318.51387fil
+.....\hbox(0.0+0.0)x0.0
 .....\OT1/cmr/m/n/10 T
 .....\kern-0.83334
 .....\OT1/cmr/m/n/10 e
@@ -74,8 +74,8 @@ Completed box being shipped out [1]
 ....\glue(\parskip) 0.0 plus 1.0
 ....\glue(\parskip) 0.0
 ....\glue(\baselineskip) 5.05556
-....\hbox(6.94444+1.94443)x345.0, glue set 292.36101fil
-.....\hbox(0.0+0.0)x15.0
+....\hbox(6.94444+1.94443)x345.0, glue set 307.36101fil
+.....\hbox(0.0+0.0)x0.0
 .....\OT1/cmr/m/n/10 F
 .....\kern-0.83334
 .....\OT1/cmr/m/n/10 o
@@ -208,12 +208,9 @@ Completed box being shipped out [1]
 .....\glue(\rightskip) 0.0
 ....\glue -2.85002
 ....\glue 0.0 plus 0.0001fil
-...\glue(\baselineskip) 23.55556
-...\hbox(6.44444+0.0)x345.0
-....\hbox(6.44444+0.0)x345.0, glue set 170.0fil
-.....\glue 0.0 plus 1.0fil
-.....\OT1/cmr/m/n/10 1
-.....\glue 0.0 plus 1.0fil
+...\glue(\baselineskip) 30.0
+...\hbox(0.0+0.0)x345.0
+....\hbox(0.0+0.0)x345.0
 .\kern 0.0
 ============================================================
 ============================================================
@@ -443,12 +440,9 @@ Completed box being shipped out [2]
 ....\glue 0.0 plus 1.0fil
 ....\glue 0.0
 ....\glue 0.0 plus 0.0001fil
-...\glue(\baselineskip) 23.55556
-...\hbox(6.44444+0.0)x345.0
-....\hbox(6.44444+0.0)x345.0, glue set 170.0fil
-.....\glue 0.0 plus 1.0fil
-.....\OT1/cmr/m/n/10 2
-.....\glue 0.0 plus 1.0fil
+...\glue(\baselineskip) 30.0
+...\hbox(0.0+0.0)x345.0
+....\hbox(0.0+0.0)x345.0
 (issue-30.aux)
 Package rerunfilecheck Info: File `issue-30.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.

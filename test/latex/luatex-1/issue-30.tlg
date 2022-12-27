@@ -52,13 +52,13 @@ Completed box being shipped out [1]
 ....\write-{}
 ....\pdfdest name{Doc-Start} xyz
 ....\glue(\topskip) 1.72308
-....\hbox(8.27692+0.11)x345.0, glue set 303.52698fil, direction TLT
+....\hbox(8.27692+0.11)x345.0, glue set 318.52698fil, direction TLT
 .....\localpar
 ......\localinterlinepenalty=0
 ......\localbrokenpenalty=0
 ......\localleftbox=null
 ......\localrightbox=null
-.....\hbox(0.0+0.0)x15.0, direction TLT
+.....\hbox(0.0+0.0)x0.0, direction TLT
 .....\TU/lmr/m/n/10 T
 .....\kern-0.83 (font)
 .....\TU/lmr/m/n/10 e
@@ -80,13 +80,13 @@ Completed box being shipped out [1]
 ....\glue(\parskip) 0.0 plus 1.0
 ....\glue(\parskip) 0.0
 ....\glue(\baselineskip) 4.95
-....\hbox(6.94+1.94)x345.0, glue set 292.35999fil, direction TLT
+....\hbox(6.94+1.94)x345.0, glue set 307.35999fil, direction TLT
 .....\localpar
 ......\localinterlinepenalty=0
 ......\localbrokenpenalty=0
 ......\localleftbox=null
 ......\localrightbox=null
-.....\hbox(0.0+0.0)x15.0, direction TLT
+.....\hbox(0.0+0.0)x0.0, direction TLT
 .....\TU/lmr/m/n/10 F
 .....\kern-0.83 (font)
 .....\TU/lmr/m/n/10 o
@@ -225,12 +225,9 @@ Completed box being shipped out [1]
 .....\glue(\rightskip) 0.0
 ....\glue -2.85002
 ....\glue 0.0 plus 0.0001fil
-...\glue(\baselineskip) 23.34
-...\hbox(6.66+0.0)x345.0, direction TLT
-....\hbox(6.66+0.0)x345.0, glue set 170.0fil, direction TLT
-.....\glue 0.0 plus 1.0fil
-.....\TU/lmr/m/n/10 1
-.....\glue 0.0 plus 1.0fil
+...\glue(\baselineskip) 30.0
+...\hbox(0.0+0.0)x345.0, direction TLT
+....\hbox(0.0+0.0)x345.0, direction TLT
 .\kern0.0
 ============================================================
 ============================================================
@@ -472,12 +469,9 @@ Completed box being shipped out [2]
 ....\glue 0.0 plus 1.0fil
 ....\glue 0.0
 ....\glue 0.0 plus 0.0001fil
-...\glue(\baselineskip) 23.34
-...\hbox(6.66+0.0)x345.0, direction TLT
-....\hbox(6.66+0.0)x345.0, glue set 170.0fil, direction TLT
-.....\glue 0.0 plus 1.0fil
-.....\TU/lmr/m/n/10 2
-.....\glue 0.0 plus 1.0fil
+...\glue(\baselineskip) 30.0
+...\hbox(0.0+0.0)x345.0, direction TLT
+....\hbox(0.0+0.0)x345.0, direction TLT
 (issue-30.aux)
 Package rerunfilecheck Warning: File `issue-30.out' has changed.
 (rerunfilecheck)                Rerun to get outlines right

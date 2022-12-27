@@ -5,7 +5,6 @@
 \input{csl-test}
 
 \usepackage[french]{babel}
-
 \usepackage{citation-style-language}
 
 \cslsetup{
@@ -22,7 +21,6 @@
 \TEST{Babel locale}{
   \cite{ITEM-1}
 }
-
 
 \TEST{Bibliography}{
   \printbibliography

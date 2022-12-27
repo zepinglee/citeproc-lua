@@ -26,7 +26,10 @@
 ]
 \end{filecontents}
 
+\input{csl-test}
+
 \usepackage{citation-style-language}
+
 \cslsetup{
   regression-test = true,
   style = chicago-fullnote-bibliography,
@@ -50,7 +53,6 @@ Foo \#30  % bar
 \TEST{Citation page output}{
   \clearpage
 }
-
 
 \TEST{Bibliography with URL}{
   \printbibliography

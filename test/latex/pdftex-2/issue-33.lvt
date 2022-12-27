@@ -43,6 +43,7 @@
 \input{csl-test}
 
 \usepackage{citation-style-language}
+
 \cslsetup{
   regression-test = true,
   style = chicago-fullnote-bibliography,
@@ -50,6 +51,7 @@
 \addbibresource{\jobname.json}
 
 % \usepackage{hyperref}
+
 
 \begin{document}
 

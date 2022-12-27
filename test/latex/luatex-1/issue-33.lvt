@@ -58,7 +58,7 @@
 \START
 
 \TEST{LaTeX markup in prefix}{
-  test. \cite[prefix = {See the \textit{opposite} view in },
+  test.\cite[prefix = {See the \textit{opposite} view in },
   page = 1]{Williams1992-Heaven20}
 }
 

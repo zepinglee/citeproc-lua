@@ -18,10 +18,9 @@
 
 \START
 
-\TEST{Locale}{
+\TEST{Force locale}{
   \cite{ITEM-1}
 }
-
 
 \TEST{Bibliography}{
   \printbibliography

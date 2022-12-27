@@ -22,7 +22,6 @@
   \cite{ITEM-1}
 }
 
-
 \TEST{Bibliography}{
   \printbibliography
 }

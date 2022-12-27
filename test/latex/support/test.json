@@ -1,5 +1,7 @@
 [
     {
+        "id": "ITEM-1",
+        "type": "book",
         "author": [
             {
                 "family": "D’Arcus",
@@ -7,7 +9,6 @@
             }
         ],
         "citation-key": "ITEM-1",
-        "id": "ITEM-1",
         "issued": {
             "date-parts": [
                 [
@@ -19,10 +20,11 @@
         },
         "note": "The apostrophe in Bruce’s name appears in proper typeset form.",
         "publisher": "Routledge",
-        "title": "Boundaries of dissent: Protest and state power in the media age",
-        "type": "book"
+        "title": "Boundaries of dissent: Protest and state power in the media age"
     },
     {
+        "id": "ITEM-2",
+        "type": "article-journal",
         "author": [
             {
                 "family": "Bennett",
@@ -32,7 +34,6 @@
         ],
         "citation-key": "ITEM-2",
         "container-title": "Pac. Rim L. & Pol’y J.",
-        "id": "ITEM-2",
         "issued": {
             "date-parts": [
                 [
@@ -43,10 +44,11 @@
         },
         "page": "463-509",
         "title": "Getting property right: “informal” mortgages in the Japanese courts",
-        "type": "article-journal",
         "volume": "18"
     },
     {
+        "id": "ITEM-3",
+        "type": "book",
         "author": [
             {
                 "family": "Lamport",
@@ -55,7 +57,6 @@
         ],
         "citation-key": "ITEM-3",
         "edition": "2",
-        "id": "ITEM-3",
         "issued": {
             "date-parts": [
                 [
@@ -65,10 +66,11 @@
         },
         "publisher": "Addison-Wesley",
         "publisher-place": "Reading, MA, USA",
-        "title": "LaTeX: A document preparation system: User’s guide and reference manual",
-        "type": "book"
+        "title": "LaTeX: A document preparation system: User’s guide and reference manual"
     },
     {
+        "id": "ITEM-4",
+        "type": "book",
         "author": [
             {
                 "family": "Mittelbach",
@@ -93,7 +95,6 @@
         ],
         "citation-key": "ITEM-4",
         "edition": "2",
-        "id": "ITEM-4",
         "issued": {
             "date-parts": [
                 [
@@ -103,7 +104,6 @@
         },
         "publisher": "Addison-Wesley",
         "publisher-place": "Reading, MA, USA",
-        "title": "The LaTeX companion",
-        "type": "book"
+        "title": "The LaTeX companion"
     }
 ]
