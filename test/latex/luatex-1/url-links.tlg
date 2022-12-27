@@ -4,7 +4,7 @@ Don't change this file in any respect.
 \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...\cite{ITEM-1}
-> \l__csl_citation_tl=citation.
+> \l__csl_citation_tl=\cslcite {ITEM-1}{citation}.
 <recently read> }
 l. ...\cite{ITEM-1}
 ============================================================

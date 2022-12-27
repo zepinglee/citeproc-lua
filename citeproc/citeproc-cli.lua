@@ -162,7 +162,7 @@ local function process_aux_file(aux_file)
     local citation_id = citation.citationID
     if citation_id ~= "@nocite" then
       local citation_str = citation_strings[citation_id]
-      output_string = output_string .. string.format("\\cslcite{%s}{%s}\n", citation_id, citation_str)
+      output_string = output_string .. string.format("\\cslcitation{%s}{%s}\n", citation_id, citation_str)
     end
   end
 

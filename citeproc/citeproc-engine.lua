@@ -52,6 +52,7 @@ function CiteProc.new(sys, style, lang, force_lang)
   o.opt = {
     -- Similar to citeproc-js's development_extensions.wrap_url_and_doi
     wrap_url_and_doi = false,
+    citation_link = false,
     title_link = false,
   }
 
@@ -121,6 +122,11 @@ function CiteProc:updateItems(ids)
   self.cite_first_note_numbers = {}
   self.cite_last_note_numbers = {}
   self.note_citations_map = {}
+
+  for _, item in ipairs(self.registry.registry) do
+    item.year_suffix_number = nil
+    item["year-suffix"] = nil
+  end
 end
 
 function CiteProc:updateUncitedItems(uncited_ids)
@@ -169,7 +175,7 @@ end
 
 
 function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
-  -- util.debug(citation)
+  -- util.debug(citation.citationID)
   citation = self:normalize_citation_input(citation)
 
   -- Registor citation
@@ -761,10 +767,12 @@ end
 
 function CiteProc:enable_linking()
   self.opt.wrap_url_and_doi = true
+  self.opt.citation_link = true
 end
 
 function CiteProc:disable_linking()
   self.opt.wrap_url_and_doi = false
+  self.opt.citation_link = false
 end
 
 function CiteProc.create_element_tree(node)

@@ -7,8 +7,8 @@ TEST 1: Citation with URL
 \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=John Doe, \textit {Foo \#1 \& 20\% of Bar}, 2007, \url
-{https://abc.zyx/foo%20bar#baz}..
+> \l__csl_citation_tl=\cslcite {ITEM-1}{John Doe, \textit {Foo \#1 \& 20\% of
+Bar}, 2007, \url {https://abc.zyx/foo%20bar#baz}}..
 <recently read> }
 l. ...}
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -109,6 +109,7 @@ Completed box being shipped out [1]
 ......\hbox(0.0+0.0)x0.0, shifted -9.5
 .......\pdfdest name{Hfootnote.1} xyz
 .......\penalty 10000
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite.ITEM-1}
 .....\OT1/cmr/m/n/8 J
 .....\OT1/cmr/m/n/8 o
 .....\OT1/cmr/m/n/8 h
@@ -200,6 +201,7 @@ Completed box being shipped out [1]
 .....\OT1/cmtt/m/n/8 z
 .....\mathoff
 .....\pdfendlink
+.....\pdfendlink
 .....\OT1/cmr/m/n/8 .
 .....\penalty 10000
 .....\rule(0.0+2.85002)x0.0
@@ -279,6 +281,10 @@ Completed box being shipped out [2]
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0
 ....\penalty 10000
+....\glue 9.90276 plus 0.86108
+....\pdfdest name{cite.ITEM-1} xyz
+....\penalty 10000
+....\glue -9.90276 plus -0.86108
 ....\glue 9.90276 plus 0.86108
 ....\glue(\parskip) 0.0
 ....\glue(\parskip) 0.0

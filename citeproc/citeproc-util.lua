@@ -296,16 +296,16 @@ function util.strip (str)
 end
 
 function util.startswith(str, prefix)
-  if not str or type(str) ~= "string" then
-    print(debug.traceback())
-  end
+  -- if not str or type(str) ~= "string" then
+  --   print(debug.traceback())
+  -- end
   return string.sub(str, 1, #prefix) == prefix
 end
 
 function util.endswith(str, suffix)
-  if not str or type(str) ~= "string" then
-    print(debug.traceback())
-  end
+  -- if not str or type(str) ~= "string" then
+  --   print(debug.traceback())
+  -- end
   return string.sub(str, -#suffix) == suffix
 end
 

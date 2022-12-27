@@ -518,19 +518,14 @@
   }
 
 
-\cs_new:Npn \cslcite #1#2
-  {
-    % \if@filesw
-    %   \iow_now:Nn \@auxout { \bibcite {#1} {#2} }
-    % \fi
-    \bibcite {#1} {#2}
-  }
-
-
-\cs_new:Npn \__csl_bibcite:nn #1#2
+\cs_new:Npn \cslcitation #1#2
   { \prop_gput:Nnn \g__csl_citations_prop {#1} {#2} }
 
-\cs_set_eq:NN \bibcite \__csl_bibcite:nn
+
+% This command is for use with hyperref.
+% #1: cite id
+% #2: cite contents
+\cs_new:Npn \cslcite #1#2 {#2}
 
 
 \keys_define:nn { csl / bibliography }
@@ -920,7 +915,7 @@
 
 
 % Load .bbl at the beginning of document to save one pass of latex.
-% In this procedure, the \cslcite command is processed and the contents
+% In this procedure, the \cslcitation command is processed and the contents
 % of `thebibliography` is stored into \g__csl_bibliography_tl.
 \cs_new:Npn \__csl_load_bbl:
   {
@@ -1016,7 +1011,8 @@
 \cs_new:Npn \__csl_lbibitem:nn [#1]#2
   {
     \clist_gput_right:Nn \g__csl_bib_items_clist {#2}
-    \item [ \@biblabel {#1} \hfill ] \ignorespaces
+    \item [ \@biblabel {#1} \hfill ]
+    \ignorespaces
   }
 \cs_set_eq:NN \@lbibitem \__csl_lbibitem:nn
 
@@ -1026,7 +1022,8 @@
 \cs_new:Npn \__csl_bibitem:n #1
   {
     \clist_gput_right:Nn \g__csl_bib_items_clist {#1}
-    \item [ ] \ignorespaces
+    \item
+    \ignorespaces
   }
 \cs_set_eq:NN \@bibitem \__csl_bibitem:n
 
@@ -1304,7 +1301,6 @@
 
 % babel
 
-% The `babel` package redefines \bibcite in the \@begindocumenthook.
 % This should be disabled.
 \AtEndOfPackageFile* { babel }
   {
@@ -1315,8 +1311,8 @@
         \__csl_no_cite:n {#1}
         \@safe@activesfalse
       }
-    \cs_set_eq:NN \bibcite \__csl_bibcite:nn
     \cs_set_eq:NN \bbl@cite@choice \relax
+    \cs_set_eq:NN \@lbibitem \__csl_lbibitem:nn
     \cs_set_eq:NN \@bibitem \__csl_bibitem:n
   }
 
@@ -1339,10 +1335,32 @@
 % when used with csl.
 \AtEndOfPackageFile* { hyperref }
   {
-    \cs_set_eq:NN \bibcite \__csl_bibcite:nn
-    \cs_set_eq:NN \Hy@bibcite \bibcite
-    \cs_gset_eq:NN \@lbibitem \__csl_lbibitem:nn
-    \cs_gset_eq:NN \@bibitem \__csl_bibitem:n
+    \cs_gset_eq:NN \cslcite \__csl_hyperref_cite_item:nn
+    \cs_gset_eq:NN \@lbibitem \__csl_hyperref_lbibitem:nn
+    \cs_gset_eq:NN \@bibitem \__csl_hyperref_bibitem:n
+  }
+
+\cs_set:Npn \__csl_hyperref_cite_item:nn #1#2
+  { \hyper@@link [ cite ] { } { cite. #1 \@extra@b@citeb } { #2 } }
+
+\cs_new:Npn \__csl_hyperref_lbibitem:nn [#1]#2
+  {
+    \clist_gput_right:Nn \g__csl_bib_items_clist {#2}
+    \item [ \@biblabel {#1} \hfill ]
+    \ignorespaces
+  }
+
+\cs_new:Npn \__csl_hyperref_bibitem:n #1
+  {
+    \clist_gput_right:Nn \g__csl_bib_items_clist {#1}
+    \@skiphyperreftrue \H@item \@skiphyperreffalse
+    \Hy@raisedlink
+      {
+        \hyper@anchorstart
+        { cite. #1 \@extra@b@citeb } \relax
+        \hyper@anchorend
+      }
+    \ignorespaces
   }
 
 

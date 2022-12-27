@@ -20,6 +20,7 @@ local Micro = require("citeproc-output").Micro
 local Formatted = require("citeproc-output").Formatted
 local PlainText = require("citeproc-output").PlainText
 local InlineElement = require("citeproc-output").InlineElement
+local CiteInline = require("citeproc-output").CiteInline
 local DisamStringFormat = require("citeproc-output").DisamStringFormat
 local SortStringFormat = require("citeproc-output").SortStringFormat
 local util = require("citeproc-util")
@@ -190,9 +191,9 @@ function Citation:build_cluster(citation_items, engine, properties)
     local cite_prefix = citation_items[i].prefix
     local cite_suffix = citation_items[i].suffix
     if not ir.collapse_suppressed then
-      local ir_inlines = ir:flatten(output_format)
-      if #ir_inlines > 0 then
-        -- Make sure ir_inlines has outputs contents.
+      local cite_inlines = ir:flatten(output_format)
+      if #cite_inlines > 0 then
+        -- Make sure cite_inlines has outputs contents.
         -- collapse_AuthorCollapseNoDateSorted.txt
         if previous_ir then
           if previous_ir.own_delimiter then
@@ -212,8 +213,12 @@ function Citation:build_cluster(citation_items, engine, properties)
           table.insert(citation_stream, Micro:new(cite_prefix))
         end
 
-        -- util.debug(ir)
-        util.extend(citation_stream, ir_inlines)
+        -- util.debug(ir.cite_item.id)
+        -- util.debug(cite_inlines)
+        -- if context.engine.opt.citation_link then
+          cite_inlines = {CiteInline:new(cite_inlines, ir.cite_item)}
+        -- end
+        util.extend(citation_stream, cite_inlines)
         previous_ir = ir
 
         if cite_suffix then
@@ -222,6 +227,8 @@ function Citation:build_cluster(citation_items, engine, properties)
       end
     end
   end
+
+  -- util.debug(citation_stream)
 
   local has_printed_form = true
   if #citation_items == 0 then
@@ -232,7 +239,8 @@ function Citation:build_cluster(citation_items, engine, properties)
     -- date_DateNoDateNoTest.txt
     has_printed_form = false
     citation_stream = {PlainText:new("[CSL STYLE ERROR: reference with no printed form.]")}
-  elseif #citation_stream == 1 and citation_stream[1].value == "[NO_PRINTED_FORM]" then
+  elseif #citation_stream == 1 and citation_stream[1]._type == "CiteInline" and
+      #citation_stream[1].inlines == 1 and citation_stream[1].inlines[1].value == "[NO_PRINTED_FORM]" then
     has_printed_form = false
   end
 
@@ -317,10 +325,18 @@ end
 function Citation:build_fully_disambiguated_ir(cite_item, output_format, engine, properties)
   local cite_ir = self:build_ambiguous_ir(cite_item, output_format, engine)
   -- util.debug(cite_ir)
+  -- if cite_item.id == "ITEM-3" then
+  --   util.debug(cite_item.id)
+  --   util.debug(cite_ir)
+  -- end
   cite_ir = self:apply_disambiguate_add_givenname(cite_ir, engine)
   cite_ir = self:apply_disambiguate_add_names(cite_ir, engine)
   cite_ir = self:apply_disambiguate_conditionals(cite_ir, engine)
   cite_ir = self:apply_disambiguate_add_year_suffix(cite_ir, engine)
+  -- if cite_item.id == "ITEM-3" then
+  --   util.debug(cite_item.id)
+  --   util.debug(cite_ir)
+  -- end
 
   return cite_ir
 end
@@ -875,14 +891,25 @@ function Citation:check_ambiguity(cite_ir, engine)
   return false
 end
 
-function Citation:get_same_output_irs(cite_ir, engine)
-  local ambiguous_same_output_irs = {}
-  for _, ir_ in pairs(engine.cite_irs_by_output[cite_ir.disam_str]) do
-    if ir_.disam_str == cite_ir.disam_str then
-      table.insert(ambiguous_same_output_irs, ir_)
+function Citation:get_ambiguous_cite_irs(cite_ir, engine)
+  local res = {}
+  for _, ir in pairs(engine.cite_irs_by_output[cite_ir.disam_str]) do
+    if ir.cite_item.id ~= cite_ir.cite_item.id then
+      table.insert(res, ir)
     end
   end
-  return ambiguous_same_output_irs
+  return res
+end
+
+function Citation:get_ambiguous_same_output_cite_irs(cite_ir, engine)
+  -- This includes the cite_ir itself.
+  local res = {}
+  for _, ir in pairs(engine.cite_irs_by_output[cite_ir.disam_str]) do
+    if ir.disam_str == cite_ir.disam_str then
+      table.insert(res, ir)
+    end
+  end
+  return res
 end
 
 function Citation:apply_disambiguate_add_year_suffix(cite_ir, engine)
@@ -890,60 +917,63 @@ function Citation:apply_disambiguate_add_year_suffix(cite_ir, engine)
     return cite_ir
   end
 
-  local same_output_irs = self:get_same_output_irs(cite_ir, engine)
+  local ambiguous_same_output_irs = self:get_ambiguous_same_output_cite_irs(cite_ir, engine)
 
-  table.sort(same_output_irs, function (a, b)
+  table.sort(ambiguous_same_output_irs, function (a, b)
     -- return a.ir_index < b.ir_index
     return a.reference["citation-number"] < b.reference["citation-number"]
   end)
 
-  local year_suffix_number = 0
-  -- util.debug(cite_ir)
-
   local disam_format = DisamStringFormat:new()
 
-  for _, ir_ in ipairs(same_output_irs) do
+  for _, ir_ in ipairs(ambiguous_same_output_irs) do
     ir_.reference.year_suffix_number = nil
   end
 
-  for _, ir_ in ipairs(same_output_irs) do
-    -- print(ir_.cite_item.id)
-    -- print(ir_.reference)
+  -- TODO: clear year-suffix after updateItems
+  local year_suffix_number = 0
+  for _, ir_ in ipairs(ambiguous_same_output_irs) do
     if not ir_.reference.year_suffix_number then
       year_suffix_number = year_suffix_number + 1
       ir_.reference.year_suffix_number = year_suffix_number
       ir_.reference["year-suffix"] = self:render_year_suffix(year_suffix_number)
     end
+    -- util.debug(string.format('%s: %s "%s"', ir_.cite_item.id, tostring(ir_.reference.year_suffix_number), ir_.reference["year-suffix"]))
 
     if not ir_.year_suffix_irs then
       ir_.year_suffix_irs = ir_:collect_year_suffix_irs()
       if #ir_.year_suffix_irs == 0 then
-        -- By default, the year-suffix is appended the first year rendered through cs:date
+        -- The style does not have a "year-suffix" variable.
+        -- Then the year-suffix is appended the first year rendered through cs:date
         local year_ir = ir_:find_first_year_ir()
         -- util.debug(year_ir)
         if year_ir then
           local year_suffix_ir = YearSuffix:new({}, self)
           table.insert(year_ir.children, year_suffix_ir)
           table.insert(ir_.year_suffix_irs, year_suffix_ir)
+        else
+          util.warning("No date variable for year-suffix")
         end
       end
     end
 
+    -- Render all the year-suffix irs.
     for _, year_suffix_ir in ipairs(ir_.year_suffix_irs) do
-      year_suffix_ir.inlines = {PlainText:new(ir_.reference["year-suffix"])}
+      -- util.debug(ir_.reference["year-suffix"])
+      year_suffix_ir.inlines = { PlainText:new(ir_.reference["year-suffix"]) }
       year_suffix_ir.year_suffix_number = ir_.reference.year_suffix_number
       year_suffix_ir.group_var = "important"
     end
 
-    local inlines = ir_:flatten(disam_format)
-    local disam_str = disam_format:output(inlines, nil)
-    -- util.debug("update: " .. ir_.cite_item.id .. ": " .. disam_str)
-    ir_.disam_str = disam_str
-    if not engine.cite_irs_by_output[disam_str] then
-      engine.cite_irs_by_output[disam_str] = {}
-    end
-    engine.cite_irs_by_output[disam_str][ir_.ir_index] = ir_
-
+    -- DisamStringFormat doesn't render YearSuffix and this can be skipped.
+    -- local inlines = ir_:flatten(disam_format)
+    -- local disam_str = disam_format:output(inlines, nil)
+    -- util.debug(string.format('update %s: "%s" to "%s"', ir_.cite_item.id, ir_.disam_str, disam_str))
+    -- ir_.disam_str = disam_str
+    -- if not engine.cite_irs_by_output[disam_str] then
+    --   engine.cite_irs_by_output[disam_str] = {}
+    -- end
+    -- engine.cite_irs_by_output[disam_str][ir_.ir_index] = ir_
   end
 
   cite_ir.is_ambiguous = false

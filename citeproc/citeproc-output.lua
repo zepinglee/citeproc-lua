@@ -182,6 +182,17 @@ function Div:new(inlines, display)
 end
 
 
+local CiteInline = InlineElement:derive("CiteInline")
+
+function CiteInline:new(inlines, cite_item)
+  local o = InlineElement.new(self)
+  o.inlines = inlines
+  o.cite_item = cite_item
+  setmetatable(o, self)
+  return o
+end
+
+
 function InlineElement:parse(text, context)
   local text_type = type(text)
   local inlines
@@ -554,6 +565,17 @@ function InlineElement:capitalize_first_term()
   end
 end
 
+--[[
+Class inheritance hierarchical
+
+OutputFormat
+├── SortStringFormat
+├── DisamStringFormat
+└── Markup
+    ├── LatexWriter
+    ├── HtmlWriter
+    └── PlainTextWriter
+--]]
 
 local OutputFormat = {}
 
@@ -692,7 +714,7 @@ function OutputFormat:apply_text_case_inner(inlines, text_case, seen_one, is_upp
            (inline._type == "Formatted" and inline.formatting["vertical-align"] == "sub") then
       seen_one = seen_one or inline_contains_word(inline)
 
-    elseif inline._type == "Formatted" or inline._type == "Quoted" then
+    elseif inline._type == "Formatted" or inline._type == "Quoted" or inline._type == "CiteInline" then
       seen_one = self:apply_text_case_inner(inline.inlines, text_case, seen_one, is_uppercase) or seen_one
     end
   end
@@ -1136,7 +1158,8 @@ local function normalise_text_elements(inlines)
         idx = idx + 1
       end
 
-    elseif first._type == "Formatted" and second._type == "PlainText" then
+    elseif (first._type == "Formatted" or first._type == "CiteInline")
+        and second._type == "PlainText" then
       local success = smash_just_punc(first, second)
       if success then
         if second.value == "" then
@@ -1229,7 +1252,7 @@ function OutputFormat:move_punctuation(inlines, piq)
 
   for _, inline in ipairs(inlines) do
     if inline._type == "Quoted" or inline._type == "Formatted" or
-        inline._type == "Div" then
+        inline._type == "Div" or inline._type == "CiteInline" then
       self:move_punctuation(inline.inlines)
     end
   end
@@ -1245,9 +1268,9 @@ end
 
 function OutputFormat:write_inline(inline, context)
   if inline.value then
-    return self:write_escaped(inline.value)
+    return self:write_escaped(inline.value, context)
   elseif inline.inlines then
-    return self:write_inlines(inline.inlines)
+    return self:write_inlines(inline.inlines, context)
   end
   return ""
 end
@@ -1256,17 +1279,16 @@ function OutputFormat:write_escaped(str, context)
   return str
 end
 
-function OutputFormat:write_link(inline, context)
-  return self:write_escaped(inline.value)
-end
-
-
 
 local Markup = OutputFormat:new()
 
 function Markup:write_inline(inline, context)
-  -- Should be deprecated code
+  -- if not context then
+  --   print(debug.traceback())
+  --   error('stop')
+  -- end
   if type(inline) == "string" then
+    -- Should not happen
     return self:write_escaped(inline, context)
 
   elseif type(inline) == "table" then
@@ -1275,7 +1297,7 @@ function Markup:write_inline(inline, context)
       return self:write_escaped(inline.value, context)
 
     elseif inline._type == "InlineElement" then
-      return self:write_children(inline, context)
+      return self:write_inlines(inline.inlines, context)
 
     elseif inline._type == "Formatted" then
       return self:write_formatted(inline, context)
@@ -1289,41 +1311,52 @@ function Markup:write_inline(inline, context)
     elseif inline._type == "Linked" then
       return self:write_link(inline, context)
 
+    elseif inline._type == "CiteInline" then
+      return self:write_cite(inline, context)
+
     elseif inline._type == "Code" then
-      return self:write_code(inline.inlines)
+      return self:write_code(inline.inlines, context)
 
     elseif inline._type == "MathML" then
-      return self:write_mathml(inline.inlines)
+      return self:write_mathml(inline.inlines, context)
 
     elseif inline._type == "MathTeX" then
-      return self:write_math_tex(inline.inlines)
+      return self:write_math_tex(inline.inlines, context)
 
     elseif inline._type == "NoCase" or inline._type == "NoDecor" then
-      return self:write_inlines(inline.inlines)
+      return self:write_inlines(inline.inlines, context)
 
     else
-      return self:write_inlines(inline.inlines)
+      return self:write_inlines(inline.inlines, context)
     end
   end
   return ""
 end
 
-function Markup:write_children(inline, context)
-  local res = ""
-  for _, child_inline in ipairs(inline.inlines) do
-    res = res .. self:write_inline(child_inline, context)
-  end
-  return res
+function Markup:write_formatted(inline, context)
+  return self:write_inlines(inline.inlines, context)
 end
 
 function Markup:write_quoted(inline, context)
-  local res = self:write_children(inline, context)
+  local res = self:write_inlines(inline.inlines, context)
   local quotes = inline.quotes
   if inline.is_inner then
     return quotes.inner_open .. res .. quotes.inner_close
   else
     return quotes.outer_open .. res .. quotes.outer_close
   end
+end
+
+function Markup:write_display(inline, context)
+  return self:write_inlines(inline.inlines, context)
+end
+
+function Markup:write_link(inline, context)
+  return self:write_escaped(inline.value, context)
+end
+
+function Markup:write_cite(inline, context)
+  return self:write_inlines(inline.inlines, context)
 end
 
 
@@ -1383,7 +1416,7 @@ function LatexWriter:write_escaped(str, context)
 end
 
 function LatexWriter:write_formatted(inline, context)
-  local res = self:write_children(inline, context)
+  local res = self:write_inlines(inline.inlines, context)
   for _, key in ipairs({"font-style", "font-variant", "font-weight", "text-decoration", "vertical-align"}) do
     local value = inline.formatting[key]
     if value then
@@ -1400,7 +1433,7 @@ end
 function LatexWriter:write_display(inline, context)
   if inline.div == "left-margin" then
     local plainter_text_writer = output_module.PlainTextWriter:new()
-    local str = plainter_text_writer:write_inline(inline)
+    local str = plainter_text_writer:write_inline(inline, context)
     local len = utf8.len(str)
     if len > context.engine.registry.maxoffset then
       context.engine.registry.maxoffset = len
@@ -1408,7 +1441,7 @@ function LatexWriter:write_display(inline, context)
     end
   end
 
-  local res = self:write_children(inline, context)
+  local res = self:write_inlines(inline.inlines, context)
   if inline.div == "left-margin" then
     if string.match(res, "%]") then
       res = "{" .. res .. "}"
@@ -1433,6 +1466,14 @@ function LatexWriter:write_link(inline, context)
   else
     return self:write_escaped(inline.value, context)
   end
+end
+
+function LatexWriter:write_cite(inline, context)
+  local str = self:write_inlines(inline.inlines, context)
+  if context.engine.opt.citation_link then
+    str = string.format("\\cslcite{%s}{%s}", inline.cite_item.id, str)
+  end
+  return str
 end
 
 function LatexWriter:write_code(inline, context)
@@ -1486,7 +1527,7 @@ function HtmlWriter:write_escaped(str, context)
 end
 
 function HtmlWriter:write_formatted(inline, context)
-  local res = self:write_children(inline, context)
+  local res = self:write_inlines(inline.inlines, context)
   for _, key in ipairs({"font-style", "font-variant", "font-weight", "text-decoration", "vertical-align"}) do
     local value = inline.formatting[key]
     if value then
@@ -1503,7 +1544,7 @@ end
 function HtmlWriter:write_display(inline, context)
   if inline.div == "left-margin" then
     local plainter_text_writer = output_module.PlainTextWriter:new()
-    local str = plainter_text_writer:write_inline(inline)
+    local str = plainter_text_writer:write_inline(inline, context)
     local len = utf8.len(str)
     if len > context.engine.registry.maxoffset then
       context.engine.registry.maxoffset = len
@@ -1514,7 +1555,7 @@ function HtmlWriter:write_display(inline, context)
   if #inline.inlines == 0 then
     return ""
   end
-  local res = self:write_children(inline, context)
+  local res = self:write_inlines(inline.inlines, context)
   local key = string.format("@display/%s", inline.div)
   if inline.div == "right-inline" then
     -- Strip trailing spaces
@@ -1527,6 +1568,9 @@ function HtmlWriter:write_display(inline, context)
 end
 
 function HtmlWriter:write_link(inline, context)
+  -- if not context then
+  --   print(debug.traceback())
+  -- end
   local content = self:write_escaped(inline.value, context)
   if context.engine.opt.wrap_url_and_doi then
     local href = self:write_escaped(inline.href, context)
@@ -1558,14 +1602,15 @@ function PlainTextWriter:write_escaped(str, context)
 end
 
 function PlainTextWriter:write_formatted(inline, context)
-  return self:write_children(inline, context)
+  return self:write_inlines(inline.inlines, context)
 end
 
 function PlainTextWriter:write_display(inline, context)
-  return self:write_children(inline, context)
+  return self:write_inlines(inline.inlines, context)
 end
 
 
+-- Omit formatting and quotes
 local SortStringFormat = OutputFormat:new()
 
 function SortStringFormat:output(inlines, context)
@@ -1575,11 +1620,13 @@ function SortStringFormat:output(inlines, context)
 end
 
 function SortStringFormat:write_escaped(str, context)
+  -- sort_Quotes.txt
   str = string.gsub(str, ",", "")
   return str
 end
 
 
+-- Omit formatting and quotes
 local DisamStringFormat = OutputFormat:new()
 
 function DisamStringFormat:output(inlines, context)
@@ -1625,6 +1672,12 @@ function DisamStringFormat:flatten_seq_ir(ir)
   -- assert ir.quotes == localized quotes
   inlines = self:affixed_quoted(inlines, ir.affixes, ir.quotes);
   inlines = self:with_display(inlines, ir.display);
+
+  -- -- A citation layout
+  -- if ir._element == "layout" and ir.cite_item then
+  --   inlines = {CiteInline:new(inlines, ir.cite_item)}
+  -- end
+
   return inlines
 end
 
@@ -1711,6 +1764,7 @@ output_module.Micro = Micro
 output_module.Quoted = Quoted
 output_module.Linked = Linked
 output_module.Div = Div
+output_module.CiteInline = CiteInline
 output_module.NoCase = NoCase
 output_module.NoDecor = NoDecor
 

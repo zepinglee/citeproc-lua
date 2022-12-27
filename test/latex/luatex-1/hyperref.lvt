@@ -1,0 +1,39 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+
+\cslsetup{
+  regression-test = true,
+  style = apa,
+}
+\addbibresource{test.json}
+
+\usepackage{hyperref}
+
+
+\begin{document}
+
+\START
+\showoutput
+
+\TEST{Citation with hyperlink}{
+  \cite{ITEM-1, ITEM-2, ITEM-3, ITEM-4}
+}
+
+\TEST{Citation output}{
+  \clearpage
+}
+
+\TEST{Bibliography}{
+  \printbibliography
+}
+
+\TEST{Bibliography output}{
+  \clearpage
+}
+
+\end{document}
