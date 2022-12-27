@@ -1,0 +1,29 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+
+\cslsetup{
+  regression-test = true,
+  style = apa,
+}
+\addbibresource{test.json}
+
+
+\begin{document}
+
+\START
+
+\TEST{Unavailable item}{
+  \cite{ITEM-UNAVAILABLE}
+}
+
+\TEST{Empty citation}{
+  % https://github.com/latex3/latex2e/issues/790
+  \cite{}
+}
+
+\end{document}

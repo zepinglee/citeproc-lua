@@ -1,0 +1,27 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Unavailable item
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE@1},citationItems={{id={ITEM-UNAVAILABLE}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...}
+Package citation-style-language Warning: Citation `ITEM-UNAVAILABLE' on page 1
+(citation-style-language)                undefined on line ....
+> \l__csl_citation_tl=[\textbf {ITEM-UNAVAILABLE}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 2: Empty citation
+============================================================
+Package citation-style-language Warning: Citation `' on page 1 undefined on
+(citation-style-language)                line 27.
+> \l__csl_citation_tl=[\textbf {?}].
+<recently read> }
+l. ...}
+============================================================
+[1
+] (error-reports.aux)
+LaTeX Warning: There were undefined references.

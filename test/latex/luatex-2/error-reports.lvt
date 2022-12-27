@@ -10,19 +10,20 @@
   regression-test = true,
   style = apa,
 }
-\addbibresource{test.bib}
+\addbibresource{test.json}
 
 
 \begin{document}
 
 \START
 
-\TEST{Item unavailable}{
+\TEST{Unavailable item}{
   \cite{ITEM-UNAVAILABLE}
 }
 
-\TEST{Bibliography}{
-  \printbibliography
+\TEST{Empty citation}{
+  % https://github.com/latex3/latex2e/issues/790
+  \cite{}
 }
 
 \end{document}
