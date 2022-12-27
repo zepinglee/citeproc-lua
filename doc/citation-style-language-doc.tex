@@ -437,23 +437,48 @@ An error will be triggered if any of them is loaded together with \pkg{citation-
 
 
 
-\section{Known issues}
+\section{To-do list}
 
-The \pkg{citation-style-language} package is in early development stage and there are some issues with it.
+The \pkg{citation-style-language} package is in early development stage and
+some features may not work as expected.
+Bug report are welcome at the GitHub issue tracker
+\footnote{\url{https://github.com/zepinglee/citeproc-lua/issues}}.
+The following is a list of features to be implemented.
+If you need any of them or new features, please post a issue to let me know
+so that I can give it a priority.
 
 \begin{itemize}
-  \item The \pkg{citeproc-lua} has not implemented all the features of CSL.
-    For detailed information of the coverage on the CSL standard test
-    suite\footnote{\url{https://github.com/citation-style-language/test-suite}},
-    see \href{https://github.com/zepinglee/citeproc-lua/blob/main/test/citeproc-test.log}{citeproc-test.log}
-    in the GitHub repository.
-  \item When used with \pkg{hyperref}, the citations are not correctly rendered
-    as hyperlinks.
+  \item The \pkg{citeproc-lua} engine has not passed all the fixures from the
+    CSL standard test-suite. The skipped fixtures are lists in
+    \href{https://github.com/zepinglee/citeproc-lua/blob/main/test/citeproc-test-skip.txt}{citeproc-test-skip.txt}
+    and they need to be handled (though less than 6\% of test-suite).
+
   \item The Unicode sorting method is provided by \pkg{lua-uca} package and
     CJK scripts are not supported so far.
+
+  \item Citation commands that capitalize the first letter (\cs{Cite},
+    \cs{Textcite}, etc.).
+
+  \item Back references: page numbers of the citations appears after the entry
+    item in bibliography (even without the hyperref).
+
+  \item \cs{footcite} command.
+
+  \item \cs{cite} in a footnote should work as in-text citations (similar to
+    \cs{smartcite}).
+
+  \item CSL-YAML support.
+
+  \item Multiple bibliographies in a document like \pkg{chapterbib} package or
+    \texttt{refsection} and \texttt{refsegment} options in \pkg{biblatex}.
+
+  \item Journal abbreviation.
+
+  \item Sentences case conversion: the title and booktitle fields in BibTeX
+    database are converted to sentences case if they are in title case.
+
+  \item Distinguish dropping and non-dropping particles in names.
 \end{itemize}
-
-
 
 
 \end{documentation}
