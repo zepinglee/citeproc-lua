@@ -15,11 +15,11 @@ TEST 1: Bibliography
 Package citation-style-language Warning: The bibliography is empty.
 ============================================================
 [1
-] (hyperref.aux)
+] (url-links.aux)
 LaTeX Warning: There were undefined references.
-Package rerunfilecheck Warning: File `hyperref.out' has changed.
+Package rerunfilecheck Warning: File `url-links.out' has changed.
 (rerunfilecheck)                Rerun to get outlines right
 (rerunfilecheck)                or use package `bookmark'.
-Package rerunfilecheck Info: Checksums for `hyperref.out':
+Package rerunfilecheck Info: Checksums for `url-links.out':
 (rerunfilecheck)             Before: <no file>
 (rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
