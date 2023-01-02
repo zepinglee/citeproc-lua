@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add hyperlinks to citations when `hyperref` is loaded.
+- Add backref.
 
 ### Fixed
 

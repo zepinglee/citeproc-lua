@@ -18,21 +18,18 @@
 
 % Check incompatible packages
 \msg_new:nnn { citation-style-language } { incompatible-package }
-  { The~ `#1'~ package~ is~ incompatible~ with~ `citeproc'. }
+  { The~ `#1'~ package~ is~ incompatible~ with~ `citation-style-language'. }
 
-\cs_new_protected:Npn \__csl_load_check:n #1
-  {
-    \AtBeginOfPackageFile* {#1}
-      { \msg_error:nnn { citation-style-language } { incompatible-package } {#1} }
-  }
-
-\clist_map_function:nN
+\clist_map_inline:nn
   {
     babelbib , backref , biblatex , bibtopic , bibunits , chapterbib ,
     cite , citeref , inlinebib , jurabib , mcite , mciteplus ,
     multibib , natbib , splitbib
   }
-  \__csl_load_check:n
+  {
+    \AtBeginOfPackageFile* {#1}
+      { \msg_error:nnn { citation-style-language } { incompatible-package } {#1} }
+  }
 
 
 % Check l3build regression-test
@@ -284,6 +281,46 @@
     \__csl_process_citation_id:NN \l__csl_citation_id_tl #1
     \__csl_get_note_index:N \l__csl_note_index_tl
     \prop_put:NnV \l__csl_citation_properties_prop { noteIndex } \l__csl_note_index_tl
+    \__csl_add_back_ref_info:
+  }
+
+
+\tl_new:N \l__csl_back_ref_tl
+\prop_new:N \g__csl_back_ref_info_prop
+\prop_new:N \l__csl_back_ref_section_pop
+
+% Provide empty \@currentHref when hyperref is not loaded.
+\cs_new:Npn \@currentHref {}
+
+% TODO: write backref info to .brf file or .aux file
+\cs_new:Npn \__csl_add_back_ref_info:
+  {
+    % Same as the second argument of backref's \backcite
+    % \thepage: the page number
+    % \@currentlabel: the current label of the citation
+    % \@currentHref: the current anchor name
+    \tl_if_empty:NTF \@currentlabel
+      {
+        \tl_set:Nx \l__csl_back_ref_tl
+          { { \thepage } { (document) } { Doc-Start } }
+      }
+      {
+        \tl_set:Nx \l__csl_back_ref_tl
+          { { \thepage } { \@currentlabel } { \@currentHref } }
+      }
+    \seq_map_inline:Nn \l__csl_cite_keys_seq
+      {
+        \prop_get:NnNTF \g__csl_back_ref_info_prop {##1} \l_tmpa_tl
+          {
+            \tl_put_right:Nn \l_tmpa_tl { , }
+            \tl_put_right:NV \l_tmpa_tl \l__csl_back_ref_tl
+            \prop_gput:NnV \g__csl_back_ref_info_prop {##1} \l_tmpa_tl
+          }
+          {
+            \prop_gput:NnV \g__csl_back_ref_info_prop {##1}
+              \l__csl_back_ref_tl
+          }
+      }
   }
 
 
@@ -641,15 +678,21 @@
 \tl_new:N \l__csl_class_tl
 \bool_new:N \l__csl_note_bool
 \clist_new:N \l__csl_bib_resources_clist
+\tl_new:N \l__csl_locale_tl
+\bool_new:N \l__csl_back_ref_bool
+\str_new:N \l__csl_back_ref_type_str
+% Citation formatting
 \tl_new:N \l__csl_prefix_separator_tl
 \tl_new:N \l__csl_suffix_separator_tl
-\tl_new:N \l__csl_locale_tl
+% Bibliography formatting
 \tl_new:N \l__csl_bib_font_tl
 \tl_new:N \l__csl_bib_item_sep_tl
 \tl_new:N \l__csl_bib_hang_tl
 \bool_new:N \l__csl_hanging_indent_bool
 \tl_new:N \l__csl_line_spacing_tl
 \tl_new:N \l__csl_entry_spacing_tl
+
+\tl_set:Nn \l__csl_back_ref_type_str { page }
 
 
 \keys_define:nn { csl }
@@ -662,9 +705,14 @@
         \tl_if_eq:NnT \l__csl_class_tl { note }
           { \bool_set_true:N \l__csl_note_bool }
       } ,
+    locale .tl_set:N = \l__csl_locale_tl ,
+    backref .choices:nn =
+      { true, page, section, false }
+      { \exp_args:NV \__csl_set_back_ref:n \l_keys_choice_tl } ,
+    % Citation formatting
     prefix-separator .tl_set:N = \l__csl_prefix_separator_tl ,
     suffix-separator .tl_set:N = \l__csl_suffix_separator_tl ,
-    locale .tl_set:N = \l__csl_locale_tl ,
+    % Bibliography formatting
     bib-font .tl_set:N = \l__csl_bib_font_tl ,
     bib-item-sep .tl_set:N = \l__csl_bib_item_sep_tl ,
     bib-hang .tl_set:N = \l__csl_bib_hang_tl ,
@@ -681,6 +729,7 @@
     line-spacing = { 1 } ,
     entry-spacing = { 1 } ,
   }
+
 
 \ProcessKeysPackageOptions { csl }
 
@@ -1002,30 +1051,127 @@
 
 % Used for debugging and testing
 \clist_new:N \g__csl_bib_items_clist
+% Backref
+\bool_set_false:N \l__csl_back_ref_bool
 
 % For numeric or label-style bibliography
 % \def\@lbibitem[#1]#2{\item[\@biblabel{#1}\hfill]\if@filesw
 %       {\let\protect\noexpand
 %        \immediate
 %        \write\@auxout{\string\bibcite{#2}{#1}}}\fi\ignorespaces}
-\cs_new:Npn \__csl_lbibitem:nn [#1]#2
+\cs_new:Npn \__csl_lbibitem_plain:nn [#1]#2
   {
     \clist_gput_right:Nn \g__csl_bib_items_clist {#2}
     \item [ \@biblabel {#1} \hfill ]
     \ignorespaces
   }
-\cs_set_eq:NN \@lbibitem \__csl_lbibitem:nn
+
+\cs_new:Npn \__csl_lbibitem_back_ref:nnn [#1]#2#3\par
+  {
+    \__csl_lbibitem_plain:nn [#1] {#2}
+    #3
+    \prop_get:NnNT \g__csl_back_ref_info_prop {#2} \l_tmpa_tl
+      {
+        \c_space_tl
+        \exp_args:NV \__csl_print_back_refs:n \l_tmpa_tl
+      }
+    \par
+  }
+
+\cs_new:Npn \__csl_print_back_refs:n #1
+  % #1: list of {<page>}{<label>}{anchor}
+  {
+    \clist_set:Nn \l_tmpa_clist {#1}
+    % To remove duplicates
+    \prop_clear:N \l_tmpa_prop
+    % Output seq
+    \seq_clear:N \l_tmpa_seq
+    \clist_map_inline:Nn \l_tmpa_clist { \__csl_print_back_ref_aux:nnn ##1 }
+    \backref { \seq_use:Nn \l_tmpa_seq { ,~ } }
+  }
+
+\cs_new:Npn \__csl_print_back_ref_aux:nnn #1#2#3
+  {
+    \str_if_eq:VnTF \l__csl_back_ref_type_str { page }
+      {
+        \prop_if_in:NnF \l_tmpa_prop {#1}
+          {
+            \bool_if:NTF \l__csl_hyperref_loaded_bool
+              { \seq_put_right:Nn \l_tmpa_seq { \hyperlink { page. #1 } {#1} } }
+              { \seq_put_right:Nn \l_tmpa_seq {#1} }
+            \prop_put:Nnn \l_tmpa_prop {#1} {#1}
+          }
+      }
+      {
+        % section
+        \prop_if_in:NnF \l_tmpa_prop {#2}
+          {
+            \bool_if:NTF \l__csl_hyperref_loaded_bool
+              { \seq_put_right:Nn \l_tmpa_seq { \hyperlink {#3} {#2} } }
+              { \seq_put_right:Nn \l_tmpa_seq {#2} }
+            \prop_put:Nnn \l_tmpa_prop {#2} {#2}
+          }
+      }
+  }
+
+% Hook
+\cs_new:Npn \backref #1 {#1}
+
+\cs_new:Npn \__csl_lbibitem:
+  {
+    \bool_if:NTF \l__csl_back_ref_bool
+      { \__csl_lbibitem_back_ref:nnn }
+      { \__csl_lbibitem_plain:nn }
+  }
+
+\cs_set_eq:NN \@lbibitem \__csl_lbibitem:
+
 
 % For author-date bibliography
 % \def\@bibitem#1{\item\if@filesw \immediate\write\@auxout
 %        {\string\bibcite{#1}{\the\value{\@listctr}}}\fi\ignorespaces}
-\cs_new:Npn \__csl_bibitem:n #1
+\cs_new:Npn \__csl_bibitem:
+  {
+    \bool_if:NTF \l__csl_back_ref_bool
+      { \__csl_bibitem_back_ref:nn }
+      { \__csl_bibitem_plain:n }
+  }
+
+\cs_set_eq:NN \@bibitem \__csl_bibitem:
+
+\cs_new:Npn \__csl_bibitem_plain:n #1
   {
     \clist_gput_right:Nn \g__csl_bib_items_clist {#1}
     \item
     \ignorespaces
   }
-\cs_set_eq:NN \@bibitem \__csl_bibitem:n
+
+\cs_new:Npn \__csl_bibitem_back_ref:nn #1#2\par
+  {
+    \__csl_bibitem_plain:n {#1}
+    #2
+    % \prop_show:N \g__csl_back_ref_info_prop
+    \prop_get:NnNT \g__csl_back_ref_info_prop {#1} \l_tmpa_tl
+      {
+        \c_space_tl
+        \exp_args:NV \__csl_print_back_refs:n \l_tmpa_tl
+      }
+    \par
+  }
+
+\cs_new:Npn \__csl_set_back_ref:n #1
+  {
+    \str_if_eq:nnTF {#1} {false}
+      {
+        \bool_set_false:N \l__csl_back_ref_bool
+      }
+      {
+        \bool_set_true:N \l__csl_back_ref_bool
+        \str_if_eq:nnTF {#1} {true}
+          { \str_set:Nn \l__csl_back_ref_type_str { page } }
+          { \str_set:Nn \l__csl_back_ref_type_str {#1} }
+      }
+  }
 
 
 % CSL outputs the whole label thus the brackets are removed from \@biblabel
@@ -1312,8 +1458,8 @@
         \@safe@activesfalse
       }
     \cs_set_eq:NN \bbl@cite@choice \relax
-    \cs_set_eq:NN \@lbibitem \__csl_lbibitem:nn
-    \cs_set_eq:NN \@bibitem \__csl_bibitem:n
+    \cs_set_eq:NN \@lbibitem \__csl_lbibitem_plain:nn
+    \cs_set_eq:NN \@bibitem \__csl_bibitem_plain:n
   }
 
 
@@ -1333,11 +1479,17 @@
 
 % The hyperref package also patches \bibcite but it cannot provide hyperlinks
 % when used with csl.
+\bool_new:N \l__csl_hyperref_loaded_bool
 \AtEndOfPackageFile* { hyperref }
   {
+    \bool_set_true:N \l__csl_hyperref_loaded_bool
+    % Pakcage "hyperref" redefines \@lbibitem and \bibitem and we need to
+    % recover them.
+    \cs_gset_eq:NN \@lbibitem \__csl_lbibitem:
+    \cs_gset_eq:NN \@bibitem \__csl_bibitem:
+    \cs_gset_eq:NN \__csl_lbibitem_plain:nn \__csl_hyperref_lbibitem:nn
+    \cs_gset_eq:NN \__csl_bibitem_plain:n \__csl_hyperref_bibitem:n
     \cs_gset_eq:NN \cslcite \__csl_hyperref_cite_item:nn
-    \cs_gset_eq:NN \@lbibitem \__csl_hyperref_lbibitem:nn
-    \cs_gset_eq:NN \@bibitem \__csl_hyperref_bibitem:n
   }
 
 \cs_set:Npn \__csl_hyperref_cite_item:nn #1#2
@@ -1346,7 +1498,21 @@
 \cs_new:Npn \__csl_hyperref_lbibitem:nn [#1]#2
   {
     \clist_gput_right:Nn \g__csl_bib_items_clist {#2}
-    \item [ \@biblabel {#1} \hfill ]
+    \@skiphyperreftrue
+    \H@item[%
+      \ifx\Hy@raisedlink\@empty
+        \hyper@anchorstart{cite.#2\@extra@b@citeb}%
+          \@BIBLABEL{#1}%
+        \hyper@anchorend
+      \else
+        \Hy@raisedlink{%
+          \hyper@anchorstart{cite.#2\@extra@b@citeb}\hyper@anchorend
+        }%
+        \@BIBLABEL{#1}%
+      \fi
+      \hfill
+    ]%
+    \@skiphyperreffalse
     \ignorespaces
   }
 

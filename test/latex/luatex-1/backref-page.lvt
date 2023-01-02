@@ -1,0 +1,49 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+
+\cslsetup{
+  regression-test = true,
+  style = apa,
+  backref = page,
+}
+\addbibresource{test.json}
+
+\usepackage{hyperref}
+
+
+\begin{document}
+
+\START
+\showoutput
+\OMIT
+
+\section{Foo}
+\cite{ITEM-1}
+
+\section{Bar}
+\cite{ITEM-1, ITEM-2}
+\clearpage
+
+\section{Bar}
+\cite{ITEM-3, ITEM-1}
+
+\section{Baz}
+\cite{ITEM-2, ITEM-4}\par
+\clearpage
+
+\TIMO
+
+\TEST{Bibliography contents}{
+  \printbibliography
+}
+
+\TEST{Bibliography format}{
+  \clearpage
+}
+
+\end{document}
