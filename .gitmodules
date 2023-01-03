@@ -5,6 +5,12 @@
 	path = locales
 	url = https://github.com/zepinglee/csl-locales.git
 	branch = ctan
+[submodule "submodules/abbreviations"]
+	path = submodules/abbreviations
+	url = https://github.com/citation-style-language/abbreviations.git
+[submodule "submodules/jabref-abbrv"]
+	path = submodules/jabref-abbrv
+	url = https://github.com/JabRef/abbrv.jabref.org.git
 [submodule "test/test-suite"]
 	path = test/test-suite
 	url = https://github.com/citation-style-language/test-suite.git

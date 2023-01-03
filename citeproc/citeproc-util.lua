@@ -4,12 +4,13 @@
 -- Repository: https://github.com/zepinglee/citeproc-lua
 --
 
+local util = {}
+
 -- load `slnunicode` from LuaTeX
 local unicode = require("unicode")
 local inspect  -- only load it when debugging
+local journal_data = nil  -- load as needed
 
-
-local util = {}
 
 -- Deep copy
 function util.deep_copy(obj)
@@ -1036,6 +1037,26 @@ function util.parse_extra_name(str)
     name = {literal = str}
   end
   return name
+end
+
+
+function util.check_journal_abbreviations(item)
+  if item["container-title"] and not item["container-title-short"] then
+    if not journal_data then
+      journal_data = require("citeproc-journal-data")
+    end
+    local key = unicode.utf8.upper(string.gsub(item["container-title"], "%.", ""))
+    local full = journal_data.unabbrevs[key]
+    if full then
+      item["container-title-short"] = item["container-title"]
+      item["container-title"] = full
+    else
+      local abbr = journal_data.abbrevs[key]
+      if abbr then
+        item["container-title-short"] = abbr
+      end
+    end
+  end
 end
 
 

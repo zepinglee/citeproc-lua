@@ -78,6 +78,13 @@ local function read_data_file(data_file)
     local status, res = pcall(utilities.json.tolua, contents)
     if status and res then
       csl_items = res
+      for _, item in ipairs(csl_items) do
+        -- Jounal abbreviations
+        if item.type == "article-journal" or item.type == "article-magazine"
+            or item.type == "article-newspaper" then
+          util.check_journal_abbreviations(item)
+        end
+      end
     else
       util.error(string.format('JSON decoding error in file "%s"', data_file))
       csl_items = {}

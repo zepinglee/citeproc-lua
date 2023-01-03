@@ -689,9 +689,16 @@ function bibtex.process_special_fields(item, bib_fields)
   --   end
   -- end
 
+  -- Jounal abbreviations
+  if item.type == "article-journal" or item.type == "article-magazine"
+      or item.type == "article-newspaper" then
+    util.check_journal_abbreviations(item)
+  end
+
   -- number
   if item.number then
-    if item.type == "article-journal" or item.type == "article-magazine" or item.type == "article-newspaper" or item.type == "periodical" then
+    if item.type == "article-journal" or item.type == "article-magazine" or
+        item.type == "article-newspaper" or item.type == "periodical" then
       if not item.issue then
         item.issue = item.number
         item.number = nil

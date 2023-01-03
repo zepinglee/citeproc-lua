@@ -686,7 +686,7 @@ describe("Full BibTeX to CSL-JSON conversion", function ()
   it("full entry", function ()
     local contents = [[
       @article{key,
-        author = {von Last, First and von Last, First, Jr},
+        author = {von Last, First and von Last, Jr, First},
         editor = {First de la Last and First de la Von Last},
         title = {One ``two'' “three” `four' ‘five’},
         date = {1999-01-01/2000-12-11},
@@ -697,6 +697,8 @@ describe("Full BibTeX to CSL-JSON conversion", function ()
     local res = bibtex.parse(contents)
     local expected = {
       {
+        id = "key",
+        type = "article-journal",
         author = {
           {
             family = "Last",
@@ -704,9 +706,9 @@ describe("Full BibTeX to CSL-JSON conversion", function ()
             ["non-dropping-particle"] = "von"
           }, {
             family = "Last",
-            given = "Jr",
+            given = "First",
             ["non-dropping-particle"] = "von",
-            suffix = "First"
+            suffix = "Jr"
           }
         },
         editor = {
@@ -720,14 +722,57 @@ describe("Full BibTeX to CSL-JSON conversion", function ()
             ["non-dropping-particle"] = "de la"
           }
         },
-        id = "key",
         issued = {
           ["date-parts"] = { { 1999, 1, 1 }, { 2000, 12, 11 } }
         },
         title = "One “two” “three” ‘four’ ‘five’",
-        type = "article-journal"
       }
     }
+    assert.same(expected, res)
+  end)
+
+  it("Journal abbreviation", function()
+    local contents = [[
+      @article{PhysRevLett.129.274801,
+        title = {Accelerating Ions by Crossing Two Ultraintense Lasers in a Near-Critical Relativistically Transparent Plasma},
+        author = {Liu, Bin and Shi, Mingyuan and Zepf, Matt and Lei, Bifeng and Seipt, Daniel},
+        journal = {Phys. Rev. Lett.},
+        volume = {129},
+        issue = {27},
+        pages = {274801},
+        year = {2022},
+      }
+    ]]
+    local res = bibtex.parse(contents)
+    local expected = { {
+      id = "PhysRevLett.129.274801",
+      type = "article-journal",
+      author = { {
+        family = "Liu",
+        given = "Bin"
+      }, {
+        family = "Shi",
+        given = "Mingyuan"
+      }, {
+        family = "Zepf",
+        given = "Matt"
+      }, {
+        family = "Lei",
+        given = "Bifeng"
+      }, {
+        family = "Seipt",
+        given = "Daniel"
+      } },
+      ["container-title"] = "Physical Review Letters",
+      ["container-title-short"] = "Phys. Rev. Lett.",
+      issue = "27",
+      issued = {
+        ["date-parts"] = { { 2022 } }
+      },
+      page = "274801",
+      title = "Accelerating Ions by Crossing Two Ultraintense Lasers in a Near-Critical Relativistically Transparent Plasma",
+      volume = "129"
+    } }
     assert.same(expected, res)
   end)
 
