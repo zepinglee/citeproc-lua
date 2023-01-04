@@ -1,6 +1,6 @@
 ---@diagnostic disable: lowercase-global
 
-testfiledir = "./test/latex/pdftex-2"
+testfiledir = "./tests/latex/pdftex-2"
 
 checkengines = {"pdftex"}
 stdengine = "pdftex"

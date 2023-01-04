@@ -28,7 +28,7 @@ end
 
 
 describe("BibTeX entry", function ()
-  local bibtex_dir = "./test/bibtex"
+  local bibtex_dir = "./tests/bibtex"
   for _, file in ipairs(listdir(bibtex_dir)) do
     if string.match(file, "%.bib$") then
       it(file, function ()

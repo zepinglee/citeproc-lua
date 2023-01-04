@@ -42,7 +42,7 @@ skipped_fixtures = [
 ]
 
 failed_fixtures = []
-with open('./test/citeproc-test.log') as f:
+with open('./tests/citeproc-test.log') as f:
     for line in f:
         if line.startswith('Failure → test-suite') or \
             line.startswith('Error → test-suite'):
@@ -53,9 +53,9 @@ namespaces = {
     'cs': 'http://purl.org/net/xbiblio/csl',
 }
 
-# paths = sorted(glob.glob('./test/test-suite/processor-tests/humans/*.txt'))
+# paths = sorted(glob.glob('./tests/test-suite/processor-tests/humans/*.txt'))
 paths = sorted([
-    './test/test-suite/processor-tests/humans/' + f for f in failed_fixtures
+    './tests/test-suite/processor-tests/humans/' + f for f in failed_fixtures
     if f not in skipped_fixtures
 ])
 

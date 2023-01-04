@@ -5,7 +5,7 @@ build/
 *-ctan/
 *.tds/
 ctan.ann
-example/example.pdf
+examples/example.pdf
 
 
 # Lua

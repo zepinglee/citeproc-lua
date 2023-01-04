@@ -248,7 +248,7 @@ return function (options)
 
     if handler.test_count > 800 then
       colors = setmetatable({}, {__index = function () return function (s) return s end end})
-      local file = io.open("test/citeproc-test.log", "w")
+      local file = io.open("tests/citeproc-test.log", "w")
       file:write(get_status_log())
       file:write(get_failures_log())
       file:close()

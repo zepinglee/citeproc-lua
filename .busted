@@ -6,10 +6,10 @@ return {
     recursive = "off",
   },
   default = {
-    ROOT = {"test"},
+    ROOT = {"tests"},
   },
   citeproc = {
-    ROOT = {"test/citeproc-test.lua"},
-    output = "test/bust-output.lua",
+    ROOT = {"tests/citeproc-test.lua"},
+    output = "tests/bust-output.lua",
   },
 }

@@ -6,8 +6,8 @@
 module = "citation-style-language"
 
 docfiledir = "./doc"
--- testfiledir = "./test/latex"
-testsuppdir = "./test/latex/support"
+-- testfiledir = "./tests/latex"
+testsuppdir = "./tests/latex/support"
 
 exefiles = {"citeproc-lua.lua", "**/citeproc-lua.lua"}
 installfiles = {
@@ -21,25 +21,25 @@ scriptmanfiles = {"citeproc-lua.1"}
 sourcefiles = {
   "citeproc/*.lua",
   "latex/*.sty",
-  "locales/csl-locales-*.xml",
-  "styles/*.csl"
+  "submodules/locales/csl-locales-*.xml",
+  "submodules/styles/*.csl"
 }
 tagfiles = {
   "CHANGELOG.md",
   "citeproc/citeproc.lua",
-  "doc/citation-style-language-doc.tex",
-  "doc/citeproc-lua.1",
+  "docs/citation-style-language-doc.tex",
+  "docs/citeproc-lua.1",
   "latex/citation-style-language.sty",
 }
-textfiles = {"doc/README.md", "CHANGELOG.md", "DEPENDS.txt"}
+textfiles = {"docs/README.md", "CHANGELOG.md", "DEPENDS.txt"}
 typesetfiles = {"*.tex"}
 
 checkconfigs = {
   "build",
-  "test/latex/config-luatex-1",
-  "test/latex/config-luatex-2",
-  "test/latex/config-pdftex-1",
-  "test/latex/config-pdftex-2",
+  "tests/latex/config-luatex-1",
+  "tests/latex/config-luatex-2",
+  "tests/latex/config-pdftex-1",
+  "tests/latex/config-pdftex-2",
 }
 
 asciiengines = {}
@@ -47,7 +47,7 @@ packtdszip = true
 
 tdslocations = {
   "tex/latex/citation-style-language/styles/*.csl",
-  "tex/latex/citation-style-language/locales/csl-locales-*.xml",
+  "tex/latex/citation-style-language/submodules/locales/csl-locales-*.xml",
 }
 
 uploadconfig = {

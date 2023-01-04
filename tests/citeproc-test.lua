@@ -42,7 +42,7 @@ end
 
 local function get_skipped_files()
   local skipped_files = {}
-  local file = io.open("./test/citeproc-test-skip.txt", "r")
+  local file = io.open("./tests/citeproc-test-skip.txt", "r")
   if not file then
     return skipped_files
   end
@@ -265,7 +265,7 @@ local function run_test(path)
       if not lang then
         return nil
       end
-      local path = "./locales/csl-locales-" .. lang .. ".xml"
+      local path = "./submodules/locales/csl-locales-" .. lang .. ".xml"
       local content = util.read_file(path)
       if not content then
         return nil
@@ -322,8 +322,8 @@ local function main()
   local skipped_files = get_skipped_files()
 
   local test_dirs = {
-    "./test/test-suite/processor-tests/humans",  -- standard test-suite
-    "./test/overrides",  -- fixtures that override the standard
+    "./tests/test-suite/processor-tests/humans",  -- standard test-suite
+    "./tests/overrides",  -- fixtures that override the standard
   }
   local fixture_list = {}
   local fixture_paths = {}
@@ -352,7 +352,7 @@ local function main()
     end
   end)
 
-  local test_dir = "./test/local"
+  local test_dir = "./tests/local"
   if path_exists(test_dir) then
     describe("local-fixtures", function ()
       for _, file in ipairs(listdir(test_dir)) do

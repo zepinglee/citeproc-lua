@@ -1,4 +1,4 @@
--- This file is generated from citeproc-bibtex-data.json by tools/update-bibtex-data.py
+-- This file is generated from citeproc-bibtex-data.json by scripts/update-bibtex-data.py
 
 return {
   description = "BibTeX CSL mapping",

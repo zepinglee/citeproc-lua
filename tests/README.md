@@ -8,7 +8,7 @@ The [`busted`](https://olivinelabs.com/busted/#output-handlers) library is requi
 luarocks --lua-dir /usr/local/opt/lua@5.3 --lua-version 5.3 install busted
 ```
 
-Clone the two submodules [`test-suite`](https://github.com/citation-style-language/test-suite) and [`locales`](https://github.com/citation-style-language/locales) into the [`test/`](https://github.com/zepinglee/citeproc-lua/tree/main/test) directory.
+Clone the two submodules [`test-suite`](https://github.com/citation-style-language/test-suite) and [`locales`](https://github.com/citation-style-language/locales) into the [`tests/`](https://github.com/zepinglee/citeproc-lua/tree/main/test) directory.
 
 ```bash
 git submodule update --init
@@ -20,7 +20,7 @@ Run all the tests from `test-suite`.
 busted --run=citeproc
 ```
 
-The log is printed to [`test/citeproc-test.log`](https://github.com/zepinglee/citeproc-lua/tree/main/test/citeproc-test.log).
+The log is printed to [`tests/citeproc-test.log`](https://github.com/zepinglee/citeproc-lua/tree/main/tests/citeproc-test.log).
 Currently the `citeproc-lua` has passed 600 of 853 tests from test-suite.
 
 Select tests via pattern.
@@ -39,6 +39,6 @@ busted --pattern=formatted_text --filter=quotes
 
 ```bash
 l3build check
-l3build check --config test/latex/config-luatex-2 luatex-2-csl
-l3build save --config test/latex/config-other-2 other-2-csl
+l3build check --config tests/latex/config-luatex-2 luatex-2-csl
+l3build save --config tests/latex/config-other-2 other-2-csl
 ```

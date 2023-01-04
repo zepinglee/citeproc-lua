@@ -34,17 +34,17 @@ jobs:
       - name: Test citperoc-lua engine
         run: busted --run=citeproc --output=TAP
       - name: Test BibTeX entries
-        run: busted test/bibtex-test.lua --output=TAP
+        run: busted tests/bibtex-test.lua --output=TAP
       - name: Test BibTeX parser
-        run: busted test/bibtex-parser-test.lua --output=TAP
+        run: busted tests/bibtex-parser-test.lua --output=TAP
       - name: Test LaTeX parser
-        run: busted test/latex-parser-test.lua --output=TAP
+        run: busted tests/latex-parser-test.lua --output=TAP
       - name: Test LaTeX package
         run: l3build check -q
       - name: Run examples
         run: |
           l3build install
-          cd example
+          cd examples
           pdflatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
           "$(kpsewhich -var-value=TEXMFHOME)"/scripts/citation-style-language/citeproc-lua.lua example.aux
           pdflatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex

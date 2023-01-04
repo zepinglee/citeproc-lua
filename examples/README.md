@@ -24,13 +24,13 @@ lualatex example.tex
 
 The `latexmk` can also be used.
 ```bash
-latexmk -cd -lualatex example/example.tex
+latexmk -cd -lualatex examples/example.tex
 ```
 
 For engines other than LuaLaTeX, the `citeproc` executable is required to run as BibTeX.
 
 ```bash
-cd example
+cd examples
 pdflatex example.tex
 citeproc-lua example.aux
 pdflatex example.tex
@@ -48,5 +48,5 @@ make uninstall
 The `citeproc` can also run as a stanalone script to convert a `.bib` database to CSL-JSON format.
 
 ```bash
-citeproc-lua example/example.bib
+citeproc-lua examples/example.bib
 ```

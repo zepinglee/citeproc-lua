@@ -404,7 +404,7 @@ class BibData(OrderedDict):
             self['fields'][field] = OrderedDict(sorted(value.items()))
 
     def export_lua(self):
-        res = '-- This file is generated from citeproc-bibtex-data.json by tools/update-bibtex-data.py\n\n'
+        res = '-- This file is generated from citeproc-bibtex-data.json by scripts/update-bibtex-data.py\n\n'
 
         def to_lua_table(obj, level=0):
             res = ''
@@ -477,12 +477,12 @@ class BibData(OrderedDict):
                 line = f'{field} | {target} | {notes}\n'
                 res += line
 
-        with open('tools/bib-csl-mapping.md', 'w') as f:
+        with open('scripts/bib-csl-mapping.md', 'w') as f:
             f.write(res)
 
 
 if __name__ == '__main__':
-    bib_data_path = 'tools/citeproc-bibtex-data.json'
+    bib_data_path = 'scripts/citeproc-bibtex-data.json'
     bib_data = BibData(bib_data_path)
 
     bib_data.update_bibtex()

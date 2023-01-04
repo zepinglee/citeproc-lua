@@ -1,0 +1,15 @@
+cp ../styles/american-chemical-society.csl submodules/styles/
+cp ../styles/american-medical-association.csl submodules/styles/
+cp ../styles/american-political-science-association.csl submodules/styles/
+cp ../styles/apa.csl submodules/styles/
+cp ../styles/american-sociological-association.csl submodules/styles/
+cp ../styles/chicago-author-date.csl submodules/styles/
+cp ../styles/chicago-note-bibliography.csl submodules/styles/
+cp ../styles/chicago-fullnote-bibliography.csl submodules/styles/
+cp ../styles/harvard-cite-them-right.csl submodules/styles/
+cp ../styles/elsevier-harvard.csl submodules/styles/
+cp ../styles/ieee.csl submodules/styles/
+cp ../styles/modern-humanities-research-association.csl submodules/styles/
+cp ../styles/modern-language-association.csl submodules/styles/
+cp ../styles/nature.csl submodules/styles/
+cp ../styles/vancouver.csl submodules/styles/

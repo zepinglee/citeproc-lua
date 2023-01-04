@@ -94,7 +94,7 @@ def update_journal_abbrev_pair(abbrevs, unabbrevs, full, abbr, file):
 def update_from_retorquere_fixups(abbrevs, unabbrevs):
     # https://github.com/retorquere/bibtex-parser/blob/master/build/abbr.py
     file = 'journal-abbrev-retorquere-fixups.json'
-    with open('tools/journal-abbrev-retorquere-fixups.json') as f:
+    with open('scripts/journal-abbrev-retorquere-fixups.json') as f:
         data = json.load(f)
     for abbr, full in data.items():
         abbr = abbr.title()

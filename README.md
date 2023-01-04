@@ -22,7 +22,7 @@ Comments, suggestions and bug reports are welcome.
 
 ## LaTeX example
 
-A full LaTeX example is in the [`example/`](example) directory.
+A full LaTeX example is in the [`examples/`](examples) directory.
 
 - LaTeX document example.tex
 

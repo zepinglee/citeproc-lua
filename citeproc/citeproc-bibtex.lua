@@ -6,7 +6,7 @@
 
 --[[
   A PEG-based implementation of a Bib(La)TeX dateabase (.bib) parser
-  References notes: tools/bibtex-parser-notes.md
+  References notes: scripts/bibtex-parser-notes.md
 --]]
 
 local bibtex = {}

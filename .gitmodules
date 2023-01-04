@@ -1,8 +1,8 @@
 [submodule "schema"]
-	path = schema
+	path = submodules/schema
 	url = https://github.com/citation-style-language/schema.git
 [submodule "locales"]
-	path = locales
+	path = submodules/locales
 	url = https://github.com/zepinglee/csl-locales.git
 	branch = ctan
 [submodule "submodules/abbreviations"]
@@ -11,6 +11,6 @@
 [submodule "submodules/jabref-abbrv"]
 	path = submodules/jabref-abbrv
 	url = https://github.com/JabRef/abbrv.jabref.org.git
-[submodule "test/test-suite"]
-	path = test/test-suite
+[submodule "tests/test-suite"]
+	path = tests/test-suite
 	url = https://github.com/citation-style-language/test-suite.git

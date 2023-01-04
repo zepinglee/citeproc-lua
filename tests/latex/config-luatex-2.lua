@@ -1,8 +1,8 @@
 ---@diagnostic disable: lowercase-global
 
-testfiledir = "./test/latex/luatex-1"
+testfiledir = "./tests/latex/luatex-2"
 
 checkengines = {"luatex"}
 stdengine = "luatex"
 
-checkruns = 1
+checkruns = 2
