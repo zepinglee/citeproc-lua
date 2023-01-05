@@ -18,7 +18,88 @@ local util = require("citeproc-util")
 
 
 describe("BibTeX-parser", function()
-  -- http://maverick.inria.fr/~Xavier.Decoret/resources/xdkbibtex/bibtex_summary.html
+
+  describe("parse entries", function()
+
+    it("entry", function ()
+      local bib = [[
+        @book{lamport86,
+          author    = "Leslie Lamport",
+          title     = "{\LaTeX{}} A Document
+                      Preparation system",
+          publisher = {Addison-Wesley},
+          year      = 1986
+        }
+      ]]
+      local res = bibtex_parser.parse(bib)
+      local expected = {
+        {
+          type = "book",
+          key = "lamport86",
+          fields = {
+            author    = "Leslie Lamport",
+            title     = "{\\LaTeX{}} A Document Preparation system",
+            publisher = "Addison-Wesley",
+            year      = "1986"
+          },
+        },
+      }
+      assert.same(expected, res.entries)
+    end)
+
+    it("with string concatenation", function ()
+      local contents = [[
+        @STRING( WGA = " World Gnus Almanac" )
+        @BOOK(almanac-66,
+          title = 1966 # WGA,
+        )
+      ]]
+      local res = bibtex_parser.parse(contents)
+      local expected = {
+        {
+          type = "book",
+          key = "almanac-66",
+          fields = {
+            title = "1966 World Gnus Almanac",
+          },
+        }
+      }
+      assert.same(expected, res.entries)
+    end)
+
+  end)
+
+  describe("parse @string commands", function()
+
+    it("string command", function ()
+      -- btxdoc.pdf, p. 2
+      local bib = [[
+        @STRING( WGA = " World Gnus Almanac" )
+      ]]
+      local res = bibtex_parser.parse(bib)
+      local expected = {
+        wga = " World Gnus Almanac",
+      }
+      assert.same(expected, res.strings)
+    end)
+
+  end)
+
+  describe("parse @preamble commands", function()
+
+    it("preamble command", function ()
+      -- btxdoc.pdf, p. 4
+      local contents = [[
+        @PREAMBLE{ "\newcommand{\noopsort}[1]{} "
+                # "\newcommand{\singleletter}[1]{#1} " }
+      ]]
+      local res = bibtex_parser.parse(contents)
+      local expected = "\\newcommand{\\noopsort}[1]{} \\newcommand{\\singleletter}[1]{#1} "
+      assert.same(expected, res.preamble)
+    end)
+
+  end)
+
 
   describe("splits names", function()
 
@@ -29,7 +110,7 @@ describe("BibTeX-parser", function()
           "Mittelbach, Franck",
           "Samarin, Alexander",
         },
-        BibtexParser:_split_names("Goossens, Michel and Mittelbach, Franck and Samarin, Alexander")
+        bibtex_parser.split_names("Goossens, Michel and Mittelbach, Franck and Samarin, Alexander")
       )
     end)
 
@@ -39,14 +120,14 @@ describe("BibTeX-parser", function()
           "Foo",
           "{Bar and Baz}"
         },
-        BibtexParser:_split_names("Foo and {Bar and Baz}")
+        bibtex_parser.split_names("Foo and {Bar and Baz}")
       )
     end)
 
     it("empty", function()
       assert.same(
         {},
-        BibtexParser:_split_names("")
+        bibtex_parser.split_names("")
       )
     end)
 
@@ -55,7 +136,7 @@ describe("BibTeX-parser", function()
         {
           "Foo Andes",
         },
-        BibtexParser:_split_names("Foo Andes")
+        bibtex_parser.split_names("Foo Andes")
       )
     end)
 
@@ -64,7 +145,7 @@ describe("BibTeX-parser", function()
         {
           "Foo",
         },
-        BibtexParser:_split_names("and Foo")
+        bibtex_parser.split_names("and Foo")
       )
     end)
 
@@ -73,7 +154,7 @@ describe("BibTeX-parser", function()
         {
           "Foo",
         },
-        BibtexParser:_split_names(" and Foo")
+        bibtex_parser.split_names(" and Foo")
       )
     end)
 
@@ -83,7 +164,7 @@ describe("BibTeX-parser", function()
         {
           "Foo",
         },
-        BibtexParser:_split_names("Foo and")
+        bibtex_parser.split_names("Foo and")
       )
     end)
 
@@ -92,7 +173,7 @@ describe("BibTeX-parser", function()
         {
           "Foo",
         },
-        BibtexParser:_split_names("Foo and ")
+        bibtex_parser.split_names("Foo and ")
       )
     end)
 
@@ -102,7 +183,7 @@ describe("BibTeX-parser", function()
           "Foo,",
           "Bar",
         },
-        BibtexParser:_split_names("Foo, and Bar")
+        bibtex_parser.split_names("Foo, and Bar")
       )
     end)
 
@@ -117,7 +198,7 @@ describe("BibTeX-parser", function()
           von = "von",
           last = "Last",
         },
-        BibtexParser:_split_name_parts("First von Last")
+        bibtex_parser.split_name_parts("First von Last")
       )
     end)
 
@@ -128,7 +209,7 @@ describe("BibTeX-parser", function()
           von = "von",
           last = "Last",
         },
-        BibtexParser:_split_name_parts("von Last, First")
+        bibtex_parser.split_name_parts("von Last, First")
       )
     end)
 
@@ -140,7 +221,7 @@ describe("BibTeX-parser", function()
           last = "Last",
           jr = "Jr",
         },
-        BibtexParser:_split_name_parts("von Last, Jr, First")
+        bibtex_parser.split_name_parts("von Last, Jr, First")
       )
     end)
 
@@ -150,7 +231,7 @@ describe("BibTeX-parser", function()
           first = "Per",
           last = "Brinch Hansen",
         },
-        BibtexParser:_split_name_parts("Brinch Hansen, Per")
+        bibtex_parser.split_name_parts("Brinch Hansen, Per")
       )
     end)
 
@@ -160,7 +241,7 @@ describe("BibTeX-parser", function()
           first = "Per Brinch",
           last = "Hansen",
         },
-        BibtexParser:_split_name_parts("Per Brinch Hansen")
+        bibtex_parser.split_name_parts("Per Brinch Hansen")
       )
     end)
 
@@ -171,7 +252,7 @@ describe("BibTeX-parser", function()
           von = "de la",
           last = "Vall{\\'e}e Poussin",
         },
-        BibtexParser:_split_name_parts("Charles Louis Xavier Joseph de la Vall{\\'e}e Poussin")
+        bibtex_parser.split_name_parts("Charles Louis Xavier Joseph de la Vall{\\'e}e Poussin")
       )
     end)
 
@@ -182,7 +263,7 @@ describe("BibTeX-parser", function()
           von = "jean de la",
           last = "fontaine",
         },
-        BibtexParser:_split_name_parts("jean de la fontaine")
+        bibtex_parser.split_name_parts("jean de la fontaine")
       )
 
       assert.same(
@@ -191,7 +272,7 @@ describe("BibTeX-parser", function()
           von = "de la",
           last = "fontaine",
         },
-        BibtexParser:_split_name_parts("Jean de la fontaine")
+        bibtex_parser.split_name_parts("Jean de la fontaine")
       )
 
       assert.same(
@@ -200,7 +281,7 @@ describe("BibTeX-parser", function()
           von = "la",
           last = "fontaine",
         },
-        BibtexParser:_split_name_parts("Jean {de} la fontaine")
+        bibtex_parser.split_name_parts("Jean {de} la fontaine")
       )
 
       assert.same(
@@ -208,7 +289,7 @@ describe("BibTeX-parser", function()
           von = "jean",
           last = "{de} {la} fontaine",
         },
-        BibtexParser:_split_name_parts("jean {de} {la} fontaine")
+        bibtex_parser.split_name_parts("jean {de} {la} fontaine")
       )
 
       assert.same(
@@ -216,7 +297,7 @@ describe("BibTeX-parser", function()
           first = "Jean {de} {la}",
           last = "fontaine",
         },
-        BibtexParser:_split_name_parts("Jean {de} {la} fontaine")
+        bibtex_parser.split_name_parts("Jean {de} {la} fontaine")
       )
 
       assert.same(
@@ -224,7 +305,7 @@ describe("BibTeX-parser", function()
           first = "Jean De La",
           last = "Fontaine",
         },
-        BibtexParser:_split_name_parts("Jean De La Fontaine")
+        bibtex_parser.split_name_parts("Jean De La Fontaine")
       )
 
       assert.same(
@@ -232,7 +313,7 @@ describe("BibTeX-parser", function()
           von = "jean De la",
           last = "Fontaine",
         },
-        BibtexParser:_split_name_parts("jean De la Fontaine")
+        bibtex_parser.split_name_parts("jean De la Fontaine")
       )
 
       assert.same(
@@ -241,11 +322,12 @@ describe("BibTeX-parser", function()
           von = "de",
           last = "La Fontaine",
         },
-        BibtexParser:_split_name_parts("Jean de La Fontaine")
+        bibtex_parser.split_name_parts("Jean de La Fontaine")
       )
 
     end)
 
+    -- http://maverick.inria.fr/~Xavier.Decoret/resources/xdkbibtex/bibtex_summary.html
     describe("in test suite", function()
 
       describe("for the first name specification form First von Last", function()
@@ -256,7 +338,7 @@ describe("BibTeX-parser", function()
               first = "AA",
               last = "BB",
             },
-            BibtexParser:_split_name_parts("AA BB")
+            bibtex_parser.split_name_parts("AA BB")
           )
         end)
 
@@ -265,7 +347,7 @@ describe("BibTeX-parser", function()
             {
               last = "AA",
             },
-            BibtexParser:_split_name_parts("AA")
+            bibtex_parser.split_name_parts("AA")
           )
         end)
 
@@ -275,7 +357,7 @@ describe("BibTeX-parser", function()
               first = "AA",
               last = "bb",
             },
-            BibtexParser:_split_name_parts("AA bb")
+            bibtex_parser.split_name_parts("AA bb")
           )
         end)
 
@@ -284,7 +366,7 @@ describe("BibTeX-parser", function()
             {
               last = "aa",
             },
-            BibtexParser:_split_name_parts("aa")
+            bibtex_parser.split_name_parts("aa")
           )
         end)
 
@@ -295,7 +377,7 @@ describe("BibTeX-parser", function()
               von = "bb",
               last = "CC",
             },
-            BibtexParser:_split_name_parts("AA bb CC")
+            bibtex_parser.split_name_parts("AA bb CC")
           )
         end)
 
@@ -306,7 +388,7 @@ describe("BibTeX-parser", function()
               von = "bb CC dd",
               last = "EE",
             },
-            BibtexParser:_split_name_parts("AA bb CC dd EE")
+            bibtex_parser.split_name_parts("AA bb CC dd EE")
           )
         end)
 
@@ -317,7 +399,7 @@ describe("BibTeX-parser", function()
               von = "cc",
               last = "dd",
             },
-            BibtexParser:_split_name_parts("AA 1B cc dd")
+            bibtex_parser.split_name_parts("AA 1B cc dd")
           )
         end)
 
@@ -328,7 +410,7 @@ describe("BibTeX-parser", function()
               von = "1b cc",
               last = "dd",
             },
-            BibtexParser:_split_name_parts("AA 1b cc dd")
+            bibtex_parser.split_name_parts("AA 1b cc dd")
           )
         end)
 
@@ -339,7 +421,7 @@ describe("BibTeX-parser", function()
               von = "cc",
               last = "dd",
             },
-            BibtexParser:_split_name_parts("AA {b}B cc dd")
+            bibtex_parser.split_name_parts("AA {b}B cc dd")
           )
         end)
 
@@ -350,7 +432,7 @@ describe("BibTeX-parser", function()
               von = "{b}b cc",
               last = "dd",
             },
-            BibtexParser:_split_name_parts("AA {b}b cc dd")
+            bibtex_parser.split_name_parts("AA {b}b cc dd")
           )
         end)
 
@@ -361,7 +443,7 @@ describe("BibTeX-parser", function()
               von = "{B}b cc",
               last = "dd",
             },
-            BibtexParser:_split_name_parts("AA {B}b cc dd")
+            bibtex_parser.split_name_parts("AA {B}b cc dd")
           )
         end)
 
@@ -372,7 +454,7 @@ describe("BibTeX-parser", function()
               von = "cc",
               last = "dd",
             },
-            BibtexParser:_split_name_parts("AA {B}B cc dd")
+            bibtex_parser.split_name_parts("AA {B}B cc dd")
           )
         end)
 
@@ -383,7 +465,7 @@ describe("BibTeX-parser", function()
               von = "cc",
               last = "dd",
             },
-            BibtexParser:_split_name_parts("AA \\BB{b} cc dd")
+            bibtex_parser.split_name_parts("AA \\BB{b} cc dd")
           )
         end)
 
@@ -394,7 +476,7 @@ describe("BibTeX-parser", function()
               von = "\\bb{b} cc",
               last = "dd",
             },
-            BibtexParser:_split_name_parts("AA \\bb{b} cc dd")
+            bibtex_parser.split_name_parts("AA \\bb{b} cc dd")
           )
         end)
 
@@ -405,7 +487,7 @@ describe("BibTeX-parser", function()
               von = "cc",
               last = "DD",
             },
-            BibtexParser:_split_name_parts("AA {bb} cc DD")
+            bibtex_parser.split_name_parts("AA {bb} cc DD")
           )
         end)
 
@@ -416,7 +498,7 @@ describe("BibTeX-parser", function()
               von = "bb",
               last = "{cc} DD",
             },
-            BibtexParser:_split_name_parts("AA bb {cc} DD")
+            bibtex_parser.split_name_parts("AA bb {cc} DD")
           )
         end)
 
@@ -426,7 +508,7 @@ describe("BibTeX-parser", function()
               first = "AA {bb}",
               last = "CC",
             },
-            BibtexParser:_split_name_parts("AA {bb} CC")
+            bibtex_parser.split_name_parts("AA {bb} CC")
           )
         end)
 
@@ -442,7 +524,7 @@ describe("BibTeX-parser", function()
               von = "bb",
               last = "CC",
             },
-            BibtexParser:_split_name_parts("bb CC, AA")
+            bibtex_parser.split_name_parts("bb CC, AA")
           )
         end)
 
@@ -453,7 +535,7 @@ describe("BibTeX-parser", function()
               von = "bb",
               last = "CC",
             },
-            BibtexParser:_split_name_parts("bb CC, aa")
+            bibtex_parser.split_name_parts("bb CC, aa")
           )
         end)
 
@@ -464,7 +546,7 @@ describe("BibTeX-parser", function()
               von = "bb CC dd",
               last = "EE",
             },
-            BibtexParser:_split_name_parts("bb CC dd EE, AA")
+            bibtex_parser.split_name_parts("bb CC dd EE, AA")
           )
         end)
 
@@ -474,7 +556,7 @@ describe("BibTeX-parser", function()
               first = "AA",
               last = "bb",
             },
-            BibtexParser:_split_name_parts("bb, AA")
+            bibtex_parser.split_name_parts("bb, AA")
           )
         end)
 
@@ -483,7 +565,7 @@ describe("BibTeX-parser", function()
             {
               last = "BB",
             },
-            BibtexParser:_split_name_parts("BB,")
+            bibtex_parser.split_name_parts("BB,")
           )
         end)
 
@@ -495,7 +577,7 @@ describe("BibTeX-parser", function()
               last = "CC",
               jr = "XX",
             },
-            BibtexParser:_split_name_parts("bb CC,XX, AA")
+            bibtex_parser.split_name_parts("bb CC,XX, AA")
           )
         end)
 
@@ -507,7 +589,7 @@ describe("BibTeX-parser", function()
               last = "CC",
               jr = "xx",
             },
-            BibtexParser:_split_name_parts("bb CC,xx, AA")
+            bibtex_parser.split_name_parts("bb CC,xx, AA")
           )
         end)
 
@@ -517,9 +599,106 @@ describe("BibTeX-parser", function()
               first = "AA",
               last = "BB",
             },
-            BibtexParser:_split_name_parts("BB, , AA")
+            bibtex_parser.split_name_parts("BB, , AA")
           )
         end)
+
+      end)
+
+      it("further remarks", function()
+
+        assert.same(
+          {
+            first = "Paul \\'Emile",
+            last = "Victor",
+          },
+          bibtex_parser.split_name_parts("Paul \\'Emile Victor")
+        )
+
+        assert.same(
+          {
+            first = "Paul {\\'E}mile",
+            last = "Victor",
+          },
+          bibtex_parser.split_name_parts("Paul {\\'E}mile Victor")
+        )
+
+        assert.same(
+          {
+            first = "Paul",
+            von = "\\'emile",
+            last = "Victor",
+          },
+          bibtex_parser.split_name_parts("Paul \\'emile Victor")
+        )
+
+        assert.same(
+          {
+            first = "Paul",
+            von = "{\\'e}mile",
+            last = "Victor",
+          },
+          bibtex_parser.split_name_parts("Paul {\\'e}mile Victor")
+        )
+
+        assert.same(
+          {
+            first = "Paul \\'Emile",
+            last = "Victor",
+          },
+          bibtex_parser.split_name_parts("Victor, Paul \\'Emile")
+        )
+
+        assert.same(
+          {
+            first = "Paul {\\'E}mile",
+            last = "Victor",
+          },
+          bibtex_parser.split_name_parts("Victor, Paul {\\'E}mile")
+        )
+
+        assert.same(
+          {
+            first = "Paul \\'emile",
+            last = "Victor",
+          },
+          bibtex_parser.split_name_parts("Victor, Paul \\'emile")
+        )
+
+        assert.same(
+          {
+            first = "Paul {\\'e}mile",
+            last = "Victor",
+          },
+          bibtex_parser.split_name_parts("Victor, Paul {\\'e}mile")
+        )
+
+        assert.same(
+          {
+            first = "Dominique Galouzeau",
+            von = "de",
+            last = "Villepin",
+          },
+          bibtex_parser.split_name_parts("Dominique Galouzeau de Villepin")
+        )
+
+        assert.same(
+          {
+            first = "Dominique",
+            von = "{G}alouzeau de",
+            last = "Villepin",
+          },
+          bibtex_parser.split_name_parts("Dominique {G}alouzeau de Villepin")
+        )
+
+        assert.same(
+          {
+            first = "Dominique",
+            von = "Galouzeau de",
+            last = "Villepin",
+          },
+          bibtex_parser.split_name_parts("Galouzeau de Villepin, Dominique")
+        )
 
       end)
 
