@@ -1,9 +1,8 @@
-require("busted.runner")()
-
 kpse.set_program_name("luatex")
 
 local kpse_searcher = package.searchers[2]
-package.searchers[2] = function (name)
+---@diagnostic disable-next-line: duplicate-set-field
+package.searchers[2] = function(name)
   local file, err = package.searchpath(name, package.path)
   if not err then
     return loadfile(file)
@@ -12,768 +11,520 @@ package.searchers[2] = function (name)
 end
 
 
-local bibtex = require("citeproc-bibtex")
+require("busted.runner")()
+local bibtex_parser = require("citeproc-bibtex-parser")
+local BibtexParser = bibtex_parser.BibtexParser
 local util = require("citeproc-util")
 
 
-describe("Parsing AST", function ()
+describe("BibTeX-parser", function()
+  -- http://maverick.inria.fr/~Xavier.Decoret/resources/xdkbibtex/bibtex_summary.html
 
-  it("entry", function ()
-    local contents = [[
-      @book{lamport86,
-        author    = "Leslie Lamport",
-        title     = "{\LaTeX{}} A Document
-                     Preparation system",
-        publisher = {Addison-Wesley},
-        year      = 1986
-      }
-    ]]
-    local res = bibtex.parse_bibtex_objects(contents)
-    local expected = {
-      {
-        category = "entry",
-        type = "book",
-        key = "lamport86",
-        fields = {
-          author    = {"Leslie Lamport"},
-          title     = {"{\\LaTeX{}} A Document Preparation system"},
-          publisher = {"Addison-Wesley"},
-          year      = {"1986"}
-        },
-      },
-    }
-    assert.same(expected, res)
-  end)
+  describe("splits names", function()
 
-  it("string command", function ()
-    -- btxdoc.pdf, p. 2
-    local contents = [[
-      @STRING( WGA = " World Gnus Almanac" )
-    ]]
-    local res = bibtex.parse_bibtex_objects(contents)
-    local expected = {
-      {
-        category = "string",
-        name = "wga",
-        contents = {
-          " World Gnus Almanac",
-        },
-      },
-    }
-    assert.same(expected, res)
-  end)
-
-  it("string in field value", function ()
-    -- btxdoc.pdf, p. 2
-    local contents = [[
-      @BOOK(almanac-66,
-        title = 1966 # WGA,
-      )
-    ]]
-    local res = bibtex.parse_bibtex_objects(contents)
-    local expected = {
-      {
-        category = "entry",
-        type = "book",
-        key = "almanac-66",
-        fields = {
-          title = {
-            "1966",
-            {
-              category = "string",
-              name = "wga"
-            },
-          },
-        },
-      }
-    }
-    assert.same(expected, res)
-  end)
-
-  it("preamble command", function ()
-    -- btxdoc.pdf, p. 4
-    local contents = [[
-      @PREAMBLE{ "\newcommand{\noopsort}[1]{} "
-               # "\newcommand{\singleletter}[1]{#1} " }
-    ]]
-    local res = bibtex.parse_bibtex_objects(contents)
-    local expected = {
-      {
-        category = "preamble",
-        contents = {
-          "\\newcommand{\\noopsort}[1]{} ",
-          "\\newcommand{\\singleletter}[1]{#1} ",
-        }
-      }
-    }
-    assert.same(expected, res)
-  end)
-
-  -- describe("error report", function ()
-
-  --   it("should throw an error", function ()
-  --     local str = "@book{test\n foo=foo}"
-  --     assert.has_error(function () bibtex.parse_bibtex_objects(str) end)
-  --   end)
-
-  -- end)
-
-end)
-
-
-describe("Parsing BibTeX data", function ()
-
-  it("BibTeX entry", function ()
-    local contents = [[
-      @book{entry-key,
-        Author = {Foo, Bar},
-        title  = "Title",
-        year   = 1984,
-      }
-    ]]
-    local res = bibtex.parse_bibtex(contents)
-    -- util.debug(res.entries[1])
-    local expected = {
-      preamble = "",
-      strings = {},
-      entries = {
+    it("", function()
+      assert.same(
         {
-          type = "book",
-          key = "entry-key",
-          fields = {
-            author = "Foo, Bar",
-            title = "Title",
-            year = "1984"
-          },
-        }
-      }
-    }
-    assert.same(expected, res)
-  end)
-
-  it("spaces in field value", function ()
-    local contents = [[
-      @book{entry-key,
-        title = {Foo  Bar},
-        booktitle = {Foo
-                     Bar},
-      }
-    ]]
-    local res = bibtex.parse_bibtex(contents)
-    local expected = {
-      {
-        type = "book",
-        key = "entry-key",
-        fields = {
-          title = "Foo Bar",
-          booktitle = "Foo Bar"
+          "Goossens, Michel",
+          "Mittelbach, Franck",
+          "Samarin, Alexander",
         },
-      }
-    }
-    assert.same(expected, res.entries)
-  end)
-
-  it("string command", function ()
-    -- btxdoc.pdf, p. 4
-    local contents = [[
-      @STRING( WGA = " World Gnus Almanac" )
-    ]]
-    local res = bibtex.parse_bibtex(contents)
-    local expected = {
-      preamble = "",
-      entries = {},
-      strings = {
-        wga = " World Gnus Almanac"
-      },
-    }
-    assert.same(expected, res)
-  end)
-
-  it("preamble command", function ()
-    -- btxdoc.pdf, p. 4
-    local contents = [[
-      @PREAMBLE{ "\newcommand{\noopsort}[1]{} "
-               # "\newcommand{\singleletter}[1]{#1} " }
-    ]]
-    local res = bibtex.parse_bibtex(contents)
-    local expected = {
-      preamble = "\\newcommand{\\noopsort}[1]{} \\newcommand{\\singleletter}[1]{#1} ",
-      entries = {},
-      strings = {},
-    }
-    assert.same(expected, res)
-  end)
-
-  it("string concatenation", function ()
-    local contents = [[
-      @STRING{STOC = " Symposium on the Theory of Computing"}
-      @INPROCEEDINGS{inproceedings-full,
-        booktitle = "Proc. Fifteenth Annual ACM" # STOC,
-        month = mar # ", " # 1,
-      }
-    ]]
-    local res = bibtex.parse_bibtex(contents)
-    local expected = {
-      {
-        type = "inproceedings",
-        key = "inproceedings-full",
-        fields = {
-          booktitle = "Proc. Fifteenth Annual ACM Symposium on the Theory of Computing",
-          month = "3, 1",
-        }
-      },
-    }
-    assert.same(expected, res.entries)
-  end)
-
-
-  describe("convert LaTeX formats to HTML", function ()
-
-    it("textbf", function ()
-      local str = "foo \\textbf{bar} baz"
-      local expected = 'foo <b><span class="nocase">bar</span></b> baz'
-      local res = bibtex.to_unicode(str)
-      assert.same(expected, res)
+        BibtexParser:_split_names("Goossens, Michel and Mittelbach, Franck and Samarin, Alexander")
+      )
     end)
 
-    it("em", function ()
-      local str = "foo {\\em bar} baz"
-      local expected = "foo <i>bar</i> baz"
-      local res = bibtex.to_unicode(str)
-      assert.same(expected, res)
-    end)
-
-  end)
-
-  describe("converts to unicode", function ()
-
-    it("with single symbol", function ()
-      local str = "\\textexclamdown "
-      local expected = "¡"
-      local res = bibtex.to_unicode(str)
-      assert.same(expected, res)
-    end)
-
-    it("with accent letter", function ()
-      local str = "\\`A "
-      local expected = "À "
-      local res = bibtex.to_unicode(str)
-      assert.same(expected, res)
-    end)
-
-    it("with accent letter", function ()
-      local str = "\\`{A} "
-      local expected = "À "
-      local res = bibtex.to_unicode(str)
-      assert.same(expected, res)
-    end)
-
-    it("with accent letter", function ()
-      local str = "\\` A "
-      local expected = "À "
-      local res = bibtex.to_unicode(str)
-      assert.same(expected, res)
-    end)
-
-    it("with accent letter", function ()
-      local str = "\\` {A} "
-      local expected = "À "
-      local res = bibtex.to_unicode(str)
-      assert.same(expected, res)
-    end)
-
-    it("with accent letter", function ()
-      local str = "{\\`A} "
-      local expected = "À "
-      local res = bibtex.to_unicode(str)
-      assert.same(expected, res)
-    end)
-
-    it("with accent letter", function ()
-      local str = "{\\`{A}} "
-      local expected = "À "
-      local res = bibtex.to_unicode(str)
-      assert.same(expected, res)
-    end)
-
-    it("with accent letter", function ()
-      local str = "{\\` A} "
-      local expected = "À "
-      local res = bibtex.to_unicode(str)
-      assert.same(expected, res)
-    end)
-
-    it("with accent letter", function ()
-      local str = "{\\` {A}} "
-      local expected = "À "
-      local res = bibtex.to_unicode(str)
-      assert.same(expected, res)
-    end)
-
-    it("with accent letter", function ()
-      local str = "\\`\\i "
-      local expected = "ì"
-      local res = bibtex.to_unicode(str)
-      assert.same(expected, res)
-    end)
-
-    it("with accent letter", function ()
-      local str = "\\` \\i "
-      local expected = "ì"
-      local res = bibtex.to_unicode(str)
-      assert.same(expected, res)
-    end)
-
-    it("with accent letter", function ()
-      local str = "\\r ABC"
-      local expected = "ÅBC"
-      local res = bibtex.to_unicode(str)
-      assert.same(expected, res)
-    end)
-
-    it("with accent letter", function ()
-      local str = "\\r{A}BC"
-      local expected = "ÅBC"
-      local res = bibtex.to_unicode(str)
-      assert.same(expected, res)
-    end)
-
-    it("with dot above", function ()
-      local str = "\\.{}"
-      local expected = "˙"
-      local res = bibtex.to_unicode(str)
-      assert.same(expected, res)
-    end)
-
-    it("with dot above", function ()
-      local str = "\\. {}"
-      local expected = "˙"
-      local res = bibtex.to_unicode(str)
-      assert.same(expected, res)
-    end)
-
-    it("Latin Small Letter I with Acute", function ()
-      local str = "Jasmine Ana{\\'i}{\\'i}s"
-      local expected = "Jasmine Anaíís"
-      local res = bibtex.to_unicode(str)
-      assert.same(expected, res)
-    end)
-
-  end)
-
-
-  describe("error report", function ()
-
-    it("should throw an error", function ()
-      local str = "@book{test\n foo=foo}"
-      assert.has_error(function () bibtex.parse(str) end)
-    end)
-
-  end)
-
-end)
-
-
-describe("CSL-JSON conversion", function ()
-
-  describe("name parsing", function ()
-    -- http://maverick.inria.fr/~Xavier.Decoret/resources/xdkbibtex/bibtex_summary.html
-
-    describe("non-reversed name", function ()
-
-      it("Testing simple case with no von.", function ()
-        local res = bibtex.parse_single_name("AA BB")
-        local expected = {
-          given = "AA",
-          family = "BB",
-        }
-        assert.same(expected, res)
-      end)
-
-      it("Testing that Last cannot be empty.", function ()
-        local res = bibtex.parse_single_name("AA")
-        local expected = {
-          family = "AA",
-        }
-        assert.same(expected, res)
-      end)
-
-      it("Testing that Last cannot be empty.", function ()
-        local res = bibtex.parse_single_name("AA bb")
-        local expected = {
-          given = "AA",
-          family = "bb",
-        }
-        assert.same(expected, res)
-      end)
-
-      it("Testing that Last cannot be empty.", function ()
-        local res = bibtex.parse_single_name("aa")
-        local expected = {
-          family = "aa",
-        }
-        assert.same(expected, res)
-      end)
-
-      it("Testing simple von.", function ()
-        local res = bibtex.parse_single_name("AA bb CC")
-        local expected = {
-          given = "AA",
-          ["non-dropping-particle"] = "bb",
-          family = "CC",
-        }
-        assert.same(expected, res)
-      end)
-
-      it("Testing simple von (with inner uppercase words)", function ()
-        local res = bibtex.parse_single_name("AA bb CC dd EE")
-        local expected = {
-          given = "AA",
-          ["non-dropping-particle"] = "bb CC dd",
-          family = "EE",
-        }
-      end)
-
-      it("Testing that digits are caseless (B fixes the case of 1B to uppercase).", function ()
-        local res = bibtex.parse_single_name("AA 1B cc dd")
-        local expected = {
-          given = "AA 1B",
-          ["non-dropping-particle"] = "cc",
-          family = "dd",
-        }
-        assert.same(expected, res)
-      end)
-
-      -- it("Testing that digits are caseless (b fixes the case of 1b to lowercase)", function ()
-      --   local res = bibtex.parse_single_name("AA 1b cc dd")
-      --   local expected = {
-      --     given = "AA",
-      --     ["non-dropping-particle"] = "1b cc",
-      --     family = "dd",
-      --   }
-      --   assert.same(expected, res)
-      -- end)
-
-      it("Testing that pseudo letters are caseless.", function ()
-        local res = bibtex.parse_single_name("AA {b}B cc dd")
-        local expected = {
-          given = "AA {b}B",
-          ["non-dropping-particle"] = "cc",
-          family = "dd",
-        }
-        assert.same(expected, res)
-      end)
-
-      -- it("Testing that pseudo letters are caseless.", function ()
-      --   local res = bibtex.parse_single_name("AA {b}b cc dd")
-      --   local expected = {
-      --     given = "AA",
-      --     ["non-dropping-particle"] = "{b}b cc",
-      --     family = "dd",
-      --   }
-      --   assert.same(expected, res)
-      -- end)
-
-      -- it("Testing that pseudo letters are caseless.", function ()
-      --   local res = bibtex.parse_single_name("AA {B}b cc dd")
-      --   local expected = {
-      --     given = "AA",
-      --     ["non-dropping-particle"] = "{B}b cc",
-      --     family = "dd",
-      --   }
-      --   assert.same(expected, res)
-      -- end)
-
-      it("Testing that pseudo letters are caseless.", function ()
-        local res = bibtex.parse_single_name("AA {B}B cc dd")
-        local expected = {
-          given = "AA {B}B",
-          ["non-dropping-particle"] = "cc",
-          family = "dd",
-        }
-        assert.same(expected, res)
-      end)
-
-      it("Testing that non letters are case less (in particular show how latex command are considered).", function ()
-        local res = bibtex.parse_single_name("AA \\BB{b} cc dd")
-        local expected = {
-          given = "AA \\BB{b}",
-          ["non-dropping-particle"] = "cc",
-          family = "dd",
-        }
-        assert.same(expected, res)
-      end)
-
-      -- it("Testing that non letters are case less (in particular show how latex command are considered).", function ()
-      --   local res = bibtex.parse_single_name("AA \\bb{b} cc dd")
-      --   local expected = {
-      --     given = "AA",
-      --     ["non-dropping-particle"] = "\\bb{b} cc",
-      --     family = "dd",
-      --   }
-      --   assert.same(expected, res)
-      -- end)
-
-      it("Testing that caseless words are grouped with First primilarily and then with Last.", function ()
-        local res = bibtex.parse_single_name("AA {bb} cc DD")
-        local expected = {
-          given = "AA {bb}",
-          ["non-dropping-particle"] = "cc",
-          family = "DD",
-        }
-        assert.same(expected, res)
-      end)
-
-      it("Testing that caseless words are grouped with First primilarily and then with Last.", function ()
-        local res = bibtex.parse_single_name("AA bb {cc} DD")
-        local expected = {
-          given = "AA",
-          ["non-dropping-particle"] = "bb",
-          family = "{cc} DD",
-        }
-        assert.same(expected, res)
-      end)
-
-      it("Testing that caseless words are grouped with First primilarily and then with Last.", function ()
-        local res = bibtex.parse_single_name("AA {bb} CC")
-        local expected = {
-          given = "AA {bb}",
-          family = "CC",
-        }
-        assert.same(expected, res)
-      end)
-
-    end)
-
-
-    describe("reversed name", function ()
-
-      it("Simple case. Case do not matter for First.", function ()
-        local res = bibtex.parse_single_name("bb CC, AA")
-        local expected = {
-          given = "AA",
-          ["non-dropping-particle"] = "bb",
-          family = "CC",
-        }
-        assert.same(expected, res)
-      end)
-
-      it("Simple case. Case do not matter for First.", function ()
-        local res = bibtex.parse_single_name("bb CC, aa")
-        local expected = {
-          given = "aa",
-          ["non-dropping-particle"] = "bb",
-          family = "CC",
-        }
-        assert.same(expected, res)
-      end)
-
-      it("Testing simple von (with inner uppercase).", function ()
-        local res = bibtex.parse_single_name("bb CC dd EE, AA")
-        local expected = {
-          given = "AA",
-          ["non-dropping-particle"] = "bb CC dd",
-          family = "EE",
-        }
-        assert.same(expected, res)
-      end)
-
-      it("Testing that the Last part cannot be empty.", function ()
-        local res = bibtex.parse_single_name("bb, AA")
-        local expected = {
-          given = "AA",
-          family = "bb",
-        }
-        assert.same(expected, res)
-      end)
-
-      it("Testing that first can be empty after coma", function ()
-        local res = bibtex.parse_single_name("BB,")
-        local expected = {
-          family = "BB",
-        }
-        assert.same(expected, res)
-      end)
-
-      it("Simple Jr. Case do not matter for it.", function ()
-        local res = bibtex.parse_single_name("bb CC,XX, AA")
-        local expected = {
-          given = "AA",
-          ["non-dropping-particle"] = "bb",
-          family = "CC",
-          suffix = "XX",
-        }
-        assert.same(expected, res)
-      end)
-
-      it("Simple Jr. Case do not matter for it.", function ()
-        local res = bibtex.parse_single_name("bb CC,xx, AA")
-        local expected = {
-          given = "AA",
-          ["non-dropping-particle"] = "bb",
-          family = "CC",
-          suffix = "xx",
-        }
-        assert.same(expected, res)
-      end)
-
-      it("Testing that jr can be empty in between comas.", function ()
-        local res = bibtex.parse_single_name("BB,, AA")
-        local expected = {
-          given = "AA",
-          family = "BB",
-        }
-        assert.same(expected, res)
-      end)
-
-    end)
-
-  end)
-
-  describe("date parsing", function ()
-
-    it("single date", function ()
-      local res = bibtex.parse_date("1992-08-11")
-      local expected = {
-        ["date-parts"] = {
-          { 1992, 8, 11 },
-        }
-      }
-      assert.same(expected, res)
-    end)
-
-    it("year", function ()
-      local res = bibtex.parse_date("1992")
-      local expected = {
-        ["date-parts"] = {
-          { 1992 },
-        }
-      }
-      assert.same(expected, res)
-    end)
-
-    it("date range", function ()
-      local res = bibtex.parse_date("1997-07-01/2017-07-01")
-      local expected = {
-        ["date-parts"] = {
-          { 1997, 7, 1 },
-          { 2017, 7, 1 },
-        }
-      }
-      assert.same(expected, res)
-    end)
-
-    it("literal date", function ()
-      local res = bibtex.parse_date("2003c")
-      local expected = { literal = "2003c" }
-      assert.same(expected, res)
-    end)
-
-    it("too many range parts", function ()
-      local res = bibtex.parse_date("1992/08/11")
-      local expected = { literal = "1992/08/11" }
-      assert.same(expected, res)
-    end)
-
-  end)
-
-
-end)
-
-
-describe("Full BibTeX to CSL-JSON conversion", function ()
-
-  it("full entry", function ()
-    local contents = [[
-      @article{key,
-        author = {von Last, First and von Last, Jr, First},
-        editor = {First de la Last and First de la Von Last},
-        title = {One ``two'' “three” `four' ‘five’},
-        date = {1999-01-01/2000-12-11},
-        year = 1999,
-        month = jul,
-      }
-    ]]
-    local res = bibtex.parse(contents)
-    local expected = {
-      {
-        id = "key",
-        type = "article-journal",
-        author = {
-          {
-            family = "Last",
-            given = "First",
-            ["non-dropping-particle"] = "von"
-          }, {
-            family = "Last",
-            given = "First",
-            ["non-dropping-particle"] = "von",
-            suffix = "Jr"
-          }
+    it("with braces", function()
+      assert.same(
+        {
+          "Foo",
+          "{Bar and Baz}"
         },
-        editor = {
-          {
-            family = "Last",
-            given = "First",
-            ["non-dropping-particle"] = "de la"
-          }, {
-            family = "Von Last",
-            given = "First",
-            ["non-dropping-particle"] = "de la"
-          }
+        BibtexParser:_split_names("Foo and {Bar and Baz}")
+      )
+    end)
+
+    it("empty", function()
+      assert.same(
+        {},
+        BibtexParser:_split_names("")
+      )
+    end)
+
+    it("with and- prefix", function()
+      assert.same(
+        {
+          "Foo Andes",
         },
-        issued = {
-          ["date-parts"] = { { 1999, 1, 1 }, { 2000, 12, 11 } }
+        BibtexParser:_split_names("Foo Andes")
+      )
+    end)
+
+    it("starting with and", function()
+      assert.same(
+        {
+          "Foo",
         },
-        title = "One “two” “three” ‘four’ ‘five’",
-      }
-    }
-    assert.same(expected, res)
+        BibtexParser:_split_names("and Foo")
+      )
+    end)
+
+    it("starting with and", function()
+      assert.same(
+        {
+          "Foo",
+        },
+        BibtexParser:_split_names(" and Foo")
+      )
+    end)
+
+    it("ending with and", function()
+      -- BibTeX actually produces {"and"}
+      assert.same(
+        {
+          "Foo",
+        },
+        BibtexParser:_split_names("Foo and")
+      )
+    end)
+
+    it("ending with and", function()
+      assert.same(
+        {
+          "Foo",
+        },
+        BibtexParser:_split_names("Foo and ")
+      )
+    end)
+
+    it("ending with and", function()
+      assert.same(
+        {
+          "Foo,",
+          "Bar",
+        },
+        BibtexParser:_split_names("Foo, and Bar")
+      )
+    end)
+
   end)
 
-  it("Journal abbreviation", function()
-    local contents = [[
-      @article{PhysRevLett.129.274801,
-        title = {Accelerating Ions by Crossing Two Ultraintense Lasers in a Near-Critical Relativistically Transparent Plasma},
-        author = {Liu, Bin and Shi, Mingyuan and Zepf, Matt and Lei, Bifeng and Seipt, Daniel},
-        journal = {Phys. Rev. Lett.},
-        volume = {129},
-        issue = {27},
-        pages = {274801},
-        year = {2022},
-      }
-    ]]
-    local res = bibtex.parse(contents)
-    local expected = { {
-      id = "PhysRevLett.129.274801",
-      type = "article-journal",
-      author = { {
-        family = "Liu",
-        given = "Bin"
-      }, {
-        family = "Shi",
-        given = "Mingyuan"
-      }, {
-        family = "Zepf",
-        given = "Matt"
-      }, {
-        family = "Lei",
-        given = "Bifeng"
-      }, {
-        family = "Seipt",
-        given = "Daniel"
-      } },
-      ["container-title"] = "Physical Review Letters",
-      ["container-title-short"] = "Phys. Rev. Lett.",
-      issue = "27",
-      issued = {
-        ["date-parts"] = { { 2022 } }
-      },
-      page = "274801",
-      title = "Accelerating Ions by Crossing Two Ultraintense Lasers in a Near-Critical Relativistically Transparent Plasma",
-      volume = "129"
-    } }
-    assert.same(expected, res)
+  describe("splits name parts", function()
+
+    it("with first form", function()
+      assert.same(
+        {
+          first = "First",
+          von = "von",
+          last = "Last",
+        },
+        BibtexParser:_split_name_parts("First von Last")
+      )
+    end)
+
+    it("with second form", function()
+      assert.same(
+        {
+          first = "First",
+          von = "von",
+          last = "Last",
+        },
+        BibtexParser:_split_name_parts("von Last, First")
+      )
+    end)
+
+    it("with third form", function()
+      assert.same(
+        {
+          first = "First",
+          von = "von",
+          last = "Last",
+          jr = "Jr",
+        },
+        BibtexParser:_split_name_parts("von Last, Jr, First")
+      )
+    end)
+
+    it("example 1", function()
+      assert.same(
+        {
+          first = "Per",
+          last = "Brinch Hansen",
+        },
+        BibtexParser:_split_name_parts("Brinch Hansen, Per")
+      )
+    end)
+
+    it("example 1 mistake", function()
+      assert.same(
+        {
+          first = "Per Brinch",
+          last = "Hansen",
+        },
+        BibtexParser:_split_name_parts("Per Brinch Hansen")
+      )
+    end)
+
+    it("example 2", function()
+      assert.same(
+        {
+          first = "Charles Louis Xavier Joseph",
+          von = "de la",
+          last = "Vall{\\'e}e Poussin",
+        },
+        BibtexParser:_split_name_parts("Charles Louis Xavier Joseph de la Vall{\\'e}e Poussin")
+      )
+    end)
+
+    it('with conbinations of format "First von Last" in sec. 11 of ttb', function()
+
+      assert.same(
+        {
+          von = "jean de la",
+          last = "fontaine",
+        },
+        BibtexParser:_split_name_parts("jean de la fontaine")
+      )
+
+      assert.same(
+        {
+          first = "Jean",
+          von = "de la",
+          last = "fontaine",
+        },
+        BibtexParser:_split_name_parts("Jean de la fontaine")
+      )
+
+      assert.same(
+        {
+          first = "Jean {de}",
+          von = "la",
+          last = "fontaine",
+        },
+        BibtexParser:_split_name_parts("Jean {de} la fontaine")
+      )
+
+      assert.same(
+        {
+          von = "jean",
+          last = "{de} {la} fontaine",
+        },
+        BibtexParser:_split_name_parts("jean {de} {la} fontaine")
+      )
+
+      assert.same(
+        {
+          first = "Jean {de} {la}",
+          last = "fontaine",
+        },
+        BibtexParser:_split_name_parts("Jean {de} {la} fontaine")
+      )
+
+      assert.same(
+        {
+          first = "Jean De La",
+          last = "Fontaine",
+        },
+        BibtexParser:_split_name_parts("Jean De La Fontaine")
+      )
+
+      assert.same(
+        {
+          von = "jean De la",
+          last = "Fontaine",
+        },
+        BibtexParser:_split_name_parts("jean De la Fontaine")
+      )
+
+      assert.same(
+        {
+          first = "Jean",
+          von = "de",
+          last = "La Fontaine",
+        },
+        BibtexParser:_split_name_parts("Jean de La Fontaine")
+      )
+
+    end)
+
+    describe("in test suite", function()
+
+      describe("for the first name specification form First von Last", function()
+
+        it("Testing simple case with no von.", function()
+          assert.same(
+            {
+              first = "AA",
+              last = "BB",
+            },
+            BibtexParser:_split_name_parts("AA BB")
+          )
+        end)
+
+        it("Testing that Last cannot be empty.", function()
+          assert.same(
+            {
+              last = "AA",
+            },
+            BibtexParser:_split_name_parts("AA")
+          )
+        end)
+
+        it("Testing that Last cannot be empty.", function()
+          assert.same(
+            {
+              first = "AA",
+              last = "bb",
+            },
+            BibtexParser:_split_name_parts("AA bb")
+          )
+        end)
+
+        it("Testing that Last cannot be empty.", function()
+          assert.same(
+            {
+              last = "aa",
+            },
+            BibtexParser:_split_name_parts("aa")
+          )
+        end)
+
+        it("Testing simple von.", function()
+          assert.same(
+            {
+              first = "AA",
+              von = "bb",
+              last = "CC",
+            },
+            BibtexParser:_split_name_parts("AA bb CC")
+          )
+        end)
+
+        it("Testing simple von (with inner uppercase words)", function()
+          assert.same(
+            {
+              first = "AA",
+              von = "bb CC dd",
+              last = "EE",
+            },
+            BibtexParser:_split_name_parts("AA bb CC dd EE")
+          )
+        end)
+
+        it("Testing that digits are caseless (B fixes the case of 1B to uppercase).", function()
+          assert.same(
+            {
+              first = "AA 1B",
+              von = "cc",
+              last = "dd",
+            },
+            BibtexParser:_split_name_parts("AA 1B cc dd")
+          )
+        end)
+
+        it("Testing that digits are caseless (b fixes the case of 1b to lowercase)", function()
+          assert.same(
+            {
+              first = "AA",
+              von = "1b cc",
+              last = "dd",
+            },
+            BibtexParser:_split_name_parts("AA 1b cc dd")
+          )
+        end)
+
+        it("Testing that pseudo letters are caseless.", function()
+          assert.same(
+            {
+              first = "AA {b}B",
+              von = "cc",
+              last = "dd",
+            },
+            BibtexParser:_split_name_parts("AA {b}B cc dd")
+          )
+        end)
+
+        it("Testing that pseudo letters are caseless.", function()
+          assert.same(
+            {
+              first = "AA",
+              von = "{b}b cc",
+              last = "dd",
+            },
+            BibtexParser:_split_name_parts("AA {b}b cc dd")
+          )
+        end)
+
+        it("Testing that pseudo letters are caseless.", function()
+          assert.same(
+            {
+              first = "AA",
+              von = "{B}b cc",
+              last = "dd",
+            },
+            BibtexParser:_split_name_parts("AA {B}b cc dd")
+          )
+        end)
+
+        it("Testing that pseudo letters are caseless.", function()
+          assert.same(
+            {
+              first = "AA {B}B",
+              von = "cc",
+              last = "dd",
+            },
+            BibtexParser:_split_name_parts("AA {B}B cc dd")
+          )
+        end)
+
+        it("Testing that non letters are case less (in particular show how latex command are considered).", function()
+          assert.same(
+            {
+              first = "AA \\BB{b}",
+              von = "cc",
+              last = "dd",
+            },
+            BibtexParser:_split_name_parts("AA \\BB{b} cc dd")
+          )
+        end)
+
+        it("Testing that non letters are case less (in particular show how latex command are considered).", function()
+          assert.same(
+            {
+              first = "AA",
+              von = "\\bb{b} cc",
+              last = "dd",
+            },
+            BibtexParser:_split_name_parts("AA \\bb{b} cc dd")
+          )
+        end)
+
+        it("Testing that caseless words are grouped with First primilarily and then with Last.", function()
+          assert.same(
+            {
+              first = "AA {bb}",
+              von = "cc",
+              last = "DD",
+            },
+            BibtexParser:_split_name_parts("AA {bb} cc DD")
+          )
+        end)
+
+        it("Testing that caseless words are grouped with First primilarily and then with Last.", function()
+          assert.same(
+            {
+              first = "AA",
+              von = "bb",
+              last = "{cc} DD",
+            },
+            BibtexParser:_split_name_parts("AA bb {cc} DD")
+          )
+        end)
+
+        it("Testing that caseless words are grouped with First primilarily and then with Last.", function()
+          assert.same(
+            {
+              first = "AA {bb}",
+              last = "CC",
+            },
+            BibtexParser:_split_name_parts("AA {bb} CC")
+          )
+        end)
+
+      end)
+
+
+      describe("for the second,third specification form von Last First", function()
+
+        it("Simple case. Case do not matter for First.", function()
+          assert.same(
+            {
+              first = "AA",
+              von = "bb",
+              last = "CC",
+            },
+            BibtexParser:_split_name_parts("bb CC, AA")
+          )
+        end)
+
+        it("Simple case. Case do not matter for First.", function()
+          assert.same(
+            {
+              first = "aa",
+              von = "bb",
+              last = "CC",
+            },
+            BibtexParser:_split_name_parts("bb CC, aa")
+          )
+        end)
+
+        it("Testing simple von (with inner uppercase).", function()
+          assert.same(
+            {
+              first = "AA",
+              von = "bb CC dd",
+              last = "EE",
+            },
+            BibtexParser:_split_name_parts("bb CC dd EE, AA")
+          )
+        end)
+
+        it("Testing that the Last part cannot be empty.", function()
+          assert.same(
+            {
+              first = "AA",
+              last = "bb",
+            },
+            BibtexParser:_split_name_parts("bb, AA")
+          )
+        end)
+
+        it("Testing that first can be empty after coma", function()
+          assert.same(
+            {
+              last = "BB",
+            },
+            BibtexParser:_split_name_parts("BB,")
+          )
+        end)
+
+        it("Simple Jr. Case do not matter for it.", function()
+          assert.same(
+            {
+              first = "AA",
+              von = "bb",
+              last = "CC",
+              jr = "XX",
+            },
+            BibtexParser:_split_name_parts("bb CC,XX, AA")
+          )
+        end)
+
+        it("Simple Jr. Case do not matter for it.", function()
+          assert.same(
+            {
+              first = "AA",
+              von = "bb",
+              last = "CC",
+              jr = "xx",
+            },
+            BibtexParser:_split_name_parts("bb CC,xx, AA")
+          )
+        end)
+
+        it("Testing that jr can be empty in between comas.", function()
+          assert.same(
+            {
+              first = "AA",
+              last = "BB",
+            },
+            BibtexParser:_split_name_parts("BB, , AA")
+          )
+        end)
+
+      end)
+
+    end)
+
   end)
 
 end)
