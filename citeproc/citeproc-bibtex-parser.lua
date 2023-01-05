@@ -5,15 +5,18 @@
 --
 
 --[[
-  A PEG-based implementation of a Bib(La)TeX dateabase (.bib) parser
+  A PEG-based implementation of a Bib(La)TeX database (.bib) parser
   References notes: scripts/bibtex-parser-notes.md
 --]]
 
+
+-- @module bibtex_parser
 local bibtex_parser = {}
 
 local lpeg = require("lpeg")
 local unicode = require("unicode")
 local bibtex_data = require("citeproc-bibtex-data")
+local latex_parser = nil  -- load as needed
 local util = require("citeproc-util")
 
 local P = lpeg.P
@@ -112,28 +115,33 @@ local function concat_strings(pieces, strings)
 end
 
 
-
 -- The parser class
+---@class BibtexParser
 local BibtexParser = {
   grammar = get_bibtex_grammar(),
   -- config
   strings = {},
-  -- allow_escaped_braces = true,
-  convert_to_unicode = false,
-  -- common_strings = false,
-  splitted_names = false,
-  splitted_name_parts = false,
+  options = {
+    -- allow_escaped_braces = true,
+    convert_to_unicode = false,
+    -- common_strings = false,
+    split_names = false,
+    split_name_parts = false,
+  },
   -- variables
-  name_field_dict = {},
+  name_fields = {},
 }
 
+---Create a new BibtexParser instance.
+---@return BibtexParser
 function BibtexParser:new()
-  local obj = {
-  }
+  local obj = {}
+
+  obj.options = util.clone(self.options)
 
   for field, info in ipairs(bibtex_data.fields) do
     if info.type == "name" then
-      obj.name_field_dict[field] = true
+      obj.name_fields[field] = true
     end
   end
 
@@ -142,6 +150,12 @@ function BibtexParser:new()
   return obj
 end
 
+
+---@alias BibtexData table
+---@alias Exception table
+
+---comment
+---@return BibtexData?, Exception[]?
 function BibtexParser:parse(bib_str, strings)
   if strings then
     strings = setmetatable({}, {__index = strings})
@@ -150,7 +164,11 @@ function BibtexParser:parse(bib_str, strings)
   end
   local bib_objects = self.grammar:match(bib_str)
   if not bib_objects then
-    return nil, {"BibtexParser error."}
+    local error = {
+      type = "error",
+      message = "BibTeX parser error.",
+    }
+    return nil, {error}
   end
 
   local res = {
@@ -190,19 +208,21 @@ function BibtexParser:parse(bib_str, strings)
   return res, exceptions
 end
 
+
 function BibtexParser:_make_entry(object, strings)
   object.category = nil
   for field, value in pairs(object.fields) do
     value = concat_strings(value, strings)
 
-    -- if self.convert_to_unicode then
-    --   value = bibtex:convert_to_unicode(value)
-    -- end
+    if self.options.convert_to_unicode then
+      latex_parser = latex_parser or require("citeproc-latex-parser")
+      value = latex_parser.latex_to_unicode(value)
+    end
 
-    if self.name_field_dict[field] then
-      if self.splitted_names then
+    if self.name_fields[field] then
+      if self.options.split_names then
         value = bibtex_parser.split_names(value)
-        if self.splitted_name_parts then
+        if self.options.split_name_parts then
           for i, name in ipairs(value) do
             value[i] = bibtex_parser.split_name_parts(name)
           end
@@ -237,6 +257,13 @@ local function ignore_case(str)
   return Cf(char^1, function (a, b) return a * b end):match(str)
 end
 
+
+---@alias NameDict table
+---@alias NameStr string
+
+---Split BibTeX names
+---@param str NameStr name field value
+---@return NameStr[]
 function bibtex_parser.split_names(str)
   local delimiter_and = ignore_case("and") * (space + -1)
   local name = (balanced - space * delimiter_and)^1
@@ -244,6 +271,9 @@ function bibtex_parser.split_names(str)
   return names:match(str)
 end
 
+---Split BibTeX name parts
+---@param str NameStr single name string
+---@return NameDict
 function bibtex_parser.split_name_parts(str)
   str = util.strip(str)
   if string.match(str, ",$") then
@@ -434,16 +464,20 @@ function bibtex_parser._split_von_last_parts(str)
   return name
 end
 
-bibtex_parser.BibtexParser = BibtexParser
-local _default_parser = BibtexParser:new()
+
+bibtex_parser._default_parser = BibtexParser:new()
 
 
-function bibtex_parser.parse(bib_str, strings, parser)
-  if not parser then
-    parser = _default_parser
-  end
-
-  return parser:parse(bib_str, strings)
+---comment
+---@param bib_str string input string
+---@param strings table<string, string> strings
+---@return BibtexData?, Exception[]?
+function bibtex_parser.parse(bib_str, strings)
+  return bibtex_parser._default_parser:parse(bib_str, strings)
 end
+
+
+bibtex_parser.BibtexParser = BibtexParser
+
 
 return bibtex_parser

@@ -1,16 +1,18 @@
-kpse.set_program_name("luatex")
+kpse.set_program_name("texlua")
 
 local kpse_searcher = package.searchers[2]
-package.searchers[2] = function (name)
-  local file, err = package.searchpath(name, package.path)
-  if not err then
-    return loadfile(file)
+---@diagnostic disable-next-line: duplicate-set-field
+package.searchers[2] = function (pkg_name)
+  local pkg_file = package.searchpath(pkg_name, package.path)
+  if pkg_file then
+    return loadfile(pkg_file)
   end
-  return kpse_searcher(name)
+  return kpse_searcher(pkg_name)
 end
 
 
 require("busted.runner")()
+
 require("lualibs")
 local lfs = require("lfs")
 -- local inspect = require("inspect")

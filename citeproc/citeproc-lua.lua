@@ -6,7 +6,7 @@
 -- Repository: https://github.com/zepinglee/citeproc-lua
 --
 
-kpse.set_program_name("luatex")
+kpse.set_program_name("texlua", "citeproc-lua")
 
 local cli = require("citeproc-cli")
 cli.main()

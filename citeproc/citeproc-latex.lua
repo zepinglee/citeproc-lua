@@ -86,14 +86,17 @@ function csl.enable_linking()
 end
 
 
+---comment
+---@param citation_info string
 function csl.cite(citation_info)
   -- "citationID={ITEM-UNAVAILABLE@1},citationItems={{id={ITEM-UNAVAILABLE}}},properties={noteIndex={1}}"
   if not csl.engine then
     csl.error("CSL engine is not initialized.")
   end
 
-  -- util.debub(citation_info)
+  -- util.debug(citation_info)
   local citation = core.make_citation(citation_info)
+  -- util.debug(citation)
 
   local citation_str
   if csl.preview_mode then

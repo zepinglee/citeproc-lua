@@ -39,7 +39,16 @@ function util.clone(obj)
   end
 end
 
+---Limitation: Hierarchical or multiple inheritance is not supported.
+---@param obj table
+---@param class table
+---@return boolean
+function util.is_instance(obj, class)
+  return (type(obj) == "table" and obj._type == class._type)
+end
+
 function util.join(list, delimiter)
+  -- Why not return table.concat(list, delimiter)?
   local res = {}
   for i, item in ipairs(list) do
     if i > 1 then
@@ -194,16 +203,18 @@ function util.split_multiple(str, seps, include_sep)
     local start, sep, stop = table.unpack(sep_tuple)
     local item = string.sub(str, previous, start - 1)
     if include_sep then
-      item = {item, sep}
+      table.insert(res, {item, sep})
+    else
+      table.insert(res, item)
     end
-    table.insert(res, item)
     previous = stop
   end
   local item = string.sub(str, previous, #str)
   if include_sep then
-    item = {item, ""}
+    table.insert(res, {item, ""})
+  else
+    table.insert(res, item)
   end
-  table.insert(res, item)
   return res
 end
 
@@ -545,12 +556,23 @@ util.word_boundaries = {
 
 -- Text-case
 
-function util.is_lower (str)
-  return unicode.utf8.lower(str) == str
+--- Return True if all cased characters in the string are lowercase and there
+--- is at least one cased character, False otherwise.
+---@param str string
+---@return boolean
+function util.is_lower(str)
+  if not str then
+    print(debug.traceback())
+  end
+  return unicode.utf8.lower(str) == str and unicode.utf8.upper(str) ~= str
 end
 
-function util.is_upper (str)
-  return unicode.utf8.upper(str) == str
+--- Return True if all cased characters in the string are uppercase and there
+--- is at least one cased character, False otherwise.
+---@param str string
+---@return boolean
+function util.is_upper(str)
+  return unicode.utf8.upper(str) == str and unicode.utf8.lower(str) ~= str
 end
 
 function util.capitalize(str)

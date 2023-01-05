@@ -8,17 +8,8 @@
     "Lua.diagnostics.globals": [
         "describe",
         "it",
-        "kpse",
-        "lfs",
-        "luatexbase",
         "pending",
-        "tex",
-        "texio",
-        "token",
-        "utilities"
-    ],
-    "Lua.workspace.library": [
-        "${3rd}/lfs/library"
-    ],
-    "Lua.workspace.checkThirdParty": false
+        "utilities",
+        "lfs"
+    ]
 }

@@ -1,25 +1,26 @@
-kpse.set_program_name("luatex")
+kpse.set_program_name("texlua")
 
 local kpse_searcher = package.searchers[2]
 ---@diagnostic disable-next-line: duplicate-set-field
-package.searchers[2] = function(name)
-  local file, err = package.searchpath(name, package.path)
-  if not err then
-    return loadfile(file)
+package.searchers[2] = function (pkg_name)
+  local pkg_file = package.searchpath(pkg_name, package.path)
+  if pkg_file then
+    return loadfile(pkg_file)
   end
-  return kpse_searcher(name)
+  return kpse_searcher(pkg_name)
 end
 
 
 require("busted.runner")()
+
 local bibtex_parser = require("citeproc-bibtex-parser")
 local BibtexParser = bibtex_parser.BibtexParser
 local util = require("citeproc-util")
 
 
-describe("BibTeX-parser", function()
+describe("BibTeX-parser", function ()
 
-  describe("parse entries", function()
+  describe("parse entries", function ()
 
     it("entry", function ()
       local bib = [[
@@ -69,7 +70,7 @@ describe("BibTeX-parser", function()
 
   end)
 
-  describe("parse @string commands", function()
+  describe("parse @string commands", function ()
 
     it("string command", function ()
       -- btxdoc.pdf, p. 2
@@ -85,7 +86,7 @@ describe("BibTeX-parser", function()
 
   end)
 
-  describe("parse @preamble commands", function()
+  describe("parse @preamble commands", function ()
 
     it("preamble command", function ()
       -- btxdoc.pdf, p. 4
@@ -100,10 +101,9 @@ describe("BibTeX-parser", function()
 
   end)
 
+  describe("splits names", function ()
 
-  describe("splits names", function()
-
-    it("", function()
+    it("", function ()
       assert.same(
         {
           "Goossens, Michel",
@@ -114,7 +114,7 @@ describe("BibTeX-parser", function()
       )
     end)
 
-    it("with braces", function()
+    it("with braces", function ()
       assert.same(
         {
           "Foo",
@@ -124,14 +124,14 @@ describe("BibTeX-parser", function()
       )
     end)
 
-    it("empty", function()
+    it("empty", function ()
       assert.same(
         {},
         bibtex_parser.split_names("")
       )
     end)
 
-    it("with and- prefix", function()
+    it("with and- prefix", function ()
       assert.same(
         {
           "Foo Andes",
@@ -140,7 +140,7 @@ describe("BibTeX-parser", function()
       )
     end)
 
-    it("starting with and", function()
+    it("starting with and", function ()
       assert.same(
         {
           "Foo",
@@ -149,7 +149,7 @@ describe("BibTeX-parser", function()
       )
     end)
 
-    it("starting with and", function()
+    it("starting with and", function ()
       assert.same(
         {
           "Foo",
@@ -158,7 +158,7 @@ describe("BibTeX-parser", function()
       )
     end)
 
-    it("ending with and", function()
+    it("ending with and", function ()
       -- BibTeX actually produces {"and"}
       assert.same(
         {
@@ -168,7 +168,7 @@ describe("BibTeX-parser", function()
       )
     end)
 
-    it("ending with and", function()
+    it("ending with and", function ()
       assert.same(
         {
           "Foo",
@@ -177,7 +177,7 @@ describe("BibTeX-parser", function()
       )
     end)
 
-    it("ending with and", function()
+    it("ending with and", function ()
       assert.same(
         {
           "Foo,",
@@ -189,9 +189,9 @@ describe("BibTeX-parser", function()
 
   end)
 
-  describe("splits name parts", function()
+  describe("splits name parts", function ()
 
-    it("with first form", function()
+    it("with first form", function ()
       assert.same(
         {
           first = "First",
@@ -202,7 +202,7 @@ describe("BibTeX-parser", function()
       )
     end)
 
-    it("with second form", function()
+    it("with second form", function ()
       assert.same(
         {
           first = "First",
@@ -213,7 +213,7 @@ describe("BibTeX-parser", function()
       )
     end)
 
-    it("with third form", function()
+    it("with third form", function ()
       assert.same(
         {
           first = "First",
@@ -225,7 +225,7 @@ describe("BibTeX-parser", function()
       )
     end)
 
-    it("example 1", function()
+    it("example 1", function ()
       assert.same(
         {
           first = "Per",
@@ -235,7 +235,7 @@ describe("BibTeX-parser", function()
       )
     end)
 
-    it("example 1 mistake", function()
+    it("example 1 mistake", function ()
       assert.same(
         {
           first = "Per Brinch",
@@ -245,7 +245,7 @@ describe("BibTeX-parser", function()
       )
     end)
 
-    it("example 2", function()
+    it("example 2", function ()
       assert.same(
         {
           first = "Charles Louis Xavier Joseph",
@@ -256,7 +256,7 @@ describe("BibTeX-parser", function()
       )
     end)
 
-    it('with conbinations of format "First von Last" in sec. 11 of ttb', function()
+    it('with conbinations of format "First von Last" in sec. 11 of ttb', function ()
 
       assert.same(
         {
@@ -328,11 +328,11 @@ describe("BibTeX-parser", function()
     end)
 
     -- http://maverick.inria.fr/~Xavier.Decoret/resources/xdkbibtex/bibtex_summary.html
-    describe("in test suite", function()
+    describe("in test suite", function ()
 
-      describe("for the first name specification form First von Last", function()
+      describe("for the first name specification form First von Last", function ()
 
-        it("Testing simple case with no von.", function()
+        it("Testing simple case with no von.", function ()
           assert.same(
             {
               first = "AA",
@@ -342,7 +342,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing that Last cannot be empty.", function()
+        it("Testing that Last cannot be empty.", function ()
           assert.same(
             {
               last = "AA",
@@ -351,7 +351,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing that Last cannot be empty.", function()
+        it("Testing that Last cannot be empty.", function ()
           assert.same(
             {
               first = "AA",
@@ -361,7 +361,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing that Last cannot be empty.", function()
+        it("Testing that Last cannot be empty.", function ()
           assert.same(
             {
               last = "aa",
@@ -370,7 +370,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing simple von.", function()
+        it("Testing simple von.", function ()
           assert.same(
             {
               first = "AA",
@@ -381,7 +381,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing simple von (with inner uppercase words)", function()
+        it("Testing simple von (with inner uppercase words)", function ()
           assert.same(
             {
               first = "AA",
@@ -392,7 +392,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing that digits are caseless (B fixes the case of 1B to uppercase).", function()
+        it("Testing that digits are caseless (B fixes the case of 1B to uppercase).", function ()
           assert.same(
             {
               first = "AA 1B",
@@ -403,7 +403,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing that digits are caseless (b fixes the case of 1b to lowercase)", function()
+        it("Testing that digits are caseless (b fixes the case of 1b to lowercase)", function ()
           assert.same(
             {
               first = "AA",
@@ -414,7 +414,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing that pseudo letters are caseless.", function()
+        it("Testing that pseudo letters are caseless.", function ()
           assert.same(
             {
               first = "AA {b}B",
@@ -425,7 +425,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing that pseudo letters are caseless.", function()
+        it("Testing that pseudo letters are caseless.", function ()
           assert.same(
             {
               first = "AA",
@@ -436,7 +436,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing that pseudo letters are caseless.", function()
+        it("Testing that pseudo letters are caseless.", function ()
           assert.same(
             {
               first = "AA",
@@ -447,7 +447,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing that pseudo letters are caseless.", function()
+        it("Testing that pseudo letters are caseless.", function ()
           assert.same(
             {
               first = "AA {B}B",
@@ -458,7 +458,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing that non letters are case less (in particular show how latex command are considered).", function()
+        it("Testing that non letters are case less (in particular show how latex command are considered).", function ()
           assert.same(
             {
               first = "AA \\BB{b}",
@@ -469,7 +469,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing that non letters are case less (in particular show how latex command are considered).", function()
+        it("Testing that non letters are case less (in particular show how latex command are considered).", function ()
           assert.same(
             {
               first = "AA",
@@ -480,7 +480,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing that caseless words are grouped with First primilarily and then with Last.", function()
+        it("Testing that caseless words are grouped with First primilarily and then with Last.", function ()
           assert.same(
             {
               first = "AA {bb}",
@@ -491,7 +491,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing that caseless words are grouped with First primilarily and then with Last.", function()
+        it("Testing that caseless words are grouped with First primilarily and then with Last.", function ()
           assert.same(
             {
               first = "AA",
@@ -502,7 +502,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing that caseless words are grouped with First primilarily and then with Last.", function()
+        it("Testing that caseless words are grouped with First primilarily and then with Last.", function ()
           assert.same(
             {
               first = "AA {bb}",
@@ -515,9 +515,9 @@ describe("BibTeX-parser", function()
       end)
 
 
-      describe("for the second,third specification form von Last First", function()
+      describe("for the second,third specification form von Last First", function ()
 
-        it("Simple case. Case do not matter for First.", function()
+        it("Simple case. Case do not matter for First.", function ()
           assert.same(
             {
               first = "AA",
@@ -528,7 +528,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Simple case. Case do not matter for First.", function()
+        it("Simple case. Case do not matter for First.", function ()
           assert.same(
             {
               first = "aa",
@@ -539,7 +539,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing simple von (with inner uppercase).", function()
+        it("Testing simple von (with inner uppercase).", function ()
           assert.same(
             {
               first = "AA",
@@ -550,7 +550,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing that the Last part cannot be empty.", function()
+        it("Testing that the Last part cannot be empty.", function ()
           assert.same(
             {
               first = "AA",
@@ -560,7 +560,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing that first can be empty after coma", function()
+        it("Testing that first can be empty after coma", function ()
           assert.same(
             {
               last = "BB",
@@ -569,7 +569,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Simple Jr. Case do not matter for it.", function()
+        it("Simple Jr. Case do not matter for it.", function ()
           assert.same(
             {
               first = "AA",
@@ -581,7 +581,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Simple Jr. Case do not matter for it.", function()
+        it("Simple Jr. Case do not matter for it.", function ()
           assert.same(
             {
               first = "AA",
@@ -593,7 +593,7 @@ describe("BibTeX-parser", function()
           )
         end)
 
-        it("Testing that jr can be empty in between comas.", function()
+        it("Testing that jr can be empty in between comas.", function ()
           assert.same(
             {
               first = "AA",
@@ -605,7 +605,7 @@ describe("BibTeX-parser", function()
 
       end)
 
-      it("further remarks", function()
+      it("further remarks", function ()
 
         assert.same(
           {

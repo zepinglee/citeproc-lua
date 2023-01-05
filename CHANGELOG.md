@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add hyperlinks to citations when `hyperref` is loaded.
 - Add backref.
 - Add journal abbreviation.
+- The `title`s and `booktitle`s from BibTeX data are converted to sentence case.
 
 ### Fixed
 

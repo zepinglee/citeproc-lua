@@ -3,7 +3,6 @@
 hard filehook
 hard l3kernel
 hard l3packages  # xparse
-hard lpeg
 hard lua-uca
 hard lualibs  # JSON parser
 hard luatex

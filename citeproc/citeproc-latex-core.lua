@@ -7,7 +7,7 @@
 local core = {}
 
 local citeproc = require("citeproc")
-local bibtex  -- = require("citeproc-bibtex")  -- load on demand
+local bibtex2csl  -- = require("citeproc-bibtex-parser")  -- load on demand
 local util = citeproc.util
 require("lualibs")
 local latex_parser = require("citeproc-latex-parser")
@@ -90,8 +90,8 @@ local function read_data_file(data_file)
       csl_items = {}
     end
   elseif extension == ".bib" then
-    bibtex = bibtex or require("citeproc-bibtex")
-    csl_items = bibtex.parse(contents)
+    bibtex2csl = bibtex2csl or require("citeproc-bibtex2csl")
+    csl_items = bibtex2csl.parse_bibtex_to_csl(contents, true, true, true, true)
   end
 
   return file_name, csl_items
@@ -192,10 +192,12 @@ function core.make_citation(citation_info)
   for i, item in ipairs(citation.citationItems) do
     local citation_item = parse_latex_prop(item)
     if citation_item.prefix then
-      citation_item.prefix = latex_parser.convert_latex_to_rich_text(citation_item.prefix)
+      -- util.debug(citation_item.prefix)
+      citation_item.prefix = latex_parser.latex_to_pseudo_html(citation_item.prefix, true, false)
+      -- util.debug(citation_item.prefix)
     end
     if citation_item.suffix then
-      citation_item.suffix = latex_parser.convert_latex_to_rich_text(citation_item.suffix)
+      citation_item.suffix = latex_parser.latex_to_pseudo_html(citation_item.suffix, true, false)
     end
     citation.citationItems[i] = citation_item
   end

@@ -7,6 +7,7 @@
 local output_module = {}
 
 local unicode = require("unicode")
+local citeproc_unicode = require("citeproc-unicode")
 local dom = require("luaxml-domobject")
 
 local util = require("citeproc-util")
@@ -33,17 +34,27 @@ function LocalizedQuotes:new(outer_open, outer_close, inner_open, inner_close, p
   return o
 end
 
-
+-- Inspired by:
+-- https://github.com/zotero/citeproc-rs/blob/master/crates/io/src/output/markup.rs#L67
+-- https://hackage.haskell.org/package/pandoc-types-1.22.2.1/docs/Text-Pandoc-Definition.html
+---@class InlineElement
 local InlineElement = {
   _type = "InlineElement",
   _base_class = "InlineElement",
+  value = nil,
+  inlines = nil,
 }
 
-function InlineElement:derive(type)
+
+
+---comment
+---@param class_name string
+---@return table
+function InlineElement:derive(class_name)
   local o = {
-    _type  = type,
+    _type  = class_name,
   }
-  self[type] = o
+  -- self[class_name] = o
   setmetatable(o, self)
   self.__index = self
   o.__index = o
@@ -60,6 +71,7 @@ function InlineElement:new(inlines)
 end
 
 
+---@class PlainText
 local PlainText = InlineElement:derive("PlainText")
 
 function PlainText:new(value)
@@ -70,6 +82,7 @@ function PlainText:new(value)
 end
 
 
+---@class Formatted
 local Formatted = InlineElement:derive("Formatted")
 
 function Formatted:new(inlines, formatting)
@@ -81,6 +94,7 @@ function Formatted:new(inlines, formatting)
 end
 
 
+---@class Micro
 local Micro = InlineElement:derive("Micro")
 
 -- This is how we can flip-flop only user-supplied styling.
@@ -93,6 +107,7 @@ function Micro:new(inlines)
 end
 
 
+---@class Quoted
 local Quoted = InlineElement:derive("Quoted")
 
 function Quoted:new(inlines, localized_quotes)
@@ -110,6 +125,7 @@ function Quoted:new(inlines, localized_quotes)
 end
 
 
+---@class Code
 local Code = InlineElement:derive("Code")
 
 function Code:new(value)
@@ -120,6 +136,7 @@ function Code:new(value)
 end
 
 
+---@class MathML
 local MathML = InlineElement:derive("MathML")
 
 function MathML:new(value)
@@ -130,6 +147,7 @@ function MathML:new(value)
 end
 
 
+---@class MathTeX
 local MathTeX = InlineElement:derive("MathTeX")
 
 function MathTeX:new(value)
@@ -140,6 +158,7 @@ function MathTeX:new(value)
 end
 
 
+---@class NoCase
 local NoCase = InlineElement:derive("NoCase")
 
 function NoCase:new(inlines)
@@ -150,6 +169,7 @@ function NoCase:new(inlines)
 end
 
 
+---@class NoDecor
 local NoDecor = InlineElement:derive("NoDecor")
 
 function NoDecor:new(inlines)
@@ -160,6 +180,7 @@ function NoDecor:new(inlines)
 end
 
 
+---@class Linked
 local Linked = InlineElement:derive("Linked")
 
 function Linked:new(value, href)
@@ -171,6 +192,7 @@ function Linked:new(value, href)
 end
 
 
+---@class Div
 local Div = InlineElement:derive("Div")
 
 function Div:new(inlines, display)
@@ -182,6 +204,7 @@ function Div:new(inlines, display)
 end
 
 
+---@class CiteInline
 local CiteInline = InlineElement:derive("CiteInline")
 
 function CiteInline:new(inlines, cite_item)
@@ -666,6 +689,68 @@ function OutputFormat:with_format(inlines, formatting)
   return self:format_list(inlines, formatting)
 end
 
+
+---Check if there is a lowercase word not in CSL's stop words
+---@param str string
+---@return boolean
+local function is_str_sentence_case(str)
+  local segments = util.segment_words(str)
+  for _, segment in ipairs(segments) do
+    local word = segment[1]
+    if util.is_lower(word) and not util.stop_words[word] then
+      -- util.debug(word)
+      return true
+    end
+  end
+  return false
+end
+
+---Returns true if the inlines contain a lowercase word which is not CSL's stop words.
+---@param inlines table[]
+---@return boolean
+function OutputFormat:is_sentence_case(inlines)
+  for _, inline in ipairs(inlines) do
+    if util.is_instance(inline, PlainText) then
+      if is_str_sentence_case(inline.value) then
+        -- util.debug(inline.value)
+        return true
+      end
+
+    elseif util.is_instance(inline, Quoted)
+        or util.is_instance(inline, NoCase)
+        or util.is_instance(inline, NoDecor)
+        or util.is_instance(inline, CiteInline)
+        or (util.is_instance(inline, Formatted)
+            and inline.formatting["font-variant"] ~= "small-caps"
+            and inline.formatting["vertical-align"] ~= "sup"
+            and inline.formatting["vertical-align"] ~= "sub") then
+      if self:is_sentence_case(inline.inlines) then
+        return true
+      end
+    end
+  end
+  return false
+end
+
+---1. For uppercase strings, the first character of the string remains capitalized.
+---   All other letters are lowercased.
+---2. For lower or mixed case strings, the first character of the first word is
+---   capitalized if the word is lowercase.
+---3. All other words are lowercased if capitalized.
+---@param inlines table[]
+---@param check_sentence_case boolean
+function OutputFormat:convert_sentence_case(inlines, check_sentence_case)
+  if not inlines or #inlines == 0  then
+    return
+  end
+  local is_uppercase = false  -- TODO
+  -- util.debug(check_sentence_case)
+  -- util.debug(self:is_sentence_case(inlines))
+  if not check_sentence_case or not self:is_sentence_case(inlines) then
+    self:apply_text_case_inner(inlines, "sentence-strong", false, is_uppercase)
+  end
+end
+
 function OutputFormat:apply_text_case(inlines, text_case, is_english)
   if not inlines or #inlines == 0 or not text_case then
     return
@@ -702,8 +787,12 @@ function OutputFormat:apply_text_case_inner(inlines, text_case, seen_one, is_upp
     end
     local is_last = (i == #inlines)
     if inline._type == "PlainText" then
+      -- util.debug(inline.value)
+      -- util.debug(text_case)
       inline.value = self:transform_case(inline.value, text_case, seen_one, is_last, is_uppercase);
+      -- util.debug(inline.value)
       seen_one = seen_one or string_contains_word(inline.value)
+
     elseif inline._type == "NoCase" or
            inline._type == "NoDecor" or
            inline._type == "Code" or
@@ -716,6 +805,7 @@ function OutputFormat:apply_text_case_inner(inlines, text_case, seen_one, is_upp
 
     elseif inline._type == "Formatted" or inline._type == "Quoted" or inline._type == "CiteInline" then
       seen_one = self:apply_text_case_inner(inline.inlines, text_case, seen_one, is_uppercase) or seen_one
+
     end
   end
   return seen_one
@@ -730,85 +820,135 @@ local function transform_uppercase(str)
   return string.gsub(str, utf8.charpattern, unicode.utf8.upper)
 end
 
-local function transform_first_word(str, transform)
-  -- TODO: [Unicode word boundaries](https://www.unicode.org/reports/tr29/#Word_Boundaries)
-  local segments = util.segment_words(str)
-  for _, segment in ipairs(segments) do
-    if segment[1] ~= "" then
-      segment[1] = transform(segment[1])
-      break
-    end
-  end
-  local res = ""
-  for _, segment in ipairs(segments) do
-    res = res .. segment[1] .. segment[2]
-  end
-  return res
-end
-
-local function transform_each_word(str, seen_one, is_last, transform)
-  -- util.debug(str)
-  local segments = util.segment_words(str)
-  -- util.debug(segments)
-  -- print(debug.traceback())
-
-  local first_idx
-  local last_idx
-  for i, segment in ipairs(segments) do
-    if segment[1] ~= "" then
-      if not first_idx then
-        first_idx = i
+---comment
+---@param str string
+---@param is_first boolean
+---@param transform function
+---@return string
+local function transform_first_word(str, is_first, transform)
+  if is_first then
+    local segments = citeproc_unicode.words(str)
+    for i, segment in ipairs(segments) do
+      if citeproc_unicode.isalnum(segment) then
+        segments[i] = transform(segment)
+        break
       end
-      last_idx = i
     end
+    str = table.concat(segments)
   end
-
-  local immediate_before = ""
-  local last_punct = ""
-  for i, segment in ipairs(segments) do
-    local is_first_word = not seen_one and i == first_idx
-    local is_last_word = is_last and i == last_idx
-    local follows_colon = (
-      last_punct == ":" or
-      last_punct == "!" or
-      last_punct == "?" or
-      last_punct == "?")
-    local no_stop_word = is_first_word or is_last_word or follows_colon or (segment[2] == "-" and immediate_before ~= "-")
-
-    if (immediate_before == "." or immediate_before == "-") and #segment[1] == 1 then
-    else
-      segment[1] = transform(segment[1], no_stop_word)
-    end
-
-    if segment[1] ~= "" then
-      immediate_before = segment[1]
-      last_punct = string.match(segment[1], "(%S)%s*$") or last_punct
-    end
-    if segment[2] ~= "" then
-      immediate_before = segment[2]
-      last_punct = string.match(segment[2], "(%S)%s*$") or last_punct
-    end
-  end
-  local res = ""
-  for _, segment in ipairs(segments) do
-    res = res .. segment[1] .. segment[2]
-  end
-  return res
+  return str
 end
 
+
+local SegmentType = {
+  Word = 1,
+  Puctuation = 2,
+  EndingPunctuation = 3,  -- "?" and "!" excluding "." Do we need a sentence break?
+  Colon = 4,  -- Including em-dash
+  Other = 0,
+}
+
+---comment
+---@param str string
+---@param seen_one boolean
+---@param is_last_inline boolean
+---@param transform function
+---@return string
+local function transform_each_word(str, seen_one, is_last_inline, transform)
+  local segments = citeproc_unicode.words(str)
+
+  local segment_type_list = {}
+  local last_word_idx
+  for i, segment in ipairs(segments) do
+    segment_type_list[i] = SegmentType.Other
+
+    -- Do not use isalnum(): "can't"
+    if unicode.grapheme.match(segment, "%w") then
+      segment_type_list[i] = SegmentType.Word
+      last_word_idx = i
+
+    elseif unicode.grapheme.match(segment, "%p") then
+      segment_type_list[i] = SegmentType.Puctuation
+      if segment == "!" or segment == "?" then
+        segment_type_list[i] = SegmentType.EndingPunctuation
+      -- elseif segment == ":" or segment == "—" then
+      elseif segment == ":" then
+        -- Em dash is not taken into consideration, see "Stability—with Job" in `textcase_TitleWithEmDash.txt`
+        segment_type_list[i] = SegmentType.Colon
+      end
+    end
+  end
+
+  local sentence_begin = not seen_one
+  local after_colon = false
+
+  for i, segment in ipairs(segments) do
+    if segment_type_list[i] == SegmentType.Word then
+      local is_first_word = sentence_begin
+      local is_last_word = segment_type_list[i+1] == SegmentType.EndingPunctuation
+        or (is_last_inline and i == last_word_idx)
+      -- See "Pro-Environmental" in `textcase_StopWordBeforeHyphen.txt`
+      -- but not "Out-of-Fashion" in `textcase_TitleCaseWithHyphens.txt`.
+      local ignore_stop_word = segments[i+1] == "-" and segments[i-1] ~= "-"
+
+      -- util.debug(segment)
+      -- util.debug(after_colon)
+      -- See "07-x" in `textcase_LastChar.txt`
+      if not (segments[i-1] == "-" and unicode.grapheme.len(segment) == 1) then
+        segments[i] = transform(segment, is_first_word, after_colon, is_last_word, ignore_stop_word)
+
+      end
+      -- util.debug(segments[i])
+
+      sentence_begin = false
+      after_colon = false
+
+    elseif segment_type_list[i] == SegmentType.EndingPunctuation then
+      sentence_begin = true
+
+    elseif segment_type_list[i] == SegmentType.Colon then
+      after_colon = true
+
+    end
+  end
+  return table.concat(segments)
+end
+
+---comment
+---@param word string
+---@return string
 local function transform_capitalize_word_if_lower(word)
-  if util.is_lower(word) then
-    return string.gsub(word, utf8.charpattern, unicode.utf8.upper, 1)
+  if citeproc_unicode.islower(word) then
+    local res = string.gsub(word, utf8.charpattern, unicode.utf8.upper, 1)
+    return res
   else
     return word
   end
 end
 
-local function title_case_word(word, no_stop_word)
+local function title_case_word(word, is_first, after_end_punct, is_last, ignore_stop_word)
   -- Entirely non-English
   -- e.g. "β" in "β-Carotine"
-  if string.match(word, "%a") and (not util.stop_words[word] or no_stop_word) and util.is_lower(word) then
-    return string.gsub(word, utf8.charpattern, unicode.utf8.upper, 1)
+  -- TODO: two-word cases like "due to"
+  -- util.debug(word)
+  -- util.debug(ignore_stop_word)
+  if (is_first or is_last or after_end_punct or ignore_stop_word or not util.stop_words[word])
+      and string.match(word, "%a") and citeproc_unicode.islower(word) then
+    return citeproc_unicode.capitalize(word)
+  else
+    return word
+  end
+end
+
+local function transform_lowercase_if_capitalize(word, is_first, after_end_punct, is_last, is_stop_word)
+  if not (is_first or after_end_punct) then
+    local is_capitalize_word = false
+    local lower_first = string.gsub(word, utf8.charpattern, unicode.utf8.lower, 1)
+    if util.is_lower(lower_first) then
+      return lower_first
+    else
+      return word
+    end
   else
     return word
   end
@@ -821,15 +961,20 @@ function OutputFormat:transform_case(str, text_case, seen_one, is_last, is_upper
   elseif text_case == "uppercase" then
     res = transform_uppercase(str)
   elseif text_case == "capitalize-first" then
-    res = transform_first_word(str, transform_capitalize_word_if_lower)
+    res = transform_first_word(str, not seen_one, transform_capitalize_word_if_lower)
   elseif text_case == "capitalize-all" then
-    res = transform_each_word(str, false, false, transform_capitalize_word_if_lower)
+    res = transform_each_word(str, false, true, transform_capitalize_word_if_lower)
   elseif text_case == "sentence" then
     -- TODO: if uppercase convert all to lowercase
-    res = transform_first_word(str, transform_capitalize_word_if_lower)
+    res = transform_first_word(str, not seen_one, transform_capitalize_word_if_lower)
   elseif text_case == "title" then
     -- TODO: if uppercase convert all to lowercase
     res = transform_each_word(str, seen_one, is_last, title_case_word)
+  elseif text_case == "sentence-strong" then
+    -- Conversion for BibTeX title fields to sentence case
+    -- TODO: if uppercase convert all to lowercase
+    res = transform_each_word(str, seen_one, is_last, transform_lowercase_if_capitalize)
+    res = transform_first_word(res, not seen_one, transform_capitalize_word_if_lower)
   end
   return res
 end
@@ -1315,16 +1460,19 @@ function Markup:write_inline(inline, context)
       return self:write_cite(inline, context)
 
     elseif inline._type == "Code" then
-      return self:write_code(inline.inlines, context)
+      return self:write_code(inline, context)
 
     elseif inline._type == "MathML" then
-      return self:write_mathml(inline.inlines, context)
+      return self:write_mathml(inline, context)
 
     elseif inline._type == "MathTeX" then
-      return self:write_math_tex(inline.inlines, context)
+      return self:write_math_tex(inline, context)
 
-    elseif inline._type == "NoCase" or inline._type == "NoDecor" then
-      return self:write_inlines(inline.inlines, context)
+    elseif inline._type == "NoCase" then
+      return self:write_nocase(inline, context)
+
+    elseif inline._type == "NoDecor" then
+      return self:write_nodecor(inline, context)
 
     else
       return self:write_inlines(inline.inlines, context)
@@ -1356,6 +1504,14 @@ function Markup:write_link(inline, context)
 end
 
 function Markup:write_cite(inline, context)
+  return self:write_inlines(inline.inlines, context)
+end
+
+function Markup:write_nocase(inline, context)
+  return self:write_inlines(inline.inlines, context)
+end
+
+function Markup:write_nodecor(inline, context)
   return self:write_inlines(inline.inlines, context)
 end
 
@@ -1682,6 +1838,32 @@ function DisamStringFormat:flatten_seq_ir(ir)
 end
 
 
+local PseudoHtml = HtmlWriter:new()
+
+function PseudoHtml :write_escaped(str, context)
+  -- str = string.gsub(str, "%&", "&#38;")
+  -- str = string.gsub(str, "<", "&#60;")
+  -- str = string.gsub(str, ">", "&#62;")
+  -- for char, sub in pairs(util.superscripts) do
+  --   str = string.gsub(str, char, "<sup>" .. sub .. "</sup>")
+  -- end
+  return str
+end
+
+function PseudoHtml:write_mathml(inline, context)
+  return string.format('<math>%s</math>', inline.value)
+end
+
+function PseudoHtml:write_math_tex(inline, context)
+  return string.format("<math>%s</math>", inline.value)
+end
+
+function PseudoHtml:write_nocase(inline, context)
+  local str = self:write_inlines(inline.inlines, context)
+  return string.format('<span class="nocase">%s</span>', str)
+end
+
+
 function InlineElement.has_space(inlines)
   local str = DisamStringFormat:output(inlines)
   if not str then
@@ -1765,6 +1947,9 @@ output_module.Quoted = Quoted
 output_module.Linked = Linked
 output_module.Div = Div
 output_module.CiteInline = CiteInline
+output_module.Code = Code
+output_module.MathTeX = MathTeX
+output_module.MathTML = MathML
 output_module.NoCase = NoCase
 output_module.NoDecor = NoDecor
 
@@ -1776,5 +1961,6 @@ output_module.HtmlWriter = HtmlWriter
 output_module.PlainTextWriter = PlainTextWriter
 output_module.DisamStringFormat = DisamStringFormat
 output_module.SortStringFormat = SortStringFormat
+output_module.PseudoHtml = PseudoHtml
 
 return output_module

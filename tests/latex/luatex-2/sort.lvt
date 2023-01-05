@@ -11,7 +11,7 @@
   style  = sort,
   locale = cs-CZ,
 }
-\addbibresource{sort.bib}
+\addbibresource{sort.json}
 
 
 \begin{document}

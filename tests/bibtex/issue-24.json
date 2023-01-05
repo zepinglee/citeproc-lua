@@ -40,7 +40,7 @@
    ]
   },
   "page" : "1-7",
-  "title" : "Design of a <span class=\u0022nocase\u0022><span class=\u0022nocase\u0022>Single Actuator Walking Robot</span></span> via <span class=\u0022nocase\u0022><span class=\u0022nocase\u0022>Mechanism Synthesis Based</span></span> on <span class=\u0022nocase\u0022><span class=\u0022nocase\u0022>Genetic Algorithms</span></span>",
+  "title" : "Design of a <span class=\u0022nocase\u0022>Single Actuator Walking Robot</span> via <span class=\u0022nocase\u0022>Mechanism Synthesis Based</span> on <span class=\u0022nocase\u0022>Genetic Algorithms</span>",
   "type" : "article-journal",
   "volume" : "2"
  },
@@ -70,7 +70,7 @@
     "given" : "Klaus"
    }
   ],
-  "collection-title" : "Berichte Aus Der <span class=\u0022nocase\u0022><span class=\u0022nocase\u0022>Robotik</span></span>",
+  "collection-title" : "Berichte Aus Der <span class=\u0022nocase\u0022>Robotik</span>",
   "id" : "Brillowski2004",
   "issued" : {
    "date-parts" : [
@@ -79,7 +79,7 @@
   },
   "publisher" : "<span class=\u0022nocase\u0022>Shaker</span>",
   "publisher-place" : "<span class=\u0022nocase\u0022>Aachen</span>",
-  "title" : "Einführung in die <span class=\u0022nocase\u0022><span class=\u0022nocase\u0022>Robotik</span></span>: <span class=\u0022nocase\u0022><span class=\u0022nocase\u0022>Auslegung</span></span> und <span class=\u0022nocase\u0022><span class=\u0022nocase\u0022>Steuerung</span></span> serieller <span class=\u0022nocase\u0022><span class=\u0022nocase\u0022>Roboter</span></span>",
+  "title" : "Einführung in die <span class=\u0022nocase\u0022>Robotik</span>: <span class=\u0022nocase\u0022>Auslegung</span> und <span class=\u0022nocase\u0022>Steuerung</span> serieller <span class=\u0022nocase\u0022>Roboter</span>",
   "type" : "book"
  },
  {
@@ -98,7 +98,7 @@
   "language" : "en-US",
   "publisher" : "Universite de Liege",
   "publisher-place" : "Liege",
-  "title" : "Integrated <span class=\u0022nocase\u0022><span class=\u0022nocase\u0022>Simulation</span></span> and <span class=\u0022nocase\u0022><span class=\u0022nocase\u0022>Reduced-Order Modeling</span></span> of <span class=\u0022nocase\u0022><span class=\u0022nocase\u0022>Controlled Flexible Multibody Systems</span></span>",
+  "title" : "Integrated <span class=\u0022nocase\u0022>Simulation</span> and <span class=\u0022nocase\u0022>Reduced-Order Modeling</span> of <span class=\u0022nocase\u0022>Controlled Flexible Multibody Systems</span>",
   "type" : "thesis"
  }
 ]
