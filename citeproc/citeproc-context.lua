@@ -77,7 +77,7 @@ function Context:get_ordinary(name, form)
     variable_name = variable_name .. "-" .. form
   end
 
-  if variable_name == "locator" or variable_name == "label" then
+  if variable_name == "locator" or variable_name == "label" and self.cite then
     res = self.cite[variable_name]
   else
     res = self.reference[variable_name]
