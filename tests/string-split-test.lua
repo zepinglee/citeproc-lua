@@ -16,7 +16,7 @@ require("busted.runner")()
 local util = require("citeproc-util")
 
 
-describe("String split", function ()
+describe("String splitter", function ()
   local split = util.split
   it("empty sep", function ()
     -- assert.has_error(split("abc", ""))
@@ -86,15 +86,4 @@ describe("String split", function ()
   --   assert.same(split("en-US", "n-"), {"", "", "", "", "", "", ""})
   -- end)
 
-  it("apostrophe", function ()
-    local splits = split("Nobody Knows You’re a Dog", util.word_boundaries)
-    local expected = {'Nobody', 'Knows', 'You’re', 'a', 'Dog'}
-    assert.same(expected, splits)
-  end)
-
-  it("segment words", function ()
-    local splits = util.segment_words("Nobody Knows You’re a Dog")
-    local expected = {'Nobody', 'Knows', 'You’re', 'a', 'Dog'}
-    assert.same(expected, splits)
-  end)
 end)

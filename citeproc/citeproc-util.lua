@@ -146,7 +146,7 @@ end
 
 -- Similar to re.split() in Python
 function util.split(str, sep, maxsplit)
-  if not str then
+  if type(str) ~= "string" then
     util.error("Invalid string.")
   end
   sep = sep or "%s+"
@@ -216,15 +216,6 @@ function util.split_multiple(str, seps, include_sep)
     table.insert(res, item)
   end
   return res
-end
-
--- TODO: [Unicode word boundaries](https://www.unicode.org/reports/tr29/#Word_Boundaries)
--- Returns: {
---   {word, boundary},
---   {word, boundary},
--- }
-function util.segment_words(str)
-  return util.split_multiple(str, util.word_boundaries, true)
 end
 
 function util.slice (t, start, stop)

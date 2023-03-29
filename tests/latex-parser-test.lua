@@ -17,7 +17,7 @@ local latex_parser = require("citeproc-latex-parser")
 local util = require("citeproc-util")
 
 
-describe("LaTeX Parser", function ()
+describe("LaTeX parser", function ()
 
   describe("from LaTeX to Unicode", function ()
 
@@ -132,7 +132,7 @@ describe("LaTeX Parser", function ()
     end)
 
     it("protected command", function ()
-      assert.equal("The <code>{</code><code>\\TeX </code>book<code>}</code>",
+      assert.equal("The <code>{\\TeX </code>book<code>}</code>",
         latex_parser.latex_to_sentence_case_pseudo_html("The {\\TeX book}", true, true, false)
       )
     end)

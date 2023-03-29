@@ -9,7 +9,7 @@ return {
     ROOT = {"tests"},
   },
   citeproc = {
-    ROOT = {"tests/citeproc-test.lua"},
+    ROOT = {"tests/citeproc_test.lua"},
     output = "tests/bust-output.lua",
   },
 }

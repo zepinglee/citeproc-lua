@@ -33,12 +33,8 @@ jobs:
         run: luarocks install busted
       - name: Test citperoc-lua engine
         run: busted --run=citeproc --output=TAP
-      - name: Test BibTeX entries
-        run: busted tests/bibtex-test.lua --output=TAP
-      - name: Test BibTeX parser
-        run: busted tests/bibtex-parser-test.lua --output=TAP
-      - name: Test LaTeX parser
-        run: busted tests/latex-parser-test.lua --output=TAP
+      - name: Test other Lua modules
+        run: busted --output=TAP
       - name: Test LaTeX package
         run: l3build check -q
       - name: Run examples

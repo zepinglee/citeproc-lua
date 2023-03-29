@@ -15,7 +15,9 @@ local util = require("citeproc-util")
 -- Convert LaTeX string to Unicode string
 function latex_parser.latex_to_unicode(str)
   local ast = latex_parser.latex_grammar:match(str)
+  -- util.debug(ast)
   latex_parser.convert_ast_to_unicode(ast)
+  -- util.debug(ast)
   local res = latex_parser.to_string(ast)
   return res
 end
@@ -58,6 +60,7 @@ function latex_parser.latex_to_sentence_case_pseudo_html(str, keep_unknown_comma
   local inlines = latex_parser.convert_tokens_to_inlines(ast, keep_unknown_commands, case_protection)
   local pseudo_html_format = markup.PseudoHtml:new()
   pseudo_html_format:convert_sentence_case(inlines, check_sentence_case)
+  -- util.debug(inlines)
   local res = pseudo_html_format:write_inlines(inlines, {})
   return res
 end
@@ -113,7 +116,8 @@ function latex_parser.get_latex_grammar()
                     + P"'" / util.unicode["right single quotation mark"]
                     + P"---" / util.unicode["em dash"]
                     + P"--" / util.unicode["en dash"]
-  local plain_text = C(1 - S"{}$\\")
+  local utf8_char = R("\0\127") + R("\194\244") * R("\128\191")^1
+  local plain_text = C(utf8_char - S"{}$\\")
   local latex_grammar = P{
     "latex_text";
     latex_text = Ct((specials + control_sequence + math + ligatures + specials + V"group" + plain_text)^0),
@@ -214,7 +218,7 @@ local function _replace_diacritic_with_unicode(tokens, i, code_point)
           arg = next_token.name
         elseif next_token.type == "group" then
           if #next_token.contents == 0 then
-            arg = "{}"
+            arg = ""
           elseif #next_token.contents == 1 then
             next_token = next_token.contents[1]
             if type(next_token) == "string" then

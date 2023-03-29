@@ -176,9 +176,61 @@ function unicode.upper(str, locale)
 end
 
 
+---@enum CharState
+local CharState = {
+  Other = 0,
+  Word = 1,
+  Punctuation = 2,
+  Space = 3,
+}
+
+
 ---@param str string
 ---@return string[]
 function unicode.words(str)
+  local words = {}
+  if uni_words then
+    for _, _, segment in uni_words.word_boundaries(str) do
+      if unicode.isalnum(segment) then
+        table.insert(words, segment)
+      end
+    end
+
+  else
+    -- A naive implementation
+    local state = CharState.Other
+    local last_idx = 1
+    for idx, char in sln.grapheme.gmatch(str, "()(.)") do
+      local new_state = CharState.Other
+      if sln.grapheme.match(char, "%w") or char == "'" or char == "’" or char == "`" then
+        new_state = CharState.Word
+      else
+        new_state = CharState.Other
+      end
+      if new_state ~= state then
+        if idx > 1 and state == CharState.Word then
+          local segment = string.sub(str, last_idx, idx - 1)
+          table.insert(words, segment)
+        end
+        state = new_state
+        last_idx = idx
+      end
+    end
+
+    if state == CharState.Word then
+      local segment = string.sub(str, last_idx, #str)
+      table.insert(words, segment)
+    end
+  end
+
+  return words
+
+end
+
+
+---@param str string
+---@return string[]
+function unicode.split_word_bounds(str)
   local segments = {}
   if uni_words then
     for _, _, segment in uni_words.word_boundaries(str) do
@@ -187,29 +239,31 @@ function unicode.words(str)
 
   else
     -- A naive implementation
-    local boudary_indices = {}
-    for start in sln.grapheme.gmatch(str, "()[%w'’`]+") do
-      table.insert(boudary_indices, start)
-    end
-    for start, punct in sln.grapheme.gmatch(str, "()(%p)") do
-      if punct ~= "'" and punct ~= "’" then
-        table.insert(boudary_indices, start)
-      end
-    end
-    for start in sln.grapheme.gmatch(str, "()%s+") do
-      table.insert(boudary_indices, start)
-    end
-    table.sort(boudary_indices)
-    for i, start in ipairs(boudary_indices) do
-      local end_index = boudary_indices[i + 1]
-      if i == #boudary_indices then  -- end_index == nil
-        end_index = #str
+    local state = CharState.Other
+    local last_idx = 1
+    for idx, char in sln.grapheme.gmatch(str, "()(.)") do
+      local new_state = CharState.Other
+      if sln.grapheme.match(char, "%w") or char == "'" or char == "’" or char == "`" then
+        new_state = CharState.Word
+      elseif sln.grapheme.match(char, "%p") then
+        new_state = CharState.Punctuation
+      elseif sln.grapheme.match(char, "%s") then
+        new_state = CharState.Space
       else
-        end_index = end_index - 1
+        new_state = CharState.Other
       end
-      local segment = string.sub(str, start, end_index)
-      table.insert(segments, segment)
+      if new_state ~= state then
+        if idx > 1 then
+          local segment = string.sub(str, last_idx, idx - 1)
+          table.insert(segments, segment)
+        end
+        state = new_state
+        last_idx = idx
+      end
     end
+
+    local segment = string.sub(str, last_idx, #str)
+    table.insert(segments, segment)
   end
 
   return segments

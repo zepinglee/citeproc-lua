@@ -116,6 +116,7 @@ function bibtex2csl.convert_field(bib_field, value, keep_unknown_commands, case_
     end
 
   elseif bib_field == "title" or bib_field == "booktitle" then
+    -- util.debug(value)
     -- 1. unicode 2. sentence case 3. html tag
     if sentence_case_title and (not language or util.startswith(language, "en")) then
       -- util.debug(value)

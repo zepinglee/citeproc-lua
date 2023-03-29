@@ -18,7 +18,7 @@ local BibtexParser = bibtex_parser.BibtexParser
 local util = require("citeproc-util")
 
 
-describe("BibTeX-parser", function ()
+describe("BibTeX parser", function ()
 
   describe("parse entries", function ()
 

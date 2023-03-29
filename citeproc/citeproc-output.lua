@@ -694,9 +694,8 @@ end
 ---@param str string
 ---@return boolean
 local function is_str_sentence_case(str)
-  local segments = util.segment_words(str)
-  for _, segment in ipairs(segments) do
-    local word = segment[1]
+  local words = citeproc_unicode.words(str)
+  for _, word in ipairs(words) do
     if util.is_lower(word) and not util.stop_words[word] then
       -- util.debug(word)
       return true
@@ -746,7 +745,13 @@ function OutputFormat:convert_sentence_case(inlines, check_sentence_case)
   local is_uppercase = false  -- TODO
   -- util.debug(check_sentence_case)
   -- util.debug(self:is_sentence_case(inlines))
-  if not check_sentence_case or not self:is_sentence_case(inlines) then
+  if check_sentence_case then
+    if self:is_sentence_case(inlines) then
+      self:apply_text_case_inner(inlines, "capitalize-first", false, is_uppercase)
+    else
+      self:apply_text_case_inner(inlines, "sentence-strong", false, is_uppercase)
+    end
+  else
     self:apply_text_case_inner(inlines, "sentence-strong", false, is_uppercase)
   end
 end
@@ -827,7 +832,7 @@ end
 ---@return string
 local function transform_first_word(str, is_first, transform)
   if is_first then
-    local segments = citeproc_unicode.words(str)
+    local segments = citeproc_unicode.split_word_bounds(str)
     for i, segment in ipairs(segments) do
       if citeproc_unicode.isalnum(segment) then
         segments[i] = transform(segment)
@@ -855,7 +860,8 @@ local SegmentType = {
 ---@param transform function
 ---@return string
 local function transform_each_word(str, seen_one, is_last_inline, transform)
-  local segments = citeproc_unicode.words(str)
+  local segments = citeproc_unicode.split_word_bounds(str)
+  -- util.debug(segments)
 
   local segment_type_list = {}
   local last_word_idx
