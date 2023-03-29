@@ -28,10 +28,7 @@ class BibData(OrderedDict):
         else:
             warnings.warn(f'Invalid path "{path}".')
 
-        self['unicode'] = OrderedDict()
-        self['unicode_commands'] = dict()
-
-        self.texmf_dist = None
+        self.texmf_dist = ''
         if not self.texmf_dist:
             paths = glob.glob('/usr/local/texlive/*/texmf-dist')
             if paths:
@@ -246,7 +243,7 @@ class BibData(OrderedDict):
 
     def check_csl_schema(self):
         # csl_data_path = './schema/csl-data.json'  # v1.0.1
-        csl_data_path = './schema/schemas/input/csl-data.json'  # v1.0.2+
+        csl_data_path = 'submodules/schema/schemas/input/csl-data.json'  # v1.0.2+
         if not os.path.exists(csl_data_path):
             warnings.warn(f'Invalid schema path "{csl_data_path}".')
             return
@@ -258,6 +255,7 @@ class BibData(OrderedDict):
         # csl_1_1_fields = csl_1_1_data['definitions']['refitem']['properties'].keys()
 
         for category in ['types', 'fields']:
+            csl_fields = dict()
             if category == 'types':
                 csl_fields = csl_data['items']['properties']['type']['enum']
                 # Fix a typo
@@ -330,69 +328,6 @@ class BibData(OrderedDict):
                         # print(
                         #     f'"{field.lower()}": {{"csl": "{field}", "source": "csl"}},'
                         # )
-
-    def update_unicode(self):
-        utf8ienc_path = os.path.join(self.texmf_dist, 'tex', 'latex', 'base',
-                                     'utf8enc.dfu')
-        with open(utf8ienc_path) as f:
-            lines = f.readlines()
-        for line in lines:
-            line = line.strip()
-            matched = re.match(r'\\DeclareUnicodeCharacter\{(\w+)\}\{(\\.+)\}',
-                               line)
-            if not matched:
-                continue
-            code_point = matched.group(1)
-            contents = matched.group(2)
-            if re.search(r'\\cyr', contents, flags=re.IGNORECASE):
-                continue  # Ignore cyrillic
-            contents = contents.replace('\\@tabacckludge', '\\')
-            self['unicode'][code_point] = contents
-
-        # Special commands
-        # self['unicode']['0023'] = '\\#'
-        # self['unicode']['0024'] = '\\$'
-        # self['unicode']['0025'] = '\\%'
-        # self['unicode']['0026'] = '\\&'
-        self['unicode']['005C'] = '\\textbackslash'
-        # self['unicode']['005F'] = '\\_'
-        self['unicode']['2003'] = '\\quad'
-        self['unicode']['FEFF'] = '\\nobreak'
-
-        self['unicode'] = OrderedDict(sorted(self['unicode'].items()))
-
-        for code_point, latex_commands in self['unicode'].items():
-            cmd_arg = re.match(r'^(\\(?:[a-zA-Z]+|[^a-zA-Z]))\s*(.*)$',
-                               latex_commands)
-            if cmd_arg:
-                cmd = cmd_arg.group(1).strip()
-                arg = cmd_arg.group(2)
-                # print(cmd, arg)
-                if arg:
-                    if cmd not in self['unicode_commands']:
-                        self['unicode_commands'][cmd] = OrderedDict()
-                    self['unicode_commands'][cmd][arg] = code_point
-                    if arg == '\\i':
-                        self['unicode_commands'][cmd]['i'] = code_point
-                else:
-                    # if cmd in self['unicode_commands']:
-                    #     print(cmd)
-                    self['unicode_commands'][cmd] = code_point
-            else:
-                print(latex_commands)
-
-        # Special processing because of duplicates
-        self['unicode_commands']['\\textendash'] = "2013"
-        self['unicode_commands']['\\textemdash'] = "2014"
-        self['unicode_commands']['\\textlangle'] = "2329"
-        self['unicode_commands']['\\textrangle'] = "232A"
-
-        self['unicode_commands'] = OrderedDict(
-            sorted(self['unicode_commands'].items()))
-        for key, value in self['unicode_commands'].items():
-            if isinstance(value, dict) or isinstance(value, OrderedDict):
-                self['unicode_commands'][key] = OrderedDict(
-                    sorted(value.items()))
 
     def sort_keys(self):
         self['types'] = OrderedDict(sorted(self['types'].items()))
@@ -492,8 +427,6 @@ if __name__ == '__main__':
 
     bib_data.update_all_bst()
     bib_data.update_all_biblatex_styles()
-
-    bib_data.update_unicode()
 
     bib_data.check_csl_schema()
     bib_data.sort_keys()

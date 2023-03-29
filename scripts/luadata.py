@@ -17,13 +17,15 @@ def to_lua(obj, indent='  ', level=0, sort_keys=False) -> str:
     elif isinstance(obj, str):
         obj = obj.replace('\\', '\\\\')
         obj = obj.replace('\n', '\\n')
+        obj = obj.replace('\r', '\\r')
+        obj = obj.replace('\t', '\\t')
         if '"' in obj:
             if "'" in obj:
-                obj = obj.replace('"', '\\"')
+                obj = '"' + obj.replace('"', '\\"') + '"'
             else:
-                res = "'" + obj + "'"
+                res = f"'{obj}'"
         else:
-            res = '"' + obj + '"'
+            res = f'"{obj}"'
 
     elif isinstance(obj, list) or isinstance(obj, tuple):
         res = '{\n'

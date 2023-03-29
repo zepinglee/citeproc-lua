@@ -139,12 +139,26 @@ function bibtex2csl.convert_field(bib_field, value, keep_unknown_commands, case_
 end
 
 
+local function clean_name_part(name_part)
+  if not name_part then
+    return nil
+  end
+  return string.gsub(name_part, "[{}]", "")
+end
+
+
 function bibtex2csl.convert_to_csl_name(bibtex_name)
+  if bibtex_name.last and not (bibtex_name.first or bibtex_name.von or bibtex_name.jr)
+    and string.match(bibtex_name.last, "^%b{}$") then
+    return {
+      literal = string.sub(bibtex_name.last, 1, -1)
+    }
+  end
   local csl_name = {
-    family = bibtex_name.last,
-    ["non-dropping-particle"] = bibtex_name.von,
-    given = bibtex_name.first,
-    suffix = bibtex_name.jr,
+    family = clean_name_part(bibtex_name.last),
+    ["non-dropping-particle"] = clean_name_part(bibtex_name.von),
+    given = clean_name_part(bibtex_name.first),
+    suffix = clean_name_part(bibtex_name.jr),
   }
   return csl_name
 end

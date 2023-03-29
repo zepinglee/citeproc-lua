@@ -396,6 +396,19 @@ function latex_parser.convert_tokens_to_inlines(tokens, strict, case_protection)
     i = i + 1
   end
 
+  -- Merge adjacent Code inlines.
+  for i = #inlines, 1, -1 do
+    if i > 1 then
+      local inline = inlines[i]
+      local prev = inlines[i-1]
+      if type(inline) == "table" and inline._type == "Code" and
+          type(prev) == "table" and prev._type == "Code" then
+        prev.value = prev.value .. inline.value
+        table.remove(inlines, i)
+      end
+    end
+  end
+
   return inlines
 end
 
