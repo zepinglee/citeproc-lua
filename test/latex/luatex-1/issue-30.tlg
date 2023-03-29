@@ -167,7 +167,7 @@ Completed box being shipped out [1]
 .....\TU/lmr/m/n/8 7
 .....\TU/lmr/m/n/8 ,
 .....\glue(\spaceskip) 2.832 plus 1.76999 minus 0.75519
-.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 1]} action user{/Subtype/Link/A<</Type/Action/S/URI/URI(https://abc.zyx/foo%20bar#baz\ETC.}
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 1]} action user{/Subtype/Link/A<</Type/Action/S/URI/URI(https://abc.zyx/foo%20bar#baz)>>}
 .....\mathon
 .....\TU/lmtt/m/n/8 h
 .....\TU/lmtt/m/n/8 t
@@ -370,7 +370,7 @@ Completed box being shipped out [2]
 .....\TU/lmr/m/n/10 7
 .....\TU/lmr/m/n/10 .
 .....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
-.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 1]} action user{/Subtype/Link/A<</Type/Action/S/URI/URI(https://abc.zyx/foo%20bar#baz\ETC.}
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 1]} action user{/Subtype/Link/A<</Type/Action/S/URI/URI(https://abc.zyx/foo%20bar#baz)>>}
 .....\mathon
 .....\TU/lmr/m/n/10 h
 .....\glue 0.0
