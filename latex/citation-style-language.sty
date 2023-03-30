@@ -718,6 +718,7 @@
     prefix-separator .tl_set:N = \l__csl_prefix_separator_tl ,
     suffix-separator .tl_set:N = \l__csl_suffix_separator_tl ,
     % Bibliography formatting
+    bib-section .cs_set:Np = \bibsection ,
     bib-font .tl_set:N = \l__csl_bib_font_tl ,
     bib-item-sep .tl_set:N = \l__csl_bib_item_sep_tl ,
     bib-hang .tl_set:N = \l__csl_bib_hang_tl ,
@@ -1187,9 +1188,11 @@
 \cs_set:Npn \@biblabel #1 {#1}
 
 
+% Bibliography heading
+\cs_new:Npn \bibsection {}
 \cs_if_exist:cTF { chapter }
   {
-    \cs_set:Nn \__csl_bib_section:
+    \cs_set:Nn \bibsection
       {
         \chapter*
           {
@@ -1201,7 +1204,7 @@
       }
   }
   {
-    \cs_set:Nn \__csl_bib_section:
+    \cs_set:Nn \bibsection
       {
         \section*
           {
@@ -1397,7 +1400,7 @@
 % \newenvironment{thebibliography}[1]
 \RenewDocumentEnvironment { thebibliography } { m }
   {
-    \__csl_bib_section:
+    \bibsection
     \dim_zero:N \parindent
     \l__csl_bib_preamble_tl
     \tl_if_eq:NnF \l__csl_line_spacing_tl { 1 }
