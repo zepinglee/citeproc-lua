@@ -224,7 +224,9 @@ function InlineElement:parse(text, context)
     inlines = self:parse_csl_rich_text(text)
   elseif text_type == "string" then
     -- String with HTML-like formatting tags
+    -- util.debug(text)
     inlines = self:parse_html_tags(text, context)
+    -- util.debug(inlines)
   elseif text_type == "number" then
     inlines = {PlainText:new(tostring(text))}
   else
@@ -300,6 +302,7 @@ function InlineElement:parse_csl_rich_text(text)
   return inlines
 end
 
+-- TODO: Rewrite with lpeg
 function InlineElement:parse_html_tags(str, context)
   -- Return a list of inlines
   -- if type(str) ~= "string" then
@@ -328,7 +331,12 @@ function InlineElement:from_node(node)
   for _, child in ipairs(node:get_children()) do
     local inline
     if child:is_text() then
-      inline = PlainText:new(child:get_text())
+      local text = child:get_text()
+      if tag_name == "code" or tag_name == "script" then
+        inline = Code:new(text)
+      else
+        inline = PlainText:new(text)
+      end
     elseif child:is_element() then
       inline = InlineElement:from_node(child)
     end

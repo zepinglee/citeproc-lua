@@ -106,8 +106,8 @@ function csl.cite(citation_info)
   else
     citation_str = csl.engine:process_citation(citation)
   end
-
   -- util.debug(citation_str)
+
   -- tex.sprint(citation_str)
   -- tex.setcatcode(35, 12)  -- #
   -- tex.setcatcode(37, 12)  -- %

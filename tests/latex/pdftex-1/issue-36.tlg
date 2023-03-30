@@ -1,0 +1,19 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: LaTeX command in prefix
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={Wallace1996-GreekG@1},citationItems={{id={Wallace1996-GreekG},prefix={\myCommandToday
+word. },label={page},locator={419}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...}
+Package citation-style-language Warning: Citation `Wallace1996-GreekG' on page
+(citation-style-language)                1 undefined on line ....
+> \l__csl_citation_tl=[\textbf {Wallace1996-GreekG}].
+<recently read> }
+l. ...}
+============================================================
+[1
+] (issue-36.aux)
+LaTeX Warning: There were undefined references.

@@ -1,0 +1,54 @@
+\input{regression-test}
+
+\documentclass{article}
+
+% https://github.com/zepinglee/citeproc-lua/issues/36
+
+\begin{filecontents}[overwrite,noheader]{\jobname.json}
+[
+    {
+        "id": "Wallace1996-GreekG",
+        "type": "book",
+        "author": [
+            {
+                "family": "Wallace",
+                "given": "Daniel B."
+            }
+        ],
+        "title": "Greek Grammar Beyond the Basics: An Exegetical Syntax of the New Testament",
+        "title-short": "Greek Grammar",
+        "source": "Accordance",
+        "publisher-place": "Grand Rapids, MI",
+        "publisher": "Zondervan",
+        "issued": {
+            "date-parts": [
+                [
+                    "1996"
+                ]
+            ]
+        }
+    }
+]
+\end{filecontents}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+\cslsetup{
+  regression-test = true,
+  style = chicago-note-bibliography,
+}
+\addbibresource{\jobname.json}
+
+\newcommand{\myCommandToday}{new command}
+
+\begin{document}
+
+\START
+
+\TEST{LaTeX command in prefix}{
+  Test.\cite[prefix = {\myCommandToday word.
+  }, page = {419}]{Wallace1996-GreekG}
+}
+
+\end{document}

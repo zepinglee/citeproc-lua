@@ -551,7 +551,7 @@
 \cs_set:Npn \citation #1
   {
     \sys_if_engine_luatex:T
-      { \lua_now:n { csl.register_citation_info("#1") } }
+      { \lua_now:e { csl.register_citation_info("\lua_escape:n {#1}") } }
   }
 
 

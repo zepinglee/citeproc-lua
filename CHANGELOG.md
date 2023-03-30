@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix missing warning of empty citation ([latex3/latex2e#790](https://github.com/latex3/latex2e/issues/790)).
 - Fix url link of PMCID.
+- Fix an error of LaTeX commands in cite prefix ([#36](https://github.com/zepinglee/citeproc-lua/issues/36)).
 
 ## [v0.3.0] - 2022-12-25
 
