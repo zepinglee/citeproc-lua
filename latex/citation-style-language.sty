@@ -47,7 +47,7 @@
 \NewDocumentCommand \cslsetup { m }
   { \keys_set:nn { csl } {#1} }
 
-\cs_new:Npn \csl@options #1 { }
+\cs_new:Npn \csl@aux@options #1 { }
 
 
 \DeclareDocumentCommand \cite { o o m }
@@ -462,7 +462,7 @@
   % #1: citation info "{<citationID>}{{id=ITEM-1},{id=ITEM-2}}{<noteIndex>}"
   {
     \if@filesw
-      \iow_now:Nn \@auxout { \citation {#1} }
+      \iow_now:Nn \@auxout { \csl@aux@cite {#1} }
     \fi
   }
 
@@ -548,7 +548,7 @@
 
 % Used in aux files to register cite items.
 % #1: a citation object
-\cs_set:Npn \citation #1
+\cs_set:Npn \csl@aux@cite #1
   {
     \sys_if_engine_luatex:T
       { \lua_now:e { csl.register_citation_info("\lua_escape:n {#1}") } }
@@ -886,7 +886,7 @@
 \cs_new:Npn \__csl_write_aux_bibstyle:n #1
   {
     \if@filesw
-      \iow_now:Nx \@auxout { \token_to_str:N \csl@style {#1} }
+      \iow_now:Nx \@auxout { \token_to_str:N \csl@aux@style {#1} }
     \fi
   }
 
@@ -958,7 +958,7 @@
 \cs_new:Npn \__csl_write_aux_options:n #1
   {
     \if@filesw
-      \iow_now:Nn \@auxout { \csl@options {#1} }
+      \iow_now:Nn \@auxout { \csl@aux@options {#1} }
     \fi
   }
 
@@ -1018,7 +1018,7 @@
   }
 
 \tl_new:N \g__csl_aux_bibstyle_tl
-\cs_set:Npn \csl@style #1
+\cs_set:Npn \csl@aux@style #1
   { \tl_gset:Nn \g__csl_aux_bibstyle_tl {#1} }
 
 
@@ -1030,7 +1030,7 @@
 % to find xxx.json.bib and it refuses to run the $bibtex procedure.
 % John Collins suggests using a different command than \bibdata.
 \clist_new:N \g__csl_aux_bib_files_clist
-\cs_new:Npn \csl@data #1
+\cs_new:Npn \csl@aux@data #1
   { \clist_gput_right:Nn \g__csl_aux_bib_files_clist {#1} }
 
 
@@ -1044,7 +1044,7 @@
   {
     \if@filesw
       % Full expansion for files like \jobname.bib
-      \iow_now:Nx \@auxout { \token_to_str:N \csl@data {#1} }
+      \iow_now:Nx \@auxout { \token_to_str:N \csl@aux@data {#1} }
     \fi
   }
 
@@ -1240,6 +1240,9 @@
       }
       { \skip_set:Nn \l__csl_bib_item_sep_skip { \l__csl_bib_item_sep_tl } }
   }
+
+
+% See <https://github.com/plk/biblatex/blob/e16f4aaa5d9857c7b844bbcbe246f0535fd334e9/tex/latex/biblatex/biblatex.def#L219-L258>
 
 \cs_new:Npn \__csl_set_bib_allow_break:
   {

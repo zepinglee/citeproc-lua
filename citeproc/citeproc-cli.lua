@@ -99,22 +99,22 @@ local function read_aux_file(aux_file)
   for line in file:lines() do
     local match
     -- TODO: Use lpeg-based method and detect multiple lines
-    match = string.match(line, "^\\csl@style%s*(%b{})")
+    match = string.match(line, "^\\csl@aux@style%s*(%b{})")
     if match then
       bib_style = string.sub(match, 2, -2)
     else
-      match = string.match(line, "^\\csl@data%s*(%b{})")
+      match = string.match(line, "^\\csl@aux@data%s*(%b{})")
       if match then
         for _, bib in ipairs(util.split(string.sub(match, 2, -2), "%s*,%s*")) do
           table.insert(bib_files, bib)
         end
       else
-        match = string.match(line, "^\\citation%s*(%b{})")
+        match = string.match(line, "^\\csl@aux@cite%s*(%b{})")
         if match then
           local citation = core.make_citation(string.sub(match, 2, -2))
           table.insert(citations, citation)
         else
-          match = string.match(line, "^\\csl@options%s*(%b{})")
+          match = string.match(line, "^\\csl@aux@options%s*(%b{})")
           if match then
             local options = latex_parser.parse_prop(string.sub(match, 2, -2))
             for key, value in pairs(options) do
