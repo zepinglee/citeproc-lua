@@ -686,7 +686,9 @@
 \tl_new:N \l__csl_prefix_separator_tl
 \tl_new:N \l__csl_suffix_separator_tl
 % Bibliography formatting
+\tl_new:N \bibsection
 \tl_new:N \l__csl_bib_font_tl
+\bool_new:N \l__csl_bib_entry_page_break_bool
 \tl_new:N \l__csl_bib_item_sep_tl
 \tl_new:N \l__csl_bib_hang_tl
 \bool_new:N \l__csl_hanging_indent_bool
@@ -718,8 +720,9 @@
     prefix-separator .tl_set:N = \l__csl_prefix_separator_tl ,
     suffix-separator .tl_set:N = \l__csl_suffix_separator_tl ,
     % Bibliography formatting
-    bib-section .cs_set:Np = \bibsection ,
+    bib-section .tl_set:N = \bibsection ,
     bib-font .tl_set:N = \l__csl_bib_font_tl ,
+    bib-entry-page-break .bool_set:N = \l__csl_bib_entry_page_break_bool ,
     bib-item-sep .tl_set:N = \l__csl_bib_item_sep_tl ,
     bib-hang .tl_set:N = \l__csl_bib_hang_tl ,
     hanging-indent .bool_set:N = \l__csl_hanging_indent_bool ,
@@ -731,6 +734,7 @@
   {
     prefix-separator = { ~ } ,
     suffix-separator = { , ~ } ,
+    bib-entry-page-break = true ,
     bib-hang = { 1 em } ,
     line-spacing = { 1 } ,
     entry-spacing = { 1 } ,
@@ -1189,10 +1193,9 @@
 
 
 % Bibliography heading
-\cs_new:Npn \bibsection {}
 \cs_if_exist:cTF { chapter }
   {
-    \cs_set:Nn \bibsection
+    \tl_set:Nn \bibsection
       {
         \chapter*
           {
@@ -1204,7 +1207,7 @@
       }
   }
   {
-    \cs_set:Nn \bibsection
+    \tl_set:Nn \bibsection
       {
         \section*
           {
@@ -1265,8 +1268,6 @@
     \frenchspacing
   }
 
-\cs_new_eq:NN \__csl_set_bib_page_break: \__csl_set_bib_allow_break:
-
 \cs_new:Npn \__csl_set_bib_no_break:
   {
     \sloppy
@@ -1276,6 +1277,13 @@
     \int_set_eq:NN \@clubpenalty \clubpenalty
     \raggedbottom
     \frenchspacing
+  }
+
+\cs_new:Npn \__csl_set_bib_page_break:
+  {
+    \bool_if:NTF \l__csl_bib_entry_page_break_bool
+      { \__csl_set_bib_allow_break: }
+      { \__csl_set_bib_no_break: }
   }
 
 
