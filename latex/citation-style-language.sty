@@ -675,6 +675,7 @@
 
 
 \tl_new:N \l__csl_style_tl
+\newcommand \csl@style {}  % For latex2e interface
 \tl_new:N \l__csl_class_tl
 \bool_new:N \l__csl_note_bool
 \clist_new:N \l__csl_bib_resources_clist
@@ -698,7 +699,11 @@
 \keys_define:nn { csl }
   {
     regression-test .bool_set:N = \l__csl_regression_test_bool ,
-    style .tl_set:N = \l__csl_style_tl ,
+    style .code:n =
+      {
+        \tl_set:Nn \l__csl_style_tl {#1}
+        \renewcommand \csl@style {#1}
+      } ,
     class .code:n =
       {
         \tl_set:Nn \l__csl_class_tl {#1}
@@ -872,7 +877,10 @@
 \cs_new:Npn \__csl_write_aux_info:
   {
     \tl_if_empty:NTF \l__csl_style_tl
-      { \tl_set_eq:NN \l__csl_style_tl \g__csl_aux_bibstyle_tl }
+      {
+        \tl_set_eq:NN \l__csl_style_tl \g__csl_aux_bibstyle_tl
+        \edef \csl@style { \g__csl_aux_bibstyle_tl }
+      }
       { \exp_args:Nx \__csl_write_aux_bibstyle:n { \l__csl_style_tl } }
     \clist_if_empty:NTF \l__csl_bib_resources_clist
       { \clist_set_eq:NN \l__csl_bib_resources_clist \g__csl_aux_bib_files_clist }
