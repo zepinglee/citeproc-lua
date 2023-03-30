@@ -65,6 +65,9 @@
 \NewDocumentCommand \citet { o o m }
   { \__csl_text_cite:nnn {#1} {#2} {#3} }
 
+\NewDocumentCommand \footcite { o o m }
+  { \__csl_cite:nnn {#1} {#2} {#3} }
+
 
 % \cites[⟨prenote⟩][⟨postnote⟩]{⟨key⟩}...[⟨prenote⟩][⟨postnote⟩]{⟨key⟩}
 \NewDocumentCommand \cites { }
