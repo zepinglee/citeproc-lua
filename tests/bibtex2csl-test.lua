@@ -20,6 +20,7 @@ local util = require("citeproc-util")
 describe("BibTeX data to CSL converter", function ()
 
   describe("name", function ()
+
     it("suffix", function ()
       local name = "Bennett, Jr., Frank G."
       local _, csl_name = bibtex2csl.convert_field("author", name, true, true, true, "en-US", true)
@@ -32,6 +33,18 @@ describe("BibTeX data to CSL converter", function ()
       }
       assert.same(expected, csl_name)
     end)
+
+    it("literal", function ()
+      local name = "{World Health Organization}"
+      local _, csl_name = bibtex2csl.convert_field("author", name, true, true, true, "en-US", true)
+      local expected = {
+        {
+          literal = "World Health Organization",
+        },
+      }
+      assert.same(expected, csl_name)
+    end)
+
   end)
 
   it("entry", function ()

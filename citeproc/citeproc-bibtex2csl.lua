@@ -151,8 +151,9 @@ end
 function bibtex2csl.convert_to_csl_name(bibtex_name)
   if bibtex_name.last and not (bibtex_name.first or bibtex_name.von or bibtex_name.jr)
     and string.match(bibtex_name.last, "^%b{}$") then
+    -- util.debug(bibtex_name)
     return {
-      literal = string.sub(bibtex_name.last, 1, -1)
+      literal = string.sub(bibtex_name.last, 2, -2)
     }
   end
   local csl_name = {

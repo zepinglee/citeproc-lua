@@ -225,6 +225,15 @@ describe("BibTeX parser", function ()
       )
     end)
 
+    it("literal", function ()
+      assert.same(
+        {
+          last = "{World Health Organization}",
+        },
+        bibtex_parser.split_name_parts("{World Health Organization}")
+      )
+    end)
+
     it("example 1", function ()
       assert.same(
         {
