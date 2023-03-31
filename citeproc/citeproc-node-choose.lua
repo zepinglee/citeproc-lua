@@ -24,32 +24,36 @@ function Choose:from_node(node)
 end
 
 function Choose:build_ir(engine, state, context)
-  local branch
+  local active_branch
   local branch_ir
+
+  local ir = SeqIr:new({}, self)
+  ir.group_var = "UnresolvedPlain"
+
   for _, child in ipairs(self.children) do
     if child:evaluate_conditions(engine, state, context) then
-      branch = child
+      active_branch = child
       branch_ir = child:build_ir(engine, state, context)
+      if branch_ir and branch_ir.group_var ~= "missing" then
+        table.insert(ir.children, branch_ir)
+        ir.group_var = branch_ir.group_var
+        ir.name_count = branch_ir.name_count
+        ir.sort_key = branch_ir.sort_key
+      else
+        ir.group_var = "missing"
+      end
       break
     end
   end
 
-  if not branch_ir then
-    branch_ir = SeqIr:new({}, self)
-    branch_ir.group_var = "missing"
-  end
-
-  local ir = SeqIr:new({branch_ir}, self)
-  ir.group_var = branch_ir.group_var
-  ir.name_count = branch_ir.name_count
-  ir.sort_key = branch_ir.sort_key
+  -- util.debug(ir)
 
   if not context.disambiguate then
     context.disambiguate = true
 
     for _, child in ipairs(self.children) do
       if child:evaluate_conditions(engine, state, context) then
-        if child ~= branch then
+        if child ~= active_branch then
           ir.disambiguate_branch_ir = child:build_ir(engine, state, context)
         end
         break

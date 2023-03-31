@@ -71,6 +71,25 @@ function InlineElement:new(inlines)
 end
 
 
+function InlineElement:_debug()
+  local text = self._type .. "("
+  if self.value then
+    text = text .. '"' .. self.value .. '"'
+  elseif self.inlines then
+    local inlines_text = ""
+    for _, inline in ipairs(self.inlines) do
+      if inlines_text ~= "" then
+        inlines_text = inlines_text .. ", "
+      end
+      inlines_text = inlines_text .. inline:_debug()
+    end
+    text = text .. inlines_text
+  end
+  text = text .. ")"
+  return text
+end
+
+
 ---@class PlainText
 local PlainText = InlineElement:derive("PlainText")
 

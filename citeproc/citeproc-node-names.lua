@@ -182,7 +182,7 @@ function Names:build_ir(engine, state, context)
     new_state.name_override = names_inheritance
     for _, substitution in ipairs(self.substitute.children) do
       local ir = substitution:build_ir(engine, new_state, context)
-      if ir and ir.group_var ~= "missing" then
+      if ir and (ir.group_var == "important" or ir.group_var == "plain") then
         if not ir.person_name_irs or #ir.person_name_irs == 0 then
           -- In case of a <text variable="title"/> in <substitute>
           local name_count = ir.name_count

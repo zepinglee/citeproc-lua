@@ -164,7 +164,7 @@ function Element:build_group_ir(engine, state, context)
   local irs = {}
   local name_count
   local ir_sort_key
-  local group_var = "plain"
+  local group_var = "UnresolvedPlain"
 
   for _, child_element in ipairs(self.children) do
     -- util.debug(child_element.element_name)
@@ -181,8 +181,10 @@ function Element:build_group_ir(engine, state, context)
       local child_group_var = child_ir.group_var
       if child_group_var == "important" then
         group_var = "important"
+      elseif child_group_var == "plain" and group_var == "UnresolvedPlain" then
+        group_var = "plain"
       elseif child_group_var == "missing" and child_ir._type ~= "YearSuffix" then
-        if group_var == "plain" then
+        if group_var == "plain" or group_var == "UnresolvedPlain" then
           group_var = "missing"
         end
       end
@@ -212,6 +214,8 @@ function Element:build_group_ir(engine, state, context)
   ir.name_count = name_count
   ir.sort_key = ir_sort_key
   ir.group_var = group_var
+
+  -- util.debug(ir)
 
   return ir
 end

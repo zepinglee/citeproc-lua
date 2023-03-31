@@ -170,6 +170,7 @@ end
 
 function Text:build_macro_ir(engine, state, context)
   local macro = context:get_macro(self.macro)
+  -- util.debug(string.format('<macro name="%s">', self.macro))
   state:push_macro(self.macro)
   local ir = macro:build_ir(engine, state, context)
   state:pop_macro(self.macro)
@@ -181,6 +182,7 @@ function Text:build_macro_ir(engine, state, context)
       ir.quotes = context:get_localized_quotes()
     end
   end
+  -- util.debug(ir)
   return ir
 end
 

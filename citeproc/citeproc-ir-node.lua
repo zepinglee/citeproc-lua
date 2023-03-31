@@ -61,6 +61,22 @@ function IrNode:derive(type)
   return o
 end
 
+function IrNode:_debug(level)
+  level = level or 0
+  local text = string.format("\n%s [%s] %s <%s>", string.rep("    ", level), self.group_var, self._type, self._element)
+  if self.children and #self.children > 0 then
+    for _, child_ir in ipairs(self.children) do
+      text = text .. child_ir:_debug(level + 1)
+    end
+
+  elseif self.inlines then
+    for _, inline in ipairs(self.inlines) do
+      text = text .. " " .. inline:_debug()
+    end
+  end
+  return text
+end
+
 function IrNode:flatten(format)
   return format:flatten_ir(self)
 end

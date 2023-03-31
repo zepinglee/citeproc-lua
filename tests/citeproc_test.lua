@@ -303,7 +303,7 @@ local function run_test(path)
     result = test_bibliography(engine, fixture)
   end
 
-  if util.startswith(fixture.result, "<div") then
+  if fixture.result and util.startswith(fixture.result, "<div") then
     result = normalize_new_line(result)
     fixture.result = normalize_new_line(fixture.result)
   end

@@ -94,7 +94,9 @@ function Bibliography:build_bibliography_str(id, engine)
       return nil
     end
 
+    -- util.debug(ir)
     local flat = ir:flatten(output_format)
+    -- util.debug(flat)
     local str = output_format:output_bibliography_entry(flat, context)
     return str
 end

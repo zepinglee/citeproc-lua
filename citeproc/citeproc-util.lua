@@ -127,20 +127,26 @@ end
 local remove_all_metatables = nil
 
 function util.debug(obj)
-  if not inspect then
-    inspect = require("inspect")
-    remove_all_metatables = function (item, path)
-      if path[#path] ~= inspect.METATABLE then
-        return item
+  local text
+  if type(obj) == "table" and obj._debug then
+    text = obj:_debug()
+  else
+    if not inspect then
+      inspect = require("inspect")
+      remove_all_metatables = function (item, path)
+        if path[#path] ~= inspect.METATABLE then
+          return item
+        end
       end
     end
+    text = inspect(obj, {process = remove_all_metatables})
   end
   io.stderr:write("[")
   io.stderr:write(debug.getinfo(2, "S").source:sub(2))
   io.stderr:write(":")
   io.stderr:write(debug.getinfo(2, "l").currentline)
   io.stderr:write("] ")
-  io.stderr:write(inspect(obj, {process = remove_all_metatables}))
+  io.stderr:write(text)
   io.stderr:write("\n")
 end
 
@@ -299,9 +305,9 @@ function util.strip (str)
 end
 
 function util.startswith(str, prefix)
-  -- if not str or type(str) ~= "string" then
-  --   print(debug.traceback())
-  -- end
+  if type(str) ~= "string" then
+    util.error(string.format('\n%s\n"%s" is not a string.', debug.traceback(), str))
+  end
   return string.sub(str, 1, #prefix) == prefix
 end
 
