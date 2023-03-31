@@ -39,10 +39,10 @@ function csl.init(style_name, bib_files, lang)
   csl.engine:updateItems(csl.id_list)
 
   if core.uncite_all_items then
-    for id, _ in pairs(core.bib) do
-      if not csl.uncited_id_map[id] then
-        table.insert(csl.uncited_id_list, id)
-        csl.uncited_id_map[id] = true
+    for _, item in ipairs(core.item_list) do
+      if not csl.uncited_id_map[item.id] then
+        table.insert(csl.uncited_id_list, item.id)
+        csl.uncited_id_map[item.id] = true
       end
     end
   end
@@ -122,7 +122,7 @@ function csl.nocite(ids_string)
   for _, uncited_id in ipairs(uncited_ids) do
     if uncited_id == "*" then
       if csl.engine then
-        for id, _ in pairs(core.bib) do
+        for id, _ in pairs(core.item_dict) do
           if not csl.uncited_id_map[id] then
             table.insert(csl.uncited_id_list, id)
             csl.uncited_id_map[id] = true

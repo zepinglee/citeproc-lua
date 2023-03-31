@@ -17,6 +17,8 @@ core.locale_file_format = "csl-locales-%s.xml"
 core.uncited_ids = {}
 core.uncite_all_items = false
 
+core.item_list = {}
+core.item_dict = {}
 
 function core.read_file(file_name, ftype, file_info)
   if file_info then
@@ -99,27 +101,29 @@ end
 
 
 local function read_data_files(data_files)
-  local bib = {}
+  local item_list = {}
+  local item_dict = {}
   for _, data_file in ipairs(data_files) do
     local file_name, csl_items = read_data_file(data_file)
 
-    -- TODO: parse bib entries on demand
+    -- TODO: parse item_dict entries on demand
     for _, item in ipairs(csl_items) do
       local id = item.id
-      if bib[id] then
+      if item_dict[id] then
         util.warning(string.format('Duplicate entry key "%s" in "%s".', id, file_name))
       else
-        bib[id] = item
+        item_dict[id] = item
+        table.insert(item_list, item)
       end
     end
   end
-  return bib
+  return item_list, item_dict
 end
 
 
 
 function core.make_citeproc_sys(data_files)
-  core.bib = read_data_files(data_files)
+  core.item_list, core.item_dict = read_data_files(data_files)
   local citeproc_sys = {
     retrieveLocale = function (lang)
       local locale_file_format = core.locale_file_format or "locales-%s.xml"
@@ -127,7 +131,7 @@ function core.make_citeproc_sys(data_files)
       return core.read_file(filename)
     end,
     retrieveItem = function (id)
-      local res = core.bib[id]
+      local res = core.item_dict[id]
       return res
     end
   }
@@ -254,10 +258,10 @@ function core.update_cited_and_uncited_ids(engine, citations)
       for _, cite_item in ipairs(citation.citationItems) do
         if cite_item.id == "*" then
           if not core.uncite_all_items then
-            for id, _ in pairs(core.bib) do
-              if not uncited_id_map[id] then
-                table.insert(uncited_id_list, id)
-                uncited_id_map[id] = true
+            for _, item in ipairs(core.item_list) do
+              if not uncited_id_map[item.id] then
+                table.insert(uncited_id_list, item.id)
+                uncited_id_map[item.id] = true
               end
             end
             core.uncite_all_items = true
