@@ -353,6 +353,8 @@ function InlineElement:from_node(node)
       local text = child:get_text()
       if tag_name == "code" or tag_name == "script" then
         inline = Code:new(text)
+      elseif tag_name == "math" then
+        inline = MathTeX:new(text)
       else
         inline = PlainText:new(text)
       end

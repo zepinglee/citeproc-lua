@@ -47,6 +47,17 @@ describe("BibTeX data to CSL converter", function ()
 
   end)
 
+  describe("title", function ()
+
+    it("math", function ()
+      local title = "A study of the excited {1$\\Sigma$g+} states in {Na2}"
+      local _, csl_title = bibtex2csl.convert_field("title", title, true, true, true, "en-US", true)
+      local expected = 'A study of the excited <span class="nocase">1<math>\\Sigma</math>g+</span> states in <span class="nocase">Na2</span>'
+      assert.same(expected, csl_title)
+    end)
+
+  end)
+
   it("entry", function ()
     local contents = [[
       @book{lamport86,
