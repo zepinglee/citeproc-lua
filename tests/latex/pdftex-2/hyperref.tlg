@@ -190,7 +190,7 @@ Completed box being shipped out [2]
 .....\hbox(0.0+0.0)x345.0
 ...\glue 25.0
 ...\glue(\lineskip) 0.0
-...\vbox(550.0+0.0)x345.0, glue set 316.06349fil
+...\vbox(550.0+0.0)x345.0, glue set 328.06221fil
 ....\write-{}
 ....\glue(\topskip) 0.00002
 ....\hbox(9.99998+0.0)x345.0, glue set 269.19334fil
@@ -379,11 +379,9 @@ Completed box being shipped out [2]
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0
 ....\penalty -51
-....\glue 4.0 plus 2.0 minus 1.0
+....\glue 0.0
 ....\pdfdest name{cite.ITEM-1} xyz
 ....\penalty 10000
-....\glue -4.0 plus -2.0 minus -1.0
-....\glue 4.0 plus 2.0 minus 1.0
 ....\glue(\parskip) 0.0
 ....\glue(\parskip) 0.0
 ....\glue(\baselineskip) 14.55556
@@ -501,11 +499,9 @@ Completed box being shipped out [2]
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0
 ....\penalty -51
-....\glue 4.0 plus 2.0 minus 1.0
+....\glue 0.0
 ....\pdfdest name{cite.ITEM-3} xyz
 ....\penalty 10000
-....\glue -4.0 plus -2.0 minus -1.0
-....\glue 4.0 plus 2.0 minus 1.0
 ....\glue(\parskip) 0.0
 ....\glue(\parskip) 0.0
 ....\glue(\baselineskip) 14.55556
@@ -657,11 +653,9 @@ Completed box being shipped out [2]
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0
 ....\penalty -51
-....\glue 4.0 plus 2.0 minus 1.0
+....\glue 0.0
 ....\pdfdest name{cite.ITEM-4} xyz
 ....\penalty 10000
-....\glue -4.0 plus -2.0 minus -1.0
-....\glue 4.0 plus 2.0 minus 1.0
 ....\glue(\parskip) 0.0
 ....\glue(\parskip) 0.0
 ....\glue(\baselineskip) 14.0

@@ -1227,7 +1227,6 @@
 \tl_new:N \l__csl_bib_postamble_tl
 
 \dim_new:N \l__csl_bib_hang_dim
-\skip_new:N \l__csl_bib_item_sep_skip
 
 \cs_new:Npn \__csl_set_bib_label_spacing:n #1
   {
@@ -1244,18 +1243,21 @@
       }
   }
 
+% In standard LaTeX classes (10pt), the vertical sep of bibliographic item is
+% \itemsep (4\p@ \@plus2\p@ \@minus\p@) + \parsep (4\p@ \@plus2\p@ \@minus\p@)
+% = 8pt plus 4pt minus 2pt
 \cs_new:Npn \__csl_set_bib_item_sep:
   {
     \skip_zero:N \parsep
     \tl_if_empty:NTF \l__csl_bib_item_sep_tl
       {
-        \skip_set:Nn \l__csl_bib_item_sep_skip
+        \skip_set:Nn \itemsep
           {
             8 pt plus 4 pt minus 2 pt * \dim_ratio:nn { 1 em } { 8 pt }
             * \l__csl_entry_spacing_tl
           }
       }
-      { \skip_set:Nn \l__csl_bib_item_sep_skip { \l__csl_bib_item_sep_tl } }
+      { \skip_set:Nn \itemsep { \l__csl_bib_item_sep_tl } }
   }
 
 

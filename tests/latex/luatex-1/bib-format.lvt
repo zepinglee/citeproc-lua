@@ -1,0 +1,34 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+
+\cslsetup{
+  regression-test = true,
+  style = apa,
+  bib-item-sep = 7pt,
+}
+\addbibresource{test.bib}
+
+
+\begin{document}
+
+\START
+\showoutput
+
+\OMIT
+\nocite{*}
+\TIMO
+
+\TEST{Bibliography contents}{
+  \printbibliography
+}
+
+\TEST{Bibliography format}{
+  \clearpage
+}
+
+\end{document}
