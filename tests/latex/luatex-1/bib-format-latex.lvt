@@ -1,0 +1,29 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\input{csl-test}
+
+% \usepackage{citation-style-language}
+\usepackage[numbers]{natbib}
+\bibliographystyle{plainnat}
+\bibliographystyle{plain}
+
+\begin{document}
+
+\START
+\showoutput
+
+\OMIT
+\nocite{*}
+\TIMO
+
+\TEST{Bibliography contents}{
+  \bibliography{test}
+}
+
+\TEST{Bibliography format}{
+  \clearpage
+}
+
+\end{document}

@@ -1,0 +1,778 @@
+[
+ {
+  "author" : [
+   {
+    "family" : "张昆"
+   },
+   {
+    "family" : "冯立群"
+   },
+   {
+    "family" : "余昌钰"
+   },
+   {
+    "family" : "others"
+   }
+  ],
+  "container-title" : "清华大学学报: 自然科学版",
+  "id" : "zhangkun1994",
+  "issue" : "2",
+  "issued" : {
+   "date-parts" : [
+    [ 1994 ]
+   ]
+  },
+  "page" : "1-7",
+  "title" : "机器人柔性手腕的球面齿轮设计研究",
+  "type" : "article-journal",
+  "volume" : "34"
+ },
+ {
+  "author" : [
+   {
+    "family" : "竺可桢"
+   }
+  ],
+  "id" : "zhukezhen1973",
+  "issued" : {
+   "date-parts" : [
+    [ 1973 ]
+   ]
+  },
+  "page" : "56-60",
+  "publisher" : "科学出版社",
+  "publisher-place" : "北京",
+  "title" : "物理学论",
+  "type" : "book"
+ },
+ {
+  "author" : [
+   {
+    "family" : "Dupont",
+    "given" : "B"
+   }
+  ],
+  "container-title" : "Proceedings of the third annual meeting of the International Society for Experimental Hematology",
+  "editor" : [
+   {
+    "family" : "White",
+    "given" : "H J"
+   },
+   {
+    "family" : "Smith",
+    "given" : "R"
+   }
+  ],
+  "id" : "dupont1974bone",
+  "issued" : {
+   "date-parts" : [
+    [ 1974 ]
+   ]
+  },
+  "page" : "44-46",
+  "publisher" : "International Society for Experimental Hematology",
+  "publisher-place" : "Houston",
+  "title" : "Bone marrow transplantation in severe combined immunodeficiency with an unrelated MLC compatible donor",
+  "type" : "paper-conference"
+ },
+ {
+  "author" : [
+   {
+    "family" : "郑开青"
+   }
+  ],
+  "id" : "zhengkaiqing1987",
+  "issued" : {
+   "date-parts" : [
+    [ 1987 ]
+   ]
+  },
+  "publisher" : "清华大学无线电系",
+  "publisher-place" : "北京",
+  "title" : "通讯系统模拟及软件",
+  "type" : "thesis"
+ },
+ {
+  "author" : [
+   {
+    "family" : "姜锡洲"
+   }
+  ],
+  "id" : "jiangxizhou1980",
+  "issued" : {
+   "date-parts" : [
+    [ 1980, 7, 26 ]
+   ]
+  },
+  "number" : "88105607.3",
+  "publisher-place" : "中国",
+  "title" : "一种温热外敷药制备方案",
+  "type" : "patent"
+ },
+ {
+  "author" : [
+   {
+    "family" : "中华人民共和国国家技术监督局"
+   }
+  ],
+  "id" : "jianduju1994",
+  "issued" : {
+   "date-parts" : [
+    [ 1994 ]
+   ]
+  },
+  "publisher" : "中国标准出版社",
+  "publisher-place" : "北京",
+  "title" : "GB3100-3102. 中华人民共和国国家标准-量与单位",
+  "type" : "standard"
+ },
+ {
+  "author" : [
+   {
+    "family" : "Merkt",
+    "given" : "Frédéric"
+   },
+   {
+    "family" : "Mackenzie",
+    "given" : "S R"
+   },
+   {
+    "family" : "Softley",
+    "given" : "Timothy P"
+   }
+  ],
+  "container-title" : "Journal of Chemical Physics",
+  "container-title-short" : "J Chem Phys",
+  "id" : "merkt1995rotational",
+  "issued" : {
+   "date-parts" : [
+    [ 1995 ]
+   ]
+  },
+  "page" : "4509-4518",
+  "title" : "Rotational autoionization dynamics in high rydberg states of nitrogen",
+  "type" : "article-journal",
+  "volume" : "103"
+ },
+ {
+  "author" : [
+   {
+    "family" : "Mellinger",
+    "given" : "A"
+   },
+   {
+    "family" : "Vidal",
+    "given" : "C R"
+   },
+   {
+    "family" : "Jungen",
+    "given" : "Ch"
+   }
+  ],
+  "container-title" : "Journal of Chemical Physics",
+  "container-title-short" : "J Chem Phys",
+  "id" : "mellinger1996laser",
+  "issued" : {
+   "date-parts" : [
+    [ 1996 ]
+   ]
+  },
+  "page" : "8913-8921",
+  "title" : "Laser reduced fluorescence study of the carbon monoxide nd triplet Rydberg series - Experimental results and multichannel quantum defect analysis",
+  "type" : "article-journal",
+  "volume" : "104"
+ },
+ {
+  "author" : [
+   {
+    "family" : "Bixon",
+    "given" : "M"
+   },
+   {
+    "family" : "Jortner",
+    "given" : "Joshua"
+   }
+  ],
+  "container-title" : "Journal of Chemical Physics",
+  "container-title-short" : "J Chem Phys",
+  "id" : "bixon1996dynamics",
+  "issued" : {
+   "date-parts" : [
+    [ 1996 ]
+   ]
+  },
+  "page" : "1363-1382",
+  "title" : "The dynamics of predissociating high <span class=\u0022nocase\u0022>Rydberg</span> states of <span class=\u0022nocase\u0022>NO</span>",
+  "type" : "article-journal",
+  "volume" : "105"
+ },
+ {
+  "author" : [
+   {
+    "family" : "马辉"
+   },
+   {
+    "family" : "李俭"
+   },
+   {
+    "family" : "刘耀明"
+   },
+   {
+    "family" : "others"
+   }
+  ],
+  "container-title" : "化学物理学报",
+  "id" : "mahui1995",
+  "issued" : {
+   "date-parts" : [
+    [ 1995 ]
+   ]
+  },
+  "page" : "308-311",
+  "title" : "利用 <span class=\u0022nocase\u0022>REMPI</span> 方法测量 <span class=\u0022nocase\u0022>BaF</span> 高里德堡系列光谱",
+  "type" : "article-journal",
+  "volume" : "8"
+ },
+ {
+  "author" : [
+   {
+    "family" : "Carlson",
+    "given" : "N W"
+   },
+   {
+    "family" : "Taylor",
+    "given" : "A J"
+   },
+   {
+    "family" : "Jones",
+    "given" : "K M"
+   },
+   {
+    "family" : "Schawlow",
+    "given" : "A L"
+   }
+  ],
+  "container-title" : "Physical Review A",
+  "container-title-short" : "Phys Rev A",
+  "id" : "carlson1981two",
+  "issued" : {
+   "date-parts" : [
+    [ 1981 ]
+   ]
+  },
+  "page" : "822-834",
+  "title" : "Two-step polarization-labeling spectroscopy of excited states of <span class=\u0022nocase\u0022>Na2</span>",
+  "type" : "article-journal",
+  "volume" : "24"
+ },
+ {
+  "author" : [
+   {
+    "family" : "Taylor",
+    "given" : "A J"
+   },
+   {
+    "family" : "Jones",
+    "given" : "K M"
+   },
+   {
+    "family" : "Schawlow",
+    "given" : "A L"
+   }
+  ],
+  "container-title" : "Journal of the Optical Society of America",
+  "container-title-short" : "J Opt Soc Am",
+  "id" : "taylor1983scanning",
+  "issued" : {
+   "date-parts" : [
+    [ 1983 ]
+   ]
+  },
+  "page" : "994-998",
+  "title" : "Scanning pulsed-polarization spectrometer applied to <span class=\u0022nocase\u0022>Na2</span>",
+  "type" : "article-journal",
+  "volume" : "73"
+ },
+ {
+  "author" : [
+   {
+    "family" : "Taylor",
+    "given" : "A J"
+   },
+   {
+    "family" : "Jones",
+    "given" : "K M"
+   },
+   {
+    "family" : "Schawlow",
+    "given" : "A L"
+   }
+  ],
+  "container-title" : "Optics Communications",
+  "container-title-short" : "Opt Commun",
+  "id" : "taylor1981study",
+  "issued" : {
+   "date-parts" : [
+    [ 1981 ]
+   ]
+  },
+  "page" : "47-50",
+  "title" : "A study of the excited <span class=\u0022nocase\u0022>1<math>\u005CSigma</math>g+</span> states in <span class=\u0022nocase\u0022>Na2</span>",
+  "type" : "article-journal",
+  "volume" : "39"
+ },
+ {
+  "author" : [
+   {
+    "family" : "Shimizu",
+    "given" : "Kazuko"
+   },
+   {
+    "family" : "Shimizu",
+    "given" : "Fujio"
+   }
+  ],
+  "container-title" : "Journal of Chemical Physics",
+  "container-title-short" : "J Chem Phys",
+  "id" : "shimizu1983laser",
+  "issued" : {
+   "date-parts" : [
+    [ 1983 ]
+   ]
+  },
+  "page" : "1126-1131",
+  "title" : "Laser induced fluorescence spectra of the a <span class=\u0022nocase\u0022>3<math>\u005CPi</math>u–X 1<math>\u005CSigma</math>g+</span> band of <span class=\u0022nocase\u0022>Na2</span> by molecular beam",
+  "type" : "article-journal",
+  "volume" : "78"
+ },
+ {
+  "author" : [
+   {
+    "family" : "Atkinson",
+    "given" : "J B"
+   },
+   {
+    "family" : "Becker",
+    "given" : "J"
+   },
+   {
+    "family" : "Demtröder",
+    "given" : "W"
+   }
+  ],
+  "container-title" : "Chemical Physics Letters",
+  "container-title-short" : "Chem Phys Lett",
+  "id" : "atkinson1982experimental",
+  "issued" : {
+   "date-parts" : [
+    [ 1982 ]
+   ]
+  },
+  "page" : "92-97",
+  "title" : "Experimental observation of the a <span class=\u0022nocase\u0022>3<math>\u005CPi</math>u</span> state of <span class=\u0022nocase\u0022>Na2</span>",
+  "type" : "article-journal",
+  "volume" : "87"
+ },
+ {
+  "author" : [
+   {
+    "family" : "Kusch",
+    "given" : "P"
+   },
+   {
+    "family" : "Hessel",
+    "given" : "M M"
+   }
+  ],
+  "container-title" : "Journal of Chemical Physics",
+  "container-title-short" : "J Chem Phys",
+  "id" : "kusch1975perturbations",
+  "issued" : {
+   "date-parts" : [
+    [ 1975 ]
+   ]
+  },
+  "page" : "4087-4088",
+  "title" : "Perturbations in the A <span class=\u0022nocase\u0022>1<math>\u005CSigma</math>u+</span> state of <span class=\u0022nocase\u0022>Na2</span>",
+  "type" : "article-journal",
+  "volume" : "63"
+ },
+ {
+  "author" : [
+   {
+    "family" : "广西壮族自治区林业厅"
+   }
+  ],
+  "id" : "guangxi1993",
+  "issued" : {
+   "date-parts" : [
+    [ 1993 ]
+   ]
+  },
+  "publisher" : "中国林业出版社",
+  "publisher-place" : "北京",
+  "title" : "广西自然保护区",
+  "type" : "book"
+ },
+ {
+  "author" : [
+   {
+    "family" : "霍斯尼"
+   }
+  ],
+  "edition" : "2",
+  "id" : "huosini1989guwu",
+  "issued" : {
+   "date-parts" : [
+    [ 1989 ]
+   ]
+  },
+  "page" : "15-20",
+  "publisher" : "中国食品出版社",
+  "publisher-place" : "北京",
+  "title" : "谷物科学与工艺学原理",
+  "translator" : [
+   {
+    "family" : "李庆龙"
+   }
+  ],
+  "type" : "book"
+ },
+ {
+  "author" : [
+   {
+    "family" : "王夫之"
+   }
+  ],
+  "edition" : "刻本",
+  "id" : "wangfuzhi1865songlun",
+  "issued" : {
+   "literal" : "1865（清同治四年）"
+  },
+  "publisher" : "曾氏",
+  "publisher-place" : "金陵",
+  "title" : "宋论",
+  "type" : "book"
+ },
+ {
+  "URL" : "http://www.ie.nthu.edu.tw/info/ie.newie.htm",
+  "accessed" : {
+   "date-parts" : [
+    [ 1998, 9, 26 ]
+   ]
+  },
+  "author" : [
+   {
+    "family" : "赵耀东"
+   }
+  ],
+  "id" : "zhaoyaodong1998xinshidai",
+  "issued" : {
+   "date-parts" : [
+    [ 1998 ]
+   ]
+  },
+  "publisher" : "天下文化出版社",
+  "publisher-place" : "台北",
+  "title" : "新时代的工业工程师",
+  "type" : "book"
+ },
+ {
+  "author" : [
+   {
+    "family" : "全国信息与文献工作标准化技术委员会出版物格式分委员会"
+   }
+  ],
+  "id" : "biaozhunhua2002tushu",
+  "issued" : {
+   "date-parts" : [
+    [ 2002 ]
+   ]
+  },
+  "page" : "1",
+  "publisher" : "中国标准出版社",
+  "publisher-place" : "北京",
+  "title" : "GB/t 12450-2001 图书书名页",
+  "type" : "standard"
+ },
+ {
+  "author" : [
+   {
+    "family" : "全国出版专业职业资格考试办公室"
+   }
+  ],
+  "edition" : "2014",
+  "id" : "chubanzhuanye2004",
+  "issued" : {
+   "date-parts" : [
+    [ 2004 ]
+   ]
+  },
+  "page" : "299-307",
+  "publisher" : "上海辞书出版社",
+  "publisher-place" : "上海",
+  "title" : "全国出版专业职业资格考试辅导教材: 出版专业理论与实务•中级",
+  "type" : "book"
+ },
+ {
+  "author" : [
+   {
+    "literal" : "World Health Organization"
+   }
+  ],
+  "id" : "who1970factors",
+  "issued" : {
+   "date-parts" : [
+    [ 1970 ]
+   ]
+  },
+  "publisher" : "WHO",
+  "publisher-place" : "Geneva",
+  "title" : "Factors regulating the immune response: Report of <span class=\u0022nocase\u0022>WHO Scientific Group</span>",
+  "type" : "report"
+ },
+ {
+  "author" : [
+   {
+    "family" : "Peebles",
+    "given" : "Peyton Z.",
+    "suffix" : "Jr"
+   }
+  ],
+  "edition" : "4",
+  "id" : "peebles2001probability",
+  "issued" : {
+   "date-parts" : [
+    [ 2001 ]
+   ]
+  },
+  "publisher" : "McGraw Hill",
+  "publisher-place" : "New York",
+  "title" : "Probability, random variables, and random signal principles",
+  "type" : "book"
+ },
+ {
+  "author" : [
+   {
+    "family" : "白书农"
+   }
+  ],
+  "container-title" : "植物科学进展",
+  "editor" : [
+   {
+    "family" : "李承森"
+   }
+  ],
+  "id" : "baishunong1998zhiwu",
+  "issued" : {
+   "date-parts" : [
+    [ 1998 ]
+   ]
+  },
+  "page" : "146-163",
+  "publisher" : "高等教育出版社",
+  "publisher-place" : "北京",
+  "title" : "植物开花研究",
+  "type" : "chapter"
+ },
+ {
+  "author" : [
+   {
+    "family" : "Weinstein",
+    "given" : "L"
+   },
+   {
+    "family" : "Swertz",
+    "given" : "M N"
+   }
+  ],
+  "container-title" : "Pathologic physiology: mechanisms of disease",
+  "editor" : [
+   {
+    "family" : "Sodeman",
+    "given" : "William A",
+    "suffix" : "Jr"
+   },
+   {
+    "family" : "Sodeman",
+    "given" : "William A"
+   }
+  ],
+  "id" : "weinstein1974pathogenic",
+  "issued" : {
+   "date-parts" : [
+    [ 1974 ]
+   ]
+  },
+  "page" : "745-772",
+  "publisher" : "Saunders",
+  "publisher-place" : "Philadelphia",
+  "title" : "Pathogenic properties of invading microorganism",
+  "type" : "chapter"
+ },
+ {
+  "author" : [
+   {
+    "family" : "韩吉人"
+   }
+  ],
+  "container-title" : "职工教育研究论文集",
+  "editor" : [
+   {
+    "family" : "中国职工教育研究会"
+   }
+  ],
+  "id" : "hanjiren1985lun",
+  "issued" : {
+   "date-parts" : [
+    [ 1985 ]
+   ]
+  },
+  "page" : "90-99",
+  "publisher" : "人民教育出版社",
+  "publisher-place" : "北京",
+  "title" : "论职工教育的特点",
+  "type" : "paper-conference"
+ },
+ {
+  "author" : [
+   {
+    "family" : "中国地质学会"
+   }
+  ],
+  "id" : "dizhi1936dizhi",
+  "issue" : "1",
+  "issued" : {
+   "date-parts" : [
+    [ 1936 ]
+   ]
+  },
+  "publisher" : "地质出版社",
+  "publisher-place" : "北京",
+  "title" : "地质评论",
+  "type" : "periodical",
+  "volume" : "1"
+ },
+ {
+  "author" : [
+   {
+    "family" : "中国图书馆学会"
+   }
+  ],
+  "id" : "tushuguan1957tushuguanxue",
+  "issue" : "1–4",
+  "issued" : {
+   "date-parts" : [
+    [ 1957 ],
+    [ 1990 ]
+   ]
+  },
+  "publisher" : "北京图书馆",
+  "publisher-place" : "北京",
+  "title" : "图书馆学通讯",
+  "type" : "periodical"
+ },
+ {
+  "author" : [
+   {
+    "literal" : "American Association for the Advancement of Science"
+   }
+  ],
+  "id" : "aaas1883science",
+  "issue" : "1",
+  "issued" : {
+   "date-parts" : [
+    [ 1883 ]
+   ]
+  },
+  "publisher" : "American Association for the Advancement of Science",
+  "publisher-place" : "Washington, D.C.",
+  "title" : "Science",
+  "type" : "periodical",
+  "volume" : "1"
+ },
+ {
+  "URL" : "http://www.bjyouth.com.cn/Bqb/20000412/B/4216%5ED0412B1401.htm",
+  "accessed" : {
+   "date-parts" : [
+    [ 2002, 3, 6 ]
+   ]
+  },
+  "author" : [
+   {
+    "family" : "傅刚"
+   },
+   {
+    "family" : "赵承"
+   },
+   {
+    "family" : "李佳路"
+   }
+  ],
+  "container-title" : "北京青年报",
+  "id" : "fugang2000fengsha",
+  "issue" : "14",
+  "issued" : {
+   "date-parts" : [
+    [ 2000, 4, 12 ]
+   ]
+  },
+  "title" : "大风沙过后的思考",
+  "type" : "article-newspaper"
+ },
+ {
+  "URL" : "http://www.creader.com/news/20011219/200112190019.htm",
+  "accessed" : {
+   "date-parts" : [
+    [ 2002, 4, 15 ]
+   ]
+  },
+  "author" : [
+   {
+    "family" : "萧钰"
+   }
+  ],
+  "id" : "xiaoyu2001chubanye",
+  "issued" : {
+   "date-parts" : [
+    [ 2001, 12, 19 ]
+   ]
+  },
+  "title" : "出版业信息化迈入快车道",
+  "type" : "webpage"
+ },
+ {
+  "URL" : "http://www.oclc.org/about/cooperation.en.htm",
+  "accessed" : {
+   "date-parts" : [
+    [ 2000, 1, 8 ]
+   ]
+  },
+  "author" : [
+   {
+    "literal" : "Online Computer Library Center, Inc"
+   }
+  ],
+  "id" : "oclc2000about",
+  "title" : "About <span class=\u0022nocase\u0022>OCLC</span>: History of cooperation",
+  "type" : "webpage"
+ },
+ {
+  "author" : [
+   {
+    "literal" : "Scitor Corporation"
+   }
+  ],
+  "id" : "scitor2000project",
+  "issued" : {
+   "date-parts" : [
+    [ 1983 ]
+   ]
+  },
+  "medium" : "DK",
+  "publisher" : "Scitor Corporation",
+  "publisher-place" : "Sunnyvale, Calif.",
+  "title" : "Project scheduler",
+  "type" : "software"
+ }
+]

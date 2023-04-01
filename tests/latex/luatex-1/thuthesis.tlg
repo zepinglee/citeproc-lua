@@ -1,0 +1,53 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Citation
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={taylor1981study@1},citationItems={{id={taylor1981study}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=\textsuperscript {[\cslcite {taylor1981study}{1}]}.
+<recently read> }
+l. ...}
+(load cache: extra_lmroman7-regular.luc)(load cache: extra_lmroman5-regular.luc)
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.53937> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+luaotfload | aux : font no 33 (nil) does not define feature vert for script dflt with language dflt
+luaotfload | aux : font no 33 (nil) does not define feature vrt2 for script dflt with language dflt
+luaotfload | aux : font no 34 (nil) does not define feature vert for script dflt with language dflt
+luaotfload | aux : font no 34 (nil) does not define feature vrt2 for script dflt with language dflt
+============================================================
+============================================================
+TEST 2: Bibliography
+============================================================
+The sequence \l__csl_bibliography_seq contains the items (without outer
+braces):
+>  {\cslsetup { class = in-text, line-spacing = 1, entry-spacing = 0, }}
+>  {\begin {thebibliography}{[1]}}
+>  {\bibitem [{[1]}]{taylor1981study} Taylor A J, Jones K M, Schawlow A L. A
+study of the excited 1$\Sigma $g+ states in Na2[J]. Optics Communications,
+1981, 39: 47-50.}
+>  {\end {thebibliography}}.
+<recently read> }
+l. ...}
+(load cache: extra_lmroman17-regular.luc)
+luaotfload | aux : font no 39 (nil) does not define feature vert for script dflt with language dflt
+luaotfload | aux : font no 39 (nil) does not define feature vrt2 for script dflt with language dflt(load cache: extra_lmroman12-bold.luc)
+LaTeX Font Info:    Font shape `LTJY3/SongtiSCLight(0)/bx/n' in size <15.05624> not available
+(Font)              Font shape `LTJY3/SongtiSCLight(0)/b/n' tried instead on input line ....
+luaotfload | aux : font no 41 (nil) does not define feature vert for script dflt with language dflt
+luaotfload | aux : font no 41 (nil) does not define feature vrt2 for script dflt with language dflt
+============================================================
+[1
+] (thuthesis.aux)
+Package rerunfilecheck Warning: File `thuthesis.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+Package rerunfilecheck Info: Checksums for `thuthesis.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
