@@ -5,7 +5,7 @@
 
 module = "citation-style-language"
 
-docfiledir = "./doc"
+docfiledir = "./docs"
 -- testfiledir = "./tests/latex"
 testsuppdir = "./tests/latex/support"
 
