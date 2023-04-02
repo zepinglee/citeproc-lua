@@ -9,6 +9,7 @@ local irnode = {}
 local util = require("citeproc-util")
 
 
+---@class IrNode
 local IrNode = {
   _element = nil,
   _type = "IrNode",
@@ -121,6 +122,7 @@ function IrNode:find_first_year_ir()
 end
 
 
+---@class Rendered: IrNode
 local Rendered = IrNode:derive("Rendered")
 
 function Rendered:new(inlines, element)
@@ -138,6 +140,7 @@ function Rendered:new(inlines, element)
 end
 
 
+---@class YearSuffix: IrNode
 local YearSuffix = IrNode:derive("YearSuffix")
 
 function YearSuffix:new(inlines, element)
@@ -155,9 +158,11 @@ function YearSuffix:new(inlines, element)
 end
 
 
+---@class NameIr: IrNode
 local NameIr = IrNode:derive("NameIr")
 
 
+---@class PersonNameIr: IrNode
 local PersonNameIr = IrNode:derive("PersonNameIr")
 
 function PersonNameIr:new(inlines, element)
@@ -173,6 +178,7 @@ function PersonNameIr:new(inlines, element)
 end
 
 
+---@class SeqIr: IrNode
 local SeqIr = IrNode:derive("SeqIr")
 
 -- function SeqIr:new(children)

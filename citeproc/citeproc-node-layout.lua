@@ -11,6 +11,7 @@ local SeqIr = require("citeproc-ir-node").SeqIr
 local util = require("citeproc-util")
 
 
+---@class Layout: Element
 local Layout = Element:derive("layout")
 
 function Layout:from_node(node)
@@ -18,6 +19,9 @@ function Layout:from_node(node)
   o:set_affixes_attributes(node)
   o:set_formatting_attributes(node)
   o:get_delimiter_attribute(node)
+
+  -- CSL-M: layout
+  o:set_attribute(node, "locale")
 
   o:process_children_nodes(node)
 

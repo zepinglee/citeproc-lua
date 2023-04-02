@@ -26,6 +26,7 @@ local SortStringFormat = require("citeproc-output").SortStringFormat
 local util = require("citeproc-util")
 
 
+---@class Citation: Element
 local Citation = Element:derive("citation", {
   givenname_disambiguation_rule = "by-cite",
   -- https://github.com/citation-style-language/schema/issues/338
@@ -38,6 +39,8 @@ function Citation:from_node(node, style)
 
   local o = self:new()
   o.children = {}
+  o.layout = nil
+  o.layouts_by_language = {}
 
   o:process_children_nodes(node)
 
@@ -46,7 +49,13 @@ function Citation:from_node(node, style)
   for _, child in ipairs(o.children) do
     local element_name = child.element_name
     if element_name == "layout" then
-      o.layout = child
+      if child.locale then
+        for _, lang in ipairs(util.split(util.strip(child.locale))) do
+          o.layouts_by_language[lang] = child
+        end
+      else
+        o.layout = child
+      end
     elseif element_name == "sort" then
       o.sort = child
     end
@@ -122,6 +131,16 @@ local function remove_name_formatting(ir)
   end
 end
 
+---@class CitationItem
+---@field id string | number
+---@field prefix string?
+---@field suffix string?
+
+---comment
+---@param citation_items CitationItem[]
+---@param engine CiteProc
+---@param properties table
+---@return string
 function Citation:build_cluster(citation_items, engine, properties)
   properties = properties or {}
   local output_format = engine.output_format
@@ -174,7 +193,6 @@ function Citation:build_cluster(citation_items, engine, properties)
 
   -- util.debug(irs)
 
-  local citation_delimiter = self.layout.delimiter
   local citation_stream = {}
 
   local context = Context:new()
@@ -203,8 +221,8 @@ function Citation:build_cluster(citation_items, engine, properties)
             if cite_prefix then
               left_most_str = cite_prefix[1]:get_left_most_string()
             end
-            if citation_delimiter and not (cite_prefix and util.startswith(left_most_str, ",")) then
-              table.insert(citation_stream, PlainText:new(citation_delimiter))
+            if previous_ir.cite_delimiter and not (cite_prefix and util.startswith(left_most_str, ",")) then
+              table.insert(citation_stream, PlainText:new(previous_ir.cite_delimiter))
             end
           end
         end
@@ -247,12 +265,11 @@ function Citation:build_cluster(citation_items, engine, properties)
   local author_only_mode = (properties.mode == "author-only" or
     (#citation_items >= 1 and citation_items[1]["author-only"]))
   if has_printed_form and context.area.layout.affixes and not author_only_mode then
-    local affixes = context.area.layout.affixes
-    if affixes.prefix then
-      table.insert(citation_stream, 1, PlainText:new(affixes.prefix))
+    if irs[1].cite_prefix then
+      table.insert(citation_stream, 1, PlainText:new(irs[1].cite_prefix))
     end
-    if affixes.suffix then
-      table.insert(citation_stream, PlainText:new(affixes.suffix))
+    if irs[#irs].cite_suffix then
+      table.insert(citation_stream, PlainText:new(irs[#irs].cite_suffix))
     end
   end
 
@@ -322,6 +339,22 @@ function Citation:sorted_citation_items(items, engine)
   return items
 end
 
+
+---@class CiteIr: IrNode
+---@field cite_item CitationItem
+---@field reference table
+---@field ir_index any
+---@field is_ambiguous boolean
+---@field disam_level integer
+---@field cite_delimiter string?
+---@field cite_prefix string?
+---@field cite_suffix string?
+
+---@param cite_item CitationItem
+---@param output_format OutputFormat
+---@param engine CiteProc
+---@param properties table
+---@return CiteIr
 function Citation:build_fully_disambiguated_ir(cite_item, output_format, engine, properties)
   local cite_ir = self:build_ambiguous_ir(cite_item, output_format, engine)
   -- util.debug(cite_ir)
@@ -341,13 +374,18 @@ function Citation:build_fully_disambiguated_ir(cite_item, output_format, engine,
   return cite_ir
 end
 
+---comment
+---@param cite_item CitationItem
+---@param output_format OutputFormat
+---@param engine CiteProc
+---@return CiteIr
 function Citation:build_ambiguous_ir(cite_item, output_format, engine)
   local state = IrState:new(engine.style)
   local context = Context:new()
   context.engine = engine
   context.style = engine.style
   context.area = self
-  context.locale = engine:get_locale(engine.lang)
+  -- context.locale = engine:get_locale(engine.lang)
   context.name_inheritance = self.name_inheritance
   context.format = output_format
   context.id = cite_item.id
@@ -355,9 +393,12 @@ function Citation:build_ambiguous_ir(cite_item, output_format, engine)
   -- context.reference = self:get_item(cite_item.id)
   context.reference = engine.registry.registry[cite_item.id]
 
+  local active_layout, context_lang = util.get_layout_by_language(self, engine, context.reference)
+  context.locale = engine:get_locale(context_lang)
+
   local ir
   if context.reference then
-    ir = self:build_ir(engine, state, context)
+    ir = self:build_ir(engine, state, context, active_layout)
   else
     ir = Rendered:new({Formatted:new({PlainText:new(cite_item.id)}, {["font-weight"] = "bold"})}, self)
   end
@@ -368,6 +409,12 @@ function Citation:build_ambiguous_ir(cite_item, output_format, engine)
   table.insert(engine.disam_irs, ir)
   ir.is_ambiguous = false
   ir.disam_level = 0
+
+  ir.cite_delimiter = active_layout.delimiter
+  if active_layout.affixes then
+    ir.cite_prefix = active_layout.affixes.prefix
+    ir.cite_suffix = active_layout.affixes.suffix
+  end
 
   -- Formattings like font-style are ignored for disambiguation.
   local disam_format = DisamStringFormat:new()
@@ -390,11 +437,11 @@ function Citation:build_ambiguous_ir(cite_item, output_format, engine)
   return ir
 end
 
-function Citation:build_ir(engine, state, context)
-  if not self.layout then
+function Citation:build_ir(engine, state, context, active_layout)
+  if not active_layout then
     util.error("Missing citation layout.")
   end
-  return self.layout:build_ir(engine, state, context)
+  return active_layout:build_ir(engine, state, context)
 end
 
 function Citation:apply_disambiguate_add_givenname(cite_ir, engine)

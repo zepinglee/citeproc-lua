@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add backref.
 - Add journal abbreviation.
 - The `title`s and `booktitle`s from BibTeX data are converted to sentence case.
+- Add [`layout` extension](https://citeproc-js.readthedocs.io/en/latest/csl-m/index.html#cs-layout-extension) of CSL-M.
 
 ### Fixed
 

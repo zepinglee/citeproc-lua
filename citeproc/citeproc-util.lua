@@ -1079,4 +1079,34 @@ function util.check_journal_abbreviations(item)
 end
 
 
+---CSL-M: `layout` extension
+---Select the layout by
+---@param element Citation | Bibliography
+---@param engine CiteProc
+---@param item any
+---@return Layout
+---@return string
+function util.get_layout_by_language(element, engine, item)
+  if not item then
+    return element.layout, engine.lang
+  end
+
+  local entry_lang = item.language or ""
+  local language = string.sub(entry_lang, 1, 2)
+  local primary_dialect = util.primary_dialects[language] or ""
+
+  local layouts = element.layouts_by_language
+  local active_layout = layouts[entry_lang] or layouts[language] or layouts[primary_dialect]
+
+  local context_lang
+  if active_layout then
+    context_lang = entry_lang
+  else
+    context_lang = engine.lang
+    active_layout = element.layout
+  end
+  return active_layout, context_lang
+end
+
+
 return util

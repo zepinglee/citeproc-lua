@@ -1,0 +1,242 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+>>===== CITATION-ITEMS =====>>
+[
+    [
+        {
+            "id": "ITEM-1"
+        }
+    ], 
+    [
+        {
+            "id": "ITEM-2"
+        }
+    ], 
+    [
+        {
+            "id": "ITEM-1"
+        }, 
+        {
+            "id": "ITEM-2"
+        }
+    ], 
+    [
+        {
+            "id": "ITEM-3"
+        }
+    ], 
+    [
+        {
+            "id": "ITEM-4"
+        }
+    ], 
+    [
+        {
+            "id": "ITEM-3"
+        }, 
+        {
+            "id": "ITEM-4"
+        }
+    ], 
+    [
+        {
+            "id": "ITEM-1"
+        }, 
+        {
+            "id": "ITEM-3"
+        }
+    ], 
+    [
+        {
+            "id": "ITEM-4"
+        }, 
+        {
+            "id": "ITEM-2"
+        }
+    ], 
+    [
+        {
+            "id": "ITEM-4"
+        }, 
+        {
+            "id": "ITEM-2"
+        }, 
+        {
+            "id": "ITEM-3"
+        }
+    ], 
+    [
+        {
+            "id": "ITEM-2"
+        }, 
+        {
+            "id": "ITEM-3"
+        }, 
+        {
+            "id": "ITEM-1"
+        }
+    ]
+]
+<<===== CITATION-ITEMS =====<<
+
+
+>>===== RESULT =====>>
+北野猛、「監督の目」、1999年2月11日。
+島田紳助、「ネタ作り」、2000年6月1日。
+北野猛、「監督の目」、1999年2月11日。島田紳助、「ネタ作り」、2000年6月1日。
+Partridge, A., “Radiant Radio,” Oct. 1, 1988.
+Only Me, “My Way, the Right Way,” Nov. 13, 1992.
+Partridge, A., “Radiant Radio,” Oct. 1, 1988; Only Me, “My Way, the Right Way,” Nov. 13, 1992.
+北野猛、「監督の目」、1999年2月11日。Partridge, A., “Radiant Radio,” Oct. 1, 1988.
+Only Me, “My Way, the Right Way,” Nov. 13, 1992; 島田紳助、「ネタ作り」、2000年6月1日。
+Only Me, “My Way, the Right Way,” Nov. 13, 1992; 島田紳助、「ネタ作り」、2000年6月1日。Partridge, A., “Radiant Radio,” Oct. 1, 1988.
+島田紳助、「ネタ作り」、2000年6月1日。Partridge, A., “Radiant Radio,” Oct. 1, 1988; 北野猛、「監督の目」、1999年2月11日。
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.1mlz1"
+      default-locale="ja-JP">
+  <info>
+    <title>Test fixture</title>
+    <id>http://citationstyles.org/tests/fixture</id>
+    <link href="http://citationstyles.org/tests/fixture" rel="self"/>
+    <link href="http://citationstyles.org/documentation/text" rel="documentation"/>
+    <category citation-format="author-date"/>
+    <updated>2014-04-30T13:19:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <locale>
+    <style-options punctuation-in-quote="true"/>
+  </locale>
+  <locale xml:lang="ja-JP">
+    <terms>
+      <term name="open-quote">「</term>
+      <term name="close-quote">」</term>
+    </terms>
+  </locale>
+  <macro name="cite-japanese">
+    <group delimiter="、">
+      <names variable="author">
+        <name />
+      </names>
+      <text variable="title" quotes="true"/>
+      <date variable="issued" form="text" date-parts="year-month-day"/>
+    </group>
+  </macro>
+  <macro name="cite-english">
+    <group delimiter=", ">
+      <names variable="author">
+        <name initialize-with=". " name-as-sort-order="all" sort-separator=", "/>
+      </names>
+      <text variable="title" quotes="true"/>
+      <date variable="issued" form="text" date-parts="year-month-day">
+        <date-part name="month" form="short"/>
+        <date-part name="day" form="numeric"/>
+      </date>
+    </group>
+  </macro>
+  <citation>
+    <layout locale="en" delimiter="; " suffix=".">
+      <text macro="cite-english"/>
+    </layout>
+    <layout delimiter="。" suffix="。">
+      <text macro="cite-japanese"/>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1", 
+        "author": [
+			{
+				"family": "北野",
+				"given": "猛"
+            }
+		],
+        "issued": {
+            "date-parts": [
+                [
+                    "1999", 
+                    "2", 
+                    "11"
+                ]
+            ]
+        }, 
+        "language": "ja",
+        "title": "監督の目", 
+        "type": "book"
+    },
+    {
+        "id": "ITEM-2", 
+        "author": [
+			{
+				"family": "島田",
+				"given": "紳助"
+            }
+		],
+        "issued": {
+            "date-parts": [
+                [
+                    "2000", 
+                    "6", 
+                    "1"
+                ]
+            ]
+        }, 
+        "language": "ja",
+        "title": "ネタ作り", 
+        "type": "book"
+    },
+    {
+        "id": "ITEM-3", 
+        "author": [
+			{
+				"family": "Partridge",
+				"given": "Alan"
+            }
+		],
+        "issued": {
+            "date-parts": [
+                [
+                    "1988", 
+                    "10", 
+                    "1"
+                ]
+            ]
+        }, 
+        "language": "en",
+        "title": "Radiant Radio", 
+        "type": "book"
+    },
+    {
+        "id": "ITEM-4", 
+        "author": [
+			{
+				"family": "Only Me"
+            }
+		],
+        "issued": {
+            "date-parts": [
+                [
+                    "1992", 
+                    "11", 
+                    "13"
+                ]
+            ]
+        }, 
+        "language": "en",
+        "title": "My Way, the Right Way", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

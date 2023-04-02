@@ -14,6 +14,7 @@ local Micro = require("citeproc-output").Micro
 local util = require("citeproc-util")
 
 
+---@class Element
 local Element = {
   element_name = nil,
   children = nil,

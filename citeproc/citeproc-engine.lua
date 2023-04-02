@@ -22,8 +22,17 @@ local SortStringFormat = require("citeproc-output").SortStringFormat
 local util = require("citeproc-util")
 
 
+---@class CiteProc
+---@field style any
+---@field lang string
 local CiteProc = {}
 
+---comment
+---@param sys table
+---@param style string
+---@param lang string?
+---@param force_lang boolean?
+---@return CiteProc
 function CiteProc.new(sys, style, lang, force_lang)
   if not sys then
     error("\"citeprocSys\" required")
@@ -920,15 +929,9 @@ function CiteProc:sort_bibliography()
 end
 
 function CiteProc:get_locale(lang)
-  if string.len(lang) == 2 then
-    lang = util.primary_dialects[lang] or lang
-  end
-  local locale = self.locales[lang]
-  if locale then
-    return locale
-  else
-    return self:get_merged_locales(lang)
-  end
+  lang = util.primary_dialects[lang] or lang
+  local locale = self.locales[lang] or self:get_merged_locales(lang)
+  return locale
 end
 
 function CiteProc:get_merged_locales(lang)

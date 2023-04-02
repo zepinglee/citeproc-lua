@@ -20,7 +20,16 @@ local YearSuffix = require("citeproc-ir-node").YearSuffix
 local util = require("citeproc-util")
 
 
-local Bibliography = Element:derive("bibliography", {
+---@class Bibliography: Element
+---@field hanging_indent boolean
+---@field line_spacing integer
+---@field entry_spacing integer
+---@field subsequent_author_substitute_rule string
+---@field layout Layout
+---@field layouts_by_language table<string, Layout>
+local Bibliography = {}
+
+Bibliography = Element:derive("bibliography", {
   hanging_indent = false,
   line_spacing = 1,
   entry_spacing = 1,
@@ -30,6 +39,8 @@ local Bibliography = Element:derive("bibliography", {
 function Bibliography:from_node(node, style)
   local o = Bibliography:new()
   o.children = {}
+  o.layout = nil
+  o.layouts_by_language = {}
 
   o:process_children_nodes(node)
 
@@ -38,7 +49,13 @@ function Bibliography:from_node(node, style)
   for _, child in ipairs(o.children) do
     local element_name = child.element_name
     if element_name == "layout" then
-      o.layout = child
+      if child.locale then
+        for _, lang in ipairs(util.split(util.strip(child.locale))) do
+          o.layouts_by_language[lang] = child
+        end
+      else
+        o.layout = child
+      end
     elseif element_name == "sort" then
       o.sort = child
     end
@@ -66,6 +83,10 @@ function Bibliography:from_node(node, style)
   return o
 end
 
+---comment
+---@param id string
+---@param engine CiteProc
+---@return string
 function Bibliography:build_bibliography_str(id, engine)
     local output_format = engine.output_format
 
@@ -75,14 +96,18 @@ function Bibliography:build_bibliography_str(id, engine)
     context.style = engine.style
     context.area = self
     context.in_bibliography = true
-    context.locale = engine:get_locale(engine.lang)
+    -- context.locale = engine:get_locale(engine.lang)
     context.name_inheritance = self.name_inheritance
     context.format = output_format
     context.id = id
     context.cite = nil
     context.reference = engine:get_item(id)
 
-    local ir = self:build_ir(engine, state, context)
+    -- CSL-M: `layout` extension
+    local active_layout, context_lang = util.get_layout_by_language(self, engine, context.reference)
+    context.locale = engine:get_locale(context_lang)
+
+    local ir = self:build_ir(engine, state, context, active_layout)
     -- util.debug(ir)
     ir.reference = context.reference
 
@@ -101,11 +126,11 @@ function Bibliography:build_bibliography_str(id, engine)
     return str
 end
 
-function Bibliography:build_ir(engine, state, context)
-  if not self.layout then
+function Bibliography:build_ir(engine, state, context, active_layout)
+  if not active_layout then
     util.error("Missing bibliography layout.")
   end
-  local ir = self.layout:build_ir(engine, state, context)
+  local ir = active_layout:build_ir(engine, state, context)
   -- util.debug(ir)
   if self.second_field_align == "flush" and #ir.children >= 2 then
     ir.children[1].display = "left-margin"
