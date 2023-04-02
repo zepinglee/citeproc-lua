@@ -640,13 +640,13 @@ function OutputFormat:new(format_name)
   return o
 end
 
-function OutputFormat:flatten_ir(ir)
+function OutputFormat:flatten_ir(ir, override_delim)
   if self.group_var == "missing" or self.collapse_suppressed then
     return {}
   end
   local inlines = {}
   if ir._type == "SeqIr" or ir._type == "NameIr" then
-    inlines = self:flatten_seq_ir(ir)
+    inlines = self:flatten_seq_ir(ir, override_delim)
   else
     inlines = self:with_format(ir.inlines, ir.formatting)
     inlines = self:affixed_quoted(inlines, ir.affixes, ir.quotes);
@@ -655,7 +655,7 @@ function OutputFormat:flatten_ir(ir)
   return inlines
 end
 
-function OutputFormat:flatten_seq_ir(ir)
+function OutputFormat:flatten_seq_ir(ir, override_delim)
   -- if not ir.children then
   --   print(debug.traceback())
   -- end
@@ -663,9 +663,14 @@ function OutputFormat:flatten_seq_ir(ir)
     return {}
   end
   local inlines_list = {}
+  local delimiter = ir.delimiter
+  if not delimiter and ir.should_inherit_delim then
+    delimiter = override_delim
+  end
+
   for _, child in ipairs(ir.children) do
     if child.group_var ~= "missing" and not child.collapse_suppressed then
-      local child_inlines = self:flatten_ir(child)
+      local child_inlines = self:flatten_ir(child, delimiter)
       if #child_inlines > 0 then
         table.insert(inlines_list, child_inlines)
       end
@@ -676,7 +681,7 @@ function OutputFormat:flatten_seq_ir(ir)
     return {}
   end
 
-  local inlines = self:group(inlines_list, ir.delimiter, ir.formatting)
+  local inlines = self:group(inlines_list, delimiter, ir.formatting)
   -- assert ir.quotes == localized quotes
   inlines = self:affixed_quoted(inlines, ir.affixes, ir.quotes);
   inlines = self:with_display(inlines, ir.display);

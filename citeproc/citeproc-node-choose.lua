@@ -28,6 +28,7 @@ function Choose:build_ir(engine, state, context)
   local branch_ir
 
   local ir = SeqIr:new({}, self)
+  ir.should_inherit_delim = true
   ir.group_var = "UnresolvedPlain"
 
   for _, child in ipairs(self.children) do

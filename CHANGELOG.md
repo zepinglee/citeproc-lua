@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix url link of PMCID.
 - Fix an error of LaTeX commands in cite prefix ([#36](https://github.com/zepinglee/citeproc-lua/issues/36)).
 - Fix invalid `bib-item-sep` option.
+- Fix the delimiter of `cs:choose` in deeper levels.
 
 ## [v0.3.0] - 2022-12-25
 

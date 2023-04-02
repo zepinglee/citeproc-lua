@@ -64,7 +64,20 @@ end
 
 function IrNode:_debug(level)
   level = level or 0
-  local text = string.format("\n%s [%s] %s <%s>", string.rep("    ", level), self.group_var, self._type, self._element)
+  local ir_info_str = ""
+  if self.delimiter then
+    ir_info_str = ir_info_str .. string.format('delimiter: "%s"', self.delimiter)
+  end
+  if self.should_inherit_delim then
+    if ir_info_str ~= "" then
+      ir_info_str = ir_info_str .. " "
+    end
+    ir_info_str = ir_info_str .. "should_inherit_delim: true"
+  end
+  if ir_info_str ~= "" then
+    ir_info_str = string.format("{%s}", ir_info_str)
+  end
+  local text = string.format("\n%s [%s] %s <%s> %s", string.rep("    ", level), self.group_var, self._type, self._element, ir_info_str)
   if self.children and #self.children > 0 then
     for _, child_ir in ipairs(self.children) do
       text = text .. child_ir:_debug(level + 1)
