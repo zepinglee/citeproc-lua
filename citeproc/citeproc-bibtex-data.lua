@@ -1960,6 +1960,10 @@ return {
     nbirthday = {
       csl = nil,
     },
+    neutralcite = {
+      csl = nil,
+      type = "literal",
+    },
     newpage = {
       csl = nil,
     },

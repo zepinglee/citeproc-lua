@@ -2594,6 +2594,11 @@
             "csl": null,
             "source": "adrbirthday.bst"
         },
+        "neutralcite": {
+            "csl": null,
+            "source": "oxalph.dbx",
+            "type": "literal"
+        },
         "newpage": {
             "csl": null,
             "source": "tugboat.bst"

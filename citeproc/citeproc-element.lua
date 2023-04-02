@@ -493,6 +493,12 @@ end
 function Element:format_page_range(number_parts, page_range_format)
   local start = number_parts[1]
   local stop = number_parts[2]
+
+  if string.match(start, "^%a+$") and string.match(stop, "^%a+$") then
+    -- CMoS exaple: xxv–xxviii
+    return stop
+  end
+
   local start_prefix, start_num  = string.match(start, "^(.-)(%d+)$")
   local stop_prefix, stop_num = string.match(stop, "^(.-)(%d+)$")
   if start_prefix ~= stop_prefix then
@@ -521,7 +527,15 @@ function Element:format_page_range(number_parts, page_range_format)
   number_parts[2] = stop
 end
 
+---comment
+---@param start string
+---@param stop string
+---@return string
 function Element:_format_range_chicago_16(start, stop)
+  if not start then
+    print(debug.traceback())
+  end
+  stop = self:_format_range_expanded(start, stop)
   if #start < 3 or string.sub(start, -2) == "00" then
     return self:_format_range_expanded(start, stop)
   elseif string.sub(start, -2, -2) == "0" then
@@ -536,6 +550,7 @@ function Element:_format_range_chicago_15(start, stop)
   if #start < 3 or string.sub(start, -2) == "00" then
     return self:_format_range_expanded(start, stop)
   else
+    stop = self:_format_range_expanded(start, stop)
     local changed_digits = self:_format_range_minimal(start, stop)
     if string.sub(start, -2, -2) == "0" then
       return changed_digits
@@ -556,7 +571,15 @@ function Element:_format_range_expanded(start, stop)
   return string.sub(start, 1, #start - #stop) .. stop
 end
 
+---comment
+---@param start string
+---@param stop string
+---@param threshold integer? Number of minimal digits
+---@return string
 function Element:_format_range_minimal(start, stop, threshold)
+  -- util.debug(start)
+  -- util.debug(stop)
+  -- util.debug(threshold)
   threshold = threshold or 1
   if #start < #stop then
     return stop
@@ -568,7 +591,9 @@ function Element:_format_range_minimal(start, stop, threshold)
       return string.sub(stop, i)
     end
   end
-  return string.sub(stop, -threshold)
+  local res = string.sub(stop, -threshold)
+  -- util.debug(res)
+  return res
 end
 
 element.Element = Element

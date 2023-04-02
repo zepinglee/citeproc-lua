@@ -52,7 +52,7 @@ tdslocations = {
 
 uploadconfig = {
   pkg               = "citation-style-language",
-  version           = "0.3.0",
+  version           = "0.4.0",
   author            = "Zeping Lee",
   license           = {"mit", "cc-by-sa-3"},
   uploader          = "Zeping Lee",

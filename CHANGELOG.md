@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.4.0] - 2023-04-02
+
 ### Added
 
 - Add hyperlinks to citations when `hyperref` is loaded.
@@ -99,7 +101,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial CTAN release.
 
-[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.0...HEAD
+[v0.4.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.3.0...0.4.0
 [v0.3.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.2.2...0.3.0
 [v0.2.2]: https://github.com/zepinglee/citeproc-lua/compare/v0.2.1...0.2.2
 [v0.2.1]: https://github.com/zepinglee/citeproc-lua/compare/v0.2.0...0.2.1
