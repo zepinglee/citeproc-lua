@@ -1,0 +1,110 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+>>===== RESULT =====>>
+>>[0] English Book: The Story of Civilization (en); German Book: The Story of Civilization (de); XX Book: The Story of Civilization (xx)
+<<===== RESULT =====<<
+
+
+>>===== CITATIONS =====>>
+[
+    [
+        {
+            "citationID": "CITATION-1", 
+            "citationItems": [
+                {
+                    "id": "ID-1"
+                }, 
+                {
+                    "id": "ID-2"
+                }, 
+                {
+                    "id": "ID-3"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 1
+            }
+        }, 
+        [], 
+        []
+    ]
+]
+<<===== CITATIONS =====<<
+
+
+>>===== CSL =====>>
+<style
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="in-text"
+      version="1.1mlz1">
+  <info>
+    <title>Test fixture</title>
+    <id>http://citationstyles.org/tests/fixture</id>
+    <link href="http://citationstyles.org/tests/fixture" rel="self"/>
+    <link href="http://citationstyles.org/documentation/text" rel="documentation"/>
+    <category citation-format="author-date"/>
+    <updated>2014-04-30T13:19:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <locale xml:lang="xx">
+    <terms>
+      <term name="book">XX Book:</term>
+    </terms>
+  </locale>
+  <locale xml:lang="en">
+    <terms>
+      <term name="book">English Book:</term>
+    </terms>
+  </locale>
+  <locale xml:lang="de">
+    <terms>
+      <term name="book">German Book:</term>
+    </terms>
+  </locale>
+  <citation>
+    <layout locale="de" delimiter="; ">
+        <group delimiter=" ">
+          <text term="book"/>
+          <text variable="title"/>
+        </group>
+    </layout>
+    <layout locale="xx" delimiter="; ">
+        <group delimiter=" ">
+          <text term="book"/>
+          <text variable="title"/>
+        </group>
+    </layout>
+    <layout delimiter="; ">
+        <group delimiter=" ">
+          <text term="book"/>
+          <text variable="title"/>
+        </group>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+>>===== INPUT =====>>
+[
+   {
+      "id":"ID-1",
+      "type": "book",
+      "language": "en",
+      "title": "The Story of Civilization (en)"
+   },
+   {
+      "id":"ID-2",
+      "type": "book",
+      "language": "de",
+      "title": "The Story of Civilization (de)"
+   },
+   {
+      "id":"ID-3",
+      "type": "book",
+      "language": "xx",
+      "title": "The Story of Civilization (xx)"
+   }
+]
+<<===== INPUT =====<<

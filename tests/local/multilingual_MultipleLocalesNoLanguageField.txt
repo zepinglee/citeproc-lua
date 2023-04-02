@@ -1,0 +1,63 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
+
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry">Bibliography (default): Some Title</div>
+</div>
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.1mlz1">
+  <info>
+    <title>Test fixture</title>
+    <id>http://citationstyles.org/tests/fixture</id>
+    <link href="http://citationstyles.org/tests/fixture" rel="self"/>
+    <link href="http://citationstyles.org/documentation/text" rel="documentation"/>
+    <category citation-format="author-date"/>
+    <updated>2014-04-30T13:19:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <macro name="volume-title">
+    <label variable="edition"/>
+    <number variable="edition"/>
+    <text variable="title"/>
+  </macro>
+  <citation>
+    <layout locale="zh">
+      <text variable="title" prefix="Citation (chinese): "/>
+    </layout>
+    <layout>
+      <text variable="title" prefix="Citation (default): "/>
+    </layout>
+  </citation>
+  <bibliography>
+    <sort>
+      <key variable="issued"/>
+    </sort>
+    <layout locale="zh">
+      <text variable="title" prefix="Bibliography (chinese): "/>
+    </layout>
+    <layout>
+      <text variable="title" prefix="Bibliography (default): "/>
+    </layout>
+  </bibliography>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1", 
+        "title": "Some Title", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

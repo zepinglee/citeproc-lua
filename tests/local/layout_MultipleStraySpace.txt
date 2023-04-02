@@ -1,0 +1,106 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry">
+    <div class="csl-left-margin">1. </div><div class="csl-right-inline">ru[x]</div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">2. </div><div class="csl-right-inline">en[y]</div>
+  </div>
+  <div class="csl-entry">
+    <div class="csl-left-margin">3. </div><div class="csl-right-inline">default[z]</div>
+  </div>
+</div>
+<<===== RESULT =====<<
+
+
+>>===== CITATIONS =====>>
+[
+    [
+        {
+            "citationID": "CITATION-1", 
+            "citationItems": [
+                {
+                    "id": "ITEM-1"
+                }, 
+                {
+                    "id": "ITEM-2"
+                }, 
+                {
+                    "id": "ITEM-3"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 1
+            }
+        }, 
+        [], 
+        []
+    ]
+]
+<<===== CITATIONS =====<<
+
+
+>>===== CSL =====>>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" default-locale="zh" version="1.1mlz1" demote-non-dropping-particle="sort-only" page-range-format="expanded">
+  <info>
+    <title>Test fixture</title>
+    <id>http://citationstyles.org/tests/fixture</id>
+    <link href="http://citationstyles.org/tests/fixture" rel="self"/>
+    <link href="http://citationstyles.org/documentation/text" rel="documentation"/>
+    <category citation-format="author-date"/>
+    <updated>2014-04-30T13:19:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <!-- Citation --> 
+  <citation> 
+    <layout prefix="[" suffix="]" delimiter=","> 
+      <text value="citation"/> 
+    </layout> 
+  </citation> 
+  <!-- Bibliography --> 
+  <bibliography et-al-min="4" et-al-use-first="1" entry-spacing="0" second-field-align="flush"> 
+    <layout suffix="[x]" locale="ru">
+        <text variable="citation-number" suffix=".&#160;"/> 
+        <text value="ru"/>
+    </layout>
+    <layout suffix="[y]" locale="en"> 
+        <text variable="citation-number" suffix=".&#160;"/> 
+        <text value="en"/> 
+    </layout> 
+    <layout suffix="[z]"> 
+        <text variable="citation-number" suffix=".&#160;"/> 
+        <text value="default"/> 
+    </layout> 
+  </bibliography> 
+</style> 
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1", 
+        "type": "book",
+        "title": "Title (ignored)",
+        "language": "ru"
+    },
+    {
+        "id": "ITEM-2", 
+        "type": "book",
+        "title": "Title (ignored)",
+        "language": "en"
+    },
+    {
+        "id": "ITEM-3", 
+        "type": "book",
+        "title": "Title (ignored)",
+        "language": "es"
+    }
+]
+<<===== INPUT =====<<

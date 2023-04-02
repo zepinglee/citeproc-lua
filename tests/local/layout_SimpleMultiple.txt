@@ -1,0 +1,58 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry">The Story of Civilization</div>
+</div>
+<<===== RESULT =====<<
+
+>>===== CSL =====>>
+<style
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="in-text"
+      version="1.1mlz1">
+  <info>
+    <title>Test fixture</title>
+    <id>http://citationstyles.org/tests/fixture</id>
+    <link href="http://citationstyles.org/tests/fixture" rel="self"/>
+    <link href="http://citationstyles.org/documentation/text" rel="documentation"/>
+    <category citation-format="author-date"/>
+    <updated>2014-04-30T13:19:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <citation>
+    <layout locale="en">
+        <text variable="title"/>
+    </layout>
+    <layout locale="de">
+        <text variable="title"/>
+    </layout>
+    <layout>
+        <text variable="title"/>
+    </layout>
+  </citation>
+  <bibliography>
+    <layout>
+        <text variable="title"/>
+    </layout>
+  </bibliography>
+</style>
+<<===== CSL =====<<
+
+>>===== INPUT =====>>
+[
+    {
+        "author": [
+            {
+                "family": "Durant", 
+                "given": "Will"
+            }
+        ], 
+        "id": "ID-1", 
+        "title": "The Story of Civilization", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<
