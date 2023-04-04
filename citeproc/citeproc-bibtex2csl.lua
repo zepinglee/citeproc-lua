@@ -6,12 +6,25 @@
 
 local bibtex2csl = {}
 
-local bibtex_parser = require("citeproc-bibtex-parser")
-local bibtex_data = require("citeproc-bibtex-data")
-local latex_parser = nil -- load as needed
-local sln = require("unicode")
-local unicode = require("citeproc-unicode")
-local util = require("citeproc-util")
+local uni_utf8
+local bibtex_parser
+local bibtex_data
+local latex_parser
+local unicode
+local util
+if kpse then
+  uni_utf8 = require("unicode").utf8
+  bibtex_parser = require("citeproc-bibtex-parser")
+  bibtex_data = require("citeproc-bibtex-data")
+  unicode = require("citeproc-unicode")
+  util = require("citeproc-util")
+else
+  uni_utf8 = require("lua-utf8")
+  bibtex_parser = require("citeproc.bibtex-parser")
+  bibtex_data = require("citeproc.bibtex-data")
+  unicode = require("citeproc.unicode")
+  util = require("citeproc.util")
+end
 
 
 ---@alias CslItem table<string, nil | string | number | table>
@@ -219,7 +232,11 @@ function bibtex2csl.convert_field(bib_field, value, keep_unknown_commands, case_
     return nil, nil
   end
 
-  latex_parser = latex_parser or require("citeproc-latex-parser")
+  if kpse then
+    latex_parser = latex_parser or require("citeproc-latex-parser")
+  else
+    latex_parser = latex_parser or require("citeproc.latex-parser")
+  end
 
   local field_type = field_data.type
   local csl_value
@@ -308,9 +325,9 @@ function bibtex2csl.post_process_special_fields(item, entry)
   local month_text = bib_fields.month
   if month_text then
     month_text = latex_parser.latex_to_pseudo_html(month_text, false, false)
-    local month, day = sln.utf8.match(month_text, "^(%a+)%.?,?%s+(%d+)%a*$")
+    local month, day = uni_utf8.match(month_text, "^(%a+)%.?,?%s+(%d+)%a*$")
     if not month then
-      day, month = sln.utf8.match(month_text, "^(%d+)%a*%s+(%a+)%.?$")
+      day, month = uni_utf8.match(month_text, "^(%d+)%a*%s+(%a+)%.?$")
     end
     if not month then
       month = string.match(month_text, "^(%a+)%.?$")

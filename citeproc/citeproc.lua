@@ -6,8 +6,15 @@
 
 local citeproc = {}
 
-local engine = require("citeproc-engine")
-local util = require("citeproc-util")
+local engine
+local util
+if kpse then
+  engine = require("citeproc-engine")
+  util = require("citeproc-util")
+else
+  engine = require("citeproc.engine")
+  util = require("citeproc.util")
+end
 
 citeproc.__VERSION__ = "0.4.0"
 

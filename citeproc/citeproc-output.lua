@@ -6,11 +6,22 @@
 
 local output_module = {}
 
-local unicode = require("unicode")
-local citeproc_unicode = require("citeproc-unicode")
-local dom = require("luaxml-domobject")
+local uni_utf8
+local unicode
+local dom
+local util
 
-local util = require("citeproc-util")
+if kpse then
+  uni_utf8 = require("unicode").utf8
+  unicode = require("citeproc-unicode")
+  dom = require("luaxml-domobject")
+  util = require("citeproc-util")
+else
+  uni_utf8 = require("lua-utf8")
+  unicode = require("citeproc.unicode")
+  dom = require("citeproc.luaxml.domobject")
+  util = require("citeproc.util")
+end
 
 
 local LocalizedQuotes = {
@@ -609,7 +620,7 @@ end
 function InlineElement:capitalize_first_term()
   -- util.debug(self)
   if self._type == "PlainText" then
-    self.value = util.capitalize(self.value)
+    self.value = unicode.capitalize(self.value)
   elseif self._type ~= "Code" and self._type ~= "MathML" and self._type ~= "MathTeX" then
     if self.inlines[1] then
     self.inlines[1]:capitalize_first_term()
@@ -728,9 +739,9 @@ end
 ---@param str string
 ---@return boolean
 local function is_str_sentence_case(str)
-  local words = citeproc_unicode.words(str)
+  local words = unicode.words(str)
   for _, word in ipairs(words) do
-    if util.is_lower(word) and not util.stop_words[word] then
+    if unicode.islower(word) and not util.stop_words[word] then
       -- util.debug(word)
       return true
     end
@@ -851,12 +862,12 @@ function OutputFormat:apply_text_case_inner(inlines, text_case, seen_one, is_upp
 end
 
 local function transform_lowercase(str)
-  return string.gsub(str, utf8.charpattern, unicode.utf8.lower)
+  return unicode.lower(str)
 end
 
 local function transform_uppercase(str)
   -- TODO: locale specific uppercase: textcase_LocaleUnicode.txt
-  return string.gsub(str, utf8.charpattern, unicode.utf8.upper)
+  return unicode.upper(str)
 end
 
 ---comment
@@ -866,9 +877,11 @@ end
 ---@return string
 local function transform_first_word(str, is_first, transform)
   if is_first then
-    local segments = citeproc_unicode.split_word_bounds(str)
+    local segments = unicode.split_word_bounds(str)
     for i, segment in ipairs(segments) do
-      if citeproc_unicode.isalnum(segment) then
+      -- bugreports_ThesisUniversityAppearsTwice.txt: "Ph.D"
+      if uni_utf8.match(segment, "%a") then
+        -- util.debug(segment)
         segments[i] = transform(segment)
         break
       end
@@ -894,7 +907,7 @@ local SegmentType = {
 ---@param transform function
 ---@return string
 local function transform_each_word(str, seen_one, is_last_inline, transform)
-  local segments = citeproc_unicode.split_word_bounds(str)
+  local segments = unicode.split_word_bounds(str)
   -- util.debug(segments)
 
   local segment_type_list = {}
@@ -903,11 +916,11 @@ local function transform_each_word(str, seen_one, is_last_inline, transform)
     segment_type_list[i] = SegmentType.Other
 
     -- Do not use isalnum(): "can't"
-    if unicode.grapheme.match(segment, "%w") then
+    if uni_utf8.match(segment, "%w") then
       segment_type_list[i] = SegmentType.Word
       last_word_idx = i
 
-    elseif unicode.grapheme.match(segment, "%p") then
+    elseif uni_utf8.match(segment, "%p") then
       segment_type_list[i] = SegmentType.Puctuation
       if segment == "!" or segment == "?" then
         segment_type_list[i] = SegmentType.EndingPunctuation
@@ -934,7 +947,7 @@ local function transform_each_word(str, seen_one, is_last_inline, transform)
       -- util.debug(segment)
       -- util.debug(after_colon)
       -- See "07-x" in `textcase_LastChar.txt`
-      if not (segments[i-1] == "-" and unicode.grapheme.len(segment) == 1) then
+      if not (segments[i-1] == "-" and unicode.len(segment) == 1) then
         segments[i] = transform(segment, is_first_word, after_colon, is_last_word, ignore_stop_word)
 
       end
@@ -958,8 +971,8 @@ end
 ---@param word string
 ---@return string
 local function transform_capitalize_word_if_lower(word)
-  if citeproc_unicode.islower(word) then
-    local res = string.gsub(word, utf8.charpattern, unicode.utf8.upper, 1)
+  if unicode.islower(word) then
+    local res = unicode.capitalize(word)
     return res
   else
     return word
@@ -973,18 +986,19 @@ local function title_case_word(word, is_first, after_end_punct, is_last, ignore_
   -- util.debug(word)
   -- util.debug(ignore_stop_word)
   if (is_first or is_last or after_end_punct or ignore_stop_word or not util.stop_words[word])
-      and string.match(word, "%a") and citeproc_unicode.islower(word) then
-    return citeproc_unicode.capitalize(word)
+      and string.match(word, "%a") and unicode.islower(word) then
+    return unicode.capitalize(word)
   else
     return word
   end
 end
 
 local function transform_lowercase_if_capitalize(word, is_first, after_end_punct, is_last, is_stop_word)
+  -- util.debug(word)
   if not (is_first or after_end_punct) then
     local is_capitalize_word = false
-    local lower_first = string.gsub(word, utf8.charpattern, unicode.utf8.lower, 1)
-    if util.is_lower(lower_first) then
+    local lower_first = string.gsub(word, utf8.charpattern, unicode.lower, 1)
+    if unicode.islower(lower_first) then
       return lower_first
     else
       return word

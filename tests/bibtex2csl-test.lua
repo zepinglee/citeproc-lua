@@ -1,20 +1,22 @@
-kpse.set_program_name("texlua")
-
-local kpse_searcher = package.searchers[2]
----@diagnostic disable-next-line: duplicate-set-field
-package.searchers[2] = function (pkg_name)
-  local pkg_file = package.searchpath(pkg_name, package.path)
-  if pkg_file then
-    return loadfile(pkg_file)
+local bibtex2csl 
+local util 
+if kpse then
+  kpse.set_program_name("luatex")
+  local kpse_searcher = package.searchers[2]
+  ---@diagnostic disable-next-line: duplicate-set-field
+  package.searchers[2] = function (pkg_name)
+    local pkg_file = package.searchpath(pkg_name, package.path)
+    if pkg_file then
+      return loadfile(pkg_file)
+    end
+    return kpse_searcher(pkg_name)
   end
-  return kpse_searcher(pkg_name)
+  bibtex2csl = require("citeproc-bibtex2csl")
+  util = require("citeproc-util")
+else
+  bibtex2csl = require("citeproc.bibtex2csl")
+  util = require("citeproc.util")
 end
-
-
-require("busted.runner")()
-
-local bibtex2csl = require("citeproc-bibtex2csl")
-local util = require("citeproc-util")
 
 
 describe("BibTeX data to CSL converter", function ()

@@ -6,14 +6,36 @@
 
 local unicode = {}
 
-local sln = require("unicode")
-local uni_case = require("lua-uni-case")
-local uni_words = nil
-if kpse.find_file("lua-uni-words", "lua") then
-  uni_words = require("lua-uni-words")
+local uni_utf8
+local uni_algos_words
+local uni_algos_case
+local util
+
+if kpse then
+  -- Load `slnunicode` if in LuaTeX
+  uni_utf8 = require("unicode").utf8
+  if kpse.find_file("lua-uni-words", "lua") then
+    uni_algos_words = require("lua-uni-words")
+  end
+  uni_algos_case = require("lua-uni-case")
+  util = require("citeproc-util")
+else
+  uni_utf8 = require("lua-utf8")
+  if not utf8 then
+    -- Lua < 5.3
+    utf8 = uni_utf8
+  end
+  uni_algos_words = require("citeproc.lua-uni-algos.words")
+  uni_algos_case = require("citeproc.lua-uni-algos.case")
+  util = require("citeproc.util")
 end
 
-local util = require("citeproc-util")
+
+---@param str any
+---@return integer
+function unicode.len(str)
+  return uni_utf8.len(str)
+end
 
 
 ---Return a copy of the string with its first character capitalized and the rest lowercased.
@@ -26,7 +48,7 @@ function unicode.capitalize(str, locale)
   end
   -- TODO: locale and unicode titlecase Lt
   str = unicode.lower(str, locale)
-  str = sln.grapheme.gsub(str, ".", sln.grapheme.upper, 1)
+  str = uni_utf8.gsub(str, ".", uni_utf8.upper, 1)
   return str
 end
 
@@ -43,7 +65,7 @@ function unicode.casefold(str, locale)
   if locale and string.match(locale, "^tr") then
     enable_special = true
   end
-  return uni_case.casefold(str, true, enable_special)
+  return uni_algos_case.casefold(str, true, enable_special)
 end
 
 
@@ -54,7 +76,7 @@ function unicode.isalnum(str)
   if type(str) ~= "string" then
     error(string.format("bad argument #1 to 'isalnum' (string expected, got %s)", type(str)))
   end
-  return sln.grapheme.match(str, "^%w+$") ~= nil
+  return uni_utf8.match(str, "^%w+$") ~= nil
 end
 
 
@@ -65,7 +87,7 @@ function unicode.isalpha(str)
   if type(str) ~= "string" then
     error(string.format("bad argument #1 to 'isalpha' (string expected, got %s)", type(str)))
   end
-  return sln.grapheme.match(str, "^%a+$") ~= nil
+  return uni_utf8.match(str, "^%a+$") ~= nil
 end
 
 
@@ -99,7 +121,7 @@ function unicode.islower(str)
     error(string.format("bad argument #1 to 'islower' (string expected, got %s)", type(str)))
   end
   --TODO: No titlecased letters
-  return sln.grapheme.find(str, "%l") and not sln.grapheme.find(str, "%u")
+  return uni_utf8.find(str, "%l") and not uni_utf8.find(str, "%u")
 end
 
 
@@ -111,6 +133,16 @@ function unicode.isnumeric(str)
     error(string.format("bad argument #1 to 'isnumeric' (string expected, got %s)", type(str)))
   end
   return string.match(str, "^%n+$") ~= nil
+end
+
+
+---@param str string
+---@return boolean
+function unicode.ispunct(str)
+  if type(str) ~= "string" then
+    error(string.format("bad argument #1 to 'isnumeric' (string expected, got %s)", type(str)))
+  end
+  return uni_utf8.match(str, "^%p+$") ~= nil
 end
 
 
@@ -134,7 +166,7 @@ function unicode.isupper(str)
     error(string.format("bad argument #1 to 'isupper' (string expected, got %s)", type(str)))
   end
   --TODO: No titlecased letters
-  return sln.grapheme.find(str, "%u") and not sln.grapheme.find(str, "%l")
+  return uni_utf8.find(str, "%u") and not uni_utf8.find(str, "%l")
 end
 
 
@@ -147,7 +179,7 @@ function unicode.lower(str, locale)
     error(string.format("bad argument #1 to 'lower' (string expected, got %s)", type(str)))
   end
   -- TODO: locale
-  return sln.grapheme.lower(str)
+  return uni_utf8.lower(str)
 end
 
 
@@ -172,7 +204,7 @@ function unicode.upper(str, locale)
     error(string.format("bad argument #1 to 'upper' (string expected, got %s)", type(str)))
   end
   -- TODO: locale
-  return sln.grapheme.lower(str)
+  return uni_utf8.upper(str)
 end
 
 
@@ -189,8 +221,8 @@ local CharState = {
 ---@return string[]
 function unicode.words(str)
   local words = {}
-  if uni_words then
-    for _, _, segment in uni_words.word_boundaries(str) do
+  if uni_algos_words then
+    for _, _, segment in uni_algos_words.word_boundaries(str) do
       if unicode.isalnum(segment) then
         table.insert(words, segment)
       end
@@ -200,9 +232,9 @@ function unicode.words(str)
     -- A naive implementation
     local state = CharState.Other
     local last_idx = 1
-    for idx, char in sln.grapheme.gmatch(str, "()(.)") do
+    for idx, char in uni_utf8.gmatch(str, "()(.)") do
       local new_state = CharState.Other
-      if sln.grapheme.match(char, "%w") or char == "'" or char == "’" or char == "`" then
+      if uni_utf8.match(char, "%w") or char == "'" or char == "’" or char == "`" then
         new_state = CharState.Word
       else
         new_state = CharState.Other
@@ -231,39 +263,56 @@ end
 ---@param str string
 ---@return string[]
 function unicode.split_word_bounds(str)
+  -- util.debug(str)
   local segments = {}
-  if uni_words then
-    for _, _, segment in uni_words.word_boundaries(str) do
+  if uni_algos_words then
+    for _, _, segment in uni_algos_words.word_boundaries(str) do
       table.insert(segments, segment)
     end
+    -- textcase_NoSpaceBeforeApostrophe.txt: "Marcus Shafi`" -> ["Marcus" "Shafi`"]
+    for i = #segments, 1, -1 do
+      local segment = segments[i]
+      if segment == "`" then
+        if i < #segments and not uni_utf8.match(segments[i+1], "^%s") then
+          segments[i] = segment .. segments[i+1]
+          table.remove(segments, i+1)
+        end
+        if i > 1 and not uni_utf8.match(segments[i-1], "%s") then
+          segments[i-1] = segments[i-1] .. segments[i]
+          table.remove(segments, i)
+        end
+      end
+    end
+    -- util.debug(segments)
 
   else
     -- A naive implementation
     local state = CharState.Other
-    local last_idx = 1
-    for idx, char in sln.grapheme.gmatch(str, "()(.)") do
+    local segment = ""
+    for idx, code_point in utf8.codes(str) do
+      local char = utf8.char(code_point)
       local new_state = CharState.Other
-      if sln.grapheme.match(char, "%w") or char == "'" or char == "’" or char == "`" then
+      if uni_utf8.match(char, "%w") or char == "'" or char == "’" or char == "`" then
         new_state = CharState.Word
-      elseif sln.grapheme.match(char, "%p") then
+      elseif uni_utf8.match(char, "%p") then
         new_state = CharState.Punctuation
-      elseif sln.grapheme.match(char, "%s") then
+      elseif uni_utf8.match(char, "%s") then
         new_state = CharState.Space
       else
         new_state = CharState.Other
       end
       if new_state ~= state then
-        if idx > 1 then
-          local segment = string.sub(str, last_idx, idx - 1)
+        if segment ~= "" then
           table.insert(segments, segment)
+          segment = ""
         end
         state = new_state
-        last_idx = idx
       end
+      segment = segment .. char
     end
 
-    local segment = string.sub(str, last_idx, #str)
     table.insert(segments, segment)
+    -- util.debug(segments)
   end
 
   return segments

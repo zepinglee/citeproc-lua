@@ -6,9 +6,19 @@
 
 local context = {}
 
-local LocalizedQuotes = require("citeproc-output").LocalizedQuotes
+local unicode
+local LocalizedQuotes
+local util
 
-local util = require("citeproc-util")
+if kpse then
+  unicode = require("citeproc-unicode")
+  LocalizedQuotes = require("citeproc-output").LocalizedQuotes
+  util = require("citeproc-util")
+else
+  unicode = require("citeproc.unicode")
+  LocalizedQuotes = require("citeproc.output").LocalizedQuotes
+  util = require("citeproc.util")
+end
 
 
 local Context = {
@@ -179,7 +189,7 @@ function Context:split_ndp_family(name)
         if ndp and family then
           table.insert(ndp_parts, ndp)
           parts[i] = family
-        elseif i < #parts and util.is_lower(part) then
+        elseif i < #parts and unicode.islower(part) then
           table.insert(ndp_parts, part)
         end
       end
@@ -190,7 +200,7 @@ function Context:split_ndp_family(name)
       end
       break
     end
-    if not util.is_lower(part) then
+    if not unicode.islower(part) then
       for j = i, #parts do
         table.insert(family_parts, parts[j])
       end
@@ -212,7 +222,7 @@ function Context:split_given_dp(name)
   local parts = util.split(name.given)
   for i = #parts, 1, -1 do
     local part = parts[i]
-    if i == 1 or not util.is_lower(part) then
+    if i == 1 or not unicode.islower(part) then
       for j = 1, i do
         table.insert(given_parts, parts[j])
       end

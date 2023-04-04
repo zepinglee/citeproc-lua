@@ -6,19 +6,36 @@
 
 local names_module = {}
 
-local unicode = require("unicode")
+local unicode
+local element
+local ir_node
+local output
+local util
 
-local IrNode = require("citeproc-ir-node").IrNode
-local NameIr = require("citeproc-ir-node").NameIr
-local PersonNameIr = require("citeproc-ir-node").PersonNameIr
-local SeqIr = require("citeproc-ir-node").SeqIr
-local Rendered = require("citeproc-ir-node").Rendered
-local InlineElement = require("citeproc-output").InlineElement
-local PlainText = require("citeproc-output").PlainText
-local SortStringFormat = require("citeproc-output").SortStringFormat
+if kpse then
+  unicode = require("citeproc-unicode")
+  element = require("citeproc-element")
+  ir_node = require("citeproc-ir-node")
+  output = require("citeproc-output")
+  util = require("citeproc-util")
+else
+  unicode = require("citeproc.unicode")
+  element = require("citeproc.element")
+  ir_node = require("citeproc.ir-node")
+  output = require("citeproc.output")
+  util = require("citeproc.util")
+end
 
-local Element = require("citeproc-element").Element
-local util = require("citeproc-util")
+local IrNode = ir_node.IrNode
+local NameIr = ir_node.NameIr
+local PersonNameIr = ir_node.PersonNameIr
+local SeqIr = ir_node.SeqIr
+local Rendered = ir_node.Rendered
+local InlineElement = output.InlineElement
+local PlainText = output.PlainText
+local SortStringFormat = output.SortStringFormat
+
+local Element = element.Element
 
 
 local Names = Element:derive("names")
@@ -869,7 +886,7 @@ function Name:initialize_name(given, with, initialize_with_hyphen)
     local is_abbreviation = false
 
     local first_letter = utf8.char(utf8.codepoint(name))
-    if util.is_lower(first_letter) then
+    if unicode.islower(first_letter) then
         is_particle = true
     elseif #name == 1 then
       is_abbreviation = true
@@ -890,14 +907,14 @@ function Name:initialize_name(given, with, initialize_with_hyphen)
       name_list[i] = name .. with
     else
       if self.initialize then
-        if util.is_upper(name) then
+        if unicode.isupper(name) then
           name = first_letter
         else
           -- Long abbreviation: "TSerendorjiin" -> "Ts."
           local abbreviation = ""
           for _, c in utf8.codes(name) do
             local char = utf8.char(c)
-            local lower = unicode.utf8.lower(char)
+            local lower = unicode.lower(char)
             if lower == char then
               break
             end

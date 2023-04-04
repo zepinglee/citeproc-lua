@@ -6,10 +6,21 @@
 
 local latex_parser = {}
 
+local bibtex_parser
+local latex_data
+local markup 
+local util
+if kpse then
+  latex_data = require("citeproc-latex-data")
+  markup = require("citeproc-output")
+  util = require("citeproc-util")
+else
+  latex_data = require("citeproc.latex-data")
+  markup = require("citeproc.output")
+  util = require("citeproc.util")
+end
+
 local lpeg = require("lpeg")
-local latex_data = require("citeproc-latex-data")
-local markup = require("citeproc-output")
-local util = require("citeproc-util")
 
 
 -- Convert LaTeX string to Unicode string

@@ -6,12 +6,25 @@
 
 local element = {}
 
-local SeqIr = require("citeproc-ir-node").SeqIr
+local context
+local ir_node
+local output
+local util
 
-local InlineElement = require("citeproc-output").InlineElement
-local Micro = require("citeproc-output").Micro
+if kpse then
+  ir_node = require("citeproc-ir-node")
+  output = require("citeproc-output")
+  util = require("citeproc-util")
+else
+  ir_node = require("citeproc.ir-node")
+  output = require("citeproc.output")
+  util = require("citeproc.util")
+end
 
-local util = require("citeproc-util")
+local SeqIr = ir_node.SeqIr
+
+local InlineElement = output.InlineElement
+local Micro = output.Micro
 
 
 ---@class Element

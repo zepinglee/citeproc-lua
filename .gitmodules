@@ -14,3 +14,15 @@
 [submodule "tests/test-suite"]
 	path = tests/test-suite
 	url = https://github.com/citation-style-language/test-suite.git
+[submodule "submodules/luaxml"]
+	path = submodules/luaxml
+	url = https://github.com/zepinglee/LuaXML.git
+[submodule "submodules/lua-uca"]
+	path = submodules/lua-uca
+	url = https://github.com/zepinglee/lua-uca.git
+[submodule "submodules/lua-uni-algos"]
+	path = submodules/lua-uni-algos
+	url = https://github.com/zepinglee/lua-uni-algos.git
+[submodule "submodules/unicode-data"]
+	path = submodules/unicode-data
+	url = https://github.com/latex3/unicode-data.git

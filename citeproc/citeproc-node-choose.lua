@@ -6,9 +6,22 @@
 
 local choose = {}
 
-local Element = require("citeproc-element").Element
-local SeqIr = require("citeproc-ir-node").SeqIr
-local util = require("citeproc-util")
+local element
+local ir_node
+local util
+
+if kpse then
+  element = require("citeproc-element")
+  ir_node = require("citeproc-ir-node")
+  util = require("citeproc-util")
+else
+  element = require("citeproc.element")
+  ir_node = require("citeproc.ir-node")
+  util = require("citeproc.util")
+end
+
+local Element = element.Element
+local SeqIr = ir_node.SeqIr
 
 -- [Choose](https://docs.citationstyles.org/en/stable/specification.html#choose)
 local Choose = Element:derive("choose")

@@ -6,18 +6,38 @@
 
 local bibliography_module = {}
 
-local dom = require("luaxml-domobject")
+local context
+local element
+local ir_node
+local output
+local node_names
+local util
 
-local Context = require("citeproc-context").Context
-local IrState = require("citeproc-context").IrState
-local Element = require("citeproc-element").Element
-local IrNode = require("citeproc-ir-node").IrNode
-local Rendered = require("citeproc-ir-node").Rendered
-local SeqIr = require("citeproc-ir-node").SeqIr
-local PlainText = require("citeproc-output").PlainText
-local DisamStringFormat = require("citeproc-output").DisamStringFormat
-local YearSuffix = require("citeproc-ir-node").YearSuffix
-local util = require("citeproc-util")
+if kpse then
+  context = require("citeproc-context")
+  element = require("citeproc-element")
+  ir_node = require("citeproc-ir-node")
+  output = require("citeproc-output")
+  node_names = require("citeproc-node-names")
+  util = require("citeproc-util")
+else
+  context = require("citeproc.context")
+  element = require("citeproc.element")
+  ir_node = require("citeproc.ir-node")
+  output = require("citeproc.output")
+  node_names = require("citeproc.node-names")
+  util = require("citeproc.util")
+end
+
+local Context = context.Context
+local IrState = context.IrState
+local Element = element.Element
+local IrNode = ir_node.IrNode
+local Rendered = ir_node.Rendered
+local SeqIr = ir_node.SeqIr
+local PlainText = output.PlainText
+local DisamStringFormat = output.DisamStringFormat
+local YearSuffix = ir_node.YearSuffix
 
 
 ---@class Bibliography: Element
@@ -71,7 +91,7 @@ function Bibliography:from_node(node, style)
   o:set_attribute(node, "subsequent-author-substitute")
   o:set_attribute(node, "subsequent-author-substitute-rule")
 
-  local name_inheritance = require("citeproc-node-names").Name:new()
+  local name_inheritance = node_names.Name:new()
   for key, value in pairs(style.name_inheritance) do
     if value ~= nil then
       name_inheritance[key] = value

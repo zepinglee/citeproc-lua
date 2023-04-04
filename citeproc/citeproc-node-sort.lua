@@ -6,13 +6,36 @@
 
 local sort = {}
 
-local unicode = require("unicode")
+local uca_languages
+local uca_ducet
+local uca_collator
 
-local Element = require("citeproc-element").Element
-local Date = require("citeproc-node-date").Date
-local names = require("citeproc-node-names")
-local InlineElement = require("citeproc-output").InlineElement
-local util = require("citeproc-util")
+local element
+local output
+local util
+local node_date
+
+if kpse then
+  uca_languages = require("lua-uca-languages")
+  uca_ducet = require("lua-uca-ducet")
+  uca_collator = require("lua-uca-collator")
+  element = require("citeproc-element")
+  output = require("citeproc-output")
+  util = require("citeproc-util")
+  node_date = require("citeproc-node-date")
+else
+  uca_languages = require("citeproc.lua-uca.languages")
+  uca_ducet = require("citeproc.lua-uca.ducet")
+  uca_collator = require("citeproc.lua-uca.collator")
+  element = require("citeproc.element")
+  output = require("citeproc.output")
+  util = require("citeproc.util")
+  node_date = require("citeproc.node-date")
+end
+
+local Element = element.Element
+local Date = node_date.Date
+local InlineElement = output.InlineElement
 
 
 -- [Sorting](https://docs.citationstyles.org/en/stable/specification.html#sorting)
@@ -46,13 +69,8 @@ function Sort:sort(items, state, context)
   if not Sort.collator then
     local lang = context.engine.lang
     local language = string.sub(lang, 1, 2)
-    -- It's 6 seconds slower to run the whole test-suite if these package
-    -- loading statements are put in the header.
-    local uca_ducet = require("lua-uca.lua-uca-ducet")
-    local uca_collator = require("lua-uca.lua-uca-collator")
     Sort.collator = uca_collator.new(uca_ducet)
     if language ~= "en" then
-      local uca_languages = require("lua-uca.lua-uca-languages")
       if uca_languages[language] then
         Sort.collator = uca_languages[language](Sort.collator)
       else

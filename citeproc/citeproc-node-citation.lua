@@ -1,4 +1,3 @@
-
 --
 -- Copyright (c) 2021-2023 Zeping Lee
 -- Released under the MIT license.
@@ -7,23 +6,43 @@
 
 local citation_module = {}
 
-local dom = require("luaxml-domobject")
+local context
+local element
+local ir_node
+local output
+local node_names
+local util
 
-local Context = require("citeproc-context").Context
-local IrState = require("citeproc-context").IrState
-local Element = require("citeproc-element").Element
-local IrNode = require("citeproc-ir-node").IrNode
-local Rendered = require("citeproc-ir-node").Rendered
-local SeqIr = require("citeproc-ir-node").SeqIr
-local YearSuffix = require("citeproc-ir-node").YearSuffix
-local Micro = require("citeproc-output").Micro
-local Formatted = require("citeproc-output").Formatted
-local PlainText = require("citeproc-output").PlainText
-local InlineElement = require("citeproc-output").InlineElement
-local CiteInline = require("citeproc-output").CiteInline
-local DisamStringFormat = require("citeproc-output").DisamStringFormat
-local SortStringFormat = require("citeproc-output").SortStringFormat
-local util = require("citeproc-util")
+if kpse then
+  context = require("citeproc-context")
+  element = require("citeproc-element")
+  ir_node = require("citeproc-ir-node")
+  output = require("citeproc-output")
+  node_names = require("citeproc-node-names")
+  util = require("citeproc-util")
+else
+  context = require("citeproc.context")
+  element = require("citeproc.element")
+  ir_node = require("citeproc.ir-node")
+  output = require("citeproc.output")
+  node_names = require("citeproc.node-names")
+  util = require("citeproc.util")
+end
+
+local Context = context.Context
+local IrState = context.IrState
+local Element = element.Element
+local IrNode = ir_node.IrNode
+local Rendered = ir_node.Rendered
+local SeqIr = ir_node.SeqIr
+local YearSuffix = ir_node.YearSuffix
+local Micro = output.Micro
+local Formatted = output.Formatted
+local PlainText = output.PlainText
+local InlineElement = output.InlineElement
+local CiteInline = output.CiteInline
+local DisamStringFormat = output.DisamStringFormat
+local SortStringFormat = output.SortStringFormat
 
 
 ---@class Citation: Element
@@ -95,7 +114,7 @@ function Citation:from_node(node, style)
   -- Note Distance
   o:set_number_attribute(node, "near-note-distance")
 
-  local name_inheritance = require("citeproc-node-names").Name:new()
+  local name_inheritance = node_names.Name:new()
   for key, value in pairs(style.name_inheritance) do
     if value ~= nil then
       name_inheritance[key] = value

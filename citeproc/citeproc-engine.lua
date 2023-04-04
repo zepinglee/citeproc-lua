@@ -6,20 +6,45 @@
 
 local engine = {}
 
-local dom = require("luaxml-domobject")
+local dom
+local context
+local element
+local nodes
+local node_locale
+local node_style
+local output
+local util
 
-local nodes = require("citeproc-nodes")
-local Element = require("citeproc-element").Element
-local Style = require("citeproc-node-style").Style
-local Locale = require("citeproc-node-locale").Locale
-local Context = require("citeproc-context").Context
-local IrState = require("citeproc-context").IrState
-local InlineElement = require("citeproc-output").InlineElement
--- local OutputFormat = require("citeproc-output").OutputFormat
-local LatexWriter = require("citeproc-output").LatexWriter
-local HtmlWriter = require("citeproc-output").HtmlWriter
-local SortStringFormat = require("citeproc-output").SortStringFormat
-local util = require("citeproc-util")
+if kpse then
+  dom = require("luaxml-domobject")
+  context = require("citeproc-context")
+  element = require("citeproc-element")
+  nodes = require("citeproc-nodes")
+  node_locale = require("citeproc-node-locale")
+  node_style = require("citeproc-node-style")
+  output = require("citeproc-output")
+  util = require("citeproc-util")
+else
+  dom = require("citeproc.luaxml.domobject")
+  context = require("citeproc.context")
+  element = require("citeproc.element")
+  nodes = require("citeproc.nodes")
+  node_locale = require("citeproc.node-locale")
+  node_style = require("citeproc.node-style")
+  output = require("citeproc.output")
+  util = require("citeproc.util")
+end
+
+local Element = element.Element
+local Style = node_style.Style
+local Locale = node_locale.Locale
+local Context = context.Context
+local IrState = context.IrState
+local InlineElement = output.InlineElement
+-- local OutputFormat = output.OutputFormat
+local LatexWriter = output.LatexWriter
+local HtmlWriter = output.HtmlWriter
+local SortStringFormat = output.SortStringFormat
 
 
 ---@class CiteProc

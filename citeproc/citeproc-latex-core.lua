@@ -8,6 +8,7 @@ local core = {}
 
 local citeproc = require("citeproc")
 local bibtex2csl  -- = require("citeproc-bibtex-parser")  -- load on demand
+local unicode =  require("citeproc-unicode")
 local util = citeproc.util
 require("lualibs")
 local latex_parser = require("citeproc-latex-parser")
@@ -22,7 +23,7 @@ core.item_dict = {}
 
 function core.read_file(file_name, ftype, file_info)
   if file_info then
-    file_info = util.capitalize(file_info)
+    file_info = unicode.capitalize(file_info)
   else
     file_info = "File"
   end

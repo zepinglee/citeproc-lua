@@ -6,11 +6,22 @@
 
 local number_module = {}
 
-local Element = require("citeproc-element").Element
+local element
+local ir_node
+local util
 
-local Rendered = require("citeproc-ir-node").Rendered
+if kpse then
+  element = require("citeproc-element")
+  ir_node = require("citeproc-ir-node")
+  util = require("citeproc-util")
+else
+  element = require("citeproc.element")
+  ir_node = require("citeproc.ir-node")
+  util = require("citeproc.util")
+end
 
-local util = require("citeproc-util")
+local Element = element.Element
+local Rendered = ir_node.Rendered
 
 
 local Number = Element:derive("number")

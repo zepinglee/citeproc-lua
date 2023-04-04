@@ -1,24 +1,25 @@
-kpse.set_program_name("texlua")
+local json_decode
 
-local kpse_searcher = package.searchers[2]
----@diagnostic disable-next-line: duplicate-set-field
-package.searchers[2] = function (pkg_name)
-  local pkg_file = package.searchpath(pkg_name, package.path)
-  if pkg_file then
-    return loadfile(pkg_file)
+if kpse then
+  kpse.set_program_name("luatex")
+  local kpse_searcher = package.searchers[2]
+  ---@diagnostic disable-next-line: duplicate-set-field
+  package.searchers[2] = function (pkg_name)
+    local pkg_file = package.searchpath(pkg_name, package.path)
+    if pkg_file then
+      return loadfile(pkg_file)
+    end
+    return kpse_searcher(pkg_name)
   end
-  return kpse_searcher(pkg_name)
+  require("lualibs")
+  json_decode = utilities.json.tolua
+else
+  json_decode = require("dkjson").decode
 end
 
-
-require("busted.runner")()
-
-require("lualibs")
 local lfs = require("lfs")
--- local inspect = require("inspect")
-
 local citeproc = require("citeproc")
-local util = require("citeproc-util")
+local util = citeproc.util
 
 
 local function path_exists(path)
@@ -196,7 +197,7 @@ local function parse_fixture(path)
             section == "BIBENTRIES" or
             section == "BIBSECTION" or
             section == "ABBREVIATIONS" then
-          contents = utilities.json.tolua(contents)
+          contents = json_decode(contents)
           if not contents then
             error(string.format('JSON parsing error in "%s"', section))
           end

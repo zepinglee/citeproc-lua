@@ -6,7 +6,13 @@
 
 local irnode = {}
 
-local util = require("citeproc-util")
+local util
+
+if kpse then
+  util = require("citeproc-util")
+else
+  util = require("citeproc.util")
+end
 
 
 ---@class IrNode

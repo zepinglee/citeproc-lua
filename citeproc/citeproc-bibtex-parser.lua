@@ -13,11 +13,22 @@
 -- @module bibtex_parser
 local bibtex_parser = {}
 
+local unicode 
+local bibtex_data 
+local util 
+if kpse then
+  unicode = require("citeproc-unicode")
+  bibtex_data = require("citeproc-bibtex-data")
+  util = require("citeproc-util")
+else
+  unicode = require("citeproc.unicode")
+  bibtex_data = require("citeproc.bibtex-data")
+  util = require("citeproc.util")
+end
+
 local lpeg = require("lpeg")
-local unicode = require("unicode")
-local bibtex_data = require("citeproc-bibtex-data")
 local latex_parser = nil  -- load as needed
-local util = require("citeproc-util")
+
 
 local P = lpeg.P
 local R = lpeg.R
@@ -226,7 +237,11 @@ function BibtexParser:_make_entry(object, strings)
     value = concat_strings(value, strings)
 
     if self.options.convert_to_unicode then
-      latex_parser = latex_parser or require("citeproc-latex-parser")
+      if kpse then
+        latex_parser = latex_parser or require("citeproc-latex-parser")
+      else
+        latex_parser = latex_parser or require("citeproc.latex-parser")
+      end
       value = latex_parser.latex_to_unicode(value)
     end
 
@@ -323,14 +338,6 @@ function bibtex_parser.split_name_parts(str)
   return name
 end
 
-local function is_upper_letter(char)
-  return unicode.utf8.upper(char) == char and unicode.utf8.lower(char) ~= char
-end
-
-local function is_lower_letter(char)
-  return unicode.utf8.lower(char) == char and unicode.utf8.upper(char) ~= char
-end
-
 local function is_lower_word(word)
   -- Word is a list of tokens
   for _, token in ipairs(word) do
@@ -346,17 +353,17 @@ local function is_lower_word(word)
         token_content = string.gsub(token, "}%s*$", "")
         for i = 1, #token_content do
           local char = string.sub(token_content, i, i)
-          if is_lower_letter(char) then
+          if unicode.islower(char) then
             return true
-          elseif is_upper_letter(char) then
+          elseif unicode.isupper(char) then
             return false
           end
         end
       end
     else
-      if is_lower_letter(token) then
+      if unicode.islower(token) then
         return true
-      elseif is_upper_letter(token) then
+      elseif unicode.isupper(token) then
         return false
       end
     end

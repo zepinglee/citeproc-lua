@@ -6,8 +6,18 @@
 
 local locale = {}
 
-local Element = require("citeproc-element").Element
-local util = require("citeproc-util")
+local element
+local util
+
+if kpse then
+  element = require("citeproc-element")
+  util = require("citeproc-util")
+else
+  element = require("citeproc.element")
+  util = require("citeproc.util")
+end
+
+local Element = element.Element
 
 
 local Locale = Element:derive("locale")

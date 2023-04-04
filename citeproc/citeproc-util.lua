@@ -6,8 +6,14 @@
 
 local util = {}
 
--- load `slnunicode` from LuaTeX
-local unicode = require("unicode")
+local uni_utf8
+if kpse then
+  uni_utf8 = require("unicode").utf8
+else
+  uni_utf8 = require("lua-utf8")
+end
+
+
 local inspect  -- only load it when debugging
 local journal_data = nil  -- load as needed
 
@@ -342,10 +348,6 @@ function util.endswith(str, suffix)
   return string.sub(str, -#suffix) == suffix
 end
 
-function util.is_punct(str)
-  return string.match(str, "^%p$")
-end
-
 function util.is_numeric (str)
   if str == nil or str == "" then
     return false
@@ -575,51 +577,6 @@ util.word_boundaries = {
 }
 
 
--- Text-case
-
---- Return True if all cased characters in the string are lowercase and there
---- is at least one cased character, False otherwise.
----@param str string
----@return boolean
-function util.is_lower(str)
-  if not str then
-    print(debug.traceback())
-  end
-  return unicode.utf8.lower(str) == str and unicode.utf8.upper(str) ~= str
-end
-
---- Return True if all cased characters in the string are uppercase and there
---- is at least one cased character, False otherwise.
----@param str string
----@return boolean
-function util.is_upper(str)
-  return unicode.utf8.upper(str) == str and unicode.utf8.lower(str) ~= str
-end
-
-function util.capitalize(str)
-  -- if not str then
-  --   print(debug.traceback())
-  -- end
-  local res = string.gsub(str, utf8.charpattern, unicode.utf8.upper, 1)
-  return res
-end
-
-function util.sentence (str)
-  if util.is_upper(str) then
-    return util.capitalize(str)
-  else
-    local output = {}
-    for i, word in ipairs(util.split(str)) do
-      if i == 1 and util.is_lower(word) then
-        table.insert(output, util.capitalize(word))
-      else
-        table.insert(output, word)
-      end
-    end
-    return table.concat(output, " ")
-  end
-end
-
 -- TODO: process multiple words
 util.stop_words = {
   ["a"] = true,
@@ -740,23 +697,6 @@ util.stop_words = {
   ["without"] = true,
   ["yet"] = true,
 }
-
-function util.title (str)
-  local output = {}
-  local previous = ":"
-  for i, word in ipairs(util.split(str)) do
-    local lower = unicode.utf8.lower(word)
-    if previous ~= ":" and util.stop_words[string.match(lower, "%w+")] then
-      table.insert(output, lower)
-    elseif util.is_lower(word) or util.is_upper(word) then
-      table.insert(output, util.capitalize(word))
-    else
-      table.insert(output, word)
-    end
-  end
-  local res = table.concat(output, " ")
-  return res
-end
 
 function util.all (t)
   for _, item in ipairs(t) do
@@ -1162,9 +1102,13 @@ end
 function util.check_journal_abbreviations(item)
   if item["container-title"] and not item["container-title-short"] then
     if not journal_data then
-      journal_data = require("citeproc-journal-data")
+      if kpse then
+        journal_data = require("citeproc-journal-data")
+      else
+        journal_data = require("citeproc.journal-data")
+      end
     end
-    local key = unicode.utf8.upper(string.gsub(item["container-title"], "%.", ""))
+    local key = uni_utf8.upper(string.gsub(item["container-title"], "%.", ""))
     local full = journal_data.unabbrevs[key]
     if full then
       item["container-title-short"] = item["container-title"]

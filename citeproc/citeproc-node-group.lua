@@ -6,9 +6,22 @@
 
 local group = {}
 
-local SeqIr = require("citeproc-ir-node").SeqIr
-local Element = require("citeproc-element").Element
-local util = require("citeproc-util")
+local element
+local ir_node
+local util
+
+if kpse then
+  element = require("citeproc-element")
+  ir_node = require("citeproc-ir-node")
+  util = require("citeproc-util")
+else
+  element = require("citeproc.element")
+  ir_node = require("citeproc.ir-node")
+  util = require("citeproc.util")
+end
+
+local SeqIr = ir_node.SeqIr
+local Element = element.Element
 
 
 local Group = Element:derive("group")

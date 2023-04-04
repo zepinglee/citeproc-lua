@@ -7,10 +7,35 @@ on:
       - main
 
 jobs:
-  Test:
+  Test-Lua:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        luaVersion: ["5.3", "5.4"]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - run: git submodule update --init
+      - name: Install Lua
+        uses: leafo/gh-actions-lua@v10
+        with:
+          luaVersion: ${{ matrix.luaVersion }}
+      - name: Install Luarocks
+        uses: leafo/gh-actions-luarocks@v4
+      - name: Install package
+        run: luarocks build
+      - name: Install busted
+        run: luarocks install busted
+      - name: Test citperoc-lua engine
+        run: busted --lua=lua --lpath="" --run=citeproc --output=TAP
+      - name: Test other Lua modules
+        run: busted --lua=lua --lpath="" --output=TAP
+
+  Test-TeX:
     runs-on: ubuntu-latest
     steps:
-      # Boilerplate
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -24,7 +49,7 @@ jobs:
           # different workflows.
           package_file: .github/tl_packages
       - name: Install Lua
-        uses: leafo/gh-actions-lua@v9
+        uses: leafo/gh-actions-lua@v10
         with:
           luaVersion: "5.3"
       - name: Install Luarocks

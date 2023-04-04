@@ -6,15 +6,35 @@
 
 local style_module = {}
 
-local dom = require("luaxml-domobject")
+local dom
+local element
+local ir_node
+local output
+local node_names
+local util
 
-local Element = require("citeproc-element").Element
-local IrNode = require("citeproc-ir-node").IrNode
-local Rendered = require("citeproc-ir-node").Rendered
-local SeqIr = require("citeproc-ir-node").SeqIr
-local PlainText = require("citeproc-output").PlainText
-local DisamStringFormat = require("citeproc-output").DisamStringFormat
-local util = require("citeproc-util")
+if kpse then
+  dom = require("luaxml-domobject")
+  element = require("citeproc-element")
+  ir_node = require("citeproc-ir-node")
+  output = require("citeproc-output")
+  node_names = require("citeproc-node-names")
+  util = require("citeproc-util")
+else
+  dom = require("citeproc.luaxml.domobject")
+  element = require("citeproc.element")
+  ir_node = require("citeproc.ir-node")
+  output = require("citeproc.output")
+  node_names = require("citeproc.node-names")
+  util = require("citeproc.util")
+end
+
+local Element = element.Element
+local IrNode = ir_node.IrNode
+local Rendered = ir_node.Rendered
+local SeqIr = ir_node.SeqIr
+local PlainText = output.PlainText
+local DisamStringFormat = output.DisamStringFormat
 
 
 local Style = Element:derive("style")
@@ -67,7 +87,7 @@ function Style:from_node(node)
 
   -- Inheritable Name Options
   -- https://docs.citationstyles.org/en/stable/specification.html#inheritable-name-options
-  o.name_inheritance = require("citeproc-node-names").Name:new()
+  o.name_inheritance = node_names.Name:new()
   Element.make_name_inheritance(o.name_inheritance, node)
 
   if o.page_range_format == "chicago" then

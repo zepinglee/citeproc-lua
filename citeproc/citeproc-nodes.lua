@@ -4,20 +4,49 @@
 -- Repository: https://github.com/zepinglee/citeproc-lua
 --
 
-local style  = require("citeproc-node-style")
-local citation  = require("citeproc-node-citation")
-local citation  = require("citeproc-node-citation")
-local bibliography  = require("citeproc-node-bibliography")
-local locale = require("citeproc-node-locale")
-local layout = require("citeproc-node-layout")
-local text   = require("citeproc-node-text")
-local date   = require("citeproc-node-date")
-local number = require("citeproc-node-number")
-local names  = require("citeproc-node-names")
-local label  = require("citeproc-node-label")
-local group  = require("citeproc-node-group")
-local choose = require("citeproc-node-choose")
-local sort   = require("citeproc-node-sort")
+local style
+local citation
+local bibliography
+local locale
+local layout
+local text
+local date
+local number
+local names
+local label
+local group
+local choose
+local sort
+
+if kpse then
+  style  = require("citeproc-node-style")
+  citation  = require("citeproc-node-citation")
+  bibliography  = require("citeproc-node-bibliography")
+  locale = require("citeproc-node-locale")
+  layout = require("citeproc-node-layout")
+  text   = require("citeproc-node-text")
+  date   = require("citeproc-node-date")
+  number = require("citeproc-node-number")
+  names  = require("citeproc-node-names")
+  label  = require("citeproc-node-label")
+  group  = require("citeproc-node-group")
+  choose = require("citeproc-node-choose")
+  sort   = require("citeproc-node-sort")
+else
+  style  = require("citeproc.node-style")
+  citation  = require("citeproc.node-citation")
+  bibliography  = require("citeproc.node-bibliography")
+  locale = require("citeproc.node-locale")
+  layout = require("citeproc.node-layout")
+  text   = require("citeproc.node-text")
+  date   = require("citeproc.node-date")
+  number = require("citeproc.node-number")
+  names  = require("citeproc.node-names")
+  label  = require("citeproc.node-label")
+  group  = require("citeproc.node-group")
+  choose = require("citeproc.node-choose")
+  sort   = require("citeproc.node-sort")
+end
 
 local nodes = {
   ["style"]        = style.Style,

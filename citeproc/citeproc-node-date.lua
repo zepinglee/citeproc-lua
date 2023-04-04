@@ -6,12 +6,28 @@
 
 local date_module = {}
 
-local Element = require("citeproc-element").Element
-local IrNode = require("citeproc-ir-node").IrNode
-local Rendered = require("citeproc-ir-node").Rendered
-local SeqIr = require("citeproc-ir-node").SeqIr
-local PlainText = require("citeproc-output").PlainText
-local util = require("citeproc-util")
+local element
+local ir_node
+local output
+local util
+
+if kpse then
+  element = require("citeproc-element")
+  ir_node = require("citeproc-ir-node")
+  output = require("citeproc-output")
+  util = require("citeproc-util")
+else
+  element = require("citeproc.element")
+  ir_node = require("citeproc.ir-node")
+  output = require("citeproc.output")
+  util = require("citeproc.util")
+end
+
+local Element = element.Element
+local IrNode = ir_node.IrNode
+local Rendered = ir_node.Rendered
+local SeqIr = ir_node.SeqIr
+local PlainText = output.PlainText
 
 
 -- [Date](https://docs.citationstyles.org/en/stable/specification.html#date)

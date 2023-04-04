@@ -6,12 +6,28 @@
 
 local text_module = {}
 
-local Element = require("citeproc-element").Element
-local Rendered = require("citeproc-ir-node").Rendered
-local YearSuffix = require("citeproc-ir-node").YearSuffix
-local PlainText = require("citeproc-output").PlainText
-local Linked = require("citeproc-output").Linked
-local util = require("citeproc-util")
+local element
+local ir_node
+local output
+local util
+
+if kpse then
+  element = require("citeproc-element")
+  ir_node = require("citeproc-ir-node")
+  output = require("citeproc-output")
+  util = require("citeproc-util")
+else
+  element = require("citeproc.element")
+  ir_node = require("citeproc.ir-node")
+  output = require("citeproc.output")
+  util = require("citeproc.util")
+end
+
+local Element = element.Element
+local Rendered = ir_node.Rendered
+local YearSuffix = ir_node.YearSuffix
+local PlainText = output.PlainText
+local Linked = output.Linked
 
 
 -- [Text](https://docs.citationstyles.org/en/stable/specification.html#text)
