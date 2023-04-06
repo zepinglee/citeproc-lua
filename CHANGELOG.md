@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add `heading` and `title` options in `\printbibliography` ([#31](https://github.com/zepinglee/citeproc-lua/issues/31)).
+
 ## [v0.4.0] - 2023-04-02
 
 ### Added

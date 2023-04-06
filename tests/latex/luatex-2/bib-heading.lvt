@@ -1,0 +1,47 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+
+\cslsetup{
+  regression-test = true,
+  style = apa,
+}
+\addbibresource{test.bib}
+
+
+\begin{document}
+
+\START
+\showoutput
+
+\OMIT
+\cite{ITEM-1, ITEM-2}
+\TIMO
+
+\defbibheading{section}[REFERENCES]{%
+  \subsection{#1}%
+}
+
+\TEST{Customize bib heading}{
+  \printbibliography[heading = section]
+  \clearpage
+}
+
+\TEST{Customize bib heading and title}{
+  \printbibliography[
+    heading = section,
+    title   = {Works Cited}
+  ]
+  \clearpage
+}
+
+\TEST{Default bib heading and title}{
+  \printbibliography
+  \clearpage
+}
+
+\end{document}

@@ -567,9 +567,18 @@
 % #2: cite contents
 \cs_new:Npn \cslcite #1#2 {#2}
 
+\tl_new:N \l__csl_bib_env_tl
+\tl_new:N \l__csl_bib_head_name_tl
+\tl_new:N \l__csl_bib_head_title_tl
+
+\tl_set:Nn \l__csl_bib_env_tl { bibliography }
+\tl_set:Nn \l__csl_bib_head_name_tl { bibliography }
 
 \keys_define:nn { csl / bibliography }
   {
+    env         .tl_set:N = \l__csl_bib_env_name_tl ,
+    heading     .tl_set:N = \l__csl_bib_head_name_tl ,
+    title       .tl_set:N = \l__csl_bib_head_title_tl ,
     type        .code:n = \__csl_add_filter_condition:nn { type } {#1} ,
     nottype     .code:n = \__csl_add_filter_condition_negative:nn { type } {#1} , % subtype     .code:n = \__csl_add_filter_condition:nn { subtype } {#1} ,
     % notsubtype  .code:n = \__csl_add_filter_condition_negative:nn { subtype } {#1} ,
@@ -1195,33 +1204,6 @@
 \cs_set:Npn \@biblabel #1 {#1}
 
 
-% Bibliography heading
-\cs_if_exist:cTF { chapter }
-  {
-    \tl_set:Nn \bibsection
-      {
-        \chapter*
-          {
-            \bibname
-            \@mkboth
-              { \MakeUppercase { \bibname } }
-              { \MakeUppercase { \bibname } }
-          }
-      }
-  }
-  {
-    \tl_set:Nn \bibsection
-      {
-        \section*
-          {
-            \refname
-            \@mkboth
-              { \MakeUppercase { \refname } }
-              { \MakeUppercase { \refname } }
-          }
-      }
-  }
-
 \tl_new:N \l__csl_bib_preamble_tl
 
 \tl_new:N \l__csl_bib_postamble_tl
@@ -1413,7 +1395,8 @@
 % \newenvironment{thebibliography}[1]
 \RenewDocumentEnvironment { thebibliography } { m }
   {
-    \bibsection
+    \exp_args:NVV \__csl_make_bib_heading:nn
+      \l__csl_bib_head_name_tl \l__csl_bib_head_title_tl
     \dim_zero:N \parindent
     \l__csl_bib_preamble_tl
     \tl_if_eq:NnF \l__csl_line_spacing_tl { 1 }
@@ -1436,6 +1419,138 @@
       { \msg_warning:nn { citation-style-language } { bibliography / empty } }
     \endlist
     \__csl_reset_bib_format:
+  }
+
+
+% Bibliography Headings and Environments
+
+\prop_new:N \l__csl_bib_env_begin_prop
+\prop_new:N \l__csl_bib_env_end_prop
+\prop_new:N \l__csl_bib_item_prop
+
+% \defbibenvironment{⟨name⟩}{⟨begin code⟩}{⟨end code⟩}{⟨item code⟩}
+\NewDocumentCommand { \defbibenvironment } { m m m m }
+  {
+    \prop_put:Nnn \l__csl_bib_env_begin_prop {#1} {#2}
+    \prop_put:Nnn \l__csl_bib_env_end_prop {#1} {#3}
+    \prop_put:Nnn \l__csl_bib_item_prop {#1} {#4}
+  }
+
+% \defbibenvironment { bibliography }
+%   { }
+
+
+% #1: bib heading name
+% #2: bib heading title
+\cs_new:Npn \__csl_make_bib_heading:nn #1#2
+  {
+    \tl_if_empty:NTF \bibsection
+      {
+        \cs_if_exist:cF { __csl_head_ #1 :n }
+          {
+            \msg_error:nnn { citation-style-language } { bib-heading-undefined }
+              {#1}
+          }
+        \tl_if_blank:nTF {#2}
+          { \use:c { __csl_head_ #1 :n } }
+          { \use:c { __csl_head_ #1 :n } [#2] }
+      }
+      { \bibsection }
+  }
+
+\msg_new:nnn { citation-style-language } { bib-heading-undefined }
+  { Bibliography~ heading~ '#1'~ undefined. }
+
+% \defbibheading { ⟨name⟩}[⟨title⟩]{⟨code⟩}
+\NewDocumentCommand { \defbibheading } { m O { \bibname } }
+  {
+    \expandafter \newcommand \csname __csl_head_ #1 :n \endcsname [1] [ {#2} ]
+  }
+
+\cs_if_exist:NTF \chapter
+  {
+    % `book` or `report`
+    \defbibheading { bibliography } [ \bibname ]
+      {
+        \chapter* {#1}
+        \@mkboth { \MakeUppercase {#1} } { \MakeUppercase {#1} }
+      }
+    \defbibheading { biblist } [ \biblistname ]
+      {
+        \chapter* {#1}
+        \@mkboth { \MakeMarkcase {#1} } { \MakeMarkcase {#1} }
+      }
+    \defbibheading { bibintoc } [ \bibname ]
+      {
+        \chapter* {#1}
+        \addcontentsline { toc } { chapter } {#1}
+        \@mkboth { \MakeMarkcase {#1} } { \MakeMarkcase {#1} }
+      }
+    \defbibheading { biblistintoc } [ \biblistname ]
+      {
+        \chapter* {#1}
+        \addcontentsline { toc } { chapter } {#1}
+        \@mkboth { \MakeMarkcase {#1} } { \MakeMarkcase {#1} }
+      }
+    \defbibheading { bibnumbered } [ \bibname ]
+      { \chapter {#1} }
+    \defbibheading { biblistnumbered } [ \biblistname ]
+      { \chapter {#1} }
+    \defbibheading { subbibliography } [ \refname ]
+      {
+        \section* {#1}
+        \if@twoside
+          \markright { \MakeMarkcase {#1} }
+        \fi
+      }
+    \defbibheading { subbibintoc } [ \refname ]
+      {
+        \section* {#1}
+          \addcontentsline { toc } { section } {#1}
+          \if@twoside
+            \markright { \MakeMarkcase {#1} }
+          \fi
+      }
+    \defbibheading { subbibnumbered } [ \refname ]
+      { \section {#1} }
+  }
+  {
+    % `article`
+    \defbibheading { bibliography } [ \refname ]
+      {
+        \section* {#1}
+        \@mkboth { \MakeUppercase {#1} } { \MakeUppercase {#1} }
+      }
+    \defbibheading { biblist } [ \biblistname ]
+      {
+        \section* {#1}
+        \@mkboth { \MakeMarkcase {#1} } { \MakeMarkcase {#1} }
+      }
+    \defbibheading { bibintoc } [ \refname ]
+      {
+        \section* {#1}
+        \addcontentsline { toc } { section } {#1}
+        \@mkboth { \MakeMarkcase {#1} } { \MakeMarkcase {#1} }
+      }
+    \defbibheading { biblistintoc } [ \biblistname ]
+      {
+        \section* {#1}
+        \addcontentsline { toc } { section } {#1}
+        \@mkboth { \MakeMarkcase {#1} } { \MakeMarkcase {#1} }
+      }
+    \defbibheading { bibnumbered } [ \refname ]
+      { \section {#1} }
+    \defbibheading { biblistnumbered } [ \biblistname ]
+      { \section {#1} }
+    \defbibheading { subbibliography } [ \refname ]
+      { \subsection* {#1} }
+    \defbibheading { subbibintoc } [ \refname ]
+      {
+        \subsection* {#1}
+        \addcontentsline { toc } { subsection } {#1}
+      }
+    \defbibheading { subbibnumbered } [ \refname ]
+      { \subsection {#1} }
   }
 
 
