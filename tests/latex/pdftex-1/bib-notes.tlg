@@ -1,0 +1,53 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Bibliography notes
+============================================================
+Completed box being shipped out [1]
+\vbox(632.5+0.0)x429.0
+.\glue 17.0
+.\vbox(615.5+0.0)x390.0, shifted 39.0
+..\vbox(12.0+0.0)x390.0, glue set 12.0fil
+...\glue 0.0 plus 1.0fil
+...\hbox(0.0+0.0)x390.0
+....\hbox(0.0+0.0)x390.0
+..\glue 25.0
+..\glue(\lineskip) 0.0
+..\vbox(548.5+0.0)x390.0, glue set 536.4427fil
+...\write-{}
+...\glue(\topskip) 3.0
+...\hbox(9.0+3.0)x390.0, glue set 280.5556fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/12 [
+....\kern 0.0
+....\OT1/cmr/bx/n/12 I
+....\OT1/cmr/bx/n/12 T
+....\OT1/cmr/bx/n/12 E
+....\OT1/cmr/bx/n/12 M
+....\OT1/cmr/bx/n/12 -
+....\discretionary
+....\OT1/cmr/bx/n/12 1
+....\OT1/cmr/bx/n/12 ,
+....\glue 4.5 plus 2.8125 minus 1.2
+....\OT1/cmr/bx/n/12 I
+....\OT1/cmr/bx/n/12 T
+....\OT1/cmr/bx/n/12 E
+....\OT1/cmr/bx/n/12 M
+....\OT1/cmr/bx/n/12 -
+....\discretionary
+....\OT1/cmr/bx/n/12 2
+....\kern 0.0
+....\OT1/cmr/m/n/12 ]
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue -3.0
+...\glue 0.0 plus 1.0fil
+...\glue 0.0
+...\glue 0.0 plus 0.0001fil
+..\glue(\baselineskip) 30.0
+..\hbox(0.0+0.0)x390.0
+...\hbox(0.0+0.0)x390.0
+============================================================
+(bib-notes.aux)
+LaTeX Warning: There were undefined references.

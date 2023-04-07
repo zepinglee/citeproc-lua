@@ -1,0 +1,45 @@
+\input{regression-test}
+
+\documentclass[12pt]{article}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+
+\cslsetup{
+  regression-test = true,
+  style = apa,
+  bib-font = \footnotesize,
+}
+\addbibresource{test.bib}
+
+
+\begin{document}
+
+\START
+\showoutput
+
+\OMIT
+\cite{ITEM-1, ITEM-2}
+\TIMO
+
+\defbibnote{prenote}{%
+  This is a prenote.
+}
+
+\defbibnote{postnote}{%
+  This is a postnote.
+}
+
+\OMIT
+\printbibliography[
+  prenote = prenote,
+  postnote = postnote,
+]
+\TIMO
+
+\TEST{Bibliography notes}{
+  \clearpage
+}
+
+\end{document}

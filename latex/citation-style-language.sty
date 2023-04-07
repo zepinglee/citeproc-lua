@@ -570,17 +570,26 @@
 \tl_new:N \l__csl_bib_env_tl
 \tl_new:N \l__csl_bib_head_name_tl
 \tl_new:N \l__csl_bib_head_title_tl
+\tl_new:N \l__csl_bib_pre_note_tl
+\tl_new:N \l__csl_bib_post_note_tl
 
 \tl_set:Nn \l__csl_bib_env_tl { bibliography }
 \tl_set:Nn \l__csl_bib_head_name_tl { bibliography }
 
 \keys_define:nn { csl / bibliography }
   {
-    env         .tl_set:N = \l__csl_bib_env_name_tl ,
+    % env         .tl_set:N = \l__csl_bib_env_name_tl ,
     heading     .tl_set:N = \l__csl_bib_head_name_tl ,
     title       .tl_set:N = \l__csl_bib_head_title_tl ,
+    % label
+    % block
+    prenote     .tl_set:N = \l__csl_bib_pre_note_tl ,
+    postnote    .tl_set:N = \l__csl_bib_post_note_tl ,
+    % section
+    % segment
     type        .code:n = \__csl_add_filter_condition:nn { type } {#1} ,
-    nottype     .code:n = \__csl_add_filter_condition_negative:nn { type } {#1} , % subtype     .code:n = \__csl_add_filter_condition:nn { subtype } {#1} ,
+    nottype     .code:n = \__csl_add_filter_condition_negative:nn { type } {#1} ,
+    % subtype     .code:n = \__csl_add_filter_condition:nn { subtype } {#1} ,
     % notsubtype  .code:n = \__csl_add_filter_condition_negative:nn { subtype } {#1} ,
     keyword     .code:n = \__csl_add_filter_condition:nn { keyword } {#1} ,
     notkeyword  .code:n = \__csl_add_filter_condition_negative:nn { keyword } {#1} ,
@@ -1397,28 +1406,30 @@
   {
     \exp_args:NVV \__csl_make_bib_heading:nn
       \l__csl_bib_head_name_tl \l__csl_bib_head_title_tl
-    \dim_zero:N \parindent
-    \l__csl_bib_preamble_tl
-    \tl_if_eq:NnF \l__csl_line_spacing_tl { 1 }
-      { \linespread { \l__csl_line_spacing_tl } \selectfont }
-    \l__csl_bib_font_tl
-    \list { }
-      {
-        \__csl_set_bib_label_spacing:n {#1}
-        \__csl_set_bib_item_sep:
-      }
-    \sloppy
-    \__csl_set_bib_page_break:
-    \frenchspacing
-    \__csl_bib_url_setup:
-    \clist_gclear:N \g__csl_bib_items_clist
+    \exp_args:NV \__csl_print_bib_note:n \l__csl_bib_pre_note_tl
+    \group_begin:
+      \dim_zero:N \parindent
+      \tl_if_eq:NnF \l__csl_line_spacing_tl { 1 }
+        { \linespread { \l__csl_line_spacing_tl } \selectfont }
+      \l__csl_bib_font_tl
+      \list { }
+        {
+          \__csl_set_bib_label_spacing:n {#1}
+          \__csl_set_bib_item_sep:
+        }
+      \sloppy
+      \__csl_set_bib_page_break:
+      \frenchspacing
+      \__csl_bib_url_setup:
+      \clist_gclear:N \g__csl_bib_items_clist
   }
   {
-    \l__csl_bib_postamble_tl
-    \tl_set:Nn \@noitemerr
-      { \msg_warning:nn { citation-style-language } { bibliography / empty } }
-    \endlist
-    \__csl_reset_bib_format:
+      \tl_set:Nn \@noitemerr
+        { \msg_warning:nn { citation-style-language } { bibliography / empty } }
+      \endlist
+      \__csl_reset_bib_format:
+    \group_end:
+    \exp_args:NV \__csl_print_bib_note:n \l__csl_bib_post_note_tl
   }
 
 
@@ -1552,6 +1563,43 @@
     \defbibheading { subbibnumbered } [ \refname ]
       { \subsection {#1} }
   }
+
+
+% Bibliography notes
+
+\prop_new:N \l__csl_bib_notes_prop
+
+% \tl_new:N \l__csl_bib_preamble_tl
+% \tl_new:N \l__csl_bib_postamble_tl
+
+% #1: note name
+\cs_new:Npn \__csl_print_bib_note:n #1
+  {
+    \tl_if_empty:nF {#1}
+      {
+        \prop_get:NnNF \l__csl_bib_notes_prop {#1} \l_tmpa_tl
+          {
+            \msg_error:nnn { citation-style-language } { bib-note-undefined }
+              {#1}
+          }
+        \group_begin:
+          % \cs_set_eq:NN \newrefsection \relax
+          % \cs_set_eq:NN \newrefsegment \relax
+          \noindent
+          \tl_use:N \l_tmpa_tl
+          \par \nobreak
+        \group_end:
+      }
+  }
+
+
+\msg_new:nnn { citation-style-language } { bib-note-undefined }
+  { Bibliography~ note~ '#1'~ undefined. }
+
+% #1: name
+% #2: text
+\NewDocumentCommand { \defbibnote } { m m }
+  { \prop_put:Nnn \l__csl_bib_notes_prop {#1} {#2} }
 
 
 % Bibliography Categories
