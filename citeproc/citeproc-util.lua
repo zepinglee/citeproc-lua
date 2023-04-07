@@ -1013,6 +1013,17 @@ util.superscripts = {
 
 -- File IO
 
+function util.remove_bom(text)
+  if type(text) == "string" then
+    return string.gsub(text, "^\xEF\xBB\xBF", "")
+  else
+    return text
+  end
+end
+
+
+---@param path string
+---@return string?
 function util.read_file(path)
   -- if not path then
   --   print(debug.traceback())
@@ -1023,8 +1034,22 @@ function util.read_file(path)
     return nil
   end
   local content = file:read("*a")
+  content = util.remove_bom(content)
   file:close()
   return content
+end
+
+
+---@param text string
+---@param path string
+function util.write_file(text, path)
+  local file = io.open(path, "w")
+  if not file then
+    util.error(string.format('Cannot write to file "%s".', path))
+    return 
+  end
+  file:write(text)
+  file:close()
 end
 
 

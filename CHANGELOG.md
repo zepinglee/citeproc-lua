@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `heading` and `title` options in `\printbibliography` ([#31](https://github.com/zepinglee/citeproc-lua/issues/31)).
 - Add `prenote` and `postnote` options in `\printbibliography`.
 
+### Fixed
+
+- Remove UTF-8 BOM from leaded files (fix [#34](https://github.com/zepinglee/citeproc-lua/issues/34)).
+
 ## [v0.4.0] - 2023-04-02
 
 ### Added

@@ -74,13 +74,7 @@ local function convert_bib(path, output_path)
   if not output_path then
     output_path = string.gsub(path, "%.bib$", ".json")
   end
-  local file = io.open(output_path, "w")
-  if not file then
-    util.error(string.format('Cannot write "%s".', output_path))
-    return
-  end
-  file:write(utilities.json.tojson(csl_data) .. "\n")
-  file:close()
+  util.write_file(utilities.json.tojson(csl_data) .. "\n", output_path)
 end
 
 
@@ -178,9 +172,7 @@ local function process_aux_file(aux_file)
   output_string = output_string .. result
 
   local output_path = string.gsub(aux_file, "%.aux$", ".bbl")
-  local bbl_file = io.open(output_path, "w")
-  bbl_file:write(output_string)
-  bbl_file:close()
+  util.write_file(output_string, output_path)
 end
 
 

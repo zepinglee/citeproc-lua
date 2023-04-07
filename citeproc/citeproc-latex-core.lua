@@ -40,6 +40,7 @@ function core.read_file(file_name, ftype, file_info)
     return nil
   end
   local contents = file:read("*a")
+  contents = util.remove_bom(contents)
   file:close()
   return contents
 end
