@@ -1,0 +1,91 @@
+%
+% Copyright (c) 2021-2023 Zeping Lee
+% Released under the MIT License.
+% Repository: https://github.com/zepinglee/citeproc-lua
+%
+
+% ## Compatibilities with other packages
+
+% ### `babel`
+
+% This should be disabled.
+\AtEndOfPackageFile* { babel }
+  {
+    \RenewDocumentCommand \nocite { m }
+      {
+        % \@safe@activestrue\org@nocite{#1}\@safe@activesfalse
+        \@safe@activestrue
+        \__csl_no_cite:n {#1}
+        \@safe@activesfalse
+      }
+    \cs_set_eq:NN \bbl@cite@choice \relax
+    \cs_set_eq:NN \@lbibitem \__csl_lbibitem_plain:nn
+    \cs_set_eq:NN \@bibitem \__csl_bibitem_plain:n
+  }
+
+
+% ### `csquotes`
+
+\AtEndOfPackageFile* { csquotes }
+  {
+    \BlockquoteDisable
+      {
+        \cs_set_eq:NN \__csl_process_citation_info:NN \use_none:nn
+        \cs_set_eq:NN \__csl_make_citation:N \use_none:n
+      }
+  }
+
+
+% ### `hyperref`
+
+% The hyperref package also patches \bibcite but it cannot provide hyperlinks
+% when used with csl.
+\bool_new:N \l__csl_hyperref_loaded_bool
+\AtEndOfPackageFile* { hyperref }
+  {
+    \bool_set_true:N \l__csl_hyperref_loaded_bool
+    % Pakcage "hyperref" redefines \@lbibitem and \bibitem and we need to
+    % recover them.
+    \cs_gset_eq:NN \@lbibitem \__csl_lbibitem:
+    \cs_gset_eq:NN \@bibitem \__csl_bibitem:
+    \cs_gset_eq:NN \__csl_lbibitem_plain:nn \__csl_hyperref_lbibitem:nn
+    \cs_gset_eq:NN \__csl_bibitem_plain:n \__csl_hyperref_bibitem:n
+    \cs_gset_eq:NN \cslcite \__csl_hyperref_cite_item:nn
+  }
+
+\cs_set:Npn \__csl_hyperref_cite_item:nn #1#2
+  { \hyper@@link [ cite ] { } { cite. #1 \@extra@b@citeb } { #2 } }
+
+\cs_new:Npn \__csl_hyperref_lbibitem:nn [#1]#2
+  {
+    \clist_gput_right:Nn \g__csl_bib_items_clist {#2}
+    \@skiphyperreftrue
+    \H@item[%
+      \ifx\Hy@raisedlink\@empty
+        \hyper@anchorstart{cite.#2\@extra@b@citeb}%
+          \@BIBLABEL{#1}%
+        \hyper@anchorend
+      \else
+        \Hy@raisedlink{%
+          \hyper@anchorstart{cite.#2\@extra@b@citeb}\hyper@anchorend
+        }%
+        \@BIBLABEL{#1}%
+      \fi
+      \hfill
+    ]%
+    \@skiphyperreffalse
+    \ignorespaces
+  }
+
+\cs_new:Npn \__csl_hyperref_bibitem:n #1
+  {
+    \clist_gput_right:Nn \g__csl_bib_items_clist {#1}
+    \@skiphyperreftrue \H@item \@skiphyperreffalse
+    \Hy@raisedlink
+      {
+        \hyper@anchorstart
+        { cite. #1 \@extra@b@citeb } \relax
+        \hyper@anchorend
+      }
+    \ignorespaces
+  }

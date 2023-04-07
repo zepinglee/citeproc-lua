@@ -1,0 +1,718 @@
+%
+% Copyright (c) 2021-2023 Zeping Lee
+% Released under the MIT License.
+% Repository: https://github.com/zepinglee/citeproc-lua
+%
+
+% ## Bibliography commands
+
+\NewDocumentCommand \printbibliography { O { } }
+  {
+    \__csl_set_categories:
+    % Bibliography filter
+    \group_begin:
+      \seq_clear:N \l__bibliography_filter_conditions_seq
+      \keys_set:nn { csl / bibliography } {#1}
+      \__csl_collect_bib_filter_conditions:
+      % Collect the bibliography to token list
+      \sys_if_engine_luatex:T
+        {
+          \bool_if:NT \l__csl_engine_initialized_bool
+            {
+              \__csl_collect_bibliography:n
+                {
+                  \lua_now:e
+                    { csl.bibliography("\l__bibliography_filter_conditions_tl") }
+                }
+            }
+        }
+      % Print the bibliography
+      \tl_if_empty:NTF \g__csl_bibliography_tl
+        { \msg_warning:nn { citation-style-language } { bibliography / empty } }
+        {
+          \bool_if:NT \l__csl_regression_test_bool
+            {
+              \seq_set_split:NnV \l__csl_bibliography_seq { \par } \g__csl_bibliography_tl
+              \seq_show:N \l__csl_bibliography_seq
+            }
+          \tl_use:N \g__csl_bibliography_tl
+        }
+    \group_end:
+  }
+
+\msg_new:nnn { citation-style-language } { bibliography / empty }
+  { The~ bibliography~ is~ empty.  }
+
+\DeclareDocumentCommand \bibliography { m }
+  {
+    \__csl_write_aux_bibdata:n {#1}
+    \printbibliography
+  }
+
+
+\tl_new:N \l__csl_bib_env_tl
+\tl_new:N \l__csl_bib_head_name_tl
+\tl_new:N \l__csl_bib_head_title_tl
+\tl_new:N \l__csl_bib_pre_note_tl
+\tl_new:N \l__csl_bib_post_note_tl
+\seq_new:N \l__bibliography_filter_conditions_seq
+\tl_new:N \l__bibliography_filter_conditions_tl
+
+\tl_set:Nn \l__csl_bib_env_tl { bibliography }
+\tl_set:Nn \l__csl_bib_head_name_tl { bibliography }
+
+\keys_define:nn { csl / bibliography }
+  {
+    % env         .tl_set:N = \l__csl_bib_env_name_tl ,
+    heading     .tl_set:N = \l__csl_bib_head_name_tl ,
+    title       .tl_set:N = \l__csl_bib_head_title_tl ,
+    % label
+    % block
+    prenote     .tl_set:N = \l__csl_bib_pre_note_tl ,
+    postnote    .tl_set:N = \l__csl_bib_post_note_tl ,
+    % section
+    % segment
+    type        .code:n = \__csl_add_filter_condition:nn { type } {#1} ,
+    nottype     .code:n = \__csl_add_filter_condition_negative:nn { type } {#1} ,
+    % subtype     .code:n = \__csl_add_filter_condition:nn { subtype } {#1} ,
+    % notsubtype  .code:n = \__csl_add_filter_condition_negative:nn { subtype } {#1} ,
+    keyword     .code:n = \__csl_add_filter_condition:nn { keyword } {#1} ,
+    notkeyword  .code:n = \__csl_add_filter_condition_negative:nn { keyword } {#1} ,
+    category    .code:n = \__csl_add_filter_condition:nn { categories } {#1} ,
+    notcategory .code:n = \__csl_add_filter_condition_negative:nn { categories } {#1} ,
+    % filter .tl_set:N = \l__csl_bibliography_nottype_tl ,
+  }
+
+
+% Used for debugging and testing
+\clist_new:N \g__csl_bib_items_clist
+
+
+\RenewDocumentEnvironment { thebibliography } { m }
+  {
+    \exp_args:NVV \__csl_make_bib_heading:nn
+      \l__csl_bib_head_name_tl \l__csl_bib_head_title_tl
+    \exp_args:NV \__csl_print_bib_note:n \l__csl_bib_pre_note_tl
+    \group_begin:
+      \dim_zero:N \parindent
+      \tl_if_eq:NnF \l__csl_line_spacing_tl { 1 }
+        { \linespread { \l__csl_line_spacing_tl } \selectfont }
+      \l__csl_bib_font_tl
+      \list { }
+        {
+          \__csl_set_bib_label_spacing:n {#1}
+          \__csl_set_bib_item_sep:
+        }
+      \sloppy
+      \__csl_set_bib_page_break:
+      \frenchspacing
+      \__csl_bib_url_setup:
+      \clist_gclear:N \g__csl_bib_items_clist
+  }
+  {
+      \tl_set:Nn \@noitemerr
+        { \msg_warning:nn { citation-style-language } { bibliography / empty } }
+      \endlist
+      \__csl_reset_bib_format:
+    \group_end:
+    \exp_args:NV \__csl_print_bib_note:n \l__csl_bib_post_note_tl
+  }
+
+
+
+% ### Bibliography spacing
+
+\dim_new:N \l__csl_bib_hang_dim
+
+\cs_new:Npn \__csl_set_bib_label_spacing:n #1
+  {
+    \bool_if:NTF \l__csl_hanging_indent_bool
+      {
+        \dim_set:Nn \l__csl_bib_hang_dim { \l__csl_bib_hang_tl }
+        \dim_set_eq:NN \leftmargin \l__csl_bib_hang_dim
+        \dim_set:Nn \itemindent { - \leftmargin }
+      }
+      {
+        \settowidth \labelwidth { \@biblabel {#1} }
+        \dim_set_eq:NN \leftmargin \labelwidth
+        \dim_add:Nn \leftmargin { \labelsep }
+      }
+  }
+
+% In standard LaTeX classes (10pt), the vertical sep of bibliographic item is
+% \itemsep (4\p@ \@plus2\p@ \@minus\p@) + \parsep (4\p@ \@plus2\p@ \@minus\p@)
+% = 8pt plus 4pt minus 2pt
+\cs_new:Npn \__csl_set_bib_item_sep:
+  {
+    \skip_zero:N \parsep
+    \tl_if_empty:NTF \l__csl_bib_item_sep_tl
+      {
+        \skip_set:Nn \itemsep
+          {
+            8 pt plus 4 pt minus 2 pt * \dim_ratio:nn { 1 em } { 8 pt }
+            * \l__csl_entry_spacing_tl
+          }
+      }
+      { \skip_set:Nn \itemsep { \l__csl_bib_item_sep_tl } }
+  }
+
+
+% ### Bibliography label
+
+% CSL outputs the whole label thus the brackets are removed from \@biblabel
+% \def\@biblabel#1{[#1]}
+\cs_set:Npn \@biblabel #1 {#1}
+
+% For numeric or label-style bibliography: \bibitem[{[17]}]{entrykey}
+% \@lbibitem is redefined in `babel` and `hyperref` and we need to override it
+% in the patching code. Thus we define \__csl_lbibitem: here and reassign it to
+% \@lbibitem in compatability code
+\cs_new:Npn \__csl_lbibitem:
+  {
+    \bool_if:NTF \l__csl_back_ref_bool
+      { \__csl_lbibitem_back_ref:nnn }
+      { \__csl_lbibitem_plain:nn }
+  }
+
+\cs_set_eq:NN \@lbibitem \__csl_lbibitem:
+
+\cs_new:Npn \__csl_lbibitem_plain:nn [#1]#2
+  {
+    \clist_gput_right:Nn \g__csl_bib_items_clist {#2}
+    \item [ \@biblabel {#1} \hfill ]
+    \ignorespaces
+  }
+
+% This is the version for use with backref feature.
+\cs_new:Npn \__csl_lbibitem_back_ref:nnn [#1]#2#3\par
+  {
+    \__csl_lbibitem_plain:nn [#1] {#2}
+    #3
+    \prop_get:NnNT \g__csl_back_ref_info_prop {#2} \l_tmpa_tl
+      {
+        \c_space_tl
+        \exp_args:NV \__csl_print_back_refs:n \l_tmpa_tl
+      }
+    \par
+  }
+
+\cs_new:Npn \__csl_print_back_refs:n #1
+  % #1: list of {<page>}{<label>}{anchor}
+  {
+    \clist_set:Nn \l_tmpa_clist {#1}
+    % To remove duplicates
+    \prop_clear:N \l_tmpa_prop
+    % Output seq
+    \seq_clear:N \l_tmpa_seq
+    \clist_map_inline:Nn \l_tmpa_clist { \__csl_print_back_ref_aux:nnn ##1 }
+    \backref { \seq_use:Nn \l_tmpa_seq { ,~ } }
+  }
+
+\cs_new:Npn \__csl_print_back_ref_aux:nnn #1#2#3
+  {
+    \str_if_eq:VnTF \l__csl_back_ref_type_str { page }
+      {
+        \prop_if_in:NnF \l_tmpa_prop {#1}
+          {
+            \bool_if:NTF \l__csl_hyperref_loaded_bool
+              { \seq_put_right:Nn \l_tmpa_seq { \hyperlink { page. #1 } {#1} } }
+              { \seq_put_right:Nn \l_tmpa_seq {#1} }
+            \prop_put:Nnn \l_tmpa_prop {#1} {#1}
+          }
+      }
+      {
+        % section
+        \prop_if_in:NnF \l_tmpa_prop {#2}
+          {
+            \bool_if:NTF \l__csl_hyperref_loaded_bool
+              { \seq_put_right:Nn \l_tmpa_seq { \hyperlink {#3} {#2} } }
+              { \seq_put_right:Nn \l_tmpa_seq {#2} }
+            \prop_put:Nnn \l_tmpa_prop {#2} {#2}
+          }
+      }
+  }
+
+% Hook
+\cs_new:Npn \backref #1 {#1}
+
+
+% For author-date bibliography
+% \def\@bibitem#1{\item\if@filesw \immediate\write\@auxout
+%        {\string\bibcite{#1}{\the\value{\@listctr}}}\fi\ignorespaces}
+\cs_new:Npn \__csl_bibitem:
+  {
+    \bool_if:NTF \l__csl_back_ref_bool
+      { \__csl_bibitem_back_ref:nn }
+      { \__csl_bibitem_plain:n }
+  }
+
+\cs_set_eq:NN \@bibitem \__csl_bibitem:
+
+\cs_new:Npn \__csl_bibitem_plain:n #1
+  {
+    \clist_gput_right:Nn \g__csl_bib_items_clist {#1}
+    \item
+    \ignorespaces
+  }
+
+\cs_new:Npn \__csl_bibitem_back_ref:nn #1#2\par
+  {
+    \__csl_bibitem_plain:n {#1}
+    #2
+    % \prop_show:N \g__csl_back_ref_info_prop
+    \prop_get:NnNT \g__csl_back_ref_info_prop {#1} \l_tmpa_tl
+      {
+        \c_space_tl
+        \exp_args:NV \__csl_print_back_refs:n \l_tmpa_tl
+      }
+    \par
+  }
+
+
+% It will be used for multi-bibliography.
+\cs_new:Npn \__csl_reset_bib_format:
+  {
+    \keys_set:nn { csl } {
+      hanging-indent = false ,
+      line-spacing = 1 ,
+      entry-spacing = 1 ,
+    }
+  }
+
+
+% ### Bibliography Headings and Environments
+
+\prop_new:N \l__csl_bib_env_begin_prop
+\prop_new:N \l__csl_bib_env_end_prop
+\prop_new:N \l__csl_bib_item_prop
+
+% \defbibenvironment{⟨name⟩}{⟨begin code⟩}{⟨end code⟩}{⟨item code⟩}
+\NewDocumentCommand { \defbibenvironment } { m m m m }
+  {
+    \prop_put:Nnn \l__csl_bib_env_begin_prop {#1} {#2}
+    \prop_put:Nnn \l__csl_bib_env_end_prop {#1} {#3}
+    \prop_put:Nnn \l__csl_bib_item_prop {#1} {#4}
+  }
+
+% \defbibenvironment { bibliography }
+%   { }
+
+
+% #1: bib heading name
+% #2: bib heading title
+\cs_new:Npn \__csl_make_bib_heading:nn #1#2
+  {
+    \tl_if_empty:NTF \bibsection
+      {
+        \cs_if_exist:cF { __csl_head_ #1 :n }
+          {
+            \msg_error:nnn { citation-style-language } { bib-heading-undefined }
+              {#1}
+          }
+        \tl_if_blank:nTF {#2}
+          { \use:c { __csl_head_ #1 :n } }
+          { \use:c { __csl_head_ #1 :n } [#2] }
+      }
+      { \bibsection }
+  }
+
+\msg_new:nnn { citation-style-language } { bib-heading-undefined }
+  { Bibliography~ heading~ '#1'~ undefined. }
+
+\keys_define:nn { csl / bib-heading }
+  {
+    heading .tl_set:N = \l__csl_bib_head_name_tl ,
+    title   .tl_set:N = \l__csl_bib_head_title_tl ,
+    % label
+  }
+
+\cs_new:Npn \__csl_reset_heading_options:
+  {
+    \tl_set:Nn \l__csl_bib_head_name_tl { bibliography }
+    \tl_set:Nn \l__csl_bib_head_title_tl { }
+  }
+
+\NewDocumentCommand { \printbibheading } { O { } }
+  {
+    % We can't use a group here.
+    % See <https://github.com/plk/biblatex/issues/1278>.
+    \__csl_reset_heading_options:
+    \keys_set:nn { csl / bib-heading } {#1}
+    \exp_args:NVV \__csl_make_bib_heading:nn
+      \l__csl_bib_head_name_tl \l__csl_bib_head_title_tl
+    \__csl_reset_heading_options:
+  }
+
+% \defbibheading { ⟨name⟩}[⟨title⟩]{⟨code⟩}
+\NewDocumentCommand { \defbibheading } { m O { \bibname } }
+  {
+    \expandafter \newcommand \csname __csl_head_ #1 :n \endcsname [1] [ {#2} ]
+  }
+
+\cs_if_exist:NTF \chapter
+  {
+    % `book` or `report`
+    \defbibheading { bibliography } [ \bibname ]
+      {
+        \chapter* {#1}
+        \@mkboth { \MakeUppercase {#1} } { \MakeUppercase {#1} }
+      }
+    \defbibheading { biblist } [ \biblistname ]
+      {
+        \chapter* {#1}
+        \@mkboth { \MakeMarkcase {#1} } { \MakeMarkcase {#1} }
+      }
+    \defbibheading { bibintoc } [ \bibname ]
+      {
+        \chapter* {#1}
+        \addcontentsline { toc } { chapter } {#1}
+        \@mkboth { \MakeMarkcase {#1} } { \MakeMarkcase {#1} }
+      }
+    \defbibheading { biblistintoc } [ \biblistname ]
+      {
+        \chapter* {#1}
+        \addcontentsline { toc } { chapter } {#1}
+        \@mkboth { \MakeMarkcase {#1} } { \MakeMarkcase {#1} }
+      }
+    \defbibheading { bibnumbered } [ \bibname ]
+      { \chapter {#1} }
+    \defbibheading { biblistnumbered } [ \biblistname ]
+      { \chapter {#1} }
+    \defbibheading { subbibliography } [ \refname ]
+      {
+        \section* {#1}
+        \if@twoside
+          \markright { \MakeMarkcase {#1} }
+        \fi
+      }
+    \defbibheading { subbibintoc } [ \refname ]
+      {
+        \section* {#1}
+          \addcontentsline { toc } { section } {#1}
+          \if@twoside
+            \markright { \MakeMarkcase {#1} }
+          \fi
+      }
+    \defbibheading { subbibnumbered } [ \refname ]
+      { \section {#1} }
+  }
+  {
+    % `article`
+    \defbibheading { bibliography } [ \refname ]
+      {
+        \section* {#1}
+        \@mkboth { \MakeUppercase {#1} } { \MakeUppercase {#1} }
+      }
+    \defbibheading { biblist } [ \biblistname ]
+      {
+        \section* {#1}
+        \@mkboth { \MakeMarkcase {#1} } { \MakeMarkcase {#1} }
+      }
+    \defbibheading { bibintoc } [ \refname ]
+      {
+        \section* {#1}
+        \addcontentsline { toc } { section } {#1}
+        \@mkboth { \MakeMarkcase {#1} } { \MakeMarkcase {#1} }
+      }
+    \defbibheading { biblistintoc } [ \biblistname ]
+      {
+        \section* {#1}
+        \addcontentsline { toc } { section } {#1}
+        \@mkboth { \MakeMarkcase {#1} } { \MakeMarkcase {#1} }
+      }
+    \defbibheading { bibnumbered } [ \refname ]
+      { \section {#1} }
+    \defbibheading { biblistnumbered } [ \biblistname ]
+      { \section {#1} }
+    \defbibheading { subbibliography } [ \refname ]
+      { \subsection* {#1} }
+    \defbibheading { subbibintoc } [ \refname ]
+      {
+        \subsection* {#1}
+        \addcontentsline { toc } { subsection } {#1}
+      }
+    \defbibheading { subbibnumbered } [ \refname ]
+      { \subsection {#1} }
+  }
+
+
+% Bibliography notes
+
+\prop_new:N \l__csl_bib_notes_prop
+
+% #1: name
+% #2: text
+\NewDocumentCommand { \defbibnote } { m m }
+  { \prop_put:Nnn \l__csl_bib_notes_prop {#1} {#2} }
+
+% #1: note name
+\cs_new:Npn \__csl_print_bib_note:n #1
+  {
+    \tl_if_empty:nF {#1}
+      {
+        \prop_get:NnNF \l__csl_bib_notes_prop {#1} \l_tmpa_tl
+          {
+            \msg_error:nnn { citation-style-language } { bib-note-undefined }
+              {#1}
+          }
+        \tl_if_empty:NF \l_tmp_tl
+          {
+            \group_begin:
+              % \cs_set_eq:NN \newrefsection \relax
+              % \cs_set_eq:NN \newrefsegment \relax
+              \noindent
+              \tl_use:N \l_tmpa_tl
+              \par \nobreak
+            \group_end:
+          }
+      }
+  }
+
+\msg_new:nnn { citation-style-language } { bib-note-undefined }
+  { Bibliography~ note~ '#1'~ undefined. }
+
+
+
+% ## Bibliography Filters
+
+\cs_new:Npn \__csl_add_filter_condition:nn #1#2
+  {
+    \seq_put_right:Nn \l__bibliography_filter_conditions_seq
+      {
+        {
+          field = #1 ,
+          value = #2
+        }
+      }
+  }
+
+\cs_new:Npn \__csl_add_filter_condition_negative:nn #1#2
+  {
+    \seq_put_right:Nn \l__bibliography_filter_conditions_seq
+      {
+        {
+          field = #1,
+          value = #2,
+          negative = true
+        }
+      }
+  }
+
+\cs_new:Npn \__csl_collect_bib_filter_conditions:
+  {
+    % Collect the selective conditions for bibliography
+    \tl_clear:N \l__bibliography_filter_conditions_tl
+    \seq_if_empty:NF \l__bibliography_filter_conditions_seq
+      {
+        \tl_set:Nx \l__bibliography_filter_conditions_tl
+          { select = \c_left_brace_str }
+        \tl_put_right:Nx \l__bibliography_filter_conditions_tl
+          { \seq_use:Nn \l__bibliography_filter_conditions_seq { , } }
+        \tl_put_right:NV \l__bibliography_filter_conditions_tl
+          { \c_right_brace_str }
+        % Write to aux file
+        \sys_if_engine_luatex:F
+          {
+            \tl_set:Nx \l_tmpa_tl { bib-filter = \c_left_brace_str }
+            \tl_put_right:NV \l_tmpa_tl { \l__bibliography_filter_conditions_tl }
+            \tl_put_right:NV \l_tmpa_tl { \c_right_brace_str }
+            \exp_args:NV \__csl_write_aux_options:n \l_tmpa_tl
+          }
+      }
+  }
+
+
+% ### Bibliography Categories
+
+\prop_new:N \l__csl_categories_prop
+
+% \DeclareBibliographyCategory{⟨category⟩}
+\NewDocumentCommand \DeclareBibliographyCategory { m }
+  {
+    \prop_put:Nnn \l__csl_categories_prop { #1 } { }
+  }
+
+% \addtocategory{⟨category⟩}{⟨keys⟩}
+\NewDocumentCommand \addtocategory { m m }
+  {
+    \prop_get:NnNTF \l__csl_categories_prop {#1} \l_tmpa_tl
+      {
+        \tl_if_empty:NF \l_tmpa_tl
+          { \tl_put_right:Nn \l_tmpa_tl { , } }
+        \tl_put_right:Nn \l_tmpa_tl {#2}
+        \prop_put:NnV \l__csl_categories_prop {#1} \l_tmpa_tl
+      }
+      {
+        \msg_error:nnn { citation-style-language } { category-not-declared }
+          {#1}
+      }
+  }
+
+% Set categories in Lua module or write to aux file.
+% This procesure is at `\printbibligoraphy` to allow \addtocategory in main text.
+\cs_new:Npn \__csl_set_categories:
+  {
+    % Set categories
+    \prop_if_empty:NF \l__csl_categories_prop
+      {
+        \tl_clear:N \l_tmpa_tl
+        \prop_map_inline:Nn \l__csl_categories_prop
+          {
+            \tl_if_empty:NF \l_tmpa_tl
+              { \tl_put_right:Nn \l_tmpa_tl { , } }
+            \tl_put_right:Nn \l_tmpa_tl { ##1 = {##2} }
+          }
+        \sys_if_engine_luatex:T
+          { \lua_now:e { csl.set_categories("\l_tmpa_tl") } }
+          {
+            \tl_put_left:Nx \l_tmpa_tl { categories = \c_left_brace_str }
+            \tl_put_right:NV \l_tmpa_tl \c_right_brace_str
+            \exp_args:NV \__csl_write_aux_options:n \l_tmpa_tl
+          }
+      }
+  }
+
+\msg_new:nnn { citation-style-language } { category-not-declared }
+  { Category~ '#1'~ not~ declared. }
+
+
+% ### Page break in bibliography
+
+% See <https://github.com/plk/biblatex/blob/e16f4aaa5d9857c7b844bbcbe246f0535fd334e9/tex/latex/biblatex/biblatex.def#L219-L258>
+
+\cs_new:Npn \__csl_set_bib_page_break:
+  {
+    \bool_if:NTF \l__csl_bib_entry_page_break_bool
+      { \__csl_set_bib_allow_break: }
+      { \__csl_set_bib_no_break: }
+  }
+
+% The following code allows linebreaks before numbers and letters.
+% This is often the only way to break DOIs. It also allows breaks
+% after hyphens and adjusts \Urlmuskip to add some stretchability
+% to URLs.
+
+\cs_new:Npn \__csl_set_bib_allow_break:
+  {
+    \sloppy
+    \int_set:Nn \clubpenalty { 4000 }
+    \int_set_eq:NN \@clubpenalty \clubpenalty
+    \int_set:Nn \widowpenalty { 4000 }
+    % \sfcode`\.\@m
+    \frenchspacing
+  }
+
+\cs_new:Npn \__csl_set_bib_no_break:
+  {
+    \sloppy
+    \int_set:Nn \interlinepenalty { 5000 }
+    \int_set:Nn \widowpenalty { 10000 }
+    \int_set:Nn \clubpenalty { 10000 }
+    \int_set_eq:NN \@clubpenalty \clubpenalty
+    \raggedbottom
+    \frenchspacing
+  }
+
+
+% ### Urls in bibliography
+% Taken from `biblatex`'s \biburlsetup
+% https://github.com/plk/biblatex/blob/dev/tex/latex/biblatex/biblatex.def
+
+\int_new:N \l__csl_url_big_break_penalty_int
+\int_new:N \l__csl_url_break_penalty_int
+\int_new:N \l__csl_url_num_penalty_int
+\int_new:N \l__csl_url_uc_penalty_int
+\int_new:N \l__csl_url_lc_penalty_int
+
+\int_set:Nn \l__csl_url_big_break_penalty_int { 100 }
+\int_set:Nn \l__csl_url_break_penalty_int { 200 }
+% Allow linebreaks before numbers and letters.
+% Taken from `xurl.sty`.
+\int_set:Nn \l__csl_url_num_penalty_int { 9000 }
+\int_set:Nn \l__csl_url_uc_penalty_int { 9000 }
+\int_set:Nn \l__csl_url_lc_penalty_int { 8000 }
+
+\muskip_new:N \l__csl_url_big_muskip
+\muskip_new:N \l__csl_url_num_muskip
+\muskip_new:N \l__csl_url_uc_muskip
+\muskip_new:N \l__csl_url_lc_muskip
+
+\muskip_set:Nn \l__csl_url_big_muskip { 0mu plus 3mu }
+\muskip_set:Nn \l__csl_url_num_muskip { 0mu }
+\muskip_set:Nn \l__csl_url_uc_muskip { 0mu }
+\muskip_set:Nn \l__csl_url_lc_muskip { 0mu }
+
+\cs_new:Npn \__csl_bib_url_setup:
+  {
+    \urlstyle { same }
+    \muskip_set_eq:NN \Urlmuskip \l__csl_url_big_muskip
+    \mathchardef \UrlBigBreakPenalty = \l__csl_url_big_break_penalty_int
+    \mathchardef \UrlBreakPenalty = \l__csl_url_break_penalty_int
+    % \int_set_eq:NN doesn't work here
+    % \int_set_eq:NN \UrlBigBreakPenalty \l__csl_url_big_break_penalty_int
+    % \int_set_eq:NN \UrlBreakPenalty \l__csl_url_break_penalty_int
+    \tl_set:Nn \UrlBigBreaks { \do \: \do \- }
+    \tl_set:Nn \UrlBreaks
+      {
+        \do \. \do \@ \do \/ \do \\ \do \! \do \_ \do \| \do \; \do \> \do \]
+        \do \) \do \} \do \, \do \? \do \' \do \+ \do \= \do \# \do \$ \do \&
+        \do \* \do \^ \do \"
+      }
+    \int_compare:nNnT { \l__csl_url_num_penalty_int } > { 0 }
+      {
+        \clist_map_inline:nn
+          { \1 , \2 , \3 , \4 , \5 , \6 , \7 , \8 , \9 , \0 }
+          {
+            \tl_put_right:Nn \UrlSpecials
+              {
+                \do ##1
+                  {
+                    \mathchar`##1
+                    \mskip \l__csl_url_num_muskip
+                    \penalty \l__csl_url_num_penalty_int
+                  }
+              }
+          }
+      }
+    \int_compare:nNnT { \l__csl_url_uc_penalty_int } > { 0 }
+      {
+        \clist_map_inline:nn
+          {
+            \A , \B , \C , \D , \E , \F , \G , \H , \I , \J ,
+            \K , \L , \M , \N , \O , \P , \Q , \R , \S , \T ,
+            \U , \V , \W , \X , \Y , \Z
+          }
+          {
+            \tl_put_right:Nn \UrlSpecials
+              {
+                \do ##1
+                  {
+                    \mathchar`##1
+                    \mskip \l__csl_url_uc_muskip
+                    \penalty \l__csl_url_uc_penalty_int
+                  }
+              }
+          }
+      }
+    \int_compare:nNnT { \l__csl_url_lc_penalty_int } > { 0 }
+      {
+        \clist_map_inline:nn
+          {
+            \a , \b , \c , \d , \e , \f , \g , \h , \i , \j ,
+            \k , \l , \m , \n , \o , \p , \q , \r , \s , \t ,
+            \u , \v , \w , \x , \y , \z
+          }
+          {
+            \tl_put_right:Nn \UrlSpecials
+              {
+                \do ##1
+                  {
+                    \mathchar`##1
+                    \mskip \l__csl_url_lc_muskip
+                    \penalty \l__csl_url_lc_penalty_int
+                  }
+              }
+          }
+      }
+    \cs_set_eq:NN \do \exp_not:N
+  }

@@ -1,0 +1,306 @@
+%
+% Copyright (c) 2021-2023 Zeping Lee
+% Released under the MIT License.
+% Repository: https://github.com/zepinglee/citeproc-lua
+%
+
+% ## Initialization at `\begin{document}`
+
+\tl_new:N \g__csl_bibliography_tl
+\tl_new:N \g__csl_bibliography_setup_tl
+\seq_new:N \l__csl_bibliography_seq
+
+
+\AtBeginDocument { \__csl_at_begin_document_hook: }
+
+
+\cs_new:Npn \__csl_at_begin_document_hook:
+  {
+    \__csl_write_aux_info:
+    \sys_if_engine_luatex:TF
+      { \__csl_initialize_lua_module: }
+      { \__csl_load_bbl: }
+  }
+
+
+\clist_new:N \g__csl_aux_bib_files_clist
+
+\cs_new:Npn \__csl_write_aux_info:
+  {
+    \tl_if_empty:NTF \l__csl_style_tl
+      {
+        \tl_set_eq:NN \l__csl_style_tl \g__csl_aux_bibstyle_tl
+        \edef \csl@style { \g__csl_aux_bibstyle_tl }
+      }
+      { \exp_args:Nx \__csl_write_aux_bibstyle:n { \l__csl_style_tl } }
+    \clist_if_empty:NTF \l__csl_bib_resources_clist
+      { \clist_set_eq:NN \l__csl_bib_resources_clist \g__csl_aux_bib_files_clist }
+      {
+        \exp_args:Nx \__csl_write_aux_bibdata:n
+          { \clist_use:Nn \l__csl_bib_resources_clist { , } }
+      }
+    \__csl_write_aux_csl_options:
+  }
+
+\cs_new:Npn \__csl_write_aux_bibstyle:n #1
+  {
+    \if@filesw
+      \iow_now:Nx \@auxout { \token_to_str:N \csl@aux@style {#1} }
+    \fi
+  }
+
+\cs_new:Npn \__csl_write_aux_bibdata:n #1
+  {
+    \if@filesw
+      % Full expansion for files like \jobname.bib
+      \iow_now:Nx \@auxout { \token_to_str:N \csl@aux@data {#1} }
+    \fi
+  }
+
+% In earlier time, \bibdata{xxx.json} was used but this causes latexmk unable
+% to find xxx.json.bib and it refuses to run the $bibtex procedure.
+% John Collins suggests using a different command than \bibdata.
+\cs_new:Npn \csl@aux@data #1
+  { \clist_gput_right:Nn \g__csl_aux_bib_files_clist {#1} }
+
+
+
+\cs_new:Npn \__csl_initialize_lua_module:
+  {
+    \lua_now:e
+      {
+        csl.init(
+          "\l__csl_style_tl",
+          "\l__csl_bib_resources_clist",
+          "\l__csl_locale_tl"
+        )
+      }
+    \str_if_eq:eeT { \lua_now:n { tex.print(csl.initialized) } } { true }
+      { \bool_set_true:N \l__csl_engine_initialized_bool }
+    \__csl_get_style_class:
+    \@ifpackageloaded { hyperref }
+      { \lua_now:n { csl.enable_linking() } }
+      { }
+  }
+
+
+% \str_new:N \l__csl_style_class_str
+% In-text (including numeric or author-date) or note style
+% \bool_new:N \l__csl_note_style_bool
+
+\cs_new:Npn \__csl_get_style_class: {
+  \bool_if:NT \l__csl_engine_initialized_bool
+    {
+      \tl_set:Nx \l__csl_class_tl { \lua_now:n { csl.get_style_class() } }
+      \tl_if_eq:NnT \l__csl_class_tl { note }
+        { \bool_set_true:N \l__csl_note_bool }
+    }
+}
+
+
+\clist_new:N \l__csl_options_clist
+
+\bool_new:N \l__csl_engine_initialized_bool
+
+\prop_set_from_keyval:Nn \l__csl_language_code_map_prop
+  {
+    acadian         = fr-CA,
+    american        = en-US,
+    australian      = en-AU,
+    afrikaans       = af-ZA,
+    albanian        = sq-AL,
+    amharic         = am-ET,
+    arabic          = ar,
+    armenian        = hy-AM,
+    asturian        = ast-ES,
+    austrian        = de-AT,
+    bahasa          = id-ID,
+    bahasai         = id-ID,
+    bahasam         = id-ID,
+    basque          = eu-ES,
+    bengali         = bn-BD,
+    bgreek          = el-GR,
+    brazil          = pt-BR,
+    brazilian       = pt-BR,
+    breton          = br-FR,
+    british         = en-GB,
+    bulgarian       = bg-BG,
+    canadian        = en-CA,
+    canadien        = fr-CA,
+    catalan         = ca-AD,
+    coptic          = cop,
+    croatian        = hr-HR,
+    czech           = cs-CZ,
+    danish          = da-DK,
+    divehi          = dv-MV,
+    dutch           = nl-NL,
+    english         = en-US,
+    esperanto       = eo-001,
+    estonian        = et-EE,
+    ethiopia        = am-ET,
+    farsi           = fa-IR,
+    finnish         = fi-FI,
+    francais        = fr-FR,
+    french          = fr-FR,
+    frenchle        = fr-FR,
+    friulan         = fur-IT,
+    galician        = gl-ES,
+    german          = de-DE,
+    germanb         = de-DE,
+    greek           = el-GR,
+    hebrew          = he-IL,
+    hindi           = hi-IN,
+    ibygreek        = el-CY,
+    icelandic       = is-IS,
+    indon           = id-ID,
+    indonesia       = id-ID,
+    interlingua     = ia-FR,
+    irish           = ga-IE,
+    italian         = it-IT,
+    japanese        = ja-JP,
+    kannada         = kn-IN,
+    lao             = lo-LA,
+    latin           = la-Latn,
+    latvian         = lv-LV,
+    lithuanian      = lt-LT,
+    lowersorbian    = dsb-DE,
+    lsorbian        = dsb-DE,
+    magyar          = hu-HU,
+    malay           = id-ID,
+    malayalam       = ml-IN,
+    marathi         = mr-IN,
+    meyalu          = id-ID,
+    mongolian       = mn-Cyrl,
+    naustrian       = de-AT,
+    newzealand      = en-NZ,
+    ngerman         = de-DE,
+    nko             = ha-NG,
+    norsk           = nb-NO,
+    norwegian       = nn-NO,
+    nynorsk         = nn-NO,
+    occitan         = oc-FR,
+    piedmontese     = pms-IT,
+    pinyin          = pny,
+    polish          = pl-PL,
+    polutonikogreek = el-GR,
+    portuges        = pt-PT,
+    portuguese      = pt-PT,
+    romanian        = ro-RO,
+    romansh         = rm-CH,
+    russian         = ru-RU,
+    samin           = se-NO,
+    sanskrit        = sa-IN,
+    scottish        = gd-GB,
+    serbian         = sr-Latn,
+    serbianc        = sr-Cyrl,
+    slovak          = sk-SK,
+    slovene         = sl-SI,
+    slovenian       = sl-SI,
+    spanish         = es-ES,
+    swedish         = sv-SE,
+    swiss           = de-CH,
+    swissgerman     = de-CH,
+    nswissgerman    = de-CH,
+    syriac          = syc,
+    tamil           = ta-IN,
+    telugu          = te-IN,
+    thai            = th-TH,
+    thaicjk         = th-TH,
+    tibetan         = bo-CN,
+    turkish         = tr-TR,
+    turkmen         = tk-TM,
+    ukrainian       = uk-UA,
+    urdu            = ur-IN,
+    UKenglish       = en-UK,
+    uppersorbian    = hsb-DE,
+    USenglish       = en-US,
+    usorbian        = hsb-DE,
+    vietnamese      = vi-VN,
+    welsh           = cy-GB,
+  }
+
+
+\cs_new:Npn \__csl_write_aux_csl_options:
+  {
+    \clist_clear:N \l__csl_options_clist
+    % locale
+    \tl_if_empty:NT \l__csl_locale_tl
+      {
+        \tl_if_exist:NT \bbl@main@language
+          {
+            \prop_get:NVN \l__csl_language_code_map_prop \bbl@main@language
+              \l__csl_locale_tl
+          }
+      }
+    \tl_if_empty:NF \l__csl_locale_tl
+      {
+        \clist_put_right:Nx \l__csl_options_clist
+          { locale = \l__csl_locale_tl }
+      }
+    % linking
+    \@ifpackageloaded { hyperref }
+      { \clist_put_right:Nn \l__csl_options_clist { linking = true } }
+      { }
+    % write to aux file
+    \prop_if_empty:NF \l__csl_options_clist
+      {
+        \exp_args:Nx \__csl_write_aux_options:n
+          { \clist_use:Nn \l__csl_options_clist { , } }
+      }
+  }
+
+\cs_new:Npn \__csl_write_aux_options:n #1
+  {
+    \if@filesw
+      \iow_now:Nn \@auxout { \csl@aux@options {#1} }
+    \fi
+  }
+
+\cs_new:Npn \csl@aux@options #1 { }
+
+
+% Load .bbl at the beginning of document to save one pass of latex.
+% In this procedure, the \cslcitation command is processed and the contents
+% of `thebibliography` is stored into \g__csl_bibliography_tl.
+\cs_new:Npn \__csl_load_bbl:
+  {
+    % The \@input@ prints "No file ....bbl" in the .log file from which
+    % the latexmk decides to run $bibtex or not.
+    \__csl_collect_bibliography:n { \@input@ { \jobname .bbl } }
+    % Execute the \cslsetup part to set the style class.
+    % \tl_show:N \g__csl_bibliography_setup_tl
+    \tl_use:N \g__csl_bibliography_setup_tl
+    % \bool_show:N \l__csl_note_bool
+  }
+
+% Collection the bibliography (as well as \cslsetup) into \g__csl_bibliography_setup_tl
+\cs_new:Npn \__csl_collect_bibliography:n #1
+  {
+    \group_begin:
+      % URLs may contain "%" and "#" characters.
+      \char_set_catcode_other:N \%
+      \char_set_catcode_other:N \#
+      \RenewDocumentCommand \cslsetup { m }
+        { \tl_gset:Nn \g__csl_bibliography_setup_tl { \cslsetup { ##1 } } }
+      \RenewDocumentEnvironment { thebibliography } { m +b }
+        {
+          \tl_gset:Nn \g__csl_bibliography_tl
+            {
+              \begin { thebibliography } {##1}
+                ##2
+              \end { thebibliography }
+            }
+        }
+        { }
+      % Perform the execution
+      #1
+      \tl_if_empty:NF \g__csl_bibliography_setup_tl
+        {
+          \tl_gput_left:Nn \g__csl_bibliography_tl { \par }
+          \tl_gput_left:NV \g__csl_bibliography_tl \g__csl_bibliography_setup_tl
+        }
+    \group_end:
+  }
+
+% \msg_new:nnn { citation-style-language } { file / non-exist }
+%   { No~ file~ #1. }
