@@ -231,7 +231,8 @@ function bibtex2csl.process_special_fields(item, bib_fields)
   end
 
   -- PMID
-  if bib_fields.eprint and string.lower(bib_fields.eprinttype) == "pubmed" and not item.PMID then
+  if bib_fields.eprint and type(bib_fields.eprinttype) == "string" and
+      string.lower(bib_fields.eprinttype) == "pubmed" and not item.PMID then
     item.PMID = bib_fields.eprint
   end
 
