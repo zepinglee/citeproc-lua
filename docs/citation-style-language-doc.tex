@@ -155,7 +155,7 @@ The general procedure is similar to the traditional BibTeX workflow.
 
 
 
-\section{Package commands}
+\section{Global settings}
 
 \begin{function}{\cslsetup}
   \begin{syntax}
@@ -241,6 +241,9 @@ usually used for author-date style references.
 By default, it is 1 em (with respect to the \opt{bib-font} size if set).
 
 
+
+\section{Bibliographic resources}
+
 \begin{function}{\addbibresource}
   \begin{syntax}
     \cs{addbibresource}\oarg{options}\marg{resource}
@@ -263,6 +266,9 @@ Note that only UTF-8 encoding is supported in the \meta{resource} file.
   \addbibresource{bib-file.bib}
 \end{LaTeXdemo}
 
+
+
+\section{Citation commands}
 
 \begin{function}{\cite}
   \begin{syntax}
@@ -377,15 +383,144 @@ If the special key |*| is given (\cs{notecite\{*\}}), all the entries in the
 database are included.
 
 
+\section{Biliography commands}
 
 \begin{function}{\printbibliography}
   \begin{syntax}
-    \cs{printbibliography}\oarg{options}
+    \cs{printbibliography}\oarg{key = value, \dots}
   \end{syntax}
 \end{function}
 
-This command prints the reference list.
-Currently no options are available.
+This command prints the reference list. It takes one optional argument of the
+following options in key-value form.
+
+% \DescribeOption{env}
+
+\newcommand\defaultoption[1]{%
+  \hfill
+  default: \opt{#1}\par
+}
+
+\begin{itemize}
+  \item \opt{heading = \meta{name}}:
+    This option selects the heading \meta{name} defined by \cs{defbibheading}.
+    See also \S \ref{sec:bib-heading}. (default: \opt{bibliography})
+
+  \item \opt{title = \meta{text}}:
+    This option overrides the title of selected heading.
+
+  \item \opt{type = \meta{csltype}}:
+    Prints only entries with CSL type \meta{meta}. Note that the types of
+    entries from BibTeX format (.bib) are converted to CSL type.
+
+  \item \opt{nottype = \meta{csltype}}:
+    Exclude entries with CSL type \meta{meta}. Note that the types of
+    entries from BibTeX format (.bib) are converted to CSL type.
+    This option may be used multiple times.
+
+  \item \opt{keyword = \meta{keyword}}:
+    Prints only entries whose \opt{keyword} field includes \meta{keyword}.
+
+  \item \opt{notkeyword = \meta{keyword}}:
+    Exclude entries with \meta{keyword} in \opt{keyword} field.
+    This option may be used multiple times.
+
+  \item \opt{category = \meta{category}}:
+    Prints only entries in the category \meta{category} defined by
+    \cs{DeclareBibliographyCategory}. See also \S \ref{sec:bib-category}.
+
+  \item \opt{notcategory = \meta{category}}:
+    Exclude entries in the category \meta{category}.
+    This option may be used multiple times.
+
+\end{itemize}
+
+
+\subsection{Bibliography headings}
+
+\begin{function}{\defbibheading}
+  \begin{syntax}
+    \cs{defbibheading}\marg{name}\oarg{title}\marg{code}
+  \end{syntax}
+\end{function}
+
+This command defines a bibliography heading \meta{name} which can be selected
+with \opt{heading} option in \cs{printbibliography}.
+The \meta{code} is expected to generate a section heading with commands like
+\cs{chapter} or \cs{section}
+The optional \meta{title} argument is the default title passed to \meta{code}
+as |#1|.
+If the \opt{title} option is used in \cs{printbibliography}, its value will
+override the \meta{title}.
+
+Here is the the default \opt{bibliography} heading for standard document class
+\cls{article}.
+
+\begin{LaTeXdemo}
+  \defbibheading{bibliography}[\refname]{%
+    \section*{#1}%
+    \@mkboth{\MakeUppercase{#1}}{\MakeUppercase{#1}}%
+  }
+\end{LaTeXdemo}
+
+The following are predefined headings that can be directly used.
+
+\begin{description}
+  \item[\opt{bibliography}]
+    This is the default heading for \cs{printbibliography}.
+    Its actaul definition depends on the document class.
+    For classes like \cls{book} and \cls{report} that define \cs{chapter},
+    this heading uses \cs{chapter*} and \cs{bibname} as the default heading
+    title. For classes without \cs{chapter}, the heading uses \cs{section*} and
+    \cs{refname}.
+
+  \item[\opt{subbibliography}]
+    Similar to \opt{bibliography} but one sectioning level lower.
+    For example, this heading calls \cs{subsection*} instead of the original
+    \cs{section*} in \cls{article} class.
+
+  \item[\opt{bibintoc}]
+    Similar to \opt{bibliography} above but adds an entry to the table of
+    contents.
+
+  \item[\opt{subbibintoc}]
+    Similar to \opt{subbibliography} above but adds an entry to the table of
+    contents.
+
+  \item[\opt{bibnumbered}]
+    This heading uses a numbered sectioning command like \cs{chapter} or
+    \cs{section}. It also adds an entry in the table of contents.
+
+  \item[\opt{subbibnumbered}]
+    Similar to \opt{bibnumbered} but one sectioning level lower.
+
+  \item[\opt{none}]
+    An empty heading.
+
+\end{description}
+
+
+
+\subsection{Bibliography categories}
+
+\begin{function}{\DeclareBibliographyCategory}
+  \begin{syntax}
+    \cs{DeclareBibliographyCategory}\marg{category}
+  \end{syntax}
+\end{function}
+
+This command declares a new \meta{category} for use with the \opt{category} and
+\opt{notcategory} options in \cs{printbibliography}.
+
+\begin{function}{\addtocategory}
+  \begin{syntax}
+    \cs{addtocategory}\marg{category}\marg{entrykey, \dots}
+  \end{syntax}
+\end{function}
+
+This command assigns the \meta{entrykey}s to \meta{category}.
+
+
 
 
 % \begin{function}{\cites}
