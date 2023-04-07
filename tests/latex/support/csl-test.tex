@@ -6,3 +6,18 @@
 
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
+
+\long\def\TEST#1#2{%
+  \global\advance\gTESTint by 1 %
+  \SEPARATOR
+  \LONGTYPEOUT{TEST \the\gTESTint: \detokenize{#1}}%
+  \SEPARATOR
+  % \begingroup
+    \let\origTYPE\TYPE
+    \let\TYPE\LONGTYPEOUT
+    #2%
+  % \endgroup
+    \let\TYPE\origTYPE
+  \SEPARATOR
+  \LONGTYPEOUT{}%
+}

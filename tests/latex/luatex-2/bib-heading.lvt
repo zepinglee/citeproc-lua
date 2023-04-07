@@ -12,6 +12,10 @@
 }
 \addbibresource{test.bib}
 
+\defbibheading{subsection}[Works Cited]{%
+  \subsection{#1}%
+}
+
 
 \begin{document}
 
@@ -22,19 +26,27 @@
 \cite{ITEM-1, ITEM-2}
 \TIMO
 
-\defbibheading{section}[REFERENCES]{%
-  \subsection{#1}%
+\TEST{Print selected bibliography heading}{
+  Lorem ipsum dolor sit amet consecture lorem ipsum dolor sit amet.
+  \printbibheading[heading = subsection]
+  Lorem ipsum dolor sit amet consecture lorem ipsum dolor sit amet.
+}
+
+\TEST{Print default bibliography heading}{
+  \printbibheading
+  Lorem ipsum dolor sit amet consecture lorem ipsum dolor sit amet.
+  \clearpage
 }
 
 \TEST{Customize bib heading}{
-  \printbibliography[heading = section]
+  \printbibliography[heading = subsection]
   \clearpage
 }
 
 \TEST{Customize bib heading and title}{
   \printbibliography[
-    heading = section,
-    title   = {Works Cited}
+    heading = subsection,
+    title   = {Reference List},
   ]
   \clearpage
 }

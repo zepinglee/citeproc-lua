@@ -646,49 +646,51 @@
           }
       }
     % Bibliography filter
-    \seq_clear:N \l__bibliography_filter_conditions_seq
-    \keys_set:nn { csl / bibliography } {#1}
-    \tl_clear:N \l__bibliography_filter_conditions_tl
-    \seq_if_empty:NF \l__bibliography_filter_conditions_seq
-      {
-        \tl_set:Nx \l__bibliography_filter_conditions_tl
-          { select = \c_left_brace_str }
-        \tl_put_right:Nx \l__bibliography_filter_conditions_tl
-          { \seq_use:Nn \l__bibliography_filter_conditions_seq { , } }
-        \tl_put_right:NV \l__bibliography_filter_conditions_tl
-          { \c_right_brace_str }
-        % Write to aux file
-        \sys_if_engine_luatex:F
-          {
-            \tl_set:Nx \l_tmpa_tl { bib-filter = \c_left_brace_str }
-            \tl_put_right:NV \l_tmpa_tl { \l__bibliography_filter_conditions_tl }
-            \tl_put_right:NV \l_tmpa_tl { \c_right_brace_str }
-            \exp_args:NV \__csl_write_aux_options:n \l_tmpa_tl
-          }
-      }
-    % Collect the bibliography to token list
-    \sys_if_engine_luatex:T
-      {
-        \bool_if:NT \l__csl_engine_initialized_bool
-          {
-            \__csl_collect_bibliography:n
-              {
-                \lua_now:e
-                  { csl.bibliography("\l__bibliography_filter_conditions_tl") }
-              }
-          }
-      }
-    % Print the bibliography
-    \tl_if_empty:NTF \g__csl_bibliography_tl
-      { \msg_warning:nn { citation-style-language } { bibliography / empty } }
-      {
-        \bool_if:NT \l__csl_regression_test_bool
-          {
-            \seq_set_split:NnV \l__csl_bibliography_seq { \par } \g__csl_bibliography_tl
-            \seq_show:N \l__csl_bibliography_seq
-          }
-        \tl_use:N \g__csl_bibliography_tl
-      }
+    \group_begin:
+      \seq_clear:N \l__bibliography_filter_conditions_seq
+      \keys_set:nn { csl / bibliography } {#1}
+      \tl_clear:N \l__bibliography_filter_conditions_tl
+      \seq_if_empty:NF \l__bibliography_filter_conditions_seq
+        {
+          \tl_set:Nx \l__bibliography_filter_conditions_tl
+            { select = \c_left_brace_str }
+          \tl_put_right:Nx \l__bibliography_filter_conditions_tl
+            { \seq_use:Nn \l__bibliography_filter_conditions_seq { , } }
+          \tl_put_right:NV \l__bibliography_filter_conditions_tl
+            { \c_right_brace_str }
+          % Write to aux file
+          \sys_if_engine_luatex:F
+            {
+              \tl_set:Nx \l_tmpa_tl { bib-filter = \c_left_brace_str }
+              \tl_put_right:NV \l_tmpa_tl { \l__bibliography_filter_conditions_tl }
+              \tl_put_right:NV \l_tmpa_tl { \c_right_brace_str }
+              \exp_args:NV \__csl_write_aux_options:n \l_tmpa_tl
+            }
+        }
+      % Collect the bibliography to token list
+      \sys_if_engine_luatex:T
+        {
+          \bool_if:NT \l__csl_engine_initialized_bool
+            {
+              \__csl_collect_bibliography:n
+                {
+                  \lua_now:e
+                    { csl.bibliography("\l__bibliography_filter_conditions_tl") }
+                }
+            }
+        }
+      % Print the bibliography
+      \tl_if_empty:NTF \g__csl_bibliography_tl
+        { \msg_warning:nn { citation-style-language } { bibliography / empty } }
+        {
+          \bool_if:NT \l__csl_regression_test_bool
+            {
+              \seq_set_split:NnV \l__csl_bibliography_seq { \par } \g__csl_bibliography_tl
+              \seq_show:N \l__csl_bibliography_seq
+            }
+          \tl_use:N \g__csl_bibliography_tl
+        }
+    \group_end:
   }
 
 \msg_new:nnn { citation-style-language } { bibliography / empty }
@@ -1450,6 +1452,29 @@
 % \defbibenvironment { bibliography }
 %   { }
 
+\keys_define:nn { csl / bib-heading }
+  {
+    heading .tl_set:N = \l__csl_bib_head_name_tl ,
+    title   .tl_set:N = \l__csl_bib_head_title_tl ,
+    % label
+  }
+
+\cs_new:Npn \__csl_reset_heading_options:
+  {
+    \tl_set:Nn \l__csl_bib_head_name_tl { bibliography }
+    \tl_set:Nn \l__csl_bib_head_title_tl { }
+  }
+
+\NewDocumentCommand { \printbibheading } { O { } }
+  {
+    % We can't use a group here.
+    % See <https://github.com/plk/biblatex/issues/1278>.
+    \__csl_reset_heading_options:
+    \keys_set:nn { csl / bib-heading } {#1}
+    \exp_args:NVV \__csl_make_bib_heading:nn
+      \l__csl_bib_head_name_tl \l__csl_bib_head_title_tl
+    \__csl_reset_heading_options:
+  }
 
 % #1: bib heading name
 % #2: bib heading title
@@ -1582,13 +1607,16 @@
             \msg_error:nnn { citation-style-language } { bib-note-undefined }
               {#1}
           }
-        \group_begin:
-          % \cs_set_eq:NN \newrefsection \relax
-          % \cs_set_eq:NN \newrefsegment \relax
-          \noindent
-          \tl_use:N \l_tmpa_tl
-          \par \nobreak
-        \group_end:
+        \tl_if_empty:NF \l_tmp_tl
+          {
+            \group_begin:
+              % \cs_set_eq:NN \newrefsection \relax
+              % \cs_set_eq:NN \newrefsegment \relax
+              \noindent
+              \tl_use:N \l_tmpa_tl
+              \par \nobreak
+            \group_end:
+          }
       }
   }
 
