@@ -1,15 +1,31 @@
 {
+    "[latex]": {
+        "editor.tabSize": 2
+    },
+    "[latex-expl3]": {
+        "editor.tabSize": 2
+    },
+    "[lua]": {
+        "editor.tabSize": 2
+    },
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
     "files.associations": {
+        ".busted": "lua",
+        "*.aux": "latex",
+        "*.bbl": "latex",
         "*.lvt": "latex",
+        "*.rockspec": "lua",
         "*.sty": "latex-expl3",
         "*.tlg": "latex",
         "*_*.txt": "xml"
     },
+    "latex-workshop.intellisense.update.aggressive.enabled": true,
     "Lua.diagnostics.globals": [
         "describe",
         "it",
         "pending",
-        "utilities",
-        "lfs"
+        "utilities"
     ]
 }

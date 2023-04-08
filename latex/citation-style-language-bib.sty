@@ -53,6 +53,7 @@
 \tl_new:N \l__csl_bib_env_tl
 \tl_new:N \l__csl_bib_head_name_tl
 \tl_new:N \l__csl_bib_head_title_tl
+\tl_new:N \l__csl_bib_head_label_tl
 \tl_new:N \l__csl_bib_pre_note_tl
 \tl_new:N \l__csl_bib_post_note_tl
 \seq_new:N \l__bibliography_filter_conditions_seq
@@ -66,7 +67,7 @@
     % env         .tl_set:N = \l__csl_bib_env_name_tl ,
     heading     .tl_set:N = \l__csl_bib_head_name_tl ,
     title       .tl_set:N = \l__csl_bib_head_title_tl ,
-    % label
+    label       .tl_set:N = \l__csl_bib_head_label_tl ,
     % block
     prenote     .tl_set:N = \l__csl_bib_pre_note_tl ,
     postnote    .tl_set:N = \l__csl_bib_post_note_tl ,
@@ -314,6 +315,8 @@
           { \use:c { __csl_head_ #1 :n } [#2] }
       }
       { \bibsection }
+    \tl_if_empty:NF \l__csl_bib_head_label_tl
+      { \exp_args:NV \label \l__csl_bib_head_label_tl }
   }
 
 \msg_new:nnn { citation-style-language } { bib-heading-undefined }
