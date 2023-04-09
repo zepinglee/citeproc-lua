@@ -197,13 +197,20 @@ local function _remove_braces_of_diacritic(tokens, i, orig_first_token)
   end
 end
 
-local function _replace_diacritic_with_unicode(tokens, i, code_point)
+---comment
+---@param tokens any
+---@param i any
+---@param command_info string | table
+local function _replace_diacritic_with_unicode(tokens, i, command_info)
   local unicode_char
-  if type(code_point) == "string" then
-    unicode_char = utf8.char(tonumber(code_point, 16))
+  if type(command_info) == "string" then
+    unicode_char = utf8.char(tonumber(command_info, 16))
     tokens[i] = unicode_char
 
-  elseif type(code_point) == "table" then
+  elseif type(command_info) == "table" then
+    if not command_info.composites then
+      error('Missing "composites"')
+    end
     -- The command takes an argument (\"{o})
     local arg
     local j = i + 1
@@ -231,12 +238,19 @@ local function _replace_diacritic_with_unicode(tokens, i, code_point)
         end
       end
     end
-    if arg and code_point[arg] then
-      unicode_char = utf8.char(tonumber(code_point[arg], 16))
+    if arg and command_info.composites[arg] then
+      unicode_char = utf8.char(tonumber(command_info.composites[arg], 16))
       tokens[i] = unicode_char
       for k = j, i + 1, -1 do
         table.remove(tokens, k)
       end
+    elseif command_info.code_point then
+      -- Move the Diacritic after the next token
+      unicode_char = utf8.char(tonumber(command_info.code_point, 16))
+      for k = i, j - 1 do
+        tokens[k] = tokens[k + 1]
+      end
+      tokens[j] = unicode_char
     end
   end
 end
@@ -254,9 +268,9 @@ function latex_parser.convert_ast_to_unicode(tokens)
 
       elseif token.type == "control_sequence" then
         local cs = token
-        local code_point = latex_data.unicode_commands[cs.name]
-        if code_point then
-          _replace_diacritic_with_unicode(tokens, i, code_point)
+        local command_info = latex_data.unicode_commands[cs.name]
+        if command_info then
+          _replace_diacritic_with_unicode(tokens, i, command_info)
         end
       end
     end

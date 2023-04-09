@@ -54,15 +54,17 @@ def load_tuenc_def(latex_data, texmf_dist):
                 unicode_commands[command] = code_point
             continue
 
-        # matched = re.match(rf'\\DeclareUnicodeAccent\s*{arg_regex}\s*{arg_regex}', line)
-        # if matched:
-        #     command = matched.group(1)
-        #     code_point = matched.group(2)
-        #     code_point = code_point.replace('"', '')
-        #     if command not in unicode_commands:
-        #         unicode_commands[command] = dict()
-        #     unicode_commands[command]['code_point'] = code_point
-        #     continue
+        matched = re.match(rf'\\DeclareUnicodeAccent\s*{arg_regex}\s*{arg_regex}', line)
+        if matched:
+            command = strip_braces(matched.group(1))
+            code_point = strip_braces(matched.group(2))
+            print(command, code_point)
+            code_point = code_point.replace('"', '')
+            if command not in unicode_commands:
+                unicode_commands[command] = dict()
+            if 'code_point' not in unicode_commands[command]:
+                unicode_commands[command]['code_point'] = code_point
+            continue
 
         matched = re.match(rf'\\DeclareUnicodeComposite\s*{arg_regex}\s*{arg_regex}\s*{arg_regex}', line)
         if matched:
@@ -72,8 +74,10 @@ def load_tuenc_def(latex_data, texmf_dist):
             code_point = code_point.replace('"', '')
             if command not in unicode_commands:
                 unicode_commands[command] = dict()
+            if 'composites' not in unicode_commands[command]:
+                unicode_commands[command]['composites'] = dict()
             if argument not in unicode_commands[command]:
-                unicode_commands[command][argument] = code_point
+                unicode_commands[command]['composites'][argument] = code_point
             continue
 
 
@@ -121,8 +125,10 @@ def load_utf8enc_dfu(latex_data, texmf_dist):
 
                     if command not in unicode_commands:
                         unicode_commands[command] = dict()
-                    if argument not in unicode_commands[command]:
-                        unicode_commands[command][argument] = code_point
+                    if 'composites' not in unicode_commands[command]:
+                        unicode_commands[command]['composites'] = dict()
+                    if argument not in unicode_commands[command]['composites']:
+                        unicode_commands[command]['composites'][argument] = code_point
                 else:
                     if command not in unicode_commands:
                         unicode_commands[command] = code_point
