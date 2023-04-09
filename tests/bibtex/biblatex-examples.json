@@ -27,7 +27,8 @@
 		"page": "55-65",
 		"publisher": "Greenwood",
 		"publisher-place": "Westport, Conn. and London",
-		"title": "The true frontier"
+		"title": "The true frontier: Confronting and avoiding the realities of space in <span class=\"nocase\">American</span> science fiction films",
+		"title-short": "The True Frontier"
 	},
 	{
 		"id": "set",
@@ -326,7 +327,8 @@
 		},
 		"language": "en-US",
 		"note": "An <code>\\texttt{</code><span class=\"nocase\">article</span><code>}</code> entry with an <code>\\texttt{</code><span class=\"nocase\">eid</span><code>}</code> and a <code>\\texttt{</code><span class=\"nocase\">doi</span><code>}</code> field. Note that the <span style=\"font-variant:small-caps;\"><span class=\"nocase\">doi</span></span> is transformed into a clickable link if <code>\\texttt{</code><span class=\"nocase\">hyperref</span><code>}</code> support has been enabled",
-		"title": "Computation of methodology<code>\\hyphen </code>independent ionic solvation free energies from molecular simulations",
+		"title": "Computation of methodology<code>\\hyphen </code>independent ionic solvation free energies from molecular simulations: <span class=\"nocase\">I</span>. <span class=\"nocase\">The</span> electrostatic potential in molecular liquids",
+		"title-short": "Computation of methodology<code>\\hyphen </code>independent ionic solvation free energies from molecular simulations",
 		"volume": "124"
 	},
 	{
@@ -403,7 +405,7 @@
 		"language": "en-US",
 		"note": "An <code>\\texttt{</code><span class=\"nocase\">article</span><code>}</code> entry with <code>\\arabic{</code><span class=\"nocase\">author</span><code>}</code> authors. By default, long author and editor lists are automatically truncated. This is configurable",
 		"page": "17-30",
-		"title": "Alkanethiolate gold cluster molecules with core diameters from 1.5 to 5.2 <span class=\"nocase\">nm</span>",
+		"title": "Alkanethiolate gold cluster molecules with core diameters from 1.5 to 5.2 <span class=\"nocase\">nm</span>: Core and monolayer properties as a function of core size",
 		"title-short": "Alkanethiolate gold cluster molecules",
 		"volume": "14"
 	},
@@ -483,7 +485,8 @@
 		},
 		"note": "An <code>\\texttt{</code><span class=\"nocase\">article</span><code>}</code> entry with <code>\\texttt{</code><span class=\"nocase\">series</span><code>}</code>, <code>\\texttt{</code><span class=\"nocase\">volume</span><code>}</code>, and <code>\\texttt{</code><span class=\"nocase\">number</span><code>}</code> fields. Note the format of the <code>\\texttt{</code><span class=\"nocase\">series</span><code>}</code> which is a localization key",
 		"page": "9-27",
-		"title": "Twice-born, once conceived",
+		"title": "Twice-born, once conceived: Meaning construction and cultural cognition",
+		"title-short": "Twice-Born, Once Conceived",
 		"volume": "93"
 	},
 	{
@@ -857,7 +860,7 @@
 		"note": "A <code>\\texttt{</code><span class=\"nocase\">book</span><code>}</code> entry. Note the concatenation of the <code>\\texttt{</code><span class=\"nocase\">editor</span><code>}</code> and <code>\\texttt{</code><span class=\"nocase\">translator</span><code>}</code> fields as well as the <code>\\texttt{</code><span class=\"nocase\">indextitle</span><code>}</code> and <code>\\texttt{</code><span class=\"nocase\">indexsorttitle</span><code>}</code> fields",
 		"publisher": "S. Hermann",
 		"publisher-place": "Berlin",
-		"title": "Drei Abhandlungen über die Conjunction des separaten Intellects mit dem Menschen",
+		"title": "Drei Abhandlungen über die Conjunction des separaten Intellects mit dem Menschen: Von Averroes (Vater und Sohn), aus dem Arabischen übersetzt von Samuel Ibn Tibbon",
 		"title-short": "Drei Abhandlungen",
 		"translator": [
 			{
@@ -1030,7 +1033,7 @@
 		"note": "This is a <code>\\texttt{</code><span class=\"nocase\">book</span><code>}</code> entry. Note the format of the <code>\\texttt{</code><span class=\"nocase\">location</span><code>}</code> field as well as the <code>\\texttt{</code><span class=\"nocase\">sorttitle</span><code>}</code> and <code>\\texttt{</code><span class=\"nocase\">indextitle</span><code>}</code> fields",
 		"publisher": "Duke University Press",
 		"publisher-place": "Durham and London",
-		"title": "The federal appointments process",
+		"title": "The federal appointments process: A constitutional and historical analysis",
 		"title-short": "Federal Appointments Process"
 	},
 	{
@@ -1367,7 +1370,7 @@
 		"note": "This is a <code>\\texttt{</code><span class=\"nocase\">book</span><code>}</code> entry. Note the format of the <code>\\texttt{</code><span class=\"nocase\">publisher</span><code>}</code> and <code>\\texttt{</code><span class=\"nocase\">edition</span><code>}</code> fields as well as the <code>\\texttt{</code><span class=\"nocase\">subtitle</span><code>}</code> field",
 		"publisher": "Routledge <span class=\"nocase\">and</span> Kegan Paul",
 		"publisher-place": "London",
-		"title": "Argonauts of the <span class=\"nocase\">Western Pacific</span>",
+		"title": "Argonauts of the <span class=\"nocase\">Western Pacific</span>: An account of native enterprise and adventure in the Archipelagoes of <span class=\"nocase\">Melanesian New Guinea</span>",
 		"title-short": "Argonauts"
 	},
 	{
@@ -1502,7 +1505,8 @@
 		"number-of-volumes": "15",
 		"publisher": "Deutscher Taschenbuch-Verlag and Walter de Gruyter",
 		"publisher-place": "München and Berlin and New York",
-		"title": "Sämtliche Werke"
+		"title": "Sämtliche Werke: Kritische Studienausgabe",
+		"title-short": "Sämtliche Werke"
 	},
 	{
 		"id": "nietzsche:ksa1",
@@ -1587,7 +1591,7 @@
 		"note": "This is a <code>\\texttt{</code><span class=\"nocase\">book</span><code>}</code> entry. Note the format of the <code>\\texttt{</code><span class=\"nocase\">location</span><code>}</code> field in the database file",
 		"publisher": "Duke University Press",
 		"publisher-place": "Durham and London",
-		"title": "City of suspects",
+		"title": "City of suspects: Crime in <span class=\"nocase\">Mexico City</span>, 1900–1931",
 		"title-short": "City of Suspects"
 	},
 	{
@@ -1722,7 +1726,7 @@
 			]
 		},
 		"language": "es-ES",
-		"note": "A multivolume book cited as a whole. This is a <code>\\texttt{</code><span class=\"nocase\">mvbook</span><code>}</code> entry with <code>\\texttt{</code><span class=\"nocase\">volumes</span><code>}</code>, <code>\\texttt{</code><span class=\"nocase\">note</span><code>}</code>, <code>\\texttt{</code><span class=\"nocase\">sorttitle</span><code>}</code>, and <code>\\texttt{</code><span class=\"nocase\">indextitle</span><code>}</code> fields",
+		"note": "Ed. facs. de la realizada en 1948–49",
 		"number-of-volumes": "3",
 		"publisher": "Iberdrola",
 		"publisher-place": "Pamplona",
@@ -1771,7 +1775,7 @@
 		"note": "A <code>\\texttt{</code><span class=\"nocase\">book</span><code>}</code> entry. Note the <code>\\texttt{</code><span class=\"nocase\">sorttitle</span><code>}</code> and <code>\\texttt{</code><span class=\"nocase\">indextitle</span><code>}</code> fields",
 		"publisher": "University of Texas Press",
 		"publisher-place": "Austin",
-		"title": "The cast of character",
+		"title": "The cast of character: Style in <span class=\"nocase\">Greek</span> literature",
 		"title-short": "Cast of Character"
 	},
 	{
@@ -1899,7 +1903,8 @@
 		"note": "This is a <code>\\texttt{</code><span class=\"nocase\">collection</span><code>}</code> entry. Note the format of the <code>\\texttt{</code><span class=\"nocase\">location</span><code>}</code> field as well as the <code>\\texttt{</code><span class=\"nocase\">subtitle</span><code>}</code> field",
 		"publisher": "Greenwood",
 		"publisher-place": "Westport, Conn. and London",
-		"title": "Space and beyond"
+		"title": "Space and beyond: The frontier theme in science fiction",
+		"title-short": "Space and Beyond"
 	},
 	{
 		"id": "kant:kpv",
@@ -2002,7 +2007,7 @@
 		"page": "243-334",
 		"publisher": "Deutscher Taschenbuch-Verlag and Walter de Gruyter",
 		"publisher-place": "München and Berlin and New York",
-		"title": "Unzeitgemässe betrachtungen. zweites stück",
+		"title": "Unzeitgemässe Betrachtungen. Zweites Stück: Vom Nutzen und Nachtheil der Historie für das Leben",
 		"title-short": "Vom Nutzen und Nachtheil der Historie",
 		"volume": "1"
 	},
@@ -2147,7 +2152,7 @@
 		"page": "281-324",
 		"publisher": "Cambridge University Press",
 		"publisher-place": "Cambridge",
-		"title": "Le <i><span class=\"nocase\">De Anima</span></i> dans la tradition grècque",
+		"title": "Le <i><span class=\"nocase\">De Anima</span></i> dans la tradition grècque: Quelques aspects de l’interpretation du traité, de Theophraste à Themistius",
 		"title-short": "<i><span class=\"nocase\">De Anima</span></i> dans la tradition grècque"
 	},
 	{
@@ -2209,7 +2214,7 @@
 		"note": "This is a <code>\\texttt{</code><span class=\"nocase\">manual</span><code>}</code> entry without an <code>\\texttt{</code><span class=\"nocase\">author</span><code>}</code> or <code>\\texttt{</code><span class=\"nocase\">editor</span><code>}</code>. Note the <code>\\texttt{</code><span class=\"nocase\">label</span><code>}</code> field in the database file which is provided for author-year citation styles. Also note the <code>\\texttt{</code><span class=\"nocase\">sorttitle</span><code>}</code> and <code>\\texttt{</code><span class=\"nocase\">indextitle</span><code>}</code> fields. By default, all entries without an <code>\\texttt{</code><span class=\"nocase\">author</span><code>}</code> or <code>\\texttt{</code><span class=\"nocase\">editor</span><code>}</code> are alphabetized by <code>\\texttt{</code><span class=\"nocase\">title</span><code>}</code> but we want this entry to be alphabetized under “*”<code>{</code><span class=\"nocase\">C</span><code>}</code> rather than “*”<code>{</code><span class=\"nocase\">T</span><code>}</code>. There’s also an <code>\\texttt{</code><span class=\"nocase\">isbn</span><code>}</code> field",
 		"publisher": "University of Chicago Press",
 		"publisher-place": "Chicago, Ill.",
-		"title": "The <span class=\"nocase\">Chicago</span> manual of style",
+		"title": "The <span class=\"nocase\">Chicago</span> manual of style: The essential guide for writers, editors, and publishers",
 		"title-short": "Chicago Manual of Style"
 	},
 	{
@@ -2262,7 +2267,8 @@
 		},
 		"language": "en-US",
 		"note": "This is an <code>\\texttt{</code><span class=\"nocase\">online</span><code>}</code> entry. The <span style=\"font-variant:small-caps;\"><span class=\"nocase\">url</span></span>, which is given in the <code>\\texttt{</code><span class=\"nocase\">url</span><code>}</code> field, is transformed into a clickable link if <code>\\texttt{</code><span class=\"nocase\">hyperref</span><code>}</code> support has been enabled. Note the format of the <code>\\texttt{</code><span class=\"nocase\">urldate</span><code>}</code> field (<code>\\texttt{</code><span class=\"nocase\">yyyy-mm-dd</span><code>}</code>) in the database file. Also note the <code>\\texttt{</code><span class=\"nocase\">label</span><code>}</code> field which may be used as a fallback by citation styles which need an <code>\\texttt{</code><span class=\"nocase\">author</span><code>}</code> and<code>\\slash </code>or a <code>\\texttt{</code><span class=\"nocase\">year</span><code>}</code>",
-		"title": "CTAN"
+		"title": "CTAN: The <span class=\"nocase\">Comprehensive TeX Archive Network</span>",
+		"title-short": "CTAN"
 	},
 	{
 		"id": "itzhaki",
@@ -2319,7 +2325,8 @@
 		},
 		"language": "en-US",
 		"note": "An <code>\\texttt{</code><span class=\"nocase\">online</span><code>}</code> entry for a tutorial. Note the format of the <code>\\texttt{</code><span class=\"nocase\">date</span><code>}</code> field (<code>\\texttt{</code><span class=\"nocase\">yyyy-mm-dd</span><code>}</code>) in the database file.",
-		"title": "Tame the <span class=\"nocase\">BeaST</span>",
+		"title": "Tame the <span class=\"nocase\">BeaST</span>: The <span class=\"nocase\">B</span> to <span class=\"nocase\">X</span> of <span class=\"nocase\">BibTeX</span>",
+		"title-short": "Tame the <span class=\"nocase\">BeaST</span>",
 		"version": "1.3"
 	},
 	{
@@ -2383,7 +2390,7 @@
 		"note": "This is a <code>\\texttt{</code><span class=\"nocase\">patent</span><code>}</code> entry with a <code>\\texttt{</code><span class=\"nocase\">location</span><code>}</code> field. The number is given in the <code>\\texttt{</code><span class=\"nocase\">number</span><code>}</code> field. Note the format of the <code>\\texttt{</code><span class=\"nocase\">location</span><code>}</code> field in the database file. Compare <code>\\texttt{</code><span class=\"nocase\">laufenberg</span><code>}</code>, <code>\\texttt{</code><span class=\"nocase\">sorace</span><code>}</code>, and <code>\\texttt{</code><span class=\"nocase\">kowalik</span><code>}</code>",
 		"number": "EU-29702195U",
 		"publisher-place": "countryfr and countryuk and countryde",
-		"title": "Elektromagnetisches signalhorn"
+		"title": "Elektromagnetisches Signalhorn"
 	},
 	{
 		"id": "kowalik",
@@ -2612,7 +2619,8 @@
 		"note": "This is a typical <code>\\texttt{</code><span class=\"nocase\">thesis</span><code>}</code> entry for a PhD thesis. Note the <code>\\texttt{</code><span class=\"nocase\">type</span><code>}</code> field in the database file which uses a localization key. Also note the format of the printed name and compare the <code>\\texttt{</code><span class=\"nocase\">useprefix</span><code>}</code> option in the <code>\\texttt{</code><span class=\"nocase\">options</span><code>}</code> field as well as <code>\\texttt{</code><span class=\"nocase\">vangennep</span><code>}</code>",
 		"publisher": "Uppsala Universitet",
 		"publisher-place": "Uppsala",
-		"title": "Earl, saint, bishop, skald – and music"
+		"title": "Earl, saint, bishop, skald – and music: The <span class=\"nocase\">Orkney Earldom</span> of the twelfth century. <span class=\"nocase\">A</span> musicological study",
+		"title-short": "Earl, Saint, Bishop, Skald – and Music"
 	},
 	{
 		"id": "loh",

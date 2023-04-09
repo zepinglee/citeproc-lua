@@ -71,7 +71,6 @@ function bibtex2csl.convert_to_csl_data(bib, keep_unknown_commands, case_protect
     --TODO: language
 
     -- TODO: preprosse
-    -- Merge title, maintitle, substitle, titleaddon
 
     -- crossref
     if entry.fields.crossref then
@@ -87,6 +86,9 @@ function bibtex2csl.convert_to_csl_data(bib, keep_unknown_commands, case_protect
       end
     end
 
+    -- Merge title, maintitle, subtitle, titleaddon
+    bibtex2csl.process_titles(entry)
+
     for field, value in pairs(entry.fields) do
       local csl_field, csl_value = bibtex2csl.convert_field(
         field, value, keep_unknown_commands, case_protection, sentence_case_title, item.language, check_sentence_case)
@@ -100,6 +102,21 @@ function bibtex2csl.convert_to_csl_data(bib, keep_unknown_commands, case_protect
     table.insert(csl_data, item)
   end
   return csl_data
+end
+
+
+function bibtex2csl.process_titles(entry)
+  local fields = entry.fields
+  if fields.subtitle then
+    if not fields.shorttitle then
+      fields.shorttitle = fields.title
+    end
+    if fields.title then
+      fields.title = fields.title .. ": " .. fields.subtitle
+    else
+      fields.title = fields.subtitle
+    end
+  end
 end
 
 
