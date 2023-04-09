@@ -24,6 +24,17 @@
   }
 
 
+% ### `biblatex`
+% The following doesn't really make `csl` compatible with `biblatex`.
+% It just provides commands to make it accepting `biblatex`'s database.
+
+\ProvideDocumentCommand { \hyphen } { }
+  {
+    \nobreak - \nobreak
+    \hskip \z@skip
+  }
+
+
 % ### `csquotes`
 
 \AtEndOfPackageFile* { csquotes }

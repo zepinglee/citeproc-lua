@@ -58,7 +58,7 @@ def load_tuenc_def(latex_data, texmf_dist):
         if matched:
             command = strip_braces(matched.group(1))
             code_point = strip_braces(matched.group(2))
-            print(command, code_point)
+            # print(command, code_point)
             code_point = code_point.replace('"', '')
             if command not in unicode_commands:
                 unicode_commands[command] = dict()

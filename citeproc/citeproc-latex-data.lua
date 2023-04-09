@@ -44,6 +44,28 @@ return {
       inline_type = "Formatted",
       num_args = 0,
     },
+    ["\\mkbibbold"] = {
+      formatting_key = "font-weight",
+      formatting_value = "bold",
+      inline_type = "Formatted",
+      num_args = 1,
+    },
+    ["\\mkbibemph"] = {
+      formatting_key = "font-style",
+      formatting_value = "italic",
+      inline_type = "Formatted",
+      num_args = 1,
+    },
+    ["\\mkbibitalic"] = {
+      formatting_key = "font-style",
+      formatting_value = "italic",
+      inline_type = "Formatted",
+      num_args = 1,
+    },
+    ["\\mkbibquote"] = {
+      inline_type = "Quoted",
+      num_args = 1,
+    },
     ["\\noopsort"] = {
       action = "gobble",
       num_args = 1,
