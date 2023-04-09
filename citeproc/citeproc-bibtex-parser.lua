@@ -179,6 +179,7 @@ function BibtexParser:parse(bib_str, strings)
 
   local res = {
     entries = {},
+    entries_by_id = {},
     strings = {},
     preamble = nil,
   }
@@ -187,7 +188,8 @@ function BibtexParser:parse(bib_str, strings)
   for _, object in ipairs(bib_objects) do
     if object.category == "entry" then
       local entry = self:_make_entry(object, strings)
-      table.insert(res.entries, object)
+      table.insert(res.entries, entry)
+      res.entries_by_id[entry.key] = entry
 
     elseif object.category == "string" then
       local string_value = concat_strings(object.contents, strings)

@@ -9,6 +9,7 @@ local bibtex2csl = {}
 local bibtex_parser = require("citeproc-bibtex-parser")
 local bibtex_data = require("citeproc-bibtex-data")
 local latex_parser = nil -- load as needed
+local unicode = require("citeproc-unicode")
 local util = require("citeproc-util")
 
 
@@ -48,6 +49,13 @@ end
 ---@return CslData
 function bibtex2csl.convert_to_csl_data(bib, keep_unknown_commands, case_protection, sentence_case_title, check_sentence_case)
   local csl_data = {}
+
+  -- BibTeX looks for crossref in a case-insensitive manner.
+  local entries_by_id_ignore_case = {}
+  for _, entry in ipairs(bib.entries) do
+    entries_by_id_ignore_case[unicode.casefold(entry.key)] = entry
+  end
+
   for _, entry in ipairs(bib.entries) do
     local item = {
       id = entry.key,
@@ -64,6 +72,20 @@ function bibtex2csl.convert_to_csl_data(bib, keep_unknown_commands, case_protect
 
     -- TODO: preprosse
     -- Merge title, maintitle, substitle, titleaddon
+
+    -- crossref
+    if entry.fields.crossref then
+      local ref_entry = entries_by_id_ignore_case[unicode.casefold(entry.fields.crossref)]
+      if ref_entry then
+        for field, value in pairs(ref_entry.fields) do
+          if not entry.fields[field] then
+            entry.fields[field] = value
+          end
+        end
+      else
+        util.error(string.format('Crossref "%s" not found.', entry.fields.crossref))
+      end
+    end
 
     for field, value in pairs(entry.fields) do
       local csl_field, csl_value = bibtex2csl.convert_field(

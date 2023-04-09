@@ -51,9 +51,20 @@
 				"given": "L[eslie] A."
 			}
 		],
+		"container-title": "<code>\\mbox{</code><span class=\"nocase\">G-Animal’s</span><code>}</code> Journal",
+		"issue": "7",
+		"issued": {
+			"date-parts": [
+				[
+					1986,
+					7
+				]
+			]
+		},
 		"note": "This is a cross-referencing ARTICLE entry",
 		"page": "73+",
-		"title": "The gnats and gnus document preparation system"
+		"title": "The gnats and gnus document preparation system",
+		"volume": "41"
 	},
 	{
 		"id": "whole-journal",
@@ -121,6 +132,12 @@
 	{
 		"id": "inbook-crossref",
 		"type": "chapter",
+		"author": [
+			{
+				"family": "Knuth",
+				"given": "Donald E."
+			}
+		],
 		"chapter-number": "1.2",
 		"collection-title": "The Art of Computer Programming",
 		"edition": "2",
@@ -133,6 +150,7 @@
 			]
 		},
 		"note": "This is a cross-referencing INBOOK entry",
+		"publisher": "Addison-Wesley",
 		"title": "Fundamental algorithms",
 		"volume": "1"
 	},
@@ -182,6 +200,12 @@
 	{
 		"id": "book-crossref",
 		"type": "book",
+		"author": [
+			{
+				"family": "Knuth",
+				"given": "Donald E."
+			}
+		],
 		"collection-title": "The Art of Computer Programming",
 		"edition": "2",
 		"issued": {
@@ -192,6 +216,7 @@
 			]
 		},
 		"note": "This is a cross-referencing BOOK entry",
+		"publisher": "Addison-Wesley",
 		"title": "Seminumerical algorithms",
 		"volume": "2"
 	},
@@ -310,8 +335,36 @@
 				"given": "Daniel D."
 			}
 		],
+		"collection-number": "23",
+		"collection-title": "Fast Computers",
+		"container-title": "High speed computer and algorithm organization",
+		"edition": "3",
+		"editor": [
+			{
+				"family": "Lipcoll",
+				"given": "David J."
+			},
+			{
+				"family": "Lawrie",
+				"given": "D. H."
+			},
+			{
+				"family": "Sameh",
+				"given": "A. H."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1977,
+					9
+				]
+			]
+		},
 		"note": "This is a cross-referencing INCOLLECTION entry",
 		"page": "179-183",
+		"publisher": "Academic Press",
+		"publisher-place": "New York",
 		"title": "Semigroups of recurrences"
 	},
 	{
@@ -532,11 +585,20 @@
 				"given": "Mihalis"
 			}
 		],
+		"container-title": "Proc. fifteenth annual ACM symposium on the theory of computing",
+		"issued": {
+			"date-parts": [
+				[
+					1983
+				]
+			]
+		},
 		"note": "This is a cross-referencing INPROCEEDINGS entry",
 		"organizer": {
 			"literal": ""
 		},
 		"page": "133-139",
+		"publisher-place": "Boston",
 		"title": "On notions of information transfer in <span class=\"nocase\">VLSI</span> circuits"
 	},
 	{
