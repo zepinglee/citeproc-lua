@@ -35,6 +35,7 @@ end
 -- Convert LaTeX string to string with HTML-like tags
 function latex_parser.latex_to_pseudo_html(str, strict, case_protection)
   local ast = latex_parser.latex_grammar:match(str)
+  -- util.debug(ast)
   latex_parser.convert_ast_to_unicode(ast)
   local inlines = latex_parser.convert_tokens_to_inlines(ast, strict, case_protection)
   -- util.debug(inlines)
@@ -309,6 +310,14 @@ function latex_parser.convert_cs_to_inlines(tokens, i, strict, case_protection)
         -- NoCase
         table.insert(inlines, markup[inline_type]:new(arg_inlines))
       end
+
+    elseif command_info.action then
+      if command_info.action == "gobble" then
+        table.remove(tokens, i)
+        for j = 1, command_info.num_args do
+          table.remove(tokens, i)
+        end
+      end
     end
 
   else
@@ -331,7 +340,7 @@ function latex_parser.convert_cs_to_inlines(tokens, i, strict, case_protection)
   return inlines, i
 end
 
-function latex_parser.convert_group_to_inlines(token, strict, case_protection)
+function latex_parser.convert_group_to_inlines(token, strict, case_protection, force_add_braces)
   if case_protection then
     local first_token = token.contents[1]
     if type(first_token) == "table" and first_token.type == "control_sequence" then
@@ -340,6 +349,10 @@ function latex_parser.convert_group_to_inlines(token, strict, case_protection)
     end
   end
   local inlines = latex_parser.convert_tokens_to_inlines(token.contents, strict, false)
+  if #inlines == 0 then
+    -- Empty group like `{\\noopsort{1973b}}`
+    return inlines
+  end
   if case_protection then
     inlines = {markup.NoCase:new(inlines)}
   end
@@ -351,7 +364,7 @@ function latex_parser.convert_group_to_inlines(token, strict, case_protection)
         break
       end
     end
-    if has_command then
+    if force_add_braces or has_command then
       table.insert(inlines, 1, markup.Code:new("{"))
       table.insert(inlines, markup.Code:new("}"))
     end
@@ -360,7 +373,9 @@ function latex_parser.convert_group_to_inlines(token, strict, case_protection)
 end
 
 
----comment
+---A group is surrounded with braces in these cases:
+---1. Following a command; e.g, `\textbf{foo}` and `\textcolor{red}{flag}`
+---2. Containing a command; e.g, {\bfseies foo}
 ---@param tokens table
 ---@param strict boolean? Convert unrecognized LaTeX command to Code element
 ---@param case_protection boolean? Protect case with BibTeX's rules
@@ -369,6 +384,7 @@ function latex_parser.convert_tokens_to_inlines(tokens, strict, case_protection)
   local inlines = {}
 
   local i = 1
+  local add_group_braces = false
   while i <= #tokens do
     local token = tokens[i]
     if type(token) == "string" then
@@ -382,15 +398,17 @@ function latex_parser.convert_tokens_to_inlines(tokens, strict, case_protection)
         end
       end
       table.insert(inlines, markup.PlainText:new(token))
+      add_group_braces = false
 
     elseif type(token) == "table" then
       if token.type == "control_sequence" then
         local cs_inlines
         cs_inlines, i = latex_parser.convert_cs_to_inlines(tokens, i, strict, case_protection)
         util.extend(inlines, cs_inlines)
+        add_group_braces = true
 
       elseif token.type == "group" then
-        util.extend(inlines, latex_parser.convert_group_to_inlines(token, strict, case_protection))
+        util.extend(inlines, latex_parser.convert_group_to_inlines(token, strict, case_protection, add_group_braces))
 
       elseif token.type == "math" then
         table.insert(inlines, markup.MathTeX:new(token.text))

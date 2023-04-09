@@ -88,6 +88,18 @@ describe("LaTeX parser", function ()
       )
     end)
 
+    it("command with arguments", function ()
+      assert.same("<code>\\mbox{</code><span class=\"nocase\">G-Animal’s</span><code>}</code> Journal",
+        latex_parser.latex_to_pseudo_html("\\mbox{G-Animal's} Journal", true, true)
+      )
+    end)
+
+    it("\\noopsort", function ()
+      assert.same("1973",
+        latex_parser.latex_to_pseudo_html("{\\noopsort{1973b}}1973", true, true)
+      )
+    end)
+
   end)
 
 

@@ -73,7 +73,7 @@ function bibtex2csl.convert_to_csl_data(bib, keep_unknown_commands, case_protect
       end
     end
 
-    bibtex2csl.process_special_fields(item, entry.fields)
+    bibtex2csl.process_special_fields(item, entry.fields, entry.type)
 
     table.insert(csl_data, item)
   end
@@ -166,14 +166,17 @@ function bibtex2csl.convert_to_csl_name(bibtex_name)
 end
 
 
-function bibtex2csl.process_special_fields(item, bib_fields)
+function bibtex2csl.process_special_fields(item, bib_fields, bib_type)
   -- Default entry type `document`
   if item.type == "document" then
     if item.URL then
       item.type = "webpage"
-    else
-      item.type = "article"
     end
+  end
+
+  -- BibTeX's `edition` should be an ordinal.
+  if item.edition then
+    item.edition = util.convert_ordinal_to_arabic(item.edition)
   end
 
   -- event-title: for compatibility with CSL v1.0.1 and earlier versions
@@ -183,7 +186,8 @@ function bibtex2csl.process_special_fields(item, bib_fields)
 
   -- issued date
   if bib_fields.year and not item.issued then
-    item.issued = bibtex2csl._parse_edtf_date(bib_fields.year)
+    local text = latex_parser.latex_to_pseudo_html(bib_fields.year, false, false)
+    item.issued = bibtex2csl._parse_edtf_date(text)
   end
   local month = bib_fields.month
   if month and string.match(month, "^%d+$") then
@@ -227,6 +231,19 @@ function bibtex2csl.process_special_fields(item, bib_fields)
     elseif item["collection-title"] and not item["collection-number"] then
       item["collection-number"] = item.number
       item.number = nil
+    end
+  end
+
+  -- organization: the `organizer` that sponsors a conference or a `publisher` that publishes a `@manual` or `@online`.
+  if bib_fields.organization then
+    if item.publisher or bib_type == "inproceedings" or bib_type == "proceedings" then
+      if not item.organizer then
+        item.organizer = {
+          literal = bib_fields.organization
+        }
+      end
+    elseif not item.publisher then
+      item.publisher = bib_fields.organization
     end
   end
 

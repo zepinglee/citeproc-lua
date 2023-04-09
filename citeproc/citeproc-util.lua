@@ -862,6 +862,57 @@ function util.has_cjk_char(s)
   return false
 end
 
+
+---@param ordinal string
+---@return string
+function util.convert_ordinal_to_arabic(ordinal)
+  -- "1st", "2nd"
+  local numeral, suffix = string.match(ordinal, "^(%d+)(%a+)$")
+  if numeral then
+    return numeral
+  end
+  local arabic = util.ordinal_to_arabic_map[string.lower(ordinal)]
+  if arabic then
+    return arabic
+  else
+    return ordinal
+  end
+end
+
+util.ordinal_to_arabic_map = {
+  first              = "1",
+  second             = "2",
+  third              = "3",
+  fourth             = "4",
+  fifth              = "5",
+  sixth              = "6",
+  seventh            = "7",
+  eighth             = "8",
+  ninth              = "9",
+  tenth              = "10",
+  eleventh           = "11",
+  twelfth            = "12",
+  thirteenth         = "13",
+  fourteenth         = "14",
+  fifteenth          = "15",
+  sixteenth          = "16",
+  seventeenth        = "17",
+  eighteenth         = "18",
+  nineteenth         = "19",
+  twentieth          = "20",
+  ["twenty-first"]   = "21",
+  ["twenty-second"]  = "22",
+  ["twenty-third"]   = "23",
+  ["twenty-fourth"]  = "24",
+  ["twenty-fifth"]   = "25",
+  ["twenty-sixth"]   = "26",
+  ["twenty-seventh"] = "27",
+  ["twenty-eighth"]  = "28",
+  ["twenty-ninth"]   = "29",
+  thirtieth          = "30",
+}
+
+
 function util.convert_roman (number)
   -- assert(type(number) == "number")
   local output = {}
@@ -1025,12 +1076,12 @@ end
 ---@param path string
 ---@return string?
 function util.read_file(path)
-  -- if not path then
-  --   print(debug.traceback())
-  -- end
+  if type(path) ~= "string" then
+    error("Invalid path.")
+  end
   local file = io.open(path, "r")
   if not file then
-    -- util.error(string.format('Cannot read file "%s".', path))
+    util.error(string.format('Cannot open file "%s".', path))
     return nil
   end
   local content = file:read("*a")
@@ -1046,7 +1097,7 @@ function util.write_file(text, path)
   local file = io.open(path, "w")
   if not file then
     util.error(string.format('Cannot write to file "%s".', path))
-    return 
+    return
   end
   file:write(text)
   file:close()

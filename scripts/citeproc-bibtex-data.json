@@ -2730,8 +2730,8 @@
             "source": "abntex2-alf.bst"
         },
         "organization": {
-            "csl": "publisher",
-            "notes": "It is mapped to `author` (in `institution` property) if possible.",
+            "csl": null,
+            "notes": "The `organizer` that sponsors a conference or a `publisher` that publishes a `@manual` or `@online`.",
             "source": "bibtex",
             "type": "literal"
         },

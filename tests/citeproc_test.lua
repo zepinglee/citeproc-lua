@@ -268,11 +268,12 @@ local function run_test(path)
         return nil
       end
       local path = "./submodules/locales/csl-locales-" .. lang .. ".xml"
-      local content = util.read_file(path)
-      if not content then
+      local status, content = pcall(util.read_file, path)
+      if not status then
         return nil
+      else
+        return content
       end
-      return content
     end,
     retrieveItem = function (id)
       return bib[id]

@@ -138,7 +138,7 @@ Bib(La)TeX | CSL | Notes
 `note` | `note` | 
 `number` | `number` | It is mapped to `issue` in `@ariticle` but to `number` in `@patent` or `@report`.
 `options` | - | Not supported.
-`organization` | `publisher` | It is mapped to `author` (in `institution` property) if possible.
+`organization` | - | The `organizer` that sponsors a conference or a `publisher` that publishes a `@manual` or `@online`.
 `origdate` | `original-date` | 
 `origlanguage` | - | 
 `origlocation` | `original-publisher-place` | 

@@ -44,6 +44,10 @@ return {
       inline_type = "Formatted",
       num_args = 0,
     },
+    ["\\noopsort"] = {
+      action = "gobble",
+      num_args = 1,
+    },
     ["\\sl"] = {
       formatting_key = "font-style",
       formatting_value = "oblique",

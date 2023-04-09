@@ -155,12 +155,18 @@ end
 ---@alias Exception table
 
 ---comment
----@return BibtexData?, Exception[]?
+---@param bib_str string
+---@param strings table
+---@return BibtexData?
+---@return Exception[]?
 function BibtexParser:parse(bib_str, strings)
   if strings then
     strings = setmetatable({}, {__index = strings})
   else
     strings = setmetatable({}, {__index = self.strings})
+  end
+  if type(bib_str) ~= "string" then
+    util.error("Invalid string.")
   end
   local bib_objects = self.grammar:match(bib_str)
   if not bib_objects then

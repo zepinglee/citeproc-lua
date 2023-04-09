@@ -2063,7 +2063,7 @@ return {
       csl = nil,
     },
     organization = {
-      csl = "publisher",
+      csl = nil,
       type = "literal",
     },
     organizer = {
