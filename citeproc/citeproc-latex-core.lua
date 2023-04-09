@@ -140,6 +140,11 @@ function core.make_citeproc_sys(data_files)
   return citeproc_sys
 end
 
+---comment
+---@param style_name string
+---@param data_files string[]
+---@param lang string?
+---@return CiteProc?
 function core.init(style_name, data_files, lang)
   if style_name == "" or #data_files == 0 then
     return nil
@@ -289,23 +294,47 @@ function core.update_cited_and_uncited_ids(engine, citations)
 
 end
 
+
+---Convert to a filter object described in
+--- <https://citeproc-js.readthedocs.io/en/latest/running.html#selective-output-with-makebibliography>
+---@param filter_str string e.g., "type={book},notcategory={csl},notcategory={tex}"
+---@return table
 function core.parser_filter(filter_str)
-  -- util.debug(filter_str)
-  local filter = latex_parser.parse_prop(filter_str)
-  for filter_type, conditions in pairs(filter) do
-    conditions = latex_parser.parse_seq(conditions)
-    filter[filter_type] = conditions
-    for i, condition in ipairs(conditions) do
-      conditions[i] = latex_parser.parse_prop(condition)
+  local conditions = {}
+  for i, condition in ipairs(latex_parser.parse_seq(filter_str)) do
+    local negative
+    local field, value = string.match(condition, "(%w+)%s*=%s*{([^}]+)}")
+    if field then
+      if string.match(field, "^not") then
+        negative = true
+        field = string.gsub(field, "^not", "")
+      end
+      if field == "category" then
+        field = "categories"
+      end
+      if field == "keyword" or field == "type" or field == "categories" then
+        table.insert(conditions, {
+          field = field,
+          value = value,
+          negative = negative,
+        })
+      end
     end
   end
-  return filter
+  -- util.debug(conditions)
+  return {select = conditions}
 end
 
-function core.make_bibliography(engine, filter_str)
+---comment
+---@param engine CiteProc
+---@param option_str string
+---@return unknown
+function core.make_bibliography(engine, option_str)
   local filter
-  if filter_str then
-    filter = core.parser_filter(filter_str)
+  local options = {}
+  if option_str and option_str ~= "" then
+    options = latex_parser.parse_prop(option_str)
+    filter = core.parser_filter(option_str)
   end
   local result = engine:makeBibliography(filter)
 
@@ -314,20 +343,23 @@ function core.make_bibliography(engine, filter_str)
 
   local res = ""
 
-  local bib_options = {}
-  bib_options["class"] = engine:get_style_class()
-  local bib_option_list = {"class"}
+  ---@type table<string, any>
+  local bib_options = {
+    index = options.index or "1"
+  }
 
   local bib_option_map = {
+    ["hanging-indent"] = "hangingindent",
     ["entry-spacing"] = "entryspacing",
     ["line-spacing"] = "linespacing",
-    ["hanging-indent"] = "hangingindent",
+    ["widest-label"] = "widest_label",
   }
   local bib_option_order = {
-    "class",
+    "index",
     "hanging-indent",
     "line-spacing",
     "entry-spacing",
+    "widest-label",
   }
 
   for option, param in pairs(bib_option_map) do
@@ -336,20 +368,23 @@ function core.make_bibliography(engine, filter_str)
     end
   end
 
-  local bib_options_str = "\\cslsetup{\n"
+  local bib_option_list = {}
   for _, option in ipairs(bib_option_order) do
     local value = bib_options[option]
-    if value then
-      bib_options_str = bib_options_str .. string.format("  %s = %s,\n", option, tostring(value))
+    if value and value ~= "" then
+      table.insert(bib_option_list, string.format("%s = %s", option, tostring(value)))
     end
   end
-  bib_options_str = bib_options_str .. "}\n"
-  res = res .. bib_options_str .. "\n"
+  local bib_options_str = table.concat(bib_option_list, ", ")
 
   -- util.debug(params.bibstart)
-  if params.bibstart then
-    res = res .. params.bibstart
-  end
+  -- if params.bibstart then
+  --   res = res .. params.bibstart
+  -- end
+
+  local bibstart = string.format("\\begin{thebibliography}{%s}\n", bib_options_str)
+  res = res .. bibstart
+
 
   for _, bib_item in ipairs(bib_items) do
     res = res .. "\n" .. bib_item

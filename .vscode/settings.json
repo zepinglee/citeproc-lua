@@ -18,7 +18,7 @@
         "*.lvt": "latex",
         "*.rockspec": "lua",
         "*.sty": "latex-expl3",
-        "*.tlg": "latex",
+        "*.tlg": "latex-expl3",
         "*_*.txt": "xml"
     },
     "latex-workshop.intellisense.update.aggressive.enabled": true,

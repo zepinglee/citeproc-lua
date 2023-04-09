@@ -29,7 +29,15 @@
 }
 
 \TEST{Bibliography with filter}{
-  \printbibliography[type = book, notcategory = latex]
+  \printbibliography[title = LaTeX Books, type = book, category = latex]
+}
+
+\TEST{Bibliography with filter}{
+  \printbibliography[title = Other books, type = book, notcategory = latex]
+}
+
+\TEST{Bibliography with filter}{
+  \printbibliography[title = Articles, type = article-journal]
 }
 
 \end{document}

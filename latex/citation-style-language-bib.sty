@@ -6,37 +6,54 @@
 
 % ## Bibliography commands
 
+% The options like `notcategory` can be used multiple times and thus we save
+% them into a seq instead of a prop.
+\seq_new:N \l__csl_bib_filter_seq
+\int_new:N \g__bib_list_index_int
+\tl_new:N \g__bib_list_index_tl
+\tl_new:N \l__csl_bibliography_tl
+\seq_new:N \l__csl_bibliography_seq
+
 \NewDocumentCommand \printbibliography { O { } }
   {
+    \int_gincr:N \g__bib_list_index_int
+    \tl_gset:Nx \g__bib_list_index_tl { \int_use:N \g__bib_list_index_int }
     \__csl_set_categories:
     % Bibliography filter
     \group_begin:
-      \seq_clear:N \l__bibliography_filter_conditions_seq
+      \seq_clear:N \l__csl_bib_filter_seq
+      \seq_put_right:Nx \l__csl_bib_filter_seq
+        { index = \g__bib_list_index_tl }
       \keys_set:nn { csl / bibliography } {#1}
-      \__csl_collect_bib_filter_conditions:
+      \__csl_serialize_seq:NN \l__csl_bib_filter_seq \l__csl_bib_filter_tl
       % Collect the bibliography to token list
-      \sys_if_engine_luatex:T
+      \sys_if_engine_luatex:TF
         {
           \bool_if:NT \l__csl_engine_initialized_bool
             {
               \__csl_collect_bibliography:n
                 {
                   \lua_now:e
-                    { csl.bibliography("\l__bibliography_filter_conditions_tl") }
+                    { csl.bibliography("\l__csl_bib_filter_tl") }
                 }
             }
         }
+        {
+          % Write to aux file
+          \exp_args:NV \__csl_write_aux_bibliography:n \l__csl_bib_filter_tl
+        }
       % Print the bibliography
-      \tl_if_empty:NTF \g__csl_bibliography_tl
-        { \msg_warning:nn { citation-style-language } { bibliography / empty } }
+      \prop_get:NVNTF \g__csl_bibliographies_prop \g__bib_list_index_tl
+          \l__csl_bibliography_tl
         {
           \bool_if:NT \l__csl_regression_test_bool
             {
-              \seq_set_split:NnV \l__csl_bibliography_seq { \par } \g__csl_bibliography_tl
+              \seq_set_split:NnV \l__csl_bibliography_seq { \par } \l__csl_bibliography_tl
               \seq_show:N \l__csl_bibliography_seq
             }
-          \tl_use:N \g__csl_bibliography_tl
+          \tl_use:N \l__csl_bibliography_tl
         }
+        { \msg_warning:nn { citation-style-language } { bibliography / empty } }
     \group_end:
   }
 
@@ -56,8 +73,7 @@
 \tl_new:N \l__csl_bib_head_label_tl
 \tl_new:N \l__csl_bib_pre_note_tl
 \tl_new:N \l__csl_bib_post_note_tl
-\seq_new:N \l__bibliography_filter_conditions_seq
-\tl_new:N \l__bibliography_filter_conditions_tl
+\tl_new:N \l__csl_bib_filter_tl
 
 \tl_set:Nn \l__csl_bib_env_tl { bibliography }
 \tl_set:Nn \l__csl_bib_head_name_tl { bibliography }
@@ -73,14 +89,14 @@
     postnote    .tl_set:N = \l__csl_bib_post_note_tl ,
     % section
     % segment
-    type        .code:n = \__csl_add_filter_condition:nn { type } {#1} ,
-    nottype     .code:n = \__csl_add_filter_condition_negative:nn { type } {#1} ,
-    % subtype     .code:n = \__csl_add_filter_condition:nn { subtype } {#1} ,
-    % notsubtype  .code:n = \__csl_add_filter_condition_negative:nn { subtype } {#1} ,
-    keyword     .code:n = \__csl_add_filter_condition:nn { keyword } {#1} ,
-    notkeyword  .code:n = \__csl_add_filter_condition_negative:nn { keyword } {#1} ,
-    category    .code:n = \__csl_add_filter_condition:nn { categories } {#1} ,
-    notcategory .code:n = \__csl_add_filter_condition_negative:nn { categories } {#1} ,
+    type        .code:n = { \seq_put_right:Nn \l__csl_bib_filter_seq { type = {#1} } } ,
+    nottype     .code:n = { \seq_put_right:Nn \l__csl_bib_filter_seq { nottype = {#1} } } ,
+    % subtype     .code:n = { \seq_put_right:Nn \l__csl_bib_filter_seq { subtype = {#1} } } ,
+    % notsubtype  .code:n = { \seq_put_right:Nn \l__csl_bib_filter_seq { notsubtype = {#1} } } ,
+    keyword     .code:n = { \seq_put_right:Nn \l__csl_bib_filter_seq { keyword = {#1} } } ,
+    notkeyword  .code:n = { \seq_put_right:Nn \l__csl_bib_filter_seq { notkeyword = {#1} } } ,
+    category    .code:n = { \seq_put_right:Nn \l__csl_bib_filter_seq { category = {#1} } } ,
+    notcategory .code:n = { \seq_put_right:Nn \l__csl_bib_filter_seq { notcategory = {#1} } } ,
     % filter .tl_set:N = \l__csl_bibliography_nottype_tl ,
   }
 
@@ -89,19 +105,55 @@
 \clist_new:N \g__csl_bib_items_clist
 
 
+\cs_new:Npn \__csl_write_aux_bibliography:n #1
+  {
+    \if@filesw
+      \iow_now:Nn \@auxout { \csl@aux@bibliography {#1} }
+    \fi
+  }
+
+\cs_new:Npn \csl@aux@bibliography #1 { }
+
+
+\tl_new:N \l__csl_bib_index_tl
+\bool_new:N \l__csl_hanging_indent_bool
+\tl_new:N \l__csl_line_spacing_tl
+\tl_new:N \l__csl_entry_spacing_tl
+\tl_new:N \l__csl_bib_wides_label_tl
+
+\keys_define:nn { csl / bib-options }
+  {
+    index          .tl_set:N   = \l__csl_bib_index_tl ,
+    hanging-indent .bool_set:N = \l__csl_hanging_indent_bool ,
+    line-spacing   .tl_set:N   = \l__csl_line_spacing_tl ,
+    entry-spacing  .tl_set:N   = \l__csl_entry_spacing_tl ,
+    widest-label   .tl_set:N   = \l__csl_bib_wides_label_tl ,
+  }
+
+\keys_set:nn { csl / bib-options }
+  {
+    index          = 1 ,
+    hanging-indent = false ,
+    line-spacing   = 1 ,
+    entry-spacing  = 1 ,
+    widest-label   = { } ,
+  }
+
 \RenewDocumentEnvironment { thebibliography } { m }
   {
     \exp_args:NVV \__csl_make_bib_heading:nn
       \l__csl_bib_head_name_tl \l__csl_bib_head_title_tl
     \exp_args:NV \__csl_print_bib_note:n \l__csl_bib_pre_note_tl
     \group_begin:
+      \tl_set:Nn \l__csl_bib_index_tl { 1 }
+      \keys_set:nn { csl / bib-options } {#1}
       \dim_zero:N \parindent
       \tl_if_eq:NnF \l__csl_line_spacing_tl { 1 }
         { \linespread { \l__csl_line_spacing_tl } \selectfont }
       \l__csl_bib_font_tl
       \list { }
         {
-          \__csl_set_bib_label_spacing:n {#1}
+          \__csl_set_bib_label_spacing:n { \l__csl_bib_wides_label_tl }
           \__csl_set_bib_item_sep:
         }
       \sloppy
@@ -114,7 +166,6 @@
       \tl_set:Nn \@noitemerr
         { \msg_warning:nn { citation-style-language } { bibliography / empty } }
       \endlist
-      \__csl_reset_bib_format:
     \group_end:
     \exp_args:NV \__csl_print_bib_note:n \l__csl_bib_post_note_tl
   }
@@ -267,17 +318,6 @@
         \exp_args:NV \__csl_print_back_refs:n \l_tmpa_tl
       }
     \par
-  }
-
-
-% It will be used for multi-bibliography.
-\cs_new:Npn \__csl_reset_bib_format:
-  {
-    \keys_set:nn { csl } {
-      hanging-indent = false ,
-      line-spacing = 1 ,
-      entry-spacing = 1 ,
-    }
   }
 
 
@@ -476,55 +516,6 @@
 \msg_new:nnn { citation-style-language } { bib-note-undefined }
   { Bibliography~ note~ '#1'~ undefined. }
 
-
-
-% ## Bibliography Filters
-
-\cs_new:Npn \__csl_add_filter_condition:nn #1#2
-  {
-    \seq_put_right:Nn \l__bibliography_filter_conditions_seq
-      {
-        {
-          field = #1 ,
-          value = #2
-        }
-      }
-  }
-
-\cs_new:Npn \__csl_add_filter_condition_negative:nn #1#2
-  {
-    \seq_put_right:Nn \l__bibliography_filter_conditions_seq
-      {
-        {
-          field = #1,
-          value = #2,
-          negative = true
-        }
-      }
-  }
-
-\cs_new:Npn \__csl_collect_bib_filter_conditions:
-  {
-    % Collect the selective conditions for bibliography
-    \tl_clear:N \l__bibliography_filter_conditions_tl
-    \seq_if_empty:NF \l__bibliography_filter_conditions_seq
-      {
-        \tl_set:Nx \l__bibliography_filter_conditions_tl
-          { select = \c_left_brace_str }
-        \tl_put_right:Nx \l__bibliography_filter_conditions_tl
-          { \seq_use:Nn \l__bibliography_filter_conditions_seq { , } }
-        \tl_put_right:NV \l__bibliography_filter_conditions_tl
-          { \c_right_brace_str }
-        % Write to aux file
-        \sys_if_engine_luatex:F
-          {
-            \tl_set:Nx \l_tmpa_tl { bib-filter = \c_left_brace_str }
-            \tl_put_right:NV \l_tmpa_tl { \l__bibliography_filter_conditions_tl }
-            \tl_put_right:NV \l_tmpa_tl { \c_right_brace_str }
-            \exp_args:NV \__csl_write_aux_options:n \l_tmpa_tl
-          }
-      }
-  }
 
 
 % ### Bibliography Categories

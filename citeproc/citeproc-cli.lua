@@ -8,6 +8,8 @@
 local cli = {}
 
 
+local lpeg = require("lpeg")
+
 require("lualibs")
 local citeproc = require("citeproc")
 local bibtex2csl  -- = require("citeproc-bibtex-parser")  -- load on demand
@@ -78,41 +80,71 @@ local function convert_bib(path, output_path)
 end
 
 
+local balanced = lpeg.P{ "{" * lpeg.V(1)^0 * "}" + (1 - lpeg.S"{}") }
 
+
+---@param text string
+---@return string?
+local function get_command_argument(text, command)
+  if string.match(text, command) then
+    local grammar = (lpeg.P(command) * lpeg.S(" \t\r\n")^0 * lpeg.C(balanced) + 1)^0
+    local argument = grammar:match(text)
+    if not argument then
+      return nil
+    end
+    argument = string.sub(argument, 2, -2)
+    return argument
+  end
+  return nil
+end
+
+
+
+---comment
+---@param aux_file any
+---@return string
+---@return string[]
+---@return Citation[]
+---@return table<string, string>
+---@return string[]
 local function read_aux_file(aux_file)
   local bib_style = nil
   local bib_files = {}
   local citations = {}
   local csl_options = {}
+  local bibliographies = {}
 
   local file = io.open(aux_file, "r")
   if not file then
     error(string.format('Cannot read "%s"', aux_file))
-    return
   end
   for line in file:lines() do
-    local match
     -- TODO: Use lpeg-based method and detect multiple lines
-    match = string.match(line, "^\\csl@aux@style%s*(%b{})")
-    if match then
-      bib_style = string.sub(match, 2, -2)
+    local style = get_command_argument(line, "\\csl@aux@style")
+    if style then
+      bib_style = style
     else
-      match = string.match(line, "^\\csl@aux@data%s*(%b{})")
-      if match then
-        for _, bib in ipairs(util.split(string.sub(match, 2, -2), "%s*,%s*")) do
-          table.insert(bib_files, bib)
+      local data = get_command_argument(line, "\\csl@aux@data")
+      if data then
+        for _, bib_file in ipairs(latex_parser.parse_seq(data)) do
+          table.insert(bib_files, bib_file)
         end
       else
-        match = string.match(line, "^\\csl@aux@cite%s*(%b{})")
-        if match then
-          local citation = core.make_citation(string.sub(match, 2, -2))
+        local cite = get_command_argument(line, "\\csl@aux@cite")
+        if cite then
+          local citation = core.make_citation(cite)
           table.insert(citations, citation)
         else
-          match = string.match(line, "^\\csl@aux@options%s*(%b{})")
-          if match then
-            local options = latex_parser.parse_prop(string.sub(match, 2, -2))
+          local options = get_command_argument(line, "\\csl@aux@options")
+          if options then
+            options = latex_parser.parse_prop(options)
             for key, value in pairs(options) do
               csl_options[key] = value
+            end
+          else
+            local bib = get_command_argument(line, "\\csl@aux@bibliography")
+            if bib then
+              table.insert(bibliographies, bib)
             end
           end
         end
@@ -121,20 +153,24 @@ local function read_aux_file(aux_file)
   end
   file:close()
 
-  return bib_style, bib_files, citations, csl_options
+  return bib_style, bib_files, citations, csl_options, bibliographies
 end
 
 
+---@param aux_file string
 local function process_aux_file(aux_file)
   if not util.endswith(aux_file, ".aux") then
     aux_file = aux_file .. ".aux"
   end
 
-  local style_name, bib_files, citations, csl_options = read_aux_file(aux_file)
+  local style_name, bib_files, citations, csl_options, bibliographies = read_aux_file(aux_file)
 
   local lang = csl_options.locale
 
   local engine = core.init(style_name, bib_files, lang)
+  if not engine then
+    error("citeproc-lua: fails in initialize engine")
+  end
   if csl_options.linking then
     engine:enable_linking()
   end
@@ -150,7 +186,7 @@ local function process_aux_file(aux_file)
 
   -- util.debug(citation_strings)
 
-  local output_string = ""
+  local output_string = string.format("\\cslsetup{class = %s}\n\n", style_class)
 
   for _, citation in ipairs(citations) do
     local citation_id = citation.citationID
@@ -166,10 +202,10 @@ local function process_aux_file(aux_file)
     core.set_categories(engine, categories_str)
   end
 
-  local filter_str = csl_options["bib-filter"]
-
-  local result = core.make_bibliography(engine, filter_str)
-  output_string = output_string .. result
+  for _, bib_filter_str in ipairs(bibliographies) do
+    local result = core.make_bibliography(engine, bib_filter_str)
+    output_string = output_string .. "\n\n\n" .. result
+  end
 
   local output_path = string.gsub(aux_file, "%.aux$", ".bbl")
   util.write_file(output_string, output_path)

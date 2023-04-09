@@ -1560,7 +1560,7 @@ local LatexWriter = Markup:new()
 
 LatexWriter.markups = {
   ["bibstart"] = function (engine)
-    return string.format("\\begin{thebibliography}{%s}\n", engine.registry.longest_label)
+    return string.format("\\begin{thebibliography}{%s}\n", engine.registry.widest_label)
   end,
   ["bibend"] = "\\end{thebibliography}",
   ["@font-style/normal"] = "{\\normalshape %s}",
@@ -1633,7 +1633,7 @@ function LatexWriter:write_display(inline, context)
     local len = utf8.len(str)
     if len > context.engine.registry.maxoffset then
       context.engine.registry.maxoffset = len
-      context.engine.registry.longest_label = str
+      context.engine.registry.widest_label = str
     end
   end
 
@@ -1741,10 +1741,11 @@ function HtmlWriter:write_display(inline, context)
   if inline.div == "left-margin" then
     local plainter_text_writer = output_module.PlainTextWriter:new()
     local str = plainter_text_writer:write_inline(inline, context)
+    --TODO: width of CJK characters
     local len = utf8.len(str)
     if len > context.engine.registry.maxoffset then
       context.engine.registry.maxoffset = len
-      context.engine.registry.longest_label = str
+      context.engine.registry.widest_label = str
     end
   end
 

@@ -170,6 +170,11 @@ function util.debug(obj)
 end
 
 -- Similar to re.split() in Python
+---comment
+---@param str string
+---@param sep string?
+---@param maxsplit integer?
+---@return string[]
 function util.split(str, sep, maxsplit)
   if type(str) ~= "string" then
     util.error("Invalid string.")

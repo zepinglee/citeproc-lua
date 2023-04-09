@@ -62,9 +62,6 @@
 \bool_new:N \l__csl_bib_entry_page_break_bool
 \tl_new:N \l__csl_bib_item_sep_tl
 \tl_new:N \l__csl_bib_hang_tl
-\bool_new:N \l__csl_hanging_indent_bool
-\tl_new:N \l__csl_line_spacing_tl
-\tl_new:N \l__csl_entry_spacing_tl
 
 
 \keys_define:nn { csl }
@@ -94,9 +91,6 @@
     bib-entry-page-break .bool_set:N = \l__csl_bib_entry_page_break_bool ,
     bib-item-sep .tl_set:N = \l__csl_bib_item_sep_tl ,
     bib-hang .tl_set:N = \l__csl_bib_hang_tl ,
-    hanging-indent .bool_set:N = \l__csl_hanging_indent_bool ,
-    line-spacing .tl_set:N = \l__csl_line_spacing_tl ,
-    entry-spacing .tl_set:N = \l__csl_entry_spacing_tl ,
   }
 
 \cs_new:Npn \__csl_set_back_ref:n #1
@@ -121,8 +115,6 @@
     suffix-separator = { , ~ } ,
     bib-entry-page-break = true ,
     bib-hang = { 1 em } ,
-    line-spacing = { 1 } ,
-    entry-spacing = { 1 } ,
   }
 
 

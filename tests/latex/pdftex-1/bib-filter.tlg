@@ -30,6 +30,16 @@ TEST 3: Bibliography with filter
 ============================================================
 Package citation-style-language Warning: The bibliography is empty.
 ============================================================
+============================================================
+TEST 4: Bibliography with filter
+============================================================
+Package citation-style-language Warning: The bibliography is empty.
+============================================================
+============================================================
+TEST 5: Bibliography with filter
+============================================================
+Package citation-style-language Warning: The bibliography is empty.
+============================================================
 [1
 ] (bib-filter.aux)
 LaTeX Warning: There were undefined references.

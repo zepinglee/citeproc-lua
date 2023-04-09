@@ -74,7 +74,7 @@ function CiteProc.new(sys, style, lang, force_lang)
     uncited_list = {},
     previous_citation = nil,
     requires_sorting = false,
-    longest_label = "",
+    widest_label = "",
     maxoffset = 0,
   }
 
@@ -602,7 +602,7 @@ function CiteProc:makeBibliography(bibsection)
 
   local res = {}
 
-  self.registry.longest_label = ""
+  self.registry.widest_label = ""
   self.registry.maxoffset = 0
 
   local ids = self:get_sorted_refs()
@@ -629,6 +629,7 @@ function CiteProc:makeBibliography(bibsection)
     linespacing = self.style.bibliography.line_spacing,
     entryspacing = self.style.bibliography.entry_spacing,
     maxoffset = self.registry.maxoffset,
+    widest_label = self.registry.widest_label,
     bibstart = bib_start,
     bibend = bib_end,
     entry_ids = util.clone(self.registry.reflist),
