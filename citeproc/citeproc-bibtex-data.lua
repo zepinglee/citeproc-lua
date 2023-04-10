@@ -4169,11 +4169,11 @@ return {
     },
     apr = {
       source = "bibtex",
-      value = "4",
+      value = "April",
     },
     aug = {
       source = "bibtex",
-      value = "8",
+      value = "August",
     },
     cacm = {
       source = "bibtex",
@@ -4181,11 +4181,11 @@ return {
     },
     dec = {
       source = "bibtex",
-      value = "12",
+      value = "December",
     },
     feb = {
       source = "bibtex",
-      value = "2",
+      value = "February",
     },
     ibmjrd = {
       source = "bibtex",
@@ -4216,9 +4216,8 @@ return {
       value = "Journal of the ACM",
     },
     jan = {
-      notes = "Use numeric form for easy conversion.",
       source = "bibtex",
-      value = "1",
+      value = "January",
     },
     jcss = {
       source = "bibtex",
@@ -4226,27 +4225,27 @@ return {
     },
     jul = {
       source = "bibtex",
-      value = "7",
+      value = "July",
     },
     jun = {
       source = "bibtex",
-      value = "6",
+      value = "June",
     },
     mar = {
       source = "bibtex",
-      value = "3",
+      value = "March",
     },
     may = {
       source = "bibtex",
-      value = "5",
+      value = "May",
     },
     nov = {
       source = "bibtex",
-      value = "11",
+      value = "November",
     },
     oct = {
       source = "bibtex",
-      value = "10",
+      value = "October",
     },
     scp = {
       source = "bibtex",
@@ -4254,7 +4253,7 @@ return {
     },
     sep = {
       source = "bibtex",
-      value = "9",
+      value = "September",
     },
     sicomp = {
       source = "bibtex",
@@ -4290,8 +4289,8 @@ return {
     },
   },
   language_code_map = {
-    ukenglish = "en-GB",
-    usenglish = "en-US",
+    UKenglish = "en-GB",
+    USenglish = "en-US",
     acadian = "fr-CA",
     afrikaans = "af-ZA",
     albanian = "sq-AL",
@@ -4393,6 +4392,31 @@ return {
     urdu = "ur-IN",
     vietnamese = "vi-VN",
     welsh = "cy-GB",
+  },
+  months = {
+    apr = "4",
+    april = "4",
+    aug = "8",
+    august = "8",
+    dec = "12",
+    december = "12",
+    feb = "2",
+    february = "2",
+    jan = "1",
+    january = "1",
+    jul = "7",
+    july = "7",
+    jun = "6",
+    june = "6",
+    mar = "3",
+    march = "3",
+    may = "5",
+    nov = "11",
+    november = "11",
+    oct = "10",
+    october = "10",
+    sep = "9",
+    september = "9",
   },
   primary_fields = {
     annotation = "note",

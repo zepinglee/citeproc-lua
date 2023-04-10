@@ -9,6 +9,7 @@ local bibtex2csl = {}
 local bibtex_parser = require("citeproc-bibtex-parser")
 local bibtex_data = require("citeproc-bibtex-data")
 local latex_parser = nil -- load as needed
+local sln = require("unicode")
 local unicode = require("citeproc-unicode")
 local util = require("citeproc-util")
 
@@ -303,12 +304,27 @@ function bibtex2csl.post_process_special_fields(item, entry)
   end
 
   -- month
-  local month = bib_fields.month
-  if month and string.match(month, "^%d+$") then
-    if item.issued and item.issued["date-parts"] and
+  -- local month = bib_fields.month
+  local month_text = bib_fields.month
+  if month_text then
+    month_text = latex_parser.latex_to_pseudo_html(month_text, false, false)
+    local month, day = sln.utf8.match(month_text, "^(%a+)%.?,?%s+(%d+)%a*$")
+    if not month then
+      day, month = sln.utf8.match(month_text, "^(%d+)%a*%s+(%a+)%.?$")
+    end
+    if not month then
+      month = string.match(month_text, "^(%a+)%.?$")
+    end
+    if month then
+      month = bibtex_data.months[unicode.casefold(month)]
+    end
+    if month and item.issued and item.issued["date-parts"] and
         item.issued["date-parts"][1] and
         item.issued["date-parts"][1][2] == nil then
       item.issued["date-parts"][1][2] = tonumber(month)
+      if day then
+        item.issued["date-parts"][1][3] = tonumber(day)
+      end
     end
   end
 
