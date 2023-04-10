@@ -5,6 +5,8 @@ import os
 import glob
 import warnings
 
+import luadata
+
 # References:
 # https://github.com/jgm/pandoc/blob/master/src/Text/Pandoc/Citeproc/BibTeX.hs
 # https://github.com/andras-simonyi/citeproc-el/wiki/BibLaTeX-CSL-mapping
@@ -182,7 +184,10 @@ class BibData(OrderedDict):
         for match in re.finditer(
                 r'\\DeclareDatamodelFields(\[(.*)\])?\{(([^}]|\s)*)\}',
                 contents):
-            field_type = re.search(r'datatype=(\w+)', match.group(2)).group(1)
+            field_type = re.search(r'datatype=(\w+)', match.group(2))
+            if not field_type:
+                continue
+            field_type = field_type.group(1)
             for field in match.group(3).split(','):
                 field = re.sub(r'[^\n]\r?\n\s*', '', field)
                 field = field.strip()
@@ -329,47 +334,55 @@ class BibData(OrderedDict):
                         #     f'"{field.lower()}": {{"csl": "{field}", "source": "csl"}},'
                         # )
 
-    def sort_keys(self):
-        self['types'] = OrderedDict(sorted(self['types'].items()))
-        self['fields'] = OrderedDict(sorted(self['fields'].items()))
+    def check_primary_fields(self):
+        csl_field_reverse_map = dict()
+        for bibtex_field, info in self['fields'].items():
+            csl_field = None
+            if 'csl' in info:
+                csl_field = info['csl']
+            if csl_field:
+                if csl_field not in csl_field_reverse_map:
+                    csl_field_reverse_map[csl_field] = []
+                csl_field_reverse_map[csl_field].append(bibtex_field)
 
-        for entry_type, value in self['types'].items():
-            self['types'][entry_type] = OrderedDict(sorted(value.items()))
-        for field, value in self['fields'].items():
-            self['fields'][field] = OrderedDict(sorted(value.items()))
+        for csl_field, bibtex_fields in csl_field_reverse_map.items():
+            if len(bibtex_fields) > 1:
+
+                has_primary_field = any([field in self['primary_fields'] for field in bibtex_fields])
+                if not has_primary_field:
+                    print(csl_field, bibtex_fields)
+                    for field in bibtex_fields:
+                        field_info = self['fields'][field]
+                        if 'source' in field_info and field_info['source'] == 'biblatex' and 'alias' not in field_info:
+                            self['primary_fields'][field] = csl_field
+                            break
+
+                has_primary_field = any([field in self['primary_fields'] for field in bibtex_fields])
+                if not has_primary_field:
+                    for field in bibtex_fields:
+                        field_info = self['fields'][field]
+                        if 'source' in field_info and field_info['source'] == 'bibtex' and 'alias' not in field_info:
+                            self['primary_fields'][field] = csl_field
+                            break
+
+                has_primary_field = any([field in self['primary_fields'] for field in bibtex_fields])
+                if not has_primary_field:
+                    for field in bibtex_fields:
+                        field_info = self['fields'][field]
+                        if 'source' in field_info and field_info['source'] == 'csl' and 'alias' not in field_info:
+                            self['primary_fields'][field] = csl_field
+                            break
+
+                has_primary_field = any([field in self['primary_fields'] for field in bibtex_fields])
+                if not has_primary_field:
+                    for field in bibtex_fields:
+                        if field in csl_field_reverse_map:
+                            self['primary_fields'][field] = csl_field
+                            break
 
     def export_lua(self):
         res = '-- This file is generated from citeproc-bibtex-data.json by scripts/update-bibtex-data.py\n\n'
-
-        def to_lua_table(obj, level=0):
-            res = ''
-            if obj is None:
-                res = "nil"
-            elif isinstance(obj, str):
-                obj = obj.replace('\\', '\\\\')
-                obj = obj.replace('"', '\\"')
-                res = '"' + obj + '"'
-            elif isinstance(obj, dict) or isinstance(obj, OrderedDict):
-                res += '{\n'
-                for key, value in obj.items():
-                    if key == "alias" or key == "notes" or key == "source":
-                        continue
-                    key = key.replace('\\', '\\\\')
-                    key = key.replace('"', '\\"')
-                    formatted_key = f'["{key}"]'
-                    if re.match("^[a-zA-Z_][a-zA-Z0-9_]*$", key):
-                        formatted_key = key
-                    res += '  ' * (level +
-                                   1) + formatted_key + ' = ' + to_lua_table(
-                                       value, level + 1) + ',\n'
-                res += '  ' * level + '}'
-            else:
-                print(obj)
-            return res
-
-        res += 'return ' + to_lua_table(self)
-        # print(to_lua_table(self))
-
+        res += 'return ' + luadata.dumps(self)
         with open('citeproc/citeproc-bibtex-data.lua', 'w') as f:
             f.write(res + '\n')
 
@@ -429,7 +442,8 @@ if __name__ == '__main__':
     bib_data.update_all_biblatex_styles()
 
     bib_data.check_csl_schema()
-    bib_data.sort_keys()
+    bib_data.check_primary_fields()
+
     bib_data.export_lua()
     bib_data.export_markdown()
 

@@ -1388,7 +1388,7 @@
             "type": "literal"
         },
         "issuetitle": {
-            "csl": null,
+            "csl": "volume-title",
             "source": "biblatex",
             "type": "literal"
         },
@@ -1506,7 +1506,7 @@
             "type": "literal"
         },
         "language": {
-            "csl": null,
+            "csl": "language",
             "notes": "The `language` field in `biblatex` has no special internal meaning thus it is used only when langid is missing.",
             "source": "biblatex",
             "type": "key"
@@ -3312,7 +3312,7 @@
             "type": "entrykey"
         },
         "year": {
-            "csl": null,
+            "csl": "issued",
             "notes": "Used only when `date` is empty.",
             "source": "bibtex",
             "type": "date"
@@ -3578,6 +3578,47 @@
             "source": "bibtex",
             "value": "ACM Transactions on Programming Languages and Systems"
         }
+    },
+    "primary_fields": {
+        "annotation": "note",
+        "archive-place": "archive-place",
+        "author": "author",
+        "bookauthor": "container-author",
+        "chapter": "chapter-number",
+        "date": "issued",
+        "director": "director",
+        "editor": "editor",
+        "eprinttype": "archive",
+        "eventdate": "event-date",
+        "eventtitle": "event-title",
+        "executive-producer": "executive-producer",
+        "journaltitle": "container-title",
+        "jurisdiction": "jurisdiction",
+        "langid": "language",
+        "location": "publisher-place",
+        "medium": "medium",
+        "number": "number",
+        "origdate": "original-date",
+        "origlocation": "original-publisher-place",
+        "origpublisher": "original-publisher",
+        "origtitle": "original-title",
+        "pages": "page",
+        "pagetotal": "number-of-pages",
+        "performer": "performer",
+        "pmid": "PMID",
+        "publisher": "publisher",
+        "pubstate": "status",
+        "series": "collection-title",
+        "shortjournal": "container-title-short",
+        "shorttitle": "title-short",
+        "title": "title",
+        "translator": "translator",
+        "type": "genre",
+        "urldate": "accessed",
+        "venue": "event-place",
+        "version": "version",
+        "volume-title": "volume-title",
+        "volumes": "number-of-volumes"
     },
     "types": {
         "abstract": {

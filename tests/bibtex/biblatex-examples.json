@@ -8,7 +8,7 @@
 				"given": "Gary"
 			}
 		],
-		"container-title": "Space and beyond",
+		"container-title": "Space and beyond: The frontier theme in science fiction",
 		"editor": [
 			{
 				"family": "Westfahl",
@@ -28,7 +28,7 @@
 		"publisher": "Greenwood",
 		"publisher-place": "Westport, Conn. and London",
 		"title": "The true frontier: Confronting and avoiding the realities of space in <span class=\"nocase\">American</span> science fiction films",
-		"title-short": "The True Frontier"
+		"title-short": "The true frontier"
 	},
 	{
 		"id": "set",
@@ -486,7 +486,7 @@
 		"note": "An <code>\\texttt{</code><span class=\"nocase\">article</span><code>}</code> entry with <code>\\texttt{</code><span class=\"nocase\">series</span><code>}</code>, <code>\\texttt{</code><span class=\"nocase\">volume</span><code>}</code>, and <code>\\texttt{</code><span class=\"nocase\">number</span><code>}</code> fields. Note the format of the <code>\\texttt{</code><span class=\"nocase\">series</span><code>}</code> which is a localization key",
 		"page": "9-27",
 		"title": "Twice-born, once conceived: Meaning construction and cultural cognition",
-		"title-short": "Twice-Born, Once Conceived",
+		"title-short": "Twice-born, once conceived",
 		"volume": "93"
 	},
 	{
@@ -567,7 +567,7 @@
 		"note": "A plain <code>\\texttt{</code><span class=\"nocase\">article</span><code>}</code> entry",
 		"page": "92-122",
 		"title": "Mediaeval pilgrim routes from <span class=\"nocase\">Scandinavia</span> to <span class=\"nocase\">Rome</span>",
-		"title-short": "Mediaeval Pilgrim Routes",
+		"title-short": "Mediaeval pilgrim routes",
 		"volume": "12"
 	},
 	{
@@ -793,7 +793,7 @@
 		"publisher": "Jewish Theological Seminary of America",
 		"publisher-place": "New York",
 		"title": "The epistle on the possibility of conjunction with the active intellect by <span class=\"nocase\">Ibn Rushd</span> with the commentary of <span class=\"nocase\">Moses Narboni</span>",
-		"title-short": "Possibility of Conjunction",
+		"title-short": "Possibility of conjunction",
 		"translator": [
 			{
 				"family": "Bland",
@@ -976,7 +976,7 @@
 		"publisher": "Addison-Wesley",
 		"publisher-place": "Reading, Mass.",
 		"title": "The <span class=\"nocase\">LaTeX</span> companion",
-		"title-short": "LaTeX Companion"
+		"title-short": "LaTeX companion"
 	},
 	{
 		"id": "cotton",
@@ -1034,7 +1034,7 @@
 		"publisher": "Duke University Press",
 		"publisher-place": "Durham and London",
 		"title": "The federal appointments process: A constitutional and historical analysis",
-		"title-short": "Federal Appointments Process"
+		"title-short": "Federal appointments process"
 	},
 	{
 		"id": "gonzalez",
@@ -1159,7 +1159,7 @@
 		"publisher": "Addison-Wesley",
 		"publisher-place": "Reading, Mass.",
 		"title": "The <code>{\\TeX </code>book<code>}</code>",
-		"title-short": "<code>\\TeX </code>book",
+		"title-short": "<code>\\TeX </code>Book",
 		"volume": "A"
 	},
 	{
@@ -1394,7 +1394,7 @@
 		"publisher": "University of Nebraska Press",
 		"publisher-place": "Lincoln",
 		"title": "Animal triste",
-		"title-short": "Animal Triste",
+		"title-short": "Animal triste",
 		"translator": [
 			{
 				"family": "Goldstein",
@@ -1592,7 +1592,7 @@
 		"publisher": "Duke University Press",
 		"publisher-place": "Durham and London",
 		"title": "City of suspects: Crime in <span class=\"nocase\">Mexico City</span>, 1900–1931",
-		"title-short": "City of Suspects"
+		"title-short": "City of suspects"
 	},
 	{
 		"id": "vangennep",
@@ -1639,7 +1639,7 @@
 		"note": "A translation of the <code>\\texttt{</code><span class=\"nocase\">vangennep</span><code>}</code> entry. Note the <code>\\texttt{</code><span class=\"nocase\">translator</span><code>}</code> and <code>\\texttt{</code><span class=\"nocase\">origlanguage</span><code>}</code> fields. Compare with the <code>\\texttt{</code><span class=\"nocase\">vangennep:related</span><code>}</code> entry.",
 		"publisher": "University of Chicago Press",
 		"title": "The rites of passage",
-		"title-short": "Rites of Passage",
+		"title-short": "Rites of passage",
 		"translator": [
 			{
 				"family": "Vizedom",
@@ -1689,7 +1689,7 @@
 		"note": "A translated work from <code>\\texttt{</code><span class=\"nocase\">vangennep</span><code>}</code>. Note the format of the <code>\\texttt{</code><span class=\"nocase\">related</span><code>}</code> and <code>\\texttt{</code><span class=\"nocase\">relatedtype</span><code>}</code> fields",
 		"publisher": "University of Chicago Press",
 		"title": "The rites of passage",
-		"title-short": "Rites of Passage",
+		"title-short": "Rites of passage",
 		"translator": [
 			{
 				"family": "Vizedom",
@@ -1726,7 +1726,7 @@
 			]
 		},
 		"language": "es-ES",
-		"note": "Ed. facs. de la realizada en 1948–49",
+		"note": "A multivolume book cited as a whole. This is a <code>\\texttt{</code><span class=\"nocase\">mvbook</span><code>}</code> entry with <code>\\texttt{</code><span class=\"nocase\">volumes</span><code>}</code>, <code>\\texttt{</code><span class=\"nocase\">note</span><code>}</code>, <code>\\texttt{</code><span class=\"nocase\">sorttitle</span><code>}</code>, and <code>\\texttt{</code><span class=\"nocase\">indextitle</span><code>}</code> fields",
 		"number-of-volumes": "3",
 		"publisher": "Iberdrola",
 		"publisher-place": "Pamplona",
@@ -1776,7 +1776,7 @@
 		"publisher": "University of Texas Press",
 		"publisher-place": "Austin",
 		"title": "The cast of character: Style in <span class=\"nocase\">Greek</span> literature",
-		"title-short": "Cast of Character"
+		"title-short": "Cast of character"
 	},
 	{
 		"id": "britannica",
@@ -1885,7 +1885,7 @@
 	{
 		"id": "westfahl:frontier",
 		"type": "book",
-		"container-title": "Space and beyond",
+		"container-title": "Space and beyond: The frontier theme in science fiction",
 		"editor": [
 			{
 				"family": "Westfahl",
@@ -1904,7 +1904,7 @@
 		"publisher": "Greenwood",
 		"publisher-place": "Westport, Conn. and London",
 		"title": "Space and beyond: The frontier theme in science fiction",
-		"title-short": "Space and Beyond"
+		"title-short": "Space and beyond"
 	},
 	{
 		"id": "kant:kpv",
@@ -2080,7 +2080,7 @@
 		"publisher": "The Catholic University of America Press",
 		"publisher-place": "Washington, D.C.",
 		"title": "Aristotle’s Theory of the Intellect and its Interpretation by <span class=\"nocase\">Averroes</span>",
-		"title-short": "Aristotle’s Theory of the Intellect"
+		"title-short": "Aristotle’s Theory of the intellect"
 	},
 	{
 		"id": "pines",
@@ -2111,7 +2111,7 @@
 		"publisher": "Harvard University Press",
 		"publisher-place": "Cambridge, Mass.",
 		"title": "The Limitations of Human Knowledge According to <span class=\"nocase\">Al-Farabi</span>, <span class=\"nocase\">ibn Bajja</span>, and <span class=\"nocase\">Maimonides</span>",
-		"title-short": "Limitations of Human Knowledge"
+		"title-short": "Limitations of human knowledge"
 	},
 	{
 		"id": "moraux",
@@ -2164,7 +2164,8 @@
 				"given": "Abdus"
 			}
 		],
-		"container-title": "Elementary particle theory",
+		"container-title": "Elementary particle theory: Relativistic groups and analyticity",
+		"container-title-short": "Elementary particle theory",
 		"editor": [
 			{
 				"family": "Svartholm",
@@ -2215,7 +2216,7 @@
 		"publisher": "University of Chicago Press",
 		"publisher-place": "Chicago, Ill.",
 		"title": "The <span class=\"nocase\">Chicago</span> manual of style: The essential guide for writers, editors, and publishers",
-		"title-short": "Chicago Manual of Style"
+		"title-short": "Chicago manual of style"
 	},
 	{
 		"id": "baez/online",
@@ -2535,7 +2536,8 @@
 		},
 		"note": "This is a <code>\\texttt{</code><span class=\"nocase\">periodical</span><code>}</code> entry with an <code>\\texttt{</code><span class=\"nocase\">issn</span><code>}</code> field.",
 		"title": "Computers and graphics",
-		"volume": "35"
+		"volume": "35",
+		"volume-title": "Semantic <span class=\"nocase\">3D</span> Media and Content"
 	},
 	{
 		"id": "chiu",
@@ -2620,7 +2622,7 @@
 		"publisher": "Uppsala Universitet",
 		"publisher-place": "Uppsala",
 		"title": "Earl, saint, bishop, skald – and music: The <span class=\"nocase\">Orkney Earldom</span> of the twelfth century. <span class=\"nocase\">A</span> musicological study",
-		"title-short": "Earl, Saint, Bishop, Skald – and Music"
+		"title-short": "Earl, saint, bishop, skald – and music"
 	},
 	{
 		"id": "loh",

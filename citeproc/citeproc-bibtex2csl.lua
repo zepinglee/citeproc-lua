@@ -13,7 +13,7 @@ local unicode = require("citeproc-unicode")
 local util = require("citeproc-util")
 
 
----@alias CslItem table
+---@alias CslItem table<string, nil | string | number | table>
 ---@alias CslData CslItem[]
 
 
@@ -51,45 +51,46 @@ function bibtex2csl.convert_to_csl_data(bib, keep_unknown_commands, case_protect
   local csl_data = {}
 
   -- BibTeX looks for crossref in a case-insensitive manner.
-  local entries_by_id_ignore_case = {}
+  local entries_by_id = {}
   for _, entry in ipairs(bib.entries) do
-    entries_by_id_ignore_case[unicode.casefold(entry.key)] = entry
+    entries_by_id[unicode.casefold(entry.key)] = entry
   end
 
   for _, entry in ipairs(bib.entries) do
+    ---@type CslItem
     local item = {
       id = entry.key,
       type = "document",
     }
 
-    -- CSL types
-    local type_data = bibtex_data.types[entry.type]
-    if type_data and type_data.csl then
-      item.type = type_data.csl
-    end
-
-    --TODO: language
-
-    -- TODO: preprosse
-
     -- crossref
     if entry.fields.crossref then
-      local ref_entry = entries_by_id_ignore_case[unicode.casefold(entry.fields.crossref)]
-      if ref_entry then
-        for field, value in pairs(ref_entry.fields) do
-          if not entry.fields[field] then
-            entry.fields[field] = value
-          end
+      bibtex2csl.process_cross_ref(entry, entries_by_id)
+    end
+
+    bibtex2csl.pre_process_special_fields(item, entry)
+
+    -- First convert primary fields
+    for field, csl_field in pairs(bibtex_data.primary_fields) do
+      local value = entry.fields[field]
+      if value then
+        local _, csl_value = bibtex2csl.convert_field(
+          field, value, keep_unknown_commands, case_protection, sentence_case_title, item.language, check_sentence_case)
+        if csl_field and csl_value and not item[csl_field] then
+          item[csl_field] = csl_value
         end
-      else
-        util.error(string.format('Crossref "%s" not found.', entry.fields.crossref))
       end
     end
 
-    -- Merge title, maintitle, subtitle, titleaddon
-    bibtex2csl.process_titles(entry)
+    -- Convert the fields in a fixed order
+    local field_list = {}
+    for field, _ in pairs(entry.fields) do
+      table.insert(field_list, field)
+    end
+    table.sort(field_list)
 
-    for field, value in pairs(entry.fields) do
+    for _, field in ipairs(field_list) do
+      local value = entry.fields[field]
       local csl_field, csl_value = bibtex2csl.convert_field(
         field, value, keep_unknown_commands, case_protection, sentence_case_title, item.language, check_sentence_case)
       if csl_field and csl_value and not item[csl_field] then
@@ -97,7 +98,7 @@ function bibtex2csl.convert_to_csl_data(bib, keep_unknown_commands, case_protect
       end
     end
 
-    bibtex2csl.process_special_fields(item, entry.fields, entry.type)
+    bibtex2csl.post_process_special_fields(item, entry, entry.type)
 
     table.insert(csl_data, item)
   end
@@ -105,6 +106,56 @@ function bibtex2csl.convert_to_csl_data(bib, keep_unknown_commands, case_protect
 end
 
 
+---@param entry BibtexEntry
+---@param entries_by_id table<string, BibtexEntry>
+function bibtex2csl.process_cross_ref(entry, entries_by_id)
+  local ref_entry = entries_by_id[unicode.casefold(entry.fields.crossref)]
+  if ref_entry then
+    for field, value in pairs(ref_entry.fields) do
+      if not entry.fields[field] then
+        entry.fields[field] = value
+      end
+    end
+  else
+    util.error(string.format('Crossref "%s" not found.', entry.fields.crossref))
+  end
+end
+
+
+---@param item CslItem
+---@param entry BibtexEntry
+function bibtex2csl.pre_process_special_fields(item, entry)
+  -- CSL types
+  local type_data = bibtex_data.types[entry.type]
+  if type_data and type_data.csl then
+    item.type = type_data.csl
+  elseif entry.fields.url then
+    item.type = "webpage"
+  end
+
+  -- BibTeX's `edition` is expected to be an ordinal.
+  if entry.fields.edition then
+    item.edition = util.convert_ordinal_to_arabic(entry.fields.edition)
+  end
+
+  -- language: convert `babel` language to ISO 639-1 language code
+  local lang = entry.fields.langid or entry.fields.language
+  if lang then
+    item.language = bibtex_data.language_code_map[unicode.casefold(lang)]
+  end
+  -- if not item.language then
+  --   if util.has_cjk_char(item.title) then
+  --     item.language = "zh"
+  --   end
+  -- end
+
+  -- Merge title, maintitle, subtitle, titleaddon
+  bibtex2csl.process_titles(entry)
+
+end
+
+
+---@param entry BibtexEntry
 function bibtex2csl.process_titles(entry)
   local fields = entry.fields
   if fields.subtitle then
@@ -112,9 +163,36 @@ function bibtex2csl.process_titles(entry)
       fields.shorttitle = fields.title
     end
     if fields.title then
-      fields.title = fields.title .. ": " .. fields.subtitle
+      fields.title = util.join_title(fields.title, fields.subtitle)
     else
       fields.title = fields.subtitle
+    end
+  end
+  if fields.booksubtitle then
+    if not fields.shorttitle then
+      fields["container-title-short"] = fields.booktitle
+    end
+    if fields.booktitle then
+      fields.booktitle = util.join_title(fields.booktitle, fields.booksubtitle)
+    else
+      fields.booktitle = fields.booksubtitle
+    end
+  end
+  if fields.journalsubtitle then
+    if fields.journaltitle then
+      fields.journaltitle = util.join_title(fields.journaltitle, fields.journalsubtitle)
+    elseif fields.journal then
+      fields.journal = util.join_title(fields.journal, fields.journal)
+    end
+  end
+  if fields.issuesubtitle then
+    if not fields.shorttitle then
+      fields["volume-title-short"] = fields.issuetitle
+    end
+    if fields.issuetitle then
+      fields.issuetitle = util.join_title(fields.issuetitle, fields.issuesubtitle)
+    else
+      fields.issuetitle = fields.issuesubtitle
     end
   end
 end
@@ -154,7 +232,12 @@ function bibtex2csl.convert_field(bib_field, value, keep_unknown_commands, case_
       csl_value[i] = bibtex2csl.convert_to_csl_name(name_dict)
     end
 
-  elseif bib_field == "title" or bib_field == "booktitle" then
+  elseif field_type == "date" then
+    csl_value = latex_parser.latex_to_pseudo_html(value, false, false)
+    csl_value = bibtex2csl._parse_edtf_date(csl_value)
+
+  elseif bib_field == "title" or bib_field == "shorttitle"
+      or bib_field == "booktitle" or bib_field == "container-title-short" then
     -- util.debug(value)
     -- 1. unicode 2. sentence case 3. html tag
     if sentence_case_title and (not language or util.startswith(language, "en")) then
@@ -168,9 +251,7 @@ function bibtex2csl.convert_field(bib_field, value, keep_unknown_commands, case_
   else
     -- 1. unicode 2. html tag
     csl_value = latex_parser.latex_to_pseudo_html(value, keep_unknown_commands, case_protection)
-    if field_type == "date" then
-      csl_value = bibtex2csl._parse_edtf_date(csl_value)
-    elseif csl_field == "volume" or csl_field == "page" then
+    if csl_field == "volume" or csl_field == "page" then
       csl_value = string.gsub(csl_value, util.unicode["en dash"], "-")
     end
   end
@@ -205,29 +286,23 @@ function bibtex2csl.convert_to_csl_name(bibtex_name)
 end
 
 
-function bibtex2csl.process_special_fields(item, bib_fields, bib_type)
-  -- Default entry type `document`
-  if item.type == "document" then
-    if item.URL then
-      item.type = "webpage"
-    end
-  end
-
-  -- BibTeX's `edition` should be an ordinal.
-  if item.edition then
-    item.edition = util.convert_ordinal_to_arabic(item.edition)
-  end
-
+---@param item CslItem
+---@param entry BibtexEntry
+function bibtex2csl.post_process_special_fields(item, entry)
+  local bib_type = entry.type
+  local bib_fields = entry.fields
   -- event-title: for compatibility with CSL v1.0.1 and earlier versions
   if item["event-title"] then
     item.event = item["event-title"]
   end
 
-  -- issued date
-  if bib_fields.year and not item.issued then
-    local text = latex_parser.latex_to_pseudo_html(bib_fields.year, false, false)
-    item.issued = bibtex2csl._parse_edtf_date(text)
+  -- Jounal abbreviations
+  if item.type == "article-journal" or item.type == "article-magazine"
+      or item.type == "article-newspaper" then
+    util.check_journal_abbreviations(item)
   end
+
+  -- month
   local month = bib_fields.month
   if month and string.match(month, "^%d+$") then
     if item.issued and item.issued["date-parts"] and
@@ -235,28 +310,6 @@ function bibtex2csl.process_special_fields(item, bib_fields, bib_type)
         item.issued["date-parts"][1][2] == nil then
       item.issued["date-parts"][1][2] = tonumber(month)
     end
-  end
-
-  -- language: convert `babel` language to ISO 639-1 language code
-  if not item.language and bib_fields.language then
-    item.language = bib_fields.language
-  end
-  if item.language then
-    local language_code = bibtex_data.language_code_map[item.language]
-    if language_code then
-      item.language = language_code
-    end
-  end
-  -- if not item.language then
-  --   if util.has_cjk_char(item.title) then
-  --     item.language = "zh"
-  --   end
-  -- end
-
-  -- Jounal abbreviations
-  if item.type == "article-journal" or item.type == "article-magazine"
-      or item.type == "article-newspaper" then
-    util.check_journal_abbreviations(item)
   end
 
   -- number

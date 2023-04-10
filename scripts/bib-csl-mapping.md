@@ -116,7 +116,7 @@ Bib(La)TeX | CSL | Notes
 `issn` | `ISSN` | 
 `issue` | `issue` | 
 `issuesubtitle` | - | 
-`issuetitle` | - | 
+`issuetitle` | `volume-title` | 
 `issuetitleaddon` | - | 
 `iswc` | - | 
 `journal` | `container-title` | Alias for `journaltitle`.
@@ -128,7 +128,7 @@ Bib(La)TeX | CSL | Notes
 `label` | - | 
 `langid` | `language` | The language id of the bibliography entry. The identifier must be a language name known to the babel/polyglossia packages. It should be converted to ISO 639-1 language code in CSL.
 `langidopts` | - | 
-`language` | - | The `language` field in `biblatex` has no special internal meaning thus it is used only when langid is missing.
+`language` | `language` | The `language` field in `biblatex` has no special internal meaning thus it is used only when langid is missing.
 `library` | - | 
 `location` | `publisher-place` | 
 `mainsubtitle` | - | 
@@ -185,4 +185,4 @@ Bib(La)TeX | CSL | Notes
 `volumes` | `number-of-volumes` | 
 `xdata` | - | inherits fields from other items.
 `xref` | - | Establishes a parent-child relationship in biblatex, but without inheriting data => no need to parse this.
-`year` | - | Used only when `date` is empty.
+`year` | `issued` | Used only when `date` is empty.

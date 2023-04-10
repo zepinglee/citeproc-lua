@@ -151,6 +151,7 @@ function BibtexParser:new()
 end
 
 
+---@alias BibtexEntry { key: string, type: string, fields: table<string, string> }
 ---@alias BibtexData table
 ---@alias Exception table
 
@@ -178,7 +179,9 @@ function BibtexParser:parse(bib_str, strings)
   end
 
   local res = {
+    ---@type BibtexEntry[]
     entries = {},
+    ---@type table<string, BibtexEntry>
     entries_by_id = {},
     strings = {},
     preamble = nil,

@@ -80,6 +80,25 @@ function util.to_list(str)
   return util.split(str)
 end
 
+
+--- Concat with CJK or western colon
+---@param main_title string
+---@param substitle string
+function util.join_title(main_title, substitle)
+  local code_point = utf8.codepoint(main_title, utf8.len(main_title))
+  if util.is_cjk_char(code_point) then
+    return main_title .. "：" .. substitle
+  else
+    code_point = utf8.codepoint(substitle, 1)
+    if util.is_cjk_char(code_point) then
+      return main_title .. "：" .. substitle
+    else
+      return main_title .. ": " .. substitle
+    end
+  end
+end
+
+
 function util.to_ordinal (n)
   -- assert(type(n) == "number")
   local last_digit = n % 10
