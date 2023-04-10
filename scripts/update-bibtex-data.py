@@ -434,5 +434,5 @@ if __name__ == '__main__':
     bib_data.export_markdown()
 
     with open(bib_data_path, 'w') as f:
-        json.dump(bib_data, f, indent=4, ensure_ascii=False)
+        json.dump(bib_data, f, indent=4, ensure_ascii=False, sort_keys=True)
         f.write('\n')

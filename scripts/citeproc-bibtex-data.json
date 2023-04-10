@@ -1,818 +1,5 @@
 {
     "description": "BibTeX CSL mapping",
-    "types": {
-        "abstract": {
-            "csl": null,
-            "source": "biblatex-cv.dbx"
-        },
-        "ancienttext": {
-            "csl": "classic",
-            "source": "sbl.dbx"
-        },
-        "archival": {
-            "csl": "collection",
-            "notes": "New in CSL v1.0.2.",
-            "source": "jurabib.bst"
-        },
-        "archive": {
-            "csl": "collection",
-            "source": "gbt7714-numerical.bst"
-        },
-        "article": {
-            "csl": "article-journal",
-            "notes": "May also be `article-magazine` or `article-newspaper` depending upon the field `entrysubtype`.",
-            "source": "bibtex"
-        },
-        "article-journal": {
-            "csl": "article-journal",
-            "source": "csl"
-        },
-        "article-magazine": {
-            "csl": "article-magazine",
-            "source": "csl"
-        },
-        "article-newspaper": {
-            "csl": "article-newspaper",
-            "source": "csl"
-        },
-        "artifactdataset": {
-            "csl": "dataset",
-            "source": "ACM-Reference-Format.bst"
-        },
-        "artifactsoftware": {
-            "csl": "software",
-            "source": "ACM-Reference-Format.bst"
-        },
-        "artwork": {
-            "csl": "graphic",
-            "source": "biblatex"
-        },
-        "atlas": {
-            "csl": null,
-            "source": "ametsoc2014.bst"
-        },
-        "audio": {
-            "csl": "song",
-            "notes": "CSL's `song` can be used for any audio recording (not only music).",
-            "source": "biblatex"
-        },
-        "bachelor": {
-            "csl": "thesis",
-            "source": "dlfltxbbibtex.bst"
-        },
-        "bibnote": {
-            "csl": null,
-            "notes": "Not supported.",
-            "source": "biblatex"
-        },
-        "bill": {
-            "csl": "bill",
-            "source": "csl"
-        },
-        "book": {
-            "csl": "book",
-            "source": "bibtex"
-        },
-        "bookinarticle": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "bookinbook": {
-            "csl": "chapter",
-            "source": "biblatex"
-        },
-        "bookincollection": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "bookininarticle": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "bookininbook": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "bookinincollection": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "bookininproceedings": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "bookininreference": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "bookinjournal": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "bookinmathesis": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "bookinphdthesis": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "bookinproceedings": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "bookinreference": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "bookinthesis": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "booklet": {
-            "csl": "pamphlet",
-            "source": "bibtex"
-        },
-        "broadcast": {
-            "csl": "broadcast",
-            "source": "csl"
-        },
-        "brochure": {
-            "csl": "pamphlet",
-            "source": "thesnumb.bst"
-        },
-        "catalog": {
-            "csl": null,
-            "source": "arthistory-bonn.dbx"
-        },
-        "cconference": {
-            "csl": "paper-conference",
-            "source": "seuthesis.bst"
-        },
-        "chapter": {
-            "csl": "chapter",
-            "source": "csl"
-        },
-        "classic": {
-            "csl": "classic",
-            "source": "csl"
-        },
-        "classictext": {
-            "csl": "classic",
-            "source": "sbl.dbx"
-        },
-        "codefragment": {
-            "csl": "software",
-            "source": "software.dbx"
-        },
-        "collection": {
-            "csl": "book",
-            "source": "biblatex"
-        },
-        "comment": {
-            "csl": null,
-            "notes": "Special entry type for Scribe compatibility",
-            "source": "bibtex"
-        },
-        "commentary": {
-            "csl": "book",
-            "notes": "Not supported.",
-            "source": "biblatex"
-        },
-        "commented": {
-            "csl": null,
-            "source": "jurabib.bst"
-        },
-        "committee": {
-            "csl": null,
-            "source": "biblatex-cv.dbx"
-        },
-        "conference": {
-            "alias": "inproceedings",
-            "csl": "paper-conference",
-            "source": "bibtex"
-        },
-        "conferencepaper": {
-            "csl": "paper-conference",
-            "source": "sbl.dbx"
-        },
-        "constitution": {
-            "csl": "legislation",
-            "source": "apa.dbx"
-        },
-        "ctan": {
-            "csl": "software",
-            "source": "tugboat.bst"
-        },
-        "customa": {
-            "csl": null,
-            "source": "biblatex"
-        },
-        "customb": {
-            "csl": null,
-            "source": "biblatex"
-        },
-        "customc": {
-            "csl": null,
-            "source": "biblatex"
-        },
-        "customd": {
-            "csl": null,
-            "source": "biblatex"
-        },
-        "custome": {
-            "csl": null,
-            "source": "biblatex"
-        },
-        "customf": {
-            "csl": null,
-            "source": "biblatex"
-        },
-        "data": {
-            "csl": null,
-            "source": "apa6.dbx"
-        },
-        "database": {
-            "csl": "dataset",
-            "source": "gbt7714-numerical.bst"
-        },
-        "dataset": {
-            "csl": "dataset",
-            "source": "biblatex"
-        },
-        "degree": {
-            "csl": null,
-            "source": "biblatex-cv.dbx"
-        },
-        "dictionary": {
-            "csl": "book",
-            "source": "vancouver.bst"
-        },
-        "docthesis": {
-            "csl": "thesis",
-            "source": "gost2003.bst"
-        },
-        "document": {
-            "csl": "document",
-            "source": "csl"
-        },
-        "electronic": {
-            "alias": "online",
-            "csl": "webpage",
-            "source": "biblatex"
-        },
-        "entry": {
-            "csl": "entry",
-            "source": "csl"
-        },
-        "entry-dictionary": {
-            "csl": "entry-dictionary",
-            "source": "csl"
-        },
-        "entry-encyclopedia": {
-            "csl": "entry-encyclopedia",
-            "source": "csl"
-        },
-        "eulegislation": {
-            "csl": "legislation",
-            "source": "bath.bst"
-        },
-        "event": {
-            "csl": "event",
-            "source": "csl"
-        },
-        "exhibcatalog": {
-            "csl": null,
-            "source": "arthistory-bonn.dbx"
-        },
-        "figure": {
-            "csl": "figure",
-            "source": "csl"
-        },
-        "footnote": {
-            "csl": null,
-            "source": "apsrev4-2.bst"
-        },
-        "funding": {
-            "csl": null,
-            "source": "biblatex-cv.dbx"
-        },
-        "game": {
-            "csl": "software",
-            "source": "ACM-Reference-Format.bst"
-        },
-        "gitcommit": {
-            "csl": null,
-            "source": "gitlog.dbx"
-        },
-        "govpub": {
-            "csl": "regulation",
-            "source": "thesnumb.bst"
-        },
-        "graphic": {
-            "csl": "graphic",
-            "source": "csl"
-        },
-        "habthesis": {
-            "csl": "thesis",
-            "source": "bestpapers-export.bst"
-        },
-        "heading": {
-            "csl": null,
-            "source": "bookdb.bst"
-        },
-        "hearing": {
-            "csl": "hearing",
-            "source": "csl"
-        },
-        "hidden": {
-            "csl": null,
-            "source": "abntex2-alf.bst"
-        },
-        "image": {
-            "csl": "graphic",
-            "source": "biblatex"
-        },
-        "inarticle": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "inaudio": {
-            "csl": null,
-            "source": "oxalph.dbx"
-        },
-        "inbook": {
-            "csl": "chapter",
-            "source": "bibtex"
-        },
-        "incatalog": {
-            "csl": null,
-            "source": "arthistory-bonn.dbx"
-        },
-        "incollection": {
-            "csl": "chapter",
-            "source": "bibtex"
-        },
-        "incommentary": {
-            "csl": null,
-            "source": "sbl.dbx"
-        },
-        "inexhibcatalog": {
-            "csl": null,
-            "source": "arthistory-bonn.dbx"
-        },
-        "ininarticle": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "ininbook": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "inincollection": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "ininproceedings": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "ininreference": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "inlexicon": {
-            "csl": null,
-            "source": "sbl.dbx"
-        },
-        "inloosecollection": {
-            "csl": "chapter",
-            "source": "resphilosophica.bst"
-        },
-        "inmathesis": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "inmovie": {
-            "csl": null,
-            "source": "oxalph.dbx"
-        },
-        "inmusic": {
-            "csl": null,
-            "source": "oxalph.dbx"
-        },
-        "inphdthesis": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "inpress": {
-            "csl": "article",
-            "notes": "Use for preprints, working papers, and similar works posted on a platform where some level of persistence or stewardship is expected (e.g. arXiv or other preprint repositories, working paper series).",
-            "source": "bjnano.bst"
-        },
-        "inproceedings": {
-            "csl": "paper-conference",
-            "source": "bibtex"
-        },
-        "inreference": {
-            "csl": "entry",
-            "notes": "May also be `entry`, `entry-dictionary` or `entry-encyclopedia`.",
-            "source": "biblatex"
-        },
-        "inserialcollection": {
-            "csl": null,
-            "source": "asmejour.bst"
-        },
-        "internet": {
-            "csl": "webpage",
-            "source": "IEEEtran.bst"
-        },
-        "interview": {
-            "csl": "interview",
-            "source": "csl"
-        },
-        "inthesis": {
-            "csl": null,
-            "source": "bookinother.dbx"
-        },
-        "invideo": {
-            "csl": null,
-            "source": "oxalph.dbx"
-        },
-        "journalpart": {
-            "csl": null,
-            "source": "abntex2-alf.bst"
-        },
-        "journals": {
-            "csl": "periodical",
-            "source": "bestpapers-export.bst"
-        },
-        "jurisdiction": {
-            "csl": "legal_case",
-            "notes": "\"Court decisions, court recordings, and similar things.\"",
-            "source": "biblatex"
-        },
-        "jurthesis": {
-            "csl": "thesis",
-            "source": "jurabib.bst"
-        },
-        "legadminmaterial": {
-            "csl": "regulation",
-            "source": "apa.dbx"
-        },
-        "legal": {
-            "csl": "treaty",
-            "notes": "\"Legal documents such as treaties.\"",
-            "source": "biblatex"
-        },
-        "legal_case": {
-            "csl": "legal_case",
-            "source": "csl"
-        },
-        "legislation": {
-            "csl": "legislation",
-            "notes": "\"Laws, bills, legislative proposals, and similar things.\" May also be `bill`",
-            "source": "biblatex"
-        },
-        "legmaterial": {
-            "csl": "legislation",
-            "source": "apa.dbx"
-        },
-        "letter": {
-            "csl": "personal_communication",
-            "source": "biblatex"
-        },
-        "letters": {
-            "csl": "personal_communication",
-            "source": "apa6.dbx"
-        },
-        "lexicon": {
-            "csl": "book",
-            "source": "jurabib.bst"
-        },
-        "majorthesis": {
-            "csl": "thesis",
-            "source": "achicago.bst"
-        },
-        "manual": {
-            "csl": "report",
-            "notes": "CSL's `report` is also used for manuals and similar technical documentation (e.g. a software, instrument, or test manual).",
-            "source": "bibtex"
-        },
-        "manuscript": {
-            "csl": "manuscript",
-            "source": "manuscripts-shared.dbx"
-        },
-        "map": {
-            "csl": "map",
-            "source": "vancouver.bst"
-        },
-        "mastersthesis": {
-            "alias": "thesis",
-            "csl": "thesis",
-            "source": "bibtex"
-        },
-        "masterthesis": {
-            "csl": "thesis",
-            "source": "asaetr.bst"
-        },
-        "minorthesis": {
-            "csl": "thesis",
-            "source": "achicago.bst"
-        },
-        "misc": {
-            "csl": "document",
-            "notes": "New in CSL v1.0.2.",
-            "source": "bibtex"
-        },
-        "mlasource": {
-            "csl": null,
-            "source": "mla.dbx"
-        },
-        "monograph": {
-            "csl": "book",
-            "source": "gbt7714-numerical.bst"
-        },
-        "monography": {
-            "csl": "book",
-            "source": "abntex2-alf.bst"
-        },
-        "motion_picture": {
-            "csl": "motion_picture",
-            "source": "csl"
-        },
-        "movie": {
-            "csl": "motion_picture",
-            "source": "biblatex"
-        },
-        "music": {
-            "csl": "song",
-            "source": "biblatex"
-        },
-        "musical_score": {
-            "csl": "musical_score",
-            "source": "csl"
-        },
-        "mvbook": {
-            "csl": "book",
-            "source": "biblatex"
-        },
-        "mvcollection": {
-            "csl": "book",
-            "source": "biblatex"
-        },
-        "mvcommentary": {
-            "csl": null,
-            "source": "sbl.dbx"
-        },
-        "mvlexicon": {
-            "csl": null,
-            "source": "sbl.dbx"
-        },
-        "mvproceedings": {
-            "csl": "book",
-            "source": "biblatex"
-        },
-        "mvreference": {
-            "csl": "book",
-            "source": "biblatex"
-        },
-        "nameonly": {
-            "csl": null,
-            "source": "apa.dbx"
-        },
-        "news": {
-            "csl": "article-newspaper",
-            "source": "seuthesix.bst"
-        },
-        "newsarticle": {
-            "csl": "article-newspaper",
-            "source": "apa6.dbx"
-        },
-        "newspaper": {
-            "csl": "article-newspaper",
-            "source": "gbt7714-numerical.bst"
-        },
-        "online": {
-            "csl": "webpage",
-            "source": "biblatex"
-        },
-        "other": {
-            "csl": null,
-            "source": "bjnano.bst"
-        },
-        "pamphlet": {
-            "csl": "pamphlet",
-            "source": "csl"
-        },
-        "paper-conference": {
-            "csl": "paper-conference",
-            "source": "csl"
-        },
-        "patent": {
-            "csl": "patent",
-            "source": "biblatex"
-        },
-        "performance": {
-            "csl": "performance",
-            "notes": "New in CSL v1.0.2.",
-            "source": "biblatex"
-        },
-        "periodical": {
-            "csl": "periodical",
-            "notes": "New in CSL v1.0.2.",
-            "source": "biblatex"
-        },
-        "personal_communication": {
-            "csl": "personal_communication",
-            "source": "csl"
-        },
-        "phdthesis": {
-            "alias": "thesis",
-            "csl": "thesis",
-            "source": "bibtex"
-        },
-        "post": {
-            "csl": "post",
-            "source": "csl"
-        },
-        "post-weblog": {
-            "csl": "post-weblog",
-            "source": "csl"
-        },
-        "preamble": {
-            "csl": null,
-            "notes": "Special entry type for inserting commands or text in the bbl",
-            "source": "bibtex"
-        },
-        "preprint": {
-            "csl": "article",
-            "notes": "Use for preprints, working papers, and similar works posted on a platform where some level of persistence or stewardship is expected (e.g. arXiv or other preprint repositories, working paper series).",
-            "source": "gbt7714-numerical.bst"
-        },
-        "presentation": {
-            "csl": "speech",
-            "notes": "A speech or other presentation (e.g. a paper, talk, poster, or symposium at a conference).",
-            "source": "apsrev4-2.bst"
-        },
-        "proceedings": {
-            "csl": "book",
-            "source": "bibtex"
-        },
-        "program": {
-            "csl": "software",
-            "source": "ChemCommun.bst"
-        },
-        "reference": {
-            "csl": "book",
-            "source": "biblatex"
-        },
-        "regulation": {
-            "csl": "regulation",
-            "source": "csl"
-        },
-        "report": {
-            "csl": "report",
-            "source": "biblatex"
-        },
-        "repository": {
-            "csl": null,
-            "source": "quantum.bst"
-        },
-        "review": {
-            "csl": "review",
-            "notes": "\"A more specific variant of the `@article` type\"",
-            "source": "biblatex"
-        },
-        "review-book": {
-            "csl": "review-book",
-            "source": "csl"
-        },
-        "school": {
-            "csl": null,
-            "source": "biblatex-cv.dbx"
-        },
-        "seminarpaper": {
-            "csl": null,
-            "source": "sbl.dbx"
-        },
-        "set": {
-            "csl": null,
-            "notes": "Not supported.",
-            "source": "biblatex"
-        },
-        "setup": {
-            "csl": null,
-            "source": "bestpapers-export.bst"
-        },
-        "software": {
-            "csl": "software",
-            "notes": "New in CSL v1.0.2.",
-            "source": "biblatex"
-        },
-        "softwaremodule": {
-            "csl": "software",
-            "source": "software.dbx"
-        },
-        "softwareversion": {
-            "csl": null,
-            "source": "software.dbx"
-        },
-        "song": {
-            "csl": "song",
-            "source": "csl"
-        },
-        "speech": {
-            "csl": "speech",
-            "source": "csl"
-        },
-        "standard": {
-            "csl": "standard",
-            "notes": "New in CSL v1.0.2.",
-            "source": "biblatex"
-        },
-        "string": {
-            "csl": null,
-            "notes": "Special entry type for defining abbreviations",
-            "source": "bibtex"
-        },
-        "student": {
-            "csl": null,
-            "source": "biblatex-cv.dbx"
-        },
-        "suppbook": {
-            "csl": "chapter",
-            "notes": "lossy mapping; \"Supplemental material in a `@book`. This type is closely related to the @inbook entry type. While `@inbook` is primarily intended for a part of a book with its own title (e. g., a single essay in a collection of essays by the same author), this type is provided for elements such as prefaces, introductions, forewords, afterwords, etc. which often have a generic title only. Style guides may require such items to be formatted differently from other `@inbook` items.\"",
-            "source": "biblatex"
-        },
-        "suppcollection": {
-            "csl": "chapter",
-            "notes": "lossy mapping; see `suppbook`",
-            "source": "biblatex"
-        },
-        "suppperiodical": {
-            "csl": "article",
-            "notes": "see `article`",
-            "source": "biblatex"
-        },
-        "talk": {
-            "csl": "speech",
-            "source": "archaeologie.dbx"
-        },
-        "teaching": {
-            "csl": null,
-            "source": "biblatex-cv.dbx"
-        },
-        "techreport": {
-            "alias": "report",
-            "csl": "report",
-            "source": "bibtex"
-        },
-        "techstandard": {
-            "csl": "standard",
-            "notes": "New in CSL v1.0.2.",
-            "source": "udesoftec.bst"
-        },
-        "thesis": {
-            "csl": "thesis",
-            "source": "biblatex"
-        },
-        "treaty": {
-            "csl": "treaty",
-            "source": "csl"
-        },
-        "uklegislation": {
-            "csl": "legislation",
-            "source": "bath.bst"
-        },
-        "unpublished": {
-            "csl": "manuscript",
-            "notes": "For unpublished works not made widely available or only hosted on personal websites, use manuscript",
-            "source": "bibtex"
-        },
-        "video": {
-            "csl": "motion_picture",
-            "source": "biblatex"
-        },
-        "webpage": {
-            "csl": "webpage",
-            "source": "IEEEtran.bst"
-        },
-        "website": {
-            "csl": "webpage",
-            "source": "quantum.bst"
-        },
-        "www": {
-            "alias": "online",
-            "csl": "webpage",
-            "source": "biblatex"
-        },
-        "xdata": {
-            "csl": null,
-            "notes": "special item type: \"`@xdata` entries hold data which may be inherited by other entries using the xdata field. Entries of this type only serve as data containers; they may not be cited or added to the bibliography.\"",
-            "source": "biblatex"
-        }
-    },
     "fields": {
         "abstract": {
             "csl": "abstract",
@@ -4156,138 +3343,9 @@
             "source": "adrbirthday.bst"
         }
     },
-    "macros": {
-        "jan": {
-            "value": "1",
-            "notes": "Use numeric form for easy conversion.",
-            "source": "bibtex"
-        },
-        "feb": {
-            "value": "2",
-            "source": "bibtex"
-        },
-        "mar": {
-            "value": "3",
-            "source": "bibtex"
-        },
-        "apr": {
-            "value": "4",
-            "source": "bibtex"
-        },
-        "may": {
-            "value": "5",
-            "source": "bibtex"
-        },
-        "jun": {
-            "value": "6",
-            "source": "bibtex"
-        },
-        "jul": {
-            "value": "7",
-            "source": "bibtex"
-        },
-        "aug": {
-            "value": "8",
-            "source": "bibtex"
-        },
-        "sep": {
-            "value": "9",
-            "source": "bibtex"
-        },
-        "oct": {
-            "value": "10",
-            "source": "bibtex"
-        },
-        "nov": {
-            "value": "11",
-            "source": "bibtex"
-        },
-        "dec": {
-            "value": "12",
-            "source": "bibtex"
-        },
-        "acmcs": {
-            "value": "ACM Computing Surveys",
-            "source": "bibtex"
-        },
-        "acta": {
-            "value": "Acta Informatica",
-            "source": "bibtex"
-        },
-        "cacm": {
-            "value": "Communications of the ACM",
-            "source": "bibtex"
-        },
-        "ibmjrd": {
-            "value": "IBM Journal of Research and Development",
-            "source": "bibtex"
-        },
-        "ibmsj": {
-            "value": "IBM Systems Journal",
-            "source": "bibtex"
-        },
-        "ieeese": {
-            "value": "IEEE Transactions on Software Engineering",
-            "source": "bibtex"
-        },
-        "ieeetc": {
-            "value": "IEEE Transactions on Computers",
-            "source": "bibtex"
-        },
-        "ieeetcad": {
-            "value": "IEEE Transactions on Computer-Aided Design of Integrated Circuits",
-            "source": "bibtex"
-        },
-        "ipl": {
-            "value": "Information Processing Letters",
-            "source": "bibtex"
-        },
-        "jacm": {
-            "value": "Journal of the ACM",
-            "source": "bibtex"
-        },
-        "jcss": {
-            "value": "Journal of Computer and System Sciences",
-            "source": "bibtex"
-        },
-        "scp": {
-            "value": "Science of Computer Programming",
-            "source": "bibtex"
-        },
-        "sicomp": {
-            "value": "SIAM Journal on Computing",
-            "source": "bibtex"
-        },
-        "tocs": {
-            "value": "ACM Transactions on Computer Systems",
-            "source": "bibtex"
-        },
-        "tods": {
-            "value": "ACM Transactions on Database Systems",
-            "source": "bibtex"
-        },
-        "tog": {
-            "value": "ACM Transactions on Graphics",
-            "source": "bibtex"
-        },
-        "toms": {
-            "value": "ACM Transactions on Mathematical Software",
-            "source": "bibtex"
-        },
-        "toois": {
-            "value": "ACM Transactions on Office Information Systems",
-            "source": "bibtex"
-        },
-        "toplas": {
-            "value": "ACM Transactions on Programming Languages and Systems",
-            "source": "bibtex"
-        },
-        "tcs": {
-            "value": "Theoretical Computer Science",
-            "source": "bibtex"
-        }
-    },
     "language_code_map": {
+        "UKenglish": "en-GB",
+        "USenglish": "en-US",
         "acadian": "fr-CA",
         "afrikaans": "af-ZA",
         "albanian": "sq-AL",
@@ -4385,11 +3443,953 @@
         "tibetan": "bo-CN",
         "turkish": "tr-TR",
         "turkmen": "tk-TM",
-        "UKenglish": "en-GB",
         "ukrainian": "uk-UA",
         "urdu": "ur-IN",
-        "USenglish": "en-US",
         "vietnamese": "vi-VN",
         "welsh": "cy-GB"
+    },
+    "macros": {
+        "acmcs": {
+            "source": "bibtex",
+            "value": "ACM Computing Surveys"
+        },
+        "acta": {
+            "source": "bibtex",
+            "value": "Acta Informatica"
+        },
+        "apr": {
+            "source": "bibtex",
+            "value": "4"
+        },
+        "aug": {
+            "source": "bibtex",
+            "value": "8"
+        },
+        "cacm": {
+            "source": "bibtex",
+            "value": "Communications of the ACM"
+        },
+        "dec": {
+            "source": "bibtex",
+            "value": "12"
+        },
+        "feb": {
+            "source": "bibtex",
+            "value": "2"
+        },
+        "ibmjrd": {
+            "source": "bibtex",
+            "value": "IBM Journal of Research and Development"
+        },
+        "ibmsj": {
+            "source": "bibtex",
+            "value": "IBM Systems Journal"
+        },
+        "ieeese": {
+            "source": "bibtex",
+            "value": "IEEE Transactions on Software Engineering"
+        },
+        "ieeetc": {
+            "source": "bibtex",
+            "value": "IEEE Transactions on Computers"
+        },
+        "ieeetcad": {
+            "source": "bibtex",
+            "value": "IEEE Transactions on Computer-Aided Design of Integrated Circuits"
+        },
+        "ipl": {
+            "source": "bibtex",
+            "value": "Information Processing Letters"
+        },
+        "jacm": {
+            "source": "bibtex",
+            "value": "Journal of the ACM"
+        },
+        "jan": {
+            "notes": "Use numeric form for easy conversion.",
+            "source": "bibtex",
+            "value": "1"
+        },
+        "jcss": {
+            "source": "bibtex",
+            "value": "Journal of Computer and System Sciences"
+        },
+        "jul": {
+            "source": "bibtex",
+            "value": "7"
+        },
+        "jun": {
+            "source": "bibtex",
+            "value": "6"
+        },
+        "mar": {
+            "source": "bibtex",
+            "value": "3"
+        },
+        "may": {
+            "source": "bibtex",
+            "value": "5"
+        },
+        "nov": {
+            "source": "bibtex",
+            "value": "11"
+        },
+        "oct": {
+            "source": "bibtex",
+            "value": "10"
+        },
+        "scp": {
+            "source": "bibtex",
+            "value": "Science of Computer Programming"
+        },
+        "sep": {
+            "source": "bibtex",
+            "value": "9"
+        },
+        "sicomp": {
+            "source": "bibtex",
+            "value": "SIAM Journal on Computing"
+        },
+        "tcs": {
+            "source": "bibtex",
+            "value": "Theoretical Computer Science"
+        },
+        "tocs": {
+            "source": "bibtex",
+            "value": "ACM Transactions on Computer Systems"
+        },
+        "tods": {
+            "source": "bibtex",
+            "value": "ACM Transactions on Database Systems"
+        },
+        "tog": {
+            "source": "bibtex",
+            "value": "ACM Transactions on Graphics"
+        },
+        "toms": {
+            "source": "bibtex",
+            "value": "ACM Transactions on Mathematical Software"
+        },
+        "toois": {
+            "source": "bibtex",
+            "value": "ACM Transactions on Office Information Systems"
+        },
+        "toplas": {
+            "source": "bibtex",
+            "value": "ACM Transactions on Programming Languages and Systems"
+        }
+    },
+    "types": {
+        "abstract": {
+            "csl": null,
+            "source": "biblatex-cv.dbx"
+        },
+        "ancienttext": {
+            "csl": "classic",
+            "source": "sbl.dbx"
+        },
+        "archival": {
+            "csl": "collection",
+            "notes": "New in CSL v1.0.2.",
+            "source": "jurabib.bst"
+        },
+        "archive": {
+            "csl": "collection",
+            "source": "gbt7714-numerical.bst"
+        },
+        "article": {
+            "csl": "article-journal",
+            "notes": "May also be `article-magazine` or `article-newspaper` depending upon the field `entrysubtype`.",
+            "source": "bibtex"
+        },
+        "article-journal": {
+            "csl": "article-journal",
+            "source": "csl"
+        },
+        "article-magazine": {
+            "csl": "article-magazine",
+            "source": "csl"
+        },
+        "article-newspaper": {
+            "csl": "article-newspaper",
+            "source": "csl"
+        },
+        "artifactdataset": {
+            "csl": "dataset",
+            "source": "ACM-Reference-Format.bst"
+        },
+        "artifactsoftware": {
+            "csl": "software",
+            "source": "ACM-Reference-Format.bst"
+        },
+        "artwork": {
+            "csl": "graphic",
+            "source": "biblatex"
+        },
+        "atlas": {
+            "csl": null,
+            "source": "ametsoc2014.bst"
+        },
+        "audio": {
+            "csl": "song",
+            "notes": "CSL's `song` can be used for any audio recording (not only music).",
+            "source": "biblatex"
+        },
+        "bachelor": {
+            "csl": "thesis",
+            "source": "dlfltxbbibtex.bst"
+        },
+        "bibnote": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex"
+        },
+        "bill": {
+            "csl": "bill",
+            "source": "csl"
+        },
+        "book": {
+            "csl": "book",
+            "source": "bibtex"
+        },
+        "bookinarticle": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookinbook": {
+            "csl": "chapter",
+            "source": "biblatex"
+        },
+        "bookincollection": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookininarticle": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookininbook": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookinincollection": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookininproceedings": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookininreference": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookinjournal": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookinmathesis": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookinphdthesis": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookinproceedings": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookinreference": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "bookinthesis": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "booklet": {
+            "csl": "pamphlet",
+            "source": "bibtex"
+        },
+        "broadcast": {
+            "csl": "broadcast",
+            "source": "csl"
+        },
+        "brochure": {
+            "csl": "pamphlet",
+            "source": "thesnumb.bst"
+        },
+        "catalog": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx"
+        },
+        "cconference": {
+            "csl": "paper-conference",
+            "source": "seuthesis.bst"
+        },
+        "chapter": {
+            "csl": "chapter",
+            "source": "csl"
+        },
+        "classic": {
+            "csl": "classic",
+            "source": "csl"
+        },
+        "classictext": {
+            "csl": "classic",
+            "source": "sbl.dbx"
+        },
+        "codefragment": {
+            "csl": "software",
+            "source": "software.dbx"
+        },
+        "collection": {
+            "csl": "book",
+            "source": "biblatex"
+        },
+        "comment": {
+            "csl": null,
+            "notes": "Special entry type for Scribe compatibility",
+            "source": "bibtex"
+        },
+        "commentary": {
+            "csl": "book",
+            "notes": "Not supported.",
+            "source": "biblatex"
+        },
+        "commented": {
+            "csl": null,
+            "source": "jurabib.bst"
+        },
+        "committee": {
+            "csl": null,
+            "source": "biblatex-cv.dbx"
+        },
+        "conference": {
+            "alias": "inproceedings",
+            "csl": "paper-conference",
+            "source": "bibtex"
+        },
+        "conferencepaper": {
+            "csl": "paper-conference",
+            "source": "sbl.dbx"
+        },
+        "constitution": {
+            "csl": "legislation",
+            "source": "apa.dbx"
+        },
+        "ctan": {
+            "csl": "software",
+            "source": "tugboat.bst"
+        },
+        "customa": {
+            "csl": null,
+            "source": "biblatex"
+        },
+        "customb": {
+            "csl": null,
+            "source": "biblatex"
+        },
+        "customc": {
+            "csl": null,
+            "source": "biblatex"
+        },
+        "customd": {
+            "csl": null,
+            "source": "biblatex"
+        },
+        "custome": {
+            "csl": null,
+            "source": "biblatex"
+        },
+        "customf": {
+            "csl": null,
+            "source": "biblatex"
+        },
+        "data": {
+            "csl": null,
+            "source": "apa6.dbx"
+        },
+        "database": {
+            "csl": "dataset",
+            "source": "gbt7714-numerical.bst"
+        },
+        "dataset": {
+            "csl": "dataset",
+            "source": "biblatex"
+        },
+        "degree": {
+            "csl": null,
+            "source": "biblatex-cv.dbx"
+        },
+        "dictionary": {
+            "csl": "book",
+            "source": "vancouver.bst"
+        },
+        "docthesis": {
+            "csl": "thesis",
+            "source": "gost2003.bst"
+        },
+        "document": {
+            "csl": "document",
+            "source": "csl"
+        },
+        "electronic": {
+            "alias": "online",
+            "csl": "webpage",
+            "source": "biblatex"
+        },
+        "entry": {
+            "csl": "entry",
+            "source": "csl"
+        },
+        "entry-dictionary": {
+            "csl": "entry-dictionary",
+            "source": "csl"
+        },
+        "entry-encyclopedia": {
+            "csl": "entry-encyclopedia",
+            "source": "csl"
+        },
+        "eulegislation": {
+            "csl": "legislation",
+            "source": "bath.bst"
+        },
+        "event": {
+            "csl": "event",
+            "source": "csl"
+        },
+        "exhibcatalog": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx"
+        },
+        "figure": {
+            "csl": "figure",
+            "source": "csl"
+        },
+        "footnote": {
+            "csl": null,
+            "source": "apsrev4-2.bst"
+        },
+        "funding": {
+            "csl": null,
+            "source": "biblatex-cv.dbx"
+        },
+        "game": {
+            "csl": "software",
+            "source": "ACM-Reference-Format.bst"
+        },
+        "gitcommit": {
+            "csl": null,
+            "source": "gitlog.dbx"
+        },
+        "govpub": {
+            "csl": "regulation",
+            "source": "thesnumb.bst"
+        },
+        "graphic": {
+            "csl": "graphic",
+            "source": "csl"
+        },
+        "habthesis": {
+            "csl": "thesis",
+            "source": "bestpapers-export.bst"
+        },
+        "heading": {
+            "csl": null,
+            "source": "bookdb.bst"
+        },
+        "hearing": {
+            "csl": "hearing",
+            "source": "csl"
+        },
+        "hidden": {
+            "csl": null,
+            "source": "abntex2-alf.bst"
+        },
+        "image": {
+            "csl": "graphic",
+            "source": "biblatex"
+        },
+        "inarticle": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "inaudio": {
+            "csl": null,
+            "source": "oxalph.dbx"
+        },
+        "inbook": {
+            "csl": "chapter",
+            "source": "bibtex"
+        },
+        "incatalog": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx"
+        },
+        "incollection": {
+            "csl": "chapter",
+            "source": "bibtex"
+        },
+        "incommentary": {
+            "csl": null,
+            "source": "sbl.dbx"
+        },
+        "inexhibcatalog": {
+            "csl": null,
+            "source": "arthistory-bonn.dbx"
+        },
+        "ininarticle": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "ininbook": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "inincollection": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "ininproceedings": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "ininreference": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "inlexicon": {
+            "csl": null,
+            "source": "sbl.dbx"
+        },
+        "inloosecollection": {
+            "csl": "chapter",
+            "source": "resphilosophica.bst"
+        },
+        "inmathesis": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "inmovie": {
+            "csl": null,
+            "source": "oxalph.dbx"
+        },
+        "inmusic": {
+            "csl": null,
+            "source": "oxalph.dbx"
+        },
+        "inphdthesis": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "inpress": {
+            "csl": "article",
+            "notes": "Use for preprints, working papers, and similar works posted on a platform where some level of persistence or stewardship is expected (e.g. arXiv or other preprint repositories, working paper series).",
+            "source": "bjnano.bst"
+        },
+        "inproceedings": {
+            "csl": "paper-conference",
+            "source": "bibtex"
+        },
+        "inreference": {
+            "csl": "entry",
+            "notes": "May also be `entry`, `entry-dictionary` or `entry-encyclopedia`.",
+            "source": "biblatex"
+        },
+        "inserialcollection": {
+            "csl": null,
+            "source": "asmejour.bst"
+        },
+        "internet": {
+            "csl": "webpage",
+            "source": "IEEEtran.bst"
+        },
+        "interview": {
+            "csl": "interview",
+            "source": "csl"
+        },
+        "inthesis": {
+            "csl": null,
+            "source": "bookinother.dbx"
+        },
+        "invideo": {
+            "csl": null,
+            "source": "oxalph.dbx"
+        },
+        "journalpart": {
+            "csl": null,
+            "source": "abntex2-alf.bst"
+        },
+        "journals": {
+            "csl": "periodical",
+            "source": "bestpapers-export.bst"
+        },
+        "jurisdiction": {
+            "csl": "legal_case",
+            "notes": "\"Court decisions, court recordings, and similar things.\"",
+            "source": "biblatex"
+        },
+        "jurthesis": {
+            "csl": "thesis",
+            "source": "jurabib.bst"
+        },
+        "legadminmaterial": {
+            "csl": "regulation",
+            "source": "apa.dbx"
+        },
+        "legal": {
+            "csl": "treaty",
+            "notes": "\"Legal documents such as treaties.\"",
+            "source": "biblatex"
+        },
+        "legal_case": {
+            "csl": "legal_case",
+            "source": "csl"
+        },
+        "legislation": {
+            "csl": "legislation",
+            "notes": "\"Laws, bills, legislative proposals, and similar things.\" May also be `bill`",
+            "source": "biblatex"
+        },
+        "legmaterial": {
+            "csl": "legislation",
+            "source": "apa.dbx"
+        },
+        "letter": {
+            "csl": "personal_communication",
+            "source": "biblatex"
+        },
+        "letters": {
+            "csl": "personal_communication",
+            "source": "apa6.dbx"
+        },
+        "lexicon": {
+            "csl": "book",
+            "source": "jurabib.bst"
+        },
+        "majorthesis": {
+            "csl": "thesis",
+            "source": "achicago.bst"
+        },
+        "manual": {
+            "csl": "report",
+            "notes": "CSL's `report` is also used for manuals and similar technical documentation (e.g. a software, instrument, or test manual).",
+            "source": "bibtex"
+        },
+        "manuscript": {
+            "csl": "manuscript",
+            "source": "manuscripts-shared.dbx"
+        },
+        "map": {
+            "csl": "map",
+            "source": "vancouver.bst"
+        },
+        "mastersthesis": {
+            "alias": "thesis",
+            "csl": "thesis",
+            "source": "bibtex"
+        },
+        "masterthesis": {
+            "csl": "thesis",
+            "source": "asaetr.bst"
+        },
+        "minorthesis": {
+            "csl": "thesis",
+            "source": "achicago.bst"
+        },
+        "misc": {
+            "csl": "document",
+            "notes": "New in CSL v1.0.2.",
+            "source": "bibtex"
+        },
+        "mlasource": {
+            "csl": null,
+            "source": "mla.dbx"
+        },
+        "monograph": {
+            "csl": "book",
+            "source": "gbt7714-numerical.bst"
+        },
+        "monography": {
+            "csl": "book",
+            "source": "abntex2-alf.bst"
+        },
+        "motion_picture": {
+            "csl": "motion_picture",
+            "source": "csl"
+        },
+        "movie": {
+            "csl": "motion_picture",
+            "source": "biblatex"
+        },
+        "music": {
+            "csl": "song",
+            "source": "biblatex"
+        },
+        "musical_score": {
+            "csl": "musical_score",
+            "source": "csl"
+        },
+        "mvbook": {
+            "csl": "book",
+            "source": "biblatex"
+        },
+        "mvcollection": {
+            "csl": "book",
+            "source": "biblatex"
+        },
+        "mvcommentary": {
+            "csl": null,
+            "source": "sbl.dbx"
+        },
+        "mvlexicon": {
+            "csl": null,
+            "source": "sbl.dbx"
+        },
+        "mvproceedings": {
+            "csl": "book",
+            "source": "biblatex"
+        },
+        "mvreference": {
+            "csl": "book",
+            "source": "biblatex"
+        },
+        "nameonly": {
+            "csl": null,
+            "source": "apa.dbx"
+        },
+        "news": {
+            "csl": "article-newspaper",
+            "source": "seuthesix.bst"
+        },
+        "newsarticle": {
+            "csl": "article-newspaper",
+            "source": "apa6.dbx"
+        },
+        "newspaper": {
+            "csl": "article-newspaper",
+            "source": "gbt7714-numerical.bst"
+        },
+        "online": {
+            "csl": "webpage",
+            "source": "biblatex"
+        },
+        "other": {
+            "csl": null,
+            "source": "bjnano.bst"
+        },
+        "pamphlet": {
+            "csl": "pamphlet",
+            "source": "csl"
+        },
+        "paper-conference": {
+            "csl": "paper-conference",
+            "source": "csl"
+        },
+        "patent": {
+            "csl": "patent",
+            "source": "biblatex"
+        },
+        "performance": {
+            "csl": "performance",
+            "notes": "New in CSL v1.0.2.",
+            "source": "biblatex"
+        },
+        "periodical": {
+            "csl": "periodical",
+            "notes": "New in CSL v1.0.2.",
+            "source": "biblatex"
+        },
+        "personal_communication": {
+            "csl": "personal_communication",
+            "source": "csl"
+        },
+        "phdthesis": {
+            "alias": "thesis",
+            "csl": "thesis",
+            "source": "bibtex"
+        },
+        "post": {
+            "csl": "post",
+            "source": "csl"
+        },
+        "post-weblog": {
+            "csl": "post-weblog",
+            "source": "csl"
+        },
+        "preamble": {
+            "csl": null,
+            "notes": "Special entry type for inserting commands or text in the bbl",
+            "source": "bibtex"
+        },
+        "preprint": {
+            "csl": "article",
+            "notes": "Use for preprints, working papers, and similar works posted on a platform where some level of persistence or stewardship is expected (e.g. arXiv or other preprint repositories, working paper series).",
+            "source": "gbt7714-numerical.bst"
+        },
+        "presentation": {
+            "csl": "speech",
+            "notes": "A speech or other presentation (e.g. a paper, talk, poster, or symposium at a conference).",
+            "source": "apsrev4-2.bst"
+        },
+        "proceedings": {
+            "csl": "book",
+            "source": "bibtex"
+        },
+        "program": {
+            "csl": "software",
+            "source": "ChemCommun.bst"
+        },
+        "reference": {
+            "csl": "book",
+            "source": "biblatex"
+        },
+        "regulation": {
+            "csl": "regulation",
+            "source": "csl"
+        },
+        "report": {
+            "csl": "report",
+            "source": "biblatex"
+        },
+        "repository": {
+            "csl": null,
+            "source": "quantum.bst"
+        },
+        "review": {
+            "csl": "review",
+            "notes": "\"A more specific variant of the `@article` type\"",
+            "source": "biblatex"
+        },
+        "review-book": {
+            "csl": "review-book",
+            "source": "csl"
+        },
+        "school": {
+            "csl": null,
+            "source": "biblatex-cv.dbx"
+        },
+        "seminarpaper": {
+            "csl": null,
+            "source": "sbl.dbx"
+        },
+        "set": {
+            "csl": null,
+            "notes": "Not supported.",
+            "source": "biblatex"
+        },
+        "setup": {
+            "csl": null,
+            "source": "bestpapers-export.bst"
+        },
+        "software": {
+            "csl": "software",
+            "notes": "New in CSL v1.0.2.",
+            "source": "biblatex"
+        },
+        "softwaremodule": {
+            "csl": "software",
+            "source": "software.dbx"
+        },
+        "softwareversion": {
+            "csl": null,
+            "source": "software.dbx"
+        },
+        "song": {
+            "csl": "song",
+            "source": "csl"
+        },
+        "speech": {
+            "csl": "speech",
+            "source": "csl"
+        },
+        "standard": {
+            "csl": "standard",
+            "notes": "New in CSL v1.0.2.",
+            "source": "biblatex"
+        },
+        "string": {
+            "csl": null,
+            "notes": "Special entry type for defining abbreviations",
+            "source": "bibtex"
+        },
+        "student": {
+            "csl": null,
+            "source": "biblatex-cv.dbx"
+        },
+        "suppbook": {
+            "csl": "chapter",
+            "notes": "lossy mapping; \"Supplemental material in a `@book`. This type is closely related to the @inbook entry type. While `@inbook` is primarily intended for a part of a book with its own title (e. g., a single essay in a collection of essays by the same author), this type is provided for elements such as prefaces, introductions, forewords, afterwords, etc. which often have a generic title only. Style guides may require such items to be formatted differently from other `@inbook` items.\"",
+            "source": "biblatex"
+        },
+        "suppcollection": {
+            "csl": "chapter",
+            "notes": "lossy mapping; see `suppbook`",
+            "source": "biblatex"
+        },
+        "suppperiodical": {
+            "csl": "article",
+            "notes": "see `article`",
+            "source": "biblatex"
+        },
+        "talk": {
+            "csl": "speech",
+            "source": "archaeologie.dbx"
+        },
+        "teaching": {
+            "csl": null,
+            "source": "biblatex-cv.dbx"
+        },
+        "techreport": {
+            "alias": "report",
+            "csl": "report",
+            "source": "bibtex"
+        },
+        "techstandard": {
+            "csl": "standard",
+            "notes": "New in CSL v1.0.2.",
+            "source": "udesoftec.bst"
+        },
+        "thesis": {
+            "csl": "thesis",
+            "source": "biblatex"
+        },
+        "treaty": {
+            "csl": "treaty",
+            "source": "csl"
+        },
+        "uklegislation": {
+            "csl": "legislation",
+            "source": "bath.bst"
+        },
+        "unpublished": {
+            "csl": "manuscript",
+            "notes": "For unpublished works not made widely available or only hosted on personal websites, use manuscript",
+            "source": "bibtex"
+        },
+        "video": {
+            "csl": "motion_picture",
+            "source": "biblatex"
+        },
+        "webpage": {
+            "csl": "webpage",
+            "source": "IEEEtran.bst"
+        },
+        "website": {
+            "csl": "webpage",
+            "source": "quantum.bst"
+        },
+        "www": {
+            "alias": "online",
+            "csl": "webpage",
+            "source": "biblatex"
+        },
+        "xdata": {
+            "csl": null,
+            "notes": "special item type: \"`@xdata` entries hold data which may be inherited by other entries using the xdata field. Entries of this type only serve as data containers; they may not be cited or added to the bibliography.\"",
+            "source": "biblatex"
+        }
     }
 }
