@@ -1520,9 +1520,8 @@ TEST 16: Bibliography contents
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer
 braces):
->  {\cslsetup { class = note, hanging-indent = true, line-spacing = 1,
-entry-spacing = 0, }}
->  {\begin {thebibliography}{}}
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing =
+1, entry-spacing = 0}}
 >  {\bibitem {ITEM-2} Bennett, Frank G., Jr. “Getting Property Right:
 ‘Informal’ Mortgages in the Japanese Courts.” \textit {Pac. Rim L. \&
 Pol’y J.} 18 (August 2009): 463–509.}

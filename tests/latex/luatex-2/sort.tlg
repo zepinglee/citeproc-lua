@@ -16,8 +16,7 @@ TEST 2: Bibliography
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer
 braces):
->  {\cslsetup { class = in-text, line-spacing = 1, entry-spacing = 1, }}
->  {\begin {thebibliography}{}}
+>  {\begin {thebibliography}{index = 1, line-spacing = 1, entry-spacing = 1}}
 >  {\bibitem {ITEM-1} cihla}
 >  {\bibitem {ITEM-5} čáp}
 >  {\bibitem {ITEM-3} hudba}

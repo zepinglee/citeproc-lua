@@ -5,9 +5,8 @@ TEST 1: Bibliography
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer
 braces):
->  {\cslsetup { class = in-text, hanging-indent = true, line-spacing = 2,
-entry-spacing = 0, }}
->  {\begin {thebibliography}{}}
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing =
+2, entry-spacing = 0}}
 >  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of dissent:
 Protest and state power in the media age}. Routledge.}
 >  {\bibitem {ITEM-3} Lamport, L. (1994). \textit {LaTeX: A document

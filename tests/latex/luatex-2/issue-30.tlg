@@ -237,9 +237,8 @@ TEST 3: Bibliography with URL
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer
 braces):
->  {\cslsetup { class = note, hanging-indent = true, line-spacing = 1,
-entry-spacing = 0, }}
->  {\begin {thebibliography}{}}
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing =
+1, entry-spacing = 0}}
 >  {\bibitem {ITEM-1} Doe, John. \textit {Foo \#1 \& 20\% of Bar}, 2007. \url
 {https://abc.zyx/foo%20bar#baz}.}
 >  {\end {thebibliography}}.

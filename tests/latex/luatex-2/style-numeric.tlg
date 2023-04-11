@@ -579,8 +579,8 @@ TEST 16: Bibliography contents
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer
 braces):
->  {\cslsetup { class = in-text, line-spacing = 1, entry-spacing = 0, }}
->  {\begin {thebibliography}{[1]}}
+>  {\begin {thebibliography}{index = 1, line-spacing = 1, entry-spacing = 0,
+widest-label = [1]}}
 >  {\bibitem [{[1]}]{ITEM-1} B. D’Arcus, \textit {Boundaries of dissent:
 Protest and state power in the media age}. Routledge, 2005.}
 >  {\bibitem [{[2]}]{ITEM-2} F. G. Bennett Jr., “Getting property right:
