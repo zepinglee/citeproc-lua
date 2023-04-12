@@ -1,9 +1,10 @@
 # citeproc-lua
 
 [![CTAN](https://img.shields.io/ctan/v/citation-style-language)](https://www.ctan.org/pkg/citation-style-language)
+[![LuaRocks](https://img.shields.io/luarocks/v/zepinglee/citeproc-lua)](https://luarocks.org/modules/zepinglee/citeproc-lua)
 [![GitHub release](https://img.shields.io/github/v/release/zepinglee/citeproc-lua)](https://github.com/zepinglee/citeproc-lua/releases/latest)
 [![GitHub commits](https://img.shields.io/github/commits-since/zepinglee/citeproc-lua/latest)](https://github.com/zepinglee/citeproc-lua/commits/main)
-<!-- [![Actions Status](https://github.com/zepinglee/citeproc-lua/workflows/Test/badge.svg)](https://github.com/zepinglee/citeproc-lua/actions) -->
+[![Automated testing](https://github.com/zepinglee/citeproc-lua/actions/workflows/test.yaml/badge.svg)](https://github.com/zepinglee/citeproc-lua/actions/workflows/test.yaml)
 
 The [Citation Style Language](https://citationstyles.org/) (CSL) is an
 XML-based language that defines the formats of citations and bibliography.
@@ -41,14 +42,14 @@ A full LaTeX example is in the [`examples/`](examples) directory.
 \end{document}
 ```
 
-- Compiling with LuaTeX
+- For LuaTeX
 
 ```bash
 lualatex example.tex
 lualatex example.tex
 ```
 
-- Compiling with other TeX engines
+- For other TeX engines
 
 ```bash
 pdflatex example.tex
@@ -71,10 +72,10 @@ The `citation-style-language` requires the following packages:
 Make sure they are already installed in the TeX distribution.
 
 ```bash
-  git clone https://github.com/zepinglee/citeproc-lua  # Clone the repository
-  cd citeproc-lua
-  git submodule update --init --remote                 # Fetch submodules
-  l3build install
+git clone https://github.com/zepinglee/citeproc-lua  # Clone the repository
+cd citeproc-lua
+git submodule update --init --remote                 # Fetch submodules
+l3build install
 ```
 
 These commands install the package files to `TEXMFHOME` which is usually

@@ -10,7 +10,7 @@ source = {
 }
 
 if package_version == "dev" then
-   source.branch = "luarocks"
+   source.branch = "main"
 else
    source.tag = "v" .. package_version
 end

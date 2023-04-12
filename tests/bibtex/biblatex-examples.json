@@ -191,7 +191,7 @@
 		"language": "en-US",
 		"note": "An <code>\\texttt{</code><span class=\"nocase\">article</span><code>}</code> entry cited as an excerpt from a <code>\\texttt{</code><span class=\"nocase\">collection</span><code>}</code> entry. Note the format of the <code>\\texttt{</code><span class=\"nocase\">related</span><code>}</code> and <code>\\texttt{</code><span class=\"nocase\">relatedstring</span><code>}</code> fields",
 		"page": "212-225",
-		"title": "Hemingway’s Style and <span class=\"nocase\">Jake’s</span> narration",
+		"title": "Hemingway’s style and <span class=\"nocase\">Jake’s</span> narration",
 		"volume": "4"
 	},
 	{
@@ -2080,7 +2080,7 @@
 		"publisher": "The Catholic University of America Press",
 		"publisher-place": "Washington, D.C.",
 		"title": "Aristotle’s Theory of the Intellect and its Interpretation by <span class=\"nocase\">Averroes</span>",
-		"title-short": "Aristotle’s Theory of the intellect"
+		"title-short": "Aristotle’s theory of the intellect"
 	},
 	{
 		"id": "pines",

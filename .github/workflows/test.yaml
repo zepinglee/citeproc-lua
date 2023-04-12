@@ -1,4 +1,4 @@
-name: Automated testing
+name: Automated tests
 
 on:
   push:
