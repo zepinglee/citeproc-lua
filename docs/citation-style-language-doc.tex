@@ -12,10 +12,14 @@
 
 \NewDocumentCommand\opt{m}{\texttt{#1}}
 
+\lstdefinestyle{plain}{
+  basicstyle = \ttfamily\small,
+  basewidth  = 0.51em,
+}
+
 \lstnewenvironment{LaTeXdemo}{
   \lstset{
-    basicstyle = \ttfamily\small,
-    basewidth  = 0.51em,
+    style      = plain,
     frame      = single,
     gobble     = 2,
     language   = [LaTeX]TeX,
@@ -24,8 +28,7 @@
 
 \lstnewenvironment{bash}{
   \lstset{
-    basicstyle = \ttfamily\small,
-    basewidth  = 0.51em,
+    style      = plain,
     % gobble     = 2,
     language   = bash,
   }
@@ -266,6 +269,49 @@ Note that only UTF-8 encoding is supported in the \meta{resource} file.
   \addbibresource{bib-file.bib}
 \end{LaTeXdemo}
 
+
+CSL-JSON is the bibliographic metadata format for CSL styles.
+Below is an example entry in this format. Each entry must have these two
+fields: \texttt{id} and \texttt{type} and the former is the entry keys that
+appears in the \cs{cite} command. The accepted entry types and fields are
+listed in Appendix \ref{sec:entry-types} and Appendix \ref{sec:entry-fields},
+respectively. In most cases, one does not manually write CSL-JSON but exports
+from a reference manager like Zotero or Mendeley.
+
+\begin{lstlisting}[style=plain,gobble=2,frame=single]
+  {
+    "id": "ITEM-1",
+    "type": "book",
+    "author": [
+      {
+        "family": "D'Arcus",
+        "given": "Bruce"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [ 2005, 11, 22 ]
+      ]
+    },
+    "publisher": "Routledge",
+    "title": "Boundaries of dissent: Protest and state power in the media age"
+  }
+\end{lstlisting}
+
+The traditional Bib(La)TeX format is also supported. It's internally converted
+to CSL-JSON format. However there are some differences.
+
+In a Bib(La)TeX database, the titles (includding \texttt{booktitle}s) should
+be written in title case with propper words enclosed with braces (e.g.,
+“\texttt{The \{Feynman\} Lectures on Physics}”). However CSL requires the
+titles stored in sentence case (“\texttt{The Feynman lectures on physics}”).
+By default the BibTeX-to-CSL translation does this case conversion.
+It checks the original case and skips the titles that are already in sentence
+case. For example, the lowercase word “lectures” in “The Feynman lectures on
+physics” indicates the whole title is in sentence case and citeproc-lua does
+not convert it. This behavior can be turned off by specifying
+\opt{check-sentence-case = false} in the optional argument of
+\cs{addbibresource}.
 
 
 \section{Citation commands}
@@ -614,6 +660,655 @@ so that I can give it a priority.
 
   \item Distinguish dropping and non-dropping particles in names.
 \end{itemize}
+
+
+
+\appendix
+
+\section{CSL-JSON entry types}
+\label{sec:entry-types}
+
+The following content is taken from
+\url{https://docs.citationstyles.org/en/stable/specification.html#appendix-iii-types}.
+
+\begin{description}
+  \item[article]
+    A self-contained work made widely available but not published in a
+    journal or other publication;\\
+    Use for preprints, working papers, and similar works posted on a
+    platform where some level of persistence or stewardship is expected
+    (e.g. arXiv or other preprint repositories, working paper series);\\
+    For unpublished works not made widely available or only hosted on
+    personal websites, use \texttt{manuscript}
+
+  \item[article-journal]
+    An article published in an academic journal
+
+  \item[article-magazine]
+    An article published in a non-academic magazine
+
+  \item[article-newspaper]
+    An article published in a newspaper
+
+  \item[bill]
+    A proposed piece of legislation
+
+  \item[book]
+    A book or similar work;\\
+    Can be an authored book or an edited collection of self-contained
+    chapters;\\
+    Can be a physical book or an ebook;\\
+    The format for an ebook may be specified using \texttt{medium};\\
+    Can be a single-volume work, a multivolume work, or one volume of a
+    multivolume work;\\
+    If a \texttt{container-title} is present, the item is interpreted as a
+    book republished in a collection or anthology;\\
+    Also used for whole conference proceedings volumes or exhibition
+    catalogs by specifying \texttt{event} and related variables
+
+  \item[broadcast]
+    A recorded work broadcast over an electronic medium (e.g. a radio
+    broadcast, a television show, a podcast);\\
+    The type of broadcast may be specified using \texttt{genre};\\
+    If \texttt{container-title} is present, the item is interpreted as an
+    episode contained within a larger broadcast series (e.g. an episode in a
+    television show or an episode of a podcast)
+
+  \item[chapter]
+    A part of a book cited separately from the book as a whole (e.g. a
+    chapter in an edited book);\\
+    Also used for introductions, forewords, and similar supplemental
+    components of a book
+
+  \item[classic]
+    A classical or ancient work, sometimes cited using a common abbreviation
+
+  \item[collection]
+    An archival collection in a museum or other institution
+
+  \item[dataset]
+    A data set or a similar collection of (mostly) raw data
+
+  \item[document]
+    A catch-all category for items not belonging to other types;\\
+    Use a more specific type when appropriate
+
+  \item[entry]
+    An entry in a database, directory, or catalog;\\
+    For entries in a dictionary, use \texttt{entry-dictionary};\\
+    For entries in an encyclopedia, use \texttt{entry-encyclopedia}
+
+  \item[entry-dictionary]
+    An entry in a dictionary
+
+  \item[entry-encyclopedia]
+    An entry in an encyclopedia or similar reference work
+
+  \item[event]
+    An organized event (e.g., an exhibition or conference);\\
+    Use for direct citations to the event, rather than to works contained
+    within an event (e.g. a \texttt{presentation} in a conference, a
+    \texttt{graphic} in an exhibition) or based on an event (e.g. a
+    \texttt{paper-conference} published in a proceedings, an exhibition
+    catalog)
+
+  \item[figure]
+    A illustration or representation of data, typically as part of a journal
+    article or other larger work;\\
+    May be in any format (e.g. image, video, audio recording, 3D model);\\
+    The format of the item can be specified using \texttt{medium}
+
+  \item[graphic]
+    A still visual work;\\
+    Can be used for artwork or other works (e.g. journalistic or historical
+    photographs);\\
+    Can be used for any still visual work (e.g. photographs, drawings,
+    paintings, sculptures, clothing);\\
+    The format of the item can be specified using \texttt{medium}
+
+  \item[hearing]
+    A hearing by a government committee or transcript thereof
+
+  \item[interview]
+    An interview of a person;\\
+    Also used for a recording or transcript of an interview; \texttt{author}
+    is interpreted as the interviewee
+
+  \item[legal\_case]
+    A legal case
+
+  \item[legislation]
+    A law or resolution enacted by a governing body
+
+  \item[manuscript]
+    An unpublished manuscript;\\
+    Use for both modern unpublished works and classical manuscripts;\\
+    For working papers, preprints, and similar works posted to a repository,
+    use \texttt{article}
+
+  \item[map]
+    A geographic map
+
+  \item[motion\_picture]
+    A video or visual recording;\\
+    If a \texttt{container-title} is present, the item is interpreted as a
+    part contained within a larger compilation of recordings (e.g. a part of
+    a multipart documentary))
+
+  \item[musical\_score]
+    The printed score for a piece of music;\\
+    For a live performance of the music, use \texttt{performance};\\
+    For recordings of the music, use \texttt{song} (for audio recordings) or
+    \texttt{motion\_picture} (for video recordings)
+
+  \item[pamphlet]
+    A fragment, historical document, or other unusually-published or
+    ephemeral work (e.g. a sales brochure)
+
+  \item[paper-conference]
+    A paper formally published in conference proceedings;\\
+    For papers presented at a conference, but not published in a
+    proceedings, use \texttt{speech}
+
+  \item[patent]
+    A patent for an invention
+
+  \item[performance]
+    A live performance of an artistic work;\\
+    For non-artistic presentations, use \texttt{speech};\\
+    For recordings of a performance, use \texttt{song} or
+    \texttt{motion\_picture}
+
+  \item[periodical]
+    A full issue or run of issues in a periodical publication (e.g. a
+    special issue of a journal)
+
+  \item[personal\_communication]
+    Personal communications between multiple parties;\\
+    May be unpublished (e.g. private correspondence between two researchers)
+    or collected/published (e.g. a letter published in a collection)
+
+  \item[post]
+    A post on a online forum, social media platform, or similar platform;\\
+    Also used for comments posted to online items
+
+  \item[post-weblog]
+    A blog post
+
+  \item[regulation]
+    An administrative order from any level of government
+
+  \item[report]
+    A technical report, government report, white paper, brief, or similar
+    work distributed by an institution;\\
+    Also used for manuals and similar technical documentation (e.g. a
+    software, instrument, or test manual);\\
+    If a \texttt{container-title} is present, the item is interpreted as a
+    chapter contained within a larger report
+
+  \item[review]
+    A review of an item other than a book (e.g. a film review, posted peer
+    review of an article);\\
+    If \texttt{reviewed-title} is absent, \texttt{title} is taken to be the
+    title of the reviewed item
+
+  \item[review-book]
+    A review of a book;\\
+    If \texttt{reviewed-title} is absent, \texttt{title} is taken to be the
+    title of the reviewed book
+
+  \item[software]
+    A computer program, app, or other piece of software
+
+  \item[song]
+    An audio recording;\\
+    Can be used for any audio recording (not only music);\\
+    If a \texttt{container-title} is present, the item is interpreted as a
+    track contained within a larger album or compilation of recordings
+
+  \item[speech]
+    A speech or other presentation (e.g. a paper, talk, poster, or symposium
+    at a conference);\\
+    Use \texttt{genre} to specify the type of presentation;\\
+    Use \texttt{event} to indicate the event where the presentation was made
+    (e.g. the conference name);\\
+    Use \texttt{container-title} if the presentation is part of a larger
+    session (e.g. a paper in a symposium);\\
+    For papers published in conference proceedings, use
+    \texttt{paper-conference};\\
+    For artistic performances, use \texttt{performance}
+
+  \item[standard]
+    A technical standard or similar set of rules or norms
+
+  \item[thesis]
+    A thesis written to satisfy requirements for a degree;\\
+    Use \texttt{genre} to specify the type of thesis
+
+  \item[treaty]
+    A treaty agreement among political authorities
+
+  \item[webpage]
+    A website or page on a website;\\
+    Intended for sources which are intrinsically online; use a more specific
+    type when appropriate (e.g. \texttt{article-journal},
+    \texttt{post-weblog}, \texttt{report}, \texttt{entry});\\
+    If a \texttt{container-title} is present, the item is interpreted as a
+    page contained within a larger website
+
+\end{description}
+
+
+
+\section{CSL-JSON entry fields}
+\label{sec:entry-fields}
+
+\subsection{Standard Variables}
+
+The following content is taken from
+\url{https://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables}.
+
+\begin{description}
+  \item[abstract]
+    Abstract of the item (e.g. the abstract of a journal article)
+
+  \item[annote]
+    Short markup, decoration, or annotation to the item (e.g., to indicate
+    items included in a review);\\
+    For descriptive text (e.g., in an annotated bibliography), use
+    \texttt{note} instead
+
+  \item[archive]
+    Archive storing the item
+
+  \item[archive\_collection]
+    Collection the item is part of within an archive
+
+  \item[archive\_location]
+    Storage location within an archive (e.g. a box and folder number)
+
+  \item[archive-place]
+    Geographic location of the archive
+
+  \item[authority]
+    Issuing or judicial authority (e.g. “USPTO” for a patent, “Fairfax
+    Circuit Court” for a legal case)
+
+  \item[call-number]
+    Call number (to locate the item in a library)
+
+  \item[citation-key]
+    Identifier of the item in the input data file (analogous to BibTeX
+    entrykey);\\
+    Use this variable to facilitate conversion between word-processor and
+    plain-text writing systems;\\
+    For an identifer intended as formatted output label for a citation (e.g.
+    “Ferr78”), use \texttt{citation-label} instead
+
+  \item[citation-label]
+    Label identifying the item in in-text citations of label styles (e.g.
+    “Ferr78”);\\
+    May be assigned by the CSL processor based on item metadata;\\
+    For the identifier of the item in the input data file, use
+    \texttt{citation-key} instead
+
+  \item[collection-title]
+    Title of the collection holding the item (e.g. the series title for a
+    book; the lecture series title for a presentation)
+
+  \item[container-title]
+    Title of the container holding the item (e.g. the book title for a book
+    chapter, the journal title for a journal article; the album title for a
+    recording; the session title for multi-part presentation at a
+    conference)
+
+  \item[container-title-short]
+    Short/abbreviated form of \texttt{container-title};\\
+    Deprecated; use \texttt{variable="container-title"\ form="short"}
+    instead
+
+  \item[dimensions]
+    Physical (e.g. size) or temporal (e.g. running time) dimensions of the
+    item
+
+  \item[division]
+    Minor subdivision of a court with a \texttt{jurisdiction} for a legal
+    item
+
+  \item[DOI]
+    Digital Object Identifier (e.g. “10.1128/AEM.02591-07”)
+
+  \item[event]
+    Deprecated legacy variant of \texttt{event-title}
+
+  \item[event-title]
+    Name of the event related to the item (e.g. the conference name when
+    citing a conference paper; the meeting where presentation was made)
+
+  \item[event-place]
+    Geographic location of the event related to the item (e.g. “Amsterdam,
+    The Netherlands”)
+
+  \item[genre]
+    Type, class, or subtype of the item (e.g. “Doctoral dissertation” for a
+    PhD thesis; “NIH Publication” for an NIH technical report);\\
+    Do not use for topical descriptions or categories (e.g. “adventure” for
+    an adventure movie)
+
+  \item[ISBN]
+    International Standard Book Number (e.g. “978-3-8474-1017-1”)
+
+  \item[ISSN]
+    International Standard Serial Number
+
+  \item[jurisdiction]
+    Geographic scope of relevance (e.g. “US” for a US patent; the court
+    hearing a legal case)
+
+  \item[keyword]
+    Keyword(s) or tag(s) attached to the item
+
+  \item[language]
+    The language of the item;\\
+    Should be entered as an ISO 639-1 two-letter language code (e.g. “en”,
+    “zh”), optionally with a two-letter locale code (e.g. “de-DE”, “de-AT”)
+
+  \item[license]
+    The license information applicable to an item (e.g. the license an
+    article or software is released under; the copyright information for an
+    item; the classification status of a document)
+
+  \item[medium]
+    Description of the item\textquotesingle s format or medium (e.g. “CD”,
+    “DVD”, “Album”, etc.)
+
+  \item[note]
+    Descriptive text or notes about an item (e.g. in an annotated
+    bibliography)
+
+  \item[original-publisher]
+    Original publisher, for items that have been republished by a different
+    publisher
+
+  \item[original-publisher-place]
+    Geographic location of the original publisher (e.g. “London, UK”)
+
+  \item[original-title]
+    Title of the original version
+    % (e.g. “Война и мир”, the untranslated Russian title of “War and Peace”)
+
+  \item[part-title]
+    Title of the specific part of an item being cited
+
+  \item[PMCID]
+    PubMed Central reference number
+
+  \item[PMID]
+    PubMed reference number
+
+  \item[publisher]
+    Publisher
+
+  \item[publisher-place]
+    Geographic location of the publisher
+
+  \item[references]
+    Resources related to the procedural history of a legal case or
+    legislation;\\
+    Can also be used to refer to the procedural history of other items (e.g.
+    “Conference canceled” for a presentation accepted as a conference that
+    was subsequently canceled; details of a retraction or correction notice)
+
+  \item[reviewed-genre]
+    Type of the item being reviewed by the current item (e.g. book, film)
+
+  \item[reviewed-title]
+    Title of the item reviewed by the current item
+
+  \item[scale]
+    Scale of e.g. a map or model
+
+  \item[source]
+    Source from whence the item originates (e.g. a library catalog or
+    database)
+
+  \item[status]
+    Publication status of the item (e.g. “forthcoming”; “in press”; “advance
+    online publication”; “retracted”)
+
+  \item[title]
+    Primary title of the item
+
+  \item[title-short]
+    Short/abbreviated form of \texttt{title};\\
+    Deprecated; use \texttt{variable="title"\ form="short"} instead
+
+  \item[URL]
+    Uniform Resource Locator (e.g.
+    "\url{https://aem.asm.org/cgi/content/full/74/9/2766}")
+
+  \item[volume-title]
+    Title of the volume of the item or container holding the item;\\
+    Also use for titles of periodical special issues, special sections, and
+    the like
+
+  \item[year-suffix]
+    Disambiguating year suffix in author-date styles (e.g. “a” in “Doe,
+    1999a”)
+
+\end{description}
+
+
+\subsection{Number Variables}
+
+Number variables are a subset of the Standard Variables.
+
+\begin{description}
+  \item[chapter-number]
+    Chapter number (e.g. chapter number in a book; track number on an album)
+
+  \item[citation-number]
+    Index (starting at 1) of the cited reference in the bibliography
+    (generated by the CSL processor)
+
+  \item[collection-number]
+    Number identifying the collection holding the item (e.g. the series
+    number for a book)
+
+  \item[edition]
+    (Container) edition holding the item (e.g. “3” when citing a chapter in
+    the third edition of a book)
+
+  \item[first-reference-note-number]
+    Number of a preceding note containing the first reference to the item;\\
+    Assigned by the CSL processor;\\
+    Empty in non-note-based styles or when the item hasn\textquotesingle t
+    been cited in any preceding notes in a document
+
+  \item[issue]
+    Issue number of the item or container holding the item (e.g. “5” when
+    citing a journal article from journal volume 2, issue 5);\\
+    Use \texttt{volume-title} for the title of the issue, if any
+
+  \item[locator]
+    A cite-specific pinpointer within the item (e.g. a page number within a
+    book, or a volume in a multi-volume work);\\
+    Must be accompanied in the input data by a label indicating the locator
+    type (see the Locators term list), which
+    determines which term is rendered by \texttt{cs:label} when the
+    \texttt{locator} variable is selected.
+
+  \item[number]
+    Number identifying the item (e.g. a report number)
+
+  \item[number-of-pages]
+    Total number of pages of the cited item
+
+  \item[number-of-volumes]
+    Total number of volumes, used when citing multi-volume books and such
+
+  \item[page]
+    Range of pages the item (e.g. a journal article) covers in a container
+    (e.g. a journal issue)
+
+  \item[page-first]
+    First page of the range of pages the item (e.g. a journal article)
+    covers in a container (e.g. a journal issue)
+
+  \item[part-number]
+    Number of the specific part of the item being cited (e.g. part 2 of a
+    journal article);\\
+    Use \texttt{part-title} for the title of the part, if any
+
+  \item[printing-number]
+    Printing number of the item or container holding the item
+
+  \item[section]
+    Section of the item or container holding the item (e.g. “§2.0.1” for a
+    law; “politics” for a newspaper article)
+
+  \item[supplement-number]
+    Supplement number of the item or container holding the item (e.g. for
+    secondary legal items that are regularly updated between editions)
+
+  \item[version]
+    Version of the item (e.g. “2.0.9” for a software program)
+
+  \item[volume]
+    Volume number of the item (e.g. “2” when citing volume 2 of a book) or
+    the container holding the item (e.g. “2” when citing a chapter from
+    volume 2 of a book);\\
+    Use \texttt{volume-title} for the title of the volume, if any
+
+\end{description}
+
+
+\subsection{Date Variables}
+
+\begin{description}
+  \item[accessed]
+    Date the item has been accessed
+
+  \item[available-date]
+    Date the item was initially available (e.g. the online publication date
+    of a journal article before its formal publication date; the date a
+    treaty was made available for signing)
+
+  \item[event-date]
+    Date the event related to an item took place
+
+  \item[issued]
+    Date the item was issued/published
+
+  \item[original-date]
+    Issue date of the original version
+
+  \item[submitted]
+    Date the item (e.g. a manuscript) was submitted for publication
+
+\end{description}
+
+
+\subsection{Name Variables}
+
+\begin{description}
+  \item[author]
+    Author
+
+  \item[chair]
+    The person leading the session containing a presentation (e.g. the
+    organizer of the \texttt{container-title} of a \texttt{speech})
+
+  \item[collection-editor]
+    Editor of the collection holding the item (e.g. the series editor for a
+    book)
+
+  \item[compiler]
+    Person compiling or selecting material for an item from the works of
+    various persons or bodies (e.g. for an anthology)
+
+  \item[composer]
+    Composer (e.g. of a musical score)
+
+  \item[container-author]
+    Author of the container holding the item (e.g. the book author for a
+    book chapter)
+
+  \item[contributor]
+    A minor contributor to the item; typically cited using “with” before the
+    name when listed in a bibliography
+
+  \item[curator]
+    Curator of an exhibit or collection (e.g. in a museum)
+
+  \item[director]
+    Director (e.g. of a film)
+
+  \item[editor]
+    Editor
+
+  \item[editorial-director]
+    Managing editor (“Directeur de la Publication” in French)
+
+  \item[editor-translator]
+    Combined editor and translator of a work;\\
+    The citation processory must be automatically generate if
+    \texttt{editor} and \texttt{translator} variables are identical;\\
+    May also be provided directly in item data
+
+  \item[executive-producer]
+    Executive producer (e.g. of a television series)
+
+  \item[guest]
+    Guest (e.g. on a TV show or podcast)
+
+  \item[host]
+    Host (e.g. of a TV show or podcast)
+
+  \item[illustrator]
+    Illustrator (e.g. of a children\textquotesingle s book or graphic novel)
+
+  \item[interviewer]
+    Interviewer (e.g. of an interview)
+
+  \item[narrator]
+    Narrator (e.g. of an audio book)
+
+  \item[organizer]
+    Organizer of an event (e.g. organizer of a workshop or conference)
+
+  \item[original-author]
+    The original creator of a work (e.g. the form of the author name listed
+    on the original version of a book; the historical author of a work; the
+    original songwriter or performer for a musical piece; the original
+    developer or programmer for a piece of software; the original author of
+    an adapted work such as a book adapted into a screenplay)
+
+  \item[performer]
+    Performer of an item (e.g. an actor appearing in a film; a muscian
+    performing a piece of music)
+
+  \item[producer]
+    Producer (e.g. of a television or radio broadcast)
+
+  \item[recipient]
+    Recipient (e.g. of a letter)
+
+  \item[reviewed-author]
+    Author of the item reviewed by the current item
+
+  \item[script-writer]
+    Writer of a script or screenplay (e.g. of a film)
+
+  \item[series-creator]
+    Creator of a series (e.g. of a television series)
+
+  \item[translator]
+    Translator
+
+\end{description}
+
+
 
 
 \end{documentation}

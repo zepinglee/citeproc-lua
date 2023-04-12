@@ -1,0 +1,4316 @@
+\hypertarget{csl-1.0.2-specification}{%
+\section{CSL 1.0.2 Specification}\label{csl-1.0.2-specification}}
+
+Principal Authors \href{https://twitter.com/rintzezelle}{Rintze M.
+Zelle, PhD}, \href{https://twitter.com/bmwiernik}{Brenton M. Wiernik},
+Frank G. Bennett, Jr., Bruce D\textquotesingle Arcus, Denis Maier
+
+with additional contributions from Julien Gonzalez, Sebastian Karcher,
+Sylvester Keil, Cormac Relf, Lars Willighagen, and other CSL
+contributors.
+
+\includegraphics{/media/cc-by-sa-80x15.png}\_\\
+This work is licensed under a
+\href{https://creativecommons.org/licenses/by-sa/4.0/}{Creative Commons
+Attribution-ShareAlike 4.0 International License}.
+
+\textbf{Table of Contents}
+
+\hypertarget{introduction}{%
+\subsection{Introduction}\label{introduction}}
+
+The Citation Style Language (CSL) is an XML-based format to describe the
+formatting of citations, notes and bibliographies, offering:
+
+\begin{itemize}
+\tightlist
+\item
+  An open format
+\item
+  Compact and robust styles
+\item
+  Extensive support for style requirements
+\item
+  Automatic style localization
+\item
+  Infrastructure for style distribution and updating
+\item
+  Thousands of freely available styles (Creative Commons BY-SA licensed)
+\end{itemize}
+
+For additional documentation, the CSL schema, styles, and locales, visit
+the CSL project home,
+\href{http://citationstyles.org}{citationstyles.org}.
+
+\hypertarget{terminology}{%
+\subsubsection{Terminology}\label{terminology}}
+
+The key words MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD
+NOT, RECOMMENDED, MAY, and OPTIONAL, are to be interpreted as described
+in \href{http://tools.ietf.org/html/rfc2119}{IETF RFC 2119}.
+
+\hypertarget{namespacing}{%
+\subsection{Namespacing}\label{namespacing}}
+
+The CSL \href{http://en.wikipedia.org/wiki/XML_Namespace}{XML namespace
+URI} is "\url{http://purl.org/net/xbiblio/csl}". The namespace prefix
+\texttt{cs:} is used throughout this specification when referring to CSL
+elements, but is generally omitted in favor of a default namespace
+declaration (set with the \texttt{xmlns} attribute) on the root
+\texttt{cs:style} or \texttt{cs:locale} element.
+
+\hypertarget{whitespace-handling}{%
+\subsection{Whitespace Handling}\label{whitespace-handling}}
+
+CSL styles are valid XML, but CSL processors MUST NOT normalize
+attribute values by trimming leading or trailing whitespace from
+attributes which define text that is intended for output:
+
+\begin{itemize}
+\tightlist
+\item
+  after-collapse-delimiter
+\item
+  cite-group-delimiter
+\item
+  delimiter
+\item
+  initialize-with
+\item
+  name-delimiter
+\item
+  names-delimiter
+\item
+  prefix
+\item
+  range-delimiter
+\item
+  sort-separator
+\item
+  suffix
+\item
+  year-suffix-delimiter
+\item
+  value
+\end{itemize}
+
+\hypertarget{file-types}{%
+\subsection{File Types}\label{file-types}}
+
+There are three types of CSL files: independent and dependent styles
+(both types use the ".csl" extension), and locale files (named
+"locales-xx-XX.xml", where "xx-XX" is a language dialect, e.g. "en-US"
+for American English).
+
+\hypertarget{independent-styles}{%
+\subsubsection{Independent Styles}\label{independent-styles}}
+
+Independent styles contain formatting instructions for citations, notes
+and bibliographies. While mostly self-contained, they rely on locale
+files for (default) localization data.
+
+\hypertarget{dependent-styles}{%
+\subsubsection{Dependent Styles}\label{dependent-styles}}
+
+A dependent style is an alias for an independent style. Its contents are
+limited to style metadata, and doesn\textquotesingle t include any
+formatting instructions (the sole exception is that dependent styles can
+specify an overriding style locale). By linking dependent styles for
+journals that share the same citation style (e.g., "Nature
+Biotechnology", "Nature Nanotechnology", etc.) to a single independent
+style (e.g., "Nature Journals"), there is no need to duplicate
+formatting instructions.
+
+\hypertarget{locale-files}{%
+\subsubsection{Locale Files}\label{locale-files}}
+
+Each locale file contains a set of localization data (term translations,
+localized date formats, and grammar options) for a particular language
+dialect.
+
+\hypertarget{xml-declaration}{%
+\subsection{XML Declaration}\label{xml-declaration}}
+
+Each style or locale should begin with an XML declaration, specifying
+the XML version and character encoding. In most cases, the declaration
+will be:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{\textless{}?xml}\OtherTok{ version=}\StringTok{"1.0"}\OtherTok{ encoding=}\StringTok{"UTF{-}8"}\FunctionTok{?\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{styles---structure}{%
+\subsection{Styles - Structure}\label{styles---structure}}
+
+\hypertarget{the-root-element---csstyle}{%
+\subsubsection{\texorpdfstring{The Root Element -
+\texttt{cs:style}}{The Root Element - cs:style}}\label{the-root-element---csstyle}}
+
+The root element of styles is \texttt{cs:style}. In independent styles,
+the element carries the following attributes:
+
+\begin{description}
+\item[\texttt{class}]
+Determines whether the style uses in-text citations (value "in-text") or
+notes ("note").
+\item[\texttt{default-locale} (optional)]
+Sets a default locale for style localization. Value must be a
+\href{http://books.xmlschemata.org/relaxng/ch19-77191.html}{locale
+code}.
+\item[\texttt{version}]
+The CSL version of the style. Must be "1.0" for CSL 1.0-compatible
+styles.
+\end{description}
+
+In addition, \texttt{cs:style} may carry any of the
+\protect\hyperlink{global-options}{global options} and
+\protect\hyperlink{inheritable-name-options}{inheritable name options}.
+
+Of these attributes, only \texttt{version} is required on
+\texttt{cs:style} in dependent styles, while the \texttt{default-locale}
+attribute may be set to specify an overriding style locale. The other
+attributes are allowed but ignored.
+
+An example of \texttt{cs:style} for an independent style, preceded by
+the XML declaration:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{\textless{}?xml}\OtherTok{ version=}\StringTok{"1.0"}\OtherTok{ encoding=}\StringTok{"UTF{-}8"}\FunctionTok{?\textgreater{}}
+\NormalTok{\textless{}}\KeywordTok{style}\OtherTok{ xmlns=}\StringTok{"http://purl.org/net/xbiblio/csl"}\OtherTok{ version=}\StringTok{"1.0"}\OtherTok{ class=}\StringTok{"in{-}text"}\OtherTok{ default{-}locale=}\StringTok{"fr{-}FR"}\NormalTok{/\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{child-elements-of-csstyle}{%
+\subsubsection{\texorpdfstring{Child Elements of
+\texttt{cs:style}}{Child Elements of cs:style}}\label{child-elements-of-csstyle}}
+
+In independent styles, the \texttt{cs:style} root element has the
+following child elements:
+
+\begin{description}
+\item[\texttt{cs:info}]
+Must appear as the first child element of \texttt{cs:style}. Contains
+the metadata describing the style (style name, ID, authors, etc.).
+\item[\texttt{cs:citation}]
+Must appear once. Describes the formatting of in-text citations or
+notes.
+\item[\texttt{cs:bibliography} (optional)]
+May appear once. Describes the formatting of the bibliography.
+\item[\texttt{cs:macro} (optional)]
+May appear multiple times. Macros allow formatting instructions to be
+reused, keeping styles compact and maintainable.
+\item[\texttt{cs:locale} (optional)]
+May appear multiple times. Used to specify (overriding) localization
+data.
+\end{description}
+
+In \protect\hyperlink{dependent-styles}{dependent styles},
+\texttt{cs:style} has only one child element, \texttt{cs:info}.
+
+\hypertarget{info}{%
+\paragraph{Info}\label{info}}
+
+The \texttt{cs:info} element contains the style\textquotesingle s
+metadata. Its structure is based on the
+\href{http://tools.ietf.org/html/rfc4287}{Atom Syndication Format}.
+
+In independent styles, \texttt{cs:info} has the following child
+elements:
+
+\begin{description}
+\item[\texttt{cs:author} and \texttt{cs:contributor} (optional)]
+\texttt{cs:author} and \texttt{cs:contributor}, used to respectively
+acknowledge style authors and contributors, may each be used multiple
+times. Within these elements, the child element \texttt{cs:name} must
+appear once, while \texttt{cs:email} and \texttt{cs:uri} each may appear
+once. These child elements should contain respectively the name, email
+address and URI of the author or contributor.
+\item[\texttt{cs:category} (optional)]
+Styles may be assigned one or more categories. \texttt{cs:category} may
+be used once to describe how in-text citations are rendered, using the
+\texttt{citation-format} attribute set to one of the following values:
+
+\begin{itemize}
+\tightlist
+\item
+  "author-date" - e.g. "\ldots{} (Doe, 1999)"
+\item
+  "author" - e.g. "\ldots{} (Doe)"
+\item
+  "numeric" - e.g. "\ldots{} {[}1{]}"
+\item
+  "label" - e.g. "\ldots{} {[}doe99{]}"
+\item
+  "note" - the citation appears as a footnote or endnote
+\end{itemize}
+
+\texttt{cs:category} may be used multiple times with the \texttt{field}
+attribute, set to one of the discipline categories (see
+\protect\hyperlink{appendix-i---categories}{Appendix I - Categories}),
+to indicates the field(s) for which the style is relevant.
+\item[\texttt{cs:id}]
+Must appear once and contain a stable, unique identifier to establish
+the identity of the style. For historical reasons, existing styles may
+use URIs, but new styles should use a UUID to guarantee stability and
+uniqueness.
+\item[\texttt{cs:issn}/\texttt{cs:eissn}/\texttt{cs:issnl} (optional)]
+The \texttt{cs:issn} element may be used multiple times to indicate the
+ISSN identifier(s) of the journal for which the style was written. The
+\texttt{cs:eissn} and \texttt{cs:issnl} elements may each be used once
+for the eISSN and
+\href{http://www.issn.org/2-22637-What-is-an-ISSN-L.php}{ISSN-L}
+identifiers, respectively.
+\item[\texttt{cs:link} (optional)]
+May be used multiple times. \texttt{cs:link} must carry two attributes:
+\texttt{href}, set to a URI (usually a URL), and \texttt{rel}, whose
+value indicates how the URI relates to the style. The possible values of
+\texttt{rel}:
+
+\begin{itemize}
+\tightlist
+\item
+  "self" - style URI
+\item
+  "template" - URI of the style from which the current style is derived
+\item
+  "documentation" - URI of style documentation
+\end{itemize}
+
+The \texttt{cs:link} element may contain content describing the link.
+\item[\texttt{cs:published} (optional)]
+May appear once. The contents of \texttt{cs:published} must be a
+\href{http://books.xmlschemata.org/relaxng/ch19-77049.html}{timestamp},
+indicating when the style was initially created or made available.
+\item[\texttt{cs:rights} (optional)]
+May appear once. The contents of \texttt{cs:rights} specifies the
+license under which the style file is released. The element may carry a
+\texttt{license} attribute to specify the URI of the license.
+\item[\texttt{cs:summary} (optional)]
+May appear once. The contents of \texttt{cs:summary} gives a (short)
+description of the style.
+\item[\texttt{cs:title}]
+Must appear once. The contents of \texttt{cs:title} should be the name
+of the style as shown to users.
+\item[\texttt{cs:title-short} (optional)]
+May appear once. The contents of \texttt{cs:title-short} should be a
+shortened style name (e.g. "APA").
+\item[\texttt{cs:updated}]
+Must appear once. The contents of \texttt{cs:updated} must be a
+\href{http://books.xmlschemata.org/relaxng/ch19-77049.html}{timestamp}
+that shows when the style was last updated.
+\end{description}
+
+The \texttt{cs:link}, \texttt{cs:rights}, \texttt{cs:summary},
+\texttt{cs:title} and \texttt{cs:title-short} elements may carry a
+\texttt{xml:lang} attribute to specify the language of the
+element\textquotesingle s content (the value must be an
+\href{http://books.xmlschemata.org/relaxng/ch19-77191.html}{xsd:language
+locale code}). For \texttt{cs:link}, the attribute can also be used to
+indicate the language of the link target.
+
+In \protect\hyperlink{dependent-styles}{dependent styles},
+\texttt{cs:link} must be used with \texttt{rel} set to
+"independent-parent", with the URI of the independent parent style set
+on \texttt{href}. In addition, \texttt{cs:link} may not be used with
+\texttt{rel} set to "template".
+
+An example of \texttt{cs:info} for an independent style:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{info}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{title}\NormalTok{\textgreater{}Style Title\textless{}/}\KeywordTok{title}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{id}\NormalTok{\textgreater{}http://www.zotero.org/styles/style{-}title\textless{}/}\KeywordTok{id}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{link}\OtherTok{ href=}\StringTok{"http://www.zotero.org/styles/style{-}title"}\OtherTok{ rel=}\StringTok{"self"}\NormalTok{/\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{link}\OtherTok{ href=}\StringTok{"http://www.example.org/instructions{-}to{-}authors\#references"}\OtherTok{ rel=}\StringTok{"documentation"}\NormalTok{/\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{author}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{name}\NormalTok{\textgreater{}Author Name\textless{}/}\KeywordTok{name}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{email}\NormalTok{\textgreater{}name@example.org\textless{}/}\KeywordTok{email}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{uri}\NormalTok{\textgreater{}http://www.example.org/name\textless{}/}\KeywordTok{uri}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{author}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{category}\OtherTok{ citation{-}format=}\StringTok{"author{-}date"}\NormalTok{/\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{category}\OtherTok{ field=}\StringTok{"zoology"}\NormalTok{/\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{updated}\NormalTok{\textgreater{}2011{-}10{-}29T21:01:24+00:00\textless{}/}\KeywordTok{updated}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{rights}\OtherTok{ license=}\StringTok{"http://creativecommons.org/licenses/by{-}sa/3.0/"}\NormalTok{\textgreater{}This work}
+\NormalTok{  is licensed under a Creative Commons Attribution{-}ShareAlike 3.0 License\textless{}/}\KeywordTok{rights}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{info}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{citation}{%
+\paragraph{Citation}\label{citation}}
+
+The \texttt{cs:citation} element describes the formatting of citations,
+which consist of one or more references ("cites") to bibliographic
+sources. Citations appear in the form of either in-text citations (in
+the author (e.g. "{[}Doe{]}"), author-date ("{[}Doe 1999{]}"), label
+("{[}doe99{]}") or number ("{[}1{]}") format) or notes. The required
+\texttt{cs:layout} child element describes what, and how, bibliographic
+data should be included in the citations (see
+\protect\hyperlink{layout}{Layout}). \texttt{cs:layout} may be preceded
+by a \texttt{cs:sort} element, which can be used to specify how cites
+within a citation should be sorted (see
+\protect\hyperlink{sorting}{Sorting}). The \texttt{cs:citation} element
+may carry attributes for
+\protect\hyperlink{citation-specific-options}{Citation-specific Options}
+and \protect\hyperlink{inheritable-name-options}{Inheritable Name
+Options}. An example of a \texttt{cs:citation} element:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{citation}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{sort}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{key}\OtherTok{ variable=}\StringTok{"citation{-}number"}\NormalTok{/\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{sort}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{text}\OtherTok{ variable=}\StringTok{"citation{-}number"}\NormalTok{/\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{citation}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{A note to CSL processor developers} In note styles, a citation
+is often a sentence by itself. Therefore, the first character of a
+citation should preferably be uppercased when there is no preceding text
+in the note. In all other cases (e.g. when a citation is inserted into
+the middle of a pre-existing footnote), the citation should be printed
+as is.
+
+\hypertarget{bibliography}{%
+\paragraph{Bibliography}\label{bibliography}}
+
+The \texttt{cs:bibliography} element describes the formatting of
+bibliographies, which list one or more bibliographic sources. The
+required \texttt{cs:layout} child element describes how each
+bibliographic entry should be formatted. \texttt{cs:layout} may be
+preceded by a \texttt{cs:sort} element, which can be used to specify how
+references within the bibliography should be sorted (see
+\protect\hyperlink{sorting}{Sorting}). The \texttt{cs:bibliography}
+element may carry attributes for
+\protect\hyperlink{bibliography-specific-options}{Bibliography-specific
+Options} and \protect\hyperlink{inheritable-name-options}{Inheritable
+Name Options}. An example of a \texttt{cs:bibliography} element:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{bibliography}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{sort}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{key}\OtherTok{ macro=}\StringTok{"author"}\NormalTok{/\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{sort}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{group}\OtherTok{ delimiter=}\StringTok{". "}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{text}\OtherTok{ macro=}\StringTok{"author"}\NormalTok{/\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{text}\OtherTok{ variable=}\StringTok{"title"}\NormalTok{/\textgreater{}}
+\NormalTok{    \textless{}/}\KeywordTok{group}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{bibliography}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{macro}{%
+\paragraph{Macro}\label{macro}}
+
+Macros, defined with \texttt{cs:macro} elements, contain formatting
+instructions. Macros can be called with \texttt{cs:text} from within
+other macros and the \texttt{cs:layout} element of \texttt{cs:citation}
+and \texttt{cs:bibliography}, and with \texttt{cs:key} from within
+\texttt{cs:sort} of \texttt{cs:citation} and \texttt{cs:bibliography}.
+It is recommended to place macros after any \texttt{cs:locale} elements
+and before the \texttt{cs:citation} element.
+
+Macros are referenced by the value of the required \texttt{name}
+attribute on \texttt{cs:macro}. The \texttt{cs:macro} element must
+contain one or more \protect\hyperlink{rendering-elements}{rendering
+elements}.
+
+The use of macros can improve style readability, compactness and
+maintainability. It is recommended to keep the contents of
+\texttt{cs:citation} and \texttt{cs:bibliography} compact and agnostic
+of item types (e.g. books, journal articles, etc.) by depending on macro
+calls. To allow for easy reuse of macros in other styles, it is
+recommended to use common macro names.
+
+In the example below, cites consist of the item title, rendered in
+italics when the item type is "book":
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{style}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{macro}\OtherTok{ name=}\StringTok{"title"}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{choose}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{if}\OtherTok{ type=}\StringTok{"book"}\NormalTok{\textgreater{}}
+\NormalTok{        \textless{}}\KeywordTok{text}\OtherTok{ variable=}\StringTok{"title"}\OtherTok{ font{-}style=}\StringTok{"italic"}\NormalTok{/\textgreater{}}
+\NormalTok{      \textless{}/}\KeywordTok{if}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{else}\NormalTok{\textgreater{}}
+\NormalTok{        \textless{}}\KeywordTok{text}\OtherTok{ variable=}\StringTok{"title"}\NormalTok{/\textgreater{}}
+\NormalTok{      \textless{}/}\KeywordTok{else}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}/}\KeywordTok{choose}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{macro}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{citation}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{text}\OtherTok{ macro=}\StringTok{"title"}\NormalTok{/\textgreater{}}
+\NormalTok{    \textless{}/}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{citation}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{style}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+Delimiters from any ancestor delimiting element are not applied within
+the output of a \texttt{\textless{}text\ macro="..."\textgreater{}}
+element (see \protect\hyperlink{delimiter}{delimiter}).
+
+\hypertarget{locale}{%
+\paragraph{Locale}\label{locale}}
+
+Localization data, by default drawn from the "locales-xx-XX.xml" locale
+files, may be redefined or supplemented with \texttt{cs:locale}
+elements, which should be placed directly after the \texttt{cs:info}
+element.
+
+The value of the optional \texttt{xml:lang} attribute on
+\texttt{cs:locale}, which must be set to an
+\href{http://books.xmlschemata.org/relaxng/ch19-77191.html}{xsd:language
+locale code}, determines which languages or language dialects are
+affected (see \protect\hyperlink{locale-fallback}{Locale Fallback}).
+
+See \protect\hyperlink{terms}{Terms},
+\protect\hyperlink{localized-date-formats}{Localized Date Formats} and
+\protect\hyperlink{localized-options}{Localized Options} for further
+details on the use of \texttt{cs:locale}.
+
+An example of \texttt{cs:locale} in a style:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{style}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{locale}\OtherTok{ xml:lang=}\StringTok{"en"}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{terms}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{term}\OtherTok{ name=}\StringTok{"editortranslator"}\OtherTok{ form=}\StringTok{"short"}\NormalTok{\textgreater{}}
+\NormalTok{        \textless{}}\KeywordTok{single}\NormalTok{\textgreater{}ed. }\DecValTok{\&amp;}\NormalTok{ trans.\textless{}/}\KeywordTok{single}\NormalTok{\textgreater{}}
+\NormalTok{        \textless{}}\KeywordTok{multiple}\NormalTok{\textgreater{}eds. }\DecValTok{\&amp;}\NormalTok{ trans.\textless{}/}\KeywordTok{multiple}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}/}\KeywordTok{term}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}/}\KeywordTok{terms}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{locale}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{style}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{locale-fallback}{%
+\subparagraph{Locale Fallback}\label{locale-fallback}}
+
+Locale files provide localization data for language dialects (e.g.
+"en-US" for American English), whereas the optional \texttt{cs:locale}
+elements in styles can either lack the \texttt{xml:lang} attribute, or
+have it set to either a language (e.g. "en" for English) or dialect.
+Locale fallback is the mechanism determining from which of these sources
+each localizable unit (a date format, localized option, or specific form
+of a term) is retrieved.
+
+For dialects of the same language, one is designated the primary
+dialect. All others are secondaries. At the moment of writing, the
+available locale files include:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2917}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5417}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Primary dialect
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Secondary dialect(s)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+de-DE (German) & de-AT (Austria), de-CH (Switzerland) \\
+en-US (English) & en-GB (UK) \\
+es-ES (Spanish) & es-CL (Chile), es-MX (Mexico) \\
+fr-FR (French) & fr-CA (Canada) \\
+pt-PT (Portuguese) & pt-BR (Brazil) \\
+zh-CN (Chinese) & zh-TW (Taiwan) \\
+\end{longtable}
+
+Locale fallback is best described with an example. If the chosen output
+locale is "de-AT" (Austrian German), localizable units are individually
+drawn from the following sources, in decreasing order of priority:
+
+\begin{enumerate}
+\def\labelenumi{\Alph{enumi}.}
+\tightlist
+\item
+  In-style \texttt{cs:locale} elements
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    \texttt{xml:lang} set to chosen dialect, "de-AT"
+  \item
+    \texttt{xml:lang} set to matching language, "de" (German)
+  \item
+    \texttt{xml:lang} not set
+  \end{enumerate}
+\item
+  Locale files
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \setcounter{enumii}{3}
+  \tightlist
+  \item
+    \texttt{xml:lang} set to chosen dialect, "de-AT"
+  \item
+    \texttt{xml:lang} set to matching primary dialect, "de-DE" (Standard
+    German) (only applicable when the chosen locale is a secondary
+    dialect)
+  \item
+    \texttt{xml:lang} set to "en-US" (American English)
+  \end{enumerate}
+\end{enumerate}
+
+If the chosen output locale is a language (e.g. "de"), the (primary)
+dialect is used in step 1 (e.g. "de-DE").
+
+Fallback stops once a localizable unit has been found. For terms, this
+even is the case when they are defined as empty strings (e.g.
+\texttt{\textless{}term\ name="and"/\textgreater{}} or
+\texttt{\textless{}term\ name="and"\textgreater{}\textless{}/term\textgreater{}}).
+Locale fallback takes precedence over fallback of term forms (see
+\protect\hyperlink{terms}{Terms}).
+
+\hypertarget{locale-files---structure}{%
+\subsection{Locale Files - Structure}\label{locale-files---structure}}
+
+While localization data can be included in styles (see
+\protect\hyperlink{locale}{Locale}), locale files conveniently provide
+sets of default localization data, consisting of terms, date formats and
+grammar options.
+
+Each locale file contains localization data for a single language
+dialect. This
+\href{http://books.xmlschemata.org/relaxng/ch19-77191.html}{locale code}
+is set on the required \texttt{xml:lang} attribute on the
+\texttt{cs:locale} root element. The same locale code must also be used
+in the file name of the locale file (the "xx-XX" in
+"locales-xx-XX.xml"). The root element must carry the \texttt{version}
+attribute, indicating the CSL version of the locale file (must be "1.0"
+for CSL 1.0-compatible locale files). Locale files have the same
+requirements for \protect\hyperlink{namespacing}{namespacing} as styles.
+The \texttt{cs:locale} element may contain \texttt{cs:info} as its first
+child element, and requires the child elements \texttt{cs:terms},
+\texttt{cs:date} and \texttt{cs:style-options} (these elements are
+described below). An example showing part of a locale file:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{\textless{}?xml}\OtherTok{ version=}\StringTok{"1.0"}\OtherTok{ encoding=}\StringTok{"UTF{-}8"}\FunctionTok{?\textgreater{}}
+\NormalTok{\textless{}}\KeywordTok{locale}\OtherTok{ xml:lang=}\StringTok{"en{-}US"}\OtherTok{ version=}\StringTok{"1.0"}\OtherTok{ xmlns=}\StringTok{"http://purl.org/net/xbiblio/csl"}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{style{-}options}\OtherTok{ punctuation{-}in{-}quote=}\StringTok{"true"}\NormalTok{/\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{date}\OtherTok{ form=}\StringTok{"text"}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{date{-}part}\OtherTok{ name=}\StringTok{"month"}\OtherTok{ suffix=}\StringTok{" "}\NormalTok{/\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{date{-}part}\OtherTok{ name=}\StringTok{"day"}\OtherTok{ suffix=}\StringTok{", "}\NormalTok{/\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{date{-}part}\OtherTok{ name=}\StringTok{"year"}\NormalTok{/\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{date}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{date}\OtherTok{ form=}\StringTok{"numeric"}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{date{-}part}\OtherTok{ name=}\StringTok{"year"}\NormalTok{/\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{date{-}part}\OtherTok{ name=}\StringTok{"month"}\OtherTok{ form=}\StringTok{"numeric"}\OtherTok{ prefix=}\StringTok{"{-}"}\OtherTok{ range{-}delimiter=}\StringTok{"/"}\NormalTok{/\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{date{-}part}\OtherTok{ name=}\StringTok{"day"}\OtherTok{ prefix=}\StringTok{"{-}"}\OtherTok{ range{-}delimiter=}\StringTok{"/"}\NormalTok{/\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{date}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{terms}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{term}\OtherTok{ name=}\StringTok{"no date"}\NormalTok{\textgreater{}n.d.\textless{}/}\KeywordTok{term}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{term}\OtherTok{ name=}\StringTok{"et{-}al"}\NormalTok{\textgreater{}et al.\textless{}/}\KeywordTok{term}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{term}\OtherTok{ name=}\StringTok{"page"}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{single}\NormalTok{\textgreater{}page\textless{}/}\KeywordTok{single}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{multiple}\NormalTok{\textgreater{}pages\textless{}/}\KeywordTok{multiple}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}/}\KeywordTok{term}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{term}\OtherTok{ name=}\StringTok{"page"}\OtherTok{ form=}\StringTok{"short"}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{single}\NormalTok{\textgreater{}p.\textless{}/}\KeywordTok{single}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{multiple}\NormalTok{\textgreater{}pp.\textless{}/}\KeywordTok{multiple}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}/}\KeywordTok{term}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{terms}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{locale}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{info-1}{%
+\subsubsection{Info}\label{info-1}}
+
+The \texttt{cs:info} element may be used to give metadata on the locale
+file. It has the following child elements:
+
+\begin{description}
+\item[\texttt{cs:translator} (optional)]
+\texttt{cs:translator}, used to acknowledge locale translators, may be
+used multiple times. Within the element, the child element
+\texttt{cs:name} must appear once, while \texttt{cs:email} and
+\texttt{cs:uri} each may appear once. These child elements should
+contain respectively the name, email address and URI of the translator.
+\item[\texttt{cs:rights} (optional)]
+May appear once. The contents of \texttt{cs:rights} specifies the
+license under which the locale file is released. The element may carry a
+\texttt{license} attribute to specify the URI of the license, and a
+\texttt{xml:lang} attribute to specify the language of the
+element\textquotesingle s content (the value must be an
+\href{http://books.xmlschemata.org/relaxng/ch19-77191.html}{xsd:language
+locale code}).
+\item[\texttt{cs:updated} (optional)]
+May appear once. The contents of \texttt{cs:updated} must be a
+\href{http://books.xmlschemata.org/relaxng/ch19-77049.html}{timestamp}
+that shows when the locale file was last updated.
+\end{description}
+
+\hypertarget{terms}{%
+\subsubsection{Terms}\label{terms}}
+
+Terms are localized strings (e.g. by using the "and" term, "Doe and
+Smith" automatically becomes "Doe und Smith" when the style locale is
+switched from English to German). Terms are defined with
+\texttt{cs:term} elements, child elements of \texttt{cs:terms}. Each
+\texttt{cs:term} element must carry a \texttt{name} attribute, set to
+one of the terms listed in
+\protect\hyperlink{appendix-ii---terms}{Appendix II - Terms}.
+
+Terms are either directly defined in the content of \texttt{cs:term},
+or, in cases where singular and plural variants are needed (e.g. "page"
+and "pages"), in the content of the child elements \texttt{cs:single}
+and \texttt{cs:multiple}, respectively.
+
+Terms may be defined for specific forms by using \texttt{cs:term} with
+the optional \texttt{form} attribute set to:
+
+\begin{itemize}
+\tightlist
+\item
+  "long" - (default), e.g. "editor" and "editors" for the "editor" term
+\item
+  "short" - e.g. "ed." and "eds." for the term "editor"
+\item
+  "verb" - e.g. "edited by" for the term "editor"
+\item
+  "verb-short" - e.g. "ed." for the term "editor"
+\item
+  "symbol" - e.g. "§" and "§§" for the term "section"
+\end{itemize}
+
+If a style uses a term in a form that is undefined (even after
+\protect\hyperlink{locale-fallback}{Locale Fallback}), there is fallback
+to other forms: "verb-short" first falls back to "verb", "symbol" first
+falls back to "short", and "verb" and "short" both fall back to "long".
+In addition, the terms "long-ordinal-01" to "long-ordinal-10" fall back
+to the set of ordinal suffix terms. If no locale or form fallback is
+available, the term is rendered as an empty string.
+
+The \texttt{match}, \texttt{gender}, and \texttt{gender-form} attributes
+can be used on \texttt{cs:term} for the formatting of number variables
+rendered as ordinals (e.g. "first", "2nd"). See
+\protect\hyperlink{ordinal-suffixes}{Ordinal Suffixes} and
+\protect\hyperlink{gender-specific-ordinals}{Gender-specific Ordinals}
+below.
+
+Term content should not contain markup such as LaTeX or HTML.
+\href{http://unicode.org/reports/tr30/datafiles/SuperscriptFolding.txt}{Superscripted
+Unicode characters} can be used for superscripting.
+
+\hypertarget{ordinal-suffixes}{%
+\paragraph{Ordinal Suffixes}\label{ordinal-suffixes}}
+
+Number variables can be rendered with \texttt{cs:number} in the
+"ordinal" form, e.g. "2nd" (see \protect\hyperlink{number}{Number}). The
+ordinal suffixes ("nd" for "2nd") are defined with terms.
+
+The "ordinal" term defines the default ordinal suffix. This default
+suffix may be overridden for certain numbers with the following terms:
+
+\begin{itemize}
+\tightlist
+\item
+  "ordinal-00" through "ordinal-09" - by default, a term in this group
+  is used when the last digit in the term name matches the last digit of
+  the rendered number. E.g. "ordinal-00" would match the numbers "0",
+  "10", "20", etc. By setting the optional \texttt{match} attribute to
+  "last-two-digits" ("last-digit" is the default), matches are limited
+  to numbers where the two last digits agree ("0", "100", "200", etc.).
+  When \texttt{match} is set to "whole-number", there is only a match if
+  the number is the same as that of the term.
+\item
+  "ordinal-10" through "ordinal-99" - by default, a term in this group
+  is used when the last two digits in the term name match the last two
+  digits of the rendered number. When the optional \texttt{match}
+  attribute is set to "whole-number" ("last-two-digits" is the default),
+  there is only a match if the number is the same as that of the term.
+\end{itemize}
+
+When a number has matching terms from both groups (e.g. "13" can match
+"ordinal-03" and "ordinal-13"), the term from the "ordinal-10" through
+"ordinal-99" group is used.
+
+Ordinal terms work differently in CSL 1.0.1 and later than they did in
+CSL 1.0. When neither the style or locale file define the "ordinal"
+term, but do define the terms "ordinal-01" through "ordinal-04", the
+original CSL 1.0 scheme is used: "ordinal-01" is used for numbers ending
+on a 1 (except those ending on 11), "ordinal-02" for those ending on a 2
+(except those ending on 12), "ordinal-03" for those ending on a 3
+(except those ending on 13) and "ordinal-04" for all other numbers.
+
+The "ordinal" term, and "ordinal-00" through "ordinal-99" terms, behave
+differently from other terms when it comes to {Locale Fallback}. Whereas
+other terms can be (re)defined individually, (re)defining any of the
+ordinal terms through \texttt{cs:locale} replaces all previously defined
+ordinal terms.
+
+\hypertarget{long-ordinals}{%
+\paragraph{Long Ordinals}\label{long-ordinals}}
+
+Number variables can be rendered with \texttt{cs:number} in the
+"long-ordinal" form, e.g. "second" (see
+\protect\hyperlink{number}{Number}). The long ordinal terms (e.g.
+"second" for "2") are defined with the "long-ordinal-01" through
+"long-ordinal-10" terms.\\
+Long ordinal forms are available for the numbers 1 through 10. For other
+numbers "long-ordinal" falls back to "ordinal".\\
+For the numbers 1 through 10 in "long-ordinal" form, the \texttt{match}
+attribute is always treated as "whole-number". For other numbers
+rendered in "long-ordinal" form, the optional \texttt{match} attribute
+follows the behavior described in
+\protect\hyperlink{ordinal-suffixes}{Ordinal Suffixes}
+("last-two-digits" is the default).
+
+\hypertarget{gender-specific-ordinals}{%
+\paragraph{Gender-specific Ordinals}\label{gender-specific-ordinals}}
+
+Some languages use gender-specific ordinals. For example, the English
+"1st" and "first" translate in French to "1\textsuperscript{er}" and
+"premier" if the target noun is masculine, and "1\textsuperscript{re}"
+and "première" if the noun is feminine.
+
+Feminine and masculine variants of the ordinal terms (see
+\protect\hyperlink{ordinals}{Ordinals}) may be specified by setting the
+\texttt{gender-form} attribute to "feminine" or "masculine" (the term
+without \texttt{gender-form} represents the neuter variant). There are
+two types of target nouns: a) the terms accompanying the
+\protect\hyperlink{number-variables}{number variables}, and b) the month
+terms (see \protect\hyperlink{months}{Months}). The gender of these
+nouns may be specified on the "long" (default) form of the term using
+the \texttt{gender} attribute (set to "feminine" or "masculine"). When a
+number variable is rendered with \texttt{cs:number} in the "ordinal" or
+"long-ordinal" form, the ordinal term of the same gender is used, with a
+fallback to the neuter variant if the feminine or masculine variant is
+undefined. When the "day" date-part is rendered in the "ordinal" form,
+the ordinal gender is matched against that of the month term.
+
+The example below gives "1re éd." ("1st ed."), "1er janvier" ("January
+1st"), and "3e édition" ("3rd edition"):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{\textless{}?xml}\OtherTok{ version=}\StringTok{"1.0"}\OtherTok{ encoding=}\StringTok{"UTF{-}8"}\FunctionTok{?\textgreater{}}
+\NormalTok{\textless{}}\KeywordTok{locale}\OtherTok{ xml:lang=}\StringTok{"fr{-}FR"}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{terms}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{term}\OtherTok{ name=}\StringTok{"edition"}\OtherTok{ gender=}\StringTok{"feminine"}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{single}\NormalTok{\textgreater{}édition\textless{}/}\KeywordTok{single}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{multiple}\NormalTok{\textgreater{}éditions\textless{}/}\KeywordTok{multiple}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}/}\KeywordTok{term}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{term}\OtherTok{ name=}\StringTok{"edition"}\OtherTok{ form=}\StringTok{"short"}\NormalTok{\textgreater{}éd.\textless{}/}\KeywordTok{term}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{term}\OtherTok{ name=}\StringTok{"month{-}01"}\OtherTok{ gender=}\StringTok{"masculine"}\NormalTok{\textgreater{}janvier\textless{}/}\KeywordTok{term}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{term}\OtherTok{ name=}\StringTok{"ordinal"}\NormalTok{\textgreater{}e\textless{}/}\KeywordTok{term}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{term}\OtherTok{ name=}\StringTok{"ordinal{-}01"}\OtherTok{ gender{-}form=}\StringTok{"feminine"}\OtherTok{ match=}\StringTok{"whole{-}number"}\NormalTok{\textgreater{}re\textless{}/}\KeywordTok{term}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{term}\OtherTok{ name=}\StringTok{"ordinal{-}01"}\OtherTok{ gender{-}form=}\StringTok{"masculine"}\OtherTok{ match=}\StringTok{"whole{-}number"}\NormalTok{\textgreater{}er\textless{}/}\KeywordTok{term}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{terms}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{locale}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{localized-date-formats}{%
+\subsubsection{Localized Date Formats}\label{localized-date-formats}}
+
+Two localized date formats can be defined with \texttt{cs:date}
+elements: a "numeric" (e.g. "12-15-2005") and a "text" format (e.g.
+"December 15, 2005"). The format is set on \texttt{cs:date} with the
+required \texttt{form} attribute.
+
+A date format is constructed using \texttt{cs:date-part} child elements
+(see \protect\hyperlink{date-part}{Date-part}). With a required
+\texttt{name} attribute set to either \texttt{day}, \texttt{month} or
+\texttt{year}, the order of these elements reflects the display order of
+respectively the day, month, and year. The date can be formatted with
+\protect\hyperlink{formatting}{formatting} and
+\protect\hyperlink{text-case}{text-case} attributes on the
+\texttt{cs:date} and \texttt{cs:date-part} elements. The
+\protect\hyperlink{delimiter}{delimiter} attribute may be set on
+\texttt{cs:date} to specify the delimiter for the \texttt{cs:date-part}
+elements, and \protect\hyperlink{affixes}{affixes} may be applied to the
+\texttt{cs:date-part} elements.
+
+\textbf{Note} Affixes are not allowed on \texttt{cs:date} when defining
+localized date formats. This restriction is in place to separate
+locale-specific affixes (set on the \texttt{cs:date-part} elements) from
+any style-specific affixes (set on the calling \texttt{cs:date}
+element), such as parentheses. An example of a macro calling a localized
+date format:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{macro}\OtherTok{ name=}\StringTok{"issued"}\NormalTok{\textgreater{}}
+\NormalTok{ \textless{}}\KeywordTok{date}\OtherTok{ variable=}\StringTok{"issued"}\OtherTok{ form=}\StringTok{"numeric"}\OtherTok{ prefix=}\StringTok{"("}\OtherTok{ suffix=}\StringTok{")"}\NormalTok{/\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{macro}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{localized-options}{%
+\subsubsection{Localized Options}\label{localized-options}}
+
+There are two localized options, \texttt{limit-day-ordinals-to-day-1}
+and \texttt{punctuation-in-quote} (see
+\protect\hyperlink{locale-options}{Locale Options}). These global
+options (which affect both citations and the bibliography) are set as
+optional attributes on \texttt{cs:style-options}.
+
+\hypertarget{rendering-elements}{%
+\subsection{Rendering Elements}\label{rendering-elements}}
+
+Rendering elements specify which, and in what order, pieces of
+bibliographic metadata are included in citations and bibliographies, and
+offer control over their formatting.
+
+\hypertarget{layout}{%
+\subsubsection{Layout}\label{layout}}
+
+The \texttt{cs:layout} rendering element is a required child element of
+\texttt{cs:citation} and \texttt{cs:bibliography}. It must contain one
+or more of the other rendering elements described below, and may carry
+\protect\hyperlink{affixes}{affixes} and
+\protect\hyperlink{formatting}{formatting} attributes. When used within
+\texttt{cs:citation}, the \protect\hyperlink{delimiter}{delimiter}
+attribute may be used to specify a delimiter for cites within a
+citation. For example, a citation like "(1, 2)" can be achieved with:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{citation}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{layout}\OtherTok{ prefix=}\StringTok{"("}\OtherTok{ suffix=}\StringTok{")"}\OtherTok{ delimiter=}\StringTok{", "}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{text}\OtherTok{ variable=}\StringTok{"citation{-}number"}\NormalTok{/\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{citation}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{text}{%
+\subsubsection{Text}\label{text}}
+
+The \texttt{cs:text} rendering element outputs text. It must carry one
+of the following attributes to select what should be rendered:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{variable} - renders the text contents of a variable. Attribute
+  value must be one of the
+  \protect\hyperlink{standard-variables}{standard variables}. May be
+  accompanied by the \texttt{form} attribute to select the "long"
+  (default) or "short" form of a variable (e.g. the full or short
+  title). If the "short" form is selected but unavailable, the "long"
+  form is rendered instead.
+\item
+  \texttt{macro} - renders the text output of a macro. Attribute value
+  must match the value of the \texttt{name} attribute of a
+  \texttt{cs:macro} element (see \protect\hyperlink{macro}{Macro}).
+\item
+  \texttt{term} - renders a term. Attribute value must be one of the
+  terms listed in \protect\hyperlink{appendix-ii---terms}{Appendix II -
+  Terms}. May be accompanied by the \texttt{plural} attribute to select
+  the singular ("false", default) or plural ("true") variant of a term,
+  and by the \texttt{form} attribute to select the "long" (default),
+  "short", "verb", "verb-short" or "symbol" form variant (see also
+  \protect\hyperlink{terms}{Terms}).
+\item
+  \texttt{value} - renders the attribute value itself.
+\end{itemize}
+
+An example of \texttt{cs:text} rendering the "title" variable:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{text}\OtherTok{ variable=}\StringTok{"title"}\NormalTok{/\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{cs:text} may also carry \protect\hyperlink{affixes}{affixes},
+\protect\hyperlink{display}{display},
+\protect\hyperlink{formatting}{formatting},
+\protect\hyperlink{quotes}{quotes},
+\protect\hyperlink{strip-periods}{strip-periods} and
+\protect\hyperlink{text-case}{text-case} attributes.
+
+\hypertarget{date}{%
+\subsubsection{Date}\label{date}}
+
+The \texttt{cs:date} rendering element outputs the date selected from
+the list of \protect\hyperlink{date-variables}{date variables} with the
+required \texttt{variable} attribute. A date can be rendered in either a
+localized or non-localized format.
+
+\protect\hyperlink{localized-date-formats}{Localized date formats} are
+selected with the optional \texttt{form} attribute, which must be set to
+either "numeric" (for fully numeric formats, e.g. "12-15-2005"), or
+"text" (for formats with a non-numeric month, e.g. "December 15, 2005").
+Localized date formats can be customized in two ways. First, the
+\texttt{date-parts} attribute may be used to show fewer date parts. The
+possible values are:
+
+\begin{itemize}
+\tightlist
+\item
+  "year-month-day" - (default), renders the year, month and day
+\item
+  "year-month" - renders the year and month
+\item
+  "year" - renders the year
+\end{itemize}
+
+Secondly, \texttt{cs:date} may have one or more \texttt{cs:date-part}
+child elements (see \protect\hyperlink{date-part}{Date-part}). The
+attributes set on these elements override those specified for the
+localized date formats (e.g. to get abbreviated months for all locales,
+the \texttt{form} attribute on the month-\texttt{cs:date-part} element
+can be set to "short"). These \texttt{cs:date-part} elements do not
+affect which, or in what order, date parts are rendered.
+\protect\hyperlink{affixes}{Affixes}, which are very locale-specific,
+are not allowed on these \texttt{cs:date-part} elements.
+
+In the absence of the \texttt{form} attribute, \texttt{cs:date}
+describes a self-contained non-localized date format. In this case, the
+date format is constructed using \texttt{cs:date-part} child elements.
+With a required \texttt{name} attribute set to either \texttt{day},
+\texttt{month} or \texttt{year}, the order of these elements reflects
+the display order of respectively the day, month, and year. The date can
+be formatted with \protect\hyperlink{formatting}{formatting} attributes
+on the \texttt{cs:date-part} elements, as well as several
+\texttt{cs:date-part}-specific attributes (see
+\protect\hyperlink{date-part}{Date-part}). The
+\protect\hyperlink{delimiter}{delimiter} attribute may be set on
+\texttt{cs:date} to specify the delimiter for the \texttt{cs:date-part}
+elements, and \protect\hyperlink{affixes}{affixes} may be applied to the
+\texttt{cs:date-part} elements.
+
+For both localized and non-localized dates, \texttt{cs:date} may carry
+\protect\hyperlink{affixes}{affixes},
+\protect\hyperlink{display}{display},
+\protect\hyperlink{formatting}{formatting} and
+\protect\hyperlink{text-case}{text-case} attributes.
+
+\hypertarget{date-part}{%
+\paragraph{Date-part}\label{date-part}}
+
+The \texttt{cs:date-part} elements control how date parts are rendered.
+Unless the parent \texttt{cs:date} element calls a localized date
+format, they also determine which, and in what order, date parts appear.
+A \texttt{cs:date-part} element describes the date part selected with
+the required \texttt{name} attribute:
+
+\begin{description}
+\item["day"]
+For "day", \texttt{cs:date-part} may carry the \texttt{form} attribute,
+with values:
+
+\begin{itemize}
+\tightlist
+\item
+  "numeric" - (default), e.g. "1"
+\item
+  "numeric-leading-zeros" - e.g. "01"
+\item
+  "ordinal" - e.g. "1st"
+\end{itemize}
+
+Some languages, such as French, only use the "ordinal" form for the
+first day of the month ("1er janvier", "2 janvier", "3 janvier", etc.).
+Such output can be achieved with the "ordinal" form and use of the
+\texttt{limit-day-ordinals-to-day-1} attribute (see
+\protect\hyperlink{locale-options}{Locale Options}).
+\item["month"]
+For "month", \texttt{cs:date-part} may carry the
+\protect\hyperlink{strip-periods}{strip-periods} and \texttt{form}
+attributes. In locale files, month abbreviations (the "short" form of
+the month \protect\hyperlink{terms}{terms}) should be defined with
+periods if applicable (e.g. "Jan.", "Feb.", etc.). These periods can be
+removed by setting \protect\hyperlink{strip-periods}{strip-periods} to
+"true" ("false" is the default). The \texttt{form} attribute can be set
+to:
+
+\begin{itemize}
+\tightlist
+\item
+  "long" - (default), e.g. "January"
+\item
+  "short" - e.g. "Jan."
+\item
+  "numeric" - e.g. "1"
+\item
+  "numeric-leading-zeros" - e.g. "01"
+\end{itemize}
+\item["year"]
+For "year", \texttt{cs:date-part} may carry the \texttt{form} attribute,
+with values:
+
+\begin{itemize}
+\tightlist
+\item
+  "long" - (default), e.g. "2005"
+\item
+  "short" - e.g. "05"
+\end{itemize}
+\end{description}
+
+\texttt{cs:date-part} may also carry
+\protect\hyperlink{formatting}{formatting},
+\protect\hyperlink{text-case}{text-case} and \texttt{range-delimiter}
+(see \protect\hyperlink{date-ranges}{Date Ranges}) attributes.
+Attributes for \protect\hyperlink{affixes}{affixes} are allowed, unless
+\texttt{cs:date} calls a localized date format.
+
+\hypertarget{date-ranges}{%
+\subparagraph{Date Ranges}\label{date-ranges}}
+
+The default delimiter for dates in a date range is an en-dash (e.g. "May
+-- July 2008"). Custom range delimiters can be set on
+\texttt{cs:date-part} elements with the optional
+\texttt{range-delimiter} attribute. When a date range is rendered, the
+range delimiter is drawn from the \texttt{cs:date-part} element matching
+the largest date part ("year", "month", or "day") that differs between
+the two dates. For example,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{style}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{citation}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{date}\OtherTok{ variable=}\StringTok{"issued"}\NormalTok{\textgreater{}}
+\NormalTok{        \textless{}}\KeywordTok{date{-}part}\OtherTok{ name=}\StringTok{"day"}\OtherTok{ suffix=}\StringTok{" "}\OtherTok{ range{-}delimiter=}\StringTok{"{-}"}\NormalTok{/\textgreater{}}
+\NormalTok{        \textless{}}\KeywordTok{date{-}part}\OtherTok{ name=}\StringTok{"month"}\OtherTok{ suffix=}\StringTok{" "}\NormalTok{/\textgreater{}}
+\NormalTok{        \textless{}}\KeywordTok{date{-}part}\OtherTok{ name=}\StringTok{"year"}\OtherTok{ range{-}delimiter=}\StringTok{"/"}\NormalTok{/\textgreater{}}
+\NormalTok{      \textless{}/}\KeywordTok{date}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}/}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{citation}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{style}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+would result in "1-4 May 2008", "May -- July 2008" and "May 2008/June
+2009".
+
+\hypertarget{ad-and-bc}{%
+\paragraph{AD and BC}\label{ad-and-bc}}
+
+The "ad" term (Anno Domini) is automatically appended to positive years
+of less than four digits (e.g. "79" becomes "79AD"). The "bc" term
+(Before Christ) is automatically appended to negative years (e.g.
+"-2500" becomes "2500BC").
+
+\hypertarget{seasons}{%
+\paragraph{Seasons}\label{seasons}}
+
+If a date includes a season instead of a month, a season term
+("season-01" to "season-04", respectively Spring, Summer, Autumn and
+Winter) take the place of the month term. E.g.,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{style}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{citation}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{date}\OtherTok{ variable=}\StringTok{"issued"}\NormalTok{\textgreater{}}
+\NormalTok{        \textless{}}\KeywordTok{date{-}part}\OtherTok{ name=}\StringTok{"month"}\OtherTok{ suffix=}\StringTok{" "}\NormalTok{/\textgreater{}}
+\NormalTok{        \textless{}}\KeywordTok{date{-}part}\OtherTok{ name=}\StringTok{"year"}\NormalTok{/\textgreater{}}
+\NormalTok{      \textless{}/}\KeywordTok{date}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}/}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{citation}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{style}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+would result in "May 2008" and "Winter 2009".
+
+\hypertarget{approximate-dates}{%
+\paragraph{Approximate Dates}\label{approximate-dates}}
+
+Approximate dates test "true" for the \texttt{is-uncertain-date}
+conditional (see \protect\hyperlink{choose}{Choose}). For example,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{style}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{citation}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{choose}\NormalTok{\textgreater{}}
+\NormalTok{        \textless{}}\KeywordTok{if}\OtherTok{ is{-}uncertain{-}date=}\StringTok{"issued"}\NormalTok{\textgreater{}}
+\NormalTok{          \textless{}}\KeywordTok{text}\OtherTok{ term=}\StringTok{"circa"}\OtherTok{ form=}\StringTok{"short"}\OtherTok{ suffix=}\StringTok{" "}\NormalTok{/\textgreater{}}
+\NormalTok{        \textless{}/}\KeywordTok{if}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}/}\KeywordTok{choose}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{date}\OtherTok{ variable=}\StringTok{"issued"}\NormalTok{\textgreater{}}
+\NormalTok{        \textless{}}\KeywordTok{date{-}part}\OtherTok{ name=}\StringTok{"year"}\NormalTok{/\textgreater{}}
+\NormalTok{      \textless{}/}\KeywordTok{date}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}/}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{citation}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{style}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+would result in "2005" (normal date) and "ca. 2003" (approximate date).
+
+\hypertarget{number}{%
+\subsubsection{Number}\label{number}}
+
+The \texttt{cs:number} rendering element outputs the number variable
+selected with the required \texttt{variable} attribute.
+\protect\hyperlink{number-variables}{Number variables} are a subset of
+the list of \protect\hyperlink{standard-variables}{standard variables}.
+
+If a number variable is rendered with \texttt{cs:number} and only
+contains numeric content (as determined by the rules for
+\texttt{is-numeric}, see \protect\hyperlink{choose}{Choose}), the
+number(s) are extracted. Variable content is rendered "as is" when the
+variable contains any non-numeric content (e.g. "Special edition").
+
+During the extraction, numbers separated by a hyphen are stripped of
+intervening spaces ("2 - 4" becomes "2-4"). Numbers separated by a comma
+receive one space after the comma ("2,3" and "2 , 3" become "2, 3"),
+while numbers separated by an ampersand receive one space before and one
+after the ampersand ("2\&3" becomes "2 \& 3").
+
+Extracted numbers can be formatted via the optional \texttt{form}
+attribute, with values:
+
+\begin{itemize}
+\tightlist
+\item
+  "numeric" - (default), e.g. "1", "2", "3"
+\item
+  "ordinal" - e.g. "1st", "2nd", "3rd". Ordinal suffixes are defined
+  with terms (see \protect\hyperlink{ordinal-suffixes}{Ordinal
+  Suffixes}).
+\item
+  "long-ordinal" - e.g. "first", "second", "third". Long ordinals are
+  defined with the \protect\hyperlink{terms}{terms} "long-ordinal-01" to
+  "long-ordinal-10", which are used for the numbers 1 through 10. For
+  other numbers "long-ordinal" falls back to "ordinal".
+\item
+  "roman" - e.g. "i", "ii", "iii"
+\end{itemize}
+
+Numbers with prefixes or suffixes are never ordinalized or rendered in
+roman numerals (e.g. "2E" remains "2E). Numbers without affixes are
+individually transformed ("2, 3" can become "2nd, 3rd", "second, third"
+or "ii, iii").
+
+\texttt{cs:number} may carry \protect\hyperlink{affixes}{affixes},
+\protect\hyperlink{display}{display},
+\protect\hyperlink{formatting}{formatting} and
+\protect\hyperlink{text-case}{text-case} attributes.
+
+\hypertarget{names}{%
+\subsubsection{Names}\label{names}}
+
+The \texttt{cs:names} rendering element outputs the contents of one or
+more \protect\hyperlink{name-variables}{name variables} (selected with
+the required \texttt{variable} attribute), each of which can contain
+multiple names (e.g. the "author" variable contains all the author names
+of the cited item). If multiple variables are selected (separated by
+single spaces, see example below), each variable is independently
+rendered in the order specified, with one exception: when the selection
+consists of "editor" and "translator", and when the contents of these
+two name variables is identical, then the contents of only one name
+variable is rendered. In addition, the "editortranslator" term is used
+if the \texttt{cs:names} element contains a \texttt{cs:label} element,
+replacing the default "editor" and "translator" terms (e.g. resulting in
+"Doe (editor \& translator)"). The
+\protect\hyperlink{delimiter}{delimiter} attribute may be set on
+\texttt{cs:names} to separate the names of the different name variables
+(e.g. the semicolon in "Doe, Smith (editors); Johnson (translator)").
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{names}\OtherTok{ variable=}\StringTok{"editor translator"}\OtherTok{ delimiter=}\StringTok{"; "}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{label}\OtherTok{ prefix=}\StringTok{" ("}\OtherTok{ suffix=}\StringTok{")"}\NormalTok{/\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{names}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{cs:names} has four child elements (discussed below):
+\texttt{cs:name}, \texttt{cs:et-al}, \texttt{cs:substitute} and
+\texttt{cs:label}. The \texttt{cs:names} element may carry
+\protect\hyperlink{affixes}{affixes},
+\protect\hyperlink{display}{display} and
+\protect\hyperlink{formatting}{formatting} attributes.
+
+\hypertarget{name}{%
+\paragraph{Name}\label{name}}
+
+The \texttt{cs:name} element, an optional child element of
+\texttt{cs:names}, can be used to describe the formatting of individual
+names, and the separation of names within a name variable.
+\texttt{cs:name} may carry the following attributes:
+
+\begin{description}
+\item[\texttt{and}]
+Specifies the delimiter between the second to last and last name of the
+names in a name variable. Allowed values are "text" (selects the "and"
+term, e.g. "Doe, Johnson and Smith") and "symbol" (selects the
+ampersand, e.g. "Doe, Johnson \& Smith").
+\item[\texttt{delimiter}]
+Specifies the text string used to separate names in a name variable.
+Default is ", " (e.g. "Doe, Smith").
+\item[\texttt{delimiter-precedes-et-al}]
+Determines when the name delimiter or a space is used between a
+truncated name list and the "et-al" (or "and others") term in case of
+et-al abbreviation. Allowed values:
+
+\begin{itemize}
+\tightlist
+\item
+  "contextual" - (default), name delimiter is only used for name lists
+  truncated to two or more names
+
+  \begin{itemize}
+  \tightlist
+  \item
+    1 name: "J. Doe et al."
+  \item
+    2 names: "J. Doe, S. Smith, et al."
+  \end{itemize}
+\item
+  "after-inverted-name" - name delimiter is only used if the preceding
+  name is inverted as a result of the \texttt{name-as-sort-order}
+  attribute. E.g. with \texttt{name-as-sort-order} set to "first":
+
+  \begin{itemize}
+  \tightlist
+  \item
+    "Doe, J., et al."
+  \item
+    "Doe, J., S. Smith et al."
+  \end{itemize}
+\item
+  "always" - name delimiter is always used
+
+  \begin{itemize}
+  \tightlist
+  \item
+    1 name: "J. Doe, et al."
+  \item
+    2 names: "J. Doe, S. Smith, et al."
+  \end{itemize}
+\item
+  "never" - name delimiter is never used
+
+  \begin{itemize}
+  \tightlist
+  \item
+    1 name: "J. Doe et al."
+  \item
+    2 names: "J. Doe, S. Smith et al."
+  \end{itemize}
+\end{itemize}
+\item[\texttt{delimiter-precedes-last}]
+Determines when the name delimiter is used to separate the second to
+last and the last name in name lists (if \texttt{and} is not set, the
+name delimiter is always used, regardless of the value of
+\texttt{delimiter-precedes-last}). Allowed values:
+
+\begin{itemize}
+\tightlist
+\item
+  "contextual" - (default), name delimiter is only used for name lists
+  with three or more names
+
+  \begin{itemize}
+  \tightlist
+  \item
+    2 names: "J. Doe and T. Williams"
+  \item
+    3 names: "J. Doe, S. Smith, and T. Williams"
+  \end{itemize}
+\item
+  "after-inverted-name" - name delimiter is only used if the preceding
+  name is inverted as a result of the \texttt{name-as-sort-order}
+  attribute. E.g. with \texttt{name-as-sort-order} set to "first":
+
+  \begin{itemize}
+  \tightlist
+  \item
+    "Doe, J., and T. Williams"
+  \item
+    "Doe, J., S. Smith and T. Williams"
+  \end{itemize}
+\item
+  "always" - name delimiter is always used
+
+  \begin{itemize}
+  \tightlist
+  \item
+    2 names: "J. Doe, and T. Williams"
+  \item
+    3 names: "J. Doe, S. Smith, and T. Williams"
+  \end{itemize}
+\item
+  "never" - name delimiter is never used
+
+  \begin{itemize}
+  \tightlist
+  \item
+    2 names: "J. Doe and T. Williams"
+  \item
+    3 names: "J. Doe, S. Smith and T. Williams"
+  \end{itemize}
+\end{itemize}
+\item[\texttt{et-al-min} / \texttt{et-al-use-first}]
+Use of these two attributes enables et-al abbreviation. If the number of
+names in a name variable matches or exceeds the number set on
+\texttt{et-al-min}, the rendered name list is truncated after reaching
+the number of names set on \texttt{et-al-use-first}. The "et-al" (or
+"and others") term is appended to truncated name lists (see also
+\protect\hyperlink{et-al}{Et-al}). By default, when a name list is
+truncated to a single name, the name and the "et-al" (or "and others")
+term are separated by a space (e.g. "Doe et al."). When a name list is
+truncated to two or more names, the name delimiter is used (e.g. "Doe,
+Smith, et al."). This behavior can be changed with the
+\texttt{delimiter-precedes-et-al} attribute.
+\item[\texttt{et-al-subsequent-min} /
+\texttt{et-al-subsequent-use-first}]
+If used, the values of these attributes replace those of respectively
+\texttt{et-al-min} and \texttt{et-al-use-first} for subsequent cites
+(cites referencing earlier cited items).
+\item[\texttt{et-al-use-last}]
+When set to "true" (the default is "false"), name lists truncated by
+et-al abbreviation are followed by the name delimiter, the ellipsis
+character, and the last name of the original name list. This is only
+possible when the original name list has at least two more names than
+the truncated name list (for this the value of
+\texttt{et-al-use-first}/\texttt{et-al-subsequent-min} must be at least
+2 less than the value of
+\texttt{et-al-min}/\texttt{et-al-subsequent-use-first}). An example:
+
+\begin{verbatim}
+A. Goffeau, B. G. Barrell, H. Bussey, R. W. Davis, B. Dujon, H.
+Feldmann, … S. G. Oliver
+\end{verbatim}
+\end{description}
+
+The remaining attributes, discussed below, only affect personal names.
+Personal names require a "family" name-part, and may also contain
+"given", "suffix", "non-dropping-particle" and "dropping-particle"
+name-parts. These name-parts are defined as:
+
+\begin{itemize}
+\tightlist
+\item
+  "family" - surname minus any particles and suffixes
+\item
+  "given" - given names, either full ("John Edward") or initialized ("J.
+  E.")
+\item
+  "suffix" - name suffix, e.g. "Jr." in "John Smith Jr." and "III" in
+  "Bill Gates III"
+\item
+  "non-dropping-particle" - name particles that are not dropped when
+  only the surname is shown ("van" in the Dutch surname "van Gogh") but
+  which may be treated separately from the family name, e.g. for sorting
+\item
+  "dropping-particle" - name particles that are dropped when only the
+  surname is shown ("van" in "Ludwig van Beethoven", which becomes
+  "Beethoven", or "von" in "Alexander von Humboldt", which becomes
+  "Humboldt")
+\end{itemize}
+
+The attributes affecting personal names:
+
+\begin{description}
+\item[\texttt{form}]
+Specifies whether all the name-parts of personal names should be
+displayed (value "long", the default), or only the family name and the
+non-dropping-particle (value "short"). A third value, "count", returns
+the total number of names that would otherwise be rendered by the use of
+the \texttt{cs:names} element (taking into account the effects of et-al
+abbreviation and editor/translator collapsing), which allows for
+advanced \protect\hyperlink{sorting}{sorting}.
+\item[\texttt{initialize}]
+When set to "false" (the default is "true"), given names are no longer
+initialized when "initialize-with" is set. However, the value of
+"initialize-with" is still added after initials present in the full name
+(e.g. with \texttt{initialize} set to "false", and
+\texttt{initialize-with} set to ".", "James T Kirk" becomes "James T.
+Kirk").
+\item[\texttt{initialize-with}]
+When set, given names are converted to initials. The attribute value is
+added after each initial ("." results in "J. J. Doe"). For compound
+given names (e.g. "Jean-Luc"), hyphenation of the initials can be
+controlled with the global \texttt{initialize-with-hyphen} option (see
+\protect\hyperlink{hyphenation-of-initialized-names}{Hyphenation of
+Initialized Names}).
+\item[\texttt{name-as-sort-order}]
+Specifies that names should be displayed with the given name following
+the family name (e.g. "John Doe" becomes "Doe, John"). The attribute has
+two possible values:
+
+\begin{itemize}
+\tightlist
+\item
+  "first" - attribute only has an effect on the first name of each name
+  variable
+\item
+  "all" - attribute has an effect on all names
+\end{itemize}
+
+Note that even when \texttt{name-as-sort-order} changes the name-part
+order, the display order is not necessarily the same as the sorting
+order for names containing particles and suffixes (see
+\protect\hyperlink{name-part-order}{Name-part order}). Also,
+\texttt{name-as-sort-order} only affects names written in scripts where
+the given name typically precedes the family name, such as Latin, Greek,
+Cyrillic and Arabic. In contrast, names written in Asian scripts are
+always displayed with the family name preceding the given name.
+\item[\texttt{sort-separator}]
+Sets the delimiter for name-parts that have switched positions as a
+result of \texttt{name-as-sort-order}. The default value is ", " ("Doe,
+John"). As is the case for \texttt{name-as-sort-order}, this attribute
+only affects names in scripts that know "given-name family-name" order.
+\end{description}
+
+\texttt{cs:name} may also carry \protect\hyperlink{affixes}{affixes} and
+\protect\hyperlink{formatting}{formatting} attributes.
+
+\hypertarget{name-part-order}{%
+\subparagraph{Name-part Order}\label{name-part-order}}
+
+The order of name-parts depends on the values of the \texttt{form} and
+\texttt{name-as-sort-order} attributes on \texttt{cs:name}, the value of
+the \texttt{demote-non-dropping-particle} attribute on \texttt{cs:style}
+(one of the \protect\hyperlink{global-options}{global options}), and the
+script of the individual name. Note that the display and sorting order
+of name-parts often differs. An overview of the possible orders:
+
+\textbf{Display order of names in "given-name family-name" scripts
+(Latin, etc.)}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{description}
+\item[Conditions]
+\texttt{form} set to "long"
+\item[Order]
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item[]
+\item
+  given
+\item
+  dropping-particle
+\item
+  non-dropping-particle
+\item
+  family
+\item
+  suffix
+\end{enumerate}
+\item[Example]
+{[}Vincent{]} {[}{]} {[}van{]} {[}Gogh{]} {[}III{]}
+\item[Example]
+{[}Alexander{]} {[}von{]} {[}{]} {[}Humboldt{]} {[}Jr.{]}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{description}
+\item[Conditions]
+\texttt{form} set to "long", name-as-sort-order active,
+\texttt{demote-non-dropping-particle} set to "never" or "sort-only"
+\item[Order]
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item[]
+\item
+  non-dropping-particle
+\item
+  family
+\item
+  given
+\item
+  dropping-particle
+\item
+  suffix
+\end{enumerate}
+\item[Example]
+{[}van{]} {[}Gogh{]}, {[}Vincent{]} {[}{]}, {[}III{]}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{description}
+\item[Conditions]
+\texttt{form} set to "long", name-as-sort-order active,
+\texttt{demote-non-dropping-particle} set to "display-and-sort"
+\item[Order]
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item[]
+\item
+  family
+\item
+  given
+\item
+  dropping-particle
+\item
+  non-dropping-particle
+\item
+  suffix
+\end{enumerate}
+\item[Example]
+{[}Gogh{]}, {[}Vincent{]} {[}{]} {[}van{]}, {[}III{]}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{description}
+\item[Conditions]
+\texttt{form} set to "short"
+\item[Order]
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item[]
+\item
+  non-dropping-particles
+\item
+  family
+\end{enumerate}
+\item[Example]
+{[}van{]} {[}Gogh{]}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Sorting order of names in "given-name family-name" scripts
+(Latin, etc.)}
+
+N.B. The sort keys are listed in descending order of priority.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{description}
+\item[Conditions]
+\texttt{demote-non-dropping-particle} set to "never"
+\item[Order]
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item[]
+\item
+  non-dropping-particle + family
+\item
+  dropping-particle
+\item
+  given
+\item
+  suffix
+\end{enumerate}
+\item[Example]
+{[}van Gogh{]} {[}{]} {[}Vincent{]} {[}III{]}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{description}
+\item[Conditions]
+\texttt{demote-non-dropping-particle} set to "sort-only" or
+"display-and-sort"
+\item[Order]
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item[]
+\item
+  family
+\item
+  dropping-particle + non-dropping-particle
+\item
+  given
+\item
+  suffix
+\end{enumerate}
+\item[Example]
+{[}Gogh{]} {[}van{]} {[}Vincent{]} {[}III{]}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Display and sorting order of names in "family-name given-name"
+scripts (Chinese, etc.)}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{description}
+\item[Conditions]
+\texttt{form} set to "long"
+\item[Order]
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item[]
+\item
+  family
+\item
+  given
+\end{enumerate}
+\item[Example]
+毛 泽 东 {[}Mao Zedong{]}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{description}
+\item[Conditions]
+\texttt{form} set to "short"
+\item[Order]
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item[]
+\item
+  family
+\end{enumerate}
+\item[Example]
+毛 {[}Mao{]}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Non-personal names lack name-parts and are sorted as is, although
+English articles ("a", "an" and "the") at the start of the name are
+stripped. For example, "The New York Times" sorts as "New York Times".
+
+\hypertarget{name-part-formatting}{%
+\subparagraph{Name-part Formatting}\label{name-part-formatting}}
+
+The \texttt{cs:name} element may contain one or two
+\texttt{cs:name-part} child elements for name-part-specific formatting.
+\texttt{cs:name-part} must carry the \texttt{name} attribute, set to
+either "given" or "family".
+
+If set to "given", \protect\hyperlink{formatting}{formatting} and
+\protect\hyperlink{text-case}{text-case} attributes on
+\texttt{cs:name-part} affect the "given" and "dropping-particle"
+name-parts. \protect\hyperlink{affixes}{affixes} surround the "given"
+name-part, enclosing any demoted name particles for inverted names.
+
+If set to "family", \protect\hyperlink{formatting}{formatting} and
+\protect\hyperlink{text-case}{text-case} attributes affect the "family"
+and "non-dropping-particle" name-parts.
+\protect\hyperlink{affixes}{affixes} surround the "family" name-part,
+enclosing any preceding name particles, as well as the "suffix"
+name-part for non-inverted names.
+
+The "suffix" name-part is not subject to name-part formatting. The use
+of \texttt{cs:name-part} elements does not influence which, or in what
+order, name-parts are rendered. An example, yielding names like "Jane
+DOE":
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{names}\OtherTok{ variable=}\StringTok{"author"}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{name}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{name{-}part}\OtherTok{ name=}\StringTok{"family"}\OtherTok{ text{-}case=}\StringTok{"uppercase"}\NormalTok{/\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{name}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{names}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{et-al}{%
+\paragraph{Et-al}\label{et-al}}
+
+Et-al abbreviation, controlled via the \texttt{et-al-…} attributes (see
+\protect\hyperlink{name}{Name}), can be further customized with the
+optional \texttt{cs:et-al} element, which must follow the
+\texttt{cs:name} element (if present).
+
+The \protect\hyperlink{formatting}{formatting} attributes may be used on
+\texttt{cs:et-al}, for example to italicize the "et-al" term:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{names}\OtherTok{ variable=}\StringTok{"author"}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{et{-}al}\OtherTok{ font{-}style=}\StringTok{"italic"}\NormalTok{/\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{names}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{term} attribute may also be set, to either "et-al" (the
+default) or "and others", to use either term:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{names}\OtherTok{ variable=}\StringTok{"author"}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{et{-}al}\OtherTok{ term=}\StringTok{"and others"}\NormalTok{/\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{names}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{substitute}{%
+\paragraph{Substitute}\label{substitute}}
+
+The optional \texttt{cs:substitute} element, which must be included as
+the last child element of \texttt{cs:names}, adds substitution in case
+the \protect\hyperlink{name-variables}{name variables} specified in the
+parent \texttt{cs:names} element are empty. The substitutions are
+specified as child elements of \texttt{cs:substitute}, and must consist
+of one or more \protect\hyperlink{rendering-elements}{rendering
+elements} (with the exception of \texttt{cs:layout}). A shorthand
+version of \texttt{cs:names} without child elements, which inherits the
+attributes values set on the \texttt{cs:name} and \texttt{cs:et-al}
+child elements of the original \texttt{cs:names} element, may also be
+used. If \texttt{cs:substitute} contains multiple child elements, the
+first element to return a non-empty result is used for substitution.
+Substituted variables are suppressed in the rest of the output to
+prevent duplication. Substituted variables are considered empty for the
+purposes of determining whether to suppress an enclosing
+\texttt{cs:group}. If the variable was rendered earlier in the citation,
+before the "substitute" element, it is not suppressed. An example, where
+an empty "author" name variable is substituted by the "editor" name
+variable, or, when no editors exist, by the "title" macro:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{macro}\OtherTok{ name=}\StringTok{"author"}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{names}\OtherTok{ variable=}\StringTok{"author"}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{substitute}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{names}\OtherTok{ variable=}\StringTok{"editor"}\NormalTok{/\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{text}\OtherTok{ macro=}\StringTok{"title"}\NormalTok{/\textgreater{}}
+\NormalTok{    \textless{}/}\KeywordTok{substitute}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{names}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{macro}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{label-in-csnames}{%
+\paragraph{\texorpdfstring{Label in
+\texttt{cs:names}}{Label in cs:names}}\label{label-in-csnames}}
+
+A \texttt{cs:label} element (see \protect\hyperlink{label}{label}) may
+optionally be included in \texttt{cs:names}. It must appear before the
+\texttt{cs:substitute} element. The position of \texttt{cs:label}
+relative to \texttt{cs:name} determines the order of the name and label
+in the rendered text. When used as a child element of \texttt{cs:names},
+\texttt{cs:label} does not carry the \texttt{variable} attribute; it
+uses the variable(s) set on the parent \texttt{cs:names} element
+instead. A second difference is that the \texttt{form} attribute may
+also be set to "verb" or "verb-short", so that the allowed values are:
+
+\begin{itemize}
+\tightlist
+\item
+  "long" - (default), e.g. "editor" and "editors" for the "editor" term
+\item
+  "short" - e.g. "ed." and "eds." for the term "editor"
+\item
+  "verb" - e.g. "edited by" for the term "editor"
+\item
+  "verb-short" - e.g. "ed." for the term "editor"
+\item
+  "symbol" - e.g. "§" and "§§" for the term "section"
+\end{itemize}
+
+\hypertarget{label}{%
+\subsubsection{Label}\label{label}}
+
+The \texttt{cs:label} rendering element outputs the term matching the
+variable selected with the required \texttt{variable} attribute, which
+must be set to "locator", "page", or one of the
+\protect\hyperlink{number-variables}{number variables}. The term is only
+rendered if the selected variable is non-empty. For example,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{group}\OtherTok{ delimiter=}\StringTok{" "}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{label}\OtherTok{ variable=}\StringTok{"page"}\NormalTok{/\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{text}\OtherTok{ variable=}\StringTok{"page"}\NormalTok{/\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{group}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+can result in "page 3" or "pages 5-7". \texttt{cs:label} may carry the
+following attributes:
+
+\begin{description}
+\item[\texttt{form}]
+Selects the form of the term, with allowed values:
+
+\begin{itemize}
+\tightlist
+\item
+  "long" - (default), e.g. "page"/"pages" for the "page" term
+\item
+  "short" - e.g. "p."/"pp." for the "page" term
+\item
+  "symbol" - e.g. "§"/"§§" for the "section" term
+\end{itemize}
+\item[\texttt{plural}]
+Sets pluralization of the term, with allowed values:
+
+\begin{itemize}
+\tightlist
+\item
+  "contextual" - (default), the term plurality matches that of the
+  variable content. Content is considered plural when it contains
+  multiple numbers (e.g. "page 1", "pages 1-3", "volume 2", "volumes 2
+  \& 4"), or, in the case of the "number-of-pages" and
+  "number-of-volumes" variables, when the number is higher than 1 ("1
+  volume" and "3 volumes").
+\item
+  "always" - always use the plural form, e.g. "pages 1" and "pages 1-3"
+\item
+  "never" - always use the singular form, e.g. "page 1" and "page 1-3"
+\end{itemize}
+\end{description}
+
+\texttt{cs:label} may also carry \protect\hyperlink{affixes}{affixes},
+\protect\hyperlink{formatting}{formatting},
+\protect\hyperlink{text-case}{text-case} and
+\protect\hyperlink{strip-periods}{strip-periods} attributes.
+
+\hypertarget{group}{%
+\subsubsection{Group}\label{group}}
+
+The \texttt{cs:group} rendering element must contain one or more
+\protect\hyperlink{rendering-elements}{rendering elements} (with the
+exception of \texttt{cs:layout}). \texttt{cs:group} may carry the
+\protect\hyperlink{delimiter}{delimiter} attribute to separate its child
+elements, as well as \protect\hyperlink{affixes}{affixes},
+\protect\hyperlink{display}{display}, and
+\protect\hyperlink{formatting}{formatting} attributes (applied to the
+output of the group as a whole). \texttt{cs:group} implicitly acts as a
+conditional: \texttt{cs:group} and its child elements are suppressed if
+a) at least one rendering element in \texttt{cs:group} calls a variable
+(either directly or via a macro), and b) all variables that are called
+are empty. This accommodates descriptive {cs:text} and
+`cs:label`elements. For example,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{group}\OtherTok{ delimiter=}\StringTok{" "}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{text}\OtherTok{ term=}\StringTok{"retrieved"}\NormalTok{/\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{text}\OtherTok{ term=}\StringTok{"from"}\NormalTok{/\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{text}\OtherTok{ variable=}\StringTok{"URL"}\NormalTok{/\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{group}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+can result in "retrieved from
+\url{https://doi.org/10.1128/AEM.02591-07}", but doesn\textquotesingle t
+generate output when the "URL" variable is empty.
+
+If a \texttt{cs:group} is nested within another \texttt{cs:group}, the
+inner group is evaluated first: a non-empty nested \texttt{cs:group} is
+treated as a non-empty variable for the puropses of determining
+suppression of the outer \texttt{cs:group}.
+
+When a \texttt{cs:group} contains a child \texttt{cs:macro}, if the
+\texttt{cs:macro} is non-empty, it is treated as a non-empty variable
+for the purposes of determining suppression of the outer
+\texttt{cs:group}.
+
+\hypertarget{choose}{%
+\subsubsection{Choose}\label{choose}}
+
+The \texttt{cs:choose} rendering element allows for conditional
+rendering of \protect\hyperlink{rendering-elements}{rendering elements}.
+An example that renders the "issued" date variable when it exists, and
+the "no date" term when it doesn\textquotesingle t:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{choose}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{if}\OtherTok{ variable=}\StringTok{"issued"}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{date}\OtherTok{ variable=}\StringTok{"issued"}\OtherTok{ form=}\StringTok{"numeric"}\NormalTok{/\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{if}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{else}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{text}\OtherTok{ term=}\StringTok{"no date"}\NormalTok{/\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{else}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{choose}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{cs:choose} requires a \texttt{cs:if} child element, which may be
+followed by one or more \texttt{cs:else-if} child elements, and an
+optional closing \texttt{cs:else} child element. The \texttt{cs:if} and
+\texttt{cs:else-if} elements may contain any number of
+\protect\hyperlink{rendering-elements}{rendering elements} (except for
+\texttt{cs:layout}). As an empty \texttt{cs:else} element would be
+superfluous, \texttt{cs:else} must contain at least one rendering
+element. \texttt{cs:if} and \texttt{cs:else-if} elements must carry one
+or more conditions, which are set with the attributes:
+
+\begin{description}
+\item[\texttt{disambiguate}]
+When set to "true" (the only allowed value), the element content is only
+rendered if it disambiguates two otherwise identical citations. This
+attempt at \protect\hyperlink{disambiguation}{disambiguation} is only
+made when all other disambiguation methods have failed to uniquely
+identify the target source.
+\item[\texttt{is-numeric}]
+Tests whether the given variables
+(\protect\hyperlink{appendix-iv---variables}{Appendix IV - Variables})
+contain numeric content. Content is considered numeric if it solely
+consists of numbers. Numbers may have prefixes and suffixes ("D2", "2b",
+"L2d"), and may be separated by a comma, hyphen, or ampersand, with or
+without spaces ("2, 3", "2-4", "2 \& 4"). For example, "2nd" tests
+"true" whereas "second" and "2nd edition" test "false".
+\item[\texttt{is-uncertain-date}]
+Tests whether the given \protect\hyperlink{date-variables}{date
+variables} contain \protect\hyperlink{approximate-dates}{approximate
+dates}.
+\item[\texttt{locator}]
+Tests whether the locator matches the given locator types (see
+\protect\hyperlink{locators}{Locators}). Use "sub-verbo" to test for the
+"sub verbo" locator type.
+\item[\texttt{position}]
+Tests whether the cite position matches the given positions
+(terminology: citations consist of one or more cites to individual
+items). When called within the scope of cs:bibliography,
+\texttt{position} tests "false". The positions that can be tested are:
+
+\begin{itemize}
+\item
+  "first": position of cites that are the first to reference an item
+\item
+  "ibid"/"ibid-with-locator"/"subsequent": cites referencing previously
+  cited items have the "subsequent" position. Such cites may also have
+  the "ibid" or "ibid-with-locator" position when:
+
+  \begin{enumerate}
+  \def\labelenumi{\alph{enumi})}
+  \tightlist
+  \item
+    the current cite immediately follows on another cite, within the
+    same citation, that references the same item
+  \end{enumerate}
+
+  or
+
+  \begin{enumerate}
+  \def\labelenumi{\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    the current cite is the first cite in the citation, and the previous
+    citation consists of a single cite referencing the same item
+  \end{enumerate}
+
+  If either requirement is met, the presence of locators determines
+  which position is assigned:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Preceding cite does not have a locator}: if the current cite
+    has a locator, the position of the current cite is
+    "ibid-with-locator". Otherwise the position is "ibid".
+  \item
+    \textbf{Preceding cite does have a locator}: if the current cite has
+    the same locator, the position of the current cite is "ibid". If the
+    locator differs the position is "ibid-with-locator". If the current
+    cite lacks a locator its only position is "subsequent".
+  \end{itemize}
+\item
+  "near-note": position of a cite following another cite referencing the
+  same item. Both cites have to be located in foot or endnotes, and the
+  distance between both cites may not exceed the maximum distance
+  (measured in number of foot or endnotes) set with the
+  \texttt{near-note-distance} option (see
+  \protect\hyperlink{note-distance}{Note Distance}).
+\end{itemize}
+
+Whenever position="ibid-with-locator" tests true, position="ibid" also
+tests true. And whenever position="ibid" or position="near-note" test
+true, position="subsequent" also tests true.
+\item[\texttt{type}]
+Tests whether the item matches the given types
+(\protect\hyperlink{appendix-iii---types}{Appendix III - Types}).
+\item[\texttt{variable}]
+Tests whether the default (long) forms of the given variables
+(\protect\hyperlink{appendix-iv---variables}{Appendix IV - Variables})
+contain non-empty values.
+\end{description}
+
+With the exception of \texttt{disambiguate}, all conditions allow for
+multiple test values (separated with spaces, e.g. "book thesis").
+
+The \texttt{cs:if} and \texttt{cs:else-if} elements may carry the
+\texttt{match} attribute to control the testing logic, with allowed
+values:
+
+\begin{itemize}
+\tightlist
+\item
+  "all" - (default), element only tests "true" when all conditions test
+  "true" for all given test values
+\item
+  "any" - element tests "true" when any condition tests "true" for any
+  given test value
+\item
+  "none" - element only tests "true" when none of the conditions test
+  "true" for any given test value
+\end{itemize}
+
+Delimiters from the nearest delimiters from the nearest ancestor
+delimiting element \emph{are} applied within the output of
+\texttt{cs:choose} (i.e., the output of the matching \texttt{cs:if},
+\texttt{cs:else-if}, or \texttt{cs:else}; see
+\protect\hyperlink{delimiter}{delimiter}).
+
+\hypertarget{style-behavior}{%
+\subsection{Style Behavior}\label{style-behavior}}
+
+\hypertarget{options}{%
+\subsubsection{Options}\label{options}}
+
+Styles may be configured with
+\protect\hyperlink{citation-specific-options}{citation-specific
+options}, set as attributes on set on \texttt{cs:citation},
+\protect\hyperlink{bibliography-specific-options}{bibliography-specific
+options}, set on \texttt{cs:bibliography}, and
+\protect\hyperlink{global-options}{global options} (these affect both
+citations and the bibliography), set on \texttt{cs:style}.
+\protect\hyperlink{inheritable-name-options}{Inheritable name options}
+may be set on \texttt{cs:style}, \texttt{cs:citation} and
+\texttt{cs:bibliography}. Finally,
+\protect\hyperlink{locale-options}{locale options} may be set on
+\texttt{cs:locale} elements.
+
+\hypertarget{citation-specific-options}{%
+\paragraph{Citation-specific Options}\label{citation-specific-options}}
+
+\hypertarget{disambiguation}{%
+\subparagraph{Disambiguation}\label{disambiguation}}
+
+A cite is ambiguous when it matches multiple bibliographic
+entries\footnote{Including uncited entries in the bibliography can make
+  cites in the document ambiguous. To make sure such cites are
+  disambiguated, the CSL processor should include (invisible) cites for
+  such uncited bibliographic entries in the disambiguation process.}.
+Four methods are available to eliminate such ambiguity, which are always
+tried in the following order:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Expand names (adding initials or full given names)
+\item
+  Show more names
+\item
+  Render the cite with the \texttt{disambiguate} attribute of
+  \texttt{cs:choose} conditions testing "true"
+\item
+  Add a year-suffix
+\end{enumerate}
+
+Method 1 can also be used for the separate purpose of global \emph{name
+disambiguation}, covering both ambiguous and unambiguous cites
+throughout the document.
+
+The four disambiguation methods can be individually activated with the
+following optional attributes:
+
+\begin{description}
+\item[\texttt{disambiguate-add-givenname} {[}Method (1){]}]
+If set to "true" ("false" is the default), ambiguous names (names that
+are identical in their "short" or initialized "long" form, but differ
+when initials are added or the full given name is shown) are expanded.
+Name expansion can be configured with
+\texttt{givenname-disambiguation-rule}. An example of cite
+disambiguation:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Original ambiguous cites & Disambiguated cites \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+(Simpson 2005; Simpson 2005) & (H. Simpson 2005; B. Simpson 2005) \\
+(Doe 1950; Doe 1950) & (John Doe 1950; Jane Doe 1950) \\
+\end{longtable}
+\item[\texttt{givenname-disambiguation-rule}]
+Specifies (a) whether the purpose of name expansion is limited to
+disambiguating cites, or has the additional goal of disambiguating names
+(only in the latter case are ambiguous names in unambiguous cites
+expanded, e.g. from "(Doe 1950; Doe 2000)" to "(Jane Doe 1950; John Doe
+2000)"), (b) whether name expansion targets all, or just the first name
+of each cite, and (c) the method by which each name is expanded.
+
+\begin{description}
+\item[\textbf{Expansion of Individual Names}]
+The steps for expanding individual names are:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  If \texttt{initialize-with} is set and \texttt{initialize} has its
+  default value of "true", then:
+
+  (a) Initials can be shown by rendering the name with a \texttt{form}
+  value of "long" instead of "short" (e.g. "Doe" becomes "J. Doe").
+
+  (b) Full given names can be shown instead of initials by rendering the
+  name with \texttt{initialize} set to "false" (e.g. "J. Doe" becomes
+  "John Doe").
+\item
+  If \texttt{initialize-with} is \emph{not} set, full given names can be
+  shown by rendering the name with a \texttt{form} value of "long"
+  instead of "short" (e.g. "Doe" becomes "John Doe").
+\end{enumerate}
+\item[\textbf{Given Name Disambiguation Rules}]
+Allowed values of \texttt{givenname-disambiguation-rule}:
+
+\begin{description}
+\item["all-names"]
+Name expansion has the dual purpose of disambiguating cites and names.
+All rendered ambiguous names, in both ambiguous and unambiguous cites,
+are subject to disambiguation. Each name is progressively transformed
+until it is disambiguated. Names that cannot be disambiguated remain in
+their original form.
+\item["all-names-with-initials"]
+As "all-names", but name expansion is limited to showing initials (see
+step 1(a) above). No disambiguation attempt is made when
+\texttt{initialize-with} is not set or when \texttt{initialize} is set
+to "false".
+\item["primary-name"]
+As "all-names", but disambiguation is limited to the first name of each
+cite.
+\item["primary-name-with-initials"]
+As "all-names-with-initials", but disambiguation is limited to the first
+name of each cite.
+\item["by-cite"]
+Default. As "all-names", but the goal of name expansion is limited to
+disambiguating cites. Only ambiguous names in ambiguous cites are
+affected, and disambiguation stops after the first name that eliminates
+cite ambiguity.
+\end{description}
+\end{description}
+\item[\texttt{disambiguate-add-names} {[}Method (2){]}]
+If set to "true" ("false" is the default), names that would otherwise be
+hidden as a result of et-al abbreviation are added one by one to all
+members of a set of ambiguous cites, until no more cites in the set can
+be disambiguated by adding names.
+\end{description}
+
+If both \texttt{disambiguate-add-givenname} and
+\texttt{disambiguate-add-names} are set to "true", given name expansion
+is applied to rendered names first. If cites cannot be (fully)
+disambiguated by expanding the rendered names, then the names still
+hidden as a result of et-al abbreviation are added one by one to all
+members of a set of ambiguous cites. Added names are expanded if doing
+so would disambiguate the ambiguous cites. This process contines until
+no more cites in the set can be disambiguated by adding expanded names.
+
+In the description of disambiguation methods (1) and (2) above, we
+assumed that each (disambiguated) cite has an unambiguous link to its
+bibliographic entry. To assure that each cite does in fact uniquely
+identify its entry in the bibliography, detail that distinguishes cites
+(such as names, initials, and full given names) must be shown in the
+corresponding bibliography entries. If this is not the case,
+disambiguation methods (1) and (2) also act on all members of a set of
+ambiguously cited bibliographic entries, until no more entries in the
+set can be unambiguously cited by adding (expanded) names. Each method
+only takes effect on the involved bibliographic entries after it has
+been used to disambiguate cites.
+
+\begin{description}
+\item[\texttt{disambiguate} condition {[}Method (3){]}]
+A disambiguation attempt can also be made by rendering ambiguous cites
+with the \texttt{disambiguate} condition testing "true" (see
+\protect\hyperlink{choose}{Choose}).
+\item[\texttt{disambiguate-add-year-suffix} {[}Method (4){]}]
+If set to "true" ("false" is the default), an alphabetic year-suffix is
+added to ambiguous cites (e.g. "Doe 2007, Doe 2007" becomes "Doe 2007a,
+Doe 2007b") and to their corresponding bibliographic entries. This final
+disambiguation method is always successful. The assignment of
+year-suffixes follows the order of the bibliographies entries, and
+additional letters are used once "z" is reached ("z", "aa", "ab", ...,
+"az", "ba", etc.). By default, the year-suffix is appended the first
+year rendered through \texttt{cs:date} in the cite and in the
+bibliographic entry, but its location can be controlled by explicitly
+rendering the "year-suffix" variable using \texttt{cs:text}. If
+"year-suffix" is rendered through \texttt{cs:text} in the scope of
+\texttt{cs:citation}, it is suppressed for \texttt{cs:bibliography},
+unless it is also rendered through \texttt{cs:text} in the scope of
+\texttt{cs:bibliography}, and vice versa.
+\end{description}
+
+\hypertarget{cite-grouping}{%
+\subparagraph{Cite Grouping}\label{cite-grouping}}
+
+With cite grouping, cites in in-text citations with identical rendered
+names are grouped together, e.g. the year-sorted "(Doe 1999; Smith 2002;
+Doe 2006; Doe et al. 2007)" becomes "(Doe 1999; Doe 2006; Smith 2002;
+Doe et al. 2007)". The comparison is limited to the output of the
+(first) \texttt{cs:names} element, but includes output rendered through
+\texttt{cs:substitute}. Cite grouping takes places after cite sorting
+and disambiguation. Grouped cites maintain their relative order, and are
+moved to the original location of the first cite of the group.
+
+Cite grouping can be activated by setting the
+\texttt{cite-group-delimiter} attribute or the \texttt{collapse}
+attributes on \texttt{cs:citation} (see also
+\protect\hyperlink{cite-collapsing}{Cite Collapsing}).
+
+\begin{description}
+\item[\texttt{cite-group-delimiter}]
+Activates cite grouping and specifies the delimiter for cites within a
+cite group. Defaults to ", ". E.g. with \texttt{delimiter} on
+\texttt{cs:layout} in \texttt{cs:citation} set to "; ",
+\texttt{collapse} set to "year", and \texttt{cite-group-delimiter} set
+to ",", citations look like "(Doe 1999,2001; Jones 2000)".
+\end{description}
+
+\hypertarget{cite-collapsing}{%
+\subparagraph{Cite Collapsing}\label{cite-collapsing}}
+
+Cite groups (author and author-date styles), and numeric cite ranges
+(numeric styles) can be collapsed through the use of the
+\texttt{collapse} attribute. Delimiters for collapsed cite groups can be
+customized with the \texttt{year-suffix-delimiter} and
+\texttt{after-collapse-delimiter} attributes:
+
+\begin{description}
+\item[\texttt{collapse}]
+Activates cite grouping and collapsing. Allowed values:
+
+\begin{itemize}
+\tightlist
+\item
+  "citation-number" - collapses ranges of cite numbers (rendered through
+  the "citation-number" variable) in citations for "numeric" styles
+  (e.g. from "{[}1, 2, 3, 5{]}" to "{[}1 -- 3, 5{]}"). Only increasing
+  ranges collapse, e.g. "{[}3, 2, 1{]}" will not collapse (to see how to
+  sort cites by "citation-number", see
+  \protect\hyperlink{sorting}{Sorting}).
+\item
+  "year" - collapses cite groups by suppressing the output of the
+  \texttt{cs:names} element for subsequent cites in the group, e.g.
+  "(Doe 2000, Doe 2001)" becomes "(Doe 2000, 2001)".
+\item
+  "year-suffix" - collapses as "year", but also suppresses repeating
+  years within the cite group, e.g. "(Doe 2000a, b)" instead of "(Doe
+  2000a, 2000b)".
+\item
+  "year-suffix-ranged" - collapses as "year-suffix", but also collapses
+  ranges of year-suffixes, e.g. "(Doe 2000a -- c,e)" instead of "(Doe
+  2000a, b, c, e)".
+\end{itemize}
+
+"year-suffix" and "year-suffix-ranged" fall back to "year" when
+\texttt{disambiguate-add-year-suffix} is "false" (see
+\protect\hyperlink{disambiguation}{Disambiguation}), or when a cite has
+a locator (e.g. "(Doe 2000a-c, 2000d, p. 5, 2000e,f)", where the cite
+for "Doe 2000d" has a locator that prevents the cite from further
+collapsing).
+\item[\texttt{year-suffix-delimiter}]
+Specifies the delimiter for year-suffixes. Defaults to the delimiter set
+on \texttt{cs:layout} in \texttt{cs:citation}. E.g. with
+\texttt{collapse} set to "year-suffix", \texttt{delimiter} on
+\texttt{cs:layout} in \texttt{cs:citation} set to "; ", and
+\texttt{year-suffix-delimiter} set to ",", citations look like "(Doe
+1999a,b; Jones 2000)".
+\item[\texttt{after-collapse-delimiter}]
+Specifies the cite delimiter to be used \emph{after} a collapsed cite
+group. Defaults to the delimiter set on \texttt{cs:layout} in
+\texttt{cs:citation}. E.g. with \texttt{collapse} set to "year",
+\texttt{delimiter} on \texttt{cs:layout} in \texttt{cs:citation} set to
+", ", and \texttt{after-collapse-delimiter} set to "; ", citations look
+like "(Doe 1999, 2001; Jones 2000, Brown 2001)".
+\end{description}
+
+\hypertarget{note-distance}{%
+\subparagraph{Note Distance}\label{note-distance}}
+
+\begin{description}
+\item[\texttt{near-note-distance}]
+A cite tests true for the "near-note" position (see
+\protect\hyperlink{choose}{Choose}) when a preceding note exists that a)
+refers to the same item and b) does not precede the current note by more
+footnotes or endnotes than the value of \texttt{near-note-distance}
+(default value is "5").
+\end{description}
+
+\hypertarget{bibliography-specific-options}{%
+\paragraph{Bibliography-specific
+Options}\label{bibliography-specific-options}}
+
+\hypertarget{whitespace}{%
+\subparagraph{Whitespace}\label{whitespace}}
+
+\begin{description}
+\item[\texttt{hanging-indent}]
+If set to "true" ("false" is the default), bibliographic entries are
+rendered with hanging-indents.
+\item[\texttt{second-field-align}]
+If set, subsequent lines of bibliographic entries are aligned along the
+second field. With "flush", the first field is flush with the margin.
+With "margin", the first field is put in the margin, and subsequent
+lines are aligned with the margin. An example, where the first field is
+\texttt{\textless{}text\ variable="citation-number"\ suffix=".\ "/\textgreater{}}:
+
+\begin{verbatim}
+9.  Adams, D. (2002). The Ultimate Hitchhiker's Guide to the
+    Galaxy (1st ed.).
+10. Asimov, I. (1951). Foundation.
+\end{verbatim}
+\item[\texttt{line-spacing}]
+Specifies vertical line distance. Defaults to "1" (single-spacing), and
+can be set to any positive integer to specify a multiple of the standard
+unit of line height (e.g. "2" for double-spacing).
+\item[\texttt{entry-spacing}]
+Specifies vertical distance between bibliographic entries. By default
+(with a value of "1"), entries are separated by a single additional
+line-height (as set by the line-spacing attribute). Can be set to any
+non-negative integer to specify a multiple of this amount.
+\end{description}
+
+\hypertarget{reference-grouping}{%
+\subparagraph{Reference Grouping}\label{reference-grouping}}
+
+\begin{description}
+\item[\texttt{subsequent-author-substitute}]
+If set, the value of this attribute replaces names in a bibliographic
+entry that also occur in the preceding entry. The exact method of
+substitution depends on the value of the
+\texttt{subsequent-author-substitute-rule} attribute. Substitution is
+limited to the names of the first \texttt{cs:names} element rendered.
+\item[\texttt{subsequent-author-substitute-rule}]
+Specifies when and how names are substituted as a result of
+\texttt{subsequent-author-substitute}. Allowed values:
+
+\begin{itemize}
+\tightlist
+\item
+  "complete-all" - (default), when all names of the name variable match
+  those in the preceding bibliographic entry, the value of
+  \texttt{subsequent-author-substitute} replaces the entire name list
+  (including punctuation and terms like "et al" and "and"), except for
+  the affixes set on the \texttt{cs:names} element.
+\item
+  "complete-each" - requires a complete match like "complete-all", but
+  now the value of \texttt{subsequent-author-substitute} substitutes for
+  each rendered name.
+\item
+  "partial-each" - when one or more rendered names in the name variable
+  match those in the preceding bibliographic entry, the value of
+  \texttt{subsequent-author-substitute} substitutes for each matching
+  name. Matching starts with the first name, and continues up to the
+  first mismatch.
+\item
+  "partial-first" - as "partial-each", but substitution is limited to
+  the first name of the name variable.
+\end{itemize}
+
+For example, take the following bibliographic entries:
+
+\begin{verbatim}
+Doe. 1999.
+Doe. 2000.
+Doe, Johnson & Williams. 2001.
+Doe & Smith. 2002.
+Doe, Stevens & Miller. 2003.
+Doe, Stevens & Miller. 2004.
+Doe, Williams et al. 2005.
+Doe, Williams et al. 2006.
+\end{verbatim}
+
+With \texttt{subsequent-author-substitute} set to "-\/-\/-", and
+\texttt{subsequent-author-substitute-rule} set to "complete-all", this
+becomes:
+
+\begin{verbatim}
+Doe. 1999.
+---. 2000.
+Doe, Johnson & Williams. 2001.
+Doe & Smith. 2002.
+Doe, Stevens & Miller. 2003.
+---. 2004.
+Doe, Williams et al. 2005.
+---. 2005.
+\end{verbatim}
+
+With \texttt{subsequent-author-substitute-rule} set to "complete-each",
+this becomes:
+
+\begin{verbatim}
+Doe. 1999.
+---. 2000.
+Doe, Johnson & Williams. 2001.
+Doe & Smith. 2002.
+Doe, Stevens & Miller. 2003.
+---, --- & ---. 2004.
+Doe, Williams et al. 2005.
+---, --- et al. 2006.
+\end{verbatim}
+
+With \texttt{subsequent-author-substitute-rule} set to "partial-each",
+this becomes:
+
+\begin{verbatim}
+Doe. 1999.
+---. 2000.
+Doe, Johnson & Williams. 2001.
+--- & Smith. 2002.
+Doe, Stevens & Miller. 2003.
+---, --- & ---. 2004.
+Doe, Williams et al. 2005.
+---, --- et al. 2005.
+\end{verbatim}
+
+With \texttt{subsequent-author-substitute-rule} set to "partial-first",
+this becomes:
+
+\begin{verbatim}
+Doe. 1999.
+---. 2000.
+Doe, Johnson & Williams. 2001.
+--- & Smith. 2002.
+Doe, Stevens & Miller. 2003.
+---, Stevens & Miller. 2004.
+Doe, Williams et al. 2005.
+---, Williams et al. 2005.
+\end{verbatim}
+\end{description}
+
+\hypertarget{global-options}{%
+\paragraph{Global Options}\label{global-options}}
+
+\hypertarget{hyphenation-of-initialized-names}{%
+\subparagraph{Hyphenation of Initialized
+Names}\label{hyphenation-of-initialized-names}}
+
+\begin{description}
+\item[\texttt{initialize-with-hyphen}]
+Specifies whether compound given names (e.g. "Jean-Luc") should be
+initialized with a hyphen ("J.-L.", value "true", default) or without
+("J. L.", value "false").
+\end{description}
+
+\hypertarget{page-ranges}{%
+\subparagraph{Page Ranges}\label{page-ranges}}
+
+\begin{description}
+\item[\texttt{page-range-format}]
+Activates expansion or collapsing of page ranges: "chicago" ("321 --
+28"), "expanded" (e.g. "321 -- 328"), "minimal" ("321 -- 8"), or
+"minimal-two" ("321 -- 28") (see also
+\protect\hyperlink{appendix-v---page-range-formats}{Appendix V - Page
+Range Formats}). Delimits page ranges with the "page-range-delimiter"
+term (introduced with CSL 1.0.1, and defaults to an en-dash). If the
+attribute is not set, page ranges are rendered without reformatting.
+\end{description}
+
+\hypertarget{name-particles}{%
+\subparagraph{Name Particles}\label{name-particles}}
+
+Western names frequently contain one or more name particles (e.g. "van"
+in the Dutch name "Vincent van Gogh"). These name particles can be
+either kept or dropped when only the surname is shown: these two types
+are referred to as non-dropping and dropping particles, respectively.
+Theoretically, a single name might contain particles of both types (with
+non-dropping particles always following dropping particles), though
+currently we are not aware of any real-life examples. For example, the
+Dutch name "Vincent van Gogh", the German name "Alexander von Humboldt",
+and the Arabic name "Tawfiq al-Hakim" can be deconstructed into:
+
+\begin{quote}
+\begin{verbatim}
+{
+    "author": [
+        {
+            "given": "Vincent",
+            "non-dropping-particle": "van",
+            "family": "Gogh"
+        },
+        {
+            "given": "Alexander",
+            "dropping-particle": "von",
+            "family": "Humboldt"
+        }
+        {
+            "given": "Tawfiq",
+            "non-dropping-particle": "al-",
+            "family": "Hakim"
+        }
+    ]
+}
+\end{verbatim}
+\end{quote}
+
+When just the surname is shown, only the non-dropping-particle is kept:
+"Van Gogh" and "al-Hakim", but "Humboldt".
+
+In the case of inverted names, where the family name precedes the given
+name, the dropping-particle is always appended to the family name, but
+the non-dropping-particle can be either prepended (e.g. "van Gogh,
+Vincent") or appended (after initials or given names, e.g. "Gogh,
+Vincent van"). For inverted names where the non-dropping-particle is
+prepended, names can either be sorted by keeping the
+non-dropping-particle together with the family name as part of the
+primary sort key (sort order A), or by separating the
+non-dropping-particle from the family name and have it become (part of)
+a secondary sort key, joining the dropping-particle, if available (sort
+order B):
+
+\textbf{Sort order A: non-dropping-particle not demoted}
+
+\begin{itemize}
+\tightlist
+\item
+  primary sort key: "van Gogh"
+\item
+  secondary sort key: ""
+\item
+  tertiary sort key: "Vincent"
+\end{itemize}
+
+\textbf{Sort order B: non-dropping-particle demoted}
+
+\begin{itemize}
+\tightlist
+\item
+  primary sort key: "Gogh"
+\item
+  secondary sort key: "van"
+\item
+  tertiary sort key: "Vincent"
+\end{itemize}
+
+The handling of the non-dropping-particle can be customized with the
+\texttt{demote-non-dropping-particle} option:
+
+\begin{description}
+\item[\texttt{demote-non-dropping-particle}]
+Sets the display and sorting behavior of the non-dropping-particle in
+inverted names (e.g. "Gogh, Vincent van"). Allowed values:
+
+\begin{itemize}
+\tightlist
+\item
+  "never": the non-dropping-particle is treated as part of the family
+  name, whereas the dropping-particle is appended (e.g. "van Gogh,
+  Vincent", "Humboldt, Alexander von"). The non-dropping-particle is
+  part of the primary sort key (sort order A, e.g. "van Gogh, Vincent"
+  appears under "V").
+\item
+  "sort-only": same display behavior as "never", but the
+  non-dropping-particle is demoted to a secondary sort key (sort order
+  B, e.g. "van Gogh, Vincent" appears under "G").
+\item
+  "display-and-sort" (default): the dropping and non-dropping-particle
+  are appended (e.g. "Gogh, Vincent van" and "Humboldt, Alexander von").
+  For name sorting, all particles are part of the secondary sort key
+  (sort order B, e.g. "Gogh, Vincent van" appears under "G").
+\end{itemize}
+\end{description}
+
+Some names include a particle that should never be demoted. For these
+cases the particle should just be included in the family name field, for
+example for the French general Charles de Gaulle and the writer Jean de
+La Fontaine:
+
+\begin{quote}
+\begin{verbatim}
+{
+    "author": [
+        {
+            "given": "Charles"
+            "family": "de Gaulle",
+        },
+        {
+            "given": "Jean"
+            "dropping-particle": "de",
+            "family": "La Fontaine",
+        }
+    ]
+}
+\end{verbatim}
+\end{quote}
+
+\hypertarget{inheritable-name-options}{%
+\paragraph{Inheritable Name Options}\label{inheritable-name-options}}
+
+Attributes for the \texttt{cs:names} and \texttt{cs:name} elements may
+also be set on \texttt{cs:style}, \texttt{cs:citation} and
+\texttt{cs:bibliography}. This eliminates the need to repeat the same
+attributes and attribute values for every occurrence of the
+\texttt{cs:names} and \texttt{cs:name} elements.
+
+The available inheritable attributes for \texttt{cs:name} are
+\texttt{and}, \texttt{delimiter-precedes-et-al},
+\texttt{delimiter-precedes-last}, \texttt{et-al-min},
+\texttt{et-al-use-first}, \texttt{et-al-use-last},
+\texttt{et-al-subsequent-min}, \texttt{et-al-subsequent-use-first},
+\texttt{initialize}, \texttt{initialize-with},
+\texttt{name-as-sort-order} and \texttt{sort-separator}. The attributes
+\texttt{name-form} and \texttt{name-delimiter} correspond to the
+\texttt{form} and \texttt{delimiter} attributes on \texttt{cs:name}.
+Similarly, \texttt{names-delimiter} corresponds to the
+\texttt{delimiter} attribute on \texttt{cs:names}.
+
+When an inheritable name attribute is set on \texttt{cs:style},
+\texttt{cs:citation} or \texttt{cs:bibliography}, its value is used for
+all \texttt{cs:names} elements within the scope of the element carrying
+the attribute. If an attribute is set on multiple hierarchical levels,
+the value set at the lowest level is used.
+
+\hypertarget{locale-options}{%
+\paragraph{Locale Options}\label{locale-options}}
+
+\begin{description}
+\item[\texttt{limit-day-ordinals-to-day-1}]
+Date formats are defined by the \texttt{cs:date} element and its
+\texttt{cs:date-part} child elements (see
+\protect\hyperlink{date}{Date}). By default, when the
+\texttt{cs:date-part} element with \texttt{name} set to "day" has
+\texttt{form} set to "ordinal", all days (1 through 31) are rendered in
+the ordinal form, e.g. "January 1st", "January 2nd", etc. By setting
+\texttt{limit-day-ordinals-to-day-1} to "true" ("false" is the default),
+the "ordinal" form is limited to the first day of each month (other days
+will use the "numeric" form). This is desirable for some languages, such
+as French: "1er janvier", but "2 janvier", "3 janvier", etc.
+\item[\texttt{punctuation-in-quote}]
+For \texttt{cs:text} elements rendered with the \texttt{quotes}
+attribute set to "true" (see
+\protect\hyperlink{formatting}{Formatting}), and for which the output is
+followed by a comma or period, \texttt{punctuation-in-quote} specifies
+whether this punctuation is placed outside (value "false", default) or
+inside (value "true") the closing quotation mark.
+\end{description}
+
+\hypertarget{sorting}{%
+\subsubsection{Sorting}\label{sorting}}
+
+\texttt{cs:citation} and \texttt{cs:bibliography} may include a
+\texttt{cs:sort} child element before the \texttt{cs:layout} element to
+specify the sorting order of respectively cites within citations, and
+bibliographic entries within the bibliography. In the absence of
+\texttt{cs:sort}, cites and bibliographic entries appear in the order in
+which they are cited.
+
+The \texttt{cs:sort} element must contain one or more \texttt{cs:key}
+child elements. The sort key, set as an attribute on \texttt{cs:key},
+must be a variable (see
+\protect\hyperlink{appendix-iv---variables}{Appendix IV - Variables}) or
+macro name. For each \texttt{cs:key} element, the sort direction can be
+set to either "ascending" (default) or "descending" with the
+\texttt{sort} attribute. Sorting is case-insensitive. The attributes
+\texttt{names-min}, \texttt{names-use-first}, and
+\texttt{names-use-last} may be used to override the values of the
+corresponding \texttt{et-al-min}/\texttt{et-al-subsequent-min},
+\texttt{et-al-use-first}/\texttt{et-al-subsequent-use-first} and
+\texttt{et-al-use-last} attributes, and affect all names generated via
+macros called by \texttt{cs:key}.
+
+Sort keys are evaluated in sequence. A primary sort is performed on all
+items using the first sort key. A secondary sort, using the second sort
+key, is applied to items sharing the first sort key value. A tertiary
+sort, using the third sort key, is applied to items sharing the first
+and second sort key values. Sorting continues until either the order of
+all items is fixed, or until the sort keys are exhausted. Items with an
+empty sort key value are placed at the end of the sort, both for
+ascending and descending sorts.
+
+An example, where cites are first sorted by the output of the "author"
+macro, with overriding settings for et-al abbreviation. Cites sharing
+the primary sort key are subsequently sorted in descending order by the
+"issued" date variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{citation}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{sort}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{key}\OtherTok{ macro=}\StringTok{"author"}\OtherTok{ names{-}min=}\StringTok{"3"}\OtherTok{ names{-}use{-}first=}\StringTok{"3"}\NormalTok{/\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{key}\OtherTok{ variable=}\StringTok{"issued"}\OtherTok{ sort=}\StringTok{"descending"}\NormalTok{/\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{sort}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{layout}\NormalTok{\textgreater{}}
+    \CommentTok{\textless{}!{-}{-} rendering elements {-}{-}\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{citation}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+The sort key value of a variable or macro can differ from the "normal"
+rendered output. The specifics of sorting variables and macros:
+
+\hypertarget{sorting-variables}{%
+\paragraph{Sorting Variables}\label{sorting-variables}}
+
+The sort key value for a variable called by \texttt{cs:key} via the
+\texttt{variable} attribute consists of the string value, without rich
+text markup. Exceptions are name, date and numeric variables:
+
+\textbf{names:} \protect\hyperlink{name-variables}{Name variables}
+called via the \texttt{variable} attribute (e.g.
+\texttt{\textless{}key\ variable="author"/\textgreater{}}) are returned
+as a name list string, with the \texttt{cs:name} attributes
+\texttt{form} set to "long", and \texttt{name-as-sort-order} set to
+"all".
+
+\textbf{dates:} \protect\hyperlink{date-variables}{Date variables}
+called via the \texttt{variable} attribute are returned in the YYYYMMDD
+format, with zeros substituted for any missing date-parts (e.g. 20001200
+for December 2000). As a result, less specific dates precede more
+specific dates in ascending sorts, e.g. "2000, May 2000, May 1st 2000".
+Negative years are sorted inversely, e.g. "100BC, 50BC, 50AD, 100AD".
+Seasons are ignored for sorting, as the chronological order of the
+seasons differs between the northern and southern hemispheres. In the
+case of date ranges, the start date is used for the primary sort, and
+the end date is used for a secondary sort, e.g. "2000 -- 2001, 2000 --
+2005, 2002 -- 2003, 2002 -- 2009". Date ranges are placed after single
+dates when they share the same (start) date, e.g. "2000, 2000 -- 2002".
+
+\textbf{numbers:} \protect\hyperlink{number-variables}{Number variables}
+called via the \texttt{variable} attribute are returned as integers
+(\texttt{form} is "numeric"). If the original variable value only
+consists of non-numeric text, the value is returned as a text string.
+
+\hypertarget{sorting-macros}{%
+\paragraph{Sorting Macros}\label{sorting-macros}}
+
+The sort key value for a macro called via \texttt{cs:key} via the
+\texttt{macro} attribute generally consists of the string value the
+macro would ordinarily generate, without rich text markup (exceptions
+are discussed below).
+
+When sorting by \protect\hyperlink{name-variables}{name variables}
+rendered within the macro, any \texttt{cs:label} elements are excluded
+from the sort key values. Name variables are also returned with the
+\texttt{cs:name} attribute \texttt{name-as-sort-order} set to "all".
+When et-al abbreviation occurs, the "et-al" and "and others" terms are
+excluded from the sort key values.
+
+There are four advantages in using the same macro for rendering and
+sorting, instead of sorting directly on the name variable. First,
+substitution is available (e.g. the "editor" variable might substitute
+for an empty "author" variable). Second, et-al abbreviation can be used
+(using either the \texttt{et-al-min}/\texttt{et-al-subsequent-min},
+\texttt{et-al-use-first}/\texttt{et-al-subsequent-use-first}, and
+\texttt{et-al-use-last} options defined for the macro, or the overriding
+\texttt{names-min}, \texttt{names-use-first} and \texttt{names-use-last}
+attributes set on \texttt{cs:key}). Third, names can be sorted by just
+the surname (using a macro for which the \texttt{form} attribute on
+\texttt{cs:name} is set to "short"). Fourth, it is possible to sort by
+the number of names in a name list, by calling a macro for which the
+\texttt{form} attribute on \texttt{cs:name} is set to "count".
+
+\protect\hyperlink{number-variables}{Number variables} rendered within
+the macro with \texttt{cs:number} and
+\protect\hyperlink{date-variables}{date variables} are treated the same
+as when they are called via \texttt{variable}. The only exception is
+that the complete date is returned if a date variable is called via the
+\texttt{variable} attribute. In contrast, macros return only those
+date-parts that would otherwise be rendered (respecting the value of the
+\texttt{date-parts} attribute for localized dates, or the listing of
+\texttt{cs:date-part} elements for non-localized dates).
+
+\hypertarget{range-delimiters}{%
+\subsubsection{Range Delimiters}\label{range-delimiters}}
+
+Collapsed ranges for the "citation-number" and "year-suffix" variables
+are delimited by an en-dash (e.g. "(1 -- 3, 5)" and "(Doe 2000a --
+c,e)").
+
+The "locator" variable is always rendered with an en-dash replacing any
+hyphens. For the "page" variable, this replacement is only performed if
+the \texttt{page-range-format} attribute is set on \texttt{cs:style}
+(see \protect\hyperlink{page-ranges}{Page Ranges}).
+
+\hypertarget{formatting}{%
+\subsubsection{Formatting}\label{formatting}}
+
+The following formatting attributes may be set on \texttt{cs:date},
+\texttt{cs:date-part}, \texttt{cs:et-al}, \texttt{cs:group},
+\texttt{cs:label}, \texttt{cs:layout}, \texttt{cs:name},
+\texttt{cs:name-part}, \texttt{cs:names}, \texttt{cs:number} and
+\texttt{cs:text}:
+
+\begin{description}
+\item[\texttt{font-style}]
+Sets the font style, with values:
+
+\begin{itemize}
+\tightlist
+\item
+  "normal" (default)
+\item
+  "italic"
+\item
+  "oblique" (i.e. slanted)
+\end{itemize}
+\item[\texttt{font-variant}]
+Allows for the use of small capitals, with values:
+
+\begin{itemize}
+\tightlist
+\item
+  "normal" (default)
+\item
+  "small-caps"
+\end{itemize}
+\item[\texttt{font-weight}]
+Sets the font weight, with values:
+
+\begin{itemize}
+\tightlist
+\item
+  "normal" (default)
+\item
+  "bold"
+\item
+  "light"
+\end{itemize}
+\item[\texttt{text-decoration}]
+Allows for the use of underlining, with values:
+
+\begin{itemize}
+\tightlist
+\item
+  "none" (default)
+\item
+  "underline"
+\end{itemize}
+\item[\texttt{vertical-align}]
+Sets the vertical alignment, with values:
+
+\begin{itemize}
+\tightlist
+\item
+  "baseline" (default)
+\item
+  "sup" (superscript)
+\item
+  "sub" (subscript)
+\end{itemize}
+\end{description}
+
+\hypertarget{affixes}{%
+\subsubsection{Affixes}\label{affixes}}
+
+The affixes attributes \texttt{prefix} and \texttt{suffix} may be set on
+\texttt{cs:date} (except when \texttt{cs:date} defines a localized date
+format), \texttt{cs:date-part} (except when the parent \texttt{cs:date}
+element calls a localized date format), \texttt{cs:group},
+\texttt{cs:label}, \texttt{cs:layout}, \texttt{cs:name},
+\texttt{cs:name-part}, \texttt{cs:names}, \texttt{cs:number} and
+\texttt{cs:text}. The attribute value is either added before
+(\texttt{prefix}) or after (\texttt{suffix}) the output of the element
+carrying the attribute, but affixes are only rendered if the element
+produces output. With the exception of affixes set on
+\texttt{cs:layout}, affixes are outside the scope of
+\protect\hyperlink{formatting}{formatting},
+\protect\hyperlink{quotes}{quotes},
+\protect\hyperlink{strip-periods}{strip-periods} and
+\protect\hyperlink{text-case}{text-case} attributes set on the same
+element (as a workaround, these attributes take effect on affixes when
+set on a parent \texttt{cs:group} element).
+
+\hypertarget{delimiter}{%
+\subsubsection{Delimiter}\label{delimiter}}
+
+The \texttt{delimiter} attribute, whose value delimits non-empty pieces
+of output, may be set on \texttt{cs:date} (delimiting the date-parts;
+\texttt{delimiter} is not allowed when \texttt{cs:date} calls a
+localized date format), \texttt{cs:names} (delimiting name lists from
+different \protect\hyperlink{name-variables}{name variables}),
+\texttt{cs:name} (delimiting names within name lists), \texttt{cs:group}
+and \texttt{cs:layout} (delimiting the output of the child elements).
+
+A delimiting element is any element as above which takes a
+\texttt{delimiter} attribute, whether the attribute is supplied or not.
+
+Delimiters from any ancestor delimiting element are not applied within
+the output of a delimiting element. The following produces
+\texttt{retrieved:\ \textless{}http://example.com\textgreater{}}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{group}\OtherTok{ delimiter=}\StringTok{": "}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{text}\OtherTok{ term=}\StringTok{"retrieved"}\NormalTok{ /\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{group}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{text}\OtherTok{ value=}\StringTok{"}\DecValTok{\&lt;}\StringTok{"}\NormalTok{ /\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{text}\OtherTok{ variable=}\StringTok{"URL"}\NormalTok{ /\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{text}\OtherTok{ value=}\StringTok{"}\DecValTok{\&gt;}\StringTok{"}\NormalTok{ /\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{group}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{group}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{display}{%
+\subsubsection{Display}\label{display}}
+
+The \texttt{display} attribute (similar the "display" property in CSS)
+may be used to structure individual bibliographic entries into one or
+more text blocks. If used, all rendering elements should be under the
+control of a display attribute. The allowed values:
+
+\begin{itemize}
+\tightlist
+\item
+  "block" - block stretching from margin to margin.
+\item
+  "left-margin" - block starting at the left margin. If followed by a
+  "right-inline" block, the "left-margin" blocks of all bibliographic
+  entries are set to a fixed width to accommodate the longest content
+  string found among these "left-margin" blocks. In the absence of a
+  "right-inline" block the "left-margin" block extends to the right
+  margin.
+\item
+  "right-inline" - block starting to the right of a preceding
+  "left-margin" block (behaves as "block" in the absence of such a
+  "left-margin" block). Extends to the right margin.
+\item
+  "indent" - block indented to the right by a standard amount. Extends
+  to the right margin.
+\end{itemize}
+
+\textbf{Examples}
+
+\begin{enumerate}
+\def\labelenumi{(\Alph{enumi})}
+\item
+  Instead of using \texttt{second-field-align} (see
+  \protect\hyperlink{whitespace}{Whitespace}), a similar layout can be
+  achieved with a "left-margin" and "right-inline" block. A potential
+  benefit is that the styling of blocks can be further controlled in the
+  final output (e.g. using CSS for HTML, styles for Word, etc.).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{bibliography}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{text}\OtherTok{ display=}\StringTok{"left{-}margin"}\OtherTok{ variable=}\StringTok{"citation{-}number"}
+\OtherTok{        prefix=}\StringTok{"["}\OtherTok{ suffix=}\StringTok{"]"}\NormalTok{/\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{group}\OtherTok{ display=}\StringTok{"right{-}inline"}\NormalTok{\textgreater{}}
+      \CommentTok{\textless{}!{-}{-} rendering elements {-}{-}\textgreater{}}
+\NormalTok{    \textless{}/}\KeywordTok{group}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{bibliography}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{enumerate}
+\def\labelenumi{(\Alph{enumi})}
+\setcounter{enumi}{1}
+\item
+  A per-author publication listing. With
+  \texttt{subsequent-author-substitute} (see
+  \protect\hyperlink{reference-grouping}{Reference Grouping}) set to an
+  empty string, the block with the author names is only rendered once
+  for items by the same authors.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{bibliography}\OtherTok{ subsequent{-}author{-}substitute=}\StringTok{""}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{sort}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{key}\OtherTok{ variable=}\StringTok{"author"}\NormalTok{/\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{key}\OtherTok{ variable=}\StringTok{"issued"}\NormalTok{/\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{sort}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{group}\OtherTok{ display=}\StringTok{"block"}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{names}\OtherTok{ variable=}\StringTok{"author"}\NormalTok{/\textgreater{}}
+\NormalTok{    \textless{}/}\KeywordTok{group}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{group}\OtherTok{ display=}\StringTok{"left{-}margin"}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{date}\OtherTok{ variable=}\StringTok{"issued"}\NormalTok{\textgreater{}}
+\NormalTok{        \textless{}}\KeywordTok{date{-}part}\OtherTok{ name=}\StringTok{"year"}\NormalTok{ /\textgreater{}}
+\NormalTok{      \textless{}/}\KeywordTok{date}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}/}\KeywordTok{group}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{group}\OtherTok{ display=}\StringTok{"right{-}inline"}\NormalTok{\textgreater{}}
+\NormalTok{      \textless{}}\KeywordTok{text}\OtherTok{ variable=}\StringTok{"title"}\NormalTok{/\textgreater{}}
+\NormalTok{    \textless{}/}\KeywordTok{group}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{bibliography}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+  The output of this example would look like:
+
+  \begin{longtable}[]{@{}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2778}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.3333}}@{}}
+  \toprule\noalign{}
+  \endhead
+  \bottomrule\noalign{}
+  \endlastfoot
+  \multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.6111} + 2\tabcolsep}@{}}{%
+  Author1} \\
+  year-publication1 & title-publication1 \\
+  year-publication2 & title-publication2 \\
+  \multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.6111} + 2\tabcolsep}@{}}{%
+  Author2} \\
+  year-publication3 & title-publication3 \\
+  year-publication4 & title-publication4 \\
+  \end{longtable}
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{enumerate}
+\def\labelenumi{(\Alph{enumi})}
+\setcounter{enumi}{2}
+\item
+  An annotated bibliography, where the annotation appears in an indented
+  block below the reference.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}}\KeywordTok{bibliography}\NormalTok{\textgreater{}}
+\NormalTok{  \textless{}}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{group}\OtherTok{ display=}\StringTok{"block"}\NormalTok{\textgreater{}}
+      \CommentTok{\textless{}!{-}{-} rendering elements {-}{-}\textgreater{}}
+\NormalTok{    \textless{}/}\KeywordTok{group}\NormalTok{\textgreater{}}
+\NormalTok{    \textless{}}\KeywordTok{text}\OtherTok{ display=}\StringTok{"indent"}\OtherTok{ variable=}\StringTok{"abstract"}\NormalTok{ /\textgreater{}}
+\NormalTok{  \textless{}/}\KeywordTok{layout}\NormalTok{\textgreater{}}
+\NormalTok{\textless{}/}\KeywordTok{bibliography}\NormalTok{\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+\end{enumerate}
+
+\hypertarget{quotes}{%
+\subsubsection{Quotes}\label{quotes}}
+
+The \texttt{quotes} attribute may set on \texttt{cs:text}. When set to
+"true" ("false" is default), the rendered text is wrapped in quotes (the
+quotation marks used are terms). The localized
+\texttt{punctuation-in-quote} option controls whether an adjoining comma
+or period appears outside (default) or inside the closing quotation mark
+(see \protect\hyperlink{locale-options}{Locale Options}).
+
+\hypertarget{strip-periods}{%
+\subsubsection{Strip-periods}\label{strip-periods}}
+
+The \texttt{strip-periods} attribute may be set on \texttt{cs:date-part}
+(but only if \texttt{name} is set to "month"), \texttt{cs:label} and
+\texttt{cs:text}. When set to "true" ("false" is the default), any
+periods in the rendered text are removed.
+
+\hypertarget{text-case}{%
+\subsubsection{Text-case}\label{text-case}}
+
+The \texttt{text-case} attribute may be set on \texttt{cs:date},
+\texttt{cs:date-part}, \texttt{cs:label}, \texttt{cs:name-part},
+\texttt{cs:number} and \texttt{cs:text}. The allowed values:
+
+\begin{itemize}
+\tightlist
+\item
+  "lowercase": renders text in lowercase
+\item
+  "uppercase": renders text in uppercase
+\item
+  "capitalize-first": capitalizes the first character of the first word,
+  if the word is lowercase
+\item
+  "capitalize-all": capitalizes the first character of every lowercase
+  word
+\item
+  "sentence": renders text in sentence case (deprecated; do not use)
+\item
+  "title": renders text in title case
+\end{itemize}
+
+\hypertarget{sentence-case-conversion}{%
+\paragraph{Sentence Case Conversion}\label{sentence-case-conversion}}
+
+Sentence case conversion (with \texttt{text-case} set to "sentence") is
+performed by:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  For uppercase strings, the first character of the string remains
+  capitalized. All other letters are lowercased.
+\item
+  For lower or mixed case strings, the first character of the first word
+  is capitalized if the word is lowercase. The case of all other words
+  stays the same.
+\end{enumerate}
+
+CSL processors don\textquotesingle t recognize proper nouns. As a
+result, strings in sentence case can be accurately converted to title
+case, but not vice versa. For this reason, it is generally preferable to
+store strings such as titles in sentence case, and only use
+\texttt{text-case} if a style desires another case.
+
+Sentence case conversion is deprecated and will be removed in a future
+version.
+
+\hypertarget{title-case-conversion}{%
+\paragraph{Title Case Conversion}\label{title-case-conversion}}
+
+Title case conversion (with \texttt{text-case} set to "title") for
+English-language items is performed by:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  For uppercase strings, the first character of each word remains
+  capitalized. All other letters are lowercased.
+\item
+  For lower or mixed case strings, the first character of each lowercase
+  word is capitalized. The case of words in mixed or uppercase stays the
+  same.
+\end{enumerate}
+
+In both cases, stop words are lowercased, unless they are the first or
+last word in the string, or follow a colon. The stop words are listed in
+the CSL Schema file
+\href{https://resource.citationstyles.org/schema/latest/styles/stop-words.json}{stop-words.json}.
+Hyphenated word parts are treated as distinct words (e.g., "two-thirds"
+becomes "Two-Thirds").
+
+\hypertarget{non-english-items}{%
+\subparagraph{Non-English Items}\label{non-english-items}}
+
+As many languages do not use title case, title case conversion (with
+\texttt{text-case} set to "title") only affects English-language items.
+
+If the \texttt{default-locale} attribute on \texttt{cs:style}
+isn\textquotesingle t set, or set to a locale code with a primary
+language tag of "en" (English), items are assumed to be English. An item
+is only considered to be non-English if its metadata contains a
+\texttt{language} field with a non-nil value that
+doesn\textquotesingle t start with the "en" primary language tag.
+
+If \texttt{default-locale} is set to a locale code with a primary
+language tag other than "en", items are assumed to be non-English. An
+item is only considered to be English if the value of its
+\texttt{language} field starts with the "en" primary language tag.
+
+\hypertarget{appendix-i---categories}{%
+\subsection{Appendix I - Categories}\label{appendix-i---categories}}
+
+\begin{itemize}
+\tightlist
+\item
+  anthropology
+\item
+  astronomy
+\item
+  biology
+\item
+  botany
+\item
+  chemistry
+\item
+  communications
+\item
+  engineering
+\item
+  generic-base - used for generic styles like Harvard and APA
+\item
+  geography
+\item
+  geology
+\item
+  history
+\item
+  humanities
+\item
+  law
+\item
+  linguistics
+\item
+  literature
+\item
+  math
+\item
+  medicine
+\item
+  philosophy
+\item
+  physics
+\item
+  political\_science
+\item
+  psychology
+\item
+  science
+\item
+  social\_science
+\item
+  sociology
+\item
+  theology
+\item
+  zoology
+\end{itemize}
+
+\hypertarget{appendix-ii---terms}{%
+\subsection{Appendix II - Terms}\label{appendix-ii---terms}}
+
+\hypertarget{type-terms}{%
+\subsubsection{Type Terms}\label{type-terms}}
+
+For each item type listed in
+\protect\hyperlink{appendix-iii---types}{Appendix III - Types}, there is
+a corresponding term.
+
+\hypertarget{name-variable-terms}{%
+\subsubsection{Name Variable Terms}\label{name-variable-terms}}
+
+For each of the \protect\hyperlink{name-variables}{Name Variables}
+listed in \protect\hyperlink{appendix-iv---variables}{Appendix IV -
+Variables}, there is a corresponding term.
+
+\hypertarget{number-variable-terms}{%
+\subsubsection{Number Variable Terms}\label{number-variable-terms}}
+
+For each of the \protect\hyperlink{number-variables}{Number Variables}
+listed in \protect\hyperlink{appendix-iv---variables}{Appendix IV -
+Variables}, there is a corresponding term.
+
+\hypertarget{locators}{%
+\subsubsection{Locators}\label{locators}}
+
+\begin{itemize}
+\tightlist
+\item
+  appendix
+\item
+  article-locator
+\item
+  book
+\item
+  canon
+\item
+  chapter
+\item
+  column
+\item
+  elocation
+\item
+  equation
+\item
+  figure
+\item
+  folio
+\item
+  issue
+\item
+  line
+\item
+  note
+\item
+  opus
+\item
+  page
+\item
+  paragraph
+\item
+  part
+\item
+  rule
+\item
+  section
+\item
+  sub-verbo
+\item
+  supplement
+\item
+  table
+\item
+  timestamp
+\item
+  title
+\item
+  verse
+\item
+  volume
+\end{itemize}
+
+\hypertarget{months}{%
+\subsubsection{Months}\label{months}}
+
+\begin{itemize}
+\tightlist
+\item
+  month-01
+\item
+  month-02
+\item
+  month-03
+\item
+  month-04
+\item
+  month-05
+\item
+  month-06
+\item
+  month-07
+\item
+  month-08
+\item
+  month-09
+\item
+  month-10
+\item
+  month-11
+\item
+  month-12
+\end{itemize}
+
+\hypertarget{ordinals}{%
+\subsubsection{Ordinals}\label{ordinals}}
+
+\begin{itemize}
+\tightlist
+\item
+  ordinal
+\item
+  ordinal-00 through ordinal-99
+\item
+  long-ordinal-01
+\item
+  long-ordinal-02
+\item
+  long-ordinal-03
+\item
+  long-ordinal-04
+\item
+  long-ordinal-05
+\item
+  long-ordinal-06
+\item
+  long-ordinal-07
+\item
+  long-ordinal-08
+\item
+  long-ordinal-09
+\item
+  long-ordinal-10
+\end{itemize}
+
+\hypertarget{punctuation}{%
+\subsubsection{Punctuation}\label{punctuation}}
+
+\begin{itemize}
+\tightlist
+\item
+  open-quote
+\item
+  close-quote
+\item
+  open-inner-quote
+\item
+  close-inner-quote
+\item
+  page-range-delimiter
+\item
+  colon
+\item
+  comma
+\item
+  semicolon
+\end{itemize}
+
+\hypertarget{seasons-1}{%
+\subsubsection{Seasons}\label{seasons-1}}
+
+\begin{itemize}
+\tightlist
+\item
+  season-01
+\item
+  season-02
+\item
+  season-03
+\item
+  season-04
+\end{itemize}
+
+\hypertarget{miscellaneous}{%
+\subsubsection{Miscellaneous}\label{miscellaneous}}
+
+\begin{itemize}
+\tightlist
+\item
+  accessed
+\item
+  ad
+\item
+  advance-online-publication
+\item
+  album
+\item
+  and
+\item
+  and others
+\item
+  anonymous
+\item
+  at
+\item
+  audio-recording
+\item
+  available at
+\item
+  bc
+\item
+  bce
+\item
+  by
+\item
+  ce
+\item
+  circa
+\item
+  cited
+\item
+  et-al
+\item
+  film
+\item
+  forthcoming
+\item
+  from
+\item
+  henceforth
+\item
+  ibid
+\item
+  in
+\item
+  in press
+\item
+  internet
+\item
+  interview
+\item
+  letter
+\item
+  loc-cit
+\item
+  no date
+\item
+  no-place
+\item
+  no-publisher
+\item
+  on
+\item
+  online
+\item
+  op-cit
+\item
+  original-work-published
+\item
+  personal-communication
+\item
+  podcast
+\item
+  podcast-episode
+\item
+  preprint
+\item
+  presented at
+\item
+  radio-broadcast
+\item
+  radio-series
+\item
+  radio-series-episode
+\item
+  reference
+\item
+  retrieved
+\item
+  review-of
+\item
+  scale
+\item
+  special-issue
+\item
+  special-section
+\item
+  television-broadcast
+\item
+  television-series
+\item
+  television-series-episode
+\item
+  video
+\item
+  working-paper
+\end{itemize}
+
+\hypertarget{appendix-iii---types}{%
+\subsection{Appendix III - Types}\label{appendix-iii---types}}
+
+\begin{description}
+
+  \item[article]
+    A self-contained work made widely available but not published in a
+    journal or other publication;\\
+    Use for preprints, working papers, and similar works posted on a
+    platform where some level of persistence or stewardship is expected
+    (e.g. arXiv or other preprint repositories, working paper series);\\
+    For unpublished works not made widely available or only hosted on
+    personal websites, use \texttt{manuscript}
+
+  \item[article-journal]
+    An article published in an academic journal
+
+  \item[article-magazine]
+    An article published in a non-academic magazine
+
+  \item[article-newspaper]
+    An article published in a newspaper
+
+  \item[bill]
+    A proposed piece of legislation
+
+  \item[book]
+    A book or similar work;\\
+    Can be an authored book or an edited collection of self-contained
+    chapters;\\
+    Can be a physical book or an ebook;\\
+    The format for an ebook may be specified using \texttt{medium};\\
+    Can be a single-volume work, a multivolume work, or one volume of a
+    multivolume work;\\
+    If a \texttt{container-title} is present, the item is interpreted as a
+    book republished in a collection or anthology;\\
+    Also used for whole conference proceedings volumes or exhibition
+    catalogs by specifying \texttt{event} and related variables
+
+  \item[broadcast]
+    A recorded work broadcast over an electronic medium (e.g. a radio
+    broadcast, a television show, a podcast);\\
+    The type of broadcast may be specified using \texttt{genre};\\
+    If \texttt{container-title} is present, the item is interpreted as an
+    episode contained within a larger broadcast series (e.g. an episode in a
+    television show or an episode of a podcast)
+
+  \item[chapter]
+    A part of a book cited separately from the book as a whole (e.g. a
+    chapter in an edited book);\\
+    Also used for introductions, forewords, and similar supplemental
+    components of a book
+
+  \item[classic]
+    A classical or ancient work, sometimes cited using a common abbreviation
+
+  \item[collection]
+    An archival collection in a museum or other institution
+
+  \item[dataset]
+    A data set or a similar collection of (mostly) raw data
+
+  \item[document]
+    A catch-all category for items not belonging to other types;\\
+    Use a more specific type when appropriate
+
+  \item[entry]
+    An entry in a database, directory, or catalog;\\
+    For entries in a dictionary, use \texttt{entry-dictionary};\\
+    For entries in an encyclopedia, use \texttt{entry-encyclopedia}
+
+  \item[entry-dictionary]
+    An entry in a dictionary
+
+  \item[entry-encyclopedia]
+    An entry in an encyclopedia or similar reference work
+
+  \item[event]
+    An organized event (e.g., an exhibition or conference);\\
+    Use for direct citations to the event, rather than to works contained
+    within an event (e.g. a \texttt{presentation} in a conference, a
+    \texttt{graphic} in an exhibition) or based on an event (e.g. a
+    \texttt{paper-conference} published in a proceedings, an exhibition
+    catalog)
+
+  \item[figure]
+    A illustration or representation of data, typically as part of a journal
+    article or other larger work;\\
+    May be in any format (e.g. image, video, audio recording, 3D model);\\
+    The format of the item can be specified using \texttt{medium}
+
+  \item[graphic]
+    A still visual work;\\
+    Can be used for artwork or other works (e.g. journalistic or historical
+    photographs);\\
+    Can be used for any still visual work (e.g. photographs, drawings,
+    paintings, sculptures, clothing);\\
+    The format of the item can be specified using \texttt{medium}
+
+  \item[hearing]
+    A hearing by a government committee or transcript thereof
+
+  \item[interview]
+    An interview of a person;\\
+    Also used for a recording or transcript of an interview; \texttt{author}
+    is interpreted as the interviewee
+
+  \item[legal\_case]
+    A legal case
+
+  \item[legislation]
+    A law or resolution enacted by a governing body
+
+  \item[manuscript]
+    An unpublished manuscript;\\
+    Use for both modern unpublished works and classical manuscripts;\\
+    For working papers, preprints, and similar works posted to a repository,
+    use \texttt{article}
+
+  \item[map]
+    A geographic map
+
+  \item[motion\_picture]
+    A video or visual recording;\\
+    If a \texttt{container-title} is present, the item is interpreted as a
+    part contained within a larger compilation of recordings (e.g. a part of
+    a multipart documentary))
+
+  \item[musical\_score]
+    The printed score for a piece of music;\\
+    For a live performance of the music, use \texttt{performance};\\
+    For recordings of the music, use \texttt{song} (for audio recordings) or
+    \texttt{motion\_picture} (for video recordings)
+
+  \item[pamphlet]
+    A fragment, historical document, or other unusually-published or
+    ephemeral work (e.g. a sales brochure)
+
+  \item[paper-conference]
+    A paper formally published in conference proceedings;\\
+    For papers presented at a conference, but not published in a
+    proceedings, use \texttt{speech}
+
+  \item[patent]
+    A patent for an invention
+
+  \item[performance]
+    A live performance of an artistic work;\\
+    For non-artistic presentations, use \texttt{speech};\\
+    For recordings of a performance, use \texttt{song} or
+    \texttt{motion\_picture}
+
+  \item[periodical]
+    A full issue or run of issues in a periodical publication (e.g. a
+    special issue of a journal)
+
+  \item[personal\_communication]
+    Personal communications between multiple parties;\\
+    May be unpublished (e.g. private correspondence between two researchers)
+    or collected/published (e.g. a letter published in a collection)
+
+  \item[post]
+    A post on a online forum, social media platform, or similar platform;\\
+    Also used for comments posted to online items
+
+  \item[post-weblog]
+    A blog post
+
+  \item[regulation]
+    An administrative order from any level of government
+
+  \item[report]
+    A technical report, government report, white paper, brief, or similar
+    work distributed by an institution;\\
+    Also used for manuals and similar technical documentation (e.g. a
+    software, instrument, or test manual);\\
+    If a \texttt{container-title} is present, the item is interpreted as a
+    chapter contained within a larger report
+
+  \item[review]
+    A review of an item other than a book (e.g. a film review, posted peer
+    review of an article);\\
+    If \texttt{reviewed-title} is absent, \texttt{title} is taken to be the
+    title of the reviewed item
+
+  \item[review-book]
+    A review of a book;\\
+    If \texttt{reviewed-title} is absent, \texttt{title} is taken to be the
+    title of the reviewed book
+
+  \item[software]
+    A computer program, app, or other piece of software
+
+  \item[song]
+    An audio recording;\\
+    Can be used for any audio recording (not only music);\\
+    If a \texttt{container-title} is present, the item is interpreted as a
+    track contained within a larger album or compilation of recordings
+
+  \item[speech]
+    A speech or other presentation (e.g. a paper, talk, poster, or symposium
+    at a conference);\\
+    Use \texttt{genre} to specify the type of presentation;\\
+    Use \texttt{event} to indicate the event where the presentation was made
+    (e.g. the conference name);\\
+    Use \texttt{container-title} if the presentation is part of a larger
+    session (e.g. a paper in a symposium);\\
+    For papers published in conference proceedings, use
+    \texttt{paper-conference};\\
+    For artistic performances, use \texttt{performance}
+
+  \item[standard]
+    A technical standard or similar set of rules or norms
+
+  \item[thesis]
+    A thesis written to satisfy requirements for a degree;\\
+    Use \texttt{genre} to specify the type of thesis
+
+  \item[treaty]
+    A treaty agreement among political authorities
+
+  \item[webpage]
+    A website or page on a website;\\
+    Intended for sources which are intrinsically online; use a more specific
+    type when appropriate (e.g. \texttt{article-journal},
+    \texttt{post-weblog}, \texttt{report}, \texttt{entry});\\
+    If a \texttt{container-title} is present, the item is interpreted as a
+    page contained within a larger website
+
+\end{description}
+
+\hypertarget{appendix-iv---variables}{%
+\subsection{Appendix IV - Variables}\label{appendix-iv---variables}}
+
+\hypertarget{standard-variables}{%
+\subsubsection{Standard Variables}\label{standard-variables}}
+
+\begin{description}
+
+  \item[abstract]
+    Abstract of the item (e.g. the abstract of a journal article)
+
+  \item[annote]
+    Short markup, decoration, or annotation to the item (e.g., to indicate
+    items included in a review);\\
+    For descriptive text (e.g., in an annotated bibliography), use
+    \texttt{note} instead
+
+  \item[archive]
+    Archive storing the item
+
+  \item[archive\_collection]
+    Collection the item is part of within an archive
+
+  \item[archive\_location]
+    Storage location within an archive (e.g. a box and folder number)
+
+  \item[archive-place]
+    Geographic location of the archive
+
+  \item[authority]
+    Issuing or judicial authority (e.g. "USPTO" for a patent, "Fairfax
+    Circuit Court" for a legal case)
+
+  \item[call-number]
+    Call number (to locate the item in a library)
+
+  \item[citation-key]
+    Identifier of the item in the input data file (analogous to BibTeX
+    entrykey);\\
+    Use this variable to facilitate conversion between word-processor and
+    plain-text writing systems;\\
+    For an identifer intended as formatted output label for a citation (e.g.
+    "Ferr78"), use \texttt{citation-label} instead
+
+  \item[citation-label]
+    Label identifying the item in in-text citations of label styles (e.g.
+    "Ferr78");\\
+    May be assigned by the CSL processor based on item metadata;\\
+    For the identifier of the item in the input data file, use
+    \texttt{citation-key} instead
+
+  \item[collection-title]
+    Title of the collection holding the item (e.g. the series title for a
+    book; the lecture series title for a presentation)
+
+  \item[container-title]
+    Title of the container holding the item (e.g. the book title for a book
+    chapter, the journal title for a journal article; the album title for a
+    recording; the session title for multi-part presentation at a
+    conference)
+
+  \item[container-title-short]
+    Short/abbreviated form of \texttt{container-title};\\
+    Deprecated; use \texttt{variable="container-title"\ form="short"}
+    instead
+
+  \item[dimensions]
+    Physical (e.g. size) or temporal (e.g. running time) dimensions of the
+    item
+
+  \item[division]
+    Minor subdivision of a court with a \texttt{jurisdiction} for a legal
+    item
+
+  \item[DOI]
+    Digital Object Identifier (e.g. "10.1128/AEM.02591-07")
+
+  \item[event]
+    Deprecated legacy variant of \texttt{event-title}
+
+  \item[event-title]
+    Name of the event related to the item (e.g. the conference name when
+    citing a conference paper; the meeting where presentation was made)
+
+  \item[event-place]
+    Geographic location of the event related to the item (e.g. "Amsterdam,
+    The Netherlands")
+
+  \item[genre]
+    Type, class, or subtype of the item (e.g. "Doctoral dissertation" for a
+    PhD thesis; "NIH Publication" for an NIH technical report);\\
+    Do not use for topical descriptions or categories (e.g. "adventure" for
+    an adventure movie)
+
+  \item[ISBN]
+    International Standard Book Number (e.g. "978-3-8474-1017-1")
+
+  \item[ISSN]
+    International Standard Serial Number
+
+  \item[jurisdiction]
+    Geographic scope of relevance (e.g. "US" for a US patent; the court
+    hearing a legal case)
+
+  \item[keyword]
+    Keyword(s) or tag(s) attached to the item
+
+  \item[language]
+    The language of the item;\\
+    Should be entered as an ISO 639-1 two-letter language code (e.g. "en",
+    "zh"), optionally with a two-letter locale code (e.g. "de-DE", "de-AT")
+
+  \item[license]
+    The license information applicable to an item (e.g. the license an
+    article or software is released under; the copyright information for an
+    item; the classification status of a document)
+
+  \item[medium]
+    Description of the item\textquotesingle s format or medium (e.g. "CD",
+    "DVD", "Album", etc.)
+
+  \item[note]
+    Descriptive text or notes about an item (e.g. in an annotated
+    bibliography)
+
+  \item[original-publisher]
+    Original publisher, for items that have been republished by a different
+    publisher
+
+  \item[original-publisher-place]
+    Geographic location of the original publisher (e.g. "London, UK")
+
+  \item[original-title]
+    Title of the original version (e.g. "Война и мир", the untranslated
+    Russian title of "War and Peace")
+
+  \item[part-title]
+    Title of the specific part of an item being cited
+
+  \item[PMCID]
+    PubMed Central reference number
+
+  \item[PMID]
+    PubMed reference number
+
+  \item[publisher]
+    Publisher
+
+  \item[publisher-place]
+    Geographic location of the publisher
+
+  \item[references]
+    Resources related to the procedural history of a legal case or
+    legislation;\\
+    Can also be used to refer to the procedural history of other items (e.g.
+    "Conference canceled" for a presentation accepted as a conference that
+    was subsequently canceled; details of a retraction or correction notice)
+
+  \item[reviewed-genre]
+    Type of the item being reviewed by the current item (e.g. book, film)
+
+  \item[reviewed-title]
+    Title of the item reviewed by the current item
+
+  \item[scale]
+    Scale of e.g. a map or model
+
+  \item[source]
+    Source from whence the item originates (e.g. a library catalog or
+    database)
+
+  \item[status]
+    Publication status of the item (e.g. "forthcoming"; "in press"; "advance
+    online publication"; "retracted")
+
+  \item[title]
+    Primary title of the item
+
+  \item[title-short]
+    Short/abbreviated form of \texttt{title};\\
+    Deprecated; use \texttt{variable="title"\ form="short"} instead
+
+  \item[URL]
+    Uniform Resource Locator (e.g.
+    "\url{https://aem.asm.org/cgi/content/full/74/9/2766}")
+
+  \item[volume-title]
+    Title of the volume of the item or container holding the item;\\
+    Also use for titles of periodical special issues, special sections, and
+    the like
+
+  \item[year-suffix]
+    Disambiguating year suffix in author-date styles (e.g. "a" in "Doe,
+    1999a")
+    \end{description}
+
+\hypertarget{number-variables}{%
+\paragraph{Number Variables}\label{number-variables}}
+
+Number variables are a subset of the
+\protect\hyperlink{standard-variables}{Standard Variables}.
+
+\begin{description}
+
+  \item[chapter-number]
+    Chapter number (e.g. chapter number in a book; track number on an album)
+
+  \item[citation-number]
+    Index (starting at 1) of the cited reference in the bibliography
+    (generated by the CSL processor)
+
+  \item[collection-number]
+    Number identifying the collection holding the item (e.g. the series
+    number for a book)
+
+  \item[edition]
+    (Container) edition holding the item (e.g. "3" when citing a chapter in
+    the third edition of a book)
+
+  \item[first-reference-note-number]
+    Number of a preceding note containing the first reference to the item;\\
+    Assigned by the CSL processor;\\
+    Empty in non-note-based styles or when the item hasn\textquotesingle t
+    been cited in any preceding notes in a document
+
+  \item[issue]
+    Issue number of the item or container holding the item (e.g. "5" when
+    citing a journal article from journal volume 2, issue 5);\\
+    Use \texttt{volume-title} for the title of the issue, if any
+
+  \item[locator]
+    A cite-specific pinpointer within the item (e.g. a page number within a
+    book, or a volume in a multi-volume work);\\
+    Must be accompanied in the input data by a label indicating the locator
+    type (see the \protect\hyperlink{locators}{Locators} term list), which
+    determines which term is rendered by \texttt{cs:label} when the
+    \texttt{locator} variable is selected.
+
+  \item[number]
+    Number identifying the item (e.g. a report number)
+
+  \item[number-of-pages]
+    Total number of pages of the cited item
+
+  \item[number-of-volumes]
+    Total number of volumes, used when citing multi-volume books and such
+
+  \item[page]
+    Range of pages the item (e.g. a journal article) covers in a container
+    (e.g. a journal issue)
+
+  \item[page-first]
+    First page of the range of pages the item (e.g. a journal article)
+    covers in a container (e.g. a journal issue)
+
+  \item[part-number]
+    Number of the specific part of the item being cited (e.g. part 2 of a
+    journal article);\\
+    Use \texttt{part-title} for the title of the part, if any
+
+  \item[printing-number]
+    Printing number of the item or container holding the item
+
+  \item[section]
+    Section of the item or container holding the item (e.g. "§2.0.1" for a
+    law; "politics" for a newspaper article)
+
+  \item[supplement-number]
+    Supplement number of the item or container holding the item (e.g. for
+    secondary legal items that are regularly updated between editions)
+
+  \item[version]
+    Version of the item (e.g. "2.0.9" for a software program)
+
+  \item[volume]
+    Volume number of the item (e.g. "2" when citing volume 2 of a book) or
+    the container holding the item (e.g. "2" when citing a chapter from
+    volume 2 of a book);\\
+    Use \texttt{volume-title} for the title of the volume, if any
+    \end{description}
+
+\hypertarget{date-variables}{%
+\subsubsection{Date Variables}\label{date-variables}}
+
+\begin{description}
+
+  \item[accessed]
+    Date the item has been accessed
+
+  \item[available-date]
+    Date the item was initially available (e.g. the online publication date
+    of a journal article before its formal publication date; the date a
+    treaty was made available for signing)
+
+  \item[event-date]
+    Date the event related to an item took place
+
+  \item[issued]
+    Date the item was issued/published
+
+  \item[original-date]
+    Issue date of the original version
+
+  \item[submitted]
+    Date the item (e.g. a manuscript) was submitted for publication
+    \end{description}
+
+\hypertarget{name-variables}{%
+\subsubsection{Name Variables}\label{name-variables}}
+
+\begin{description}
+
+  \item[author]
+    Author
+
+  \item[chair]
+    The person leading the session containing a presentation (e.g. the
+    organizer of the \texttt{container-title} of a \texttt{speech})
+
+  \item[collection-editor]
+    Editor of the collection holding the item (e.g. the series editor for a
+    book)
+
+  \item[compiler]
+    Person compiling or selecting material for an item from the works of
+    various persons or bodies (e.g. for an anthology)
+
+  \item[composer]
+    Composer (e.g. of a musical score)
+
+  \item[container-author]
+    Author of the container holding the item (e.g. the book author for a
+    book chapter)
+
+  \item[contributor]
+    A minor contributor to the item; typically cited using "with" before the
+    name when listed in a bibliography
+
+  \item[curator]
+    Curator of an exhibit or collection (e.g. in a museum)
+
+  \item[director]
+    Director (e.g. of a film)
+
+  \item[editor]
+    Editor
+
+  \item[editorial-director]
+    Managing editor ("Directeur de la Publication" in French)
+
+  \item[editor-translator]
+    Combined editor and translator of a work;\\
+    The citation processory must be automatically generate if
+    \texttt{editor} and \texttt{translator} variables are identical;\\
+    May also be provided directly in item data
+
+  \item[executive-producer]
+    Executive producer (e.g. of a television series)
+
+  \item[guest]
+    Guest (e.g. on a TV show or podcast)
+
+  \item[host]
+    Host (e.g. of a TV show or podcast)
+
+  \item[illustrator]
+    Illustrator (e.g. of a children\textquotesingle s book or graphic novel)
+
+  \item[interviewer]
+    Interviewer (e.g. of an interview)
+
+  \item[narrator]
+    Narrator (e.g. of an audio book)
+
+  \item[organizer]
+    Organizer of an event (e.g. organizer of a workshop or conference)
+
+  \item[original-author]
+    The original creator of a work (e.g. the form of the author name listed
+    on the original version of a book; the historical author of a work; the
+    original songwriter or performer for a musical piece; the original
+    developer or programmer for a piece of software; the original author of
+    an adapted work such as a book adapted into a screenplay)
+
+  \item[performer]
+    Performer of an item (e.g. an actor appearing in a film; a muscian
+    performing a piece of music)
+
+  \item[producer]
+    Producer (e.g. of a television or radio broadcast)
+
+  \item[recipient]
+    Recipient (e.g. of a letter)
+
+  \item[reviewed-author]
+    Author of the item reviewed by the current item
+
+  \item[script-writer]
+    Writer of a script or screenplay (e.g. of a film)
+
+  \item[series-creator]
+    Creator of a series (e.g. of a television series)
+
+  \item[translator]
+    Translator
+    \end{description}
+
+\hypertarget{appendix-v---page-range-formats}{%
+\subsection{Appendix V - Page Range
+Formats}\label{appendix-v---page-range-formats}}
+
+The page abbreviation rules for the different values of the
+\texttt{page-range-format} attribute on \texttt{cs:style} are:
+
+\begin{description}
+\item["chicago"]
+Alias for "chicago-15"; will change to be an alias for "chicago-16" in
+CSL v1.1.
+\item["chicago-15"]
+Page ranges are abbreviated according to the \href{}{Chicago Manual of
+Style (15th ed and earlier) rules} (see 15th ed, section 9.64):
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3125}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3375}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3375}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+First number
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Second number
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Examples
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Less than 100 & Use all digits & 3 -- 10; 71 -- 72 \\
+100 or multiple of 100 & Use all digits & 100 -- 104; 600 -- 613; 1100
+-- 1123 \\
+101 through 109 (in multiples of 100) & Use changed part only, omitting
+unneeded zeros & 107 -- 8; 505 -- 17; 1002 -- 6 \\
+110 through 199 (in multiples of 100) & Use two digits, or more as
+needed & 321 -- 25; 415 -- 532; 11564 -- 68; 13792 -- 803 \\
+4 digits & If numbers are four digits long and three digits change, use
+all digits & 1496 -- 1504; 2787 -- 2816 \\
+\end{longtable}
+\item["chicago-16"]
+Page ranges are abbreviated according to the
+\href{http://cmosshoptalk.com/2018/04/10/316-7-316-17-or-316-317-chicago-style-for-number-ranges/}{Chicago
+Manual of Style (16th ed and later) rules} (see 16th ed, section 9.61):
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3947}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3553}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+First number
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Second number
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Examples
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Less than 100 & Use all digits & 3 -- 10; 71 -- 72; 92 -- 113; \\
+100 or multiple of 100 & Use all digits & 100 -- 104; 600 -- 613; 1100
+-- 1123 \\
+101 through 109, 201 through 209, etc. (for each multiple of 100) & Use
+changed part only, omitting unneeded zeros & 107 -- 8; 505 -- 17; 1002
+-- 6 \\
+Everything else (110 through 199, 210 through 299, etc.; for each
+multiple of 100) & Use two digits, unless more digits are needed to show
+the changed part & 321 -- 25; 415 -- 532; 1087 -- 89; 1496 -- 500; 11564
+-- 68; 13792 -- 803 12991 -- 3001 \\
+\end{longtable}
+\item["expanded"]
+Abbreviated page ranges are expanded to their non-abbreviated form: 42
+-- 45, 321 -- 328, 2787 -- 2816
+\item["minimal"]
+All digits repeated in the second number are left out: 42 -- 5, 321 --
+8, 2787 -- 816
+\item["minimal-two"]
+As "minimal", but at least two digits are kept in the second number when
+it has two or more digits long.
+\end{description}
+
+\hypertarget{appendix-vi-links}{%
+\subsection{Appendix VI: Links}\label{appendix-vi-links}}
+
+The CSL syntax does not have support for configuration of links.
+However, processors should include links on bibliographic references,
+using the following rules:
+
+If the bibliography entry for an item renders any of the following
+identifiers, the identifier should be anchored as a link, with the
+target of the link as follows:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{url}: output as is
+\item
+  \texttt{doi}: prepend with "\url{https://doi.org/}"
+\item
+  \texttt{pmid}: prepend with
+  "\url{https://www.ncbi.nlm.nih.gov/pubmed/}"
+\item
+  \texttt{pmcid}: prepend with
+  "\url{https://www.ncbi.nlm.nih.gov/pmc/articles/}"
+\end{enumerate}
+
+If the identifier is rendered as a URI, include rendered URI components
+(e.g. "\url{https://doi.org/}") in the link anchor. Do not include any
+other affix text in the link anchor (e.g. "Available from: ", "doi: ",
+"PMID: ").
+
+Citation processors should include an option flag for calling
+applications to disable bibliography linking behavior.
