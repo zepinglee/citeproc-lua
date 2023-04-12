@@ -7,16 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.4.1] - 2023-04-12
+
 ### Added
 
 - Add support for `crossref` feature in BibTeX database.
 - Add `\printbibheading` command.
-- Add `heading` and `title` options in `\printbibliography` ([#31](https://github.com/zepinglee/citeproc-lua/issues/31)).
+- Add options `heading`, `label`, and `title` in `\printbibliography` ([#31](https://github.com/zepinglee/citeproc-lua/issues/31)).
 - Add `prenote` and `postnote` options in `\printbibliography`.
 
 ### Fixed
 
-- Remove UTF-8 BOM from leaded files (fix [#34](https://github.com/zepinglee/citeproc-lua/issues/34)).
+- Remove UTF-8 BOM from loaded files (fix [#34](https://github.com/zepinglee/citeproc-lua/issues/34)).
 
 ## [v0.4.0] - 2023-04-02
 
@@ -112,7 +114,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial CTAN release.
 
-[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.1...HEAD
+[v0.4.1]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.0...0.4.1
 [v0.4.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.3.0...0.4.0
 [v0.3.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.2.2...0.3.0
 [v0.2.2]: https://github.com/zepinglee/citeproc-lua/compare/v0.2.1...0.2.2

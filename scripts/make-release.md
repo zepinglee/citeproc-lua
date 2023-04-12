@@ -3,7 +3,9 @@ cd ../styles
 git checkout v1.0.2
 git pull
 cd ../citeproc-lua
-for style in submodules/styles/*.csl; do cp -f "../styles/$(basename $style)" .; done
+for style in submodules/styles/*.csl; do
+    cp -f "../styles/$(basename $style)" submodules/styles;
+done
 
 cd submodules/locales
 git fetch upstream
@@ -21,7 +23,6 @@ busted --run citeproc
 busted
 
 code build.lua
-code ctan.ann
 l3build ctan
 l3build upload
 ```

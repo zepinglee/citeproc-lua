@@ -5,6 +5,11 @@
 
 module = "citation-style-language"
 
+local ok, mydata = pcall(require, "zepingleedata.lua")
+if not ok then
+  mydata = {email = "XXX", github = "XXX", name = "XXX"}
+end
+
 docfiledir = "./docs"
 -- testfiledir = "./tests/latex"
 testsuppdir = "./tests/latex/support"
@@ -26,10 +31,10 @@ sourcefiles = {
 }
 tagfiles = {
   "CHANGELOG.md",
-  "citeproc/citeproc.lua",
+  "citeproc/*.lua",
   "docs/citation-style-language-doc.tex",
   "docs/citeproc-lua.1",
-  "latex/citation-style-language.sty",
+  "latex/*.sty",
 }
 textfiles = {"docs/README.md", "CHANGELOG.md", "DEPENDS.txt"}
 typesetfiles = {"*.tex"}
@@ -50,13 +55,21 @@ tdslocations = {
   "tex/latex/citation-style-language/submodules/locales/csl-locales-*.xml",
 }
 
+local announcement = nil
+local f = io.open("CHANGELOG.md")
+if f then
+  local content = f:read("*a")
+  announcement = string.match(content, "(## %[v.-\n)\n+## %[v")
+  f:close()
+end
+
 uploadconfig = {
   pkg               = "citation-style-language",
   version           = "0.4.0",
-  author            = "Zeping Lee",
+  author            = "zepinglee",
   license           = {"mit", "cc-by-sa-3"},
-  uploader          = "Zeping Lee",
-  email             = "zepinglee@gmail.com",
+  uploader          = mydata.name,
+  email             = mydata.email,
   summary           = "Bibliography formatting with Citation Style Language",
   description       = [[The Citation Style Language (CSL) is an XML-based language that defines the formats of citations and bibliography. There are currently thousands of styles in CSL including the most widely used APA, Chicago, Vancouver, etc. The citation-style-language package is aimed to provide another reference formatting method for LaTeX that utilizes the CSL styles. It contains a citation processor implemented in pure Lua (citeproc-lua) which reads bibliographic metadata and performs sorting and formatting on both citations and bibliography according to the selected CSL style. A LaTeX package (citation-style-language.sty) is provided to communicate with the processor.]],
   note              = [[Uploaded automatically by l3build...]],
@@ -64,41 +77,44 @@ uploadconfig = {
   repository        = "https://github.com/zepinglee/citeproc-lua",
   bugtracker        = "https://github.com/zepinglee/citeproc-lua/issues",
   topic             = {"biblio", "use-lua"},
-  announcement_file = "ctan.ann",
+  announcement      = announcement,
   update            = true,
 }
 
 function update_tag(file, content, tagname, tagdate)
   local version_pattern = "%d[%d.]*"
   local url_prefix = "https://github.com/zepinglee/citeproc-lua/compare/"
+  content = string.gsub(content,
+    "Copyright %(C%) 2021%-%d%d%d%d",
+    "Copyright (C) 2021-" .. os.date("%Y"))
+
   if file == "citation-style-language.sty" then
-    return string.gsub(content,
-      "\\ProvidesExplPackage %{citation%-style%-language%} %{[^}]+%} %{[^}]+%}",
-      "\\ProvidesExplPackage {citation-style-language} {" .. tagdate .. "} {v" .. tagname .. "}")
+    content =  string.gsub(content,
+      "\\ProvidesExplPackage {(.-)} {.-} {.-}",
+      "\\ProvidesExplPackage {%1} {" .. tagdate .. "} {v" .. tagname .. "}")
   elseif file == "citeproc.lua" then
-    return string.gsub(content,
+    content =  string.gsub(content,
       'citeproc%.__VERSION__ = "' .. version_pattern .. '"',
       'citeproc.__VERSION__ = "' .. tagname .. '"')
   elseif file == "citation-style-language-doc.tex" then
-    return string.gsub(content,
+    content =  string.gsub(content,
       "\\date%{([^}]+)%}",
       "\\date{" .. tagdate .. " v" .. tagname .. "}")
   elseif file == "citeproc-lua.1" then
-    return string.gsub(content,
-      '%.TH citeproc-lua 1 "' .. version_pattern .. '"\n',
+    content =  string.gsub(content,
+      '%.TH citeproc%-lua 1 "' .. version_pattern .. '"\n',
       '.TH citeproc-lua 1 "' .. tagname .. '"\n')
   elseif file == "CHANGELOG.md" then
     local previous = string.match(content, "compare/v(" .. version_pattern .. ")%.%.%.HEAD")
-    if tagname == previous then return content end
-    -- print(tagname)
-    -- print(previous)
-    content = string.gsub(content,
-      "## %[Unreleased%]", "## [Unreleased]\n\n## [v" .. tagname .. "] - " .. tagdate)
-    content = string.gsub(content,
-      "v" .. version_pattern .. "%.%.%.HEAD",
-      "v" .. tagname .. "...HEAD\n[v" .. tagname .. "]: " .. url_prefix .. "v" .. previous
-        .. "..." .. tagname)
-    return content
+    if tagname ~= previous then
+      content = string.gsub(content,
+        "## %[Unreleased%]",
+        "## [Unreleased]\n\n## [v" .. tagname .. "] - " .. tagdate)
+      content = string.gsub(content,
+        "v" .. version_pattern .. "%.%.%.HEAD",
+        "v" .. tagname .. "...HEAD\n[v" .. tagname .. "]: " .. url_prefix .. "v" .. previous
+          .. "..." .. tagname)
+    end
   end
   return content
 end
