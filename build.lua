@@ -3,6 +3,8 @@
 
 -- Configuration file of "citeproc" for use with "l3build"
 
+local package_version = "0.4.1"
+
 module = "citation-style-language"
 
 local ok, mydata = pcall(require, "zepingleedata.lua")
@@ -31,6 +33,7 @@ sourcefiles = {
 }
 tagfiles = {
   "CHANGELOG.md",
+  "build.lua",
   "citeproc/*.lua",
   "docs/citation-style-language-doc.tex",
   "docs/citeproc-lua.1",
@@ -65,7 +68,7 @@ end
 
 uploadconfig = {
   pkg               = "citation-style-language",
-  version           = "0.4.0",
+  version           = package_version,
   author            = "zepinglee",
   license           = {"mit", "cc-by-sa-3"},
   uploader          = mydata.name,
@@ -88,23 +91,7 @@ function update_tag(file, content, tagname, tagdate)
     "Copyright %(C%) 2021%-%d%d%d%d",
     "Copyright (C) 2021-" .. os.date("%Y"))
 
-  if file == "citation-style-language.sty" then
-    content =  string.gsub(content,
-      "\\ProvidesExplPackage {(.-)} {.-} {.-}",
-      "\\ProvidesExplPackage {%1} {" .. tagdate .. "} {v" .. tagname .. "}")
-  elseif file == "citeproc.lua" then
-    content =  string.gsub(content,
-      'citeproc%.__VERSION__ = "' .. version_pattern .. '"',
-      'citeproc.__VERSION__ = "' .. tagname .. '"')
-  elseif file == "citation-style-language-doc.tex" then
-    content =  string.gsub(content,
-      "\\date%{([^}]+)%}",
-      "\\date{" .. tagdate .. " v" .. tagname .. "}")
-  elseif file == "citeproc-lua.1" then
-    content =  string.gsub(content,
-      '%.TH citeproc%-lua 1 "' .. version_pattern .. '"\n',
-      '.TH citeproc-lua 1 "' .. tagname .. '"\n')
-  elseif file == "CHANGELOG.md" then
+  if file == "CHANGELOG.md" then
     local previous = string.match(content, "compare/v(" .. version_pattern .. ")%.%.%.HEAD")
     if tagname ~= previous then
       content = string.gsub(content,
@@ -115,6 +102,31 @@ function update_tag(file, content, tagname, tagdate)
         "v" .. tagname .. "...HEAD\n[v" .. tagname .. "]: " .. url_prefix .. "v" .. previous
           .. "..." .. tagname)
     end
+
+  elseif file == "build.lua" then
+    content = string.gsub(content,
+    'package_version = "(%d+([%d.]*))"',
+    string.format('package_version = "%s"', tagname))
+
+  elseif file == "citeproc.lua" then
+    content =  string.gsub(content,
+      'citeproc%.__VERSION__ = "' .. version_pattern .. '"',
+      'citeproc.__VERSION__ = "' .. tagname .. '"')
+
+  elseif file:match("-doc%.tex$") then
+    content =  string.gsub(content,
+      "\\date%{([^}]+)%}",
+      "\\date{" .. tagdate .. " v" .. tagname .. "}")
+elseif file == "citeproc-lua.1" then
+    content =  string.gsub(content,
+      '%.TH citeproc%-lua 1 "' .. version_pattern .. '"\n',
+      '.TH citeproc-lua 1 "' .. tagname .. '"\n')
+
+  elseif file:match("%.sty$")then
+    content =  string.gsub(content,
+      "\\ProvidesExplPackage {(.-)} {.-} {.-}",
+      "\\ProvidesExplPackage {%1} {" .. tagdate .. "} {v" .. tagname .. "}")
+
   end
   return content
 end
