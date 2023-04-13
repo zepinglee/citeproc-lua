@@ -62,7 +62,7 @@ local announcement = nil
 local f = io.open("CHANGELOG.md")
 if f then
   local content = f:read("*a")
-  announcement = string.match(content, "(## %[v.-\n)\n+## %[v")
+  announcement = string.match(content, "## %[[^U].-%s+(##.-\n)%s+## %[")
   f:close()
 end
 
