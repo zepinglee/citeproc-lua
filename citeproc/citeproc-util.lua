@@ -120,7 +120,34 @@ function util.to_ordinal (n)
 end
 
 
+util.quiet_mode = false
+
+-- A file handle to usually a `.blg` file.
+util.logging_file = nil
+
+
+function util.set_logging_file(path)
+  util.logging_file = io.open(path, "w")
+  if not util.logging_file then
+    util.error(string.format('Cannot write to "%s".', path))
+  end
+  util.logging_file = io.open(path, 'a')
+end
+
+
+function util.close_logging_file()
+  if util.logging_file then
+    util.logging_file:close()
+  end
+end
+
+
+util.num_errors = 0
+util.num_warnings = 0
+
+
 function util.error(message)
+  util.num_errors = util.num_errors + 1
   if luatexbase then
     -- The luatexbase.module_error() prints the traceback, which causes panic
     -- luatexbase.module_error("citeproc", message)
@@ -131,23 +158,45 @@ function util.error(message)
     -- tex.print(string.format("\\PackageError{citation-style-language}{%s}{}", message))
 
   else
-    error(message, 2)
+    message  = "Error: " .. message
+    print(message)
+    if util.logging_file then
+      util.logging_file:write(message .. "\n")
+    end
   end
 end
 
 util.warning_enabled = true
 
 function util.warning(message)
+  util.num_warnings = util.num_warnings + 1
   if luatexbase then
     texio.write_nl("term", "\n")
     luatexbase.module_warning("citeproc", message)
 
     -- tex.print(string.format("\\PackageWarning{citation-style-language}{%s}{}", message))
 
-  elseif util.warning_enabled then
-    io.stderr:write("Warning: " .. message, "\n")
+  else
+    message  = "Warning: " .. message
+    if util.logging_file then
+      util.logging_file:write(message .. "\n")
+    end
+    if util.warning_enabled then
+      io.stderr:write("Warning: " .. message, "\n")
+    end
   end
 end
+
+---@param message string
+function util.info(message)
+  if not luatexbase and not util.quiet_mode then
+    print(message)
+  end
+  if util.logging_file then
+    util.logging_file:write(message .. "\n")
+  end
+end
+
 
 local remove_all_metatables = nil
 

@@ -6,6 +6,8 @@
 
 \usepackage{citation-style-language}
 
+\START
+
 \cslsetup{
   regression-test = true,
 }
@@ -14,8 +16,6 @@
 
 
 \begin{document}
-
-\START
 
 \input{csl-citation-tests}
 

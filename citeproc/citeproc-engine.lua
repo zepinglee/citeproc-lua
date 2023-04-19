@@ -857,7 +857,7 @@ function CiteProc:_retrieve_item(id)
   local res = {}
   local item = self.sys.retrieveItem(id)
   if not item then
-    util.warning(string.format('Database entry "%s" not found', id))
+    util.warning(string.format("Didn't find a database entry for '%s'", id))
     return nil
   end
 

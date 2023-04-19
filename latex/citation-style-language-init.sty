@@ -62,13 +62,21 @@
 
 \cs_new:Npn \__csl_initialize_lua_module:
   {
-    \lua_now:e
+    \tl_if_blank:VTF \l__csl_style_tl
+      { \msg_warning:nn { citation-style-language } { empty-style-name } }
       {
-        csl.init(
-          "\l__csl_style_tl",
-          "\l__csl_bib_resources_clist",
-          "\l__csl_locale_tl"
-        )
+        \clist_if_empty:NTF \l__csl_bib_resources_clist
+          { \msg_warning:nn { citation-style-language } { empty-bib-resources } }
+          {
+            \lua_now:e
+              {
+                csl.init(
+                  "\l__csl_style_tl",
+                  "\l__csl_bib_resources_clist",
+                  "\l__csl_locale_tl"
+                )
+              }
+          }
       }
     \str_if_eq:eeT { \lua_now:n { tex.print(csl.initialized) } } { true }
       { \bool_set_true:N \l__csl_engine_initialized_bool }
@@ -77,6 +85,12 @@
       { \lua_now:n { csl.enable_linking() } }
       { }
   }
+
+\msg_new:nnn { citation-style-language } { empty-style-name }
+  { Style~ name~ not~ specified. }
+
+\msg_new:nnn { citation-style-language } { empty-bib-resources }
+  { Empty~ bibliographic~ resources. Use~ \token_to_str:N \addbibresource. }
 
 
 % \str_new:N \l__csl_style_class_str

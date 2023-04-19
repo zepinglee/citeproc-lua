@@ -91,6 +91,13 @@
     bib-entry-page-break .bool_set:N = \l__csl_bib_entry_page_break_bool ,
     bib-item-sep .tl_set:N = \l__csl_bib_item_sep_tl ,
     bib-hang .tl_set:N = \l__csl_bib_hang_tl ,
+    % The following keys are for easier interaction between LaTeX and
+    % citeproc-lua engine and they are not designed for end-users.
+    undefined-cites .code:n =
+      {
+        \clist_map_inline:nn {#1}
+          { \__csl_warn_citation_undefined:n {##1} }
+      } ,
   }
 
 \cs_new:Npn \__csl_set_back_ref:n #1
@@ -131,6 +138,13 @@
 \tl_new:N \g__csl_aux_bibstyle_tl
 \cs_set:Npn \csl@aux@style #1
   { \tl_gset:Nn \g__csl_aux_bibstyle_tl {#1} }
+
+
+% Write to an empty `.ccf` file for use with latexmk
+\iow_new:N \l__csl_ccf_iow
+\iow_open:Nn \l__csl_ccf_iow { \c_sys_jobname_str .ccf }
+\iow_now:Nx \l__csl_ccf_iow { }
+\iow_close:N \l__csl_ccf_iow
 
 
 % Load other modules

@@ -1,5 +1,25 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
+No file bibstyle-in-preamble.aux.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line ....
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+Package citation-style-language Warning: Empty bibliographic resources.Use
+(citation-style-language)                \addbibresource.
 (csl-citation-tests.tex
 ============================================================
 TEST 1: Single cite item in a citation
@@ -8,8 +28,7 @@ TEST 1: Single cite item in a citation
 \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
 <recently read> }
 l. ...}
-Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
-(citation-style-language)                on line ....
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
 l. ...}
@@ -21,8 +40,8 @@ TEST 2: Multiple cite items in a citation
 \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@1},citationItems={{id={ITEM-1}},{id={ITEM-2}}},properties={noteIndex={2}}.
 <recently read> }
 l. ...}
-Package citation-style-language Warning: Citation `ITEM-1, ITEM-2' on page 1
-(citation-style-language)                undefined on line ....
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+LaTeX Warning: Citation `ITEM-2' on page 1 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1, ITEM-2}].
 <recently read> }
 l. ...}
@@ -34,8 +53,7 @@ TEST 3: Citation with page locator
 \l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={3}}.
 <recently read> }
 l. ...}
-Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
-(citation-style-language)                on line ....
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
 l. ...}
@@ -47,8 +65,7 @@ TEST 4: Citation with section locator
 \l__csl_citation_info_tl=citationID={ITEM-1@3},citationItems={{id={ITEM-1},label={section},locator={2.3}}},properties={noteIndex={4}}.
 <recently read> }
 l. ...}
-Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
-(citation-style-language)                on line ....
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
 l. ...}
@@ -60,8 +77,7 @@ TEST 5: Citation with implicit page locator
 \l__csl_citation_info_tl=citationID={ITEM-1@4},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={5}}.
 <recently read> }
 l. ...}
-Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
-(citation-style-language)                on line ....
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
 l. ...}
@@ -74,8 +90,7 @@ TEST 6: Citation with prefix and suffix
 },suffix={ suffix}}},properties={noteIndex={6}}.
 <recently read> }
 l. ...}
-Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
-(citation-style-language)                on line ....
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
 l. ...}
@@ -88,8 +103,7 @@ TEST 7: Citation with implicit prefix and suffix
 },suffix={, suffix}}},properties={noteIndex={7}}.
 <recently read> }
 l. ...}
-Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
-(citation-style-language)                on line ....
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
 l. ...}
@@ -102,8 +116,7 @@ TEST 8: Citation with implicit suffix
 suffix}}},properties={noteIndex={8}}.
 <recently read> }
 l. ...}
-Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
-(citation-style-language)                on line ....
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
 l. ...}
@@ -116,8 +129,7 @@ TEST 9: Citation with implicit prefix
 }}},properties={noteIndex={9}}.
 <recently read> }
 l. ...}
-Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
-(citation-style-language)                on line ....
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
 l. ...}
@@ -129,8 +141,7 @@ TEST 10: Narrative citation
 \l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={composite}}.
 <recently read> }
 l. ...}
-Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
-(citation-style-language)                on line ....
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
 l. ...}
@@ -143,8 +154,7 @@ TEST 11: Narrative citation
 early work},noteIndex={0},mode={composite}}.
 <recently read> }
 l. ...}
-Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
-(citation-style-language)                on line ....
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
 l. ...}
@@ -157,8 +167,8 @@ TEST 12: Multiple cite items with options
 },label={page},locator={6}},{id={ITEM-2},label={figure},locator={2}}},properties={noteIndex={12}}.
 <recently read> }
 l. ...}
-Package citation-style-language Warning: Citation `ITEM-1, ITEM-2' on page 1
-(citation-style-language)                undefined on line ....
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+LaTeX Warning: Citation `ITEM-2' on page 1 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1, ITEM-2}].
 <recently read> }
 l. ...}
@@ -170,8 +180,7 @@ TEST 13: Cite only author
 \l__csl_citation_info_tl=citationID={ITEM-1@11},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
 <recently read> }
 l. ...}
-Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
-(citation-style-language)                on line ....
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
 l. ...}

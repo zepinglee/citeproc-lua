@@ -6,6 +6,8 @@
 
 \usepackage{citation-style-language}
 
+\START
+
 \cslsetup{
   regression-test = true,
   style = apa,
@@ -14,8 +16,6 @@
 
 
 \begin{document}
-
-\START
 
 \TEST{Citation}{
   \cite{ITEM-1}

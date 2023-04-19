@@ -8,8 +8,7 @@ TEST 1: LaTeX command in prefix
 word. },label={page},locator={419}}},properties={noteIndex={1}}.
 <recently read> }
 l. ...}
-Package citation-style-language Warning: Citation `Wallace1996-GreekG' on page
-(citation-style-language)                1 undefined on line ....
+LaTeX Warning: Citation `Wallace1996-GreekG' on page 1 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {Wallace1996-GreekG}].
 <recently read> }
 l. ...}

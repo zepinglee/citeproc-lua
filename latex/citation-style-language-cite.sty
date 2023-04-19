@@ -440,11 +440,15 @@
 \cs_new:Npn \__csl_print_undefined_citation:n #1
   % #1: keys
   {
-    \G@refundefinedtrue
-    \msg_warning:nnn { citation-style-language } { citation / undefined } {#1}
     \tl_if_blank:nTF {#1}
-      { \tl_set:Nn \l__csl_citation_tl { [ \textbf { ? } ] } }
-      { \tl_set:Nn \l__csl_citation_tl { [ \textbf {#1} ] } }
+      {
+        \__csl_warn_citation_undefined:n { }
+        \tl_set:Nn \l__csl_citation_tl { [ \textbf { ? } ] }
+      }
+      {
+        \clist_map_inline:nn {#1} { \__csl_warn_citation_undefined:n {##1} }
+        \tl_set:Nn \l__csl_citation_tl { [ \textbf {#1} ] }
+      }
     \bool_if:NT \l__csl_regression_test_bool
       { \tl_show:N \l__csl_citation_tl }
     \group_begin:
@@ -452,8 +456,15 @@
     \group_end:
   }
 
-\msg_new:nnn { citation-style-language } { citation / undefined }
-  { Citation~ `#1'~ on~ page~ \thepage \space undefined~ \msg_line_context: . }
+% \msg_new:nnn { citation-style-language } { citation / undefined }
+%   { Citation~ `#1'~ on~ page~ \thepage \space undefined~ \msg_line_context: . }
+
+\cs_new:Npn \__csl_warn_citation_undefined:n #1
+  {
+    \G@refundefinedtrue
+    % The warning message is read by latexmk.
+    \@latex@warning {Citation~ `#1'~ on~ page~ \thepage \space undefined}
+  }
 
 
 \DeclareDocumentCommand \nocite { m }

@@ -7,8 +7,7 @@ TEST 1: Citation with URL
 \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
 <recently read> }
 l. ...}
-Package citation-style-language Warning: Citation `ITEM-1' on page 1 undefined
-(citation-style-language)                on line ....
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
 l. ...}

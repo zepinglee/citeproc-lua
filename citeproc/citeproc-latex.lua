@@ -113,6 +113,12 @@ function csl.cite(citation_info)
   -- tex.setcatcode(37, 12)  -- %
   token.set_macro("l__csl_citation_tl", citation_str)
 
+  for _, cite_item in ipairs(citation.citationItems) do
+    if not core.item_dict[cite_item.id] then
+      tex.print(string.format("\\cslsetup{undefined-cites = {%s}}", cite_item.id))
+    end
+  end
+
   table.insert(csl.citations_pre, {citation.citationID, citation.properties.noteIndex})
 end
 

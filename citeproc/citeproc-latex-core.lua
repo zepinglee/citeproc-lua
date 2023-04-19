@@ -98,6 +98,10 @@ local function read_data_file(data_file)
     csl_items = bibtex2csl.parse_bibtex_to_csl(contents, true, true, true, true)
   end
 
+  if not csl_items then
+    csl_items = {}
+  end
+
   return file_name, csl_items
 end
 

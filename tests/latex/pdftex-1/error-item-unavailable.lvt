@@ -6,24 +6,36 @@
 
 \usepackage{citation-style-language}
 
+\START
+
 \cslsetup{
   regression-test = true,
   style = apa,
 }
-\addbibresource{test.json}
+\addbibresource{test.bib}
 
 
 \begin{document}
 
-\START
-
-\TEST{Unavailable item}{
+\TEST{Entry not available}{
   \cite{ITEM-UNAVAILABLE}
+}
+
+\TEST{Multiple enties}{
+  \cite{ITEM-UNAVAILABLE, ANOTHER-ITEM}
+}
+
+\TEST{Mixture}{
+  \cite{ITEM-UNAVAILABLE, ITEM-1, ANOTHER-ITEM}
 }
 
 \TEST{Empty citation}{
   % https://github.com/latex3/latex2e/issues/790
   \cite{}
+}
+
+\TEST{Bibliography}{
+  \printbibliography
 }
 
 \end{document}

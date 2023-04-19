@@ -18,6 +18,7 @@ local core = require("citeproc-latex-core")
 local latex_parser = require("citeproc-latex-parser")
 
 
+-- http://lua-users.org/wiki/AlternativeGetOpt
 local function getopt( arg, options )
   local tab = {}
   for k, v in ipairs(arg) do
@@ -65,6 +66,7 @@ local function print_help()
   io.write("Usage: citeproc-lua [options] auxname[.aux]\n")
   io.write("Options:\n")
   io.write("  -h, --help          Print this message and exit.\n")
+  io.write("  -q, --quiet         Quiet mode: suppress the banner and progress reports.\n")
   io.write("  -V, --version       Print the version number and exit.\n")
 end
 
@@ -108,32 +110,33 @@ end
 ---@return table<string, string>
 ---@return string[]
 local function read_aux_file(aux_file)
-  local bib_style = nil
-  local bib_files = {}
-  local citations = {}
+  local csl_style = nil
+  local csl_data_files = {}
+  local csl_citations = {}
   local csl_options = {}
-  local bibliographies = {}
+  local csl_bibliographies = {}
 
-  local file = io.open(aux_file, "r")
+  local file = io.open(aux_file)
   if not file then
-    error(string.format('Cannot read "%s"', aux_file))
+    util.error(string.format("Couldn't open file %s", aux_file))
+    return csl_style, csl_data_files, csl_citations, csl_options, csl_bibliographies
   end
   for line in file:lines() do
     -- TODO: Use lpeg-based method and detect multiple lines
     local style = get_command_argument(line, "\\csl@aux@style")
     if style then
-      bib_style = style
+      csl_style = style
     else
       local data = get_command_argument(line, "\\csl@aux@data")
       if data then
         for _, bib_file in ipairs(latex_parser.parse_seq(data)) do
-          table.insert(bib_files, bib_file)
+          table.insert(csl_data_files, bib_file)
         end
       else
         local cite = get_command_argument(line, "\\csl@aux@cite")
         if cite then
           local citation = core.make_citation(cite)
-          table.insert(citations, citation)
+          table.insert(csl_citations, citation)
         else
           local options = get_command_argument(line, "\\csl@aux@options")
           if options then
@@ -144,7 +147,22 @@ local function read_aux_file(aux_file)
           else
             local bib = get_command_argument(line, "\\csl@aux@bibliography")
             if bib then
-              table.insert(bibliographies, bib)
+              table.insert(csl_bibliographies, bib)
+            else
+              local sub_aux_file = get_command_argument(line, "\\@input")
+              if sub_aux_file and util.endswith(sub_aux_file, ".aux") then
+                local style_name, data_files, citations, opts, bibs = read_aux_file(sub_aux_file)
+                if style_name then
+                  csl_style = style_name
+                end
+                util.extend(csl_data_files, data_files)
+                util.extend(csl_citations, citations)
+                util.extend(csl_citations, citations)
+                for key, value in pairs(opts) do
+                  csl_options[key] = value
+                end
+                util.extend(csl_bibliographies, bibs)
+              end
             end
           end
         end
@@ -153,7 +171,24 @@ local function read_aux_file(aux_file)
   end
   file:close()
 
-  return bib_style, bib_files, citations, csl_options, bibliographies
+  return csl_style, csl_data_files, csl_citations, csl_options, csl_bibliographies
+end
+
+
+local function get_undefined_info(core, citation)
+  local res = ""
+  for _, cite_item in ipairs(citation.citationItems) do
+    if not core.item_dict[cite_item.id] then
+      if res ~= "" then
+        res = res .. ","
+      end
+      res = res .. cite_item.id
+    end
+  end
+  if res ~= "" then
+    res = string.format("\\cslsetup{undefined-cites={%s}}", res)
+  end
+  return res
 end
 
 
@@ -162,8 +197,32 @@ local function process_aux_file(aux_file)
   if not util.endswith(aux_file, ".aux") then
     aux_file = aux_file .. ".aux"
   end
+  local blg_file = string.gsub(aux_file, "%.aux$", ".blg")
+  util.set_logging_file(blg_file)
+
+  local banner = string.format("This is citeproc-lua, Version %s", citeproc.__VERSION__)
+  util.info(banner)
+  util.info(string.format("The top-level auxiliary file: %s", aux_file))
 
   local style_name, bib_files, citations, csl_options, bibliographies = read_aux_file(aux_file)
+
+  if style_name and style_name ~= "" then
+    util.info(string.format("The style file: %s.csl", style_name))
+  else
+    util.error("citeproc-lua: missing style name")
+  end
+
+  if #citations == 0 then
+    util.error(string.format("No citation commands in file %s", aux_file))
+  end
+
+  if #bib_files == 0 then
+    util.warning("empty bibliography data files")
+  else
+    for i, bib_file in ipairs(bib_files) do
+      util.info(string.format("Database file #%d: %s", i, bib_file))
+    end
+  end
 
   local lang = csl_options.locale
 
@@ -192,7 +251,9 @@ local function process_aux_file(aux_file)
     local citation_id = citation.citationID
     if citation_id ~= "@nocite" then
       local citation_str = citation_strings[citation_id]
-      output_string = output_string .. string.format("\\cslcitation{%s}{%s}\n", citation_id, citation_str)
+      local undefined_entry_info = get_undefined_info(core, citation)
+      output_string = output_string .. string.format("\\cslcitation{%s}{%s%s}\n",
+        citation_id, undefined_entry_info, citation_str)
     end
   end
 
@@ -209,11 +270,26 @@ local function process_aux_file(aux_file)
 
   local output_path = string.gsub(aux_file, "%.aux$", ".bbl")
   util.write_file(output_string, output_path)
+
+  util.quiet_mode = false;
+  if util.num_errors > 1 then
+    util.info(string.format("(There were %d error messages)", util.num_errors))
+  elseif util.num_errors == 1 then
+    util.info("(There was 1 error message)")
+  end
+
+  if util.num_warnings > 1 then
+    util.info(string.format("(There were %d warning messages)", util.num_warnings))
+  elseif util.num_warnings == 1 then
+    util.info("(There was 1 warning message)")
+  end
+
+  util.close_logging_file()
 end
 
 
 function cli.main()
-  local args = getopt(arg, "o")
+  local args = getopt(arg, "")
 
   -- for k, v in pairs(args) do
   --   print( k, v )
@@ -225,10 +301,12 @@ function cli.main()
   elseif args.h or args.help then
     print_help()
     return
+  elseif args.q or args.quiet then
+    util.quiet_mode = true
   end
 
   if not args.file then
-    error("citeproc: Need exactly one file argument.\n")
+    error("citeproc-lua: Need exactly one file argument.\n")
   end
 
   local path = args.file
@@ -239,6 +317,12 @@ function cli.main()
   else
     process_aux_file(path)
   end
+
+  if util.num_errors > 0 then
+    return 1
+  end
+
+  return 0
 
 end
 

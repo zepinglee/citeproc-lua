@@ -1,0 +1,73 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+No file error-item-unavailable.aux.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+No file error-item-unavailable.bbl.
+============================================================
+TEST 1: Entry not available
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE@1},citationItems={{id={ITEM-UNAVAILABLE}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-UNAVAILABLE' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-UNAVAILABLE}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 2: Multiple enties
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE,ANOTHER-ITEM@1},citationItems={{id={ITEM-UNAVAILABLE}},{id={ANOTHER-ITEM}}},properties={noteIndex={2}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-UNAVAILABLE' on page 1 undefined on input line ....
+LaTeX Warning: Citation `ANOTHER-ITEM' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-UNAVAILABLE, ANOTHER-ITEM}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 3: Mixture
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE,ITEM-1,ANOTHER-ITEM@1},citationItems={{id={ITEM-UNAVAILABLE}},{id={ITEM-1}},{id={ANOTHER-ITEM}}},properties={noteIndex={3}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-UNAVAILABLE' on page 1 undefined on input line ....
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+LaTeX Warning: Citation `ANOTHER-ITEM' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-UNAVAILABLE, ITEM-1, ANOTHER-ITEM}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 4: Empty citation
+============================================================
+LaTeX Warning: Citation `' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {?}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 5: Bibliography
+============================================================
+Package citation-style-language Warning: The bibliography is empty.
+============================================================
+[1
+] (error-item-unavailable.aux)
+LaTeX Warning: There were undefined references.
