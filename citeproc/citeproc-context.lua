@@ -65,19 +65,26 @@ function Context:get_variable(name, form)
   end
 end
 
+---@param name string
+---@return string | number?
 function Context:get_number(name)
   if name == "locator" then
-    return self.cite.locator
+    if self.cite then
+      return self.cite.locator
+    end
   elseif name == "citation-number" then
     -- return self.bib_number
     return self.reference["citation-number"]
   elseif name == "first-reference-note-number" then
-    return self.cite["first-reference-note-number"]
+    if self.cite then
+      return self.cite["first-reference-note-number"]
+    end
   elseif name == "page-first" then
     return self.page_first(self.reference.page)
   else
     return self.reference[name]
   end
+  return nil
 end
 
 function Context:get_ordinary(name, form)
