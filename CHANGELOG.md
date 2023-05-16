@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix a bug with `<text variable="locator">` in `<bibliography>` ([#39](https://github.com/zepinglee/citeproc-lua/issues/39)).
 - Fix missing $ errors caused by underscores in citations keys.
 
-## [v0.4.1] - 2023-04-12
+## [0.4.1] - 2023-04-12
 
 ### Added
 
@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Remove UTF-8 BOM from loaded files (fix [#34](https://github.com/zepinglee/citeproc-lua/issues/34)).
 
-## [v0.4.0] - 2023-04-02
+## [0.4.0] - 2023-04-02
 
 ### Added
 
@@ -43,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix invalid `bib-item-sep` option.
 - Fix the delimiter of `cs:choose` in deeper levels.
 
-## [v0.3.0] - 2022-12-25
+## [0.3.0] - 2022-12-25
 
 ### Added
 
@@ -63,14 +63,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix missing DOI prefix when used with `hyperref` ([#28](https://github.com/zepinglee/citeproc-lua/issues/28)).
 - Fix special characters (`#` and `%`) in URL ([#30](https://github.com/zepinglee/citeproc-lua/issues/30)).
 
-## [v0.2.2] - 2022-09-23
+## [0.2.2] - 2022-09-23
 
 ### Fixed
 
 - `latexmk` can automatically call citeproc-lua when compiling with `pdflatex` or `xelatex` (thanks to [John Collins](http://personal.psu.edu/~jcc8/)).
 - Fix incorrect labels in numeric reference list ([#25](https://github.com/zepinglee/citeproc-lua/issues/25)).
 
-## [v0.2.1] - 2022-09-18
+## [0.2.1] - 2022-09-18
 
 ### Changed
 
@@ -80,7 +80,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix redundant warning `entry "*" not found`.
 
-## [v0.2.0] - 2022-08-18
+## [0.2.0] - 2022-08-18
 
 ### Added
 
@@ -99,7 +99,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix compatibility with `\blockquote` of `csquotes` ([#21](https://github.com/zepinglee/citeproc-lua/issues/21)).
 - Fix non-lowercase field names ([#22](https://github.com/zepinglee/citeproc-lua/issues/22)).
 
-## [v0.1.1] - 2022-03-21
+## [0.1.1] - 2022-03-21
 
 ### Added
 
@@ -113,18 +113,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix the incompatibility with `babel` ([#9](https://github.com/zepinglee/citeproc-lua/issues/9)).
 - Fix missing `\url` commands in bibliography ([#12](https://github.com/zepinglee/citeproc-lua/issues/12)).
 
-## [v0.1.0] - 2022-01-22
+## [0.1.0] - 2022-01-22
 
 ### Added
 
 - Initial CTAN release.
 
 [Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.1...HEAD
-[v0.4.1]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.0...0.4.1
-[v0.4.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.3.0...0.4.0
-[v0.3.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.2.2...0.3.0
-[v0.2.2]: https://github.com/zepinglee/citeproc-lua/compare/v0.2.1...0.2.2
-[v0.2.1]: https://github.com/zepinglee/citeproc-lua/compare/v0.2.0...0.2.1
-[v0.2.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.1.1...0.2.0
-[v0.1.1]: https://github.com/zepinglee/citeproc-lua/compare/v0.1.0...v0.1.1
-[v0.1.0]: https://github.com/zepinglee/citeproc-lua/releases/tag/v0.1.0
+[0.4.1]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.0...v0.4.1
+[0.4.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.3.0...v0.4.0
+[0.3.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.2.2...v0.3.0
+[0.2.2]: https://github.com/zepinglee/citeproc-lua/compare/v0.2.1...v0.2.2
+[0.2.1]: https://github.com/zepinglee/citeproc-lua/compare/v0.2.0...v0.2.1
+[0.2.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.1.1...v0.2.0
+[0.1.1]: https://github.com/zepinglee/citeproc-lua/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/zepinglee/citeproc-lua/releases/tag/v0.1.0
