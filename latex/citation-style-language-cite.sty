@@ -443,17 +443,25 @@
     \tl_if_blank:nTF {#1}
       {
         \__csl_warn_citation_undefined:n { }
-        \tl_set:Nn \l__csl_citation_tl { [ \textbf { ? } ] }
+        \__csl_set_undefined_cite:n { ? }
       }
       {
         \clist_map_inline:nn {#1} { \__csl_warn_citation_undefined:n {##1} }
-        \tl_set:Nn \l__csl_citation_tl { [ \textbf {#1} ] }
+        % Underscores in citation keys like `zankl_kunstliche_2019` may cause a missing $ error.
+        % Thus We convert them to str.
+        \tl_set:Nx \l_tmpa_str { \tl_to_str:n {#1} }
+        \exp_args:NV \__csl_set_undefined_cite:n \l_tmpa_str
       }
     \bool_if:NT \l__csl_regression_test_bool
       { \tl_show:N \l__csl_citation_tl }
     \group_begin:
       \reset@font \l__csl_citation_tl
     \group_end:
+  }
+
+\cs_new:Npn \__csl_set_undefined_cite:n #1
+  {
+    \tl_set:Nn \l__csl_citation_tl { [ \textbf {#1} ] }
   }
 
 % \msg_new:nnn { citation-style-language } { citation / undefined }
