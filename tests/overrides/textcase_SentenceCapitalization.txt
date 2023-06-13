@@ -8,6 +8,9 @@ In the spec:
   capitalized if the word is lowercase.
   The case of all other words stays the same.
 
+< This is a pen that is a Smith pencil
+> This is a Pen that is a Smith Pencil
+
 
 >>===== RESULT =====>>
 This is a Pen that is a Smith Pencil

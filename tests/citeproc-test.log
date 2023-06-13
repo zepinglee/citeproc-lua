@@ -1,7 +1,7 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       0       0       0
-bugreports          79       0       0       0
+bugreports          80       0       0       0
 collapse            21       0       0       0
 condition           17       0       0       0
 date                99       0       0       0
@@ -38,4 +38,4 @@ unicode              1       0       0       0
 variables            5       0       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              863       0       0       0
+(all)              865       0       0       0

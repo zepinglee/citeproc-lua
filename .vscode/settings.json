@@ -19,7 +19,9 @@
         "*.rockspec": "lua",
         "*.sty": "latex-expl3",
         "*.tlg": "latex-expl3",
-        "*_*.txt": "xml"
+        "*_*.txt": "xml",
+        "DEPENDS.txt": "shellscript",
+        "citeproc-test-skip.txt": "shellscript"
     },
     "latex-workshop.intellisense.update.aggressive.enabled": true,
     "Lua.diagnostics.globals": [

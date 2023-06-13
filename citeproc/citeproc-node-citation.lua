@@ -1359,11 +1359,7 @@ function Citation:collapse_cites_by_year(irs)
             -- Special hack for
             cite_ir.own_delimiter = self.after_collapse_delimiter
           elseif self.cite_grouping then
-            if self.sort then
-              cite_ir.own_delimiter = self.cite_group_delimiter
-            else
-              cite_ir.own_delimiter = self.layout.delimiter
-            end
+            cite_ir.own_delimiter = self.cite_group_delimiter
           else
             if self.sort then
               cite_ir.own_delimiter = self.cite_group_delimiter

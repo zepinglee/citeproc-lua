@@ -323,6 +323,7 @@ local function run_test(path)
 end
 
 local function main()
+  -- local skipped_files = {}
   local skipped_files = get_skipped_files()
 
   local test_dirs = {

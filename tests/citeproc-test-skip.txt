@@ -36,7 +36,7 @@ number_PlainHyphenOrEnDashAlwaysPlural.txt
 position_IbidInText.txt
 
 # Update citation-number after sorting
-sort_BibliographyCitationNumberDescendingViaCompositeMacro.txt
+sort_BibliographyCitationNumberDescendingSecondary.txt
 sort_BibliographyCitationNumberDescendingViaMacro.txt
 # sort_CitationNumberPrimaryAscendingViaVariableCitation.txt
 sort_CitationNumberPrimaryDescendingViaMacroBibliography.txt
