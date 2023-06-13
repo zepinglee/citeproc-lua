@@ -1,12 +1,12 @@
 category       success failure   error pending
 -------------- ------- ------- ------- -------
 affix                8       0       0       0
-bugreports          80       0       0       0
+bugreports          81       0       0       0
 collapse            21       0       0       0
 condition           17       0       0       0
 date                99       0       0       0
 decorations          7       0       0       0
-disambiguate        64       0       0       0
+disambiguate        65       0       0       0
 display              5       0       0       0
 etal                 4       0       0       0
 flipflop            17       0       0       0
@@ -38,4 +38,4 @@ unicode              1       0       0       0
 variables            5       0       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              865       0       0       0
+(all)              867       0       0       0

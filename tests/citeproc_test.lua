@@ -61,22 +61,21 @@ end
 
 local function test_citation_items(engine, fixture)
   local citation_items = fixture.citation_items
-  if not citation_items then
-    citation_items = {{}}
-    local cited = {}  -- to remove duplicates: number_PlainHyphenOrEnDashAlwaysPlural.txt
-    for _, item in ipairs(fixture.input) do
-      if not cited[item.id] then
-        table.insert(citation_items[1], {id = tostring(item.id)})
-        cited[item.id] = true
-      end
-    end
-  end
 
   local ids = {}
   for _, item in ipairs(fixture.input) do
     table.insert(ids, item.id)
   end
   engine:updateItems(ids)
+
+  -- The citation-items are loaded from the engine registry.
+  -- See <https://github.com/Juris-M/citeproc-test-runner/blob/b1e72d5cb1363b7f4abbe1f6546c9e2c443db726/lib/sys.js#L369-L376>
+  if not citation_items then
+    citation_items = {{}}
+    for _, id in ipairs(engine.registry.reflist) do
+      table.insert(citation_items[1], {id = tostring(id)})
+    end
+  end
 
   local output = {}
   for _, items in ipairs(citation_items) do

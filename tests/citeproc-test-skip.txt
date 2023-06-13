@@ -1,11 +1,5 @@
-# Citation sorting
-bugreports_ChicagoAuthorDateLooping.txt
-
 # Check tainted citations
 discretionary_AuthorDateAuthorOnlyThenSuppressAuthorNoteStyle.txt
-
-# Incorrect citation sorting and cite-group-delimiter
-disambiguate_InitializeWithButNoDisambiguation.txt
 
 # citeproc-lua chooses to parse rich text in numeric fields.
 flipflop_NumericField.txt

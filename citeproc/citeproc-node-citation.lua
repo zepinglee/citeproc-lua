@@ -58,6 +58,7 @@ function Citation:from_node(node, style)
 
   local o = self:new()
   o.children = {}
+  o.style = style
   o.layout = nil
   o.layouts_by_language = {}
 
@@ -1353,21 +1354,17 @@ function Citation:collapse_cites_by_year(irs)
         if i == #cite_group then
           cite_ir.own_delimiter = self.after_collapse_delimiter
         elseif i < #cite_group then
-          -- The delimiter depends on the citation > sort.
-          -- https://github.com/citation-style-language/test-suite/issues/39#issuecomment-687901688
-          if cite_ir.cite_item.locator then
-            -- Special hack for
-            cite_ir.own_delimiter = self.after_collapse_delimiter
-          elseif self.cite_grouping then
-            cite_ir.own_delimiter = self.cite_group_delimiter
-          else
-            if self.sort then
-              cite_ir.own_delimiter = self.cite_group_delimiter
+          if self.style.class == "in-text" then
+            if cite_ir.cite_item.locator then
+              -- Special hack
+              cite_ir.own_delimiter = self.after_collapse_delimiter
             else
-              -- disambiguate_YearCollapseWithInstitution.txt
-              -- disambiguate_InitializeWithButNoDisambiguation.txt ?
-              cite_ir.own_delimiter = self.layout.delimiter
+              cite_ir.own_delimiter = self.cite_group_delimiter or self.layout.delimiter
             end
+          else
+            -- In note style, the layout delimiter is tried first before falling back to the default.
+            -- See <https://github.com/citation-style-language/test-suite/issues/56>
+            cite_ir.own_delimiter = self.layout.delimiter or self.cite_group_delimiter
           end
         end
       end

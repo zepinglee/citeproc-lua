@@ -6,12 +6,8 @@ citation
 From <https://github.com/Juris-M/citeproc-js>.
 
 
-The original output is `>>[0] Kesey’s early work (1962, 1964; cf. <i>Le Guin</i> 1969)`.
-
-
-
 >>===== RESULT =====>>
->>[0] Kesey’s early work (1962; 1964; cf. <i>Le Guin</i> 1969)
+>>[0] Kesey’s early work (1962, 1964; cf. <i>Le Guin</i> 1969)
 <<===== RESULT =====<<
 
 
