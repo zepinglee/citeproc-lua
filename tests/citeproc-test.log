@@ -29,7 +29,7 @@ position            14       0       0       0
 punctuation         15       0       0       0
 quotes               4       0       0       0
 simplespace          1       0       0       0
-sort                58       0       0       0
+sort                52       0       0       0
 sortseparator        1       0       0       0
 substitute           7       0       0       0
 testers              2       0       0       0
@@ -38,4 +38,4 @@ unicode              1       0       0       0
 variables            5       0       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              867       0       0       0
+(all)              861       0       0       0

@@ -1,3 +1,6 @@
+# Disambiguation: should compare with position="subsequent"
+bugreports_EnvAndUrb.txt
+
 # Check tainted citations
 discretionary_AuthorDateAuthorOnlyThenSuppressAuthorNoteStyle.txt
 
@@ -33,16 +36,6 @@ number_PlainHyphenOrEnDashAlwaysPlural.txt
 # Citation-3 has noteIndex 0 but it's after citation-2 with noteIndex 1.
 position_IbidInText.txt
 
-# Update citation-number after sorting
-sort_BibliographyCitationNumberDescendingSecondary.txt
-sort_BibliographyCitationNumberDescendingViaMacro.txt
-# sort_CitationNumberPrimaryAscendingViaVariableCitation.txt
-sort_CitationNumberPrimaryDescendingViaMacroBibliography.txt
-sort_CitationNumberPrimaryDescendingViaMacroCitation.txt
-sort_CitationNumberPrimaryDescendingViaVariableBibliography.txt
-sort_CitationNumberPrimaryDescendingViaVariableCitation.txt
-# sort_CitationNumberSecondaryAscendingViaVariableCitation.txt
-
 # Do not ommit empty entry output.
 sort_OmittedBibRefMixedNumericStyle.txt
 sort_OmittedBibRefNonNumericStyle.txt
@@ -55,7 +48,6 @@ textcase_SkipNameParticlesInTitleCase.txt
 
 # TMP skip
 affix_WithCommas.txt
-bugreports_EnvAndUrb.txt
 bugreports_OldMhraDisambiguationFailure.txt
 date_YearSuffixImplicitWithNoDate.txt
 date_YearSuffixWithNoDate.txt
