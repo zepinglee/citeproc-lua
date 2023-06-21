@@ -4,6 +4,10 @@ discretionary_AuthorDateAuthorOnlyThenSuppressAuthorNoteStyle.txt
 # citeproc-lua chooses to parse rich text in numeric fields.
 flipflop_NumericField.txt
 
+# Editor & translator issues
+label_EditorTranslator1.txt
+name_EditorTranslatorSameWithTerm.txt
+
 # locator parsing is not yet implemented
 locator_TrickyEntryForPlurals.txt
 
@@ -63,10 +67,8 @@ disambiguate_DisambiguationHang.txt
 disambiguate_Trigraph.txt
 flipflop_LeadingMarkupWithApostrophe.txt
 integration_FirstReferenceNoteNumberPositionChange.txt
-label_EditorTranslator1.txt
 magic_CitationLabelInBibliography.txt
 magic_CitationLabelInCitation.txt
 name_CollapseRoleLabels.txt
-name_EditorTranslatorSameWithTerm.txt
 position_IbidWithPrefixFullStop.txt
 punctuation_FrenchOrthography.txt

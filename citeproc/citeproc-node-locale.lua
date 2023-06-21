@@ -100,6 +100,25 @@ Locale.form_fallbacks = {
   ["long"]       = {"long"},
 }
 
+
+---Remove leading and trailing spaces
+---See label_EditorTranslator1.txt, the `<term name="and others">\n   </term>`
+---gives nothing.
+---@param str string?
+---@return string?
+local function strip_term_content(str)
+  if not str then
+    return nil
+  end
+  str = string.gsub(str, "^[\r\n]*", "")
+  str = string.gsub(str, "[\r\n]*$", "")
+  if string.match(str, "^%s*$") then
+    str = ""
+  end
+  return str
+end
+
+
 -- Keep in sync with Terms:from_node
 function Locale:get_simple_term(name, form, plural)
   form = form or "long"
@@ -114,9 +133,9 @@ function Locale:get_simple_term(name, form, plural)
     local term = self.terms[key]
     if term then
       if plural then
-        return term.multiple or term.text
+        return strip_term_content(term.multiple) or strip_term_content(term.text)
       else
-        return term.single or term.text
+        return strip_term_content(term.single) or strip_term_content(term.text)
       end
     end
   end
