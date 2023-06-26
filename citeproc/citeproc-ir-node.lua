@@ -15,6 +15,15 @@ else
 end
 
 
+---@enum GroupVar
+local GroupVar = {
+  Plain = 0,
+  Important = 1,
+  Missing = 2,
+  UnresolvedPlain = 3,
+}
+
+
 ---@class IrNode
 local IrNode = {
   _element = nil,
@@ -32,16 +41,16 @@ function IrNode:new(children, element)
     _element = element.element_name,
     _type = self._type,
     children = children,
-    group_var = "plain",
+    group_var = GroupVar.Plain,
   }
 
-  o.group_var = "missing"
+  o.group_var = GroupVar.Missing
   for _, child_ir in ipairs(children) do
-    if child_ir.group_var == "important" then
-      o.group_var = "important"
+    if child_ir.group_var == GroupVar.Important then
+      o.group_var = GroupVar.Important
       break
-    elseif child_ir.group_var == "plain" then
-      o.group_var = "plain"
+    elseif child_ir.group_var == GroupVar.Plain then
+      o.group_var = GroupVar.Plain
     end
   end
 
@@ -150,7 +159,7 @@ function Rendered:new(inlines, element)
     _type = self._type,
     element = element,  -- required for capitalizing first term
     inlines = inlines,
-    group_var = "plain",
+    group_var = GroupVar.Plain,
   }
 
   setmetatable(o, self)
@@ -168,7 +177,7 @@ function YearSuffix:new(inlines, element)
     _type = self._type,
     element = element,
     inlines = inlines,
-    group_var = "plain",
+    group_var = GroupVar.Plain,
   }
 
   setmetatable(o, self)
@@ -189,7 +198,7 @@ function PersonNameIr:new(inlines, element)
     _element = element.element_name,
     _type = self._type,
     inlines = inlines,
-    group_var = "plain",
+    group_var = GroupVar.Plain,
   }
   setmetatable(o, self)
   self.__index = self
@@ -204,7 +213,7 @@ local SeqIr = IrNode:derive("SeqIr")
 --   o = IrNode.new(self, children)
 --   local o = {
 --     children = children,
---     group_var = "plain",
+--     group_var = GroupVar.Plain,
 --   }
 --   setmetatable(o, self)
 --   self.__index = self
@@ -219,5 +228,7 @@ irnode.YearSuffix = YearSuffix
 irnode.NameIr = NameIr
 irnode.PersonNameIr = PersonNameIr
 irnode.SeqIr = SeqIr
+
+irnode.GroupVar = GroupVar
 
 return irnode

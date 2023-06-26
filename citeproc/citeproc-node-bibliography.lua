@@ -35,6 +35,7 @@ local Element = element.Element
 local IrNode = ir_node.IrNode
 local Rendered = ir_node.Rendered
 local SeqIr = ir_node.SeqIr
+local GroupVar = ir_node.GroupVar
 local PlainText = output.PlainText
 local DisamStringFormat = output.DisamStringFormat
 local YearSuffix = ir_node.YearSuffix
@@ -231,7 +232,7 @@ function Bibliography:substitute_subsequent_authors_complete_all(engine, ir)
     local text = self.subsequent_author_substitute
     if text == "" then
       ir.first_name_ir.children = {}
-      ir.first_name_ir.group_var = "missing"
+      ir.first_name_ir.group_var = GroupVar.Missing
     else
       -- the output of label is not substituted
       -- util.debug(ir.first_name_ir)
@@ -270,7 +271,7 @@ function Bibliography:substitute_subsequent_authors_complete_each(engine, ir)
       -- In case of a <text variable="title"/> in <substitute>
       if text == "" then
         ir.first_name_ir.children = {}
-        ir.first_name_ir.group_var = "missing"
+        ir.first_name_ir.group_var = GroupVar.Missing
       else
         ir.first_name_ir.children = {Rendered:new({PlainText:new(text)}, self)}
       end
@@ -310,7 +311,7 @@ function Bibliography:substitute_subsequent_authors_partial_each(engine, ir)
       local text = self.subsequent_author_substitute
       if text == "" then
         ir.first_name_ir.children = {}
-        ir.first_name_ir.group_var = "missing"
+        ir.first_name_ir.group_var = GroupVar.Missing
       else
         ir.first_name_ir.children = {Rendered:new({PlainText:new(text)}, self)}
       end
@@ -343,7 +344,7 @@ function Bibliography:add_bibliography_year_suffix(ir, engine)
 
   for _, year_suffix_ir in ipairs(ir.year_suffix_irs) do
     year_suffix_ir.inlines = {PlainText:new(ir.reference["year-suffix"])}
-    year_suffix_ir.group_var = "important"
+    year_suffix_ir.group_var = GroupVar.Important
   end
 end
 

@@ -31,6 +31,7 @@ local NameIr = ir_node.NameIr
 local PersonNameIr = ir_node.PersonNameIr
 local SeqIr = ir_node.SeqIr
 local Rendered = ir_node.Rendered
+local GroupVar = ir_node.GroupVar
 local InlineElement = output.InlineElement
 local PlainText = output.PlainText
 local SortStringFormat = output.SortStringFormat
@@ -165,7 +166,7 @@ function Names:build_ir(engine, state, context)
       if name_ir and names_inheritance.name.form == "count" then
         num_names = num_names + name_ir.name_count
       end
-      if name_ir and name_ir.group_var ~= "missing" then
+      if name_ir and name_ir.group_var ~= GroupVar.Missing then
         table.insert(irs, name_ir)
       end
     end
@@ -175,17 +176,17 @@ function Names:build_ir(engine, state, context)
     if num_names > 0 then
       local ir = Rendered:new({PlainText:new(tostring(num_names))}, self)
       ir.name_count = num_names
-      ir.group_var = "important"
+      ir.group_var = GroupVar.Important
       ir = NameIr:new({ir}, self)
       ir.name_count = num_names
-      ir.group_var = "important"
+      ir.group_var = GroupVar.Important
       -- util.debug(ir)
       return ir
     end
   else
     if #irs > 0 then
       local ir = SeqIr:new(irs, self)
-      ir.group_var = "important"
+      ir.group_var = GroupVar.Important
       ir.delimiter = names_inheritance.delimiter
       ir.formatting = util.clone(names_inheritance.formatting)
       ir.affixes = util.clone(names_inheritance.affixes)
@@ -199,13 +200,13 @@ function Names:build_ir(engine, state, context)
     new_state.name_override = names_inheritance
     for _, substitution in ipairs(self.substitute.children) do
       local ir = substitution:build_ir(engine, new_state, context)
-      if ir and (ir.group_var == "important" or ir.group_var == "plain") then
+      if ir and (ir.group_var == GroupVar.Important or ir.group_var == GroupVar.Plain) then
         if not ir.person_name_irs or #ir.person_name_irs == 0 then
           -- In case of a <text variable="title"/> in <substitute>
           local name_count = ir.name_count
           ir = NameIr:new({ir}, self)
           ir.name_count = name_count  -- sort_AguStyle.txt
-          ir.group_var = "important"
+          ir.group_var = GroupVar.Important
         end
         return ir
       end
@@ -213,7 +214,7 @@ function Names:build_ir(engine, state, context)
   end
 
   local ir = Rendered:new({}, self)
-  ir.group_var = "missing"
+  ir.group_var = GroupVar.Missing
   return ir
 
 end
@@ -382,7 +383,7 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     end
     local ir = Rendered:new({PlainText:new(tostring(count))}, {})
     ir.name_count = count
-    ir.group_var = "important"
+    ir.group_var = GroupVar.Important
     return ir
   end
 
@@ -452,10 +453,10 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
 
   -- etal_UseZeroFirst.txt: et-al-use-first="0"
   if #irs == 0 then
-    ir.group_var = "missing"
+    ir.group_var = GroupVar.Missing
     return ir
   else
-    ir.group_var = "important"
+    ir.group_var = GroupVar.Important
   end
 
   irs = {ir}

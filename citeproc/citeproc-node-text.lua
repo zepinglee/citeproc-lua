@@ -26,6 +26,7 @@ end
 local Element = element.Element
 local Rendered = ir_node.Rendered
 local YearSuffix = ir_node.YearSuffix
+local GroupVar = ir_node.GroupVar
 local PlainText = output.PlainText
 local Linked = output.Linked
 
@@ -95,7 +96,7 @@ function Text:build_variable_ir(engine, state, context)
 
   if not text then
     local ir = Rendered:new({}, self)
-    ir.group_var = "missing"
+    ir.group_var = GroupVar.Missing
     return ir
   end
   if type(text) == "number" then
@@ -118,7 +119,7 @@ function Text:build_variable_ir(engine, state, context)
   end
 
   local ir = Rendered:new(inlines, self)
-  ir.group_var = "important"
+  ir.group_var = GroupVar.Important
 
   if variable == "citation-number" then
     ir.citation_number = context.reference["citation-number"]
@@ -167,10 +168,10 @@ function Text:build_year_suffix_ir(engine, state, context)
   local text = context:get_variable(self.variable, self.form)
   local group_var
   if text then
-    group_var = "important"
+    group_var = GroupVar.Important
   else
     text = ""
-    group_var = "missing"
+    group_var = GroupVar.Missing
   end
 
   local ir = YearSuffix:new({PlainText:new(text)}, self)

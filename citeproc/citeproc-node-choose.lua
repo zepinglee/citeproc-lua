@@ -22,6 +22,7 @@ end
 
 local Element = element.Element
 local SeqIr = ir_node.SeqIr
+local GroupVar = ir_node.GroupVar
 
 -- [Choose](https://docs.citationstyles.org/en/stable/specification.html#choose)
 local Choose = Element:derive("choose")
@@ -42,19 +43,19 @@ function Choose:build_ir(engine, state, context)
 
   local ir = SeqIr:new({}, self)
   ir.should_inherit_delim = true
-  ir.group_var = "UnresolvedPlain"
+  ir.group_var = GroupVar.UnresolvedPlain
 
   for _, child in ipairs(self.children) do
     if child:evaluate_conditions(engine, state, context) then
       active_branch = child
       branch_ir = child:build_ir(engine, state, context)
-      if branch_ir and branch_ir.group_var ~= "missing" then
+      if branch_ir and branch_ir.group_var ~= GroupVar.Missing then
         table.insert(ir.children, branch_ir)
         ir.group_var = branch_ir.group_var
         ir.name_count = branch_ir.name_count
         ir.sort_key = branch_ir.sort_key
       else
-        ir.group_var = "missing"
+        ir.group_var = GroupVar.Missing
       end
       break
     end
@@ -149,18 +150,18 @@ function If:build_children_ir(engine, state, context)
   local irs = {}
   local name_count
   local ir_sort_key
-  local group_var = "plain"
+  local group_var = GroupVar.Plain
 
   for _, child_element in ipairs(self.children) do
     local child_ir = child_element:build_ir(engine, state, context)
 
     if child_ir then
       local child_group_var = child_ir.group_var
-      if child_group_var == "important" then
-        group_var = "important"
-      elseif child_group_var == "missing" and child_ir._type ~= "YearSuffix" then
-        if group_var == "plain" then
-          group_var = "missing"
+      if child_group_var == GroupVar.Important then
+        group_var = GroupVar.Important
+      elseif child_group_var == GroupVar.Missing and child_ir._type ~= "YearSuffix" then
+        if group_var == GroupVar.Plain then
+          group_var = GroupVar.Missing
         end
       end
 
@@ -181,7 +182,7 @@ function If:build_children_ir(engine, state, context)
   end
 
   if #irs == 0 then
-    group_var = "missing"
+    group_var = GroupVar.Missing
   end
 
   local ir = SeqIr:new(irs, self)

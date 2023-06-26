@@ -9,19 +9,24 @@ local output_module = {}
 local uni_utf8
 local unicode
 local dom
+local ir_node
 local util
 
 if kpse then
   uni_utf8 = require("unicode").utf8
   unicode = require("citeproc-unicode")
   dom = require("luaxml-domobject")
+  ir_node = require("citeproc-ir-node")
   util = require("citeproc-util")
 else
   uni_utf8 = require("lua-utf8")
   unicode = require("citeproc.unicode")
   dom = require("citeproc.luaxml.domobject")
+  ir_node = require("citeproc.ir-node")
   util = require("citeproc.util")
 end
+
+local GroupVar = ir_node.GroupVar
 
 
 local LocalizedQuotes = {
@@ -652,7 +657,7 @@ function OutputFormat:new(format_name)
 end
 
 function OutputFormat:flatten_ir(ir, override_delim)
-  if self.group_var == "missing" or self.collapse_suppressed then
+  if self.group_var == GroupVar.Missing or self.collapse_suppressed then
     return {}
   end
   local inlines = {}
@@ -680,7 +685,7 @@ function OutputFormat:flatten_seq_ir(ir, override_delim)
   end
 
   for _, child in ipairs(ir.children) do
-    if child.group_var ~= "missing" and not child.collapse_suppressed then
+    if child.group_var ~= GroupVar.Missing and not child.collapse_suppressed then
       local child_inlines = self:flatten_ir(child, delimiter)
       if #child_inlines > 0 then
         table.insert(inlines_list, child_inlines)
@@ -1847,7 +1852,7 @@ function DisamStringFormat:output(inlines, context)
 end
 
 function DisamStringFormat:flatten_ir(ir)
-  if self.group_var == "missing" then
+  if self.group_var == GroupVar.Missing then
     return {}
   end
   local inlines
@@ -1872,7 +1877,7 @@ function DisamStringFormat:flatten_seq_ir(ir)
   end
   local inlines_list = {}
   for _, child in ipairs(ir.children) do
-    if child.group_var == "important" or child.group_var == "plain" then
+    if child.group_var == GroupVar.Important or child.group_var == GroupVar.Plain then
       -- and not child.collapse_suppressed
       -- Suppressed irs are stil kept in the DisamStringFormat
       table.insert(inlines_list, self:flatten_ir(child))

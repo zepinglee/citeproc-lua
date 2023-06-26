@@ -21,6 +21,7 @@ else
   util = require("citeproc.util")
 end
 
+local GroupVar = ir_node.GroupVar
 local SeqIr = ir_node.SeqIr
 
 local InlineElement = output.InlineElement
@@ -144,7 +145,7 @@ end
 function Element:build_children_ir(engine, state, context)
   local child_irs = {}
   local ir_sort_key
-  local group_var = "plain"
+  local group_var = GroupVar.Plain
   if self.children then
     for _, child_element in ipairs(self.children) do
       local child_ir = child_element:build_ir(engine, state, context)
@@ -152,8 +153,8 @@ function Element:build_children_ir(engine, state, context)
         if child_ir.sort_key ~= nil then
           ir_sort_key = child_ir.sort_key
         end
-        if child_ir.group_var == "important" then
-          group_var = "important"
+        if child_ir.group_var == GroupVar.Important then
+          group_var = GroupVar.Important
         end
         table.insert(child_irs, child_ir)
       end
@@ -163,7 +164,7 @@ function Element:build_children_ir(engine, state, context)
   ir.sort_key = ir_sort_key
   ir.group_var = group_var
   if #child_irs == 0 then
-    ir.group_var = "missing"
+    ir.group_var = GroupVar.Missing
   else
     ir.group_var = group_var
   end
@@ -178,7 +179,7 @@ function Element:build_group_ir(engine, state, context)
   local irs = {}
   local name_count
   local ir_sort_key
-  local group_var = "UnresolvedPlain"
+  local group_var = GroupVar.UnresolvedPlain
 
   for _, child_element in ipairs(self.children) do
     -- util.debug(child_element.element_name)
@@ -193,13 +194,13 @@ function Element:build_group_ir(engine, state, context)
       --   b) all variables that are called are empty. This accommodates
       --      descriptive cs:text and `cs:label` elements.
       local child_group_var = child_ir.group_var
-      if child_group_var == "important" then
-        group_var = "important"
-      elseif child_group_var == "plain" and group_var == "UnresolvedPlain" then
-        group_var = "plain"
-      elseif child_group_var == "missing" and child_ir._type ~= "YearSuffix" then
-        if group_var == "plain" or group_var == "UnresolvedPlain" then
-          group_var = "missing"
+      if child_group_var == GroupVar.Important then
+        group_var = GroupVar.Important
+      elseif child_group_var == GroupVar.Plain and group_var == GroupVar.UnresolvedPlain then
+        group_var = GroupVar.Plain
+      elseif child_group_var == GroupVar.Missing and child_ir._type ~= "YearSuffix" then
+        if group_var == GroupVar.Plain or group_var == GroupVar.UnresolvedPlain then
+          group_var = GroupVar.Missing
         end
       end
 
@@ -220,8 +221,8 @@ function Element:build_group_ir(engine, state, context)
 
   -- A non-empty nested cs:group is treated as a non-empty variable for the
   -- puropses of determining suppression of the outer cs:group.
-  if #irs > 0 and group_var == "plain" then
-    group_var = "important"
+  if #irs > 0 and group_var == GroupVar.Plain then
+    group_var = GroupVar.Important
   end
 
   local ir = SeqIr:new(irs, self)

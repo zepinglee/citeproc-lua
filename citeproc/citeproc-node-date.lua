@@ -27,6 +27,7 @@ local Element = element.Element
 local IrNode = ir_node.IrNode
 local Rendered = ir_node.Rendered
 local SeqIr = ir_node.SeqIr
+local GroupVar = ir_node.GroupVar
 local PlainText = output.PlainText
 
 
@@ -68,7 +69,7 @@ function Date:build_ir(engine, state, context)
 
   if not variable then
     local ir = Rendered:new({}, self)
-    ir.group_var = "missing"
+    ir.group_var = GroupVar.Missing
     return ir
   end
 
@@ -104,12 +105,12 @@ function Date:build_ir(engine, state, context)
   elseif variable["literal"] then
     local inlines = self:render_text_inlines(variable["literal"], context)
     ir = Rendered:new(inlines, self)
-    ir.group_var = "important"
+    ir.group_var = GroupVar.Important
 
   elseif variable["raw"] then
     local inlines = self:render_text_inlines(variable["raw"], context)
     ir = Rendered:new(inlines, self)
-    ir.group_var = "important"
+    ir.group_var = GroupVar.Important
 
   end
 
@@ -119,11 +120,11 @@ function Date:build_ir(engine, state, context)
     if context.sort_key then
       ir.sort_key = false
     end
-    ir.group_var = "missing"
+    ir.group_var = GroupVar.Missing
     return ir
   end
 
-  if ir.group_var == "important" then
+  if ir.group_var == GroupVar.Important then
     -- Suppress substituted name variable
     if state.name_override and not context.sort_key then
       state.suppressed[self.variable] = true
@@ -364,7 +365,7 @@ function DatePart:build_ir(single_date, engine, state, context, suppressed_affix
 
   if not text then
     local ir = Rendered:new({}, self)
-    ir.group_var = "missing"
+    ir.group_var = GroupVar.Missing
     return ir
   end
 
@@ -378,7 +379,7 @@ function DatePart:build_ir(single_date, engine, state, context, suppressed_affix
   inlines = output_format:with_format(inlines, self.formatting)
 
   local ir = Rendered:new(inlines, self)
-  ir.group_var = "important"
+  ir.group_var = GroupVar.Important
 
   if self.name == "year" then
     ir = SeqIr:new({ir}, self)

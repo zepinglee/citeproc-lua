@@ -22,6 +22,7 @@ end
 
 local Element = element.Element
 local Rendered = ir_node.Rendered
+local GroupVar = ir_node.GroupVar
 
 
 local Number = Element:derive("number")
@@ -54,7 +55,7 @@ function Number:build_ir(engine, state, context)
   end
   if not number then
     local ir = Rendered:new({}, self)
-    ir.group_var = "missing"
+    ir.group_var = GroupVar.Missing
     return ir
   end
 
@@ -67,7 +68,7 @@ function Number:build_ir(engine, state, context)
 
   local inlines = self:render_text_inlines(number, context)
   local ir = Rendered:new(inlines, self)
-  ir.group_var = "important"
+  ir.group_var = GroupVar.Important
 
   -- Suppress substituted name variable
   if state.name_override and not context.sort_key then

@@ -36,6 +36,7 @@ local IrNode = ir_node.IrNode
 local Rendered = ir_node.Rendered
 local SeqIr = ir_node.SeqIr
 local YearSuffix = ir_node.YearSuffix
+local GroupVar = ir_node.GroupVar
 local Micro = output.Micro
 local Formatted = output.Formatted
 local PlainText = output.PlainText
@@ -1069,7 +1070,7 @@ function Citation:apply_disambiguate_add_year_suffix(cite_ir, engine)
       -- util.debug(ir_.reference["year-suffix"])
       year_suffix_ir.inlines = { PlainText:new(ir_.reference["year-suffix"]) }
       year_suffix_ir.year_suffix_number = ir_.reference.year_suffix_number
-      year_suffix_ir.group_var = "important"
+      year_suffix_ir.group_var = GroupVar.Important
     end
 
     -- DisamStringFormat doesn't render YearSuffix and this can be skipped.
@@ -1129,7 +1130,7 @@ local function find_first_names_ir(ir)
       or ir_._element == "number"
       or ir_._element == "names"
       or ir_._element == "label")
-      and ir_.group_var ~= "missing"
+      and ir_.group_var ~= GroupVar.Missing
   end)
   local first_names_ir
   if first_rendering_ir and first_rendering_ir._element == "names" then
@@ -1200,7 +1201,7 @@ function Citation:_apply_cite_author_only(ir)
       or ir_._element == "number"
       or ir_._element == "names"
       or ir_._element == "label")
-      and ir_.group_var ~= "missing"
+      and ir_.group_var ~= GroupVar.Missing
   end)
 
   if author_ir then
@@ -1254,7 +1255,7 @@ function Citation:group_cites(irs)
     local first_names_ir = ir.first_names_ir
     if not first_names_ir then
       first_names_ir = find_first(ir, function (ir_)
-        return ir_._element == "names" and ir_.group_var ~= "missing"
+        return ir_._element == "names" and ir_.group_var ~= GroupVar.Missing
       end)
       if first_names_ir then
         local inlines = first_names_ir:flatten(disam_format)
@@ -1349,7 +1350,7 @@ function Citation:get_only_citation_number(ir)
   end
   local only_citation_number_ir
   for _, child in ipairs(ir.children) do
-    if child.group_var ~= "missing" then
+    if child.group_var ~= GroupVar.Missing then
       local citation_number_ir = self:get_only_citation_number(child)
       if citation_number_ir then
         if only_citation_number_ir then
@@ -1418,7 +1419,7 @@ local function find_rendered_year_suffix(ir)
   end
   if ir.children then
     for _, child in ipairs(ir.children) do
-      if child.group_var ~= "missing" then
+      if child.group_var ~= GroupVar.Missing then
         local year_suffix = find_rendered_year_suffix(child)
         if year_suffix then
           return year_suffix
@@ -1486,7 +1487,7 @@ function Citation:suppress_ir_except_child(ir, target)
   ir.collapse_suppressed = true
   if ir.children then
     for _, child in ipairs(ir.children) do
-      if child.group_var ~= "missing" and not child.collapse_suppressed then
+      if child.group_var ~= GroupVar.Missing and not child.collapse_suppressed then
         if not self:suppress_ir_except_child(child, target) then
           ir.collapse_suppressed = false
         end
