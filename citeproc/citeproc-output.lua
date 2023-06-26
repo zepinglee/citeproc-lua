@@ -1872,7 +1872,7 @@ function DisamStringFormat:flatten_seq_ir(ir)
   end
   local inlines_list = {}
   for _, child in ipairs(ir.children) do
-    if child.group_var ~= "missing" then
+    if child.group_var == "important" or child.group_var == "plain" then
       -- and not child.collapse_suppressed
       -- Suppressed irs are stil kept in the DisamStringFormat
       table.insert(inlines_list, self:flatten_ir(child))

@@ -47,9 +47,37 @@ local HtmlWriter = output.HtmlWriter
 local SortStringFormat = output.SortStringFormat
 
 
+---@alias ItemId string
+---@alias NoteIndex integer
+---@alias CitationId string
+---@alias CitationData {citationID: CitationId, citationItems: table[], properties: table}
+---@alias ItemData {id: ItemId, type: string, [string]: any}
+
+
+---@class Registry
+---@field citations_by_id table<ItemId, CitationData>
+---@field citation_list CitationData[]
+---@field citations_by_item_id table<ItemId, CitationData[]>
+---@field registry table<ItemId, ItemData>
+---@field reflist ItemId[]
+---@field uncited_list ItemId[]
+---@field previous_citation CitationData?
+---@field requires_sorting boolean
+---@field widest_label string
+---@field maxoffset integer
+local Registry = {}
+
+
 ---@class CiteProc
 ---@field style any
+---@field sys any
+---@field lcoales any
+---@field system_locales any
 ---@field lang string
+---@field output_format any
+---@field opt table
+---@field registry Registry
+---@field cite_first_note_numbers table<ItemId, NoteIndex>
 local CiteProc = {}
 
 ---comment
@@ -244,7 +272,7 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
         self.registry.citations_by_item_id[cite_item.id] = {}
         table.insert(item_ids, cite_item.id)
       end
-      self.registry.citations_by_item_id[cite_item.id][citation_.citationID] = true
+      table.insert(self.registry.citations_by_item_id[cite_item.id], citation_)
     end
   end
   self:updateItems(item_ids)
@@ -255,8 +283,19 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
   }
   local output = {}
 
-  local tainted_citation_ids = self:get_tainted_citaion_ids(citation_note_pairs)
+  local tainted_citation_ids = self:get_tainted_citation_ids(citation_note_pairs)
   tainted_citation_ids[citation.citationID] = true
+
+  -- Citeproc-js marks all related citations as tainted but I don't think it's
+  -- necessary.
+  if self.style.class == "note" and self.style.has_disambiguate then
+    for _, cite_item in ipairs(citation.citationItems) do
+      for _, citation_ in ipairs(self.registry.citations_by_item_id[cite_item.id]) do
+        tainted_citation_ids[citation_.citationID] = true
+      end
+    end
+  end
+
   -- util.debug(tainted_citation_ids)
 
   -- params.bibchange = #tainted_citation_ids > 0
@@ -360,7 +399,7 @@ function CiteProc:process_citation(citation)
     if not self.registry.citations_by_item_id[cite_item.id] then
       self.registry.citations_by_item_id[cite_item.id] = {}
     end
-    self.registry.citations_by_item_id[cite_item.id][citation.citationID] = true
+    table.insert(self.registry.citations_by_item_id[cite_item.id], citation)
   end
 
   -- self:updateItems(item_ids)
@@ -368,7 +407,7 @@ function CiteProc:process_citation(citation)
     self:get_item(cite_item.id)
   end
 
-  local tainted_citation_ids = self:get_tainted_citaion_ids(citation_note_pairs)
+  local tainted_citation_ids = self:get_tainted_citation_ids(citation_note_pairs)
 
   local mode = citation.properties.mode
   if mode == "suppress-author" and self.style.class == "note" then
@@ -385,7 +424,7 @@ function CiteProc:process_citation(citation)
 end
 
 
-function CiteProc:get_tainted_citaion_ids(citation_note_pairs)
+function CiteProc:get_tainted_citation_ids(citation_note_pairs)
   local tainted_citation_ids = {}
 
   self.cite_first_note_numbers = {}
@@ -435,8 +474,8 @@ function CiteProc:get_tainted_citaion_ids(citation_note_pairs)
   -- The self.tainted_item_ids were added in the sort_bibliography() procedure.
   for item_id, _ in pairs(self.tainted_item_ids) do
     if self.registry.citations_by_item_id[item_id] then
-      for citation_id, _ in pairs(self.registry.citations_by_item_id[item_id]) do
-        tainted_citation_ids[citation_id] = true
+      for _, citation in ipairs(self.registry.citations_by_item_id[item_id]) do
+        tainted_citation_ids[citation.citationID] = true
       end
     end
   end
@@ -555,7 +594,7 @@ function CiteProc:makeCitationCluster(citation_items)
 
     -- Create a wrapper of the orignal item from registry so that
     -- it may hold different `locator` or `position` values for cites.
-    local item = setmetatable(cite_item, {__index = item_data})
+    local cite_item = setmetatable(cite_item, {__index = item_data})
 
     if not special_form then
       for _, form in ipairs({"author-only", "suppress-author", "coposite"}) do
@@ -565,9 +604,16 @@ function CiteProc:makeCitationCluster(citation_items)
       end
     end
 
-    item.position_level = util.position_map["first"]
+    -- Set "first-reference-note-number" variable when called from
+    -- processCitationCluster() > updateItems()
+    local citations = self.registry.citations_by_item_id[cite_item.id]
+    if citations and #citations > 0 then
+      item_data["first-reference-note-number"] = citations[1].properties.noteIndex
+    end
+
+    cite_item.position_level = util.position_map["first"]
     if self.cite_first_note_numbers[cite_item.id] then
-      item.position_level = util.position_map["subsequent"]
+      cite_item.position_level = util.position_map["subsequent"]
     else
       self.cite_first_note_numbers[cite_item.id] = 0
     end
@@ -576,19 +622,19 @@ function CiteProc:makeCitationCluster(citation_items)
     if i == 1 then
       local previous_citation = self.registry.previous_citation
       if previous_citation then
-        if #previous_citation.citationItems == 1 and previous_citation.citationItems[1].id == item.id then
+        if #previous_citation.citationItems == 1 and previous_citation.citationItems[1].id == cite_item.id then
           preceding_cite = previous_citation.citationItems[1]
         end
       end
-    elseif citation_items[i - 1].id == item.id then
+    elseif citation_items[i - 1].id == cite_item.id then
       preceding_cite = citation_items[i - 1]
     end
 
     if preceding_cite then
-      item.position_level = self:_get_cite_position(item, preceding_cite)
+      cite_item.position_level = self:_get_cite_position(cite_item, preceding_cite)
     end
 
-    table.insert(items, item)
+    table.insert(items, cite_item)
   end
 
   if self.registry.requires_sorting then

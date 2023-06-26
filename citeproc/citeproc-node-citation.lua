@@ -45,11 +45,14 @@ local DisamStringFormat = output.DisamStringFormat
 local SortStringFormat = output.SortStringFormat
 
 
+local DEBUG_DISAMBIGUATE = false
+
+
 ---@class Citation: Element
 local Citation = Element:derive("citation", {
   givenname_disambiguation_rule = "by-cite",
   -- https://github.com/citation-style-language/schema/issues/338
-  -- The cite_group_delimiter may be changed to inherit the delimiter in citaion > layout.
+  -- The cite_group_delimiter may be changed to inherit the delimiter in citation > layout.
   cite_group_delimiter = ", ",
   near_note_distance = 5,
 })
@@ -452,6 +455,18 @@ function Citation:build_ambiguous_ir(cite_item, output_format, engine)
       break
     end
   end
+  if DEBUG_DISAMBIGUATE then
+    if ir.is_ambiguous then
+      util.debug("[CLASH]")
+      util.debug(string.format("%s: %s", cite_item.id, disam_str))
+      for ir_index, ir_ in pairs(engine.cite_irs_by_output[disam_str]) do
+        util.debug(string.format("%s: %s", ir_.cite_item.id, ir_.disam_str))
+      end
+    else
+      util.debug("[clear]")
+      util.debug(string.format("%s: %s", cite_item.id, disam_str))
+    end
+  end
   engine.cite_irs_by_output[disam_str][ir.ir_index] = ir
 
   return ir
@@ -466,7 +481,9 @@ end
 
 function Citation:apply_disambiguate_add_givenname(cite_ir, engine)
   if self.disambiguate_add_givenname then
-    -- util.debug("disambiguate_add_givenname: " .. cite_ir.cite_item.id)
+    if DEBUG_DISAMBIGUATE then
+      util.debug("[Method (1)] disambiguate-add-givenname: " .. cite_ir.cite_item.id)
+    end
 
     local gn_disam_rule = self.givenname_disambiguation_rule
     if gn_disam_rule == "all-names" or gn_disam_rule == "all-names-with-initials" then
@@ -782,13 +799,15 @@ function Citation:apply_disambiguate_add_names(cite_ir, engine)
     return cite_ir
   end
 
-  -- util.debug("disambiguate_add_names: " .. cite_ir.cite_item.id)
-
-  if name_ir then
-    -- util.debug(cite_ir.disam_str)
-    -- util.debug(cite_ir.name_ir.full_name_str)
-    -- util.debug(cite_ir.is_ambiguous)
+  if DEBUG_DISAMBIGUATE then
+    util.debug("[Method (3)] disambiguate-add-names: " .. cite_ir.cite_item.id)
   end
+
+  -- if name_ir then
+  --   util.debug(cite_ir.disam_str)
+  --   util.debug(cite_ir.name_ir.full_name_str)
+  --   util.debug(cite_ir.is_ambiguous)
+  -- end
 
   local disam_format = DisamStringFormat:new()
 
@@ -894,7 +913,9 @@ function Citation:collect_irs_with_disambiguate_branch(ir)
 end
 
 function Citation:apply_disambiguate_conditionals(cite_ir, engine)
-  -- util.debug(cite_ir)
+  if DEBUG_DISAMBIGUATE then
+    util.debug("[Method (3)] disambiguate with condition testing “true”: " .. cite_ir.cite_item.id)
+  end
 
   cite_ir.irs_with_disambiguate_branch = self:collect_irs_with_disambiguate_branch(cite_ir)
 
@@ -950,12 +971,27 @@ function Citation:apply_disambiguate_conditionals(cite_ir, engine)
 end
 
 function Citation:check_ambiguity(cite_ir, engine)
+  local is_ambiguous = false
   for _, ir_ in pairs(engine.cite_irs_by_output[cite_ir.disam_str]) do
     if ir_.cite_item.id ~= cite_ir.cite_item.id then
-      return true
+      is_ambiguous = true
     end
   end
-  return false
+  if DEBUG_DISAMBIGUATE then
+    if is_ambiguous then
+      util.debug("[CLASH]")
+      util.debug(string.format("%s, %s", cite_ir.cite_item.id, cite_ir.disam_str))
+      for _, ir_ in pairs(engine.cite_irs_by_output[cite_ir.disam_str]) do
+        if ir_.cite_item.id ~= cite_ir.cite_item.id then
+          util.debug(string.format("%s: %s", ir_.cite_item.id, ir_.disam_str))
+        end
+      end
+    else
+      util.debug("[clear]")
+      util.debug(string.format("%s, %s", cite_ir.cite_item.id, cite_ir.disam_str))
+    end
+  end
+  return is_ambiguous
 end
 
 function Citation:get_ambiguous_cite_irs(cite_ir, engine)
@@ -982,6 +1018,10 @@ end
 function Citation:apply_disambiguate_add_year_suffix(cite_ir, engine)
   if not cite_ir.is_ambiguous or not self.disambiguate_add_year_suffix then
     return cite_ir
+  end
+
+  if DEBUG_DISAMBIGUATE then
+    util.debug("[Method (4)] disambiguate-add-year-suffix”: " .. cite_ir.cite_item.id)
   end
 
   local ambiguous_same_output_irs = self:get_ambiguous_same_output_cite_irs(cite_ir, engine)

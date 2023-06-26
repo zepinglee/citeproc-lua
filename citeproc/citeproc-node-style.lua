@@ -122,6 +122,11 @@ function Style:from_node(node)
     end
   end
 
+  o.has_disambiguate = false
+  if #node:query_selector('[disambiguate="true"]') > 0 then
+    o.has_disambiguate = true
+  end
+
   return o
 end
 

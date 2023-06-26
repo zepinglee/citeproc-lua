@@ -1,6 +1,3 @@
-# Disambiguation: should compare with position="subsequent"
-bugreports_EnvAndUrb.txt
-
 # Check tainted citations
 discretionary_AuthorDateAuthorOnlyThenSuppressAuthorNoteStyle.txt
 
@@ -48,7 +45,6 @@ textcase_SkipNameParticlesInTitleCase.txt
 
 # TMP skip
 affix_WithCommas.txt
-bugreports_OldMhraDisambiguationFailure.txt
 date_YearSuffixImplicitWithNoDate.txt
 date_YearSuffixWithNoDate.txt
 disambiguate_BasedOnEtAlSubsequent.txt
