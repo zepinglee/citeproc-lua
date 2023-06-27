@@ -25,6 +25,7 @@ end
 
 local Element = element.Element
 local Rendered = ir_node.Rendered
+local SeqIr = ir_node.SeqIr
 local YearSuffix = ir_node.YearSuffix
 local GroupVar = ir_node.GroupVar
 local PlainText = output.PlainText
@@ -88,6 +89,8 @@ function Text:build_variable_ir(engine, state, context)
 
   if variable == "year-suffix" then
     return self:build_year_suffix_ir(engine, state, context)
+  elseif variable == "citation-label" then
+    return self:build_citation_label_ir(engine, state, context)
   end
 
   if not state.suppressed[variable] then
@@ -182,6 +185,31 @@ function Text:build_year_suffix_ir(engine, state, context)
   if self.quotes then
     ir.quotes = context:get_localized_quotes()
   end
+  return ir
+end
+
+function Text:build_citation_label_ir(engine, state, context)
+  local text = context:get_variable(self.variable, self.form)
+  local group_var
+  if text then
+    group_var = GroupVar.Important
+  else
+    text = ""
+    group_var = GroupVar.Missing
+  end
+
+  local ir = Rendered:new({PlainText:new(text)}, self)
+  -- The citation-label may have a year-suffix
+  ir = SeqIr:new({ir}, self)
+  ir.group_var = group_var
+  ir.affixes = util.clone(self.affixes)
+  ir.display = self.display
+  ir.formatting = util.clone(self.formatting)
+  if self.quotes then
+    ir.quotes = context:get_localized_quotes()
+  end
+
+  ir.is_year = true
   return ir
 end
 

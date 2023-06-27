@@ -1,11 +1,29 @@
+# Punctuation in affixes
+affix_WithCommas.txt
+flipflop_LeadingMarkupWithApostrophe.txt
+position_IbidWithPrefixFullStop.txt
+
+# Disambiguation add year suffix
+date_YearSuffixImplicitWithNoDate.txt
+date_YearSuffixWithNoDate.txt
+
+# Disambiguation should be based on the subsequent form
+disambiguate_BasedOnEtAlSubsequent.txt
+disambiguate_DisambiguationHang.txt
+
 # Check tainted citations
 discretionary_AuthorDateAuthorOnlyThenSuppressAuthorNoteStyle.txt
+disambiguate_BasedOnSubsequentFormWithBackref2.txt
 
 # citeproc-lua chooses to parse rich text in numeric fields.
 flipflop_NumericField.txt
 
+# Tainted citations
+integration_FirstReferenceNoteNumberPositionChange.txt
+
 # Editor & translator issues
 label_EditorTranslator1.txt
+name_CollapseRoleLabels.txt
 name_EditorTranslatorSameWithTerm.txt
 
 # locator parsing is not yet implemented
@@ -33,6 +51,9 @@ number_PlainHyphenOrEnDashAlwaysPlural.txt
 # Citation-3 has noteIndex 0 but it's after citation-2 with noteIndex 1.
 position_IbidInText.txt
 
+# French punctuation
+punctuation_FrenchOrthography.txt
+
 # Do not ommit empty entry output.
 sort_OmittedBibRefMixedNumericStyle.txt
 sort_OmittedBibRefNonNumericStyle.txt
@@ -42,21 +63,3 @@ textcase_LocaleUnicode.txt
 
 # The stop words ("about", etc.) in citeproc-js need to be updated with the schema.
 textcase_SkipNameParticlesInTitleCase.txt
-
-# TMP skip
-affix_WithCommas.txt
-date_YearSuffixImplicitWithNoDate.txt
-date_YearSuffixWithNoDate.txt
-disambiguate_BasedOnEtAlSubsequent.txt
-disambiguate_BasedOnSubsequentFormWithBackref2.txt
-disambiguate_CitationLabelDefault.txt
-disambiguate_CitationLabelInData.txt
-disambiguate_DisambiguationHang.txt
-disambiguate_Trigraph.txt
-flipflop_LeadingMarkupWithApostrophe.txt
-integration_FirstReferenceNoteNumberPositionChange.txt
-magic_CitationLabelInBibliography.txt
-magic_CitationLabelInCitation.txt
-name_CollapseRoleLabels.txt
-position_IbidWithPrefixFullStop.txt
-punctuation_FrenchOrthography.txt

@@ -8,7 +8,7 @@ local util = {}
 
 local uni_utf8
 if kpse then
-  uni_utf8 = require("unicode").utf8
+  uni_utf8 = require("unicode").grapheme
 else
   uni_utf8 = require("lua-utf8")
 end
@@ -1199,6 +1199,101 @@ function util.get_layout_by_language(element, engine, item)
     active_layout = element.layout
   end
   return active_layout, context_lang
+end
+
+
+util.trigraph = "Aaaa00:AaAa00:AaAA00:AAAA00"
+
+
+---comment
+---@param trigraph string
+---@return { authors: integer[], year: integer }
+function util.get_trigraph_param(trigraph)
+  if not trigraph or string.sub(trigraph, 1, 1) ~= "A" then
+    util.error(string.format('Bad trigraph definition: "%s"', trigraph))
+  end
+  local param = {
+    authors = {},
+    year = 0,
+  }
+
+  for i = 1, #trigraph do
+    local char = string.sub(trigraph, i, i)
+    if char == "A" then
+      table.insert(param.authors, 1)
+    elseif char == "a" then
+      local len = #param.authors
+      param.authors[len] =  param.authors[len] + 1
+    elseif char == "0" then
+      param.year = param.year + 1
+    else
+      util.error(string.format('Invalid character "%s" in trigraph definition "%s"', char, trigraph))
+    end
+  end
+  return param
+end
+
+
+---comment
+---@param item ItemData
+---@return string
+function util.get_citation_label(item)
+  local label = ""
+  local trigraph = util.split(util.trigraph, ":")
+  local config = util.get_trigraph_param(trigraph[1])
+
+  for _, name_variable in ipairs(util.variables.name) do
+    local names = item[name_variable]
+    if names then
+      local param = trigraph[1]
+      if #names > #trigraph then
+        param = trigraph[#trigraph]
+      else
+        param = trigraph[#names]
+      end
+      config = util.get_trigraph_param(param)
+      for i, name in ipairs(names) do
+        if i > #config.authors then
+          break
+        end
+        local name_label = ""
+        if name and name.family then
+          name_label = name.family
+          name_label = string.gsub(name_label, "^[ 'a-z]+%s*", "")
+          name_label = string.gsub(name_label, "^\u{2019}+%s*", "")
+        elseif name and name.literal then
+          name_label = name.literal
+        end
+        name_label = uni_utf8.lower(name_label)
+        name_label = string.gsub(name_label, "^a%s+", "")
+        name_label = string.gsub(name_label, "^an%s+", "")
+        name_label = string.gsub(name_label, "^the%s+", "")
+        -- TODO: Remove none reomanesque
+        name_label = uni_utf8.sub(name_label, 1, config.authors[i])
+        if #name_label > 1 then
+          name_label = uni_utf8.upper(uni_utf8.sub(name_label, 1, 1)) .. uni_utf8.lower(uni_utf8.sub(name_label, 2))
+        elseif #name_label == 1 then
+          name_label = uni_utf8.upper(name_label)
+        end
+        label = label .. name_label
+      end
+
+      break
+    end
+  end
+
+  if label == "" then
+    -- TODO: try the title
+  end
+
+  local year = "0000"
+  if item.issued and item.issued["date-parts"] then
+    year = tostring(item.issued["date-parts"][1][1])
+  end
+  year = string.sub(year, -config.year)
+  label = label .. year
+
+  return label
 end
 
 

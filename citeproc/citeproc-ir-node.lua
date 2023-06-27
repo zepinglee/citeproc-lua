@@ -135,6 +135,7 @@ function IrNode:collect_year_suffix_irs()
 end
 
 function IrNode:find_first_year_ir()
+  -- This also find the citation-label IR
   if self.is_year then
     return self
   end

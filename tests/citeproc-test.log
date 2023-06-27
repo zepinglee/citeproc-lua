@@ -6,7 +6,7 @@ collapse            21       0       0       0
 condition           17       0       0       0
 date                99       0       0       0
 decorations          7       0       0       0
-disambiguate        65       0       0       0
+disambiguate        68       0       0       0
 display              5       0       0       0
 etal                 4       0       0       0
 flipflop            17       0       0       0
@@ -17,7 +17,7 @@ integration         13       0       0       0
 label               18       0       0       0
 locale              23       0       0       0
 locator              5       0       0       0
-magic               38       0       0       0
+magic               40       0       0       0
 name               106       0       0       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
@@ -38,4 +38,4 @@ unicode              1       0       0       0
 variables            5       0       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              863       0       0       0
+(all)              868       0       0       0

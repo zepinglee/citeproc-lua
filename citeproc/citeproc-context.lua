@@ -96,6 +96,12 @@ function Context:get_ordinary(name, form)
 
   if variable_name == "locator" or variable_name == "label" and self.cite then
     res = self.cite[variable_name]
+  elseif variable_name == "citation-label" then
+    res = self.reference["citation-label"]
+    if not res then
+      res = util.get_citation_label(self.reference)
+      self.reference["citation-label"] = res
+    end
   else
     res = self.reference[variable_name]
   end

@@ -1052,7 +1052,7 @@ function Citation:apply_disambiguate_add_year_suffix(cite_ir, engine)
       ir_.year_suffix_irs = ir_:collect_year_suffix_irs()
       if #ir_.year_suffix_irs == 0 then
         -- The style does not have a "year-suffix" variable.
-        -- Then the year-suffix is appended the first year rendered through cs:date
+        -- Then the year-suffix is appended the first year rendered through cs:date or citation-label
         local year_ir = ir_:find_first_year_ir()
         -- util.debug(year_ir)
         if year_ir then
