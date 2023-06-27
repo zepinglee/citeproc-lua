@@ -4,7 +4,7 @@ affix                8       0       0       0
 bugreports          83       0       0       0
 collapse            21       0       0       0
 condition           17       0       0       0
-date                99       0       0       0
+date               101       0       0       0
 decorations          7       0       0       0
 disambiguate        68       0       0       0
 display              5       0       0       0
@@ -38,4 +38,4 @@ unicode              1       0       0       0
 variables            5       0       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              868       0       0       0
+(all)              870       0       0       0

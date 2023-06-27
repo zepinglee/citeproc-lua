@@ -3,23 +3,17 @@ affix_WithCommas.txt
 flipflop_LeadingMarkupWithApostrophe.txt
 position_IbidWithPrefixFullStop.txt
 
-# Disambiguation add year suffix
-date_YearSuffixImplicitWithNoDate.txt
-date_YearSuffixWithNoDate.txt
-
 # Disambiguation should be based on the subsequent form
 disambiguate_BasedOnEtAlSubsequent.txt
 disambiguate_DisambiguationHang.txt
 
-# Check tainted citations
+# Tainted citations
 discretionary_AuthorDateAuthorOnlyThenSuppressAuthorNoteStyle.txt
 disambiguate_BasedOnSubsequentFormWithBackref2.txt
+integration_FirstReferenceNoteNumberPositionChange.txt
 
 # citeproc-lua chooses to parse rich text in numeric fields.
 flipflop_NumericField.txt
-
-# Tainted citations
-integration_FirstReferenceNoteNumberPositionChange.txt
 
 # Editor & translator issues
 label_EditorTranslator1.txt

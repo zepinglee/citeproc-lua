@@ -27,6 +27,7 @@ local GroupVar = {
 ---@class IrNode
 local IrNode = {
   _element = nil,
+  _element_name = nil,
   _type = "IrNode",
   _base_class = "IrNode",
   text = nil,
@@ -38,7 +39,8 @@ local IrNode = {
 
 function IrNode:new(children, element)
   local o = {
-    _element = element.element_name,
+    _element = element,
+    _element_name = element.element_name,
     _type = self._type,
     children = children,
     group_var = GroupVar.Plain,
@@ -92,7 +94,7 @@ function IrNode:_debug(level)
   if ir_info_str ~= "" then
     ir_info_str = string.format("{%s}", ir_info_str)
   end
-  local text = string.format("\n%s [%s] %s <%s> %s", string.rep("    ", level), self.group_var, self._type, self._element, ir_info_str)
+  local text = string.format("\n%s [%s] %s <%s> %s", string.rep("    ", level), self.group_var, self._type, self._element_name, ir_info_str)
   if self.children and #self.children > 0 then
     for _, child_ir in ipairs(self.children) do
       text = text .. child_ir:_debug(level + 1)
@@ -156,7 +158,8 @@ local Rendered = IrNode:derive("Rendered")
 
 function Rendered:new(inlines, element)
   local o = {
-    _element = element.element_name,
+    _element = element,
+    _element_name = element.element_name,
     _type = self._type,
     element = element,  -- required for capitalizing first term
     inlines = inlines,
@@ -174,7 +177,8 @@ local YearSuffix = IrNode:derive("YearSuffix")
 
 function YearSuffix:new(inlines, element)
   local o = {
-    _element = element.element_name,
+    _element = element,
+    _element_name = element.element_name,
     _type = self._type,
     element = element,
     inlines = inlines,
@@ -196,7 +200,8 @@ local PersonNameIr = IrNode:derive("PersonNameIr")
 
 function PersonNameIr:new(inlines, element)
   local o = {
-    _element = element.element_name,
+    _element = element,
+    _element_name = element.element_name,
     _type = self._type,
     inlines = inlines,
     group_var = GroupVar.Plain,

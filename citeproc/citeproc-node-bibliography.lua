@@ -177,7 +177,7 @@ function Bibliography:build_ir(engine, state, context, active_layout)
 end
 
 function Bibliography:substitute_subsequent_authors(engine, ir)
-  ir.first_name_ir = self:find_first_name_ir(ir)  -- should be a SeqIr wiht _element = "names"
+  ir.first_name_ir = self:find_first_name_ir(ir)  -- should be a SeqIr wiht _element_name = "names"
   if not ir.first_name_ir then
     engine.previous_bib_names_ir = nil
     return

@@ -145,7 +145,7 @@ end
 -- Formatting is stripped from the author-only and composite renderings
 -- of the author name
 local function remove_name_formatting(ir)
-  if ir._element == "name" then
+  if ir._element_name == "name" then
     ir.formatting = nil
   end
   if ir.children then
@@ -1125,15 +1125,15 @@ local function find_first_names_ir(ir)
   end
 
   local first_rendering_ir = find_first(ir, function (ir_)
-    return (ir_._element == "text"
-      or ir_._element == "date"
-      or ir_._element == "number"
-      or ir_._element == "names"
-      or ir_._element == "label")
+    return (ir_._element_name == "text"
+      or ir_._element_name == "date"
+      or ir_._element_name == "number"
+      or ir_._element_name == "names"
+      or ir_._element_name == "label")
       and ir_.group_var ~= GroupVar.Missing
   end)
   local first_names_ir
-  if first_rendering_ir and first_rendering_ir._element == "names" then
+  if first_rendering_ir and first_rendering_ir._element_name == "names" then
     first_names_ir = first_rendering_ir
   end
   if first_names_ir then
@@ -1196,11 +1196,11 @@ end
 -- See discretionary_AuthorOnly.txt
 function Citation:_apply_cite_author_only(ir)
   local author_ir = find_first(ir, function (ir_)
-    return (ir_._element == "text"
-      or ir_._element == "date"
-      or ir_._element == "number"
-      or ir_._element == "names"
-      or ir_._element == "label")
+    return (ir_._element_name == "text"
+      or ir_._element_name == "date"
+      or ir_._element_name == "number"
+      or ir_._element_name == "names"
+      or ir_._element_name == "label")
       and ir_.group_var ~= GroupVar.Missing
   end)
 
@@ -1255,7 +1255,7 @@ function Citation:group_cites(irs)
     local first_names_ir = ir.first_names_ir
     if not first_names_ir then
       first_names_ir = find_first(ir, function (ir_)
-        return ir_._element == "names" and ir_.group_var ~= GroupVar.Missing
+        return ir_._element_name == "names" and ir_.group_var ~= GroupVar.Missing
       end)
       if first_names_ir then
         local inlines = first_names_ir:flatten(disam_format)

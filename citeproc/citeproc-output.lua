@@ -1857,7 +1857,13 @@ function DisamStringFormat:flatten_ir(ir)
   end
   local inlines
   if ir._type == "SeqIr" or ir._type == "NameIr" then
-    inlines = self:flatten_seq_ir(ir)
+    if ir._element and ir._element.variable == "accessed" then
+      -- Accessed isn't really part of a reference -- it doesn't help disambiguating one from
+      -- another. So we will ignore it. Works for, e.g., date_YearSuffixImplicitWithNoDate.txt
+      inlines = {}
+    else
+      inlines = self:flatten_seq_ir(ir)
+    end
   elseif ir._type == "YearSuffix" then
     -- Don't include year-suffix in disambiguation
     inlines = {}
@@ -1890,7 +1896,7 @@ function DisamStringFormat:flatten_seq_ir(ir)
   inlines = self:with_display(inlines, ir.display);
 
   -- -- A citation layout
-  -- if ir._element == "layout" and ir.cite_item then
+  -- if ir._element_name == "layout" and ir.cite_item then
   --   inlines = {CiteInline:new(inlines, ir.cite_item)}
   -- end
 
