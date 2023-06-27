@@ -251,7 +251,7 @@ function CiteInline:new(inlines, cite_item)
 end
 
 
-function InlineElement:parse(text, context)
+function InlineElement:parse(text, context, is_external)
   local text_type = type(text)
   local inlines
   if text_type == "table" then
@@ -260,7 +260,7 @@ function InlineElement:parse(text, context)
   elseif text_type == "string" then
     -- String with HTML-like formatting tags
     -- util.debug(text)
-    inlines = self:parse_html_tags(text, context)
+    inlines = self:parse_html_tags(text, context, is_external)
     -- util.debug(inlines)
   elseif text_type == "number" then
     inlines = {PlainText:new(tostring(text))}
@@ -338,7 +338,7 @@ function InlineElement:parse_csl_rich_text(text)
 end
 
 -- TODO: Rewrite with lpeg
-function InlineElement:parse_html_tags(str, context)
+function InlineElement:parse_html_tags(str, context, is_external)
   -- Return a list of inlines
   -- if type(str) ~= "string" then
   --   print(debug.traceback())
@@ -355,7 +355,7 @@ function InlineElement:parse_html_tags(str, context)
     inlines = {el}
   end
 
-  inlines = InlineElement:parse_quotes(inlines, context)
+  inlines = InlineElement:parse_quotes(inlines, context, is_external)
   return inlines
 end
 
@@ -405,7 +405,7 @@ function InlineElement:from_node(node)
   return InlineElement:new(inlines)
 end
 
-function InlineElement:parse_quotes(inlines, context)
+function InlineElement:parse_quotes(inlines, context, is_external)
   local quote_fragments = InlineElement:get_quote_fragments(inlines)
   -- util.debug(quote_fragments)
 
@@ -424,7 +424,7 @@ function InlineElement:parse_quotes(inlines, context)
 
     if type(fragment) == "table" then
       if fragment.inlines then
-        fragment.inlines = self:parse_quotes(fragment.inlines, context)
+        fragment.inlines = self:parse_quotes(fragment.inlines, context, is_external)
       end
       table.insert(top_text_list, fragment)
 
@@ -467,6 +467,14 @@ function InlineElement:parse_quotes(inlines, context)
              (quote == util.unicode["right-pointing double angle quotation mark"] and
               top_quote == util.unicode["left-pointing double angle quotation mark"]) then
           table.remove(quote_stack)
+          if is_external then
+            -- The text is from prefix or suffix of citationItem.
+            -- See flipflop_LeadingMarkupWithApostrophe.txt
+            localized_quotes.outer_open = top_quote
+            localized_quotes.outer_close = quote
+            localized_quotes.inner_open = top_quote
+            localized_quotes.inner_close = quote
+          end
           local quoted = Quoted:new(top_text_list, localized_quotes)
           table.remove(text_stack)
           table.insert(text_stack[#text_stack], quoted)

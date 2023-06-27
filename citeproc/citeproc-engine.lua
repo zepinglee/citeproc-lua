@@ -361,14 +361,14 @@ function CiteProc:normalize_cite_item(cite_item)
     if cite_item.prefix == "" then
       cite_item.prefix = nil
     else
-      cite_item.prefix = InlineElement:parse(cite_item.prefix)
+      cite_item.prefix = InlineElement:parse(cite_item.prefix, nil, true)
     end
   end
   if cite_item.suffix then
     if cite_item.suffix == "" then
       cite_item.suffix = nil
     else
-      cite_item.suffix = InlineElement:parse(cite_item.suffix)
+      cite_item.suffix = InlineElement:parse(cite_item.suffix, nil, true)
     end
   end
 

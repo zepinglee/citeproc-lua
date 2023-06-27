@@ -1,16 +1,12 @@
-# Punctuation in affixes
+# Tainted citations
 affix_WithCommas.txt
-flipflop_LeadingMarkupWithApostrophe.txt
-position_IbidWithPrefixFullStop.txt
+discretionary_AuthorDateAuthorOnlyThenSuppressAuthorNoteStyle.txt
+disambiguate_BasedOnSubsequentFormWithBackref2.txt
+integration_FirstReferenceNoteNumberPositionChange.txt
 
 # Disambiguation should be based on the subsequent form
 disambiguate_BasedOnEtAlSubsequent.txt
 disambiguate_DisambiguationHang.txt
-
-# Tainted citations
-discretionary_AuthorDateAuthorOnlyThenSuppressAuthorNoteStyle.txt
-disambiguate_BasedOnSubsequentFormWithBackref2.txt
-integration_FirstReferenceNoteNumberPositionChange.txt
 
 # citeproc-lua chooses to parse rich text in numeric fields.
 flipflop_NumericField.txt

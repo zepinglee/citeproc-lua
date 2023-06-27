@@ -203,8 +203,12 @@ function Citation:build_cluster(citation_items, engine, properties)
     local prefix = citation_items[i].prefix
     if prefix then
       -- Prefix is inlines
-      local right_most_str = prefix[#prefix]:get_right_most_string()
-      if string.match(right_most_str, "[.!?]%s*$") and InlineElement.has_space(prefix) then
+      local prefix_str = output.SortStringFormat:new():output(prefix, context)
+      if (string.match(prefix_str, "[.!?]%s*$")
+          -- position_IbidWithPrefixFullStop.txt
+          -- `Book A. He said “Please work.” Ibid.`
+          or string.match(prefix_str, "[.!?]”%s*$")
+         ) and InlineElement.has_space(prefix) then
         ir:capitalize_first_term()
       end
     else
@@ -238,15 +242,17 @@ function Citation:build_cluster(citation_items, engine, properties)
         -- Make sure cite_inlines has outputs contents.
         -- collapse_AuthorCollapseNoDateSorted.txt
         if previous_ir then
-          if previous_ir.own_delimiter then
-            table.insert(citation_stream, PlainText:new(previous_ir.own_delimiter))
-          else
-            local left_most_str
+          local delimiter = previous_ir.own_delimiter or previous_ir.cite_delimiter
+          if delimiter then
             if cite_prefix then
+              local left_most_str
               left_most_str = cite_prefix[1]:get_left_most_string()
+              if string.match(left_most_str, "^[,.;?!]") then
+                delimiter = nil
+              end
             end
-            if previous_ir.cite_delimiter and not (cite_prefix and util.startswith(left_most_str, ",")) then
-              table.insert(citation_stream, PlainText:new(previous_ir.cite_delimiter))
+            if delimiter then
+              table.insert(citation_stream, PlainText:new(delimiter))
             end
           end
         end
@@ -261,11 +267,20 @@ function Citation:build_cluster(citation_items, engine, properties)
           cite_inlines = {CiteInline:new(cite_inlines, ir.cite_item)}
         -- end
         util.extend(citation_stream, cite_inlines)
-        previous_ir = ir
 
         if cite_suffix then
           table.insert(citation_stream, Micro:new(cite_suffix))
+          local cite_delimiter = ir.own_delimiter or ir.cite_delimiter
+          if cite_delimiter and string.match(cite_delimiter, "^[,.;?]") then
+            -- affix_WithCommas.txt
+            local right_most_str = cite_suffix[#cite_suffix]:get_right_most_string()
+            if string.match(right_most_str, "[,.;?]%s*$") then
+              ir.own_delimiter = string.gsub(cite_delimiter,  "^[,.;?]", "")
+            end
+          end
         end
+
+        previous_ir = ir
       end
     end
   end
@@ -320,7 +335,7 @@ function Citation:build_cluster(citation_items, engine, properties)
           -- discretionary_AuthorOnlySuppressLocator.txt
           infix = " "
         end
-        for i, inline in ipairs(InlineElement:parse(infix, context)) do
+        for i, inline in ipairs(InlineElement:parse(infix, context, true)) do
           table.insert(citation_stream, i, inline)
         end
       else
