@@ -249,7 +249,9 @@
 \prop_new:N \l__csl_back_ref_section_pop
 
 % Provide empty \@currentHref when hyperref is not loaded.
-\cs_new:Npn \@currentHref {}
+% LaTeX2e 2023-06-01 defines `\@currentHref` in the kernel.
+\cs_if_exist:NF \@currentHref
+  { \cs_new:Npn \@currentHref {} }
 
 % TODO: write backref info to .brf file or .aux file
 \cs_new:Npn \__csl_add_back_ref_info:
