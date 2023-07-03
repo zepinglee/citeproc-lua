@@ -68,16 +68,23 @@ if f then
   f:close()
 end
 
+local ctan_uploader = "Zeping Lee"
+local ctan_email
+
+if mydata then
+  ctan_uploader = mydata.name
+  ctan_email = mydata.email
+end
+
 uploadconfig = {
   pkg               = "citation-style-language",
   version           = package_version,
-  author            = "zepinglee",
+  author            = "Zeping Lee",
   license           = {"mit", "cc-by-sa-3"},
-  uploader          = mydata.name,
-  email             = mydata.email,
+  uploader          = ctan_uploader,
+  email             = ctan_email,
   summary           = "Bibliography formatting with Citation Style Language",
   description       = [[The Citation Style Language (CSL) is an XML-based language that defines the formats of citations and bibliography. There are currently thousands of styles in CSL including the most widely used APA, Chicago, Vancouver, etc. The citation-style-language package is aimed to provide another reference formatting method for LaTeX that utilizes the CSL styles. It contains a citation processor implemented in pure Lua (citeproc-lua) which reads bibliographic metadata and performs sorting and formatting on both citations and bibliography according to the selected CSL style. A LaTeX package (citation-style-language.sty) is provided to communicate with the processor.]],
-  note              = [[Uploaded automatically by l3build...]],
   ctanPath          = "/biblio/citation-style-language",
   repository        = package_repository,
   bugtracker        = "https://github.com/zepinglee/citeproc-lua/issues",

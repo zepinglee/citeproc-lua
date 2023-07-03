@@ -1,0 +1,104 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - "v**"
+
+jobs:
+
+  publish-github:
+    if: ${{ github.repository == 'zepinglee/citeproc-lua' }}
+    name: Create GitHub release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Extract release notes
+        id: extract-release-notes
+        uses: ffurrer2/extract-release-notes@v1
+
+      - name: Create GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          body: ${{ steps.extract-release-notes.outputs.release_notes }}
+
+
+  publish-luarocks:
+    if: ${{ github.repository == 'zepinglee/citeproc-lua' }}
+    name: Publish to LuaRocks
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Set up Lua
+        uses: leafo/gh-actions-lua@v10
+        with:
+          luaVersion: "5.3"
+
+      - name: Set up LuaRocks
+        uses: leafo/gh-actions-luarocks@v4
+
+      - name: Set up dependencies
+        run: luarocks install dkjson
+
+      - name: Make rockspec of new version
+        run: luarocks new_version --tag {{ github.ref_name }}
+
+      - name: Build Lua rock
+        run: luarocks pack citeproc-lua-{{ github.ref_name }}-1.rockspec
+
+      - name: Upload to LuaRocks
+        run: luarocks upload --temp-key ${{ secrets.LUAROCKS_API_KEY }} citeproc-lua-${{ github.ref_name }}-1.rockspec citeproc-lua-${{ github.ref_name }}-1.src.rock
+
+
+  publish-ctan:
+    if: ${{ github.repository == 'zepinglee/citeproc-lua' }}
+    name: Publish to CTAN
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Install TeX Live
+        uses: zauguin/install-texlive@v2
+        with:
+          package_file: .github/tl_packages
+
+      - name: Create CTAN archive
+        run: l3build ctan
+
+      - name: Labeller
+        id: labeller
+        run: |
+          echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
+          echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_OUTPUT
+
+      - name: Extract release notes
+        id: extract-release-notes
+        uses: ffurrer2/extract-release-notes@v1
+        with:
+          release_notes_file: RELEASE_NOTES.md
+
+      - name: Submit to CTAN (update)
+        # # This action doesn't have announcement text
+        # uses: paolobrasolin/ctan-submit-action@v1
+        # with:
+        #   action: upload
+        #   file_path: citation-style-language-ctan.zip
+        #   fields: |
+        #     update: "true"
+        #     pkg: citation-style-language
+        #     version: ${{ steps.labeller.outputs.version }}
+        #     uploader: ${{ secrets.CTAN_UPLOADER }}
+        #     email: ${{ secrets.CTAN_EMAIL }}
+        run: l3build upload --email ${{ secrets.CTAN_EMAIL }} --message "${{ steps.extract-release-notes.outputs.release_notes }}".md ${{ steps.labeller.outputs.version }}

@@ -4,7 +4,6 @@ l3build
 # Required to build formats
 latex-bin
 tex
-xetex
 #
 # Assuming a 'basic' font set up, metafont is required to avoid
 # warnings with some packages and errors with others
@@ -17,6 +16,7 @@ l3kernel
 l3packages
 lua-uca
 lualibs
+luatex
 luaxml
 url
 #
@@ -33,11 +33,22 @@ pdftexcmds
 hyperref
 #
 # Dependencies for typesetting
-# alphalph
-# amsfonts
-# amsmath
-# booktabs
-# colortbl
-# listings
-# psnfss
-# tools
+alphalph
+amsfonts
+amsmath
+booktabs
+colortbl
+dvips
+ec
+enumitem
+fancyvrb
+helvetic
+hologo
+hypdoc
+listings
+makeindex
+mathpazo
+palatino
+psnfss
+tools
+underscore

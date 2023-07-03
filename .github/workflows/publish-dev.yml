@@ -1,0 +1,35 @@
+name: Publish dev version
+
+on:
+  push:
+    branches:
+      - $default-branch
+    paths:
+      - citeproc-lua-dev-1.rockspec
+
+jobs:
+
+  publish-luarocks-dev:
+    if: ${{ github.repository == 'zepinglee/citeproc-lua' }}
+    name: Publish dev version to LuaRocks
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Set up Lua
+        uses: leafo/gh-actions-lua@v10
+        with:
+          luaVersion: "5.3"
+
+      - name: Set up LuaRocks
+        uses: leafo/gh-actions-luarocks@v4
+
+      - name: Set up dependencies
+        run: luarocks install dkjson
+
+      - name: Upload dev version to LuaRocks
+        run: luarocks upload --temp-key ${{ secrets.LUAROCKS_API_KEY }} --force citeproc-lua-dev-1.rockspec
