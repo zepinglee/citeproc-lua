@@ -397,13 +397,16 @@ function util.endswith(str, suffix)
   return string.sub(str, -#suffix) == suffix
 end
 
-function util.is_numeric (str)
+function util.is_numeric(str)
   if str == nil or str == "" then
     return false
   end
+  str = string.gsub(str, util.unicode["en dash"], "-")
   local res = true
   for w in string.gmatch(str, "%w+") do
-    if not string.match(w, "^%a*%d+%a*$") and
+    if not string.match(w, "^%w*%d+%a*$") and
+        not string.match(w, "^and$") and
+        not string.match(w, "^et$") and
         not string.match(w, "^[MDCLXVI]+$") and
         not string.match(w, "^[mdclxvi]+$") then
       -- Roman number without validation
@@ -411,7 +414,8 @@ function util.is_numeric (str)
     end
   end
   for w in string.gmatch(str, "%W+") do
-    if string.match(w, "^%s*[,&-]+%s*$") == nil then
+    if not string.match(w, "^%s*[,&-]+%s*$")
+        and not string.match(str, "%s+") then
       res = false
       break
     end

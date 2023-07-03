@@ -20,12 +20,6 @@ name_HebrewAnd.txt
 name_InTextMarkupInitialize.txt
 name_InTextMarkupNormalizeInitials.txt
 
-# Check number plural (test fixture needs to be fixed)
-# - The difference of cs:text and cs:name is not revealed.
-#   (Should it be `<number variable="page"/>`?)
-# - Duplicate item id `ITEM-4`.
-number_PlainHyphenOrEnDashAlwaysPlural.txt
-
 # Citation-3 has noteIndex 0 but it's after citation-2 with noteIndex 1.
 position_IbidInText.txt
 

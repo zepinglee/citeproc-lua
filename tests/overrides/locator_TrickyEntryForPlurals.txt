@@ -3,15 +3,18 @@ citation
 <<==== MODE ====<<
 
 
+>>===== DESCRIPTION =====>>
 Citeproc-lua doesn't parse or localize the locator.
 
 -Book Title, vol. 1, fol. 186, 8 April 1544
 +Book Title, pp. vol. 1, fol. 186, 8 April 1544
+<<===== DESCRIPTION =====<<
 
 
 >>==== RESULT ====>>
-Book Title, pp. vol. 1, fol. 186, 8 April 1544
+Book Title, p. vol. 1, fol. 186, 8 April 1544
 <<==== RESULT ====<<
+
 
 >>==== CITATION-ITEMS ====>>
 [

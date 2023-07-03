@@ -6,7 +6,7 @@
 
 local element = {}
 
-local context
+local l = require("lpeg")
 local ir_node
 local output
 local util
@@ -375,16 +375,12 @@ end
 
 
 function Element:format_number(number, variable, form, context)
-  -- if not util.is_numeric(number) then
-  --   number = string.gsub(number, "\\%-", "-")
-  --   return number
-  -- end
   number = util.strip(number)
   if variable == "locator" then
     variable = context:get_variable("label")
   end
   form = form or "numeric"
-  local number_part_list = self:split_number_parts(number, context)
+  local number_part_list = self:split_number_parts_lpeg(number, context)
   -- {
   --   {"1", "",  " & "}
   --   {"5", "8", ", "}
@@ -423,8 +419,128 @@ function Element:format_number(number, variable, form, context)
     res = res .. number_parts[3]
   end
   return res
-
 end
+
+---comment
+---@param number any
+---@param context any
+function Element:parse_number_tokens(number, context)
+  local and_text = "and"
+  local and_symbol = "&"
+  if context then
+    and_text = context.locale:get_simple_term("and") or "and"
+    and_symbol = context.locale:get_simple_term("and", "symbol") or "&"
+  end
+  -- util.debug(and_symbol)
+
+  local space = l.S(" \t\r\n")
+  local delimiter_patt = space^0 * l.P(",") * space^0 * l.P(and_text) * space^1
+    + space^0 * l.P(",") * space^0 * l.P(and_symbol) * space^0
+    + space^0 * l.P(",") * space^0 * l.P("&") * space^0
+    + space^1 * l.P(and_text) * space^1
+    + space^0 * l.P(and_symbol) * space^0
+    + space^0 * l.P("&") * space^0
+    + space^0 * l.P(",") * space^0
+    + space^0 * l.P("-") * space^0
+    + space^0 * l.P(util.unicode["en dash"]) * space^0
+  local delimiter = l.C(delimiter_patt^1) / function (delimiter)
+    return {
+      type = "delimiter",
+      value = delimiter,
+    }
+  end
+  local token_patt = l.C((l.P("\\-") + 1 - delimiter_patt)^1) / function (token)
+    return {
+      type = "string",
+      value = token,
+    }
+  end
+  local grammer = l.Ct(token_patt * (delimiter * token_patt)^0)
+  local tokens = grammer:match(number)
+  -- util.debug(tokens)
+
+  for i, token in ipairs(tokens) do
+    if token.type == "string" then
+      token.value = string.gsub(token.value, "\\%-", "-")
+    elseif token.type == "delimiter" then
+      token.value = string.gsub(token.value, "%s*,%s*", ", ")
+      token.value = string.gsub(token.value, "&", and_symbol)
+      token.value = string.gsub(token.value, "%s*&%s*", " & ")
+    end
+  end
+
+  local stop_index = 0
+  for i, token in ipairs(tokens) do
+    if token.type == "string" then
+      if string.match(token.value, "^%w*%d+%w*$")
+          or string.match(token.value, "^[mdclxvi]+$")
+          or string.match(token.value, "^[MDCLXVI]+$") then
+        token.type = "number"
+      else
+        stop_index = i
+        if i > 1 and tokens[i-1].type == "delimiter" then
+          stop_index = i - 1
+        end
+        break
+      end
+    elseif token.type == "delimiter" then
+      token.delimiter_type = "and"
+      if string.match(token.value, "^%s*-%s*$")
+          or string.match(token.value, "^%s*–%s*$") then
+        token.delimiter_type = "range"
+        if i > 2 and tokens[i-2].delimiter_type == "range" then
+          stop_index = i
+          break
+        end
+      end
+    end
+  end
+
+  if stop_index > 0 then
+    local token = tokens[stop_index]
+    token.type = "string"
+    for i = stop_index + 1, #tokens do
+      token.value = token.value .. tokens[i].value
+    end
+    for i = #tokens, stop_index + 1, -1 do
+      table.remove(tokens, i)
+    end
+  end
+
+  return tokens
+end
+
+-- Returns something like
+-- {
+--   {"1", "",  " & "}
+--   {"5", "8", ", "}
+-- }
+function Element:split_number_parts_lpeg(number, context)
+  local tokens = self:parse_number_tokens(number, context)
+  local number_parts = {}
+  for i, token in ipairs(tokens) do
+    if token.type == "number" then
+      if i == 1 or tokens[i-1].delimiter_type == "and" then
+        table.insert(number_parts, {token.value, "", ""})
+      else
+        number_parts[#number_parts][2] = token.value
+      end
+    elseif token.type == "delimiter" then
+      if token.delimiter_type == "and" then
+        number_parts[#number_parts][3] = token.value
+      end
+    else
+      if #number_parts > 0 then
+        number_parts[#number_parts][3] = token.value
+      else
+        table.insert(number_parts, {token.value, "", ""})
+      end
+    end
+  end
+  -- util.debug(number_parts)
+  return number_parts
+end
+
 
 function Element:split_number_parts(number, context)
   -- number = string.gsub(number, util.unicode["en dash"], "-")
@@ -441,6 +557,10 @@ function Element:split_number_parts(number, context)
       delim = ", "
     elseif delim == "&" then
       delim = and_symbol or " & "
+    elseif delim == "and" then
+      delim = " and "
+    elseif delim == "et" then
+      delim = " et "
     end
     local start = single_number
     local stop = ""

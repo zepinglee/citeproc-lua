@@ -3,15 +3,18 @@ citation
 <<==== MODE ====<<
 
 
+>>===== DESCRIPTION =====>>
 Citeproc-lua doesn't parse the pages in editoin variable.
 
 -Blah blah. 7th, pp. 3–8DD<i>ed</i>
-+Blah blah. 7, p. 3-8DD<i>ed</i>
++Blah blah. 7th, p. 3-8DD<i>ed</i>
+<<===== DESCRIPTION =====<<
 
 
 >>==== RESULT ====>>
-Blah blah. 7, p. 3-8DD<i>ed</i>
+Blah blah. 7th, p. 3-8DD<i>ed</i>
 <<==== RESULT ====<<
+
 
 >>==== CITATION-ITEMS ====>>
 [

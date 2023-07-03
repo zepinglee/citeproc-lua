@@ -91,18 +91,14 @@ function Label:_is_variable_plural(variable, context)
       return value and tonumber(value) > 1
     else
       value = tostring(value)
-      -- label_CollapsedPageNumberPluralDetection.txt
-      -- 327\-30 => single
-      value = string.gsub(value, "\\%-", "")
-      if string.match(value, "[,&-]") then
-        return true
-      elseif string.match(value, util.unicode["en dash"]) then
-        return true
-      elseif string.match(value, "%Wand%W") then
-        return true
-      elseif string.match(value, "%Wet%W") then
-        return true
+      local tokens = self:parse_number_tokens(value, context)
+      local num_numeric_tokens = 0
+      for _, token in ipairs(tokens) do
+        if token.type == "number" then
+          num_numeric_tokens = num_numeric_tokens + 1
+        end
       end
+      return num_numeric_tokens > 1
     end
   end
   return false

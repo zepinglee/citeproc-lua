@@ -61,10 +61,8 @@ function Number:build_ir(engine, state, context)
 
   if type(number) == "number" then
     number = tostring(number)
-    number = self:format_number(number, self.variable, self.form, context)
-  elseif util.is_numeric(number) then
-    number = self:format_number(number, self.variable, self.form, context)
   end
+  number = self:format_number(number, self.variable, self.form, context)
 
   local inlines = self:render_text_inlines(number, context)
   local ir = Rendered:new(inlines, self)
