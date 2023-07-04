@@ -89,7 +89,7 @@ uploadconfig = {
 }
 
 function update_tag(file, content, tagname, tagdate)
-  version = string.gsub(version, "^v", "")
+  version = string.gsub(tagname, "^v", "")
 
   content = string.gsub(content,
     "Copyright %(C%) (%d%d%d%d)%-%d%d%d%d",

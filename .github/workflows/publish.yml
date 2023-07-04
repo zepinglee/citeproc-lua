@@ -49,10 +49,10 @@ jobs:
         run: luarocks install dkjson
 
       - name: Make rockspec of new version
-        run: luarocks new_version --tag {{ github.ref_name }}
+        run: luarocks new_version --tag ${{ github.ref_name }}
 
       - name: Build Lua rock
-        run: luarocks pack citeproc-lua-{{ github.ref_name }}-1.rockspec
+        run: luarocks pack citeproc-lua-${{ github.ref_name }}-1.rockspec
 
       - name: Upload to LuaRocks
         run: luarocks upload --temp-key ${{ secrets.LUAROCKS_API_KEY }} citeproc-lua-${{ github.ref_name }}-1.rockspec citeproc-lua-${{ github.ref_name }}-1.src.rock

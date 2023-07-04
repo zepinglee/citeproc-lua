@@ -9,7 +9,7 @@ done
 
 cd submodules/locales
 git fetch upstream
-git merge upstream
+git merge upstream/v1.0.2
 git push
 cd ../..
 
@@ -22,7 +22,7 @@ py scripts/collect-journal-abbrevs.py
 busted --run citeproc
 busted
 
-code build.lua
+l3build tag 0.4.2
 l3build ctan
 l3build upload
 ```
