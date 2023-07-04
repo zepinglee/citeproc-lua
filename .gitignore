@@ -1,12 +1,11 @@
 *.curlopt
+*.ccf
 *.hd
 build/
 *-doc.pdf
 *-ctan/
 *.tds/
-ctan.ann
 examples/example.pdf
-tmp.tlg
 
 
 # Lua

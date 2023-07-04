@@ -9,7 +9,7 @@ module = "citation-style-language"
 
 local ok, mydata = pcall(require, "zepingleedata.lua")
 if not ok then
-  mydata = {email = "XXX", github = "XXX", name = "XXX"}
+  mydata = {}
 end
 
 docfiledir = "./docs"
@@ -68,13 +68,8 @@ if f then
   f:close()
 end
 
-local ctan_uploader = "Zeping Lee"
-local ctan_email
-
-if mydata then
-  ctan_uploader = mydata.name
-  ctan_email = mydata.email
-end
+local ctan_uploader = mydata.name or "Zeping Lee"
+local ctan_email = mydata.email
 
 uploadconfig = {
   pkg               = "citation-style-language",
@@ -94,7 +89,7 @@ uploadconfig = {
 }
 
 function update_tag(file, content, tagname, tagdate)
-  tagname = string.gsub(tagname, "^v", "")
+  version = string.gsub(version, "^v", "")
 
   content = string.gsub(content,
     "Copyright %(C%) (%d%d%d%d)%-%d%d%d%d",
@@ -102,35 +97,35 @@ function update_tag(file, content, tagname, tagdate)
 
   if file == "CHANGELOG.md" then
     local previous = string.match(content, "compare/v(" .. version_pattern .. ")%.%.%.HEAD")
-    if tagname ~= previous then
+    if version ~= previous then
       content = string.gsub(content,
         "## %[Unreleased%]",
-        "## [Unreleased]\n\n## [" .. tagname .. "] - " .. tagdate)
+        "## [Unreleased]\n\n## [" .. version .. "] - " .. tagdate)
       content = string.gsub(content,
         "v" .. version_pattern .. "%.%.%.HEAD",
-        "v" .. tagname .. "...HEAD\n[" .. tagname .. "]: " .. package_repository .. "/compare/v" .. previous
+        "v" .. version .. "...HEAD\n[" .. version .. "]: " .. package_repository .. "/compare/v" .. previous
           .. "...v" .. tagname)
     end
 
   elseif file == "citeproc.lua" then
     content =  string.gsub(content,
       'citeproc%.__VERSION__ = "' .. version_pattern .. '"',
-      'citeproc.__VERSION__ = "' .. tagname .. '"')
+      'citeproc.__VERSION__ = "' .. version .. '"')
 
   elseif string.match(file, "%.sty$")then
     content =  string.gsub(content,
       "\\ProvidesExplPackage {(.-)} {.-} {.-}",
-      "\\ProvidesExplPackage {%1} {" .. tagdate .. "} {v" .. tagname .. "}")
+      "\\ProvidesExplPackage {%1} {" .. tagdate .. "} {" .. version .. "}")
 
   elseif string.match(file, "%-doc%.tex$") then
     content =  string.gsub(content,
       "\\date%{([^}]+)%}",
-      "\\date{" .. tagdate .. " v" .. tagname .. "}")
+      "\\date{" .. tagdate .. " v" .. version .. "}")
 
   elseif file == "citeproc-lua.1" then
     content =  string.gsub(content,
       '%.TH citeproc%-lua 1 "' .. version_pattern .. '"\n',
-      '.TH citeproc-lua 1 "' .. tagname .. '"\n')
+      '.TH citeproc-lua 1 "' .. version .. '"\n')
 
   end
   return content
