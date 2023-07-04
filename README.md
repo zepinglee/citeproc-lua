@@ -4,7 +4,7 @@
 [![LuaRocks](https://img.shields.io/luarocks/v/zepinglee/citeproc-lua)](https://luarocks.org/modules/zepinglee/citeproc-lua)
 [![GitHub release](https://img.shields.io/github/v/release/zepinglee/citeproc-lua)](https://github.com/zepinglee/citeproc-lua/releases/latest)
 [![GitHub commits](https://img.shields.io/github/commits-since/zepinglee/citeproc-lua/latest)](https://github.com/zepinglee/citeproc-lua/commits/main)
-[![Automated testing](https://github.com/zepinglee/citeproc-lua/actions/workflows/test.yaml/badge.svg)](https://github.com/zepinglee/citeproc-lua/actions/workflows/test.yaml)
+[![Automated testing](https://github.com/zepinglee/citeproc-lua/actions/workflows/test.yml/badge.svg)](https://github.com/zepinglee/citeproc-lua/actions/workflows/test.yml)
 
 The [Citation Style Language](https://citationstyles.org/) (CSL) is an
 XML-based language that defines the formats of citations and bibliography.
