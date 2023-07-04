@@ -422,7 +422,7 @@ class BibData(OrderedDict):
                         alias = '@' + alias
                     notes = f'Alias for `{alias}`. ' + notes
                 notes = notes.strip()
-                line = f'{field} | {target} | {notes}\n'
+                line = f'{field} | {target} | {notes}'.strip() + '\n'
                 res += line
 
         with open('scripts/bib-csl-mapping.md', 'w') as f:

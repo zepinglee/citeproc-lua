@@ -1330,6 +1330,10 @@ return {
       source = "manuscripts-shared.dbx",
       type = "literal",
     },
+    comment = {
+      csl = nil,
+      source = "abstract.bst",
+    },
     commentator = {
       csl = nil,
       source = "biblatex",
@@ -1642,7 +1646,7 @@ return {
       type = "key",
     },
     eid = {
-      csl = nil,
+      csl = "number",
       source = "biblatex",
       type = "literal",
     },
@@ -2107,6 +2111,26 @@ return {
     institution = {
       csl = "publisher",
       source = "bibtex",
+      type = "literal",
+    },
+    internalsortbook = {
+      csl = nil,
+      source = "biblatex-gost.dbx",
+      type = "literal",
+    },
+    internalsortissue = {
+      csl = nil,
+      source = "biblatex-gost.dbx",
+      type = "literal",
+    },
+    internalsortpart = {
+      csl = nil,
+      source = "biblatex-gost.dbx",
+      type = "literal",
+    },
+    internalsortvolume = {
+      csl = nil,
+      source = "biblatex-gost.dbx",
       type = "literal",
     },
     interviewee = {
@@ -2653,8 +2677,8 @@ return {
       source = "tugboat.bst",
     },
     number = {
-      csl = "number",
-      notes = "It is mapped to `issue` in `@ariticle` but to `number` in `@patent` or `@report`.",
+      csl = nil,
+      notes = "This field is used as `issue` in `article` type or `collection-number` with `collection-title` in `book` type. It is also `number` in `@patent` or `@report`.",
       source = "bibtex",
       type = "literal",
     },
@@ -3033,6 +3057,10 @@ return {
       csl = nil,
       source = "gost2003.bst",
       type = "literal",
+    },
+    private = {
+      csl = nil,
+      source = "abstract.bst",
     },
     producer = {
       csl = "producer",
@@ -4427,6 +4455,7 @@ return {
     date = "issued",
     director = "director",
     editor = "editor",
+    eid = "number",
     eprinttype = "archive",
     eventdate = "event-date",
     eventtitle = "event-title",

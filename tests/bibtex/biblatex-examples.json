@@ -327,6 +327,7 @@
 		},
 		"language": "en-US",
 		"note": "An <code>\\texttt{</code><span class=\"nocase\">article</span><code>}</code> entry with an <code>\\texttt{</code><span class=\"nocase\">eid</span><code>}</code> and a <code>\\texttt{</code><span class=\"nocase\">doi</span><code>}</code> field. Note that the <span style=\"font-variant:small-caps;\"><span class=\"nocase\">doi</span></span> is transformed into a clickable link if <code>\\texttt{</code><span class=\"nocase\">hyperref</span><code>}</code> support has been enabled",
+		"number": "124106",
 		"title": "Computation of methodology<code>\\hyphen </code>independent ionic solvation free energies from molecular simulations: <span class=\"nocase\">I</span>. <span class=\"nocase\">The</span> electrostatic potential in molecular liquids",
 		"title-short": "Computation of methodology<code>\\hyphen </code>independent ionic solvation free energies from molecular simulations",
 		"volume": "124"

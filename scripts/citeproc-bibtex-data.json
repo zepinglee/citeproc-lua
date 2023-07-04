@@ -515,6 +515,10 @@
             "source": "manuscripts-shared.dbx",
             "type": "literal"
         },
+        "comment": {
+            "csl": null,
+            "source": "abstract.bst"
+        },
         "commentator": {
             "csl": null,
             "source": "biblatex",
@@ -827,7 +831,7 @@
             "type": "key"
         },
         "eid": {
-            "csl": null,
+            "csl": "number",
             "source": "biblatex",
             "type": "literal"
         },
@@ -1292,6 +1296,26 @@
         "institution": {
             "csl": "publisher",
             "source": "bibtex",
+            "type": "literal"
+        },
+        "internalsortbook": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "literal"
+        },
+        "internalsortissue": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "literal"
+        },
+        "internalsortpart": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
+            "type": "literal"
+        },
+        "internalsortvolume": {
+            "csl": null,
+            "source": "biblatex-gost.dbx",
             "type": "literal"
         },
         "interviewee": {
@@ -1838,8 +1862,8 @@
             "source": "tugboat.bst"
         },
         "number": {
-            "csl": "number",
-            "notes": "It is mapped to `issue` in `@ariticle` but to `number` in `@patent` or `@report`.",
+            "csl": null,
+            "notes": "This field is used as `issue` in `article` type or `collection-number` with `collection-title` in `book` type. It is also `number` in `@patent` or `@report`.",
             "source": "bibtex",
             "type": "literal"
         },
@@ -2218,6 +2242,10 @@
             "csl": null,
             "source": "gost2003.bst",
             "type": "literal"
+        },
+        "private": {
+            "csl": null,
+            "source": "abstract.bst"
         },
         "producer": {
             "csl": "producer",
@@ -3612,6 +3640,7 @@
         "date": "issued",
         "director": "director",
         "editor": "editor",
+        "eid": "number",
         "eprinttype": "archive",
         "eventdate": "event-date",
         "eventtitle": "event-title",

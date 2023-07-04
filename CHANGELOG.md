@@ -7,10 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- BibTeX parser: The `eid` from `biblatex` field is mapped to CSL's `number` ([retorquere/zotero-better-bibtex#2551](https://github.com/retorquere/zotero-better-bibtex/issues/2551#issuecomment-1615593134)).
+
 ### Fixed
 
 - Fix a bug with `<text variable="locator">` in `<bibliography>` ([#39](https://github.com/zepinglee/citeproc-lua/issues/39)).
-- Fix missing $ errors caused by underscores in citations keys.
+- Fix missing `$` errors caused by underscores in citations keys.
 - Fix a conflict of already defined `\@currentHref` due to changes in LaTeX2e kernel 2023-06-01 ([latex3/latex2e#pr956](https://github.com/latex3/latex2e/pull/956)).
 
 ## [0.4.1] - 2023-04-12

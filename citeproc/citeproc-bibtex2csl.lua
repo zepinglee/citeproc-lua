@@ -346,16 +346,16 @@ function bibtex2csl.post_process_special_fields(item, entry)
   end
 
   -- number
-  if item.number then
+  if bib_fields.number then
     if item.type == "article-journal" or item.type == "article-magazine" or
         item.type == "article-newspaper" or item.type == "periodical" then
       if not item.issue then
-        item.issue = item.number
-        item.number = nil
+        item.issue = bib_fields.number
       end
     elseif item["collection-title"] and not item["collection-number"] then
-      item["collection-number"] = item.number
-      item.number = nil
+      item["collection-number"] = bib_fields.number
+    elseif not item.number then
+      item.number = bib_fields.number
     end
   end
 
