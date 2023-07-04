@@ -435,6 +435,10 @@ function CiteProc:get_tainted_citation_ids(citation_note_pairs)
   --   2 = {"citation-2"},
   -- }
 
+  -- Citations with noteIndex == 0 are in-text citations and they may also
+  -- have position properties.
+  local in_text_citations = {}
+
   local previous_citation
   for citation_index, pair in ipairs(citation_note_pairs) do
     local citation_id, note_number = table.unpack(pair)
@@ -445,9 +449,14 @@ function CiteProc:get_tainted_citation_ids(citation_note_pairs)
 
     local tainted = false
 
+    local prev_citation = previous_citation
+    if note_number == 0 then
+      -- Find the previous in-text citation.
+      prev_citation = in_text_citations[#in_text_citations]
+    end
     local previous_cite
     for _, cite_item in ipairs(citation.citationItems) do
-      tainted = self:set_cite_item_position(cite_item, note_number, previous_cite, previous_citation, citation)
+      tainted = self:set_cite_item_position(cite_item, note_number, previous_cite, prev_citation, citation)
 
       -- https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html#citations
       -- Citations within the main text of the document have a noteIndex of zero.
@@ -466,7 +475,11 @@ function CiteProc:get_tainted_citation_ids(citation_note_pairs)
     end
     table.insert(self.note_citations_map[note_number], citation.citationID)
     if citation.properties.mode ~= "author-only" then
-      previous_citation = citation
+      if note_number == 0 then
+        table.insert(in_text_citations, citation)
+      else
+        previous_citation = citation
+      end
     end
   end
 
@@ -488,10 +501,7 @@ function CiteProc:set_cite_item_position(cite_item, note_number, previous_cite, 
 
   -- https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html#citations
   -- Citations within the main text of the document have a noteIndex of zero.
-  if self.style.class == "note" and note_number == 0 then
-    cite_item.position_level = position
-    return false
-  elseif citation.properties.mode == "author-only" then
+  if citation.properties.mode == "author-only" then
     -- discretionary_IbidInAuthorDateStyleWithoutIntext.txt
     cite_item.position_level = position
     return false
@@ -500,11 +510,13 @@ function CiteProc:set_cite_item_position(cite_item, note_number, previous_cite, 
   local first_reference_note_number = self.cite_first_note_numbers[cite_item.id]
   if first_reference_note_number then
     position = util.position_map["subsequent"]
-  else
+  elseif note_number > 0 then
+    -- note_number == 0 implied an in-text citation
     self.cite_first_note_numbers[cite_item.id] = note_number
   end
 
   local preceding_cite_item = self:get_preceding_cite_item(cite_item, previous_cite, previous_citation, note_number)
+
   if preceding_cite_item then
     position = self:_get_cite_position(cite_item, preceding_cite_item)
   end

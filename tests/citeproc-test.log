@@ -25,7 +25,7 @@ namespaces           1       0       0       0
 number              20       0       0       0
 page                10       0       0       0
 plural               7       0       0       0
-position            15       0       0       0
+position            16       0       0       0
 punctuation         15       0       0       0
 quotes               4       0       0       0
 simplespace          1       0       0       0
@@ -38,4 +38,4 @@ unicode              1       0       0       0
 variables            5       0       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              876       0       0       0
+(all)              877       0       0       0

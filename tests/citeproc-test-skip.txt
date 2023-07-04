@@ -20,9 +20,6 @@ name_HebrewAnd.txt
 name_InTextMarkupInitialize.txt
 name_InTextMarkupNormalizeInitials.txt
 
-# Citation-3 has noteIndex 0 but it's after citation-2 with noteIndex 1.
-position_IbidInText.txt
-
 # French punctuation
 punctuation_FrenchOrthography.txt
 
