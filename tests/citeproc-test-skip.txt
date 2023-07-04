@@ -29,6 +29,3 @@ sort_OmittedBibRefNonNumericStyle.txt
 
 # Localized uppercase conversion not available for tr-TR
 textcase_LocaleUnicode.txt
-
-# The stop words ("about", etc.) in citeproc-js need to be updated with the schema.
-textcase_SkipNameParticlesInTitleCase.txt

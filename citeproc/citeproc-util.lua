@@ -751,6 +751,31 @@ util.stop_words = {
   ["yet"] = true,
 }
 
+-- <https://github.com/Juris-M/citeproc-js/blob/73bc1b44bc7d54d0bfec4e070fd27f5efe024ff9/src/load.js#L1052C2-L1052C2>
+local citeproc_js_addition_stop_words = {
+  ["about"] = true,
+  ["above"] = true,
+  ["al"] = true,
+  ["as for"] = true,
+  ["as of"] = true,
+  ["as per"] = true,
+  ["aside from"] = true,
+  ["except for"] = true,
+  ["inside of"] = true,
+  ["near to"] = true,
+  ["next to"] = true,
+  ["on to"] = true,
+  ["out from"] = true,
+  ["out of"] = true,
+  ["up to"] = true,
+  ["v"] = true,
+  ["vs"] = true,
+}
+
+for word, _ in pairs(citeproc_js_addition_stop_words) do
+  util.stop_words[word] = true
+end
+
 function util.all (t)
   for _, item in ipairs(t) do
     if not item then

@@ -33,9 +33,9 @@ sort                52       0       0       0
 sortseparator        1       0       0       0
 substitute           7       0       0       0
 testers              2       0       0       0
-textcase            28       0       0       0
+textcase            29       0       0       0
 unicode              1       0       0       0
 variables            5       0       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              877       0       0       0
+(all)              878       0       0       0
