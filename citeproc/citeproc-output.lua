@@ -1061,10 +1061,10 @@ function OutputFormat:affixed_quoted(inlines, affixes, localized_quotes)
   if localized_quotes then
     inlines = self:quoted(inlines, localized_quotes)
   end
-  if affixes and affixes.prefix then
+  if affixes and affixes.prefix and affixes.prefix ~= "" then
     table.insert(inlines, 1, PlainText:new(affixes.prefix))
   end
-  if affixes and affixes.suffix then
+  if affixes and affixes.suffix and affixes.suffix ~= "" then
     table.insert(inlines, PlainText:new(affixes.suffix))
   end
   return inlines

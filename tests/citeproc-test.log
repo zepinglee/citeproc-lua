@@ -14,11 +14,11 @@ form                 3       0       0       0
 fullstyles           5       0       0       0
 group                7       0       0       0
 integration         13       0       0       0
-label               18       0       0       0
+label               19       0       0       0
 locale              23       0       0       0
 locator              6       0       0       0
 magic               40       0       0       0
-name               106       0       0       0
+name               108       0       0       0
 nameattr            97       0       0       0
 nameorder            6       0       0       0
 namespaces           1       0       0       0
@@ -38,4 +38,4 @@ unicode              1       0       0       0
 variables            5       0       0       0
 virtual              1       0       0       0
 -------------- ------- ------- ------- -------
-(all)              878       0       0       0
+(all)              881       0       0       0

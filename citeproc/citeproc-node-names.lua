@@ -158,7 +158,9 @@ function Names:build_ir(engine, state, context)
   local num_names = 0
   -- util.debug(self.name)
 
-  -- The names element may not hold a variable attribute.
+  local index_by_variable = {}
+
+  -- The names element may have an empty variable attribute.
   -- substitute_SubstituteOnlyOnceString.txt
   if names_inheritance.variable then
     for _, variable in ipairs(util.split(names_inheritance.variable)) do
@@ -168,6 +170,52 @@ function Names:build_ir(engine, state, context)
       end
       if name_ir and name_ir.group_var ~= GroupVar.Missing then
         table.insert(irs, name_ir)
+        index_by_variable[variable] = #irs
+      end
+    end
+  end
+
+  -- editor & translator
+  local editor_ir = irs[index_by_variable.editor]
+  local translator_ir = irs[index_by_variable.translator]
+  if editor_ir and translator_ir then
+    local editor_name_ir
+    local editor_label_ir
+    local translator_name_ir
+    local translator_label_ir
+    for _, ir in ipairs(editor_ir.children) do
+      if ir._type == "NameIr" then
+        editor_name_ir = ir
+      elseif ir._element_name == "label" then
+        editor_label_ir = ir
+      end
+    end
+    for _, ir in ipairs(translator_ir.children) do
+      if ir._type == "NameIr" then
+        translator_name_ir = ir
+      elseif ir._element_name == "label" then
+        translator_label_ir = ir
+      end
+    end
+
+    if editor_name_ir.full_name_str == translator_name_ir.full_name_str then
+      local names = context:get_variable("editor")
+      local editor_translator_label_ir = names_inheritance.name:build_name_label(names_inheritance.label, "editortranslator", names, context)
+      if editor_translator_label_ir then
+        local first_index = index_by_variable.editor
+        local second_index = index_by_variable.translator
+        if first_index > second_index then
+          local tmp = first_index
+          first_index = second_index
+          second_index = tmp
+        end
+        table.remove(irs, second_index)
+        for i, ir in ipairs(irs[first_index].children) do
+          if ir._element_name == "label" then
+            irs[first_index].children[i] = editor_translator_label_ir
+            break
+          end
+        end
       end
     end
   end
@@ -345,6 +393,18 @@ function Name:from_node(node)
 end
 
 
+function Name:build_name_label(label, variable, names, context)
+  local is_plural = (label.plural == "always" or (label.plural == "contextual" and #names > 1))
+  local label_term = context.locale:get_simple_term(variable, label.form, is_plural)
+  if not label_term or label_term == "" then
+    return nil
+  end
+  local inlines = label:render_text_inlines(label_term, context)
+  local label_ir = Rendered:new(inlines, label)
+  return label_ir
+end
+
+
 function Name:build_ir(variable, et_al, label, engine, state, context)
   -- Returns NameIR
   local names
@@ -462,11 +522,8 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
   irs = {ir}
 
   if label then
-    local is_plural = (label.plural == "always" or (label.plural == "contextual" and #names > 1))
-    local label_term = context.locale:get_simple_term(variable, label.form, is_plural)
-    if label_term and label_term ~= "" then
-      local inlines = label:render_text_inlines(label_term, context)
-      local label_ir = Rendered:new(inlines, label)
+    local label_ir = self:build_name_label(label, variable, names, context);
+    if label_ir then
       if label.after_name then
         table.insert(irs, label_ir)
       else

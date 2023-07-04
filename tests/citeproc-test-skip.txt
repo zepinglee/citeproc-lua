@@ -8,11 +8,6 @@ integration_FirstReferenceNoteNumberPositionChange.txt
 disambiguate_BasedOnEtAlSubsequent.txt
 disambiguate_DisambiguationHang.txt
 
-# Editor & translator issues
-label_EditorTranslator1.txt
-name_CollapseRoleLabels.txt
-name_EditorTranslatorSameWithTerm.txt
-
 # Hebrew
 name_HebrewAnd.txt
 

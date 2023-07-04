@@ -29,6 +29,8 @@ local Micro = output.Micro
 
 
 ---@class Element
+---@field element_name string?
+---@field children Element[]?
 local Element = {
   element_name = nil,
   children = nil,

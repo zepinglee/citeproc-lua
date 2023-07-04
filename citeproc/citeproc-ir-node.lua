@@ -25,6 +25,15 @@ local GroupVar = {
 
 
 ---@class IrNode
+---@field _element Element?
+---@field _element_name string?
+---@field _type string
+---@field _base_class string
+---@field text string?
+---@field formatting any
+---@field affixes any
+---@field children IrNode[]?
+---@field delimiter string?
 local IrNode = {
   _element = nil,
   _element_name = nil,
@@ -94,7 +103,13 @@ function IrNode:_debug(level)
   if ir_info_str ~= "" then
     ir_info_str = string.format("{%s}", ir_info_str)
   end
-  local text = string.format("\n%s [%s] %s <%s> %s", string.rep("    ", level), self.group_var, self._type, self._element_name, ir_info_str)
+  local element_info = self._element.element_name
+  for _, attr in ipairs({"name", "variable"}) do
+    if self._element[attr] then
+      element_info = element_info .. string.format(' %s="%s"', attr, self._element[attr])
+    end
+  end
+  local text = string.format("\n%s [%s] %s <%s> %s", string.rep("    ", level), self.group_var, self._type, element_info, ir_info_str)
   if self.children and #self.children > 0 then
     for _, child_ir in ipairs(self.children) do
       text = text .. child_ir:_debug(level + 1)
