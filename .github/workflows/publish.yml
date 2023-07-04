@@ -48,14 +48,17 @@ jobs:
       - name: Set up dependencies
         run: luarocks install dkjson
 
+      - name: Labeller
+        id: labeller
+        run: |
+          echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
+          echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_OUTPUT
+
       - name: Make rockspec of new version
         run: luarocks new_version --tag ${{ github.ref_name }}
 
-      - name: Build Lua rock
-        run: luarocks pack citeproc-lua-${{ github.ref_name }}-1.rockspec
-
       - name: Upload to LuaRocks
-        run: luarocks upload --temp-key ${{ secrets.LUAROCKS_API_KEY }} citeproc-lua-${{ github.ref_name }}-1.rockspec citeproc-lua-${{ github.ref_name }}-1.src.rock
+        run: luarocks upload --temp-key ${{ secrets.LUAROCKS_API_KEY }} citeproc-lua-${{ steps.labeller.outputs.version }}-1.rockspec
 
 
   publish-ctan:
@@ -101,4 +104,4 @@ jobs:
         #     version: ${{ steps.labeller.outputs.version }}
         #     uploader: ${{ secrets.CTAN_UPLOADER }}
         #     email: ${{ secrets.CTAN_EMAIL }}
-        run: l3build upload --email ${{ secrets.CTAN_EMAIL }} --message "${{ steps.extract-release-notes.outputs.release_notes }}".md ${{ steps.labeller.outputs.version }}
+        run: echo "y" | l3build upload --email ${{ secrets.CTAN_EMAIL }} --message "${{ steps.extract-release-notes.outputs.release_notes }}".md ${{ steps.labeller.outputs.version }}
