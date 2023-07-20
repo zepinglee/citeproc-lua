@@ -5,6 +5,9 @@ on:
     branches:
       - "**"
   pull_request:
+  schedule:
+    # Run every Monday and Friday at 00:42. The time has been chosen at random.
+    - cron: '42 0 * * 1,5'
   workflow_dispatch:
 
 jobs:
