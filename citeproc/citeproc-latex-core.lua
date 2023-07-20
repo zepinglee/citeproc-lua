@@ -197,6 +197,7 @@ end
 
 function core.make_citation(citation_info)
   -- `citation_info`: "citationID={ITEM-1@2},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={3}}"
+  -- util.debug(citation_info)
   local citation = parse_latex_prop(citation_info)
   -- assert(citation.citationID)
   -- assert(citation.citationItems)
@@ -227,6 +228,7 @@ function core.make_citation(citation_info)
     util.error(string.format('Invalid note index "%s".', note_index))
   end
 
+  -- util.debug(citation)
   return citation
 end
 

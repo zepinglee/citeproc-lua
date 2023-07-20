@@ -1241,7 +1241,7 @@ function Citation:_apply_composite(ir, output_format, engine)
   -- local first_names_ir = find_first_names_ir(ir)
 
   local first_names_ir = find_first_names_ir(ir)
-  if first_names_ir then
+  if first_names_ir and engine.style.class ~= "note" then
     -- util.debug(first_names_ir)
     first_names_ir.collapse_suppressed = true
   end

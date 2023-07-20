@@ -14,7 +14,10 @@
     \__csl_write_aux_info:
     \sys_if_engine_luatex:TF
       { \__csl_initialize_lua_module: }
-      { \__csl_load_bbl: }
+      {
+        \__csl_load_bbl:
+        \__csl_read_style_class:
+      }
   }
 
 
@@ -314,6 +317,26 @@
       % Perform the execution
       #1
     \group_end:
+  }
+
+
+% The `\textcite` bahaves differently with note styles.
+% Thus we read the style class from the `.csl` file with non-LuaTeX engines.
+\ior_new:N \l__csl_style_ior
+\cs_new:Npn \__csl_read_style_class:
+  {
+    \exp_args:NNx \ior_open:Nn \l__csl_style_ior { \l__csl_style_tl .csl }
+    \ior_map_inline:Nn \l__csl_style_ior
+      {
+        % \tl_show:n {##1}
+        \tl_if_in:nnT {##1} { class="note" }
+          {
+            \tl_set:Nn \l__csl_class_tl { note }
+            \bool_set_true:N \l__csl_note_bool
+            \ior_map_break:
+          }
+      }
+    \ior_close:N \l__csl_style_ior
   }
 
 % \msg_new:nnn { citation-style-language } { file / non-exist }

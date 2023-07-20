@@ -56,15 +56,24 @@
 
 \cs_new:Npn \__csl_text_cite:nnn #1#2#3
   {
-    \seq_clear:N \l__csl_cite_keys_seq
-    \seq_clear:N \l__csl_citation_items_seq
-    \prop_clear:N \l__csl_citation_properties_prop
-    \__csl_process_cite_input:nnn {#1} {#2} {#3}
-    \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
-    \prop_put:Nnn \l__csl_citation_properties_prop { noteIndex } { 0 }
-    \prop_put:Nnn \l__csl_citation_properties_prop { mode } { composite }
-    % \bool_set_false:N \l__csl_note_bool
-    \__csl_make_citation:N \l__csl_citation_info_prop
+    \bool_if:NTF \l__csl_note_bool
+      {
+        % In note styles, the authors are printed in-text followed by a note.
+        \bool_set_false:N \l__csl_note_bool
+        \__csl_cite_author:nnn {#1} {#2} {#3}
+        \bool_set_true:N \l__csl_note_bool
+        \__csl_cite:nnn {#1} {#2} {#3}
+      }
+      {
+        \seq_clear:N \l__csl_cite_keys_seq
+        \seq_clear:N \l__csl_citation_items_seq
+        \prop_clear:N \l__csl_citation_properties_prop
+        \__csl_process_cite_input:nnn {#1} {#2} {#3}
+        \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
+        \prop_put:Nnn \l__csl_citation_properties_prop { noteIndex } { 0 }
+        \prop_put:Nnn \l__csl_citation_properties_prop { mode } { composite }
+        \__csl_make_citation:N \l__csl_citation_info_prop
+      }
   }
 
 
@@ -457,7 +466,9 @@
     \bool_if:NT \l__csl_regression_test_bool
       { \tl_show:N \l__csl_citation_tl }
     \group_begin:
-      \reset@font \l__csl_citation_tl
+      \bool_if:NTF \l__csl_note_bool
+        { \footnote { \reset@font \l__csl_citation_tl } }
+        { \reset@font \l__csl_citation_tl }
     \group_end:
   }
 
