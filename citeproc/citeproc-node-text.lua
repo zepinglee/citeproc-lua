@@ -33,6 +33,19 @@ local Linked = output.Linked
 
 
 -- [Text](https://docs.citationstyles.org/en/stable/specification.html#text)
+---@class Text: Element
+---@field variable string?
+---@field form string?
+---@field macro string?
+---@field term string?
+---@field plural string?
+---@field value string?
+---@field prefix string?
+---@field suffix string?
+---@field display string?
+---@field quotes boolean?
+---@field strip_periods string?
+---@field text_case string?
 local Text = Element:derive("text", {
   -- Default attributes
   variable = nil,
@@ -44,7 +57,6 @@ local Text = Element:derive("text", {
   -- Style behavior
   formatting = nil,
   affixes = nil,
-  delimiter = nil,
   display = nil,
   quotes = false,
   strip_periods = false,
@@ -84,6 +96,7 @@ function Text:build_ir(engine, state, context)
 end
 
 function Text:build_variable_ir(engine, state, context)
+  ---@type string
   local variable = self.variable
   local text
 

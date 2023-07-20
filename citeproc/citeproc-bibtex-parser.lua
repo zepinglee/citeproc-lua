@@ -13,9 +13,9 @@
 -- @module bibtex_parser
 local bibtex_parser = {}
 
-local unicode 
-local bibtex_data 
-local util 
+local unicode
+local bibtex_data
+local util
 if kpse then
   unicode = require("citeproc-unicode")
   bibtex_data = require("citeproc-bibtex-data")
@@ -136,8 +136,8 @@ local BibtexParser = {
     -- allow_escaped_braces = true,
     convert_to_unicode = false,
     -- common_strings = false,
-    split_names = false,
-    split_name_parts = false,
+    -- split_names = false,
+    -- split_name_parts = false,
   },
   -- variables
   name_fields = {},
@@ -168,9 +168,9 @@ end
 
 ---comment
 ---@param bib_str string
----@param strings table
+---@param strings table<string, string>?
 ---@return BibtexData?
----@return Exception[]?
+---@return Exception[]
 function BibtexParser:parse(bib_str, strings)
   if strings then
     strings = setmetatable({}, {__index = strings})
@@ -197,6 +197,7 @@ function BibtexParser:parse(bib_str, strings)
     strings = {},
     preamble = nil,
   }
+  ---@type Exception[]
   local exceptions = {}
 
   for _, object in ipairs(bib_objects) do
@@ -245,16 +246,17 @@ function BibtexParser:_make_entry(object, strings)
       value = latex_parser.latex_to_unicode(value)
     end
 
-    if self.name_fields[field] then
-      if self.options.split_names then
-        value = bibtex_parser.split_names(value)
-        if self.options.split_name_parts then
-          for i, name in ipairs(value) do
-            value[i] = bibtex_parser.split_name_parts(name)
-          end
-        end
-      end
-    end
+    -- if self.name_fields[field] then
+    --   if self.options.split_names then
+    --     local value = bibtex_parser.split_names(value)
+    --     value = {}
+    --     if self.options.split_name_parts then
+    --       for i, name in ipairs(value) do
+    --         value[i] = bibtex_parser.split_name_parts(name)
+    --       end
+    --     end
+    --   end
+    -- end
 
     object.fields[field] = value
   end
@@ -488,8 +490,8 @@ bibtex_parser._default_parser = BibtexParser:new()
 
 ---comment
 ---@param bib_str string input string
----@param strings table<string, string> strings
----@return BibtexData?, Exception[]?
+---@param strings table<string, string>? strings
+---@return BibtexData?, Exception[]
 function bibtex_parser.parse(bib_str, strings)
   return bibtex_parser._default_parser:parse(bib_str, strings)
 end

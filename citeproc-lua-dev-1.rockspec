@@ -1,3 +1,4 @@
+---@diagnostic disable: lowercase-global
 rockspec_format = "3.0"
 package = "citeproc-lua"
 version = "dev-1"

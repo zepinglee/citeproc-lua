@@ -25,6 +25,8 @@ local SeqIr = ir_node.SeqIr
 local GroupVar = ir_node.GroupVar
 
 -- [Choose](https://docs.citationstyles.org/en/stable/specification.html#choose)
+---@class Choose: Element
+---@field children (If | ElseIf | Else)[]
 local Choose = Element:derive("choose")
 
 function Choose:from_node(node)
@@ -48,6 +50,7 @@ function Choose:build_ir(engine, state, context)
   for _, child in ipairs(self.children) do
     if child:evaluate_conditions(engine, state, context) then
       active_branch = child
+      ---@cast child If
       branch_ir = child:build_ir(engine, state, context)
       if branch_ir and branch_ir.group_var ~= GroupVar.Missing then
         table.insert(ir.children, branch_ir)
@@ -69,6 +72,7 @@ function Choose:build_ir(engine, state, context)
     for _, child in ipairs(self.children) do
       if child:evaluate_conditions(engine, state, context) then
         if child ~= active_branch then
+          ---@cast child If
           ir.disambiguate_branch_ir = child:build_ir(engine, state, context)
         end
         break
@@ -82,9 +86,11 @@ function Choose:build_ir(engine, state, context)
 end
 
 
+---@class Condition
+---@field condition string
+---@field value string
+---@field match_type string
 local Condition = {
-  condition = nil,
-  value = nil,
   match_type = "all",
 }
 
@@ -100,6 +106,9 @@ function Condition:new(condition, value, match_type)
 end
 
 
+---@class If: Element
+---@field match string?
+---@field conditions Condition[]
 local If = Element:derive("if", {
   conditions = nil,
   match = "all"
@@ -300,9 +309,11 @@ function If:check_position(position, context)
 end
 
 
+---@class ElseIf: If
 local ElseIf = If:derive("else-if")
 
 
+---@class Else: Element
 local Else = Element:derive("else")
 
 function Else:from_node(node)

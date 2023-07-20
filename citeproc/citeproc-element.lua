@@ -46,6 +46,9 @@ function Element:new(element_name)
   return o
 end
 
+---@param element_name string
+---@param default_options table?
+---@return Element
 function Element:derive(element_name, default_options)
   local o = {
     element_name = element_name or self.element_name,
@@ -64,6 +67,11 @@ function Element:derive(element_name, default_options)
   return o
 end
 
+---@class Node
+
+---@param node Node
+---@param parent Element?
+---@return Element
 function Element:from_node(node, parent)
   local o = self:new()
   o.element_name = self.element_name or node:get_element_name()

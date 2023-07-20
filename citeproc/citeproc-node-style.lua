@@ -37,6 +37,20 @@ local PlainText = output.PlainText
 local DisamStringFormat = output.DisamStringFormat
 
 
+---@class Style: Element
+---@field class string
+---@field default_locale string?
+---@field version string?
+---@field initialize_with_hyphen boolean
+---@field page_range_format string?
+---@field demote_non_dropping_particle boolean?
+---@field info Element
+---@field locales { [string]: Locale }
+---@field macros { [string]: Element }
+---@field citation Citation
+---@field intext Citation?
+---@field bibliography Bibliography?
+---@field has_disambiguate boolean
 local Style = Element:derive("style")
 
 function Style:new()
@@ -72,6 +86,8 @@ function Style:parse(xml_str)
   return Style:from_node(style_node)
 end
 
+---@param node any
+---@return Style
 function Style:from_node(node)
   local o = Style:new()
 
@@ -137,18 +153,8 @@ Style._default_options = {
   ["demote-non-dropping-particle"] = "display-and-sort",
 }
 
-function Style:set_lang(lang, force_lang)
-  local default_locale = self:get_attribute("default-locale")
-  if lang then
-    if default_locale and not force_lang then
-      self.lang = default_locale
-    end
-  else
-    self.lang = default_locale or "en-US"
-  end
-end
 
-
+---@class Info: Element
 local Info = Element:derive("info")
 
 

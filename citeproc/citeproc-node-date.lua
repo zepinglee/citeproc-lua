@@ -32,6 +32,15 @@ local PlainText = output.PlainText
 
 
 -- [Date](https://docs.citationstyles.org/en/stable/specification.html#date)
+---@class Date: Element
+---@field children DatePart[]?
+---@field variable string
+---@field form string?
+---@field date_parts string?
+---@field delimiter string?
+---@field prefix string?
+---@field suffix string?
+---@field text_case string?
 local Date = Element:derive("date")
 
 function Date:from_node(node)
@@ -64,6 +73,7 @@ end
 function Date:build_ir(engine, state, context)
   local variable
   if not state.suppressed[self.variable] then
+    ---@type DateVariable?
     variable = context:get_variable(self.variable)
   end
 
@@ -294,8 +304,8 @@ function Date:render_sort_key(engine, state, context)
     return false
   end
   if not date["date-parts"] then
-    if self.literal then
-      return "1" .. self.literal
+    if date.literal then
+      return "1" .. date.literal
     else
       return false
     end
@@ -337,6 +347,11 @@ end
 
 
 -- [Date-part](https://docs.citationstyles.org/en/stable/specification.html#date-part)
+---@class DatePart: Element
+---@field name string
+---@field form string?
+---@field text_case string?
+---@field range_delimiter string?
 local DatePart = Element:derive("date-part")
 
 function DatePart:from_node(node)

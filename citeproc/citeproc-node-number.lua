@@ -25,6 +25,13 @@ local Rendered = ir_node.Rendered
 local GroupVar = ir_node.GroupVar
 
 
+---@class Number: Element
+---@field variable string
+---@field form string?
+---@field prefix string?
+---@field suffix string?
+---@field display string?
+---@field text_case string?
 local Number = Element:derive("number")
 
 function Number:new(node)

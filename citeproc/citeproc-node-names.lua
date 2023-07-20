@@ -39,7 +39,39 @@ local SortStringFormat = output.SortStringFormat
 local Element = element.Element
 
 
+---@class Names: Element
+---@field variable string
+---@field delimiter string?
+---@field name Name
+---@field et_al EtAl
+---@field label Label
+---@field substitute Substitute
 local Names = Element:derive("names")
+
+---@class Name: Element
+---@field and string?
+---@field delimiter string?
+---@field delimiter_precedes_et_al string?
+---@field delimiter_precedes_last string?
+---@field et_al_min integer?
+---@field et_al_use_first integer?
+---@field et_al_subsequent_min integer?
+---@field et_al_subsequent_use_first integer?
+---@field et_al_subsequent_use_last integer?
+---@field form string?
+---@field initialize boolean?
+---@field initialize_with string?
+---@field name_as_sort_order string?
+---@field sort_separator string?
+---@field prefix string?
+---@field suffix string?
+---@field font_style string?
+---@field font_variant string?
+---@field font_weight string?
+---@field text_decoration string?
+---@field vertical_align string?
+---@field family NamePart
+---@field given NamePart
 local Name = Element:derive("name", {
   delimiter = ", ",
   delimiter_precedes_et_al = "contextual",
@@ -49,8 +81,18 @@ local Name = Element:derive("name", {
   initialize = true,
   sort_separator = ", ",
 })
+
+---@class NamePart: Element
+---@field name string
+---@field text_case string?
+---@field prefix string?
+---@field suffix string?
 local NamePart = Element:derive("name-part")
+
+---@class EtAl: Element
 local EtAl = Element:derive("et-al")
+
+---@class Substitute: Element
 local Substitute = Element:derive("substitute")
 
 
@@ -318,6 +360,7 @@ function Names:substitute_names(result, context)
         for _, text in ipairs(context.build.first_rendered_names) do
           text.contents = {sub_str}
         end
+        -- FIXME: Resolve the undefined concat() method.
         result = self:concat(context.build.first_rendered_names, context)
       end
 

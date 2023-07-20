@@ -32,8 +32,14 @@ local GroupVar = {
 ---@field text string?
 ---@field formatting any
 ---@field affixes any
+---@field inlines InlineElement[]?
 ---@field children IrNode[]?
 ---@field delimiter string?
+---@field should_inherit_delim boolean?
+---@field group_var GroupVar
+---@field person_name_irs IrNode[]
+---@field name_count integer?
+---@field is_year boolean?
 local IrNode = {
   _element = nil,
   _element_name = nil,
@@ -46,6 +52,9 @@ local IrNode = {
   delimiter = nil,
 }
 
+---@param children IrNode[]
+---@param element Element
+---@return IrNode
 function IrNode:new(children, element)
   local o = {
     _element = element,
@@ -88,6 +97,8 @@ function IrNode:derive(type)
   return o
 end
 
+---@param level integer
+---@return string
 function IrNode:_debug(level)
   level = level or 0
   local ir_info_str = ""
@@ -129,8 +140,12 @@ end
 
 function IrNode:capitalize_first_term()
   -- util.debug(self)
-  if self._type == "Rendered" and self.element and (self.element.term == "ibid" or self.element.term == "and") then
-    self.inlines[1]:capitalize_first_term()
+  if self._type == "Rendered" and self._element then
+    local element = self._element
+    ---@cast element Text
+    if (element.term == "ibid" or element.term == "and") then
+      self.inlines[1]:capitalize_first_term()
+    end
   elseif self._type == "SeqIr" and self.children[1] then
     self.children[1]:capitalize_first_term()
   end
@@ -228,6 +243,7 @@ end
 
 
 ---@class SeqIr: IrNode
+---@field children IrNode[]
 local SeqIr = IrNode:derive("SeqIr")
 
 -- function SeqIr:new(children)

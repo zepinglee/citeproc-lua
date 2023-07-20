@@ -25,6 +25,10 @@ local SeqIr = ir_node.SeqIr
 
 
 ---@class Layout: Element
+---@field prefix string?
+---@field suffix string?
+---@field delimiter string?
+---@field locale string?
 local Layout = Element:derive("layout")
 
 function Layout:from_node(node)

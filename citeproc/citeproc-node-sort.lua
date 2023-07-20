@@ -39,6 +39,9 @@ local InlineElement = output.InlineElement
 
 
 -- [Sorting](https://docs.citationstyles.org/en/stable/specification.html#sorting)
+---@class Sort: Element
+---@field children Key[]
+---@field sort_directions boolean[]
 local Sort = Element:derive("sort")
 
 function Sort:from_node(node)
@@ -151,6 +154,14 @@ function Sort.compare_entry(key_map, sort_directions, item1, item2)
   end
 end
 
+
+---@class Key: Element
+---@field sort string?
+---@field variable string?
+---@field macro string?
+---@field names_min number?
+---@field names_use_first number?
+---@field names_use_last number?
 local Key = Element:derive("key")
 
 function Key:new()

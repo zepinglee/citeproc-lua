@@ -47,11 +47,30 @@ local HtmlWriter = output.HtmlWriter
 local SortStringFormat = output.SortStringFormat
 
 
----@alias ItemId string
+---@alias ItemId string | number
 ---@alias NoteIndex integer
 ---@alias CitationId string
----@alias CitationData {citationID: CitationId, citationItems: table[], properties: table}
----@alias ItemData {id: ItemId, type: string, [string]: any}
+---@alias CitationData {citationID: CitationId, citationItems: table[], properties: table, citation_index: integer}
+
+---@class NameVariable
+---@field family string?
+---@field given string?
+---@field dropping-particle string?
+---@field non-dropping-particle string?
+---@field suffix string?
+---@field comma-suffix string | number | boolean?
+---@field static-ordering string | number | boolean?
+---@field literal string | number | boolean?
+---@field parse-names string | number | boolean?
+
+---@class DateVariable
+---@field date-parts (string | number)[][]
+---@field season (string | number)
+---@field circa (string | number | boolean)
+---@field literal string
+---@field raw string
+
+---@alias ItemData { id: ItemId, type: string, language: string?, [string]: string | number | NameVariable[] | DateVariable }
 
 
 ---@class Registry
@@ -71,8 +90,8 @@ local Registry = {}
 ---@class CiteProc
 ---@field style any
 ---@field sys any
----@field lcoales any
----@field system_locales any
+---@field locales Locale[]
+---@field system_locales Locale[]
 ---@field lang string
 ---@field output_format any
 ---@field opt table
@@ -345,6 +364,8 @@ function CiteProc:normalize_citation_input(citation)
   return citation
 end
 
+---@param cite_item CitationItem
+---@return CitationItem
 function CiteProc:normalize_cite_item(cite_item)
   -- Shallow copy
   cite_item = util.clone(cite_item)
@@ -361,14 +382,14 @@ function CiteProc:normalize_cite_item(cite_item)
     if cite_item.prefix == "" then
       cite_item.prefix = nil
     else
-      cite_item.prefix = InlineElement:parse(cite_item.prefix, nil, true)
+      cite_item.prefix_inlines = InlineElement:parse(cite_item.prefix, nil, true)
     end
   end
   if cite_item.suffix then
     if cite_item.suffix == "" then
       cite_item.suffix = nil
     else
-      cite_item.suffix = InlineElement:parse(cite_item.suffix, nil, true)
+      cite_item.suffix_inlines = InlineElement:parse(cite_item.suffix, nil, true)
     end
   end
 
@@ -891,7 +912,10 @@ function CiteProc.create_element_tree(node)
   return el
 end
 
+---@param id ItemId
+---@return ItemData?
 function CiteProc:get_item(id)
+  ---@type ItemData?
   local item = self.registry.registry[id]
   if not item then
     item = self:_retrieve_item(id)
@@ -910,6 +934,8 @@ function CiteProc:get_item(id)
   return item
 end
 
+---@param id ItemId
+---@return ItemData?
 function CiteProc:_retrieve_item(id)
   -- Retrieve, copy, and normalize
   local res = {}
@@ -1093,6 +1119,7 @@ function CiteProc:get_style_class()
 end
 
 
+---@class Macro: Element
 local Macro = Element:derive("macro")
 
 function Macro:from_node(node)

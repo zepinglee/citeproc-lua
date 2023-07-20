@@ -20,6 +20,11 @@ end
 local Element = element.Element
 
 
+---@class Locale: Element
+---@field xml_lang string?
+---@field terms Terms
+---@field dates table<string, Date>
+---@field style_options { limit_day_ordinals_to_day_1: boolean?, punctuation_in_quote: boolean }
 local Locale = Element:derive("locale")
 
 function Locale:new()
@@ -181,6 +186,7 @@ function Locale:get_number_gender(name)
 end
 
 
+---@class Terms: Element
 local Terms = Element:derive("terms")
 
 function Terms:new()
@@ -234,6 +240,7 @@ function Terms:from_node(node)
 end
 
 
+---@class Term: Element
 local Term = Element:derive("term")
 
 function Term:from_node(node)

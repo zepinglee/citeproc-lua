@@ -24,6 +24,11 @@ local SeqIr = ir_node.SeqIr
 local Element = element.Element
 
 
+---@class Group: Element
+---@field delimiter string?
+---@field prefix string?
+---@field suffix string?
+---@field display string?
 local Group = Element:derive("group")
 
 function Group:from_node(node)

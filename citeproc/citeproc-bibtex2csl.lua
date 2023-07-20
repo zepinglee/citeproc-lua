@@ -27,7 +27,7 @@ else
 end
 
 
----@alias CslItem table<string, nil | string | number | table>
+---@alias CslItem ItemData
 ---@alias CslData CslItem[]
 
 
@@ -112,7 +112,7 @@ function bibtex2csl.convert_to_csl_data(bib, keep_unknown_commands, case_protect
       end
     end
 
-    bibtex2csl.post_process_special_fields(item, entry, entry.type)
+    bibtex2csl.post_process_special_fields(item, entry)
 
     table.insert(csl_data, item)
   end

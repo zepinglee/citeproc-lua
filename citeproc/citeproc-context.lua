@@ -21,6 +21,21 @@ else
 end
 
 
+---@class Context
+---@field reference ItemData?
+---@field format any
+---@field cite_id string?
+---@field style any Style
+---@field locale Locale?
+---@field name_citation any
+---@field names_delimiter any
+---@field position any
+---@field disamb_pass any
+---@field cite CitationItem?
+---@field bib_number integer?
+---@field in_bibliography boolean
+---@field sort_key any
+---@field year_suffix any
 local Context = {
   reference = nil,
   format = nil,

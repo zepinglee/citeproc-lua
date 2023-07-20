@@ -30,6 +30,13 @@ local PlainText = output.PlainText
 
 
 -- [Label](https://docs.citationstyles.org/en/stable/specification.html#label)
+---@class Label: Element
+---@field variable string
+---@field form string?
+---@field plural string?
+---@field prefix string?
+---@field suffix string?
+---@field text_case string?
 local Label = Element:derive("label")
 
 Label.form = "long"

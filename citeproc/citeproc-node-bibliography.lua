@@ -43,14 +43,15 @@ local YearSuffix = ir_node.YearSuffix
 
 ---@class Bibliography: Element
 ---@field hanging_indent boolean
----@field line_spacing integer
----@field entry_spacing integer
+---@field second_field_align string?
+---@field line_spacing number
+---@field entry_spacing number
+---@field subsequent_author_substitute string?
 ---@field subsequent_author_substitute_rule string
 ---@field layout Layout
 ---@field layouts_by_language table<string, Layout>
-local Bibliography = {}
-
-Bibliography = Element:derive("bibliography", {
+---@field name_inheritance Name
+local Bibliography = Element:derive("bibliography", {
   hanging_indent = false,
   line_spacing = 1,
   entry_spacing = 1,
@@ -107,7 +108,7 @@ end
 ---comment
 ---@param id string
 ---@param engine CiteProc
----@return string
+---@return string?
 function Bibliography:build_bibliography_str(id, engine)
     local output_format = engine.output_format
 
@@ -229,6 +230,7 @@ function Bibliography:substitute_subsequent_authors_complete_all(engine, ir)
 
   if engine.previous_bib_names_ir and
       engine.previous_bib_names_ir.bib_names_str == bib_names_str then
+    ---@type string
     local text = self.subsequent_author_substitute
     if text == "" then
       ir.first_name_ir.children = {}
@@ -262,6 +264,7 @@ function Bibliography:substitute_subsequent_authors_complete_each(engine, ir)
 
   if engine.previous_bib_names_ir and
       engine.previous_bib_names_ir.bib_names_str == bib_names_str then
+    ---@type string
     local text = self.subsequent_author_substitute
     if #ir.first_name_ir.person_name_irs > 0 then
       for _, person_name_ir in ipairs(ir.first_name_ir.person_name_irs) do
@@ -292,6 +295,7 @@ function Bibliography:substitute_subsequent_authors_partial_each(engine, ir)
           local name_variants = person_name_ir.disam_variants
           local full_name_str = name_variants[#name_variants]
           if prev_full_name_str == full_name_str then
+            ---@type string
             local text = self.subsequent_author_substitute
             person_name_ir.inlines = {PlainText:new(text)}
           else
@@ -308,6 +312,7 @@ function Bibliography:substitute_subsequent_authors_partial_each(engine, ir)
     ir.first_name_ir.bib_names_str = bib_names_str
     if engine.previous_bib_names_ir and
         engine.previous_bib_names_ir.bib_names_str == bib_names_str then
+      ---@type string
       local text = self.subsequent_author_substitute
       if text == "" then
         ir.first_name_ir.children = {}

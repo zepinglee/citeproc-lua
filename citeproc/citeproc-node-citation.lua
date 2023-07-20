@@ -50,6 +50,21 @@ local DEBUG_DISAMBIGUATE = false
 
 
 ---@class Citation: Element
+---@field disambiguate_add_givenname boolean?
+---@field givenname_disambiguation_rule string
+---@field disambiguate_add_names boolean?
+---@field disambiguate_add_year_suffix boolean?
+---@field cite_group_delimiter string
+---@field cite_grouping boolean?
+---@field collapse string?
+---@field year_suffix_delimiter string
+---@field after_collapse_delimiter string
+---@field near_note_distance integer
+---@field style Style
+---@field sort Sort
+---@field layout Layout
+---@field layouts_by_language { [string]: Layout }
+---@field name_inheritance Name
 local Citation = Element:derive("citation", {
   givenname_disambiguation_rule = "by-cite",
   -- https://github.com/citation-style-language/schema/issues/338
@@ -159,6 +174,10 @@ end
 ---@field id string | number
 ---@field prefix string?
 ---@field suffix string?
+---@field locator string?
+---@field label string?
+---@field prefix_inlines InlineElement[]?
+---@field suffix_inlines InlineElement[]?
 
 ---comment
 ---@param citation_items CitationItem[]
@@ -200,15 +219,15 @@ function Citation:build_cluster(citation_items, engine, properties)
       -- if layout_affixes then
       --   layout_prefix = layout_affixes.prefix
       -- end
-    local prefix = citation_items[i].prefix
-    if prefix then
+    local prefix_inlines = citation_items[i].prefix_inlines
+    if prefix_inlines then
       -- Prefix is inlines
-      local prefix_str = output.SortStringFormat:new():output(prefix, context)
+      local prefix_str = output.SortStringFormat:new():output(prefix_inlines, context)
       if (string.match(prefix_str, "[.!?]%s*$")
           -- position_IbidWithPrefixFullStop.txt
           -- `Book A. He said “Please work.” Ibid.`
           or string.match(prefix_str, "[.!?]”%s*$")
-         ) and InlineElement.has_space(prefix) then
+         ) and InlineElement.has_space(prefix_inlines) then
         ir:capitalize_first_term()
       end
     else
@@ -234,8 +253,8 @@ function Citation:build_cluster(citation_items, engine, properties)
 
   local previous_ir
   for i, ir in ipairs(irs) do
-    local cite_prefix = citation_items[i].prefix
-    local cite_suffix = citation_items[i].suffix
+    local cite_prefix = citation_items[i].prefix_inlines
+    local cite_suffix = citation_items[i].suffix_inlines
     if not ir.collapse_suppressed then
       local cite_inlines = ir:flatten(output_format)
       if #cite_inlines > 0 then
@@ -439,7 +458,7 @@ function Citation:build_ambiguous_ir(cite_item, output_format, engine)
   if context.reference then
     ir = self:build_ir(engine, state, context, active_layout)
   else
-    ir = Rendered:new({Formatted:new({PlainText:new(cite_item.id)}, {["font-weight"] = "bold"})}, self)
+    ir = Rendered:new({Formatted:new({PlainText:new(tostring(cite_item.id))}, {["font-weight"] = "bold"})}, self)
   end
 
   ir.cite_item = cite_item

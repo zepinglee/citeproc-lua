@@ -54,6 +54,10 @@ end
 -- https://github.com/zotero/citeproc-rs/blob/master/crates/io/src/output/markup.rs#L67
 -- https://hackage.haskell.org/package/pandoc-types-1.22.2.1/docs/Text-Pandoc-Definition.html
 ---@class InlineElement
+---@field _type string
+---@field _base_class string
+---@field value string?
+---@field inlines InlineElement[]?
 local InlineElement = {
   _type = "InlineElement",
   _base_class = "InlineElement",
@@ -106,9 +110,11 @@ function InlineElement:_debug()
 end
 
 
----@class PlainText
+---@class PlainText: InlineElement
 local PlainText = InlineElement:derive("PlainText")
 
+---@param value string
+---@return PlainText
 function PlainText:new(value)
   local o = InlineElement.new(self)
   o.value = value
@@ -117,9 +123,13 @@ function PlainText:new(value)
 end
 
 
----@class Formatted
+---@class Formatted: InlineElement
+---@field formatting table?
 local Formatted = InlineElement:derive("Formatted")
 
+---@param inlines InlineElement[]
+---@param formatting table?
+---@return Formatted
 function Formatted:new(inlines, formatting)
   local o = InlineElement.new(self)
   o.inlines = inlines
@@ -129,11 +139,13 @@ function Formatted:new(inlines, formatting)
 end
 
 
----@class Micro
+---@class Micro: InlineElement
 local Micro = InlineElement:derive("Micro")
 
 -- This is how we can flip-flop only user-supplied styling.
 -- Inside this is parsed micro html
+---@param inlines InlineElement[]
+---@return Micro
 function Micro:new(inlines)
   local o = InlineElement.new(self)
   o.inlines = inlines
@@ -142,9 +154,14 @@ function Micro:new(inlines)
 end
 
 
----@class Quoted
+---@class Quoted: InlineElement
+---@field is_inner boolean
+---@field quotes table
 local Quoted = InlineElement:derive("Quoted")
 
+---@param inlines InlineElement[]
+---@param localized_quotes table?
+---@return Quoted
 function Quoted:new(inlines, localized_quotes)
   local o = InlineElement.new(self)
   o.inlines = inlines
@@ -160,9 +177,11 @@ function Quoted:new(inlines, localized_quotes)
 end
 
 
----@class Code
+---@class Code: InlineElement
 local Code = InlineElement:derive("Code")
 
+---@param value string
+---@return Code
 function Code:new(value)
   local o = InlineElement.new(self)
   o.value = value
@@ -171,9 +190,11 @@ function Code:new(value)
 end
 
 
----@class MathML
+---@class MathML: InlineElement
 local MathML = InlineElement:derive("MathML")
 
+---@param value string
+---@return MathML
 function MathML:new(value)
   local o = InlineElement.new(self)
   o.value = value
@@ -182,9 +203,11 @@ function MathML:new(value)
 end
 
 
----@class MathTeX
+---@class MathTeX: InlineElement
 local MathTeX = InlineElement:derive("MathTeX")
 
+---@param value string
+---@return MathTeX
 function MathTeX:new(value)
   local o = InlineElement.new(self)
   o.value = value
@@ -193,9 +216,11 @@ function MathTeX:new(value)
 end
 
 
----@class NoCase
+---@class NoCase: InlineElement
 local NoCase = InlineElement:derive("NoCase")
 
+---@param inlines InlineElement[]
+---@return NoCase
 function NoCase:new(inlines)
   local o = InlineElement.new(self)
   o.inlines = inlines
@@ -204,9 +229,11 @@ function NoCase:new(inlines)
 end
 
 
----@class NoDecor
+---@class NoDecor: InlineElement
 local NoDecor = InlineElement:derive("NoDecor")
 
+---@param inlines InlineElement[]
+---@return NoDecor
 function NoDecor:new(inlines)
   local o = InlineElement.new(self)
   o.inlines = inlines
@@ -215,9 +242,13 @@ function NoDecor:new(inlines)
 end
 
 
----@class Linked
+---@class Linked: InlineElement
+---@field href string
 local Linked = InlineElement:derive("Linked")
 
+---@param value string
+---@param href string
+---@return Linked
 function Linked:new(value, href)
   local o = InlineElement.new(self)
   o.value = value
@@ -227,9 +258,13 @@ function Linked:new(value, href)
 end
 
 
----@class Div
+---@class Div: InlineElement
+---@field div table?
 local Div = InlineElement:derive("Div")
 
+---@param inlines InlineElement[]
+---@param display table?
+---@return Div
 function Div:new(inlines, display)
   local o = InlineElement.new(self)
   o.inlines = inlines
@@ -239,9 +274,13 @@ function Div:new(inlines, display)
 end
 
 
----@class CiteInline
+---@class CiteInline: InlineElement
+---@field cite_item CitationItem
 local CiteInline = InlineElement:derive("CiteInline")
 
+---@param inlines InlineElement[]
+---@param cite_item CitationItem
+---@return CiteInline
 function CiteInline:new(inlines, cite_item)
   local o = InlineElement.new(self)
   o.inlines = inlines
@@ -251,6 +290,10 @@ function CiteInline:new(inlines, cite_item)
 end
 
 
+---@param text string
+---@param context Context?
+---@param is_external boolean?
+---@return InlineElement[]
 function InlineElement:parse(text, context, is_external)
   local text_type = type(text)
   local inlines
@@ -270,6 +313,8 @@ function InlineElement:parse(text, context, is_external)
   return inlines
 end
 
+---@param text string | (string | table)[]
+---@return InlineElement[]
 function InlineElement:parse_csl_rich_text(text)
   -- Example: [
   --   "A title with a",
@@ -653,11 +698,17 @@ OutputFormat
     └── PlainTextWriter
 --]]
 
-local OutputFormat = {}
+---@class OutputFormat
+---@field name string
+---@field markups table<string, string>
+local OutputFormat = {
+
+}
 
 function OutputFormat:new(format_name)
   local o = {
     name = format_name,
+    -- markups = {},
   }
   setmetatable(o, self)
   self.__index = self
@@ -1492,6 +1543,7 @@ function OutputFormat:write_escaped(str, context)
 end
 
 
+---@class Markup: OutputFormat
 local Markup = OutputFormat:new()
 
 function Markup:write_inline(inline, context)
@@ -1572,6 +1624,18 @@ end
 
 function Markup:write_cite(inline, context)
   return self:write_inlines(inline.inlines, context)
+end
+
+function Markup:write_code(inline, context)
+  return inline.value
+end
+
+function Markup:write_mathml(inline, context)
+  return inline.value
+end
+
+function Markup:write_math_tex(inline, context)
+  return inline.value
 end
 
 function Markup:write_nocase(inline, context)
@@ -1787,7 +1851,9 @@ function HtmlWriter:write_display(inline, context)
     res = string.gsub(res, "%s+$", "")
   end
   local format_str = self.markups[key]
-  res = string.format(format_str, res)
+  if format_str then
+    res = string.format(format_str, res)
+  end
   return res
 end
 
