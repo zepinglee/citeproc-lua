@@ -24,6 +24,9 @@ local Element = element.Element
 local SeqIr = ir_node.SeqIr
 local GroupVar = ir_node.GroupVar
 
+local Position = util.Position
+
+
 -- [Choose](https://docs.citationstyles.org/en/stable/specification.html#choose)
 ---@class Choose: Element
 ---@field children (If | ElseIf | Else)[]
@@ -300,7 +303,7 @@ function If:check_position(position, context)
   -- context.cite.position is for hacking in debugging
   -- bugreports_DemoPageFullCiteCruftOnSubsequent.txt
   if position == "first" then
-    return (position_level == util.position_map["first"])
+    return (position_level == Position.First)
   elseif position == "near-note" then
     return context.cite["near-note"] or context.cite.near_note
   else

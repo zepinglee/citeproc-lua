@@ -45,6 +45,8 @@ local CiteInline = output.CiteInline
 local DisamStringFormat = output.DisamStringFormat
 local SortStringFormat = output.SortStringFormat
 
+local Position = util.Position
+
 
 local DEBUG_DISAMBIGUATE = false
 
@@ -404,6 +406,7 @@ end
 ---@field ir_index any
 ---@field is_ambiguous boolean
 ---@field disam_level integer
+---@field disam_str string?
 ---@field cite_delimiter string?
 ---@field cite_prefix string?
 ---@field cite_suffix string?
@@ -424,10 +427,18 @@ function Citation:build_fully_disambiguated_ir(cite_item, output_format, engine,
   cite_ir = self:apply_disambiguate_add_names(cite_ir, engine)
   cite_ir = self:apply_disambiguate_conditionals(cite_ir, engine)
   cite_ir = self:apply_disambiguate_add_year_suffix(cite_ir, engine)
-  -- if cite_item.id == "ITEM-3" then
-  --   util.debug(cite_item.id)
-  --   util.debug(cite_ir)
-  -- end
+
+  if engine.style.class == "note" and cite_item.position_level == Position.First then
+    -- Disambiguation should be based on the subsequent form
+    -- disambiguate_BasedOnEtAlSubsequent.txt
+    cite_item.position_level = Position.Subsequent
+    local disam_ir = self:build_ambiguous_ir(cite_item, output_format, engine)
+    disam_ir = self:apply_disambiguate_add_givenname(disam_ir, engine)
+    disam_ir = self:apply_disambiguate_add_names(disam_ir, engine)
+    disam_ir = self:apply_disambiguate_conditionals(disam_ir, engine)
+    disam_ir = self:apply_disambiguate_add_year_suffix(disam_ir, engine)
+    cite_item.position_level = Position.First
+  end
 
   return cite_ir
 end
@@ -507,6 +518,11 @@ function Citation:build_ambiguous_ir(cite_item, output_format, engine)
   return ir
 end
 
+---@param engine CiteProc
+---@param state State
+---@param context Context
+---@param active_layout Layout
+---@return CiteIr
 function Citation:build_ir(engine, state, context, active_layout)
   if not active_layout then
     util.error("Missing citation layout.")

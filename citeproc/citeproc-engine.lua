@@ -46,6 +46,8 @@ local LatexWriter = output.LatexWriter
 local HtmlWriter = output.HtmlWriter
 local SortStringFormat = output.SortStringFormat
 
+local Position = util.Position
+
 
 ---@alias ItemId string | number
 ---@alias NoteIndex integer
@@ -175,6 +177,7 @@ function CiteProc.new(sys, style, lang, force_lang)
 end
 
 function CiteProc:updateItems(ids)
+  -- util.debug(string.format('updateItems(%s)', table.concat(ids, ", ")))
   self.registry.reflist = {}
   self.registry.registry = {}
   self.person_names = {}
@@ -195,6 +198,9 @@ function CiteProc:updateItems(ids)
       loaded_ids[id] = true
     end
   end
+
+  -- Clean the first note number to reset all the positions
+  self.cite_first_note_numbers = {}
 
   -- TODO: optimize this
   self:makeCitationCluster(cite_items)
@@ -518,7 +524,7 @@ function CiteProc:get_tainted_citation_ids(citation_note_pairs)
 end
 
 function CiteProc:set_cite_item_position(cite_item, note_number, previous_cite, previous_citation, citation)
-  local position = util.position_map["first"]
+  local position = Position.First
 
   -- https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html#citations
   -- Citations within the main text of the document have a noteIndex of zero.
@@ -530,7 +536,7 @@ function CiteProc:set_cite_item_position(cite_item, note_number, previous_cite, 
 
   local first_reference_note_number = self.cite_first_note_numbers[cite_item.id]
   if first_reference_note_number then
-    position = util.position_map["subsequent"]
+    position = Position.Subsequent
   elseif note_number > 0 then
     -- note_number == 0 implied an in-text citation
     self.cite_first_note_numbers[cite_item.id] = note_number
@@ -601,18 +607,18 @@ function CiteProc:_get_cite_position(item, preceding_cite)
   if preceding_cite.locator then
     if item.locator then
       if item.locator == preceding_cite.locator and item.label == preceding_cite.label then
-        return util.position_map["ibid"]
+        return Position.Ibid
       else
-        return util.position_map["ibid-with-locator"]
+        return Position.IbidWithLocator
       end
     else
-      return util.position_map["subsequent"]
+      return Position.Subsequent
     end
   else
     if item.locator then
-      return util.position_map["ibid-with-locator"]
+      return Position.IbidWithLocator
     else
-      return util.position_map["ibid"]
+      return Position.Ibid
     end
   end
 end
@@ -644,9 +650,9 @@ function CiteProc:makeCitationCluster(citation_items)
       item_data["first-reference-note-number"] = citations[1].properties.noteIndex
     end
 
-    cite_item.position_level = util.position_map["first"]
+    cite_item.position_level = Position.First
     if self.cite_first_note_numbers[cite_item.id] then
-      cite_item.position_level = util.position_map["subsequent"]
+      cite_item.position_level = Position.Subsequent
     else
       self.cite_first_note_numbers[cite_item.id] = 0
     end

@@ -985,11 +985,20 @@ util.roman_numerals = {
 
 -- Choose
 
+---@enum Postion
+local Position = {
+  First = 0,
+  Subsequent = 1,
+  Ibid = 2,
+  IbidWithLocator = 3,
+}
+util.Position = Position
+
 util.position_map = {
-  ["first"] = 0,
-  ["subsequent"] = 1,
-  ["ibid"] = 2,
-  ["ibid-with-locator"] = 3,
+  ["first"] = Position.First,
+  ["subsequent"] = Position.Subsequent,
+  ["ibid"] = Position.Ibid,
+  ["ibid-with-locator"] = Position.IbidWithLocator,
   ["container-subsequent"] = 4,
 }
 

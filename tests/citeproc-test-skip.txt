@@ -5,7 +5,6 @@ disambiguate_BasedOnSubsequentFormWithBackref2.txt
 integration_FirstReferenceNoteNumberPositionChange.txt
 
 # Disambiguation should be based on the subsequent form
-disambiguate_BasedOnEtAlSubsequent.txt
 disambiguate_DisambiguationHang.txt
 
 # Hebrew

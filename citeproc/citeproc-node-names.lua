@@ -38,6 +38,8 @@ local SortStringFormat = output.SortStringFormat
 
 local Element = element.Element
 
+local Position = util.Position
+
 
 ---@class Names: Element
 ---@field variable string
@@ -186,7 +188,7 @@ function Names:build_ir(engine, state, context)
 
   if context.cite then
     local position_level = context.cite.position or context.cite.position_level
-    if position_level and position_level >= util.position_map["subsequent"] then
+    if position_level and position_level >= Position.Subsequent then
       if names_inheritance.name.et_al_subsequent_min then
         names_inheritance.name.et_al_min = names_inheritance.name.et_al_subsequent_min
       end
@@ -474,7 +476,7 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     label = nil
   end
 
-  local et_al_abbreviation = self.et_al_min and self.et_al_use_first and #names >= self.et_al_min
+  local et_al_abbreviation = self.et_al_min and self.et_al_use_first and #names >= self.et_al_min and #names > self.et_al_use_first
   local use_last = et_al_abbreviation and self.et_al_use_last and self.et_al_use_first <= self.et_al_min - 2
 
   if self.form == "count" then
