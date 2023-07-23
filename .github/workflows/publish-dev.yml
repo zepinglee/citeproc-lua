@@ -3,9 +3,10 @@ name: Publish dev version
 on:
   push:
     branches:
-      - $default-branch
+      - main
     paths:
       - citeproc-lua-dev-1.rockspec
+  workflow_dispatch:
 
 jobs:
 
