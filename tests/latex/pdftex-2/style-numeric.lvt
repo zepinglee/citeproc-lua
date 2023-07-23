@@ -10,7 +10,7 @@
   regression-test = true,
   style = ieee,
 }
-\addbibresource{test.bib}
+\addbibresource{test.json}
 
 
 \begin{document}

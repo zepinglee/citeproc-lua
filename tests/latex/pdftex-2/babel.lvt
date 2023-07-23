@@ -11,7 +11,7 @@
   regression-test = true,
   style = apa,
 }
-\addbibresource{test.bib}
+\addbibresource{test.json}
 
 
 \begin{document}

@@ -163,7 +163,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 15: Bibilography
+TEST 15: Bibliography
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer
 braces):
@@ -182,4 +182,4 @@ Addison-Wesley.}
 l. ...}
 ============================================================
 [1
-] (bib-resource-yaml.aux)
+] (data-bibtex.aux)

@@ -12,7 +12,7 @@
   regression-test = true,
   style = style-unavailable,
 }
-\addbibresource{test.bib}
+\addbibresource{test.json}
 
 
 \begin{document}

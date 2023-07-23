@@ -163,7 +163,7 @@ braces):
 >  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing =
 2, entry-spacing = 0}}
 >  {\bibitem {ITEM-2} Bennett, F. G., Jr. (2009). Getting property right:
-“informal” mortgages in the Japanese courts. \textit {Pac. Rim L. \& Pol’y
+“Informal” mortgages in the Japanese courts. \textit {Pac. Rim L. \& Pol’y
 J.}, \textit {18}, 463–509.}
 >  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of dissent:
 Protest and state power in the media age}. Routledge.}
@@ -249,7 +249,7 @@ Completed box being shipped out [2]
 ....\glue(\parskip) 0.0
 ....\glue(\parskip) 0.0
 ....\glue(\baselineskip) 16.3272
-....\hbox(7.5+2.5)x335.0, glue set - 0.13432, shifted 10.0, direction TLT
+....\hbox(7.5+2.5)x335.0, glue set - 0.20229, shifted 10.0, direction TLT
 .....\localpar
 ......\localinterlinepenalty=0
 ......\localbrokenpenalty=0
@@ -325,7 +325,7 @@ Completed box being shipped out [2]
 .....\TU/lmr/m/n/10 :
 .....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/n/10 “
-.....\TU/lmr/m/n/10 i
+.....\TU/lmr/m/n/10 I
 .....\TU/lmr/m/n/10 n
 .....\discretionary (penalty 50)
 ......< \TU/lmr/m/n/10 -

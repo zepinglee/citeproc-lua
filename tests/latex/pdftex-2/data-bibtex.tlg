@@ -5,11 +5,10 @@ Don't change this file in any respect.
 TEST 1: Single cite item in a citation
 ============================================================
 > 
-\l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
+\l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
-> \l__csl_citation_tl=[\textbf {ITEM-1}].
+> \l__csl_citation_tl=(D’Arcus, 2005).
 <recently read> }
 l. ...}
 ============================================================
@@ -17,12 +16,10 @@ l. ...}
 TEST 2: Multiple cite items in a citation
 ============================================================
 > 
-\l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@1},citationItems={{id={ITEM-1}},{id={ITEM-2}}},properties={noteIndex={2}}.
+\l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@1},citationItems={{id={ITEM-1}},{id={ITEM-2}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
-LaTeX Warning: Citation `ITEM-2' on page 1 undefined on input line ....
-> \l__csl_citation_tl=[\textbf {ITEM-1, ITEM-2}].
+> \l__csl_citation_tl=(Bennett, 2009; D’Arcus, 2005).
 <recently read> }
 l. ...}
 ============================================================
@@ -30,11 +27,10 @@ l. ...}
 TEST 3: Citation with page locator
 ============================================================
 > 
-\l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={3}}.
+\l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
-> \l__csl_citation_tl=[\textbf {ITEM-1}].
+> \l__csl_citation_tl=(D’Arcus, 2005, p. 6).
 <recently read> }
 l. ...}
 ============================================================
@@ -42,11 +38,10 @@ l. ...}
 TEST 4: Citation with section locator
 ============================================================
 > 
-\l__csl_citation_info_tl=citationID={ITEM-1@3},citationItems={{id={ITEM-1},label={section},locator={2.3}}},properties={noteIndex={4}}.
+\l__csl_citation_info_tl=citationID={ITEM-1@3},citationItems={{id={ITEM-1},label={section},locator={2.3}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
-> \l__csl_citation_tl=[\textbf {ITEM-1}].
+> \l__csl_citation_tl=(D’Arcus, 2005, sec. 2.3).
 <recently read> }
 l. ...}
 ============================================================
@@ -54,11 +49,10 @@ l. ...}
 TEST 5: Citation with implicit page locator
 ============================================================
 > 
-\l__csl_citation_info_tl=citationID={ITEM-1@4},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={5}}.
+\l__csl_citation_info_tl=citationID={ITEM-1@4},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
-> \l__csl_citation_tl=[\textbf {ITEM-1}].
+> \l__csl_citation_tl=(D’Arcus, 2005, p. 6).
 <recently read> }
 l. ...}
 ============================================================
@@ -67,11 +61,10 @@ TEST 6: Citation with prefix and suffix
 ============================================================
 > 
 \l__csl_citation_info_tl=citationID={ITEM-1@5},citationItems={{id={ITEM-1},prefix={prefix
-},suffix={ suffix}}},properties={noteIndex={6}}.
+},suffix={ suffix}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
-> \l__csl_citation_tl=[\textbf {ITEM-1}].
+> \l__csl_citation_tl=(prefix D’Arcus, 2005 suffix).
 <recently read> }
 l. ...}
 ============================================================
@@ -80,11 +73,10 @@ TEST 7: Citation with implicit prefix and suffix
 ============================================================
 > 
 \l__csl_citation_info_tl=citationID={ITEM-1@6},citationItems={{id={ITEM-1},prefix={prefix
-},suffix={, suffix}}},properties={noteIndex={7}}.
+},suffix={, suffix}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
-> \l__csl_citation_tl=[\textbf {ITEM-1}].
+> \l__csl_citation_tl=(prefix D’Arcus, 2005, suffix).
 <recently read> }
 l. ...}
 ============================================================
@@ -93,11 +85,10 @@ TEST 8: Citation with implicit suffix
 ============================================================
 > 
 \l__csl_citation_info_tl=citationID={ITEM-1@7},citationItems={{id={ITEM-1},suffix={,
-suffix}}},properties={noteIndex={8}}.
+suffix}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
-> \l__csl_citation_tl=[\textbf {ITEM-1}].
+> \l__csl_citation_tl=(D’Arcus, 2005, suffix).
 <recently read> }
 l. ...}
 ============================================================
@@ -106,11 +97,10 @@ TEST 9: Citation with implicit prefix
 ============================================================
 > 
 \l__csl_citation_info_tl=citationID={ITEM-1@8},citationItems={{id={ITEM-1},prefix={prefix
-}}},properties={noteIndex={9}}.
+}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
-> \l__csl_citation_tl=[\textbf {ITEM-1}].
+> \l__csl_citation_tl=(prefix D’Arcus, 2005).
 <recently read> }
 l. ...}
 ============================================================
@@ -121,8 +111,7 @@ TEST 10: Narrative citation
 \l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={composite}}.
 <recently read> }
 l. ...}
-LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
-> \l__csl_citation_tl=[\textbf {ITEM-1}].
+> \l__csl_citation_tl=D’Arcus (2005).
 <recently read> }
 l. ...}
 ============================================================
@@ -134,8 +123,7 @@ TEST 11: Narrative citation
 early work},noteIndex={0},mode={composite}}.
 <recently read> }
 l. ...}
-LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
-> \l__csl_citation_tl=[\textbf {ITEM-1}].
+> \l__csl_citation_tl=D’Arcus’s early work (2005).
 <recently read> }
 l. ...}
 ============================================================
@@ -144,12 +132,10 @@ TEST 12: Multiple cite items with options
 ============================================================
 > 
 \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@2},citationItems={{id={ITEM-1},prefix={See
-},label={page},locator={6}},{id={ITEM-2},label={figure},locator={2}}},properties={noteIndex={12}}.
+},label={page},locator={6}},{id={ITEM-2},label={figure},locator={2}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
-LaTeX Warning: Citation `ITEM-2' on page 1 undefined on input line ....
-> \l__csl_citation_tl=[\textbf {ITEM-1, ITEM-2}].
+> \l__csl_citation_tl=(Bennett, 2009, fig. 2; See D’Arcus, 2005, p. 6).
 <recently read> }
 l. ...}
 ============================================================
@@ -160,8 +146,7 @@ TEST 13: Cite only author
 \l__csl_citation_info_tl=citationID={ITEM-1@11},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
 <recently read> }
 l. ...}
-LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
-> \l__csl_citation_tl=[\textbf {ITEM-1}].
+> \l__csl_citation_tl=D’Arcus.
 <recently read> }
 l. ...}
 ============================================================
@@ -178,10 +163,23 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 15: Bibilography
+TEST 15: Bibliography
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+The sequence \l__csl_bibliography_seq contains the items (without outer
+braces):
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing =
+2, entry-spacing = 0}}
+>  {\bibitem {ITEM-2} Bennett, F. G., Jr. (2009). Getting property right:
+“Informal” mortgages in the Japanese courts. \textit {Pac. Rim L. \&
+Pol’y J.}, \textit {18}, 463–509.}
+>  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of dissent:
+Protest and state power in the media age}. Routledge.}
+>  {\bibitem {ITEM-3} Lamport, L. (1994). \textit {LaTeX: A document
+preparation system: User’s guide and reference manual} (2nd ed.).
+Addison-Wesley.}
+>  {\end {thebibliography}}.
+<recently read> }
+l. ...}
 ============================================================
 [1
-] (bib-resource-yaml.aux)
-LaTeX Warning: There were undefined references.
+] (data-bibtex.aux)

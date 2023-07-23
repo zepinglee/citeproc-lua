@@ -163,15 +163,15 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 15: Bibliography
+TEST 15: Bibilography
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer
 braces):
 >  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing =
 2, entry-spacing = 0}}
 >  {\bibitem {ITEM-2} Bennett, F. G., Jr. (2009). Getting property right:
-“informal” mortgages in the Japanese courts. \textit {Pac. Rim L. \&
-Pol’y J.}, \textit {18}, 463–509.}
+“Informal” mortgages in the Japanese courts. \textit {Pac. Rim L. \& Pol’y
+J.}, \textit {18}, 463–509.}
 >  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of dissent:
 Protest and state power in the media age}. Routledge.}
 >  {\bibitem {ITEM-3} Lamport, L. (1994). \textit {LaTeX: A document
@@ -182,4 +182,4 @@ Addison-Wesley.}
 l. ...}
 ============================================================
 [1
-] (json.aux)
+] (data-yaml.aux)

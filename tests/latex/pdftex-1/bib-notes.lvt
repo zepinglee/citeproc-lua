@@ -11,7 +11,7 @@
   style = apa,
   bib-font = \footnotesize,
 }
-\addbibresource{test.bib}
+\addbibresource{test.json}
 
 
 \begin{document}

@@ -11,7 +11,7 @@
   style = apa,
   bib-item-sep = 7pt,
 }
-\addbibresource{test.bib}
+\addbibresource{test.json}
 
 
 \begin{document}

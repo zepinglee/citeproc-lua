@@ -10,7 +10,7 @@
   regression-test = true,
   style = apa,
 }
-\addbibresource{test.bib}
+\addbibresource{test.json}
 
 \defbibheading{subsection}[Works Cited]{%
   \subsection{#1}%

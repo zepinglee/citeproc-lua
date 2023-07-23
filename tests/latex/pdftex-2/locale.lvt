@@ -11,7 +11,7 @@
   style  = locale-test,
   locale = zh-CN,
 }
-\addbibresource{test.bib}
+\addbibresource{test.json}
 
 
 \begin{document}
