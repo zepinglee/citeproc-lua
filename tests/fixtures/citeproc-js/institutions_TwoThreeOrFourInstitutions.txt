@@ -1,0 +1,87 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+In the default configuration (i.e. with spoof_institutional_affiliations="false"),
+the "and" attribute on the institution node (by default and="text") has no effect.
+
+
+>>===== RESULT =====>>
+John Doe &#38; Jane Roe
+Doe John Co, Roe Jane Co, &#38; Noakes Richard Co
+John Doe, Jane Roe, Richard Noakes, &#38; Deacon Snoakes
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <layout delimiter="&#x0A;">
+      <names variable="author">
+        <name and="symbol"/>
+      </names>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "author": [
+            {
+                "family": "John Doe"
+            }, 
+            {
+                "family": "Jane Roe"
+            }
+        ], 
+        "id": "ITEM-1", 
+        "type": "book"
+    }, 
+    {
+        "author": [
+            {
+                "literal": "Doe John Co"
+            }, 
+            {
+                "literal": "Roe Jane Co"
+            }, 
+            {
+                "literal": "Noakes Richard Co"
+            }
+        ], 
+        "id": "ITEM-2", 
+        "type": "book"
+    }, 
+    {
+        "author": [
+            {
+                "literal": "John Doe"
+            }, 
+            {
+                "literal": "Jane Roe"
+            }, 
+            {
+                "literal": "Richard Noakes"
+            }, 
+            {
+                "literal": "Deacon Snoakes"
+            }
+        ], 
+        "id": "ITEM-3", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<
+

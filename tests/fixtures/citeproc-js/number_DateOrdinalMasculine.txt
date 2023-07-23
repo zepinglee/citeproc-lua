@@ -1,0 +1,71 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+Test of month names for gendered languages.
+
+>>===== RESULT =====>>
+Junie Month 1stMASC, 1965
+<<===== RESULT =====<<
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.1mlz1">
+  <info>
+    <title>Test fixture</title>
+    <id>http://citationstyles.org/tests/fixture</id>
+    <link href="http://citationstyles.org/tests/fixture" rel="self"/>
+    <link href="http://citationstyles.org/documentation/text" rel="documentation"/>
+    <category citation-format="author-date"/>
+    <updated>2014-04-30T13:19:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <locale>
+    <terms>
+
+      <term name="month-06" gender="masculine">Junie Month</term>
+
+      <term name="ordinal">th</term>
+
+      <term name="ordinal-01" gender-form="masculine">stXX</term>
+      <term name="ordinal-02" gender-form="masculine">nd</term>
+      <term name="ordinal-03" gender-form="masculine">rd</term>
+      <term name="ordinal-04" gender-form="masculine">th</term>
+
+      <term name="ordinal-01" match="last-digit" gender-form="masculine">stMASC</term>
+      <term name="ordinal-02" match="last-digit" gender-form="masculine">ndMASC</term>
+      <term name="ordinal-03" match="last-digit" gender-form="masculine">rdMASC</term>
+      <term name="ordinal-04" match="last-digit" gender-form="masculine">thMASC</term>
+
+    </terms>
+  </locale>
+  <citation>
+    <layout>
+      <date variable="issued" form="text" date-parts="year-month-day">
+        <date-part name="day" form="ordinal"/>
+      </date>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1", 
+        "issued": {
+            "date-parts": [
+                [
+                    "1965", 
+                    "6", 
+                    "1"
+                ]
+            ]
+        }, 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

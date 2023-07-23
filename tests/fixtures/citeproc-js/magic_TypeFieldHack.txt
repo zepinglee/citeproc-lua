@@ -1,0 +1,93 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+>>[0] Should be dataset (is a dataset); Should be unrecognized type (is unrecognized type); Should be book (is a book)
+<<===== RESULT =====<<
+
+
+>>===== CITATIONS =====>>
+[
+    [
+        {
+            "citationID": "CITATION-1", 
+            "citationItems": [
+                {
+                    "id": "ITEM-1"
+                }, 
+                {
+                    "id": "ITEM-2"
+                }, 
+                {
+                    "id": "ITEM-3"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 1
+            }
+        }, 
+        [], 
+        []
+    ]
+]
+<<===== CITATIONS =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <layout delimiter="; ">
+      <group delimiter=" ">
+        <text variable="title"/>
+        <group prefix="(" suffix=")">
+          <choose>
+            <if type="book">
+              <text value="is a book"/>
+            </if>
+            <else-if type="dataset">
+              <text value="is a dataset"/>
+            </else-if>
+            <else>
+              <text value="is unrecognized type"/>
+            </else>
+          </choose>
+        </group>
+      </group>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1", 
+        "type": "book",
+        "title": "Should be dataset",
+        "note": "type: dataset"
+    }, 
+    {
+        "id": "ITEM-2", 
+        "type": "book",
+        "title": "Should be unrecognized type",
+        "note": "type: invalid"
+    },
+    {
+        "id": "ITEM-3", 
+        "type": "book",
+        "title": "Should be book"
+    }
+]
+<<===== INPUT =====<<

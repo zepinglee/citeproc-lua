@@ -266,6 +266,7 @@ function unicode.split_word_bounds(str)
   -- util.debug(str)
   local segments = {}
   if uni_algos_words then
+    -- util.debug("uni_algos_words")
     for _, _, segment in uni_algos_words.word_boundaries(str) do
       table.insert(segments, segment)
     end
@@ -283,9 +284,9 @@ function unicode.split_word_bounds(str)
         end
       end
     end
-    -- util.debug(segments)
 
   else
+    -- util.debug("no uni_algos_words")
     -- A naive implementation
     local state = CharState.Other
     local segment = ""
@@ -312,9 +313,9 @@ function unicode.split_word_bounds(str)
     end
 
     table.insert(segments, segment)
-    -- util.debug(segments)
   end
 
+  -- util.debug(segments)
   return segments
 end
 

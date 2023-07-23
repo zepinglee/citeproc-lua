@@ -1,0 +1,96 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+(Kesey 1964)
+Kesey
+(1964)
+<<===== RESULT =====<<
+
+
+>>===== CITATION-ITEMS =====>>
+[
+    [
+        {
+            "id": "ITEM-1"
+        }
+    ],
+    [
+        {
+            "id": "ITEM-1",
+            "author-only": true
+        }
+    ],
+    [
+        {
+            "id": "ITEM-1",
+            "suppress-author": true
+        }
+    ]
+]
+<<===== CITATION-ITEMS =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <layout prefix="(" suffix=")">
+      <group delimiter=" ">
+        <names variable="author">
+          <name form="short"/>
+        </names>
+        <date variable="issued" date-parts="year" form="text"/>
+      </group>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+	{
+        "id": "ITEM-1",
+		"type": "book",
+		"multi": {
+			"main": {},
+			"_keys": {}
+		},
+		"title": "Sometimes a great notion",
+		"publisher": "Viking Press",
+		"publisher-place": "New York",
+		"number-of-pages": "628",
+		"source": "catalog.loc.gov Library Catalog",
+		"event-place": "New York",
+		"archive-place": "New York",
+		"call-number": "PZ4.K42 PS3561.E667 So",
+		"author": [
+			{
+				"family": "Kesey",
+				"given": "Ken",
+				"multi": {
+					"_key": {}
+				}
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"1964"
+				]
+			]
+		}
+	}
+]
+<<===== INPUT =====<<

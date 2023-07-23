@@ -118,27 +118,25 @@ return function (options)
       io_flush()
     end
 
-    if parent.name == "test-suite" then
-      local category = string.match(element.name, "^[^_]+")
-      if not handler.category_count[category] then
-        handler.category_count[category] = {
-          success = 0,
-          failure = 0,
-          error = 0,
-          pending = 0,
-        }
-      end
+    local category = string.match(element.name, "^[^_]+")
+    if not handler.category_count[category] then
+      handler.category_count[category] = {
+        success = 0,
+        failure = 0,
+        error = 0,
+        pending = 0,
+      }
+    end
 
-      if status == "success" then
-        handler.category_count[category].success = handler.category_count[category].success + 1
-      else
-        if status == 'failure' then
-          handler.category_count[category].failure = handler.category_count[category].failure + 1
-        elseif status == 'error' then
-          handler.category_count[category].error = handler.category_count[category].error + 1
-        elseif status == 'pending' then
-          handler.category_count[category].pending = handler.category_count[category].pending + 1
-        end
+    if status == "success" then
+      handler.category_count[category].success = handler.category_count[category].success + 1
+    else
+      if status == 'failure' then
+        handler.category_count[category].failure = handler.category_count[category].failure + 1
+      elseif status == 'error' then
+        handler.category_count[category].error = handler.category_count[category].error + 1
+      elseif status == 'pending' then
+        handler.category_count[category].pending = handler.category_count[category].pending + 1
       end
     end
 

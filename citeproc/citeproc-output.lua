@@ -1049,12 +1049,15 @@ local function title_case_word(word, is_first, after_end_punct, is_last, ignore_
   -- TODO: two-word cases like "due to"
   -- util.debug(word)
   -- util.debug(ignore_stop_word)
+  local res
   if (is_first or is_last or after_end_punct or ignore_stop_word or not util.stop_words[word])
       and string.match(word, "%a") and unicode.islower(word) then
-    return unicode.capitalize(word)
+    res = unicode.capitalize(word)
   else
-    return word
+    res = word
   end
+  -- util.debug(res)
+  return res
 end
 
 local function transform_lowercase_if_capitalize(word, is_first, after_end_punct, is_last, is_stop_word)

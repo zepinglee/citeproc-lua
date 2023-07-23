@@ -1,0 +1,161 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+..[0] Alan Aalto near-note=false
+..[1] Bevy Bbritto near-note=false
+>>[2] Aalto near-note=true
+<<===== RESULT =====<<
+
+
+>>===== CITATIONS =====>>
+[
+    [
+        {
+            "citationID": "CITATION-1", 
+            "citationItems": [
+                {
+                    "id": "ITEM-1"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 1
+            }
+        }, 
+        [], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-2", 
+            "citationItems": [
+                {
+                    "id": "ITEM-2"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 2
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ]
+        ], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-3", 
+            "citationItems": [
+                {
+                    "id": "ITEM-1"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 3
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ], 
+            [
+                "CITATION-2", 
+                2
+            ]
+        ], 
+        []
+    ]
+]
+<<===== CITATIONS =====<<
+
+
+>>===== CSL =====>>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="note">
+<info>
+   <id>http://www.heiligenkreuz.at</id>
+    <link href="http://www.zotero.org/styles/style-title" rel="self"/>
+    <title>non functioning names element</title>
+    <updated>2016-01-01T08:00:00+00:00</updated>
+</info>
+<macro name="author">
+    <choose>
+        <if position="near-note">
+            <names variable="author">
+                <name delimiter=" / " 
+                      delimiter-precedes-et-al="never"
+                      et-al-min="3"
+                      et-al-use-first="3"
+                      form="short" />
+            </names>
+           <text value=" near-note=true" />
+        </if>
+        <else>
+            <names variable="author">
+                <name delimiter=" / " 
+                      delimiter-precedes-et-al="never"
+                      et-al-min="3"
+                      et-al-use-first="3" form="long" />
+            </names>
+            <text value=" near-note=false" />
+        </else>
+    </choose>
+</macro>
+<macro name="mandatoryAuthor">
+    <choose>
+        <if variable="author">
+            <text macro="author" />
+        </if>
+        <else>
+            <text value="Pflichtfeld Author fehlt" 
+                  font-weight="bold" />
+        </else>
+    </choose>
+</macro>
+<citation>    
+    <layout>
+        <choose>
+            <if type="book">
+                <text macro="mandatoryAuthor" />
+            </if>
+            <else>
+                <text value="Literaturtyp nicht unterstützt"
+                      font-weight="bold"/>
+            </else>
+        </choose>
+    </layout>
+</citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "author": [
+            {
+                "family": "Aalto", 
+                "given": "Alan"
+            }
+        ], 
+        "id": "ITEM-1", 
+        "type": "book"
+    }, 
+    {
+        "author": [
+            {
+                "family": "Bbritto", 
+                "given": "Bevy" 
+            }
+        ], 
+        "id": "ITEM-2", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

@@ -1,0 +1,50 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+This is actually an INCORRECT result, but should be the
+default behavior of the processor.
+
+Correct output would be: Lê Cao Đài
+
+>>===== RESULT =====>>
+Cao Đài Lê
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <layout>
+      <names variable="author">
+        <name />
+      </names>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "author": [
+            {
+                "family": "Lê", 
+                "given": "Cao Đài"
+            }
+        ], 
+        "id": "ITEM-1", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

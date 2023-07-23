@@ -1,0 +1,52 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+Note: With the move to using field separators, quote escapes are
+no longer required, and have been removed from citeproc-js.
+
+
+>>===== RESULT =====>>
+Ministry of Fear, Loathing and Error &#38; Mercuricon Spittle
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <layout>
+      <names variable="author">
+        <name delimiter="[x]" and="symbol"/>
+      </names>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "author": [
+            {
+                "literal": "Ministry of Fear, Loathing and Error"
+            }, 
+            {
+                "family": "Spittle", 
+                "given": "Mercuricon", 
+                "static-ordering": false
+            }
+        ], 
+        "id": "item-1", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

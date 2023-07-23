@@ -1,0 +1,58 @@
+>>== MODE ==>>
+citation
+<<== MODE ==<<
+
+
+>>== ABBREVIATIONS ==>>
+{
+    "default": {
+        "institution-part": {
+            "Waffle": "!here>>>"
+        }
+    }
+}
+<<== ABBREVIATIONS ==<<
+
+
+>>== RESULT ==>>
+Wow
+<<== RESULT ==<<
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.1mlz1"
+      default-locale="en-US-x-translit-ja-alalc97-x-translat-en">
+  <info>
+    <title>Test fixture</title>
+    <id>http://citationstyles.org/tests/fixture</id>
+    <link href="http://citationstyles.org/tests/fixture" rel="self"/>
+    <link href="http://citationstyles.org/documentation/text" rel="documentation"/>
+    <category citation-format="author-date"/>
+    <updated>2014-04-30T13:19:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <citation>
+    <layout>
+      <names variable="authority">
+        <name/>
+        <institution institution-parts="short"/>
+      </names>
+      <text variable="genre"/>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1", 
+        "authority": "Waffle",
+        "genre":"Wow",
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

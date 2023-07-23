@@ -1,0 +1,822 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+..[0] Title 1: 1st-one
+..[1] Title 2: 2nd-two-end
+..[2] Title 3: 3rd-three-end
+..[3] Title 4: 4th
+..[4] Title 5: 5th-default
+..[5] Title 10: 10th-zero
+..[6] Title 11: 11th-default
+..[7] Title 12: 12th-twelve
+..[8] Title 13: 13th-thirteen-end
+..[9] Title 14: 14th
+..[10] Title 110: 110th-zero
+..[11] Title 111: 111th-default
+..[12] Title 112: 112nd-two-end
+..[13] Title 113: 113th-thirteen-end
+>>[14] Title 114: 114th
+<<===== RESULT =====<<
+
+>>===== CITATIONS =====>>
+[
+    [
+        {
+            "citationID": "CITATION-1", 
+            "citationItems": [
+                {
+                    "id": "ITEM-1"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 1
+            }
+        }, 
+        [], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-2", 
+            "citationItems": [
+                {
+                    "id": "ITEM-2"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 2
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ]
+        ], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-3", 
+            "citationItems": [
+                {
+                    "id": "ITEM-3"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 3
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ], 
+            [
+                "CITATION-2", 
+                2
+            ]
+        ], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-4", 
+            "citationItems": [
+                {
+                    "id": "ITEM-4"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 4
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ], 
+            [
+                "CITATION-2", 
+                2
+            ], 
+            [
+                "CITATION-3", 
+                3
+            ]
+        ], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-5", 
+            "citationItems": [
+                {
+                    "id": "ITEM-5"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 5
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ], 
+            [
+                "CITATION-2", 
+                2
+            ], 
+            [
+                "CITATION-3", 
+                3
+            ], 
+            [
+                "CITATION-4", 
+                4
+            ]
+        ], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-6", 
+            "citationItems": [
+                {
+                    "id": "ITEM-10"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 6
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ], 
+            [
+                "CITATION-2", 
+                2
+            ], 
+            [
+                "CITATION-3", 
+                3
+            ], 
+            [
+                "CITATION-4", 
+                4
+            ], 
+            [
+                "CITATION-5", 
+                5
+            ]
+        ], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-7", 
+            "citationItems": [
+                {
+                    "id": "ITEM-11"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 7
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ], 
+            [
+                "CITATION-2", 
+                2
+            ], 
+            [
+                "CITATION-3", 
+                3
+            ], 
+            [
+                "CITATION-4", 
+                4
+            ], 
+            [
+                "CITATION-5", 
+                5
+            ], 
+            [
+                "CITATION-6", 
+                6
+            ]
+        ], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-8", 
+            "citationItems": [
+                {
+                    "id": "ITEM-12"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 8
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ], 
+            [
+                "CITATION-2", 
+                2
+            ], 
+            [
+                "CITATION-3", 
+                3
+            ], 
+            [
+                "CITATION-4", 
+                4
+            ], 
+            [
+                "CITATION-5", 
+                5
+            ], 
+            [
+                "CITATION-6", 
+                6
+            ], 
+            [
+                "CITATION-7", 
+                7
+            ]
+        ], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-9", 
+            "citationItems": [
+                {
+                    "id": "ITEM-13"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 9
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ], 
+            [
+                "CITATION-2", 
+                2
+            ], 
+            [
+                "CITATION-3", 
+                3
+            ], 
+            [
+                "CITATION-4", 
+                4
+            ], 
+            [
+                "CITATION-5", 
+                5
+            ], 
+            [
+                "CITATION-6", 
+                6
+            ], 
+            [
+                "CITATION-7", 
+                7
+            ], 
+            [
+                "CITATION-8", 
+                8
+            ]
+        ], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-10", 
+            "citationItems": [
+                {
+                    "id": "ITEM-14"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 10
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ], 
+            [
+                "CITATION-2", 
+                2
+            ], 
+            [
+                "CITATION-3", 
+                3
+            ], 
+            [
+                "CITATION-4", 
+                4
+            ], 
+            [
+                "CITATION-5", 
+                5
+            ], 
+            [
+                "CITATION-6", 
+                6
+            ], 
+            [
+                "CITATION-7", 
+                7
+            ], 
+            [
+                "CITATION-8", 
+                8
+            ], 
+            [
+                "CITATION-9", 
+                9
+            ]
+        ], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-11", 
+            "citationItems": [
+                {
+                    "id": "ITEM-110"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 11
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ], 
+            [
+                "CITATION-2", 
+                2
+            ], 
+            [
+                "CITATION-3", 
+                3
+            ], 
+            [
+                "CITATION-4", 
+                4
+            ], 
+            [
+                "CITATION-5", 
+                5
+            ], 
+            [
+                "CITATION-6", 
+                6
+            ], 
+            [
+                "CITATION-7", 
+                7
+            ], 
+            [
+                "CITATION-8", 
+                8
+            ], 
+            [
+                "CITATION-9", 
+                9
+            ], 
+            [
+                "CITATION-10", 
+                10
+            ]
+        ], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-12", 
+            "citationItems": [
+                {
+                    "id": "ITEM-111"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 12
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ], 
+            [
+                "CITATION-2", 
+                2
+            ], 
+            [
+                "CITATION-3", 
+                3
+            ], 
+            [
+                "CITATION-4", 
+                4
+            ], 
+            [
+                "CITATION-5", 
+                5
+            ], 
+            [
+                "CITATION-6", 
+                6
+            ], 
+            [
+                "CITATION-7", 
+                7
+            ], 
+            [
+                "CITATION-8", 
+                8
+            ], 
+            [
+                "CITATION-9", 
+                9
+            ], 
+            [
+                "CITATION-10", 
+                10
+            ], 
+            [
+                "CITATION-11", 
+                11
+            ]
+        ], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-13", 
+            "citationItems": [
+                {
+                    "id": "ITEM-112"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 13
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ], 
+            [
+                "CITATION-2", 
+                2
+            ], 
+            [
+                "CITATION-3", 
+                3
+            ], 
+            [
+                "CITATION-4", 
+                4
+            ], 
+            [
+                "CITATION-5", 
+                5
+            ], 
+            [
+                "CITATION-6", 
+                6
+            ], 
+            [
+                "CITATION-7", 
+                7
+            ], 
+            [
+                "CITATION-8", 
+                8
+            ], 
+            [
+                "CITATION-9", 
+                9
+            ], 
+            [
+                "CITATION-10", 
+                10
+            ], 
+            [
+                "CITATION-11", 
+                11
+            ], 
+            [
+                "CITATION-12", 
+                12
+            ]
+        ], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-14", 
+            "citationItems": [
+                {
+                    "id": "ITEM-113"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 14
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ], 
+            [
+                "CITATION-2", 
+                2
+            ], 
+            [
+                "CITATION-3", 
+                3
+            ], 
+            [
+                "CITATION-4", 
+                4
+            ], 
+            [
+                "CITATION-5", 
+                5
+            ], 
+            [
+                "CITATION-6", 
+                6
+            ], 
+            [
+                "CITATION-7", 
+                7
+            ], 
+            [
+                "CITATION-8", 
+                8
+            ], 
+            [
+                "CITATION-9", 
+                9
+            ], 
+            [
+                "CITATION-10", 
+                10
+            ], 
+            [
+                "CITATION-11", 
+                11
+            ], 
+            [
+                "CITATION-12", 
+                12
+            ], 
+            [
+                "CITATION-13", 
+                13
+            ]
+        ], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-15", 
+            "citationItems": [
+                {
+                    "id": "ITEM-114"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 16
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ], 
+            [
+                "CITATION-2", 
+                2
+            ], 
+            [
+                "CITATION-3", 
+                3
+            ], 
+            [
+                "CITATION-4", 
+                4
+            ], 
+            [
+                "CITATION-5", 
+                5
+            ], 
+            [
+                "CITATION-6", 
+                6
+            ], 
+            [
+                "CITATION-7", 
+                7
+            ], 
+            [
+                "CITATION-8", 
+                8
+            ], 
+            [
+                "CITATION-9", 
+                9
+            ], 
+            [
+                "CITATION-10", 
+                10
+            ], 
+            [
+                "CITATION-11", 
+                11
+            ], 
+            [
+                "CITATION-12", 
+                12
+            ], 
+            [
+                "CITATION-13", 
+                13
+            ], 
+            [
+                "CITATION-14", 
+                14
+            ]
+        ], 
+        []
+    ]
+]
+<<===== CITATIONS =====<<
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.1mlz1">
+  <info>
+    <title>Test fixture</title>
+    <id>http://citationstyles.org/tests/fixture</id>
+    <link href="http://citationstyles.org/tests/fixture" rel="self"/>
+    <link href="http://citationstyles.org/documentation/text" rel="documentation"/>
+    <category citation-format="author-date"/>
+    <updated>2014-04-30T13:19:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <locale xml:lang="en">
+    <terms>
+      <!-- ORDINALS -->
+      <term name="ordinal">th-default</term>
+      <term name="ordinal-00" match="last-digit">th-zero</term>
+      <term name="ordinal-01" match="whole-number">st-one</term>
+      <term name="ordinal-02" match="last-digit">nd-two-end</term>
+      <term name="ordinal-03" match="last-digit">rd-three-end</term>
+      <term name="ordinal-04">th</term>
+      <term name="ordinal-12" match="whole-number">th-twelve</term>
+      <term name="ordinal-13" match="last-two-digits">th-thirteen-end</term>
+    </terms>
+  </locale>
+  <citation>
+    <layout delimiter="; ">
+      <group delimiter=": ">
+        <text variable="title"/>
+        <number variable="edition" form="ordinal"/>
+      </group>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1", 
+        "title": "Title 1",
+        "edition": 1,
+        "type": "book"
+    },
+    {
+        "id": "ITEM-2", 
+        "title": "Title 2",
+        "edition": 2,
+        "type": "book"
+    },
+    {
+        "id": "ITEM-3", 
+        "title": "Title 3",
+        "edition": 3,
+        "type": "book"
+    },
+    {
+        "id": "ITEM-4", 
+        "title": "Title 4",
+        "edition": 4,
+        "type": "book"
+    },
+    {
+        "id": "ITEM-5", 
+        "title": "Title 5",
+        "edition": 5,
+        "type": "book"
+    },
+    {
+        "id": "ITEM-10", 
+        "title": "Title 10",
+        "edition": 10,
+        "type": "book"
+    },
+    {
+        "id": "ITEM-11", 
+        "title": "Title 11",
+        "edition": 11,
+        "type": "book"
+    },
+    {
+        "id": "ITEM-12", 
+        "title": "Title 12",
+        "edition": 12,
+        "type": "book"
+    },
+    {
+        "id": "ITEM-13", 
+        "title": "Title 13",
+        "edition": 13,
+        "type": "book"
+    },
+    {
+        "id": "ITEM-14", 
+        "title": "Title 14",
+        "edition": 14,
+        "type": "book"
+    },
+    {
+        "id": "ITEM-110", 
+        "title": "Title 110",
+        "edition": 110,
+        "type": "book"
+    },
+    {
+        "id": "ITEM-111", 
+        "title": "Title 111",
+        "edition": 111,
+        "type": "book"
+    },
+    {
+
+        "id": "ITEM-112", 
+        "title": "Title 112",
+        "edition": 112,
+        "type": "book"
+    },
+    {
+        "id": "ITEM-113", 
+        "title": "Title 113",
+        "edition": 113,
+        "type": "book"
+    },
+    {
+        "id": "ITEM-114", 
+        "title": "Title 114",
+        "edition": 114,
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

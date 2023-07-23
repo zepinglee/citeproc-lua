@@ -12,7 +12,7 @@
 	path = submodules/jabref-abbrv
 	url = https://github.com/JabRef/abbrv.jabref.org.git
 [submodule "tests/test-suite"]
-	path = tests/test-suite
+	path = tests/fixtures/test-suite
 	url = https://github.com/citation-style-language/test-suite.git
 [submodule "submodules/luaxml"]
 	path = submodules/luaxml

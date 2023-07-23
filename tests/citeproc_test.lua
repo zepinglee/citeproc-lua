@@ -267,13 +267,8 @@ local function run_test(path)
       if not lang then
         return nil
       end
-      local path = "./submodules/locales/csl-locales-" .. lang .. ".xml"
-      local status, content = pcall(util.read_file, path)
-      if not status then
-        return nil
-      else
-        return content
-      end
+      local locale_path = "./submodules/locales/csl-locales-" .. lang .. ".xml"
+      return util.read_file(locale_path, true)
     end,
     retrieveItem = function (id)
       return bib[id]
@@ -321,24 +316,38 @@ local function run_test(path)
 
 end
 
-local function main()
-  -- local skipped_files = {}
-  local skipped_files = get_skipped_files()
 
-  local test_dirs = {
-    "./tests/test-suite/processor-tests/humans",  -- standard test-suite
-    "./tests/overrides",  -- fixtures that override the standard
+local function main()
+  local suites = {
+    "test-suite",
+    "citeproc-js",
+    "citeproc-hs",
+    "citeproc-rs",
+    "local",
   }
-  local fixture_list = {}
+
+  local suite_dirs = {
+    ["test-suite"] = "./tests/fixtures/test-suite/processor-tests/humans",  -- standard test-suite
+    ["citeproc-js"] = "./tests/fixtures/citeproc-js",
+    ["citeproc-hs"] = "./tests/fixtures/citeproc-hs",
+    ["citeproc-rs"] = "./tests/fixtures/citeproc-rs",
+    ["local"] = "./tests/fixtures/local",
+  }
+
+  local suite_fixtures = {}
   local fixture_paths = {}
-  for _ ,test_dir in pairs(test_dirs) do
+
+  for _, suite_name in ipairs(suites) do
+    local test_dir = suite_dirs[suite_name]
+    suite_fixtures[suite_name] = {}
     if path_exists(test_dir) then
       local files = listdir(test_dir)
       for _, file in ipairs(files) do
-        if string.match(file, "%.txt$") and not skipped_files[file] then
-          if not fixture_paths[file] then
-            table.insert(fixture_list, file)
+        if string.match(file, "%.txt$") then
+          if fixture_paths[file] then
+            error(string.format("Duplicate fixture: %s", file))
           end
+          table.insert(suite_fixtures[suite_name], file)
           local path = test_dir .. "/" .. file
           fixture_paths[file] = path
         end
@@ -346,22 +355,31 @@ local function main()
     end
   end
 
-  describe("test-suite", function ()
-    for _, fixture in ipairs(fixture_list) do
-      local path = fixture_paths[fixture] do
-        it(fixture, function ()
-          run_test(path)
-        end)
-      end
-    end
-  end)
+  -- local count = 0
+  -- for file, path in pairs(fixture_paths) do
+  --   print(path)
+  --   count = count + 1
+  -- end
+  -- print(count)
 
-  local test_dir = "./tests/local"
-  if path_exists(test_dir) then
-    describe("local-fixtures", function ()
-      for _, file in ipairs(listdir(test_dir)) do
-        if string.match(file, "%.txt$") and not skipped_files[file] then
-          local path = test_dir .. "/" .. file
+  local override_dir = "./tests/fixtures/overrides"  -- fixtures that override the above
+  for _, file in ipairs(listdir(override_dir)) do
+    if string.match(file, "%.txt$") then
+      if not fixture_paths[file] then
+        error(string.format("Fixture not exists: %s", file))
+      end
+      fixture_paths[file] = override_dir .. "/" .. file
+    end
+  end
+
+  -- local skipped_files = {}
+  local skipped_files = get_skipped_files()
+
+  for _, suite_name in ipairs(suites) do
+    describe(suite_name, function ()
+      for _, file in ipairs(suite_fixtures[suite_name]) do
+        if not skipped_files[file] then
+          local path = fixture_paths[file]
           it(file, function ()
             run_test(path)
           end)

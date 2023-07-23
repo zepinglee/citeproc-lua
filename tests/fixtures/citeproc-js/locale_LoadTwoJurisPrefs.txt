@@ -1,0 +1,54 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+The processor should load jurisdiction-preference for two locales
+for reference. This test does not (yet) actually exercise the
+preferences.
+
+>>===== RESULT =====>>
+BOGUS
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="note" page-range-format="chicago" version="1.1mlz1">
+  <info>
+    <title>JM Indigo Book Law Review TESTING</title>
+    <id>http://juris-m.github.io/styles/jm-indigobook-law-review-testing</id>
+    <link href="http://juris-m.github.io/styles/jm-indigobook-law-review" rel="self"/>
+    <link href="https://law.resource.org/pub/us/code/blue/IndigoBook.html" rel="documentation"/>
+    <author>
+      <name>Frank Bennett</name>
+      <email>biercenator@gmail.com</email>
+    </author>
+    <category citation-format="note"/>
+    <category field="law"/>
+    <updated>2016-10-08T08:07:23.106844</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <locale>
+    <style-options jurisdiction-preference="IndigoTemp"/>
+  </locale>
+  <locale xml:lang="fr">
+	<style-options jurisdiction-preference="fr IndigoBook"/>
+  </locale>
+  <citation>
+    <layout>
+      <text value="BOGUS"/>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1", 
+        "type": "book",
+        "title": "Title One",
+        "language": "fr"
+    }
+]
+<<===== INPUT =====<<

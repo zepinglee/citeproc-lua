@@ -1,0 +1,74 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+>>===== RESULT =====>>
+<b>ITEM-UNAVIALABLE</b>
+Bar; Foo; <b>ITEM-UNAVIALABLE</b>
+<<===== RESULT =====<<
+
+
+>>===== CITATION-ITEMS =====>>
+[
+    [
+        {
+            "id": "ITEM-UNAVIALABLE"
+        }
+    ],
+    [
+        {
+            "id": "ITEM-1"
+        },
+        {
+            "id": "ITEM-UNAVIALABLE"
+        },
+        {
+            "id": "ITEM-2"
+        }
+    ]
+]
+<<===== CITATION-ITEMS =====<<
+
+
+>>===== CSL =====>>
+<style
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <sort>
+      <key variable="title"/>
+    </sort>
+    <layout delimiter="; ">
+      <text variable="title"/>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1",
+        "title": "Foo",
+        "type": "book"
+    },
+    {
+        "id": "ITEM-2",
+        "title": "Bar",
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<
+
+
+>>===== VERSION =====>>
+1.0
+<<===== VERSION =====<<

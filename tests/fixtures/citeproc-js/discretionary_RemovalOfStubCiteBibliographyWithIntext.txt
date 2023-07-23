@@ -1,0 +1,155 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry">Leavitt, Book One, 2000</div>
+  <div class="csl-entry">Dimery, Book Two, 2001</div>
+</div>
+<<===== RESULT =====<<
+
+
+>>===== CITATIONS =====>>
+[
+    [
+        {
+            "citationID": "CITATION-1", 
+            "citationItems": [
+                {
+                    "id": "ITEM-1"
+                }
+            ], 
+            "properties": {
+                "author-only": true, 
+                "noteIndex": 0
+            }
+        }, 
+        [], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-2", 
+            "citationItems": [
+                {
+                    "id": "ITEM-1"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 0, 
+                "suppress-author": true
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                0
+            ]
+        ], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-3", 
+            "citationItems": [
+                {
+                    "id": "ITEM-2"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 1
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                0
+            ]
+        ], 
+        []
+    ]
+]
+<<===== CITATIONS =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <layout prefix="(" suffix=")">
+      <group delimiter=", ">
+        <names variable="author">
+          <name form="short"/>
+        </names>
+        <date variable="issued" date-parts="year" form="text"/>
+      </group>
+    </layout>
+  </citation>
+  <bibliography>
+    <layout>
+      <group delimiter=", ">
+        <names variable="author">
+          <name form="short"/>
+        </names>
+        <text variable="title"/>
+        <date variable="issued" date-parts="year" form="text"/>
+      </group>
+    </layout>
+  </bibliography>
+  <intext>
+    <layout>
+      <names variable="author">
+        <name/>
+      </names>
+    </layout>
+  </intext>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1", 
+        "type": "book",
+        "title": "Book One",
+        "author": [
+            {
+                "family": "Leavitt", 
+                "given": "Lawana"
+            }
+        ],
+        "issued": {
+            "date-parts": [
+               [2000]
+            ]
+        }
+    },
+    {
+        "id": "ITEM-2", 
+        "type": "book",
+        "title": "Book Two",
+        "author": [
+            {
+                "family": "Dimery", 
+                "given": "Denice"
+            }
+        ],
+        "issued": {
+            "date-parts": [
+               [2001]
+            ]
+        }
+    }
+]
+<<===== INPUT =====<<

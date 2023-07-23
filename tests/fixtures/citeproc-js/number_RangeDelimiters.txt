@@ -1,0 +1,49 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+1–2; 128–35; 155-1
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <layout delimiter="; ">
+      <text variable="page"/>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1", 
+        "page": "1-2", 
+        "type": "book"
+    }, 
+    {
+        "id": "ITEM-2", 
+        "page": "128-35", 
+        "type": "book"
+    }, 
+    {
+        "id": "ITEM-3", 
+        "page": "155\\-1", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

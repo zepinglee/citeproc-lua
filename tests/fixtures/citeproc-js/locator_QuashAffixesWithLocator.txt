@@ -1,0 +1,55 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+One
+<<===== RESULT =====<<
+
+
+>>===== CITATION-ITEMS =====>>
+[
+    [
+        {
+            "id": "ITEM-5", 
+            "label": "locator label should be ignored too"
+        }
+    ]
+]
+<<===== CITATION-ITEMS =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <layout delimiter="&#x0A;">
+      <text variable="title"/>
+      <group delimiter=", " prefix="{" suffix="}">
+        <text value="siblings should be ignored"/>
+        <text variable="locator" prefix="[" suffix="]"/>
+      </group>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-5", 
+        "title": "One", 
+        "type": "bill"
+    }
+]
+<<===== INPUT =====<<

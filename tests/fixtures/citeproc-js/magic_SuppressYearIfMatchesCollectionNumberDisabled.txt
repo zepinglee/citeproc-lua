@@ -1,0 +1,95 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+>>===== RESULT =====>>
+Hastings v. Perkins, 1930 P. 217 (Eng. C.A. 1930).
+<<===== RESULT =====<<
+
+
+>>===== CITATION-ITEMS =====>>
+[
+    [
+        {
+            "id": "ITEM-2"
+        }
+    ]
+]
+<<===== CITATION-ITEMS =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      disable-duplicate-year-suppression="gb"
+      version="1.0">
+  <info>
+    <title>Chicago Manual of Style (Author-Date format)</title>
+    <id>http://www.zotero.org/styles/chicago-author-date</id>
+    <link rel="self" href="http://www.zotero.org/styles/chicago-author-date" />
+    <author>
+      <name>Julian Onions</name>
+      <email>julian.onions@gmail.com</email>
+    </author>
+    <category citation-format="author-date" />
+    <category field="generic-base" />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+    <summary>The author-date variant of the Chicago style</summary>
+    <link href="http://www.chicagomanualofstyle.org/tools_citationguide.html" rel="documentation" />
+  </info>
+  <citation>
+    <layout suffix=".">
+      <group delimiter=", ">
+        <text variable="title" />
+        <group delimiter=" ">
+          <choose>
+            <if variable="issue">
+              <group delimiter=" ">
+                <number prefix="[" suffix="]" variable="collection-number"/>
+                <text variable="issue"/>
+              </group>
+            </if>
+            <else>
+              <number variable="collection-number"/>
+            </else>
+          </choose>
+          <number variable="volume"/>
+          <text variable="container-title"/>
+          <text variable="page"/>
+          <group prefix="(" suffix=")" delimiter=" ">
+            <text variable="authority"/>
+            <date variable="issued" date-parts="year" form="text"/>
+          </group>
+        </group>
+      </group>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "authority": "Eng. C.A.", 
+        "container-title": "P.", 
+        "id": "ITEM-2", 
+        "issued": {
+            "date-parts": [
+                [
+                    "1930",
+                    "1",
+                    "30"
+                ]
+            ]
+        }, 
+        "page": "217", 
+        "title": "Hastings v. Perkins", 
+        "type": "legal_case", 
+        "collection-number": "1930",
+        "jurisdiction": "gb"
+    }
+]
+<<===== INPUT =====<<

@@ -1,0 +1,92 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+This is one of two complementary tests, addressing an odd case reported by user Alexius.
+
+http://forums.zotero.org/discussion/9141?page=1#Item_5
+
+The relevant portion of the post is below:
+
+
+I need to place 2 sections related to authors within bibliography:
+1st - before title (exists only when number of authors < 4). Here only first author's name should be placed.
+2nd - after title. Here all authors' names (formatted not like in 1st section). If number of authors >= 4 then here after first-author should be [et al]
+
+Example:
+Stamou, A.I. Evaluation of thermal comfort in Galatsi Arena of the Olympics “Athens 2004” using a CFD model / A.I. Stamou, I. Katsiris, A. Schaelin // Applied Thermal Engineering. – 2008. – Vol. 28, № 10. – P. 1206–1215.
+
+
+
+>>===== RESULT =====>>
+Stamou, A.I. Title of the Article / A.I. Stamou, I. Katsiris
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.1mlz1">
+  <info>
+    <title>Test fixture</title>
+    <id>http://citationstyles.org/tests/fixture</id>
+    <link href="http://citationstyles.org/tests/fixture" rel="self"/>
+    <link href="http://citationstyles.org/documentation/text" rel="documentation"/>
+    <category citation-format="author-date"/>
+    <updated>2014-04-30T13:19:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <locale xml:lang="en">
+    <terms>
+      <term name="and others"></term>
+    </terms>
+  </locale>
+  <macro name="first-position-author">
+    <names variable="author">
+      <name et-al-min="2" et-al-use-first="1" suppress-min="4" name-as-sort-order="first" sort-separator=", "/>
+      <et-al term="and others"/>
+    </names>
+  </macro>
+  <macro name="second-position-author">
+    <names variable="author">
+      <name et-al-min="4" et-al-use-first="1" delimiter=", "/>
+    </names>
+  </macro>
+  <citation>
+    <layout>
+      <group delimiter=" / ">
+        <group delimiter=" ">
+          <text macro="first-position-author"/>
+          <text variable="title"/>
+        </group>
+        <text macro="second-position-author"/>
+      </group>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "author": [
+            {
+                "family": "Stamou", 
+                "given": "A.I.", 
+                "static-ordering": false
+            }, 
+            {
+                "family": "Katsiris", 
+                "given": "I.", 
+                "static-ordering": false
+            }
+        ], 
+        "id": "ITEM-1", 
+        "title": "Title of the Article", 
+        "type": "article-journal"
+    }
+]
+<<===== INPUT =====<<

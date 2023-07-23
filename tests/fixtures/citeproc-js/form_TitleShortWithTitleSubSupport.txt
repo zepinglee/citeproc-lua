@@ -1,0 +1,48 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+Book A
+<<===== RESULT =====<<
+
+>>===== OPTIONS =====>>
+{
+    "clobber_locator_if_no_statute_section": false, 
+    "handle_parallel_articles": true, 
+    "main_title_from_short_title": true, 
+    "consolidate_legal_items": true
+}
+<<===== OPTIONS =====<<
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation et-al-min="4" et-al-use-first="1" disambiguate-add-names="true">
+    <layout>
+      <text variable="title" text-case="title" form="short"/>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1", 
+        "title": "Book A: The Long Version", 
+        "title-short": "Book A", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

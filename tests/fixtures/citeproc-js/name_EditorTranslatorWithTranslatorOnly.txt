@@ -1,0 +1,68 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+trans.: Setsuo Miyazawa, Eri Osaka, Japan Federation of Bar Associations, and John Doe
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <locale>
+    <terms>
+      <term name="translator" form="verb-short">trans.</term>
+    </terms>
+  </locale>
+  <citation>
+    <layout>
+      <names variable="editor translator">
+        <label form="verb-short" suffix=": "/>
+        <name and="text"/>
+      </names>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": 10775, 
+        "translator": [
+            {
+                "family": "Miyazawa", 
+                "given": "Setsuo", 
+                "isInstitution": ""
+            }, 
+            {
+                "family": "Osaka", 
+                "given": "Eri", 
+                "isInstitution": ""
+            }, 
+            {
+                "family": "Japan Federation of Bar Associations", 
+                "given": "", 
+                "isInstitution": 1
+            }, 
+            {
+                "family": "Doe", 
+                "given": "John", 
+                "isInstitution": ""
+            }
+        ], 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

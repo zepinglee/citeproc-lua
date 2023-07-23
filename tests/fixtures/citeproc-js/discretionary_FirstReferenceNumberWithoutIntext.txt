@@ -1,0 +1,237 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+..[0] Leavitt, Book One, 2000
+..[1] Dimery
+..[2] Dimery, Book Two, 2001
+..[3] Leavitt, note 1
+>>[4] Dimery, note 2
+<<===== RESULT =====<<
+
+
+>>===== CITATIONS =====>>
+[
+    [
+        {
+            "citationID": "CITATION-1", 
+            "citationItems": [
+                {
+                    "id": "ITEM-1"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 1
+            }
+        }, 
+        [], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-2", 
+            "citationItems": [
+                {
+                    "id": "ITEM-2"
+                }
+            ], 
+            "properties": {
+                "mode": "author-only", 
+                "noteIndex": 0
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ]
+        ], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-3", 
+            "citationItems": [
+                {
+                    "id": "ITEM-2"
+                }
+            ], 
+            "properties": {
+                "mode": "suppress-author", 
+                "noteIndex": 2
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ], 
+            [
+                "CITATION-2", 
+                0
+            ]
+        ], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-4", 
+            "citationItems": [
+                {
+                    "id": "ITEM-1"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 3
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ], 
+            [
+                "CITATION-2", 
+                0
+            ], 
+            [
+                "CITATION-3", 
+                2
+            ]
+        ], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-5", 
+            "citationItems": [
+                {
+                    "id": "ITEM-2"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 4
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ], 
+            [
+                "CITATION-2", 
+                0
+            ], 
+            [
+                "CITATION-3", 
+                2
+            ], 
+            [
+                "CITATION-4", 
+                3
+            ]
+        ], 
+        []
+    ]
+]
+<<===== CITATIONS =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <layout>
+      <choose>
+        <if position="ibid">
+          <text value="ibid"/>
+        </if>
+        <else-if position="subsequent">
+          <group delimiter=", ">
+            <names variable="author">
+              <name form="short"/>
+            </names>
+            <group delimiter=" ">
+              <text value="note"/>
+              <text variable="first-reference-note-number"/>
+            </group>
+          </group>
+        </else-if>
+        <else>
+          <group delimiter=", ">
+            <names variable="author">
+              <name form="short"/>
+            </names>
+            <text variable="title"/>
+            <date variable="issued" date-parts="year" form="text"/>
+          </group>
+        </else>
+      </choose>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1", 
+        "type": "book",
+        "title": "Book One",
+        "author": [
+            {
+                "family": "Leavitt", 
+                "given": "Lawana"
+            }
+        ],
+        "issued": {
+            "date-parts": [
+               [2000]
+            ]
+        }
+    },
+    {
+        "id": "ITEM-2", 
+        "type": "book",
+        "title": "Book Two",
+        "author": [
+            {
+                "family": "Dimery", 
+                "given": "Denice"
+            }
+        ],
+        "issued": {
+            "date-parts": [
+               [2001]
+            ]
+        }
+    },
+    {
+        "id": "ITEM-3", 
+        "type": "book",
+        "title": "Book Three",
+        "author": [
+            {
+                "family": "Ricks", 
+                "given": "Rossie"
+            }
+        ],
+        "issued": {
+            "date-parts": [
+               [2002]
+            ]
+        }
+    }
+]
+<<===== INPUT =====<<

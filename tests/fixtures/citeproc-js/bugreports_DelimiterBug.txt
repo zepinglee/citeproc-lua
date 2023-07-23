@@ -1,0 +1,995 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+Farenheit 451 Ballantine Books
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.1mlz1">
+  <info>
+    <title>Test fixture</title>
+    <id>http://citationstyles.org/tests/fixture</id>
+    <link href="http://citationstyles.org/tests/fixture" rel="self"/>
+    <link href="http://citationstyles.org/documentation/text" rel="documentation"/>
+    <category citation-format="author-date"/>
+    <updated>2014-04-30T13:19:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <macro name="mcgill-sort-key">
+    <group delimiter=" ">
+      <text macro="mcgill-contributors-sort"/>
+      <text variable="title"/>
+      <text variable="genre"/>
+    </group>
+  </macro>
+  <macro name="mcgill-contributors-sort">
+    <names variable="author">
+      <name and="text" delimiter=", " delimiter-precedes-last="always" name-as-sort-order="all" sort-separator=", "/>
+      <label form="verb-short" prefix=", " strip-periods="true" suffix="."/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+      </substitute>
+    </names>
+  </macro>
+  <macro name="mcgill-online">
+    <group delimiter=" ">
+      <text term="online"/>
+      <text prefix="&lt;" suffix="&gt;" variable="URL"/>
+    </group>
+  </macro>
+  <macro name="mcgill-citation">
+    <choose>
+      <if position="ibid-with-locator">
+        <group delimiter=", ">
+          <text font-style="italic" strip-periods="true" term="ibid" text-case="capitalize-first"/>
+          <text macro="mcgill-point-locators"/>
+        </group>
+      </if>
+      <else-if position="ibid">
+        <text font-style="italic" strip-periods="true" term="ibid" text-case="capitalize-first"/>
+      </else-if>
+      <else-if position="subsequent">
+        <group delimiter=" ">
+          <group delimiter=", ">
+            <text macro="mcgill-contributors-short"/>
+            <text macro="mcgill-title-short"/>
+            <text font-style="italic" value="supra"/>
+          </group>
+          <group delimiter=" ">
+            <text value="note"/>
+            <text variable="first-reference-note-number"/>
+            <text macro="mcgill-point-locators"/>
+          </group>
+        </group>
+      </else-if>
+      <else-if type="bill legislation legal_case">
+        <group delimiter=" ">
+          <text macro="mcgill-jurisdictions"/>
+          <text font-style="italic" prefix="[" suffix="]" variable="hereinafter"/>
+        </group>
+      </else-if>
+      <else>
+        <group delimiter=", ">
+          <group delimiter=" ">
+            <group delimiter=", ">
+              <choose>
+                <if type="thesis">
+                  <text macro="mcgill-note-thesis"/>
+                </if>
+                <else-if match="any" type="chapter paper-conference">
+                  <text macro="mcgill-note-chapter"/>
+                </else-if>
+                <else-if match="any" type="bill book graphic legal_case motion_picture report song">
+                  <text macro="mcgill-note-book"/>
+                </else-if>
+                <else-if type="article-newspaper">
+                  <text macro="mcgill-note-article-newspaper"/>
+                </else-if>
+                <else-if type="article-magazine">
+                  <text macro="mcgill-note-article-magazine"/>
+                </else-if>
+                <else-if type="article-journal">
+                  <text macro="mcgill-note-article-journal"/>
+                </else-if>
+                <else>
+                  <group delimiter=", ">
+                    <group delimiter=" ">
+                      <group delimiter=" ">
+                        <text macro="mcgill-contributors-note" suffix=","/>
+                        <text variable="title"/>
+                        <text macro="mcgill-description-note"/>
+                        <text macro="mcgill-secondary-contributors-note"/>
+                        <group delimiter="">
+                          <text macro="mcgill-container-contributors-note"/>
+                          <text macro="mcgill-container-title-note"/>
+                        </group>
+                      </group>
+                      <group delimiter=", ">
+                        <text macro="mcgill-locators-note"/>
+                        <text variable="collection-title"/>
+                      </group>
+                      <text macro="mcgill-issue-note"/>
+                    </group>
+                    <text macro="mcgill-locators-newspaper"/>
+                  </group>
+                </else>
+              </choose>
+              <text macro="mcgill-point-locators-comma"/>
+            </group>
+            <text macro="mcgill-point-locators-space"/>
+            <text macro="mcgill-hereinafter"/>
+          </group>
+          <text macro="mcgill-access-note"/>
+        </group>
+      </else>
+    </choose>
+  </macro>
+  <macro name="mcgill-point-locators-space">
+    <choose>
+      <if match="none" type="chapter paper-conference">
+        <text macro="mcgill-point-locators"/>
+      </if>
+    </choose>
+  </macro>
+  <macro name="mcgill-hereinafter">
+    <choose>
+      <if match="all" position="first" type="legal_case">
+        <text font-style="italic" prefix="[" suffix="]" variable="hereinafter"/>
+      </if>
+    </choose>
+    <choose>
+      <if match="all" position="first" type="bill">
+        <text prefix="(" suffix=")" variable="references"/>
+      </if>
+    </choose>
+  </macro>
+  <macro name="mcgill-translator-note">
+    <names variable="translator">
+      <label form="verb-short" strip-periods="true" suffix=" "/>
+      <name and="text" delimiter=", " sort-separator=", "/>
+    </names>
+  </macro>
+  <macro name="mcgill-translator">
+    <names variable="translator">
+      <label form="verb-short" strip-periods="true" suffix=" "/>
+      <name and="text" delimiter=", " delimiter-precedes-last="always" name-as-sort-order="first" sort-separator=", "/>
+    </names>
+  </macro>
+  <macro name="mcgill-title-short">
+    <choose>
+      <if match="none" variable="title">
+        <choose>
+          <if type="interview">
+            <text term="interview" text-case="lowercase"/>
+          </if>
+          <else-if match="any" type="manuscript speech">
+            <text form="short" variable="genre"/>
+          </else-if>
+          <else-if type="personal_communication">
+            <text macro="mcgill-issued"/>
+          </else-if>
+        </choose>
+      </if>
+      <else-if match="any" type="bill book graphic legal_case motion_picture report song">
+        <choose>
+          <if variable="hereinafter">
+            <text font-style="italic" variable="hereinafter"/>
+          </if>
+          <else>
+            <text font-style="italic" form="short" variable="title"/>
+          </else>
+        </choose>
+      </else-if>
+      <else>
+        <text form="short" quotes="true" variable="title"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="mcgill-title-chapter-special">
+    <choose>
+      <if match="any" variable="container-title">
+        <group delimiter=", ">
+          <text font-style="italic" quotes="true" variable="title"/>
+          <text term="in" text-case="lowercase"/>
+        </group>
+      </if>
+      <else>
+        <text font-style="italic" suffix="," variable="title"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="mcgill-secondary-contributors-note">
+    <choose>
+      <if match="none" type="chapter paper-conference">
+        <text macro="mcgill-editor-translator"/>
+      </if>
+    </choose>
+  </macro>
+  <macro name="mcgill-recipient-short">
+    <names variable="recipient">
+      <label form="verb" suffix=" " text-case="lowercase"/>
+      <name and="text" delimiter=", " form="short"/>
+    </names>
+  </macro>
+  <macro name="mcgill-recipient-note">
+    <names delimiter=", " variable="recipient">
+      <label form="verb" suffix=" " text-case="lowercase"/>
+      <name and="text" delimiter=", "/>
+    </names>
+  </macro>
+  <macro name="mcgill-recipient">
+    <group delimiter=" ">
+      <choose>
+        <if type="personal_communication">
+          <choose>
+            <if variable="genre">
+              <text text-case="capitalize-first" variable="genre"/>
+            </if>
+            <else>
+              <text term="letter" text-case="capitalize-first"/>
+            </else>
+          </choose>
+        </if>
+      </choose>
+      <text macro="mcgill-recipient-note"/>
+    </group>
+  </macro>
+  <macro name="mcgill-point-locators-comma">
+    <choose>
+      <if match="any" type="chapter paper-conference">
+        <text macro="mcgill-point-locators"/>
+      </if>
+    </choose>
+  </macro>
+  <macro name="mcgill-point-locators">
+    <choose>
+      <if match="none" variable="locator">
+        <text macro="mcgill-pages"/>
+      </if>
+      <else-if match="any" type="article-journal article-magazine article-newspaper broadcast interview manuscript map patent personal_communication song speech thesis webpage">
+        <group delimiter=" ">
+          <number variable="page"/>
+          <group delimiter="&#160;">
+            <label form="short" strip-periods="true" variable="locator"/>
+            <number variable="locator"/>
+          </group>
+        </group>
+      </else-if>
+      <else-if match="any" type="chapter paper-conference">
+        <choose>
+          <if locator="page" match="none">
+            <group delimiter=" ">
+              <label form="long" variable="locator"/>
+              <group quotes="true">
+                <number variable="locator"/>
+              </group>
+            </group>
+          </if>
+          <else-if locator="page" match="any">
+            <group delimiter=" ">
+              <number variable="page"/>
+              <group delimiter="&#160;">
+                <label form="short" strip-periods="true" variable="locator"/>
+                <number variable="locator"/>
+              </group>
+            </group>
+          </else-if>
+        </choose>
+      </else-if>
+      <else>
+        <group delimiter="">
+          <label form="short" strip-periods="true" variable="locator"/>
+          <number variable="locator"/>
+        </group>
+      </else>
+    </choose>
+  </macro>
+  <macro name="mcgill-pages">
+    <choose>
+      <if type="article-journal chapter paper-conference">
+        <number variable="page"/>
+      </if>
+    </choose>
+  </macro>
+  <macro name="mcgill-note-thesis">
+    <group delimiter=", ">
+      <text macro="mcgill-contributors-note"/>
+      <text font-style="italic" variable="title"/>
+      <text variable="genre"/>
+      <text variable="publisher"/>
+      <text macro="mcgill-issued-year"/>
+    </group>
+    <text prefix="[" suffix="]" term="unpublished"/>
+  </macro>
+  <macro name="mcgill-note-chapter">
+    <group delimiter=" ">
+      <text macro="mcgill-contributors-note" suffix=","/>
+      <text macro="mcgill-title-chapter-special"/>
+      <group delimiter=", ">
+        <text macro="mcgill-secondary-contributors-note"/>
+        <text macro="mcgill-container-contributors-note"/>
+        <text font-style="italic" variable="container-title"/>
+        <text macro="mcgill-edition"/>
+        <text variable="publisher-place"/>
+        <text variable="publisher"/>
+        <text macro="mcgill-issued-year"/>
+      </group>
+    </group>
+  </macro>
+  <macro name="mcgill-note-book">
+    <group delimiter=" ">
+      <group delimiter=" ">
+        <group delimiter=", ">
+          <text macro="mcgill-contributors-note"/>
+          <text font-style="italic" variable="title"/>
+          <text macro="mcgill-edition"/>
+          <text macro="mcgill-translator-note"/>
+          <number variable="volume"/>
+          <number variable="number-of-volumes"/>
+          <text variable="collection-title"/>
+          <number variable="collection-number"/>
+          <text macro="mcgill-editor-note"/>
+        </group>
+        <group delimiter=", " prefix="(" suffix=")">
+          <group delimiter=": ">
+            <text variable="publisher-place"/>
+            <text variable="publisher"/>
+          </group>
+          <text macro="mcgill-issued-year"/>
+        </group>
+      </group>
+      <number variable="page"/>
+    </group>
+  </macro>
+  <macro name="mcgill-note-article-newspaper">
+    <group delimiter=", ">
+      <text macro="mcgill-contributors-note"/>
+      <text quotes="true" variable="title"/>
+      <text font-style="italic" variable="container-title"/>
+      <text variable="publisher-place"/>
+      <text macro="mcgill-issued-year"/>
+    </group>
+  </macro>
+  <macro name="mcgill-note-article-magazine">
+    <group delimiter=" ">
+      <text macro="mcgill-contributors-note" suffix=","/>
+      <text quotes="true" variable="title"/>
+      <text font-style="italic" variable="container-title"/>
+      <choose>
+        <if match="any" variable="volume">
+          <group delimiter="&#160;:">
+            <number variable="volume"/>
+            <number variable="issue"/>
+          </group>
+        </if>
+        <else>
+          <text form="short" plural="true" strip-periods="true" term="issue"/>
+          <number variable="issue"/>
+        </else>
+      </choose>
+      <text macro="mcgill-issued-year" prefix="(" suffix=")"/>
+    </group>
+  </macro>
+  <macro name="mcgill-note-article-journal">
+    <group delimiter=" ">
+      <text macro="mcgill-contributors-note" suffix=","/>
+      <text quotes="true" variable="title"/>
+      <text macro="mcgill-issued-year" prefix="(" suffix=")"/>
+      <group delimiter="&#160;: ">
+        <number variable="volume"/>
+        <number variable="issue"/>
+        <number form="numeric" variable="number-of-volumes"/>
+      </group>
+      <text form="short" strip-periods="true" variable="container-title"/>
+    </group>
+  </macro>
+  <macro name="mcgill-locators-note">
+    <group delimiter=" ">
+      <text macro="mcgill-issued"/>
+      <group delimiter="&#160;: ">
+        <number variable="volume"/>
+        <number variable="issue"/>
+        <number form="numeric" variable="number-of-volumes"/>
+      </group>
+    </group>
+  </macro>
+  <macro name="mcgill-locators-newspaper">
+    <choose>
+      <if type="article-newspaper">
+        
+        <group delimiter=", ">
+          <group delimiter=" ">
+            <number variable="edition"/>
+            <label variable="edition"/>
+          </group>
+          <group delimiter=" ">
+            <text form="short" strip-periods="true" suffix="." term="section"/>
+            <text variable="section"/>
+          </group>
+        </group>
+      </if>
+    </choose>
+  </macro>
+  <macro name="mcgill-jurisdictions">
+    <choose>
+      <if jurisdiction="gb">
+        <text macro="gb-types" strip-periods="true"/>
+      </if>
+      <else-if jurisdiction="us">
+        <text macro="us-types" strip-periods="true"/>
+      </else-if>
+      <else>
+        <text macro="mcgill-fr-ca-types"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="mcgill-issued-year">
+    <date variable="issued">
+      <date-part form="long" name="year"/>
+    </date>
+  </macro>
+  <macro name="mcgill-issued">
+    <date font-style="normal" font-weight="normal" variable="issued">
+      <date-part name="day" suffix=" "/>
+      <date-part name="month" suffix=" "/>
+      <date-part name="year"/>
+    </date>
+  </macro>
+  <macro name="mcgill-issue-note">
+    <text macro="mcgill-issued" prefix="(" suffix=")"/>
+  </macro>
+  
+  <macro name="mcgill-interviewer-note">
+    <names delimiter=", " variable="interviewer">
+      <label form="verb" suffix=" " text-case="lowercase"/>
+      <name and="text" delimiter=", "/>
+    </names>
+  </macro>
+  <macro name="mcgill-fr-ca-types">
+    <choose>
+      <if type="bill">
+        <text macro="mcgill-bill"/>
+      </if>
+      <else-if type="legal_case">
+        <text macro="mcgill-case"/>
+      </else-if>
+      <else>
+        <text value="[CITE TO UNKNOWN ITEM TYPE]"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="mcgill-editor-translator">
+    <group delimiter=", ">
+      <choose>
+        <if variable="author">
+          <names delimiter=", " variable="editor">
+            <name and="text" delimiter=", "/>
+            <label form="verb-short" prefix=", " strip-periods="true" text-case="lowercase"/>
+          </names>
+          <choose>
+            <if variable="container-author">
+              <group>
+                <names variable="container-author">
+                  <label form="verb-short" strip-periods="true" suffix=" " text-case="lowercase"/>
+                  <name and="text" delimiter=", "/>
+                </names>
+              </group>
+            </if>
+          </choose>
+        </if>
+      </choose>
+      <choose>
+        <if match="any" variable="author editor">
+          <names delimiter=", " variable="translator">
+            <label form="verb-short" strip-periods="true" suffix=" " text-case="lowercase"/>
+            <name and="text" delimiter=", "/>
+          </names>
+        </if>
+      </choose>
+    </group>
+  </macro>
+  <macro name="mcgill-editor-note">
+    <names variable="editor">
+      <name and="text" delimiter=", " sort-separator=", "/>
+      <label form="short" prefix=", " strip-periods="true"/>
+    </names>
+  </macro>
+  <macro name="mcgill-editor">
+    <names variable="editor">
+      <name and="text" delimiter=", " delimiter-precedes-last="always" name-as-sort-order="first" sort-separator=", "/>
+      <label form="short" prefix=", " strip-periods="true"/>
+    </names>
+  </macro>
+  <macro name="mcgill-edition">
+    <choose>
+      <if match="any" type="bill book graphic legal_case motion_picture report song chapter paper-conference">
+        <choose>
+          <if is-numeric="edition">
+            <group delimiter=" ">
+              <number form="ordinal" variable="edition"/>
+              <text form="short" strip-periods="true" suffix="." term="edition"/>
+            </group>
+          </if>
+          <else>
+            <number suffix="." text-case="capitalize-first" variable="edition"/>
+          </else>
+        </choose>
+      </if>
+    </choose>
+  </macro>
+  <macro name="mcgill-description-note">
+    <group delimiter=", ">
+      <text macro="mcgill-interviewer-note"/>
+      <text variable="medium"/>
+      <choose>
+        <if match="none" variable="title"/>
+        <else-if match="any" type="speech"/>
+        <else>
+          <text variable="genre"/>
+        </else>
+      </choose>
+    </group>
+  </macro>
+  <macro name="mcgill-contributors-short">
+    <group delimiter=" ">
+      <names variable="author">
+        <name and="text" delimiter=", " form="short"/>
+        <substitute>
+          <names variable="editor"/>
+          <names variable="translator"/>
+        </substitute>
+      </names>
+      <text macro="mcgill-recipient-short"/>
+    </group>
+  </macro>
+  <macro name="mcgill-contributors-note">
+    <group delimiter=" ">
+      <names variable="author">
+        <name and="text" delimiter=", " sort-separator=", "/>
+        <substitute>
+          <text macro="mcgill-editor-note"/>
+          <text macro="mcgill-translator-note"/>
+        </substitute>
+      </names>
+      <text macro="mcgill-recipient-note"/>
+    </group>
+  </macro>
+  <macro name="mcgill-contributors">
+    <names variable="author">
+      <name and="text" delimiter=", " delimiter-precedes-last="always" name-as-sort-order="first" sort-separator=", "/>
+      <substitute>
+        <text macro="mcgill-editor"/>
+        <text macro="mcgill-translator"/>
+      </substitute>
+    </names>
+    <text macro="mcgill-recipient" prefix=". "/>
+  </macro>
+  <macro name="mcgill-container-title-note">
+    <choose>
+      <if match="none" type="legal_case bill">
+        <text font-style="italic" variable="container-title"/>
+      </if>
+    </choose>
+  </macro>
+  <macro name="mcgill-container-contributors-note">
+    <choose>
+      <if match="any" type="chapter paper-conference">
+        <text macro="mcgill-editor-translator"/>
+      </if>
+    </choose>
+  </macro>
+  <macro name="mcgill-case">
+    <group delimiter=" ">
+      
+      <text font-style="italic" variable="title"/>
+      
+      <choose>
+        <if match="none" variable="references">
+          <choose>
+            <if match="any" variable="issued"/>
+            <else>
+              <text value=","/>
+            </else>
+          </choose>
+        </if>
+        <else>
+          <text value=","/>
+        </else>
+      </choose>
+    </group>
+    <group delimiter=" ">
+      <choose>
+        <if match="none" variable="references">
+          <text macro="mcgill-issued" prefix="(" suffix="),"/>
+        </if>
+        <else>
+          <text macro="mcgill-issued"/>
+          <choose>
+            <if match="any" variable="issued">
+              <text macro="std-authority-description"/>
+            </if>
+            <else-if match="none" variable="issued"/>
+          </choose>
+        </else>
+      </choose>
+      <choose>
+        <if match="any" variable="page">
+          <group delimiter=" ">
+            <number variable="number"/>
+            <group prefix="[" suffix="]"> 
+              <number variable="collection-number"/>
+            </group>
+            <number variable="volume"/>
+            <number variable="issue"/>
+            <text variable="container-title"/>
+          </group>
+        </if>
+        <else-if match="none" variable="page">
+          <group delimiter=" ">
+            <number prefix="[" suffix="]" variable="collection-number"/>
+            <number variable="volume"/>
+            <number variable="issue"/>
+            <text variable="container-title"/>
+            <number variable="number"/>
+          </group>
+        </else-if>
+      </choose>
+      <number variable="page"/>
+    </group>
+  </macro>
+  <macro name="mcgill-bill">
+    <group delimiter=", ">
+      <number prefix="P.L. " variable="number"/>
+      <text font-style="italic" variable="title"/>
+      <text variable="publisher"/>
+      <text macro="mcgill-contributors"/>
+      <text variable="note"/>
+      <text macro="mcgill-issued-year"/>
+    </group>
+  </macro>
+  <macro name="mcgill-archive-note">
+    <group delimiter=", ">
+      <text variable="archive_location"/>
+      <text variable="archive"/>
+      <text variable="archive-place"/>
+    </group>
+  </macro>
+  <macro name="mcgill-access-note">
+    <group delimiter=", ">
+      <choose>
+        <if match="any" type="graphic report">
+          <text macro="mcgill-archive-note"/>
+        </if>
+        <else-if match="none" type="bill book graphic legal_case motion_picture report song article-journal article-magazine article-newspaper thesis chapter paper-conference">
+          <text macro="mcgill-archive-note"/>
+        </else-if>
+      </choose>
+      <choose>
+        <if match="any" type="article-journal article-magazine article-newspaper broadcast graphic interview manuscript map patent personal_communication song speech thesis webpage">
+          <text macro="mcgill-online"/>
+        </if>
+      </choose>
+    </group>
+  </macro>
+  <macro name="gb-types">
+    <choose>
+      <if type="legal_case">
+        <text macro="gb-case"/>
+      </if>
+      <else-if type="article-newspaper article-magazine">
+        <text macro="gb-case-newspaper"/>
+      </else-if>
+      <else-if type="interview">
+        <text macro="gb-government-transcript"/>
+      </else-if>
+      <else>
+        <text macro="gb-government-report"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="mcgill-bibliography">
+    <choose>
+      <if type="bill legal_case legislation">
+        <text macro="mcgill-jurisdictions"/>
+      </if>
+      <else-if type="thesis">
+        <text macro="mcgill-thesis"/>
+      </else-if>
+      <else-if match="any" type="chapter paper-conference">
+        <text macro="mcgill-chapter"/>
+      </else-if>
+      <else-if match="any" type="bill book graphic legal_case motion_picture report song">
+        <text macro="mcgill-book"/>
+      </else-if>
+      <else-if type="article-newspaper">
+        <text macro="mcgill-article-newspaper"/>
+      </else-if>
+      <else-if type="article-magazine">
+        <text macro="mcgill-article-magazine"/>
+      </else-if>
+      <else-if type="article-journal">
+        <text macro="mcgill-article-journal"/>
+      </else-if>
+      <else>
+        <group delimiter=" ">
+          <group delimiter=", ">
+            <group delimiter=" ">
+              <text macro="mcgill-contributors" suffix="."/>
+              <text variable="title"/>
+              <text macro="mcgill-description"/>
+              <text macro="mcgill-secondary-contributors"/>
+              <group delimiter="">
+                <text macro="mcgill-container-contributors"/>
+                <text macro="mcgill-container-title"/>
+              </group>
+              <text macro="mcgill-locators"/>
+              <text variable="collection-title"/>
+              <number variable="issue"/>
+            </group>
+            <text macro="mcgill-locators-newspaper"/>
+          </group>
+          <text macro="mcgill-locators-journal"/>
+          <text macro="mcgill-access"/>
+        </group>
+      </else>
+    </choose>
+  </macro>
+  <macro name="mcgill-thesis">
+    <group delimiter=", ">
+      <text macro="mcgill-contributors"/>
+      <text font-style="italic" variable="title"/>
+      <text variable="genre"/>
+      <text variable="publisher"/>
+      <text macro="mcgill-issued-year"/>
+      <text prefix="[" suffix="]" term="unpublished"/>
+    </group>
+  </macro>
+  <macro name="mcgill-secondary-contributors">
+    <choose>
+      <if match="none" type="chapter paper-conference">
+        <group delimiter=". ">
+          <choose>
+            <if variable="author">
+              <names delimiter=". " variable="editor">
+                <label form="verb" suffix=" " text-case="capitalize-first"/>
+                <name and="text" delimiter=", "/>
+              </names>
+            </if>
+          </choose>
+          <choose>
+            <if match="any" variable="author editor">
+              <names delimiter=". " variable="translator">
+                <label form="verb" suffix=" " text-case="capitalize-first"/>
+                <name and="text" delimiter=", "/>
+              </names>
+            </if>
+          </choose>
+        </group>
+      </if>
+    </choose>
+  </macro>
+  <macro name="mcgill-locators-journal">
+    <choose>
+      <if type="article-journal">
+        <number variable="page"/>
+      </if>
+    </choose>
+  </macro>
+  <macro name="mcgill-locators">
+    <group delimiter=" ">
+      <text macro="mcgill-issued"/>
+      <group delimiter="&#160;: ">
+        <number variable="volume"/>
+        <number variable="issue"/>
+        <number form="numeric" variable="number-of-volumes"/>
+      </group>
+    </group>
+  </macro>
+  <macro name="mcgill-interviewer">
+    <names delimiter=", " variable="interviewer">
+      <label form="verb" suffix=" " text-case="capitalize-first"/>
+      <name and="text" delimiter=", "/>
+    </names>
+  </macro>
+  <macro name="mcgill-description">
+    <group delimiter=", ">
+      <group delimiter=". ">
+        <text macro="mcgill-interviewer"/>
+        <text text-case="capitalize-first" variable="medium"/>
+      </group>
+      <choose>
+        <if match="none" variable="title"/>
+        <else-if match="any" type="speech"/>
+        <else>
+          <text text-case="capitalize-first" variable="genre"/>
+        </else>
+      </choose>
+    </group>
+  </macro>
+  <macro name="mcgill-container-title">
+    <choose>
+      <if match="none" type="legal_case">
+        <text font-style="italic" variable="container-title"/>
+      </if>
+    </choose>
+  </macro>
+  <macro name="mcgill-container-contributors">
+    <choose>
+      <if match="any" type="chapter paper-conference">
+        <group delimiter=", ">
+          <choose>
+            <if variable="author">
+              <names delimiter=", " variable="editor">
+                <name and="text" delimiter=", "/>
+                <label form="short" prefix=", " text-case="lowercase"/>
+              </names>
+              <choose>
+                <if variable="container-author">
+                  <group>
+                    <names variable="container-author">
+                      <label form="verb-short" strip-periods="true" suffix=" " text-case="lowercase"/>
+                      <name and="text" delimiter=", "/>
+                    </names>
+                  </group>
+                </if>
+              </choose>
+            </if>
+          </choose>
+          <choose>
+            <if match="any" variable="author editor">
+              <names delimiter=", " variable="translator">
+                <label form="verb" suffix=" " text-case="lowercase"/>
+                <name and="text" delimiter=", "/>
+              </names>
+            </if>
+          </choose>
+        </group>
+      </if>
+    </choose>
+  </macro>
+  <macro name="mcgill-chapter">
+    <group delimiter=" ">
+      <group delimiter=", ">
+        <text macro="mcgill-contributors"/>
+        <text macro="mcgill-title-chapter-special"/>
+      </group>
+      <group delimiter=", ">
+        <text macro="mcgill-secondary-contributors"/>
+        <text macro="mcgill-container-contributors"/>
+        <text font-style="italic" variable="container-title"/>
+        <text macro="mcgill-edition"/>
+        <text variable="publisher-place"/>
+        <text variable="publisher"/>
+        <text macro="mcgill-issued-year"/>
+      </group>
+    </group>
+  </macro>
+  <macro name="mcgill-book">
+    <group delimiter=" ">
+      <group delimiter=", ">
+        <text macro="mcgill-contributors"/>
+        <text font-style="italic" variable="title"/>
+        <text macro="mcgill-edition"/>
+        <text macro="mcgill-translator"/>
+        <number variable="volume"/>
+        <number variable="number-of-volumes"/>
+        <text variable="collection-title"/>
+        <number variable="collection-number"/>
+        <text variable="publisher-place"/>
+        <text variable="publisher"/>
+        <text macro="mcgill-issued-year"/>
+      </group>
+      <number variable="page"/>
+    </group>
+  </macro>
+  <macro name="mcgill-article-newspaper">
+    <group delimiter=", ">
+      <text macro="mcgill-contributors"/>
+      <text quotes="true" variable="title"/>
+      <text font-style="italic" variable="container-title"/>
+      <text variable="publisher-place"/>
+      <text macro="mcgill-issued-year"/>
+    </group>
+  </macro>
+  <macro name="mcgill-article-magazine">
+    <group delimiter=" ">
+      <text macro="mcgill-contributors" suffix=","/>
+      <text quotes="true" variable="title"/>
+      <text font-style="italic" variable="container-title"/>
+      <choose>
+        <if match="any" variable="volume">
+          <group delimiter="&#160;:">
+            <number variable="volume"/>
+            <number variable="issue"/>
+          </group>
+        </if>
+        <else>
+          <text form="short" plural="true" strip-periods="true" term="issue"/>
+          <number variable="issue"/>
+        </else>
+      </choose>
+      <text macro="mcgill-issued-year" prefix="(" suffix=")"/>
+    </group>
+  </macro>
+  <macro name="mcgill-article-journal">
+    <group delimiter=" ">
+      <text macro="mcgill-contributors" suffix=","/>
+      <text quotes="true" variable="title"/>
+      <text macro="mcgill-issued-year" prefix="(" suffix=")"/>
+      <group delimiter="&#160;: ">
+        <number variable="volume"/>
+        <number variable="issue"/>
+        <number form="numeric" variable="number-of-volumes"/>
+      </group>
+      <text form="short" strip-periods="true" variable="container-title"/>
+    </group>
+  </macro>
+  <macro name="mcgill-archive">
+    <group delimiter=". ">
+      <text text-case="capitalize-first" variable="archive_location"/>
+      <text variable="archive"/>
+      <text variable="archive-place"/>
+    </group>
+  </macro>
+  <macro name="mcgill-access">
+    <group delimiter=". ">
+      <choose>
+        <if match="any" type="graphic report">
+          <text macro="mcgill-archive"/>
+        </if>
+        <else-if match="none" type="bill book graphic legal_case motion_picture report song article-journal article-magazine article-newspaper thesis chapter paper-conference">
+          <text macro="mcgill-archive"/>
+        </else-if>
+      </choose>
+      <choose>
+        <if match="any" type="article-journal article-magazine article-newspaper broadcast graphic interview manuscript map patent personal_communication song speech thesis webpage">
+          <text macro="mcgill-online"/>
+        </if>
+        <else-if type="legal_case">
+          <choose>
+            <if match="none" variable="URL"/>
+            <else-if variable="URL">
+              <text term="online"/>
+              <text macro="std-authority-description"/>
+              <text prefix="&lt;" suffix="&gt;" variable="URL"/>
+            </else-if>
+          </choose>
+        </else-if>
+      </choose>
+    </group>
+  </macro>
+  <citation>
+    <layout>
+      <group delimiter=" ">
+        <group delimiter=", ">
+          <text variable="title"/>
+          <text variable="publisher-place" prefix="Q" suffix="P"/>
+          <number variable="edition" prefix="A" suffix="B"/>
+        </group>
+        <text variable="publisher"/>
+      </group>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1", 
+        "publisher": "Ballantine Books", 
+        "title": "Farenheit 451", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

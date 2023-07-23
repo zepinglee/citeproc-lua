@@ -1,0 +1,86 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+At the first stage of full processor deployment, let's eliminate
+the implicit chop behavior. If there is merit in the implicit
+chop of namesets after the first personal author, as this test
+had it originally, that will emerge in feedback on processor
+behavior.
+
+
+>>===== RESULT =====>>
+Roe et al. eds.
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="in-text"
+      version="1.1mlz1"
+      default-locale="en">
+  <info>
+    <title>Test fixture</title>
+    <id>http://citationstyles.org/tests/fixture</id>
+    <link href="http://citationstyles.org/tests/fixture" rel="self"/>
+    <link href="http://citationstyles.org/documentation/text" rel="documentation"/>
+    <category citation-format="author-date"/>
+    <updated>2014-04-30T13:19:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <citation
+    et-al-min="3"
+    et-al-use-first="1">
+    <layout>
+      <names variable="editor" delimiter=", ">
+        <name form="short" delimiter=", " and="text"/>
+        <institution 
+          institution-parts="long" 
+          delimiter=", "
+          use-first="1"
+          use-last="1"/>
+        <label form="short" prefix=" "/>
+      </names>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "editor": [
+            {
+                "family": "Roe", 
+                "given": "Jane"
+            }, 
+            {
+                "literal": "Big Ministry|Busy Committee|Tiny Subcommittee"
+            }, 
+            {
+                "family": "Doe", 
+                "given": "John"
+            }, 
+            {
+                "family": "Roe", 
+                "given": "Jane"
+            }, 
+            {
+                "family": "Snoakes", 
+                "given": "Richard"
+            }, 
+            {
+                "literal": "Wasteful Enterprise|Evil Division|Trivial Working Group"
+            }, 
+            {
+                "family": "Noakes", 
+                "given": "John"
+            }
+        ], 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

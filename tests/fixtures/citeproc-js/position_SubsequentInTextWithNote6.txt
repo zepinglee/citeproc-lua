@@ -1,0 +1,142 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+>>===== DESCRIPTION =====>>
+Tests subsequent cite form within near-note-distance where first reference and the subsequent reference are in separate notes, separated by note-distance (if counting in-text citations as notes).
+The near-note-distance constraint should be ignored, and the subsequent reference should be rendered in near-note short form, without a note pointer.
+<<===== DESCRIPTION =====<<
+
+>>===== RESULT =====>>
+..[0] First-and-Last title (FULL)
+..[1] Second title (FULL)
+..[2] ibid.
+>>[3] First-and-Last title, supra
+<<===== RESULT =====<<
+
+
+>>===== CITATIONS =====>>
+[
+    [
+        {
+            "citationID": "CITATION-1", 
+            "citationItems": [
+                {
+                    "id": "ITEM-1"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 0
+            }
+        }, 
+        [], 
+        []
+    ],
+    [
+        {
+            "citationID": "CITATION-2", 
+            "citationItems": [
+                {
+                    "id": "ITEM-2"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 0
+            }
+        }, 
+        [["CITATION-1", 0]], 
+        []
+    ],
+    [
+        {
+            "citationID": "CITATION-3", 
+            "citationItems": [
+                {
+                    "id": "ITEM-2"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 0
+            }
+        }, 
+        [["CITATION-1", 0],["CITATION-2", 0]], 
+        []
+    ],
+    [
+        {
+            "citationID": "CITATION-5", 
+            "citationItems": [
+                {
+                    "id": "ITEM-1"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 0
+            }
+        }, 
+        [["CITATION-1", 0],["CITATION-2", 0],["CITATION-3", 0]],
+        []
+    ]
+]
+<<===== CITATIONS =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="in-text"
+      version="1.1mlz1">
+  <info>
+    <title />
+    <id />
+    <link href="" rel="self" />
+    <link href="https://example.com" rel="documentation" />
+    <category citation-format="author-date" />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <citation near-note-distance="2">
+    <layout delimiter="; ">
+      <choose>
+        <if position="ibid">
+          <text value="ibid."/>
+        </if>
+        <else-if position="near-note">
+          <group delimiter=", ">
+            <text variable="title"/>
+            <group delimiter=" ">
+              <group><text value="supra"/></group>
+              <group delimiter=" ">
+                <text value="note"/>
+                <text variable="first-reference-note-number"/>
+              </group>
+            </group>
+          </group>
+        </else-if>
+        <else>
+          <group delimiter=" ">
+            <text variable="title"/>
+            <text value="(FULL)"/>
+          </group>
+        </else>
+      </choose>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "title": "First-and-Last title",
+        "id": "ITEM-1", 
+        "type": "book"
+    }, 
+    {
+        "title": "Second title",
+        "id": "ITEM-2", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

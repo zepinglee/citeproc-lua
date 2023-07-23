@@ -1,0 +1,68 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+<i>Smith/Brown/Jones <span style="font-style:normal;">(eds.)</span></i>
+<<===== RESULT =====<<
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <locale>
+    <terms>
+      <term name="editor">
+        <single>editor</single>
+        <multiple>editors</multiple>
+      </term>
+      <term name="editor" form="short">
+        <single>(ed.)</single>
+        <multiple>(eds.)</multiple>
+      </term>
+    </terms>
+  </locale>
+  <citation>
+    <layout>
+      <group font-style="italic">
+        <names variable="editor">
+          <name form="short" delimiter="/"/>
+          <label form="short" font-style="normal" prefix=" "/>
+        </names>
+      </group>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1", 
+        "type": "book",
+        "editor": [
+          {
+            "family": "Smith",
+            "given": "Fred"
+          },
+          {
+            "family": "Brown",
+            "given": "George"
+          },
+          {
+            "family": "Jones",
+            "given": "Ted"
+          }
+        ]
+    }
+]
+<<===== INPUT =====<<

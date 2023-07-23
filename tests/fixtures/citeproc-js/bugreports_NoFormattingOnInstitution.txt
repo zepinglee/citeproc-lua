@@ -1,0 +1,68 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
+
+>>===== OPTIONS =====>>
+{
+    "spoof_institutional_affiliations": false
+}
+<<===== OPTIONS =====<<
+
+
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry"><span style="font-variant:small-caps;">John Doe</span>, <span style="font-variant:small-caps;">Jane Roe</span>, <span style="font-variant:small-caps;">Big Outfit</span></div>
+</div>
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <layout>
+      <names variable="author">
+        <name font-variant="small-caps"/>
+      </names>
+    </layout>
+  </citation>
+  <bibliography>
+    <layout>
+      <names variable="author">
+        <name font-variant="small-caps"/>
+      </names>
+    </layout>
+  </bibliography>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "author": [
+            {
+                "family": "Doe", 
+                "given": "John"
+            },
+            {
+                "family": "Roe", 
+                "given": "Jane"
+            },
+            {
+                "literal": "Big Outfit"
+            }
+        ], 
+        "id": "ITEM-1", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

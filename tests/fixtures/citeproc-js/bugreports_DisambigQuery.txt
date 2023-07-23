@@ -1,0 +1,95 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+>>[0] (John Smith, Jane Smith)
+<<===== RESULT =====<<
+
+
+>>===== CITATIONS =====>>
+[
+    [
+        {
+            "citationID": "CITATION-1", 
+            "citationItems": [
+                {
+                    "id": "ITEM-1"
+                }, 
+                {
+                    "id": "ITEM-2"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 1
+            }
+        }, 
+        [], 
+        []
+    ]
+]
+<<===== CITATIONS =====<<
+
+
+>>===== CSL =====>>
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" default-locale="en-GB">
+  <info>
+    <title>Harvard - Coventry University</title>
+    <id>http://www.zotero.org/styles/harvard-coventry-university</id>
+    <link href="http://www.zotero.org/styles/harvard-coventry-university" rel="self"/>
+    <category citation-format="author-date"/>
+    <category field="generic-base"/>
+    <updated>2013-11-11T13:19:48+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <macro name="author">
+    <names variable="author">
+      <name delimiter=", "/>
+    </names>
+  </macro>
+  <macro name="author-short">
+    <names variable="author">
+      <name initialize-with=". " delimiter=", " form="short"/>
+    </names>
+  </macro>
+  <citation disambiguate-add-givenname="true">
+    <layout prefix="(" suffix=")" delimiter=", ">
+      <text macro="author-short"/>
+    </layout>
+  </citation>
+  <bibliography>
+    <layout>
+      <text macro="author"/>
+    </layout>
+  </bibliography>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "author": [
+            {
+                "family": "Smith", 
+                "given": "John"
+            }
+        ], 
+        "id": "ITEM-1", 
+        "type": "book"
+    }, 
+    {
+        "author": [
+            {
+                "family": "Smith", 
+                "given": "Jane" 
+            }
+        ], 
+        "id": "ITEM-2", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

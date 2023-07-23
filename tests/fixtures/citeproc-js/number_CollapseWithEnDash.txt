@@ -1,0 +1,44 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+437–72
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      page-range-format="chicago"
+      version="1.1mlz1">
+  <info>
+    <title />
+    <id />
+    <link href="" rel="self" />
+    <link href="https://example.com" rel="documentation" />
+    <category citation-format="author-date" />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <citation>
+    <layout>
+      <number variable="page"/>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "page": "437–472", 
+        "id": "ITEM-1"
+    }
+]
+<<===== INPUT =====<<
+

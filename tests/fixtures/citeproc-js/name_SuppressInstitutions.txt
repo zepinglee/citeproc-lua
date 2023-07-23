@@ -1,0 +1,88 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
+
+
+In the default configuration (i.e. without spoof_institutional_affiliations),
+the suppress-min="0" option is meaningless, and has no effect.
+
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry">John Doe, Jane Roe, Doe &#38; Co., John Noakes, Noakes Corp., &#38; Wurzle Gummidge</div>
+</div>
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.1mlz1">
+  <info>
+    <title>Test fixture</title>
+    <id>http://citationstyles.org/tests/fixture</id>
+    <link href="http://citationstyles.org/tests/fixture" rel="self"/>
+    <link href="http://citationstyles.org/documentation/text" rel="documentation"/>
+    <category citation-format="author-date"/>
+    <updated>2014-04-30T13:19:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <locale>
+    <terms>
+      <term name="and" form="symbol">&amp;</term>
+    </terms>
+  </locale>
+  <citation>
+    <layout>
+      <names variable="author">
+        <name/>
+      </names>
+    </layout>
+  </citation>
+  <bibliography>
+    <layout>
+      <names variable="author">
+        <name and="symbol" />
+		<institution suppress-min="0"/>
+      </names>
+    </layout>
+  </bibliography>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "author": [
+            {
+                "family": "Doe", 
+                "given": "John"
+            }, 
+            {
+                "family": "Roe", 
+                "given": "Jane"
+            }, 
+            {
+                "family": "Doe & Co.", 
+                "isInstitution": true
+            }, 
+            {
+                "family": "Noakes", 
+                "given": "John"
+            }, 
+            {
+                "family": "Noakes Corp.", 
+                "isInstitution": true
+            }, 
+            {
+                "family": "Gummidge", 
+                "given": "Wurzle"
+            }
+        ], 
+        "id": "ITEM-1", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

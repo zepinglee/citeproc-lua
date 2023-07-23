@@ -1,0 +1,115 @@
+>>==== MODE ====>>
+bibliography
+<<==== MODE ====<<
+
+>>==== OPTIONS ====>>
+{
+  "disambiguation_priority_per_specification": false
+}
+<<==== OPTIONS ====<<
+
+
+>>==== RESULT ====>>
+<div class="csl-bib-body">
+  <div class="csl-entry">
+
+    <div class="csl-block"><b>Dogs Act 2000a</b></div>
+2000, .</div>
+  <div class="csl-entry">
+
+    <div class="csl-block"><b>Dogs Act 2000b</b></div>
+2000, .</div>
+</div>
+<<==== RESULT ====<<
+
+>>==== CITATION-ITEMS ====>>
+[
+    [
+        {
+            "id": "ITEM-1"
+        }, 
+        {
+            "id": "ITEM-2"
+        }
+    ]
+]
+<<==== CITATION-ITEMS ====<<
+
+>>==== CSL ====>>
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.0" demote-non-dropping-particle="sort-only" default-locale="nl-NL">
+  <info>
+    <title>Leidraad voor juridische auteurs (Dutch)</title>
+    <title-short>Leidraad</title-short>
+    <id>http://www.zotero.org/styles/leidraad-voor-juridische-auteurs</id>
+    <link href="http://www.zotero.org/styles/leidraad-voor-juridische-auteurs" rel="self"/>
+    <link href="http://auteur.kluwer.nl/auteursmiddelen-en-instructies" rel="documentation"/>
+    <author>
+      <name>Joël Hendriks</name>
+      <email>leidraad.csl@joelhendriks.nl</email>
+    </author>
+    <category citation-format="note"/>
+    <category field="law"/>
+    <updated>2014-03-10T19:41:30+01:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <macro name="trailing-garbage">
+    <group suffix=".">
+      <text variable="container-title" suffix=" " font-style="italic"/>
+      <date variable="issued" date-parts="year" form="text" suffix=", "/>
+      <text variable="page"/>
+    </group>
+  </macro>
+  <citation initialize="true" initialize-with="." givenname-disambiguation-rule="by-cite" disambiguate-add-givenname="true" disambiguate-add-year-suffix="true">
+    <layout>
+      <text value="ALWAYS AMBIGUOUS"/>
+    </layout>
+  </citation>
+  <bibliography>
+    <layout>
+      <group display="block" delimiter=" " font-weight="bold">
+        <text variable="title"/>
+        <group>
+          <date variable="issued" date-parts="year" form="text"/>
+          <text variable="year-suffix"/>
+        </group>
+      </group>
+      <text macro="trailing-garbage"/>
+    </layout>
+  </bibliography>
+</style>
+<<==== CSL ====<<
+
+>>==== INPUT ====>>
+[
+  {
+    "id": "ITEM-1",
+    "issued": {
+      "date-parts": [
+        [
+          2000,
+          12,
+          15
+        ]
+      ]
+    },
+    "title": "Dogs Act",
+    "type": "legislation"
+  },
+  {
+    "id": "ITEM-2",
+    "issued": {
+      "date-parts": [
+        [
+          2000,
+          10,
+          1
+        ]
+      ]
+    },
+    "title": "Dogs Act",
+    "type": "legislation"
+  }
+]
+<<==== INPUT ====<<
+

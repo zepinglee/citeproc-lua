@@ -1,0 +1,52 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+>>===== OPTIONS =====>>
+{
+    "rtl_support": true
+}
+<<===== OPTIONS =====<<
+
+
+
+
+>>===== RESULT =====>>
+(הוצאה לאור של מכללת אוהלו)
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.1mlz1"
+      default-locale="fa">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <!-- layout prefix="(&#x200e;" suffix=")&#x200e;" -->
+    <layout prefix="(" suffix=")">
+      <text variable="title"/>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "title":"הוצאה לאור של מכללת אוהלו",
+        "id": "ITEM-1", 
+        "type": "book",
+        "issued": {
+           "date-parts": [[2002]]
+        },
+        "language": "he"
+    }
+]
+<<===== INPUT =====<<

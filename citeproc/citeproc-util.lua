@@ -1126,13 +1126,15 @@ end
 
 ---@param path string
 ---@return string?
-function util.read_file(path)
+function util.read_file(path, allowe_missing)
   if type(path) ~= "string" then
     error("Invalid path.")
   end
   local file = io.open(path, "r")
   if not file then
-    util.error(string.format('Cannot open file "%s".', path))
+    if not allowe_missing then
+      util.error(string.format('Cannot open file "%s".', path))
+    end
     return nil
   end
   local content = file:read("*a")

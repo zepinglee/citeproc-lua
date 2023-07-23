@@ -1,0 +1,68 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry"> “Chapter Title.” [hello]</div>
+</div>
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <locale>
+    <terms>
+      <term name="open-quote">&#8220;</term>
+      <term name="close-quote">&#8221;</term>
+    </terms>
+    <style-options punctuation-in-quote="true"/>
+  </locale>
+  <macro name="title">
+    <text variable="title"/>
+  </macro>
+  <citation>
+    <layout>
+      <text value="Bogus"/>
+    </layout>
+  </citation>
+  <bibliography>
+    <layout>
+      <group delimiter=" ">
+        <group>
+          <text macro="title" prefix=" " suffix="." quotes="true"/>
+        </group>
+        <text prefix=" " value="[hello]"/>
+      </group>
+    </layout>
+  </bibliography>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "URL": "http://example.com", 
+        "author": [
+            {
+                "family": "Smith", 
+                "given": "John"
+            }
+        ], 
+        "id": 276, 
+        "title": "Chapter Title", 
+        "type": "chapter"
+    }
+]
+<<===== INPUT =====<<

@@ -1,0 +1,81 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+>>[0] Some Statute, 2000, 456
+<<===== RESULT =====<<
+
+>>===== CITATIONS =====>>
+[
+    [
+        {
+            "citationID": "CITATION-1", 
+            "citationItems": [
+                {
+                    "id": "ITEM-1", 
+                    "locator": "456"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 1
+            }
+        }, 
+        [], 
+        []
+    ]
+]
+<<===== CITATIONS =====<<
+
+
+>>===== OPTIONS =====>>
+{
+        "clobber_locator_if_no_statute_section": false
+}
+<<===== OPTIONS =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <layout>
+      <group delimiter=", ">
+        <text variable="title" />
+        <date variable="issued" form="text" date-parts="year"/>
+        <text variable="locator" />
+      </group>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+	{
+		"id": "ITEM-1",
+		"type": "bill",
+		"key": "753QNT4J",
+		"title": "Some Statute",
+		"authority": "Big Mob Caucus",
+		"number": "abc/123",
+		"issued": {
+			"date-parts": [
+				[
+					2000
+				]
+			]
+		}
+	}
+]
+<<===== INPUT =====<<

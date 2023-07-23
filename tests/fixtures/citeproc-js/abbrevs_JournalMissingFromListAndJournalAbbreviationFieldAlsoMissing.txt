@@ -1,0 +1,65 @@
+>>== MODE ==>>
+citation
+<<== MODE ==<<
+
+
+
+
+>>== RESULT ==>>
+Doe, <i>Mango Chutney Souffle</i>, 10 Journal of Irreproducible ResultsX 235 (1988).
+<<== RESULT ==<<
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <layout suffix=".">
+      <names variable="author" suffix=", ">
+        <name form="short"/>
+      </names>
+      <text variable="title" font-style="italic" suffix=", "/>
+      <number variable="volume" suffix=" "/>
+      <text variable="container-title" form="short"/>
+      <text variable="page-first" prefix=" "/>
+      <date variable="issued" prefix=" (" suffix=")">
+        <date-part name="year"/>
+      </date>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "author": [
+            {
+                "family": "Doe", 
+                "given": "John", 
+                "static-ordering": false
+            }
+        ], 
+        "container-title": "Journal of Irreproducible ResultsX", 
+        "id": "ITEM-1", 
+        "issued": {
+            "date-parts": [
+                [
+                    "1988"
+                ]
+            ]
+        }, 
+        "page": "235", 
+        "title": "Mango Chutney Souffle", 
+        "type": "article-journal", 
+        "volume": "10"
+    }
+]
+<<===== INPUT =====<<

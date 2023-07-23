@@ -1,0 +1,64 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+<i>My Title</i>
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <macro name="disambiguate">
+    <!--
+      <choose>
+        <if disambiguate="true">
+    -->
+          <choose>
+            <if variable="title" match="none">
+              <text macro="issued"/>
+            </if>
+            <else-if type="bill book graphic legal_case legislation motion_picture report song" match="any">
+              <text variable="title" font-style="italic" text-case="title" form="short"/>
+            </else-if>
+            <else>
+              <text variable="title" quotes="true" text-case="title" form="short"/>
+            </else>
+          </choose>
+    <!--  
+        </if>
+      </choose>
+    -->
+  </macro>
+  <citation>
+    <layout delimiter="; ">
+      <text macro="disambiguate"/>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1", 
+        "type": "book",
+        "title": "My title: my subtitle",
+        "title-short": "My title"
+    }
+]
+<<===== INPUT =====<<
+
+
+

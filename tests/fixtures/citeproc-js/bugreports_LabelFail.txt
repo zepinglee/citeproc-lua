@@ -1,0 +1,111 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+>>[0] Bob Hancke et al., eds.
+<<===== RESULT =====<<
+
+
+>>===== CITATIONS =====>>
+[
+    [
+        {
+            "citationID": "CITATION-1", 
+            "citationItems": [
+                {
+                    "id": "ITEM-1"
+                }
+            ], 
+            "properties": {
+                "noteIndex": 1
+            }
+        }, 
+        [], 
+        []
+    ]
+]
+<<===== CITATIONS =====<<
+
+
+>>===== CSL =====>>
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.0" demote-non-dropping-particle="sort-only">
+  <info>
+    <title>Substitute Failure</title>
+    <id>http://www.zotero.org/styles/substitute</id>
+    <link href="http://www.zotero.org/styles/substitute" rel="self"/>
+    <author>
+      <name>Sebastian Karcher</name>
+    </author>
+    <updated>2016-02-03T17:41:02+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <macro name="author">
+    <names variable="author">
+      <name/>
+      <label form="short" prefix=", "/>
+      <substitute>
+        <choose>
+          <if type="book">
+            <names variable="editor"/>
+          </if>
+        </choose>
+        <text variable="title"/>
+      </substitute>
+    </names>
+  </macro>
+  <citation et-al-min="3" et-al-use-first="1" disambiguate-add-names="true">
+    <layout delimiter="; " suffix=".">
+      <text macro="author"/> 
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+	{
+		"type": "book",
+		"multi": {
+			"main": {},
+			"_keys": {}
+		},
+		"id": "ITEM-1",
+		"title": "Beyond varieties of capitalism : Conflict, contradiction, and complementarities in the European economy",
+		"publisher": "Oxford University Press",
+		"ISBN": "978-0-19-920648-3",
+		"title-short": "Beyond varieties of capitalism",
+		"language": "en",
+		"editor": [
+			{
+				"family": "Hancke",
+				"given": "Bob",
+				"multi": {
+					"_key": {}
+				}
+			},
+			{
+				"family": "Rhodes",
+				"given": "Martin",
+				"multi": {
+					"_key": {}
+				}
+			},
+			{
+				"family": "Thatcher",
+				"given": "Mark",
+				"multi": {
+					"_key": {}
+				}
+			}
+		],
+		"issued": {
+			"raw": "2007"
+		}
+	}
+]
+<<===== INPUT =====<<

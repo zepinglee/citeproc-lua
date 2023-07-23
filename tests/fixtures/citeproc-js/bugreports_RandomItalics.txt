@@ -1,0 +1,355 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+>>===== RESULT =====>>
+..[0] (Jagd 2011:347)
+>>[1] (Thévenot 2001; Jagd 2011)
+<<===== RESULT =====<<
+
+>>===== CITATIONS =====>>
+[
+    [
+        {
+            "citationID": "10gk1bpdes", 
+            "citationItems": [
+                {
+                    "id": 576, 
+                    "label": "page", 
+                    "locator": "347"
+                }
+            ], 
+            "properties": {
+                "index": 0, 
+                "noteIndex": 0
+            }
+        }, 
+        [], 
+        []
+    ], 
+    [
+        {
+            "citationID": "1s6a3fqtgr", 
+            "citationItems": [
+                {
+                    "id": "597", 
+                    "label": "page"
+                }, 
+                {
+                    "id": "576", 
+                    "label": "page"
+                }
+            ], 
+            "properties": {
+                "index": 1, 
+                "noteIndex": 0, 
+                "unsorted": true
+            }
+        }, 
+        [
+            [
+                "10gk1bpdes", 
+                0
+            ]
+        ], 
+        []
+    ]
+]
+<<===== CITATIONS =====<<
+
+>>===== CSL =====>>
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only">
+   <info>
+      <title>American Sociological Association</title>
+      <id>http://www.zotero.org/styles/asa</id>
+      <link href="http://www.zotero.org/styles/asa" rel="self"/>
+      <author>
+         <name>Julian Onions</name>
+         <email>julian.onions@gmail.com</email>
+      </author>
+      <category citation-format="author-date"/>
+      <category field="sociology"/>
+      <updated>2010-07-26T02:21:30+00:00</updated>
+      <summary>The ASA style.</summary>
+      <link href="http://www.asanet.org/Quick%20Style%20Guide.pdf" rel="documentation"/>
+      <rights>This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License: http://creativecommons.org/licenses/by-sa/3.0/</rights>
+   </info>
+   <macro name="editor">
+      <names variable="editor">
+         <label form="verb" text-case="lowercase" suffix=" "/>
+         <name and="text" delimiter=", "/>
+      </names>
+   </macro>
+   <macro name="series-editor">
+      <names variable="original-author">
+         <label form="short" text-case="capitalize-first" suffix=". " strip-periods="true"/>
+         <name and="text" delimiter=", "/>
+      </names>
+   </macro>
+   <macro name="anon">
+      <text term="anonymous" form="short" text-case="capitalize-first" strip-periods="true"/>
+   </macro>
+   <macro name="author">
+      <names variable="author">
+         <name and="text" name-as-sort-order="first" sort-separator=", " delimiter=", " delimiter-precedes-last="always"/>
+         <label form="short" prefix=", " suffix="." text-case="lowercase" strip-periods="true"/>
+         <substitute>
+            <names variable="editor"/>
+            <names variable="translator"/>
+            <text macro="anon"/>
+         </substitute>
+      </names>
+   </macro>
+   <macro name="author-short">
+      <names variable="author">
+         <name form="short" and="text" delimiter=", " initialize-with=". "/>
+         <substitute>
+            <names variable="editor"/>
+            <names variable="translator"/>
+            <text macro="anon"/>
+         </substitute>
+      </names>
+   </macro>
+   <macro name="access">
+      <group>
+         <text term="retrieved" text-case="capitalize-first" suffix=" "/>
+         <date variable="accessed">
+            <date-part name="month" suffix=" "/>
+            <date-part name="day" suffix=", "/>
+            <date-part name="year"/>
+         </date>
+         <group prefix=" (" suffix=")">
+            <text variable="URL"/>
+         </group>
+      </group>
+   </macro>
+   <macro name="title">
+      <choose>
+         <if type="thesis">
+            <text variable="title"/>
+         </if>
+         <else-if type="bill book graphic legal_case motion_picture report song" match="any">
+            <text variable="title" font-style="italic"/>
+         </else-if>
+         <else>
+            <text variable="title" quotes="true"/>
+         </else>
+      </choose>
+   </macro>
+   <macro name="publisher">
+      <group delimiter=": ">
+         <text variable="publisher-place"/>
+         <text variable="publisher"/>
+      </group>
+   </macro>
+   <macro name="year-date">
+      <choose>
+         <if variable="issued">
+            <date variable="issued">
+               <date-part name="year"/>
+            </date>
+         </if>
+         <else>
+            <text term="no date" form="short"/>
+         </else>
+      </choose>
+   </macro>
+   <macro name="day-month">
+      <date variable="issued">
+         <date-part name="month"/>
+         <date-part name="day" prefix=" "/>
+      </date>
+   </macro>
+   <macro name="pages">
+      <label variable="page" form="short" suffix=". " text-case="capitalize-first" strip-periods="true"/>
+      <text variable="page"/>
+   </macro>
+   <macro name="edition">
+      <choose>
+         <if is-numeric="edition">
+            <group delimiter=" ">
+               <number variable="edition" form="ordinal"/>
+               <text term="edition" form="short" suffix="." strip-periods="true"/>
+            </group>
+         </if>
+         <else>
+            <text variable="edition" suffix="."/>
+         </else>
+      </choose>
+   </macro>
+   <citation et-al-min="4" et-al-use-first="1" et-al-subsequent-min="3" et-al-subsequent-use-first="1" disambiguate-add-year-suffix="true" disambiguate-add-names="true" disambiguate-add-givenname="true" collapse="year">
+      <layout prefix="(" suffix=")" delimiter="; ">
+         <group delimiter=":">
+            <group delimiter=" ">
+               <text macro="author-short"/>
+               <text macro="year-date"/>
+            </group>
+            <text variable="locator"/>
+         </group>
+      </layout>
+   </citation>
+   <bibliography hanging-indent="true" et-al-min="6" et-al-use-first="1">
+      <sort>
+         <key macro="author"/>
+         <key variable="title"/>
+      </sort>
+      <layout suffix=".">
+         <group delimiter=" ">
+            <text macro="author" suffix="."/>
+            <text macro="year-date" suffix="."/>
+         </group>
+         <choose>
+            <if type="article-newspaper article-magazine" match="any">
+               <group delimiter=" ">
+                  <text macro="title" prefix=" " suffix="."/>
+               </group>
+               <group prefix=" " delimiter=", ">
+                  <text variable="container-title" font-style="italic"/>
+                  <text macro="day-month"/>
+                  <text variable="edition"/>
+                  <text variable="page"/>
+               </group>
+            </if>
+            <else-if type="thesis">
+               <text macro="title" prefix=" " suffix="." quotes="true"/>
+               <group prefix=" " delimiter=", ">
+                  <text macro="edition"/>
+                  <text macro="editor" suffix="."/>
+                  <text variable="genre"/>
+                  <text macro="publisher"/>
+               </group>
+            </else-if>
+            <else-if type="bill book graphic legal_case motion_picture report song" match="any">
+               <group delimiter=" ">
+                  <text macro="title" prefix=" " suffix="."/>
+                  <text macro="edition"/>
+                  <text macro="editor" suffix="."/>
+                  <text macro="publisher"/>
+               </group>
+            </else-if>
+            <else-if type="chapter paper-conference" match="any">
+               <group delimiter=" ">
+                  <text macro="title" prefix=" " suffix="."/>
+                  <group delimiter=", " suffix=".">
+                     <group delimiter=" ">
+                        <text macro="pages"/>
+                        <text term="in" text-case="lowercase"/>
+                        <text variable="container-title" font-style="italic"/>
+                     </group>
+                     <text variable="volume" prefix="vol. "/>
+                     <text variable="collection-title" font-style="italic"/>
+                     <text macro="editor"/>
+                  </group>
+                  <text macro="publisher"/>
+               </group>
+            </else-if>
+            <else>
+               <group suffix=".">
+                  <text macro="title" prefix=" "/>
+                  <text macro="editor" prefix=" "/>
+               </group>
+               <group prefix=" " suffix="." delimiter=" ">
+                  <text variable="container-title" font-style="italic"/>
+                  <group delimiter=":">
+                     <group>
+                        <text variable="volume"/>
+                        <text variable="issue" prefix="(" suffix=")"/>
+                     </group>
+                     <text variable="page"/>
+                  </group>
+               </group>
+            </else>
+         </choose>
+         <text prefix=" " macro="access" suffix="."/>
+      </layout>
+   </bibliography>
+</style>
+<<===== CSL =====<<
+
+>>===== INPUT =====>>
+[
+  {
+    "id": 576,
+    "type": "article-journal",
+    "title": "Pragmatic sociology and competing orders of worth in organizations",
+    "container-title": "European Journal of Social Theory",
+    "page": "343 -359",
+    "volume": "14",
+    "issue": "3",
+    "abstract": "Different notions of multiple rationalities have recently been applied to describe the phenomena of co-existence of competing rationalities in organizations. These include institutional pluralism, institutional logics, competing rationalities and pluralistic contexts. The French pragmatic sociologists Luc Boltanski and Laurent Thévenot have contributed to this line of research with a sophisticated theoretical framework of orders of worth, which has been applied in an increasing number of empirical studies. This article explores how the order of worth framework has been applied to empirical studies of organizations. First, I summarize the basic ideas of the framework, stressing the aspects of special relevance for studies of organizations. Second, I review the empirical studies focusing on the coexistence of competing orders of worth in organizations showing that the order of worth framework primarily has been related to three main themes in organizational research: non-profit and co-operative organizations, inter-organizational co-operation, and organizational change. Third, I discuss how the pragmatic, process-oriented aspect of the research program, focusing on the intertwining of values and action in various forms of ‘justification work’, has been translated into empirical studies. I argue that even if highly interesting empirical studies have begun to appear on the pragmatic aspects of the order of worth program, empirical studies of ‘justification work’ may be a potentially very promising focus for future empirical studies.",
+    "DOI": "10.1177/1368431011412349",
+    "author": [
+      {
+        "family": "Jagd",
+        "given": "Søren"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          2011
+        ]
+      ]
+    },
+    "accessed": {
+      "date-parts": [
+        [
+          2011,
+          8,
+          19
+        ]
+      ]
+    }
+  },
+  {
+    "id": 651,
+    "type": "article-journal",
+    "title": "The Sociology of Critical Capacity",
+    "container-title": "European Journal of Social Theory",
+    "page": "359-377",
+    "volume": "2",
+    "issue": "3",
+    "author": [
+      {
+        "family": "Boltanski",
+        "given": "Luc"
+      },
+      {
+        "family": "Thévenot",
+        "given": "Laurent"
+      }
+    ],
+    "issued": {
+      "date-parts": [
+        [
+          1999
+        ]
+      ]
+    }
+  },
+  {
+    "id": 597,
+    "type": "article-journal",
+    "title": "Organized Complexity",
+    "container-title": "European Journal of Social Theory",
+    "page": "405 -425",
+    "volume": "4",
+    "issue": "4",
+    "author": [
+      {
+        "family": "Thévenot",
+        "given": "Laurent"
+      }
+    ],
+    "DOI": "DOI 10.1177/13684310122225235",
+    "issued": {
+      "date-parts": [
+        [
+          2001, 11, 1
+        ]
+      ]
+    }
+  }
+]
+<<===== INPUT =====<<

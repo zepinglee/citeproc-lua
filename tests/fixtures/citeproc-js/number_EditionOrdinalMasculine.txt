@@ -1,0 +1,62 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+Normalizes punctuation and grouping when multiple numbers are provided in input.
+
+>>===== RESULT =====>>
+edition: 1stMASC
+<<===== RESULT =====<<
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.1mlz1">
+  <info>
+    <title>Test fixture</title>
+    <id>http://citationstyles.org/tests/fixture</id>
+    <link href="http://citationstyles.org/tests/fixture" rel="self"/>
+    <link href="http://citationstyles.org/documentation/text" rel="documentation"/>
+    <category citation-format="author-date"/>
+    <updated>2014-04-30T13:19:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <locale>
+    <terms>
+
+      <term name="edition" gender="masculine">edition</term>
+      <term name="edition" form="short">edn</term>
+
+      <term name="ordinal">th</term>
+      <term name="ordinal" gender-form="masculine">thMASC</term>
+
+      <term name="ordinal-01">st</term>
+      <term name="ordinal-02">nd</term>
+      <term name="ordinal-03">rd</term>
+
+      <term name="ordinal-01" gender-form="masculine">stMASC</term>
+      <term name="ordinal-02" gender-form="masculine">ndMASC</term>
+      <term name="ordinal-03" gender-form="masculine">rdMASC</term>
+
+    </terms>
+  </locale>
+  <citation>
+    <layout delimiter="&#x0A;">
+      <text value="edition: "/>
+      <number variable="edition" form="ordinal"/>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+>>===== INPUT =====>>
+[
+    {
+        "edition": "1", 
+        "id": "ITEM-1", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

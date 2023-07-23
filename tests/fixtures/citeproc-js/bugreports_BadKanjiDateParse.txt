@@ -1,0 +1,43 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+四月 1, 1976
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <layout>
+       <date variable="issued" form="text" date-parts="year-month-day"/>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1", 
+        "issued": {
+            "date-parts": [], 
+            "raw": "四月 1, 1976"
+        }, 
+        "title": "Some Book or Other", 
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<

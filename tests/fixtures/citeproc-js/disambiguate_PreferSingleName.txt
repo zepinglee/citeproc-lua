@@ -1,0 +1,74 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+>>===== RESULT =====>>
+Kurtz Camembert et al. / Kurt Camembert et al.
+<<===== RESULT =====<<
+
+>>===== INPUT =====>>
+[
+  {
+    "id": "1",
+    "type": "book",
+    "author": [
+      {
+        "family": "Camembert",
+        "given": "Kurtz"
+      },
+      {
+        "family": "Rossi",
+        "given": "Amadeus"
+      },
+      {
+        "family": "Ignoble",
+        "given": "Ignatius"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "type": "book",
+    "author": [
+      {
+        "family": "Camembert",
+        "given": "Kurt"
+      },
+      {
+        "family": "Rossi",
+        "given": "Amadeus"
+      },
+      {
+        "family": "Idiosyncratic",
+        "given": "Ignatius"
+      }
+    ]
+  }
+]
+<<===== INPUT =====<<
+
+>>===== CSL =====>>
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.0" default-locale="en-US">
+  <info>
+    <id>https://github.com/cormacrelf/citeproc-rs/test-style</id>
+    <title>test-style</title>
+    <updated>2000-01-01T00:00:00Z</updated>
+  </info>
+
+  <citation
+    et-al-min="1"
+    et-al-use-first="1"
+    disambiguate-add-givenname="true"
+    disambiguate-add-names="true">
+
+    <layout delimiter=" / " suffix=".">
+      <names variable="author">
+        <name initialize="true" initialize-with="." />
+      </names>
+    </layout>
+  </citation>
+</style>
+
+<<===== CSL =====<<
+
