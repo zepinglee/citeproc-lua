@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add support for CSL-YAML input.
+- Add support for dependent styles.
 
 ## [0.4.2] - 2023-07-04
 

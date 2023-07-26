@@ -183,6 +183,24 @@ function core.init(style_name, data_files, lang)
 
   local citeproc_sys = core.make_citeproc_sys(data_files)
   local engine = citeproc.new(citeproc_sys, style, lang, force_lang)
+
+  if engine:is_dependent_style() then
+    local default_locale = engine.style.default_locale;
+    local parent_style_link = engine:get_independent_parent()
+    if not parent_style_link then
+      return nil
+    end
+    local parent_style_id = string.match(string.gsub(parent_style_link, "/+$", ""), "[^/]+$")
+    util.info(string.format('Style "%s" is a dependent style linked to "%s".', style_name, parent_style_id))
+    style = core.read_file(parent_style_id .. ".csl", nil, "style")
+    if not style then
+      util.error(string.format('Failed to load style "%s.csl"', parent_style_id))
+      return nil
+    end
+    engine = citeproc.new(citeproc_sys, style, lang, force_lang)
+    engine.style.default_locale = default_locale
+  end
+
   return engine
 end
 

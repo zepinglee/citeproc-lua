@@ -90,7 +90,7 @@ local Registry = {}
 
 
 ---@class CiteProc
----@field style any
+---@field style Style
 ---@field sys any
 ---@field locales Locale[]
 ---@field system_locales Locale[]
@@ -117,6 +117,7 @@ function CiteProc.new(sys, style, lang, force_lang)
   if sys.retrieveItem == nil then
     error("\"citeprocSys.retrieveItem\" required")
   end
+  ---@type CiteProc
   local o = {}
 
   o.style = Style:parse(style)
@@ -174,6 +175,26 @@ function CiteProc.new(sys, style, lang, force_lang)
 
   setmetatable(o, { __index = CiteProc })
   return o
+end
+
+---@return boolean
+function CiteProc:is_dependent_style()
+  return self.style.info.independent_parent ~= nil
+end
+
+---@return string?
+function CiteProc:get_independent_parent()
+  return self.style.info.independent_parent
+end
+
+function CiteProc:check_valid_citation_element()
+  if not self.style.citation then
+    if self.style.info and self.style.info.independent_parent then
+      util.error(string.format('This is a dependent style linked to "%s".', self.style.info.independent_parent))
+    else
+      util.error('No <citation> in style.')
+    end
+  end
 end
 
 function CiteProc:updateItems(ids)
@@ -263,6 +284,7 @@ end
 
 function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
   -- util.debug(citation.citationID)
+  self:check_valid_citation_element()
   citation = self:normalize_citation_input(citation)
 
   -- Registor citation
@@ -680,6 +702,7 @@ function CiteProc:makeCitationCluster(citation_items)
     self:sort_bibliography()
   end
 
+  self:check_valid_citation_element()
   local citation_element = self.style.citation
   if special_form == "author-only" and self.style.intext then
     citation_element = self.style.intext

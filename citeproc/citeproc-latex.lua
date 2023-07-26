@@ -28,7 +28,7 @@ function csl.init(style_name, bib_files, lang)
 
   csl.engine = core.init(style_name, bib_files, lang)
 
-  if csl.engine then
+  if csl.engine and csl.engine.style.citation then
     csl.initialized = "true"
   else
     return
@@ -91,7 +91,7 @@ end
 function csl.cite(citation_info)
   -- "citationID={ITEM-UNAVAILABLE@1},citationItems={{id={ITEM-UNAVAILABLE}}},properties={noteIndex={1}}"
   if not csl.engine then
-    csl.error("CSL engine is not initialized.")
+    util.error("CSL engine is not initialized.")
   end
 
   -- util.debug(citation_info)

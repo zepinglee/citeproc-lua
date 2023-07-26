@@ -155,54 +155,61 @@ Style._default_options = {
 
 
 ---@class Info: Element
+---@field author table?
+---@field contributors table[]
+---@field citation_format string?
+---@field fields string[]
+---@field id string?
+---@field issn string?
+---@field eissn string?
+---@field issnl string?
+---@field links string[]
+---@field link_rel table<string, string>
+---@field independent_parent string?
+---@field published string?
+---@field rghts string?
+---@field summary string?
+---@field title string?
+---@field title_short string?
+---@field updated string?
 local Info = Element:derive("info")
 
 
 function Info:from_node(node)
+  ---@type Info
   local o = Info:new()
 
-  -- o.authors = nil
-  -- o.contributors = nil
-  o.categories = {}
-  o.id = nil
-  -- o.issn = nil
-  -- o.eissn = nil
-  -- o.issnl = nil
-  o.links = {
-    independent_parent = nil,
-  }
-  -- o.published = nil
-  -- o.rights = nil
-  -- o.summary = nil
-  o.title = nil
-  -- o.title_short = nil
-  o.updated = nil
+  o.contributors = {}
+  o.fields = {}
+  o.links = {}
+  o.link_rel = {}
 
   for _, child in ipairs(node:get_children()) do
     if child:is_element() then
       local element_name = child:get_element_name()
-      if element_name == "category" then
+
+      if element_name == "author" or element_name == "contributor" then
+        -- TODO
+      elseif element_name == "category" then
         local citation_format = child:get_attribute("citation-format")
+        local field = child:get_attribute("field")
         if citation_format then
-          o.categories.citation_format = citation_format
+          o.citation_format = citation_format
+        elseif field then
+          table.insert(o.fields, field)
         end
-
-      elseif element_name == "id" then
-        o.id = child:get_text()
-
       elseif element_name == "link" then
         local href = child:get_attribute("href")
         local rel = child:get_attribute("rel")
-        if href and rel == "independent-parent" then
-          o.links.independent_parent = href
+        if href and rel then
+          table.insert(o.links, href)
+          o.link_rel[href] = rel
+          if rel == "independent-parent" then
+            o.independent_parent = href
+          end
         end
-
-      elseif element_name == "title" then
-        o.title = child:get_text()
-
-      elseif element_name == "updated" then
-        o.updated = child:get_text()
-
+      else
+        o[element_name] = child:get_text()
       end
     end
   end
