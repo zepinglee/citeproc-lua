@@ -29,6 +29,13 @@ describe("Inline elements", function ()
 
     it("italic", function ()
       -- flipflop_ItalicsSimple.txt
+      local text = ""
+      local expected = {}
+      assert.same(expected, InlineElement:parse(text))
+    end)
+
+    it("italic", function ()
+      -- flipflop_ItalicsSimple.txt
       local text = "One TwoA <i>Three Four</i> Five!"
       local expected = {
         markup.PlainText:new("One TwoA "),

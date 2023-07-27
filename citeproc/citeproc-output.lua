@@ -453,17 +453,17 @@ local function get_inline_element_grammar()
     nodecor = P"<span" * spaces * P'class="nodecor">' * Ct((V"token" - P"</span>")^0) * P"</span>" / function (tokens)
       return NoDecor:new(tokens2inlines(tokens))
     end,
-    mathtex = P"<mathtex>" * Ct((V"token" - P"</mathtex>")^0) * P"</mathtex>" / function (tokens)
-      return MathML:new(tokens2inlines(tokens)[1])
+    mathtex = P"<mathtex>" * Ct((1- P"</mathtex>")^0) * P"</mathtex>" / function (text)
+      return MathML:new(text)
     end,
-    mathml = P"<math>" * Ct((V"token" - P"</math>")^0) * P"</math>" / function (tokens)
-      return MathML:new(tokens2inlines(tokens)[1])
+    mathml = P"<math>" * C((1- P"</math>")^0) * P"</math>" / function (text)
+      return MathML:new(text)
     end,
-    code = P"<code>" * Ct((V"token" - P"</code>")^0) * P"</code>" / function (tokens)
-      return Code:new(tokens2inlines(tokens)[1])
+    code = P"<code>" * C((1 - P"</code>")^0) * P"</code>" / function (text)
+      return Code:new(text)
     end,
-    script = P"<script>" * Ct((V"token" - P"</script>")^0) * P"</script>" / function (tokens)
-      return Code:new(tokens2inlines(tokens)[1])
+    script = P"<script>" * C((1- P"</script>")^0) * P"</script>" / function (text)
+      return Code:new(text)
     end,
   }
   return grammar
