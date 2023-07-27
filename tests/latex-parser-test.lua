@@ -1,5 +1,5 @@
-local latex_parser 
-local util 
+local latex_parser
+local util
 if kpse then
   kpse.set_program_name("luatex")
   local kpse_searcher = package.searchers[2]
@@ -85,7 +85,7 @@ describe("LaTeX parser", function ()
     end)
 
     it("math", function ()
-      assert.same("Foo <math>y = \\alpha_1 x^2</math> bar",
+      assert.same("Foo <mathtex>y = \\alpha_1 x^2</mathtex> bar",
         latex_parser.latex_to_pseudo_html("Foo $y = \\alpha_1 x^2$ bar")
       )
     end)

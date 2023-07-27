@@ -6,6 +6,7 @@
 
 local output_module = {}
 
+local lpeg = require("lpeg")
 local uni_utf8
 local unicode
 local dom
@@ -29,6 +30,7 @@ end
 local GroupVar = ir_node.GroupVar
 
 
+---@class LocalizedQuotes
 local LocalizedQuotes = {
   outer_open = util.unicode['left double quotation mark'],
   outer_close = util.unicode['right double quotation mark'],
@@ -382,74 +384,108 @@ function InlineElement:parse_csl_rich_text(text)
   return inlines
 end
 
--- TODO: Rewrite with lpeg
-function InlineElement:parse_html_tags(str, context, is_external)
-  -- Return a list of inlines
-  -- if type(str) ~= "string" then
-  --   print(debug.traceback())
-  -- end
-  local html_str = "<div>" .. str .. "</div>"
-  local ok, html = pcall(dom.parse, html_str)
-  local inlines
-  if ok then
-    local div = html:get_path("div")[1]
-    local el = InlineElement:from_node(div)
-    inlines = el.inlines
-  else
-    local el = PlainText:new(str)
-    inlines = {el}
+local function tokens2inlines(tokens)
+  local inlines = {}
+  local i = 1
+  while i <= #tokens do
+    local token = tokens[i]
+    if type(token) == "string" then
+      local text = token
+      local j = i + 1
+      while j <= #tokens and type(tokens[j]) == "string" do
+        text = text .. tokens[j]
+        j = j + 1
+      end
+      i = j
+      table.insert(inlines, PlainText:new(text))
+    else
+      table.insert(inlines, token)
+      i = i + 1
+    end
   end
+  return inlines
+end
 
+local function get_inline_element_grammar()
+  local P = lpeg.P
+  local C = lpeg.C
+  local Ct = lpeg.Ct
+  local S = lpeg.S
+  local V = lpeg.V
+  local spaces = P(" ")^1
+  local grammar = P{
+    "content";
+    token = V"italic" + V"bold" + V"sup" + V"sub" + V"sc" + V"small_caps" + V"span_nocase" + V"nodecor" + V"mathtex" + V"mathml" + V"code" + V"script" + C(1),
+    content = Ct((V"token")^0) / tokens2inlines,
+    italic = P"<i>" * Ct((V"token" - P"</i>")^0) * P"</i>" / function (tokens)
+      return Formatted:new(tokens2inlines(tokens), {["font-style"] = "italic"})
+    end,
+    bold = P"<b>" * Ct((V"token" - P"</b>")^0) * P"</b>" / function (tokens)
+      return Formatted:new(tokens2inlines(tokens), {["font-weight"] = "bold"})
+    end,
+    sup = P"<sup>" * Ct((V"token" - P"</sup>")^0) * P"</sup>" / function (tokens)
+      return Formatted:new(tokens2inlines(tokens), {["vertical-align"] = "sup"})
+    end,
+    sub = P"<sub>" * Ct((V"token" - P"</sub>")^0) * P"</sub>" / function (tokens)
+      return Formatted:new(tokens2inlines(tokens), {["vertical-align"] = "sub"})
+    end,
+    sc = P"<sc>" * Ct((V"token" - P"</sc>")^0) * P"</sc>" / function (tokens)
+      return Formatted:new(tokens2inlines(tokens), {["font-variant"] = "small-caps"})
+    end,
+    quoted = (
+          C(P'"') * Ct((V"token" - P'"')^0) * C(P'"')
+          + C(P"'") * Ct((V"token" - P"'")^0) * C(P"'")
+          + C(P'“') * Ct((V"token" - P'”')^0) * C(P'”')
+          + C(P"‘") * Ct((V"token" - P"’")^0) * C(P"’")
+          + C(P"«") * Ct((V"token" - P"»")^0) * C(P"»")
+        ) / function (open, tokens, close)
+      return Quoted:new(tokens2inlines(tokens), LocalizedQuotes:new(open, close))
+    end,
+    small_caps = P"<span" * spaces * P'style="font-variant:' * spaces^0 * P'small-caps;">' * Ct((V"token" - P"</span>")^0) * P"</span>" / function (tokens)
+      return Formatted:new(tokens2inlines(tokens), {["font-variant"] = "small-caps"})
+    end,
+    -- nocase = P"<nocase>" * Ct((V"token" - P"</nocase>")^0) * P"</nocase>" / function (tokens)
+    --   return NoCase:new(tokens2inlines(tokens))
+    -- end,
+    span_nocase = P"<span" * spaces * P'class="nocase">' * Ct((V"token" - P"</span>")^0) * P"</span>" / function (tokens)
+      return NoCase:new(tokens2inlines(tokens))
+    end,
+    nodecor = P"<span" * spaces * P'class="nodecor">' * Ct((V"token" - P"</span>")^0) * P"</span>" / function (tokens)
+      return NoDecor:new(tokens2inlines(tokens))
+    end,
+    mathtex = P"<mathtex>" * Ct((V"token" - P"</mathtex>")^0) * P"</mathtex>" / function (tokens)
+      return MathML:new(tokens2inlines(tokens)[1])
+    end,
+    mathml = P"<math>" * Ct((V"token" - P"</math>")^0) * P"</math>" / function (tokens)
+      return MathML:new(tokens2inlines(tokens)[1])
+    end,
+    code = P"<code>" * Ct((V"token" - P"</code>")^0) * P"</code>" / function (tokens)
+      return Code:new(tokens2inlines(tokens)[1])
+    end,
+    script = P"<script>" * Ct((V"token" - P"</script>")^0) * P"</script>" / function (tokens)
+      return Code:new(tokens2inlines(tokens)[1])
+    end,
+  }
+  return grammar
+end
+
+local inline_element_grammar = get_inline_element_grammar()
+
+---@param str string
+---@param context Context?
+---@param is_external boolean?
+---@return InlineElement[]
+function InlineElement:parse_html_tags(str, context, is_external)
+  local inlines = inline_element_grammar:match(str)
   inlines = InlineElement:parse_quotes(inlines, context, is_external)
   return inlines
 end
 
-function InlineElement:from_node(node)
-  local tag_name = node:get_element_name()
-  local inlines = {}
-
-  for _, child in ipairs(node:get_children()) do
-    local inline
-    if child:is_text() then
-      local text = child:get_text()
-      if tag_name == "code" or tag_name == "script" then
-        inline = Code:new(text)
-      elseif tag_name == "math" then
-        inline = MathTeX:new(text)
-      else
-        inline = PlainText:new(text)
-      end
-    elseif child:is_element() then
-      inline = InlineElement:from_node(child)
-    end
-    table.insert(inlines, inline)
-  end
-
-  if tag_name == "i" then
-    return Formatted:new(inlines, {["font-style"] = "italic"})
-  elseif tag_name == "b" then
-    return Formatted:new(inlines, {["font-weight"] = "bold"})
-  elseif tag_name == "sup" then
-    return Formatted:new(inlines, {["vertical-align"] = "sup"})
-  elseif tag_name == "sub" then
-    return Formatted:new(inlines, {["vertical-align"] = "sub"})
-  elseif tag_name == "sc" then
-    return Formatted:new(inlines, {["font-variant"] = "small-caps"})
-  elseif tag_name == "span" then
-    local style = node:get_attribute("style")
-    local class = node:get_attribute("class")
-    if style == "font-variant:small-caps;" or style == "font-variant: small-caps;" then
-      return Formatted:new(inlines, {["font-variant"] = "small-caps"})
-    elseif class == "nocase" then
-      return NoCase:new(inlines)
-    elseif class == "nodecor" then
-      return NoDecor:new(inlines)
-    end
-  end
-
-  return InlineElement:new(inlines)
-end
-
+-- TODO: Rewrite with lpeg
+---@param inlines InlineElement[]
+---@param context Context
+---@param is_external boolean?
+---@return table
 function InlineElement:parse_quotes(inlines, context, is_external)
   local quote_fragments = InlineElement:get_quote_fragments(inlines)
   -- util.debug(quote_fragments)
@@ -1136,6 +1172,8 @@ function OutputFormat:with_display(nodes, display)
   end
 end
 
+---@param inlines InlineElement[]
+---@param context Context
 function OutputFormat:output(inlines, context)
   self:flip_flop_inlines(inlines)
 
@@ -1146,6 +1184,9 @@ function OutputFormat:output(inlines, context)
   return self:write_inlines(inlines, context)
 end
 
+---@param inlines InlineElement[]
+---@param context Context
+---@return string?
 function OutputFormat:output_bibliography_entry(inlines, context)
   self:flip_flop_inlines(inlines)
   -- util.debug(inlines)
@@ -1164,7 +1205,9 @@ function OutputFormat:output_bibliography_entry(inlines, context)
   return res
 end
 
+---@param inlines InlineElement[]
 function OutputFormat:flip_flop_inlines(inlines)
+  ---@class FlipFlopState
   local flip_flop_state = {
     ["font-style"] = "normal",
     ["font-variant"] = "normal",
@@ -1176,6 +1219,8 @@ function OutputFormat:flip_flop_inlines(inlines)
   self:flip_flop(inlines, flip_flop_state)
 end
 
+---@param inlines InlineElement[]
+---@param state FlipFlopState
 function OutputFormat:flip_flop(inlines, state)
   for i, inline in ipairs(inlines) do
     if inline._type == "Micro" then
@@ -1236,6 +1281,8 @@ function OutputFormat:flip_flop(inlines, state)
   end
 end
 
+---@param inlines InlineElement[]
+---@param state FlipFlopState
 function OutputFormat:flip_flop_micro_inlines(inlines, state)
   for i, inline in ipairs(inlines) do
     if inline._type == "Micro" then
@@ -1297,6 +1344,8 @@ function OutputFormat:flip_flop_micro_inlines(inlines, state)
   end
 end
 
+---@param inline InlineElement
+---@return InlineElement?
 local function find_left(inline)
   if inline._type == "PlainText" then
     return inline
@@ -1333,9 +1382,11 @@ local function find_right_in_quoted(inline)
   end
 end
 
--- "'Foo,' bar" => ,
+--- "'Foo,' bar" => ,
+---@param inline InlineElement
 local function find_right_quoted(inline)
   if inline._type == "Quoted" and #inline.inlines > 0 then
+    ---@cast inline Quoted
     return find_right_in_quoted(inline.inlines[#inline.inlines]), inline.quotes.punctuation_in_quote
   -- elseif inline._type == "Micro" then
   --   return nil
@@ -1486,6 +1537,7 @@ local function move_out_quotes(first, second)
   return success
 end
 
+---@param inlines InlineElement[]
 local function move_around_quote(inlines)
   local idx = 1
 
@@ -1510,7 +1562,9 @@ local function move_around_quote(inlines)
   end
 end
 
-function OutputFormat:move_punctuation(inlines, piq)
+---@param inlines InlineElement[]
+---@param punctuation_in_quote boolean?
+function OutputFormat:move_punctuation(inlines, punctuation_in_quote)
   -- Merge punctuations
   normalise_text_elements(inlines)
 
@@ -1607,6 +1661,9 @@ function Markup:write_formatted(inline, context)
   return self:write_inlines(inline.inlines, context)
 end
 
+---@param inline Quoted
+---@param context Context
+---@return string
 function Markup:write_quoted(inline, context)
   local res = self:write_inlines(inline.inlines, context)
   local quotes = inline.quotes
@@ -1998,7 +2055,7 @@ function PseudoHtml:write_mathml(inline, context)
 end
 
 function PseudoHtml:write_math_tex(inline, context)
-  return string.format("<math>%s</math>", inline.value)
+  return string.format("<mathtex>%s</mathtex>", inline.value)
 end
 
 function PseudoHtml:write_nocase(inline, context)

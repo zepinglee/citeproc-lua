@@ -1,5 +1,5 @@
-local markup 
-local util 
+local markup
+local util
 
 if kpse then
   kpse.set_program_name("luatex")
@@ -24,6 +24,60 @@ OutputFormat = markup.OutputFormat
 
 
 describe("Inline elements", function ()
+
+  describe("parsing", function ()
+
+    it("italic", function ()
+      -- flipflop_ItalicsSimple.txt
+      local text = "One TwoA <i>Three Four</i> Five!"
+      local expected = {
+        markup.PlainText:new("One TwoA "),
+        markup.Formatted:new({
+          markup.PlainText:new("Three Four")
+        }, {["font-style"] = "italic"}),
+        markup.PlainText:new(" Five!"),
+      }
+      assert.same(expected, InlineElement:parse(text))
+    end)
+
+    it("small caps 1", function ()
+      -- flipflop_SmallCaps.txt
+      local text = 'His <span style="font-variant:small-caps;">Anonymous</span> Life'
+      local expected = {
+        markup.PlainText:new("His "),
+        markup.Formatted:new({
+          markup.PlainText:new("Anonymous")
+        }, {["font-variant"] = "small-caps"}),
+        markup.PlainText:new(" Life"),
+      }
+      assert.same(expected, InlineElement:parse(text))
+    end)
+
+    it("small caps 2", function ()
+      -- textcase_ImplicitNocase.txt
+      local text = "My <sc>small caps phrase</sc> in a title"
+      local expected = {
+        markup.PlainText:new("My "),
+        markup.Formatted:new({
+          markup.PlainText:new("small caps phrase")
+        }, {["font-variant"] = "small-caps"}),
+        markup.PlainText:new(" in a title"),
+      }
+      assert.same(expected, InlineElement:parse(text))
+    end)
+
+    it("no case", function ()
+      -- textcase_CapitalizeAll.txt
+      local text =  'This IS a Pen that is a <span class="nocase">SMITH</span> Pencil'
+      local expected = {
+        markup.PlainText:new("This IS a Pen that is a "),
+        markup.NoCase:new({markup.PlainText:new("SMITH")}),
+        markup.PlainText:new(" Pencil"),
+      }
+      assert.same(expected, InlineElement:parse(text))
+    end)
+
+  end)
 
   describe("title case", function ()
     local plain_text_format = markup.PlainTextWriter:new()

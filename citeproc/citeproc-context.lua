@@ -307,6 +307,7 @@ function Context:get_simple_term(name, form, plural)
   return self.locale:get_simple_term(name, form, plural)
 end
 
+---@return LocalizedQuotes
 function Context:get_localized_quotes()
   return LocalizedQuotes:new(
     self:get_simple_term("open-quote"),
