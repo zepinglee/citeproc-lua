@@ -12,6 +12,9 @@ bugreports_EnvAndUrb4.txt
 # Disambiguation should be based on the subsequent form
 disambiguate_DisambiguationHang.txt
 
+# Disambiguation in bibliography
+disambiguate_NameDisambiguationInBibliography.txt
+
 # Hebrew
 name_HebrewAnd.txt
 

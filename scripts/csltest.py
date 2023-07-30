@@ -95,6 +95,13 @@ class CslTest:
             else:
                 self.data['DESCRIPTION'] = '\n\n'.join(descriptions)
 
+        if 'DESCRIPTION' in self.data:
+            self.data['DESCRIPTION'] = re.sub(r'([^<])(https?://\S*)',
+                                              r'\1<\2>',
+                                              self.data['DESCRIPTION'])
+            self.data['DESCRIPTION'] = re.sub(r'^(https?://\S*)', r'<\1>',
+                                              self.data['DESCRIPTION'])
+
         if 'VERSION' not in self.data:
             self.data['VERSION'] = '1.0'
 
@@ -122,6 +129,8 @@ class CslTest:
                         xml_str = xml_str.replace(' class=', '\n      class=')
                         xml_str = xml_str.replace(' version=',
                                                   '\n      version=')
+                        xml_str = xml_str.replace(' default-locale=',
+                                                  '\n      default-locale=')
                     if '<id />' in self.raw_data['CSL']:
                         xml_str = xml_str.replace('<id/>', '<id />')
                         xml_str = xml_str.replace('<title/>', '<title />')

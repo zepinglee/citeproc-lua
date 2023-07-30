@@ -9,10 +9,10 @@ citeprochs           6       0       0       0
 citeprocjs           9       0       0       0
 collapse            22       0       0       0
 condition           18       0       0       0
-date               102       0       0       0
+date               104       0       0       0
 dateparser           1       0       0       0
 decorations          7       0       0       0
-disambiguate        74       0       0       0
+disambiguate        76       0       0       0
 discretionary       28       0       0       0
 display              5       0       0       0
 eclac                1       0       0       0
@@ -48,10 +48,10 @@ sortseparator        1       0       0       0
 spaces              17       0       0       0
 substitute           7       0       0       0
 testers              2       0       0       0
-textcase            31       0       0       0
+textcase            32       0       0       0
 unicode              1       0       0       0
 variables            7       0       0       0
 virtual              1       0       0       0
 wrappers             3       0       0       0
 -------------- ------- ------- ------- -------
-(all)             1085       0       0       0
+(all)             1090       0       0       0

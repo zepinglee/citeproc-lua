@@ -1,0 +1,100 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+>>===== DESCRIPTION =====>>
+<https://github.com/zotero/citeproc-rs/issues/147>
+<<===== DESCRIPTION =====<<
+
+
+>>===== RESULT =====>>
+(2000)(November)(10–December)(9)
+(2000)(November)(8–9)
+<<===== RESULT =====<<
+
+
+>>===== CITATION-ITEMS =====>>
+[
+    [
+        {
+            "id": "ITEM-1"
+        }
+    ],
+    [
+        {
+            "id": "ITEM-2"
+        }
+    ]
+]
+<<===== CITATION-ITEMS =====<<
+
+
+>>===== CSL =====>>
+<style
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="in-text"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2022-06-05T00:00:00+08:00</updated>
+  </info>
+  <citation>
+    <layout>
+      <date variable="issued">
+        <date-part name="year" prefix="(" suffix=")"/>
+        <date-part name="month" prefix="(" suffix=")"/>
+        <date-part name="day" prefix="(" suffix=")"/>
+      </date>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1",
+        "type": "book",
+        "issued": {
+            "date-parts": [
+                [
+                    2000,
+                    11,
+                    10
+                ],
+                [
+                    2000,
+                    12,
+                    9
+                ]
+            ]
+        }
+    },
+    {
+        "id": "ITEM-2",
+        "type": "book",
+        "issued": {
+            "date-parts": [
+                [
+                    2000,
+                    11,
+                    8
+                ],
+                [
+                    2000,
+                    11,
+                    9
+                ]
+            ]
+        }
+    }
+]
+<<===== INPUT =====<<
+
+
+>>===== VERSION =====>>
+1.0
+<<===== VERSION =====<<
