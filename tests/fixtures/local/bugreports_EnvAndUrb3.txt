@@ -1,0 +1,111 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+>>===== DESCRIPTION =====>>
+The citperoc-js (73bc1b44) gives:
+
+      + expected - actual
+
+      -Baines, 2000, Title One; Baines, 2000, Title Two
+      +Baines, Title One; Baines, Title Two.
+
+The dates are expected to be gobbled because they don't disambiguate the cites.
+
+Related discussion: <https://discourse.citationstyles.org/t/bugreports-envandurb-test-seems-contrary-to-disambiguation-rules/1801>
+<<===== DESCRIPTION =====<<
+
+
+>>===== RESULT =====>>
+Baines, Title One; Baines, Title Two.
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2023-06-25T14:41:33+08:00</updated>
+  </info>
+  <citation>
+    <layout delimiter="; ">
+      <group delimiter=", ">
+        <names variable="author">
+          <name form="short"/>
+        </names>
+        <choose>
+          <if disambiguate="true">
+            <date variable="issued">
+              <date-part name="year"/>
+            </date>
+          </if>
+        </choose>
+        <choose>
+          <if disambiguate="true">
+            <text variable="title"/>
+          </if>
+        </choose>
+        <choose>
+          <if disambiguate="true">
+            <text variable="container-title"/>
+          </if>
+        </choose>
+      </group>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1",
+        "type": "article-journal",
+        "author": [
+            {
+                "family": "Baines",
+                "given": "T. S."
+            }
+        ],
+        "container-title": "Journal",
+        "issued": {
+            "date-parts": [
+                [
+                    "2000"
+                ]
+            ]
+        },
+        "title": "Title One"
+    },
+    {
+        "id": "ITEM-2",
+        "type": "article-journal",
+        "author": [
+            {
+                "family": "Baines",
+                "given": "T. S."
+            }
+        ],
+        "container-title": "Journal",
+        "issued": {
+            "date-parts": [
+                [
+                    "2000"
+                ]
+            ]
+        },
+        "title": "Title Two"
+    }
+]
+<<===== INPUT =====<<
+
+
+>>===== VERSION =====>>
+1.0
+<<===== VERSION =====<<

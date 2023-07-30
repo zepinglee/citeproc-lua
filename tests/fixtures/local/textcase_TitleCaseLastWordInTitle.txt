@@ -1,0 +1,64 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+>>===== DESCRIPTION =====>>
+<https://github.com/Juris-M/citeproc-js/issues/222>
+<https://twitter.com/zotero/status/1635408908947795974>
+<<===== DESCRIPTION =====<<
+
+
+>>===== RESULT =====>>
+This War Ain't Over: Fighting the Civil War in New Deal America
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2023-06-14T17:21:25+08:00</updated>
+  </info>
+  <citation>
+    <layout>
+      <text variable="title" text-case="title"/>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1",
+        "type": "book",
+        "title": "This war ain't over: Fighting the civil war in new deal America",
+        "author": [
+            {
+                "family": "Silber",
+                "given": "Nina"
+            }
+        ],
+        "issued": {
+            "date-parts": [
+                [
+                    "2018",
+                    11,
+                    2
+                ]
+            ]
+        }
+    }
+]
+<<===== INPUT =====<<
+
+
+>>===== VERSION =====>>
+1.0
+<<===== VERSION =====<<

@@ -1,0 +1,82 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+>>===== DESCRIPTION =====>>
+https://discourse.citationstyles.org/t/unexpected-behavior-with-article-locator/1825
+<<===== DESCRIPTION =====<<
+
+
+>>===== RESULT =====>>
+p. 42 is page
+art. 42 is article-locator
+<<===== RESULT =====<<
+
+
+>>===== CITATION-ITEMS =====>>
+[
+    [
+        {
+            "id": "ITEM-1",
+            "locator": "42",
+            "label": "page"
+        }
+    ],
+    [
+        {
+            "id": "ITEM-1",
+            "locator": "42",
+            "label": "article-locator"
+        }
+    ]
+]
+<<===== CITATION-ITEMS =====<<
+
+
+>>===== CSL =====>>
+<style
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2023-07-29T19:51:21+08:00</updated>
+  </info>
+  <citation>
+    <layout>
+      <group delimiter=" ">
+        <label variable="locator" form="short"/>
+        <text variable="locator"/>
+        <choose>
+          <if locator="page">
+            <text value="is page"/>
+          </if>
+          <else-if locator="article-locator">
+            <text value="is article-locator"/>
+          </else-if>
+          <else>
+            <text value="is other"/>
+          </else>
+        </choose>
+      </group>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1",
+        "type": "legislation"
+    }
+]
+<<===== INPUT =====<<
+
+
+>>===== VERSION =====>>
+1.0
+<<===== VERSION =====<<

@@ -95,6 +95,9 @@ class CslTest:
             else:
                 self.data['DESCRIPTION'] = '\n\n'.join(descriptions)
 
+        if 'VERSION' not in self.data:
+            self.data['VERSION'] = '1.0'
+
     def dumps(self) -> str:
         text = ''
         for tag in [
@@ -112,6 +115,8 @@ class CslTest:
                     xml_str = etree.tostring(
                         self.data['CSL'], pretty_print=True,
                         encoding='utf-8').decode().strip()
+                    if '<?xml version="1.0"' in self.raw_data['CSL']:
+                        xml_str = '<?xml version="1.0" encoding="utf-8"?>\n' + xml_str
                     if re.search(r'<style\s*\n\s+xmlns', self.raw_data['CSL']):
                         xml_str = xml_str.replace(' xmlns=', '\n      xmlns=')
                         xml_str = xml_str.replace(' class=', '\n      class=')

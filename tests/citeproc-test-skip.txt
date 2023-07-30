@@ -4,6 +4,11 @@ discretionary_AuthorDateAuthorOnlyThenSuppressAuthorNoteStyle.txt
 disambiguate_BasedOnSubsequentFormWithBackref2.txt
 integration_FirstReferenceNoteNumberPositionChange.txt
 
+# Disambiguation
+bugreports_EnvAndUrb2.txt
+bugreports_EnvAndUrb3.txt
+bugreports_EnvAndUrb4.txt
+
 # Disambiguation should be based on the subsequent form
 disambiguate_DisambiguationHang.txt
 
@@ -23,3 +28,6 @@ sort_OmittedBibRefNonNumericStyle.txt
 
 # Localized uppercase conversion not available for tr-TR
 textcase_LocaleUnicode.txt
+
+# Capitalize the last word in main title
+textcase_TitleCaseLastWordInTitle.txt
