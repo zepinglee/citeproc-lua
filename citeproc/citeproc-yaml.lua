@@ -19,6 +19,9 @@ end
 
 
 -- Convert CSL-YAML string to CSL-JSON
+
+---@param str string
+---@return CslData
 function csl_yaml.parse(str)
   -- lua-tinyyaml 0.4.2 doesn't support dots terminator.
   -- See <https://github.com/api7/lua-tinyyaml/issues/22>.

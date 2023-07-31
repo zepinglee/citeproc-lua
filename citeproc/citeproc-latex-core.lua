@@ -6,13 +6,17 @@
 
 local core = {}
 
+require("lualibs")
+local json_decode = utilities.json.tolua
+
 local citeproc = require("citeproc")
+local bibtex_data = require("citeproc-bibtex-data")
+local bibtex_parser = require("citeproc-bibtex-parser")
+local latex_parser = require("citeproc-latex-parser")
 local yaml  -- = require("citeproc-yaml")  -- load on demand
-local bibtex2csl  -- = require("citeproc-bibtex-parser")  -- load on demand
+local bibtex2csl  -- = require("citeproc-bibtex2csl")  -- load on demand
 local unicode =  require("citeproc-unicode")
 local util = citeproc.util
-require("lualibs")
-local latex_parser = require("citeproc-latex-parser")
 
 
 core.locale_file_format = "csl-locales-%s.xml"
@@ -22,6 +26,10 @@ core.uncite_all_items = false
 core.item_list = {}
 core.item_dict = {}
 
+---@param file_name string
+---@param ftype "bib"?
+---@param file_info string
+---@return string? contents
 function core.read_file(file_name, ftype, file_info)
   if file_info then
     file_info = unicode.capitalize(file_info)
@@ -48,98 +56,137 @@ function core.read_file(file_name, ftype, file_info)
 end
 
 
-local function read_data_file(data_file)
-  local file_name = data_file
-  local extension = nil
+---@param filename string
+---@return string file
+---@return string format
+---@return string? contents
+local function read_data_file(filename)
+  local file = filename
+  local format = "json"
   local contents = nil
 
-  if util.endswith(data_file, ".json") then
-    extension = ".json"
-    contents = core.read_file(data_file, nil, "database file")
-  elseif string.match(data_file, "%.ya?ml$") then
-    extension = ".yaml"
-    contents = core.read_file(data_file, nil, "database file")
-  elseif util.endswith(data_file, ".bib") then
-    extension = ".bib"
-    contents = core.read_file(data_file, "bib", "database file")
+  if util.endswith(filename, ".json") then
+    format = "json"
+    contents = core.read_file(filename, nil, "database file")
+  elseif string.match(filename, "%.ya?ml$") then
+    format = "yaml"
+    contents = core.read_file(filename, nil, "database file")
+  elseif util.endswith(filename, ".bib") then
+    format = "bibtex"
+    contents = core.read_file(filename, "bib", "database file")
   else
-    local path = kpse.find_file(data_file .. ".json")
+    file = filename .. ".json"
+    local path = kpse.find_file(file)
     if path then
-      file_name = data_file .. ".json"
-      extension = ".json"
-      contents = core.read_file(data_file .. ".json", nil, "database file")
+      format = "json"
+      contents = core.read_file(file, nil, "database file")
     else
-      path = kpse.find_file(data_file .. ".yaml") or kpse.find_file(data_file .. ".yml")
+      path = kpse.find_file(filename .. ".yaml") or kpse.find_file(filename .. ".yml")
       if path then
-        extension = string.match(path, ".*(%.%w+)$")
-        file_name = data_file .. extension
+        format = "yaml"
+        file = filename .. string.match(path, "%.ya?ml$")
         contents = core.read_file(path, nil, "database file")
       else
-        path = kpse.find_file(data_file, "bib")
+        path = kpse.find_file(filename, "bib")
         if path then
-          file_name = data_file .. ".bib"
-          extension = ".bib"
-          contents = core.read_file(data_file, "bib", "database file")
+          file = filename .. ".bib"
+          format = "bibtex"
+          contents = core.read_file(filename, "bib", "database file")
         else
-          util.error(string.format('Cannot find database file "%s"', data_file .. ".json"))
+          util.error(string.format('Cannot find database file "%s"', filename .. ".json"))
+          return file, format, nil
         end
       end
     end
   end
-
-  local csl_items = nil
-
-  if extension == ".json" then
-    local status, res = pcall(utilities.json.tolua, contents)
-    if status and res then
-      csl_items = res
-      for _, item in ipairs(csl_items) do
-        -- Jounal abbreviations
-        if item.type == "article-journal" or item.type == "article-magazine"
-            or item.type == "article-newspaper" then
-          util.check_journal_abbreviations(item)
-        end
-      end
-    else
-      util.error(string.format('JSON decoding error in file "%s"', data_file))
-      csl_items = {}
-    end
-  elseif extension == ".yaml" or extension == ".yml" then
-    yaml = yaml or require("citeproc-yaml")
-    csl_items = yaml.parse(contents)
-  elseif extension == ".bib" then
-    bibtex2csl = bibtex2csl or require("citeproc-bibtex2csl")
-    csl_items = bibtex2csl.parse_bibtex_to_csl(contents, true, true, true, true)
-  end
-
-  if not csl_items then
-    csl_items = {}
-  end
-
-  return file_name, csl_items
+  return file, format, contents
 end
 
 
 local function read_data_files(data_files)
   local item_list = {}
   local item_dict = {}
-  for _, data_file in ipairs(data_files) do
-    local file_name, csl_items = read_data_file(data_file)
 
-    -- TODO: parse item_dict entries on demand
-    for _, item in ipairs(csl_items) do
-      local id = item.id
-      if item_dict[id] then
-        util.warning(string.format('Duplicate entry key "%s" in "%s".', id, file_name))
-      else
-        item_dict[id] = item
-        table.insert(item_list, item)
+  --- Store BibTeX entries for later resolving crossref
+  ---@type table<string, BibtexEntry>
+  local bibtex_entries = {}
+  ---@type table<string, string>
+  local bibtex_strings = {}
+  for name, macro in pairs(bibtex_data.macros) do
+    bibtex_strings[name] = macro.value
+  end
+  ---@type BibtexEntry[]
+  local entries_with_crossref = {}
+
+  for _, data_file in ipairs(data_files) do
+    -- local file_name, csl_items = read_data_file(data_file)
+
+    local csl_items = {}
+
+    local file, format, contents = read_data_file(data_file)
+
+    if contents then
+
+      if format == "json" then
+        local ok, res = pcall(json_decode, contents)
+        if ok then
+          ---@cast res CslData
+          csl_items = res
+        else
+          util.error(string.format('JSON decode error in file "%s".', file))
+        end
+
+      elseif format == "yaml" then
+        yaml = yaml or require("citeproc-yaml")
+        csl_items = yaml.parse(contents)
+
+      elseif format == "bibtex" then
+        local bib_data, exceptions = bibtex_parser.parse(contents, bibtex_strings)
+        if bib_data then
+          bibtex2csl = bibtex2csl or require("citeproc-bibtex2csl")
+          csl_items = bibtex2csl.convert_to_csl_data(bib_data, true, true, true, true)
+          for _, entry in ipairs(bib_data.entries) do
+            if not bibtex_entries[entry.key] then
+              bibtex_entries[entry.key] = entry
+              if entry.fields.crossref then
+                table.insert(entries_with_crossref, entry)
+              end
+            end
+          end
+          for string_name, value in pairs(bib_data.strings) do
+            bibtex_strings[string_name] = value
+          end
+        end
+      end
+
+      for _, item in ipairs(csl_items) do
+        local id = item.id
+        if item_dict[id] then
+          util.warning(string.format('Duplicate entry key "%s" in "%s".', id, file))
+        else
+          item_dict[id] = item
+          table.insert(item_list, item)
+        end
+      end
+
+    end
+  end
+
+  bibtex_parser.resolve_crossrefs(entries_with_crossref, bibtex_entries)
+
+  for _, entry in ipairs(entries_with_crossref) do
+    local new_item = bibtex2csl.convert_to_csl_item(entry, true, true, true, true)
+    item_dict[new_item.id] = new_item
+    for i, item in ipairs(item_list) do
+      if item.id == new_item.id then
+        item_list[i] = new_item
+        break
       end
     end
   end
+
   return item_list, item_dict
 end
-
 
 
 function core.make_citeproc_sys(data_files)

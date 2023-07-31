@@ -49,6 +49,7 @@ function bibtex2csl.parse_bibtex_to_csl(str, keep_unknown_commands, case_protect
   local bib_data, exceptions = bibtex_parser.parse(str, strings)
   local csl_json_items = nil
   if bib_data then
+    bibtex_parser.resolve_crossrefs(bib_data.entries, bibtex_data.entries_by_id)
     csl_json_items = bibtex2csl.convert_to_csl_data(bib_data, keep_unknown_commands, case_protection, sentence_case_title, check_sentence_case)
   end
   return csl_json_items, exceptions
@@ -71,49 +72,7 @@ function bibtex2csl.convert_to_csl_data(bib, keep_unknown_commands, case_protect
   end
 
   for _, entry in ipairs(bib.entries) do
-    ---@type CslItem
-    local item = {
-      id = entry.key,
-      type = "document",
-    }
-
-    -- crossref
-    if entry.fields.crossref then
-      bibtex2csl.process_cross_ref(entry, entries_by_id)
-    end
-
-    bibtex2csl.pre_process_special_fields(item, entry)
-
-    -- First convert primary fields
-    for field, csl_field in pairs(bibtex_data.primary_fields) do
-      local value = entry.fields[field]
-      if value then
-        local _, csl_value = bibtex2csl.convert_field(
-          field, value, keep_unknown_commands, case_protection, sentence_case_title, item.language, check_sentence_case)
-        if csl_field and csl_value and not item[csl_field] then
-          item[csl_field] = csl_value
-        end
-      end
-    end
-
-    -- Convert the fields in a fixed order
-    local field_list = {}
-    for field, _ in pairs(entry.fields) do
-      table.insert(field_list, field)
-    end
-    table.sort(field_list)
-
-    for _, field in ipairs(field_list) do
-      local value = entry.fields[field]
-      local csl_field, csl_value = bibtex2csl.convert_field(
-        field, value, keep_unknown_commands, case_protection, sentence_case_title, item.language, check_sentence_case)
-      if csl_field and csl_value and not item[csl_field] then
-        item[csl_field] = csl_value
-      end
-    end
-
-    bibtex2csl.post_process_special_fields(item, entry)
-
+    local item = bibtex2csl.convert_to_csl_item(entry, keep_unknown_commands, case_protection, sentence_case_title, check_sentence_case)
     table.insert(csl_data, item)
   end
   return csl_data
@@ -121,18 +80,50 @@ end
 
 
 ---@param entry BibtexEntry
----@param entries_by_id table<string, BibtexEntry>
-function bibtex2csl.process_cross_ref(entry, entries_by_id)
-  local ref_entry = entries_by_id[unicode.casefold(entry.fields.crossref)]
-  if ref_entry then
-    for field, value in pairs(ref_entry.fields) do
-      if not entry.fields[field] then
-        entry.fields[field] = value
+---@param keep_unknown_commands boolean?
+---@param case_protection boolean?
+---@param sentence_case_title boolean?
+---@param check_sentence_case boolean?
+---@return CslItem
+function bibtex2csl.convert_to_csl_item(entry, keep_unknown_commands, case_protection, sentence_case_title, check_sentence_case)
+  ---@type CslItem
+  local item = {
+    id = entry.key,
+    type = "document",
+  }
+
+  bibtex2csl.pre_process_special_fields(item, entry)
+
+  -- First convert primary fields
+  for field, csl_field in pairs(bibtex_data.primary_fields) do
+    local value = entry.fields[field]
+    if value then
+      local _, csl_value = bibtex2csl.convert_field(
+        field, value, keep_unknown_commands, case_protection, sentence_case_title, item.language, check_sentence_case)
+      if csl_field and csl_value and not item[csl_field] then
+        item[csl_field] = csl_value
       end
     end
-  else
-    util.error(string.format('Crossref "%s" not found.', entry.fields.crossref))
   end
+
+  -- Convert the fields in a fixed order
+  local field_list = {}
+  for field, _ in pairs(entry.fields) do
+    table.insert(field_list, field)
+  end
+  table.sort(field_list)
+
+  for _, field in ipairs(field_list) do
+    local value = entry.fields[field]
+    local csl_field, csl_value = bibtex2csl.convert_field(
+      field, value, keep_unknown_commands, case_protection, sentence_case_title, item.language, check_sentence_case)
+    if csl_field and csl_value and not item[csl_field] then
+      item[csl_field] = csl_value
+    end
+  end
+
+  bibtex2csl.post_process_special_fields(item, entry)
+  return item
 end
 
 

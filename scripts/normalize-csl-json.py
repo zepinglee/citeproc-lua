@@ -1,7 +1,7 @@
 import argparse
 from collections import OrderedDict
 import json
-import sys
+import logging
 
 
 def get_item_sort_key(item):
@@ -20,6 +20,8 @@ def main():
     args = parser.parse_args()
 
     for path in args.files:
+        if not path.endswith('.json'):
+            logging.warning(f'Path "{path}" is not likely a JSON file.')
         with open(path) as f:
             data = json.load(f)
         data = [
@@ -29,7 +31,6 @@ def main():
         with open(path, 'w') as f:
             json.dump(data, f, indent='\t', ensure_ascii=False)
             f.write('\n')
-
 
 
 if __name__ == '__main__':

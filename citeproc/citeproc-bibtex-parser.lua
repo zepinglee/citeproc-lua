@@ -163,7 +163,12 @@ end
 
 
 ---@alias BibtexEntry { key: string, type: string, fields: table<string, string> }
----@alias BibtexData table
+---@class BibtexData
+---@field entries BibtexEntry[]
+---@field entries_by_id table<string, BibtexEntry>
+---@field strings table<string, string>
+---@field preamble string?
+
 ---@alias Exception table
 
 ---comment
@@ -189,6 +194,7 @@ function BibtexParser:parse(bib_str, strings)
     return nil, {error}
   end
 
+  ---@type BibtexData
   local res = {
     ---@type BibtexEntry[]
     entries = {},
@@ -482,6 +488,42 @@ function bibtex_parser._split_von_last_parts(str)
   name.last = join_words_and_seps(words, seps, last_start, #words)
 
   return name
+end
+
+
+--- Note that BibTeX find crossref in a case-insensitive manner (see
+--- `article-crossref` in `xampl.bib`) which is unlike biber/biblatex.
+--- This function is case-sensitive.
+---@param entry_list BibtexEntry[]
+---@param entry_dict table<string, BibtexEntry>?
+function bibtex_parser.resolve_crossrefs(entry_list, entry_dict)
+  if not entry_dict then
+    entry_dict = {}
+    for _, entry in ipairs(entry_list) do
+      entry_dict[entry.key] = entry
+    end
+  end
+  for _, entry in ipairs(entry_list) do
+    local ref_entry = entry
+    ---@type string?
+    local ref_key = entry.fields.crossref
+    while ref_key do
+      local crossref_entry = entry_dict[ref_key]
+      if crossref_entry then
+        ref_entry = crossref_entry
+        for field, value in pairs(ref_entry.fields) do
+          if not entry.fields[field] then
+            entry.fields[field] = value
+          end
+        end
+        ref_key = ref_entry.fields.crossref
+      else
+        util.warning(string.format("Didn't find a database entry for crossref '%s' in entry '%s'.", ref_key, ref_entry.key))
+        ref_entry.fields.crossref = nil
+        ref_key = nil
+      end
+    end
+  end
 end
 
 
