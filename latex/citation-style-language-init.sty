@@ -6,7 +6,7 @@
 
 % ## Initialization at `\begin{document}`
 
-\AtBeginDocument { \__csl_at_begin_document_hook: }
+\hook_gput_code:nnn { begindocument } { . } { \__csl_at_begin_document_hook: }
 
 
 \cs_new:Npn \__csl_at_begin_document_hook:

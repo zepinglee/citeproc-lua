@@ -520,7 +520,7 @@
   {
     \__csl_if_preamble:TF
       {
-        \AtBeginDocument
+        \hook_gput_code:nnn { begindocument } { . }
           { \exp_args:Nx \__csl_write_aux_citation:n { #1 } }
       }
       { \exp_args:Nx \__csl_write_aux_citation:n { #1 } }

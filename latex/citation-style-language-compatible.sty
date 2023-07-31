@@ -9,7 +9,7 @@
 % ### `babel`
 
 % This should be disabled.
-\AtEndOfPackageFile* { babel }
+\hook_gput_code:nnn { package / babel / after } { . }
   {
     \RenewDocumentCommand \nocite { m }
       {
@@ -37,7 +37,7 @@
 
 % ### `csquotes`
 
-\AtEndOfPackageFile* { csquotes }
+\hook_gput_code:nnn { package / csquotes / after } { . }
   {
     \BlockquoteDisable
       {
@@ -52,7 +52,7 @@
 % The hyperref package also patches \bibcite but it cannot provide hyperlinks
 % when used with csl.
 \bool_new:N \l__csl_hyperref_loaded_bool
-\AtEndOfPackageFile* { hyperref }
+\hook_gput_code:nnn { package / hyperref / after } { . }
   {
     \bool_set_true:N \l__csl_hyperref_loaded_bool
     % Pakcage "hyperref" redefines \@lbibitem and \bibitem and we need to

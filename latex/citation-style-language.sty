@@ -13,7 +13,6 @@
   {Citation Style Language for LaTeX}
 
 \RequirePackage { l3keys2e }
-\RequirePackage { filehook }
 \RequirePackage { url }
 
 
@@ -28,7 +27,7 @@
     multibib , natbib , splitbib
   }
   {
-    \AtBeginOfPackageFile* {#1}
+    \hook_gput_code:nnn { package / #1 / before } { . }
       { \msg_error:nnn { citation-style-language } { incompatible-package } {#1} }
   }
 

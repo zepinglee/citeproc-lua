@@ -1,6 +1,5 @@
 # The format of this file is described in https://www.tug.org/texlive/pkgcontrib.html#deps.
 
-hard filehook
 hard l3kernel
 hard l3packages  # xparse
 hard lua-tinyyaml  # YAML parser

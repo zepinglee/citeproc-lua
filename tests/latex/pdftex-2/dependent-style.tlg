@@ -6,11 +6,7 @@ Package: xparse ....-..-.. L3 Experimental document command parser
 Package: citation-style-language ....-..-.. v....2 Citation Style Language for LaTeX
 (../l3keys2e.sty
 Package: l3keys2e ....-..-.. LaTeX2e option processing using LaTeX3 keys
-) (../filehook.sty
-Package: filehook ....-..-.. v... Hooks for input files
-(../filehook-2020.sty
-Package: filehook-2020 ....-..-.. v... Hooks for input files
-)) (../url.sty
+) (../url.sty
 \Urlmuskip=\muskip...
 Package: url ....-..-..  ver 3.4  Verb mode for urls, etc.
 )
