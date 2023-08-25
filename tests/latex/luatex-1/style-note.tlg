@@ -1062,7 +1062,7 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/8 e
 ....\discretionary (penalty 50)
 .....< \TU/lmr/m/n/8 -
-....\TU/lmr/m/n/8 ﬁ (ligature fi)
+....\TU/lmr/m/n/8 ﬁ
 ....\TU/lmr/m/n/8 x
 ....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
 ....\TU/lmr/m/n/8 D
@@ -1155,8 +1155,8 @@ Completed box being shipped out [1]
 ....\discretionary (penalty 50)
 .....< \TU/lmr/m/n/8 f
 .....< \TU/lmr/m/n/8 -
-.....> \TU/lmr/m/n/8 ﬁ (ligature fi)
-.....= \TU/lmr/m/n/8 ﬃ (ligature ffi)
+.....> \TU/lmr/m/n/8 ﬁ
+.....= \TU/lmr/m/n/8 ﬃ
 ....\TU/lmr/m/n/8 x
 ....\TU/lmr/m/n/8 .
 ....\penalty 10000
@@ -1185,7 +1185,7 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/8 e
 ....\discretionary (penalty 50)
 .....< \TU/lmr/m/n/8 -
-....\TU/lmr/m/n/8 ﬁ (ligature fi)
+....\TU/lmr/m/n/8 ﬁ
 ....\TU/lmr/m/n/8 x
 ....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
 ....\TU/lmr/m/n/8 D
@@ -1204,8 +1204,8 @@ Completed box being shipped out [1]
 ....\discretionary (penalty 50)
 .....< \TU/lmr/m/n/8 f
 .....< \TU/lmr/m/n/8 -
-.....> \TU/lmr/m/n/8 ﬁ (ligature fi)
-.....= \TU/lmr/m/n/8 ﬃ (ligature ffi)
+.....> \TU/lmr/m/n/8 ﬁ
+.....= \TU/lmr/m/n/8 ﬃ
 ....\TU/lmr/m/n/8 x
 ....\TU/lmr/m/n/8 .
 ....\penalty 10000
@@ -1245,8 +1245,8 @@ Completed box being shipped out [1]
 ....\discretionary (penalty 50)
 .....< \TU/lmr/m/n/8 f
 .....< \TU/lmr/m/n/8 -
-.....> \TU/lmr/m/n/8 ﬁ (ligature fi)
-.....= \TU/lmr/m/n/8 ﬃ (ligature ffi)
+.....> \TU/lmr/m/n/8 ﬁ
+.....= \TU/lmr/m/n/8 ﬃ
 ....\TU/lmr/m/n/8 x
 ....\TU/lmr/m/n/8 .
 ....\penalty 10000
@@ -1275,7 +1275,7 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/8 e
 ....\discretionary (penalty 50)
 .....< \TU/lmr/m/n/8 -
-....\TU/lmr/m/n/8 ﬁ (ligature fi)
+....\TU/lmr/m/n/8 ﬁ
 ....\TU/lmr/m/n/8 x
 ....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
 ....\TU/lmr/m/n/8 D
@@ -1490,7 +1490,7 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/8 ,
 ....\TU/lmr/m/n/8 ”
 ....\glue(\spaceskip) 2.832 plus 1.76999 minus 0.75519
-....\TU/lmr/m/n/8 ﬁ (ligature fi)
+....\TU/lmr/m/n/8 ﬁ
 ....\TU/lmr/m/n/8 g
 ....\TU/lmr/m/n/8 .
 ....\glue(\spaceskip) 3.776 plus 4.248 minus 0.31467

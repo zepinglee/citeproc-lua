@@ -338,7 +338,7 @@ Completed box being shipped out [1]
 .....\TU/lmr/m/n/7 e
 .....\discretionary (penalty 50)
 ......< \TU/lmr/m/n/7 -
-.....\TU/lmr/m/n/7 ﬁ (ligature fi)
+.....\TU/lmr/m/n/7 ﬁ
 .....\TU/lmr/m/n/7 x
 .....\glue(\spaceskip) 2.695 plus 1.3475 minus 0.89833
 .....\TU/lmr/m/n/7 1
@@ -348,8 +348,8 @@ Completed box being shipped out [1]
 .....\discretionary (penalty 50)
 ......< \TU/lmr/m/n/7 f
 ......< \TU/lmr/m/n/7 -
-......> \TU/lmr/m/n/7 ﬁ (ligature fi)
-......= \TU/lmr/m/n/7 ﬃ (ligature ffi)
+......> \TU/lmr/m/n/7 ﬁ
+......= \TU/lmr/m/n/7 ﬃ
 .....\TU/lmr/m/n/7 x
 ....\mathoff
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
@@ -374,7 +374,7 @@ Completed box being shipped out [1]
 .....\TU/lmr/m/n/7 e
 .....\discretionary (penalty 50)
 ......< \TU/lmr/m/n/7 -
-.....\TU/lmr/m/n/7 ﬁ (ligature fi)
+.....\TU/lmr/m/n/7 ﬁ
 .....\TU/lmr/m/n/7 x
 .....\glue(\spaceskip) 2.695 plus 1.3475 minus 0.89833
 .....\TU/lmr/m/n/7 1
@@ -385,8 +385,8 @@ Completed box being shipped out [1]
 .....\discretionary (penalty 50)
 ......< \TU/lmr/m/n/7 f
 ......< \TU/lmr/m/n/7 -
-......> \TU/lmr/m/n/7 ﬁ (ligature fi)
-......= \TU/lmr/m/n/7 ﬃ (ligature ffi)
+......> \TU/lmr/m/n/7 ﬁ
+......= \TU/lmr/m/n/7 ﬃ
 .....\TU/lmr/m/n/7 x
 ....\mathoff
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
@@ -414,8 +414,8 @@ Completed box being shipped out [1]
 .....\discretionary (penalty 50)
 ......< \TU/lmr/m/n/7 f
 ......< \TU/lmr/m/n/7 -
-......> \TU/lmr/m/n/7 ﬁ (ligature fi)
-......= \TU/lmr/m/n/7 ﬃ (ligature ffi)
+......> \TU/lmr/m/n/7 ﬁ
+......= \TU/lmr/m/n/7 ﬃ
 .....\TU/lmr/m/n/7 x
 ....\mathoff
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
@@ -440,7 +440,7 @@ Completed box being shipped out [1]
 .....\TU/lmr/m/n/7 e
 .....\discretionary (penalty 50)
 ......< \TU/lmr/m/n/7 -
-.....\TU/lmr/m/n/7 ﬁ (ligature fi)
+.....\TU/lmr/m/n/7 ﬁ
 .....\TU/lmr/m/n/7 x
 .....\glue(\spaceskip) 2.695 plus 1.3475 minus 0.89833
 .....\TU/lmr/m/n/7 1

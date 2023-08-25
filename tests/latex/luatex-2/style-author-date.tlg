@@ -385,7 +385,7 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/10 e
 ....\discretionary (penalty 50)
 .....< \TU/lmr/m/n/10 -
-....\TU/lmr/m/n/10 ﬁ (ligature fi)
+....\TU/lmr/m/n/10 ﬁ
 ....\TU/lmr/m/n/10 x
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\TU/lmr/m/n/10 D
@@ -409,8 +409,8 @@ Completed box being shipped out [1]
 ....\discretionary (penalty 50)
 .....< \TU/lmr/m/n/10 f
 .....< \TU/lmr/m/n/10 -
-.....> \TU/lmr/m/n/10 ﬁ (ligature fi)
-.....= \TU/lmr/m/n/10 ﬃ (ligature ffi)
+.....> \TU/lmr/m/n/10 ﬁ
+.....= \TU/lmr/m/n/10 ﬃ
 ....\TU/lmr/m/n/10 x
 ....\TU/lmr/m/n/10 )
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
@@ -433,7 +433,7 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/10 e
 ....\discretionary (penalty 50)
 .....< \TU/lmr/m/n/10 -
-....\TU/lmr/m/n/10 ﬁ (ligature fi)
+....\TU/lmr/m/n/10 ﬁ
 ....\TU/lmr/m/n/10 x
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\TU/lmr/m/n/10 D
@@ -458,8 +458,8 @@ Completed box being shipped out [1]
 ....\discretionary (penalty 50)
 .....< \TU/lmr/m/n/10 f
 .....< \TU/lmr/m/n/10 -
-.....> \TU/lmr/m/n/10 ﬁ (ligature fi)
-.....= \TU/lmr/m/n/10 ﬃ (ligature ffi)
+.....> \TU/lmr/m/n/10 ﬁ
+.....= \TU/lmr/m/n/10 ﬃ
 ....\TU/lmr/m/n/10 x
 ....\TU/lmr/m/n/10 )
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
@@ -499,8 +499,8 @@ Completed box being shipped out [1]
 ....\discretionary (penalty 50)
 .....< \TU/lmr/m/n/10 f
 .....< \TU/lmr/m/n/10 -
-.....> \TU/lmr/m/n/10 ﬁ (ligature fi)
-.....= \TU/lmr/m/n/10 ﬃ (ligature ffi)
+.....> \TU/lmr/m/n/10 ﬁ
+.....= \TU/lmr/m/n/10 ﬃ
 ....\TU/lmr/m/n/10 x
 ....\TU/lmr/m/n/10 )
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
@@ -523,7 +523,7 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/10 e
 ....\discretionary (penalty 50)
 .....< \TU/lmr/m/n/10 -
-....\TU/lmr/m/n/10 ﬁ (ligature fi)
+....\TU/lmr/m/n/10 ﬁ
 ....\TU/lmr/m/n/10 x
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\TU/lmr/m/n/10 D
@@ -648,7 +648,7 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/10 9
 ....\TU/lmr/m/n/10 ,
 ....\glue(\spaceskip) 3.33 plus 2.08124 minus 0.888
-....\TU/lmr/m/n/10 ﬁ (ligature fi)
+....\TU/lmr/m/n/10 ﬁ
 ....\TU/lmr/m/n/10 g
 ....\TU/lmr/m/n/10 .
 ....\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
