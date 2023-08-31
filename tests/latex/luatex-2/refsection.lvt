@@ -1,0 +1,46 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+
+\cslsetup{
+  regression-test = true,
+  style = IEEE,
+}
+\addbibresource{test.json}
+
+\usepackage{hyperref}
+
+
+\begin{document}
+
+\START
+\showoutput
+
+\section{Title of first section}
+\begin{refsection}
+This is just filler text \cite{ITEM-1}.\par
+This is just filler text \cite{ITEM-2}.\par
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\section{Title of second section}
+\begin{refsection}
+This is just filler text \cite{ITEM-1}.\par
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\section{Title of third section}
+\begin{refsection}
+This is just filler text \cite{ITEM-3}.\par
+This is just filler text \cite{ITEM-4}.\par
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\clearpage
+\OMIT
+
+\end{document}
