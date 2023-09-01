@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for dependent styles.
 - Resolve `crossref`s in BibTeX data.
 
+### Fixed
+
+- Fix compatibility with `beamer` ([#41](https://github.com/zepinglee/citeproc-lua/issues/41)).
+
 ## [0.4.2] - 2023-07-04
 
 ### Changed

@@ -1,0 +1,32 @@
+\input{regression-test}
+
+\documentclass{beamer}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+
+\cslsetup{
+  regression-test = true,
+  style = ieee,
+}
+\addbibresource{test.json}
+
+
+\begin{document}
+
+\START
+
+\begin{frame}
+  \TEST{Citation format}{
+    \cite{ITEM-1}
+  }
+\end{frame}
+
+\begin{frame}
+  \TEST{Bibliography contents}{
+    \printbibliography
+  }
+\end{frame}
+
+\end{document}

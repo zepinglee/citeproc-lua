@@ -24,13 +24,15 @@ url
 babel
 babel-english
 babel-french
+beamer
 carlisle
 csquotes
+epstopdf-pkg
+hyperref
 iftex
 infwarerr
 kvoptions
 pdftexcmds
-hyperref
 #
 # Dependencies for typesetting
 alphalph

@@ -1,0 +1,40 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Citation format
+============================================================
+> 
+\l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\end{frame}
+> \l__csl_citation_tl=\cslcite {ITEM-1}{[1]}.
+<recently read> }
+l. ...\end{frame}
+============================================================
+[1
+]
+============================================================
+TEST 2: Bibliography contents
+============================================================
+The sequence \l__csl_bibliography_seq contains the items (without outer
+braces):
+>  {\begin {thebibliography}{index = 1, line-spacing = 1, entry-spacing = 0,
+widest-label = [1]}}
+>  {\bibitem [{[1]}]{ITEM-1} B. D’Arcus, \textit {Boundaries of dissent:
+Protest and state power in the media age}. Routledge, 2005.}
+>  {\end {thebibliography}}.
+<recently read> }
+l. ...\end{frame}
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\translate ' on input line ....
+LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10.95> not available
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line ....
+============================================================
+[2
+]
+\tf@nav=\write...
+\tf@toc=\write...
+\tf@snm=\write...
+(package-beamer.aux)
+Package rerunfilecheck Info: File `package-beamer.out' has not changed.
+(rerunfilecheck)             Checksum: AEA4B6A8AE45636C75679C2F0DFA4493;93.
