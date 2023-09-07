@@ -285,7 +285,8 @@
   }
 
 % Hook
-\cs_new:Npn \backref #1 {#1}
+\cs_if_free:NT \backref
+  { \cs_new:Npn \backref #1 {#1} }
 
 
 % For author-date bibliography

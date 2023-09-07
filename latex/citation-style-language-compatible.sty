@@ -24,6 +24,15 @@
   }
 
 
+% ### `backref`
+
+\hook_gput_code:nnn { package / backref / after } { . }
+  {
+    \cs_set:Npn \__csl_add_back_ref_info:
+      { \seq_map_inline:Nn \l__csl_cite_keys_seq { \Hy@backout {##1} } }
+  }
+
+
 % ### `beamer`
 
 % `beamer` passes `implicit=false` to `hyperref` to skip its patch to LaTeX2e

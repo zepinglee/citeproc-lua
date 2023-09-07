@@ -1,0 +1,875 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Bibliography contents
+============================================================
+The sequence \l__csl_bibliography_seq contains the items (without outer
+braces):
+>  {\begin {thebibliography}{index = 1, line-spacing = 1, entry-spacing = 0,
+widest-label = [1]}}
+>  {\bibitem [{[1]}]{ITEM-1} B. D’Arcus, \textit {Boundaries of dissent:
+Protest and state power in the media age}. Routledge, 2005.}
+>  {\bibitem [{[2]}]{ITEM-2} F. G. Bennett Jr., “Getting property right:
+‘Informal’ mortgages in the Japanese courts,” \textit {Pac. Rim L. \& Pol’y
+J.}, vol. 18, pp. 463–509, Aug. 2009.}
+>  {\bibitem [{[3]}]{ITEM-3} L. Lamport, \textit {LaTeX: A document
+preparation system: User’s guide and reference manual}, 2nd ed. Reading, MA,
+USA: Addison-Wesley, 1994.}
+>  {\bibitem [{[4]}]{ITEM-4} F. Mittelbach, M. Goossens, J. Braams, D.
+Carlisle, and C. Rowley, \textit {The LaTeX companion}, 2nd ed. Reading, MA,
+USA: Addison-Wesley, 2004.}
+>  {\end {thebibliography}}.
+<recently read> }
+l. ...}
+(package-backref.brf)
+\tf@brf=\write...
+============================================================
+============================================================
+TEST 2: Bibliography format
+============================================================
+Completed box being shipped out [3]
+\vbox(633.0+0.0)x407.0, direction TLT
+.\vbox(0.0+0.0)x0.0, glue set - 14.99626fil, direction TLT
+..\kern0.0
+..\kern16.0
+..\kern-1.00374
+..\hbox(0.0+0.0)x0.0, glue set - 60.99626fil, direction TLT
+...\kern0.0
+...\kern62.0
+...\kern-1.00374
+...\pdfdest name{page.3} xyz
+...\penalty 10000
+...\glue 0.0 plus 1.0fil minus 1.0fil
+..\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue(\lineskip) 0.0
+.\vbox(633.0+0.0)x407.0, direction TLT
+..\glue 16.0
+..\vbox(617.0+0.0)x345.0, shifted 62.0, direction TLT
+...\vbox(12.0+0.0)x345.0, glue set 12.0fil, direction TLT
+....\glue 0.0 plus 1.0fil
+....\hbox(0.0+0.0)x345.0, direction TLT
+.....\hbox(0.0+0.0)x345.0, direction TLT
+...\glue 25.0
+...\glue(\lineskip) 0.0
+...\vbox(550.0+0.0)x345.0, glue set 411.96301fil, direction TLT
+....\write-{}
+....\glue(\topskip) 0.0
+....\hbox(10.08+0.1728)x345.0, glue set 269.19846fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+......\glue 0.0
+.....\hbox(0.0+0.0)x0.0, direction TLT
+......\kern0.0
+......\penalty 10000
+......\hbox(0.0+0.0)x0.0, direction TLT
+.......\hbox(0.0+0.0)x0.0, shifted -18.0, direction TLT
+........\pdfdest name{section*.1} xyz
+........\penalty 10000
+......\glue 0.0 plus 1.0fil minus 1.0fil
+.....\TU/lmr/bx/n/14.4 R
+.....\TU/lmr/bx/n/14.4 e
+.....\TU/lmr/bx/n/14.4 f
+.....\discretionary (penalty 50)
+......< \TU/lmr/bx/n/14.4 -
+.....\TU/lmr/bx/n/14.4 e
+.....\TU/lmr/bx/n/14.4 r
+.....\discretionary (penalty 50)
+......< \TU/lmr/bx/n/14.4 -
+.....\TU/lmr/bx/n/14.4 e
+.....\TU/lmr/bx/n/14.4 n
+.....\TU/lmr/bx/n/14.4 c
+.....\TU/lmr/bx/n/14.4 e
+.....\TU/lmr/bx/n/14.4 s
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\penalty 10000
+....\glue 9.913 plus 0.86198
+....\glue(\parskip) 0.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 4.3272
+....\hbox(7.5+2.5)x329.44, glue set - 0.6133, shifted 15.56, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(7.5+2.5)x0.0, direction TLT
+......\glue 0.0
+......\glue -10.56
+......\glue -5.0
+......\hbox(7.5+2.5)x10.56, direction TLT
+.......\glue 0.0 plus 1.0fil
+.......\penalty 10000
+.......\hbox(0.0+0.0)x0.0, direction TLT
+........\hbox(0.0+0.0)x0.0, shifted -12.0, direction TLT
+.........\pdfdest name{cite.ITEM-1} xyz
+.........\penalty 10000
+.......\TU/lmr/m/n/10 [
+.......\TU/lmr/m/n/10 1
+.......\TU/lmr/m/n/10 ]
+.......\glue 0.0 plus 1.0fill
+......\glue 5.0
+.....\penalty 0
+.....\TU/lmr/m/n/10 B
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 D
+.....\TU/lmr/m/n/10 ’
+.....\TU/lmr/m/n/10 A
+.....\TU/lmr/m/n/10 r
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 c
+.....\TU/lmr/m/n/10 u
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/it/10 B
+.....\TU/lmr/m/it/10 o
+.....\TU/lmr/m/it/10 u
+.....\TU/lmr/m/it/10 n
+.....\TU/lmr/m/it/10 d
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/10 -
+.....\TU/lmr/m/it/10 a
+.....\TU/lmr/m/it/10 r
+.....\TU/lmr/m/it/10 i
+.....\TU/lmr/m/it/10 e
+.....\TU/lmr/m/it/10 s
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 o
+.....\TU/lmr/m/it/10 f
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 d
+.....\TU/lmr/m/it/10 i
+.....\TU/lmr/m/it/10 s
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/10 -
+.....\TU/lmr/m/it/10 s
+.....\TU/lmr/m/it/10 e
+.....\TU/lmr/m/it/10 n
+.....\TU/lmr/m/it/10 t
+.....\TU/lmr/m/it/10 :
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 P
+.....\TU/lmr/m/it/10 r
+.....\kern-0.51 (font)
+.....\TU/lmr/m/it/10 o
+.....\TU/lmr/m/it/10 t
+.....\TU/lmr/m/it/10 e
+.....\TU/lmr/m/it/10 s
+.....\TU/lmr/m/it/10 t
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 a
+.....\TU/lmr/m/it/10 n
+.....\TU/lmr/m/it/10 d
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 s
+.....\TU/lmr/m/it/10 t
+.....\TU/lmr/m/it/10 a
+.....\TU/lmr/m/it/10 t
+.....\TU/lmr/m/it/10 e
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 p
+.....\kern-0.51 (font)
+.....\TU/lmr/m/it/10 o
+.....\TU/lmr/m/it/10 w
+.....\TU/lmr/m/it/10 e
+.....\TU/lmr/m/it/10 r
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 i
+.....\TU/lmr/m/it/10 n
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 t
+.....\TU/lmr/m/it/10 h
+.....\TU/lmr/m/it/10 e
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 m
+.....\TU/lmr/m/it/10 e
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/10 -
+......= \kern-0.51 (font)
+.....\TU/lmr/m/it/10 d
+.....\TU/lmr/m/it/10 i
+.....\TU/lmr/m/it/10 a
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 a
+.....\TU/lmr/m/it/10 g
+.....\TU/lmr/m/it/10 e
+.....\TU/lmr/m/n/10 .
+.....\glue(\rightskip) 0.0
+....\penalty 14000
+....\glue(\baselineskip) 2.56
+....\hbox(6.94+2.06)x329.44, glue set 235.98fil, shifted 15.56, direction TLT
+.....\TU/lmr/m/n/10 R
+.....\TU/lmr/m/n/10 o
+.....\TU/lmr/m/n/10 u
+.....\TU/lmr/m/n/10 t
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 l
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 g
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 2
+.....\TU/lmr/m/n/10 0
+.....\TU/lmr/m/n/10 0
+.....\TU/lmr/m/n/10 5
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\glue 1.1 plus 3.30002 minus 0.70007
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[1 0 0]} action goto name{page.1}
+.....\TU/lmr/m/n/10 1
+.....\pdfendlink
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[1 0 0]} action goto name{page.2}
+.....\TU/lmr/m/n/10 2
+.....\pdfendlink
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\penalty -51
+....\glue 0.0
+....\glue(\parskip) 0.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 2.44
+....\hbox(7.5+2.5)x329.44, glue set 1.06908, shifted 15.56, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(7.5+2.5)x0.0, direction TLT
+......\glue 0.0
+......\glue -10.56
+......\glue -5.0
+......\hbox(7.5+2.5)x10.56, direction TLT
+.......\glue 0.0 plus 1.0fil
+.......\penalty 10000
+.......\hbox(0.0+0.0)x0.0, direction TLT
+........\hbox(0.0+0.0)x0.0, shifted -12.0, direction TLT
+.........\pdfdest name{cite.ITEM-2} xyz
+.........\penalty 10000
+.......\TU/lmr/m/n/10 [
+.......\TU/lmr/m/n/10 2
+.......\TU/lmr/m/n/10 ]
+.......\glue 0.0 plus 1.0fill
+......\glue 5.0
+.....\penalty 0
+.....\TU/lmr/m/n/10 F
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 G
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 B
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 n
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 n
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 t
+.....\TU/lmr/m/n/10 t
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 J
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 .
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 “
+.....\TU/lmr/m/n/10 G
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 t
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 t
+.....\TU/lmr/m/n/10 i
+.....\TU/lmr/m/n/10 n
+.....\TU/lmr/m/n/10 g
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 p
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 o
+.....\TU/lmr/m/n/10 p
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+......= \kern0.28 (font)
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 t
+.....\kern-0.28 (font)
+.....\TU/lmr/m/n/10 y
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 i
+.....\TU/lmr/m/n/10 g
+.....\TU/lmr/m/n/10 h
+.....\kern-0.28 (font)
+.....\TU/lmr/m/n/10 t
+.....\TU/lmr/m/n/10 :
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 ‘
+.....\TU/lmr/m/n/10 I
+.....\TU/lmr/m/n/10 n
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 f
+.....\TU/lmr/m/n/10 o
+.....\TU/lmr/m/n/10 r
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 m
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 l
+.....\TU/lmr/m/n/10 ’
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 m
+.....\TU/lmr/m/n/10 o
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 t
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 g
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 g
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 s
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 i
+.....\TU/lmr/m/n/10 n
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 t
+.....\TU/lmr/m/n/10 h
+.....\TU/lmr/m/n/10 e
+.....\glue(\rightskip) 0.0
+....\penalty 4000
+....\glue(\baselineskip) 2.34
+....\hbox(7.16+2.06)x329.44, glue set - 0.00809, shifted 15.56, direction TLT
+.....\TU/lmr/m/n/10 J
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 p
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 n
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 e
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 c
+.....\TU/lmr/m/n/10 o
+.....\TU/lmr/m/n/10 u
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 t
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 ,
+.....\TU/lmr/m/n/10 ”
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/it/10 P
+.....\TU/lmr/m/it/10 a
+.....\TU/lmr/m/it/10 c
+.....\TU/lmr/m/it/10 .
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 R
+.....\kern-0.26 (font)
+.....\TU/lmr/m/it/10 i
+.....\TU/lmr/m/it/10 m
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 L
+.....\TU/lmr/m/it/10 .
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 &
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 P
+.....\TU/lmr/m/it/10 o
+.....\TU/lmr/m/it/10 l
+.....\TU/lmr/m/it/10 ’
+.....\TU/lmr/m/it/10 y
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 J
+.....\TU/lmr/m/it/10 .
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 v
+.....\kern-0.28 (font)
+.....\TU/lmr/m/n/10 o
+.....\TU/lmr/m/n/10 l
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 1
+.....\TU/lmr/m/n/10 8
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 p
+.....\TU/lmr/m/n/10 p
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 4
+.....\TU/lmr/m/n/10 6
+.....\TU/lmr/m/n/10 3
+.....\TU/lmr/m/n/10 –
+.....\TU/lmr/m/n/10 5
+.....\TU/lmr/m/n/10 0
+.....\TU/lmr/m/n/10 9
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 A
+.....\kern-0.28 (font)
+.....\TU/lmr/m/n/10 u
+.....\TU/lmr/m/n/10 g
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 2
+.....\TU/lmr/m/n/10 0
+.....\TU/lmr/m/n/10 0
+.....\TU/lmr/m/n/10 9
+.....\TU/lmr/m/n/10 .
+.....\glue(\rightskip) 0.0
+....\penalty 4000
+....\glue(\baselineskip) 3.28
+....\hbox(6.66+1.93)x329.44, glue set 313.33002fil, shifted 15.56, direction TLT
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[1 0 0]} action goto name{page.1}
+.....\TU/lmr/m/n/10 1
+.....\pdfendlink
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[1 0 0]} action goto name{page.2}
+.....\TU/lmr/m/n/10 2
+.....\pdfendlink
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\penalty -51
+....\glue 0.0
+....\glue(\parskip) 0.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 2.57
+....\hbox(7.5+2.5)x329.44, glue set 0.06175, shifted 15.56, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(7.5+2.5)x0.0, direction TLT
+......\glue 0.0
+......\glue -10.56
+......\glue -5.0
+......\hbox(7.5+2.5)x10.56, direction TLT
+.......\glue 0.0 plus 1.0fil
+.......\penalty 10000
+.......\hbox(0.0+0.0)x0.0, direction TLT
+........\hbox(0.0+0.0)x0.0, shifted -12.0, direction TLT
+.........\pdfdest name{cite.ITEM-3} xyz
+.........\penalty 10000
+.......\TU/lmr/m/n/10 [
+.......\TU/lmr/m/n/10 3
+.......\TU/lmr/m/n/10 ]
+.......\glue 0.0 plus 1.0fill
+......\glue 5.0
+.....\penalty 0
+.....\TU/lmr/m/n/10 L
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 L
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 m
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 p
+.....\kern0.28 (font)
+.....\TU/lmr/m/n/10 o
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 t
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/it/10 L
+.....\kern-0.51 (font)
+.....\TU/lmr/m/it/10 a
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/10 -
+.....\TU/lmr/m/it/10 T
+.....\kern-0.77 (font)
+.....\TU/lmr/m/it/10 e
+.....\TU/lmr/m/it/10 X
+.....\TU/lmr/m/it/10 :
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 A
+.....\glue(\spaceskip) 3.58 plus 1.7882 minus 1.19452
+.....\TU/lmr/m/it/10 d
+.....\TU/lmr/m/it/10 o
+.....\kern-0.51 (font)
+.....\TU/lmr/m/it/10 c
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/10 -
+.....\TU/lmr/m/it/10 u
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/10 -
+.....\TU/lmr/m/it/10 m
+.....\TU/lmr/m/it/10 e
+.....\TU/lmr/m/it/10 n
+.....\TU/lmr/m/it/10 t
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 p
+.....\TU/lmr/m/it/10 r
+.....\kern-0.51 (font)
+.....\TU/lmr/m/it/10 e
+.....\TU/lmr/m/it/10 p
+.....\kern-0.51 (font)
+.....\TU/lmr/m/it/10 a
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/10 -
+.....\TU/lmr/m/it/10 r
+.....\kern-0.51 (font)
+.....\TU/lmr/m/it/10 a
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/10 -
+.....\TU/lmr/m/it/10 t
+.....\TU/lmr/m/it/10 i
+.....\TU/lmr/m/it/10 o
+.....\TU/lmr/m/it/10 n
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 s
+.....\TU/lmr/m/it/10 y
+.....\TU/lmr/m/it/10 s
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/10 -
+.....\TU/lmr/m/it/10 t
+.....\TU/lmr/m/it/10 e
+.....\TU/lmr/m/it/10 m
+.....\TU/lmr/m/it/10 :
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 U
+.....\kern-0.51 (font)
+.....\TU/lmr/m/it/10 s
+.....\TU/lmr/m/it/10 e
+.....\TU/lmr/m/it/10 r
+.....\TU/lmr/m/it/10 ’
+.....\TU/lmr/m/it/10 s
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 g
+.....\TU/lmr/m/it/10 u
+.....\TU/lmr/m/it/10 i
+.....\TU/lmr/m/it/10 d
+.....\TU/lmr/m/it/10 e
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 a
+.....\TU/lmr/m/it/10 n
+.....\TU/lmr/m/it/10 d
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 r
+.....\kern-0.51 (font)
+.....\TU/lmr/m/it/10 e
+.....\TU/lmr/m/it/10 f
+.....\TU/lmr/m/it/10 -
+.....\discretionary (penalty 50)
+.....\glue(\rightskip) 0.0
+....\penalty 8100
+....\glue(\baselineskip) 2.34
+....\hbox(7.16+2.06)x329.44, glue set 26.98999fil, shifted 15.56, direction TLT
+.....\TU/lmr/m/it/10 e
+.....\TU/lmr/m/it/10 r
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/10 -
+......= \kern-0.51 (font)
+.....\TU/lmr/m/it/10 e
+.....\TU/lmr/m/it/10 n
+.....\TU/lmr/m/it/10 c
+.....\kern-0.51 (font)
+.....\TU/lmr/m/it/10 e
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\TU/lmr/m/it/10 m
+.....\TU/lmr/m/it/10 a
+.....\TU/lmr/m/it/10 n
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/10 -
+.....\TU/lmr/m/it/10 u
+.....\TU/lmr/m/it/10 a
+.....\TU/lmr/m/it/10 l
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 2
+.....\TU/lmr/m/n/10 n
+.....\TU/lmr/m/n/10 d
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 R
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 d
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 i
+.....\TU/lmr/m/n/10 n
+.....\TU/lmr/m/n/10 g
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 M
+.....\TU/lmr/m/n/10 A
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 U
+.....\TU/lmr/m/n/10 S
+.....\TU/lmr/m/n/10 A
+.....\TU/lmr/m/n/10 :
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 A
+.....\kern-0.28 (font)
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 i
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 o
+.....\TU/lmr/m/n/10 n
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+......= \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 W
+.....\kern-0.83 (font)
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 l
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 y
+.....\kern-0.83 (font)
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 1
+.....\TU/lmr/m/n/10 9
+.....\TU/lmr/m/n/10 9
+.....\TU/lmr/m/n/10 4
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\glue 1.1 plus 3.30002 minus 0.70007
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[1 0 0]} action goto name{page.2}
+.....\TU/lmr/m/n/10 2
+.....\pdfendlink
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\penalty -51
+....\glue 0.0
+....\glue(\parskip) 0.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 2.44
+....\hbox(7.5+2.5)x329.44, glue set 0.65738, shifted 15.56, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(7.5+2.5)x0.0, direction TLT
+......\glue 0.0
+......\glue -10.56
+......\glue -5.0
+......\hbox(7.5+2.5)x10.56, direction TLT
+.......\glue 0.0 plus 1.0fil
+.......\penalty 10000
+.......\hbox(0.0+0.0)x0.0, direction TLT
+........\hbox(0.0+0.0)x0.0, shifted -12.0, direction TLT
+.........\pdfdest name{cite.ITEM-4} xyz
+.........\penalty 10000
+.......\TU/lmr/m/n/10 [
+.......\TU/lmr/m/n/10 4
+.......\TU/lmr/m/n/10 ]
+.......\glue 0.0 plus 1.0fill
+......\glue 5.0
+.....\penalty 0
+.....\TU/lmr/m/n/10 F
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 M
+.....\TU/lmr/m/n/10 i
+.....\TU/lmr/m/n/10 t
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 t
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 l
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 b
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 c
+.....\kern-0.28 (font)
+.....\TU/lmr/m/n/10 h
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 M
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 G
+.....\TU/lmr/m/n/10 o
+.....\kern0.28 (font)
+.....\TU/lmr/m/n/10 o
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 n
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 J
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 B
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 m
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 D
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 C
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 l
+.....\TU/lmr/m/n/10 i
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 l
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 n
+.....\TU/lmr/m/n/10 d
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 C
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 R
+.....\TU/lmr/m/n/10 o
+.....\kern-0.28 (font)
+.....\TU/lmr/m/n/10 w
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 l
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 y
+.....\kern-0.83 (font)
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/it/10 T
+.....\TU/lmr/m/it/10 h
+.....\TU/lmr/m/it/10 e
+.....\glue(\rightskip) 0.0
+....\penalty 8000
+....\glue(\baselineskip) 2.34
+....\hbox(7.16+2.06)x329.44, glue set 10.35999fil, shifted 15.56, direction TLT
+.....\TU/lmr/m/it/10 L
+.....\kern-0.51 (font)
+.....\TU/lmr/m/it/10 a
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/10 -
+.....\TU/lmr/m/it/10 T
+.....\kern-0.77 (font)
+.....\TU/lmr/m/it/10 e
+.....\TU/lmr/m/it/10 X
+.....\glue(\spaceskip) 3.58 plus 1.7882 minus 1.19452
+.....\TU/lmr/m/it/10 c
+.....\kern-0.51 (font)
+.....\TU/lmr/m/it/10 o
+.....\TU/lmr/m/it/10 m
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/10 -
+.....\TU/lmr/m/it/10 p
+.....\kern-0.51 (font)
+.....\TU/lmr/m/it/10 a
+.....\TU/lmr/m/it/10 n
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/10 -
+.....\TU/lmr/m/it/10 i
+.....\TU/lmr/m/it/10 o
+.....\TU/lmr/m/it/10 n
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 2
+.....\TU/lmr/m/n/10 n
+.....\TU/lmr/m/n/10 d
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 R
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 d
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 i
+.....\TU/lmr/m/n/10 n
+.....\TU/lmr/m/n/10 g
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 M
+.....\TU/lmr/m/n/10 A
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 U
+.....\TU/lmr/m/n/10 S
+.....\TU/lmr/m/n/10 A
+.....\TU/lmr/m/n/10 :
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 A
+.....\kern-0.28 (font)
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 i
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 o
+.....\TU/lmr/m/n/10 n
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+......= \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 W
+.....\kern-0.83 (font)
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 l
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 y
+.....\kern-0.83 (font)
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 2
+.....\TU/lmr/m/n/10 0
+.....\TU/lmr/m/n/10 0
+.....\TU/lmr/m/n/10 4
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\glue 1.1 plus 3.30002 minus 0.70007
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[1 0 0]} action goto name{page.2}
+.....\TU/lmr/m/n/10 2
+.....\pdfendlink
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\penalty -51
+....\glue 10.0 plus 3.0 minus 5.0
+....\glue -2.06
+....\glue 0.0 plus 1.0fil
+....\glue 0.0
+....\glue 0.0 plus 0.0001fil
+...\glue(\baselineskip) 30.0
+...\hbox(0.0+0.0)x345.0, direction TLT
+....\hbox(0.0+0.0)x345.0, direction TLT
+============================================================
+(package-backref.aux)
+Package rerunfilecheck Info: File `package-backref.out' has not changed.
+(rerunfilecheck)             Checksum: 1DA13579EB0DB74E37BF4C750CE97FB8;232.
+Package rerunfilecheck Info: File `package-backref.brf' has not changed.
+(rerunfilecheck)             Checksum: 055383152C1CE5C2E08803F43F25528D;266.

@@ -402,11 +402,17 @@ Currently no options are available.
 The main language set by \pkg{babel} is used as the locale for \pkg{citation-style-language}.
 In general, \pkg{babel} is supposed to be loaded before \pkg{citation-style-language}.
 
+\paragraph{\pkg{beamer}}
+
+Most of this package's features work fine with \pkg{beamer} except the
+\opt{backref} option. At the moment this can be addressed with \pkg{hyperref}'s
+\opt{backref} option.
+
+
 \paragraph{\pkg{hyperref}}
 
 When \pkg{hyperref} is loaded, the DOIs, PMIDs, and PMCIDs are correctly
 rendered as hyperlinks.
-But the citations are not linked to the entries in bibliography.
 
 \paragraph{Incompatible packages}
 
