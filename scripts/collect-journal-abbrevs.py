@@ -136,7 +136,7 @@ def update_from_jabref_abbrv(abbrevs, unabbrevs):
     for file in files:
         path = os.path.join(jabref_abbrv_dir, file)
         with open(path) as f:
-            journals = csv.reader(f, delimiter=";")
+            journals = csv.reader(f)
             for journal in journals:
                 if len(journal) < 1:
                     continue

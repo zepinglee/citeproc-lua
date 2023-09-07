@@ -1738,6 +1738,10 @@
             "csl": null,
             "source": "IEEEtran.bst"
         },
+        "monthtie": {
+            "csl": null,
+            "source": "tugboat.bst"
+        },
         "mrnumber": {
             "csl": null,
             "source": "amsplain.bst"

@@ -4185,6 +4185,10 @@ return {
       csl = nil,
       source = "adrbirthday.bst",
     },
+    monthtie = {
+      csl = nil,
+      source = "tugboat.bst",
+    },
   },
   macros = {
     acmcs = {

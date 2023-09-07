@@ -54,7 +54,7 @@ packtdszip = true
 
 tdslocations = {
   "tex/latex/citation-style-language/styles/*.csl",
-  "tex/latex/citation-style-language/submodules/locales/csl-locales-*.xml",
+  "tex/latex/citation-style-language/locales/csl-locales-*.xml",
 }
 
 local package_version = nil
