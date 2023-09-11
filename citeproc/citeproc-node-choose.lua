@@ -47,6 +47,7 @@ function Choose:build_ir(engine, state, context)
   local branch_ir
 
   local ir = SeqIr:new({}, self)
+  ---@case ir SeqIr
   ir.should_inherit_delim = true
   ir.group_var = GroupVar.UnresolvedPlain
 
@@ -56,7 +57,8 @@ function Choose:build_ir(engine, state, context)
       ---@cast child If
       branch_ir = child:build_ir(engine, state, context)
       if branch_ir and branch_ir.group_var ~= GroupVar.Missing then
-        table.insert(ir.children, branch_ir)
+        ir = SeqIr:new({branch_ir}, self)
+        ir.should_inherit_delim = true
         ir.group_var = branch_ir.group_var
         ir.name_count = branch_ir.name_count
         ir.sort_key = branch_ir.sort_key

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix a disambiguation bug with names from conditional branches.
+
 ## [0.4.3] - 2023-09-07
 
 ### Added

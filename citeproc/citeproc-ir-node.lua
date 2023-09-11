@@ -37,6 +37,7 @@ local GroupVar = {
 ---@field delimiter string?
 ---@field should_inherit_delim boolean?
 ---@field group_var GroupVar
+---@field sort_key string | boolean?
 ---@field person_name_irs IrNode[]
 ---@field name_count integer?
 ---@field is_year boolean?
@@ -102,17 +103,18 @@ end
 function IrNode:_debug(level)
   level = level or 0
   local ir_info_str = ""
+  local ir_info = {}
   if self.delimiter then
-    ir_info_str = ir_info_str .. string.format('delimiter: "%s"', self.delimiter)
+    table.insert(ir_info, string.format('delimiter: "%s"', self.delimiter))
   end
   if self.should_inherit_delim then
-    if ir_info_str ~= "" then
-      ir_info_str = ir_info_str .. " "
-    end
-    ir_info_str = ir_info_str .. "should_inherit_delim: true"
+    table.insert(ir_info, "should_inherit_delim: true")
   end
-  if ir_info_str ~= "" then
-    ir_info_str = string.format("{%s}", ir_info_str)
+  if self.person_name_irs then
+    table.insert(ir_info, "person_name_irs: " .. tostring(#self.person_name_irs))
+  end
+  if #ir_info > 0 then
+    ir_info_str = string.format("{%s}", table.concat(ir_info, ' '))
   end
   local element_info = self._element.element_name
   for _, attr in ipairs({"name", "variable"}) do
@@ -244,6 +246,7 @@ end
 
 ---@class SeqIr: IrNode
 ---@field children IrNode[]
+---@field disambiguate_branch_ir IrNode?
 local SeqIr = IrNode:derive("SeqIr")
 
 -- function SeqIr:new(children)

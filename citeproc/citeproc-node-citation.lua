@@ -48,7 +48,7 @@ local SortStringFormat = output.SortStringFormat
 local Position = util.Position
 
 
-local DEBUG_DISAMBIGUATE = false
+-- local DEBUG_DISAMBIGUATE = true
 
 
 ---@class Citation: Element
@@ -716,9 +716,11 @@ function Citation:apply_disambiguate_add_givenname_primary_name(cite_ir, engine)
 end
 
 function Citation:apply_disambiguate_add_givenname_by_cite(cite_ir, engine)
+  -- util.debug(cite_ir.is_ambiguous)
   if not cite_ir.is_ambiguous then
     return cite_ir
   end
+  -- util.debug(cite_ir)
   if not cite_ir.person_name_irs or #cite_ir.person_name_irs == 0 then
     return cite_ir
   end
@@ -992,8 +994,10 @@ function Citation:apply_disambiguate_conditionals(cite_ir, engine)
       if #ir_.irs_with_disambiguate_branch > 0 then
         -- Disambiguation is incremental
         -- disambiguate_IncrementalExtraText.txt
+        ---@type SeqIr
         local condition_ir = ir_.irs_with_disambiguate_branch[1]
         condition_ir.children[1] = condition_ir.disambiguate_branch_ir
+        -- condition_ir.person_name_irs are no longer used and we ignore them
         condition_ir.group_var = condition_ir.disambiguate_branch_ir.group_var
         table.remove(ir_.irs_with_disambiguate_branch, 1)
         -- disambiguate_DisambiguateTrueReflectedInBibliography.txt
