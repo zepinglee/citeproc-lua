@@ -8,7 +8,7 @@
 
 \cslsetup{
   regression-test = true,
-  style = ieee,
+  style = chicago-fullnote-bibliography,
 }
 \addbibresource{test.json}
 

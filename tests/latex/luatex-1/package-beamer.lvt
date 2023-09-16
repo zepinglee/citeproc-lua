@@ -8,7 +8,7 @@
 
 \cslsetup{
   regression-test = true,
-  style = ieee,
+  style = chicago-fullnote-bibliography,
 }
 \addbibresource{test.json}
 
@@ -18,9 +18,9 @@
 \START
 
 \begin{frame}
-  \TEST{Citation format}{
-    \cite{ITEM-1}
-  }
+\TEST{Citation format}{
+  \cite{ITEM-1}
+}
 \end{frame}
 
 \begin{frame}

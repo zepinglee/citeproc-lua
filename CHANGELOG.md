@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fix a disambiguation bug with names from conditional branches.
+- Fix a typo related to `beamer` compatibility ([#41](https://github.com/zepinglee/citeproc-lua/issues/41#issuecomment-1715538773)).
 
 ## [0.4.3] - 2023-09-07
 

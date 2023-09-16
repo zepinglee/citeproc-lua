@@ -54,7 +54,7 @@
     \ignorespaces
   }
 
-\cs_new:Npn \__csl_beamer_lbibitem:n #1
+\cs_new:Npn \__csl_beamer_bibitem:n #1
   {
     \exp_after:wN \item \beamer@bibstore
     \cs_if_exist:cF { beamerbib@ #1 @ \int_use:N \c@framenumber }
