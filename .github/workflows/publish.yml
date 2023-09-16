@@ -48,17 +48,19 @@ jobs:
       - name: Set up dependencies
         run: luarocks install dkjson
 
-      - name: Labeller
-        id: labeller
-        run: |
-          echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
-          echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_OUTPUT
+      - name: Parse semver string
+        id: semver
+        uses: booxmedialtd/ws-action-parse-semver@v1
+        with:
+          input_string: ${{ github.ref }}
+          version_extractor_regex: '\/v(.*)$'
+
 
       - name: Make rockspec of new version
         run: luarocks new_version --tag ${{ github.ref_name }}
 
       - name: Upload to LuaRocks
-        run: luarocks upload --temp-key ${{ secrets.LUAROCKS_API_KEY }} citeproc-lua-${{ steps.labeller.outputs.version }}-1.rockspec
+        run: luarocks upload --temp-key ${{ secrets.LUAROCKS_API_KEY }} citeproc-lua-${{ steps.semver.outputs.fullversion }}-1.rockspec
 
 
   publish-ctan:
@@ -86,11 +88,12 @@ jobs:
       - name: Create CTAN archive
         run: l3build ctan
 
-      - name: Labeller
-        id: labeller
-        run: |
-          echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
-          echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_OUTPUT
+      - name: Parse semver string
+        id: semver
+        uses: booxmedialtd/ws-action-parse-semver@v1
+        with:
+          input_string: ${{ github.ref }}
+          version_extractor_regex: '\/v(.*)$'
 
       - name: Extract release notes
         id: extract-release-notes
@@ -98,8 +101,13 @@ jobs:
         with:
           release_notes_file: RELEASE_NOTES.md
 
-      - name: Upload to CTAN (update)
-        run: echo "y" | l3build upload --email ${{ secrets.CTAN_EMAIL }} ${{ steps.labeller.outputs.version }}
+      - name: Upload to CTAN with announcements
+        if: ${{ steps.semver.outputs.patch == '0' }}
+        run: echo "y" | l3build upload --email ${{ secrets.CTAN_EMAIL }} --file RELEASE_NOTES.md ${{ steps.semver.outputs.fullversion }}
+
+      - name: Upload to CTAN without announcements (patch version)
+        if: ${{ steps.semver.outputs.patch != '0' }}
+        run: echo "y" | l3build upload --email ${{ secrets.CTAN_EMAIL }} --message "" ${{ steps.semver.outputs.fullversion }}
 
       # # This action doesn't have announcement text
       # - name: Submit to CTAN (update)
@@ -110,6 +118,6 @@ jobs:
       #     fields: |
       #       update: "true"
       #       pkg: citation-style-language
-      #       version: ${{ steps.labeller.outputs.version }}
+      #       version: ${{ steps.semver.outputs.fullversion }}
       #       uploader: ${{ secrets.CTAN_UPLOADER }}
       #       email: ${{ secrets.CTAN_EMAIL }}
