@@ -58,15 +58,15 @@ tdslocations = {
 }
 
 local package_version = nil
-local announcement = nil
+-- local announcement = nil
 local version_pattern = "%d[%d.]*"
-local f = io.open("CHANGELOG.md")
-if f then
-  local content = f:read("*a")
-  package_version = string.match(content, "## %[(" .. version_pattern .. ")%]")
-  announcement = string.match(content, "(## %[" .. version_pattern .. "%].-\n)%s+## %[")
-  f:close()
-end
+-- local f = io.open("CHANGELOG.md")
+-- if f then
+--   local content = f:read("*a")
+--   package_version = string.match(content, "## %[(" .. version_pattern .. ")%]")
+--   announcement = string.match(content, "(## %[" .. version_pattern .. "%].-\n)%s+## %[")
+--   f:close()
+-- end
 
 local ctan_uploader = mydata.name or "Zeping Lee"
 local ctan_email = mydata.email
@@ -84,7 +84,7 @@ uploadconfig = {
   repository        = package_repository,
   bugtracker        = "https://github.com/zepinglee/citeproc-lua/issues",
   topic             = {"biblio", "use-lua"},
-  announcement      = announcement,
+  -- announcement      = announcement,
   update            = true,
 }
 

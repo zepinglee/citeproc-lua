@@ -2553,6 +2553,10 @@ return {
       csl = nil,
       source = "IEEEtran.bst",
     },
+    monthtie = {
+      csl = nil,
+      source = "tugboat.bst",
+    },
     mrnumber = {
       csl = nil,
       source = "amsplain.bst",
@@ -4184,10 +4188,6 @@ return {
     zip = {
       csl = nil,
       source = "adrbirthday.bst",
-    },
-    monthtie = {
-      csl = nil,
-      source = "tugboat.bst",
     },
   },
   macros = {

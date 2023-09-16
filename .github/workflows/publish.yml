@@ -99,7 +99,7 @@ jobs:
           release_notes_file: RELEASE_NOTES.md
 
       - name: Upload to CTAN (update)
-        run: echo "y" | l3build upload --email ${{ secrets.CTAN_EMAIL }} --message "${{ steps.extract-release-notes.outputs.release_notes }}".md ${{ steps.labeller.outputs.version }}
+        run: echo "y" | l3build upload --email ${{ secrets.CTAN_EMAIL }} ${{ steps.labeller.outputs.version }}
 
       # # This action doesn't have announcement text
       # - name: Submit to CTAN (update)
