@@ -72,10 +72,16 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install TeX Live
+      - name: Set up TeX Live
         uses: zauguin/install-texlive@v2
         with:
           package_file: .github/tl_packages
+
+      # - name: Set up TeX Live
+      #   uses: teatimeguest/setup-texlive-action@v2
+      #   with:
+      #     package-file: .github/tl_packages
+      #     update-all-packages: true
 
       - name: Create CTAN archive
         run: l3build ctan
@@ -92,16 +98,18 @@ jobs:
         with:
           release_notes_file: RELEASE_NOTES.md
 
-      - name: Submit to CTAN (update)
-        # # This action doesn't have announcement text
-        # uses: paolobrasolin/ctan-submit-action@v1
-        # with:
-        #   action: upload
-        #   file_path: citation-style-language-ctan.zip
-        #   fields: |
-        #     update: "true"
-        #     pkg: citation-style-language
-        #     version: ${{ steps.labeller.outputs.version }}
-        #     uploader: ${{ secrets.CTAN_UPLOADER }}
-        #     email: ${{ secrets.CTAN_EMAIL }}
+      - name: Upload to CTAN (update)
         run: echo "y" | l3build upload --email ${{ secrets.CTAN_EMAIL }} --message "${{ steps.extract-release-notes.outputs.release_notes }}".md ${{ steps.labeller.outputs.version }}
+
+      # # This action doesn't have announcement text
+      # - name: Submit to CTAN (update)
+      #   uses: paolobrasolin/ctan-submit-action@v1
+      #   with:
+      #     action: upload
+      #     file_path: citation-style-language-ctan.zip
+      #     fields: |
+      #       update: "true"
+      #       pkg: citation-style-language
+      #       version: ${{ steps.labeller.outputs.version }}
+      #       uploader: ${{ secrets.CTAN_UPLOADER }}
+      #       email: ${{ secrets.CTAN_EMAIL }}

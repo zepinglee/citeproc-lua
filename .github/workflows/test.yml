@@ -12,6 +12,98 @@ on:
 
 jobs:
 
+  test-latex:
+    if: ${{ !contains(github.event.head_commit.message, 'ci skip') }}
+    name: LaTeX Test
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Set up TeX Live
+        uses: zauguin/install-texlive@v2
+        with:
+          package_file: .github/tl_packages
+
+      # - name: Set up TeX Live
+      #   uses: teatimeguest/setup-texlive-action@v2
+      #   with:
+      #     package-file: .github/tl_packages
+      #     update-all-packages: true
+
+      - name: Test LaTeX package
+        run: l3build ctan
+
+      - name: Upload CTAN archive
+        uses: actions/upload-artifact@v3
+        with:
+          name: ctan-archive
+          path: "*-ctan.zip"
+          retention-days: 3
+
+      - name: Upload diffs of failed tests
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: testfiles
+          path: build/**/*.diff
+          retention-days: 3
+
+      - name: Run examples
+        run: |
+          l3build install
+          cd examples
+          pdflatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
+          "$(kpsewhich -var-value=TEXMFHOME)"/scripts/citation-style-language/citeproc-lua.lua example.aux
+          pdflatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
+          rm example.aux example.bbl
+          lualatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
+          lualatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
+
+
+  test-texlua:
+    if: ${{ !contains(github.event.head_commit.message, 'ci skip') }}
+    name: Lua Test (texlua)
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Set up TeX Live
+        uses: zauguin/install-texlive@v2
+        with:
+          package_file: .github/tl_packages
+
+      # - name: Set up TeX Live
+      #   uses: teatimeguest/setup-texlive-action@v2
+      #   with:
+      #     package-file: .github/tl_packages
+      #     update-all-packages: true
+
+      - name: Set up Lua
+        uses: leafo/gh-actions-lua@v10
+        with:
+          luaVersion: "5.3"
+
+      - name: Set up LuaRocks
+        uses: leafo/gh-actions-luarocks@v4
+
+      - name: Install busted
+        run: luarocks install busted
+
+      - name: Test citperoc-lua engine
+        run: busted --run=citeproc --output=TAP
+
+      - name: Test other Lua modules
+        run: busted --output=TAP
+
+
   test-lua:
     if: ${{ !contains(github.event.head_commit.message, 'ci skip') }}
     name: Lua Test
@@ -45,66 +137,3 @@ jobs:
 
       - name: Test other Lua modules
         run: busted --lua=lua --lpath="" --output=TAP
-
-
-  test-tex:
-    if: ${{ !contains(github.event.head_commit.message, 'ci skip') }}
-    name: LaTeX Test
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
-
-      - name: Install TeX Live
-        uses: zauguin/install-texlive@v2
-        with:
-          package_file: .github/tl_packages
-
-      - name: Set up Lua
-        uses: leafo/gh-actions-lua@v10
-        with:
-          luaVersion: "5.3"
-
-      - name: Set up LuaRocks
-        uses: leafo/gh-actions-luarocks@v4
-
-      - name: Install busted
-        run: luarocks install busted
-
-      - name: Test citperoc-lua engine
-        run: busted --run=citeproc --output=TAP
-
-      - name: Test other Lua modules
-        run: busted --output=TAP
-
-      - name: Test LaTeX package
-        run: l3build ctan
-
-      - name: Upload CTAN archive
-        uses: actions/upload-artifact@v3
-        with:
-          name: ctan-archive
-          path: "*-ctan.zip"
-          retention-days: 3
-
-      - name: Archive failed test output
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: testfiles
-          path: build/**/*.diff
-          retention-days: 3
-
-      - name: Run examples
-        run: |
-          l3build install
-          cd examples
-          pdflatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
-          "$(kpsewhich -var-value=TEXMFHOME)"/scripts/citation-style-language/citeproc-lua.lua example.aux
-          pdflatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
-          rm example.aux example.bbl
-          lualatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
-          lualatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
