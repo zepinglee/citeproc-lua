@@ -423,6 +423,9 @@ function util.startswith(str, prefix)
   if type(str) ~= "string" then
     util.error(string.format("\n%s\n'%s' is not a string.", debug.traceback(), str))
   end
+  if type(prefix) ~= "string" then
+    util.error(string.format("\n%s\n'%s' is not a string.", debug.traceback(), prefix))
+  end
   return string.sub(str, 1, #prefix) == prefix
 end
 
@@ -1234,8 +1237,15 @@ function util.write_file(text, path)
   file:close()
 end
 
+---@alias CslDateVariable { date-parts: (string|number)[][]?, season: string|number, circa: boolean, literal: string|number?, raw: string?}
 
+
+---@param str string
+---@return CslDateVariable?
 function util.parse_edtf(str)
+  if string.match(str, "^%s*$") then
+    return nil
+  end
   local date = {["date-parts"] = {}}
   local range_parts = util.split(str, "/")
   for i, range_part in ipairs(range_parts) do
@@ -1244,10 +1254,10 @@ function util.parse_edtf(str)
     end
     date["date-parts"][i] = {}
     local negative_year = false
-    if string.match(range_part, "^Y%-") then
+    if string.match(range_part, "^%-") or string.match(range_part, "^Y%-") then
       negative_year = true
     end
-    range_part = string.gsub(range_part, "^Y[+-]?", "")
+    range_part = string.gsub(range_part, "^Y?[+-]?", "")
     if string.match(range_part, "[?~%%]$") then
       date.circa = true
       range_part = string.gsub(range_part, "[?~%%]$", "")
@@ -1262,20 +1272,34 @@ function util.parse_edtf(str)
         date_part = string.gsub(date_part, "X", "0")
       end
       if string.match(date_part, "^%d+$") then
-        date_part = tonumber(date_part)
-        if date_part > 0 then
-          date["date-parts"][i][j] = date_part
+        local date_part_number = tonumber(date_part)
+        if date_part_number > 0 then
+          date["date-parts"][i][j] = date_part_number
         else
           break
         end
-      else
-        return nil
+      elseif date_part ~= "" then
+        -- util.error(string.format('Invalid EDTF date "%s".', str))
+        return { literal = str }
       end
     end
     if negative_year then
-      date["date-parts"][i][1] = - date["date-parts"][i][1]
+      date["date-parts"][i][1] = - 1 - date["date-parts"][i][1]
     end
   end
+
+  local all_empty = true
+  for i, range_part in ipairs(date["date-parts"]) do
+    if #range_part > 0 then
+      all_empty = false
+      break
+    end
+  end
+
+  if all_empty then
+    return nil
+  end
+
   return date
 end
 

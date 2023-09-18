@@ -51,6 +51,7 @@ function bibtex2csl.parse_bibtex_to_csl(str, keep_unknown_commands, case_protect
   local bib_data, exceptions = bibtex_parser.parse(str, strings)
   local csl_json_items = nil
   if bib_data then
+    -- TODO: Ideally we should load all .bib files and then resolve crossrefs and related
     bibtex_parser.resolve_crossrefs(bib_data.entries, bibtex_data.entries_by_id)
     csl_json_items = bibtex2csl.convert_to_csl_data(bib_data, keep_unknown_commands, case_protection, sentence_case_title, check_sentence_case)
   end
@@ -68,15 +69,19 @@ function bibtex2csl.convert_to_csl_data(bib, keep_unknown_commands, case_protect
   local csl_data = {}
 
   -- BibTeX looks for crossref in a case-insensitive manner.
-  local entries_by_id = {}
-  for _, entry in ipairs(bib.entries) do
-    entries_by_id[unicode.casefold(entry.key)] = entry
-  end
+  local bib_entry_dict = {}
+  local csl_item_dict = {}
 
   for _, entry in ipairs(bib.entries) do
+    bib_entry_dict[unicode.casefold(entry.key)] = entry
     local item = bibtex2csl.convert_to_csl_item(entry, keep_unknown_commands, case_protection, sentence_case_title, check_sentence_case)
+
     table.insert(csl_data, item)
+    csl_item_dict[item.id] = item
   end
+
+  bibtex2csl.resolve_related(csl_item_dict, bib_entry_dict)
+
   return csl_data
 end
 
@@ -159,12 +164,35 @@ function bibtex2csl.pre_process_special_fields(item, entry)
   -- Merge title, maintitle, subtitle, titleaddon
   bibtex2csl.process_titles(entry)
 
+  -- biblatex-apa
+  if entry.fields.howpublished then
+    local howpublished = string.lower(entry.fields.howpublished)
+    if howpublished == "advance online publication" then
+      -- TODO: get_locale_term("advance online publication" )
+      item.status = "Advance online publication"
+    elseif howpublished == "manunpub" then
+      -- biblatex-apa
+      item.genre = "Unpublished manuscript"
+    elseif howpublished == "maninprep" then
+      -- biblatex-apa
+      item.genre = "Manuscript in preparation"
+    elseif howpublished == "mansub" then
+      -- biblatex-apa
+      item.genre = "Manuscript submitted for publication"
+    end
+  end
+  if entry.fields.pubstate
+      and string.lower(entry.fields.pubstate) == "inpress" then
+    -- TODO: get_locale_term("advance online publication" )
+    item.status = "in press"
+  end
 end
 
 
 ---@param entry BibtexEntry
 function bibtex2csl.process_titles(entry)
   local fields = entry.fields
+  -- title and subtitle
   if fields.subtitle then
     if fields.title then
       fields.title = util.join_title(fields.title, fields.subtitle)
@@ -176,7 +204,12 @@ function bibtex2csl.process_titles(entry)
     end
     fields.subtitle = nil
   end
+
+  -- booktitle and booksubtitle
   if fields.booksubtitle then
+    if not fields["container-title-short"] then
+      fields["container-title-short"] = fields.booktitle
+    end
     if fields.booktitle then
       fields.booktitle = util.join_title(fields.booktitle, fields.booksubtitle)
     else
@@ -184,6 +217,41 @@ function bibtex2csl.process_titles(entry)
     end
     fields.booksubtitle = nil
   end
+
+  -- mainsubtitle
+  if fields.mainsubtitle then
+    if fields.maintitle then
+      fields.maintitle = util.join_title(fields.maintitle, fields.mainsubtitle)
+    else
+      fields.maintitle = fields.mainsubtitle
+    end
+  end
+
+  -- maintitle
+  if fields.maintitle then
+    if entry.type == "audio" or entry.type == "video" then
+      -- maintitle is the container-title
+      fields["container-title"] = fields.maintitle
+    elseif fields.booktitle then
+      -- maintitle is with booktitle
+      if not fields["volume-title"] then
+        fields["volume-title"] = fields.booktitle
+        fields.booktitle = fields.maintitle
+      end
+    else
+      -- maintitle is with title
+      if fields.title then
+        if not fields["volume-title"] then
+          fields["volume-title"] = fields.title
+          fields.title = fields.maintitle
+        end
+      else
+        -- This is unlikelu to happen.
+        fields.title = fields.maintitle
+      end
+    end
+  end
+
   if fields.journalsubtitle then
     if fields.journaltitle then
       fields.journaltitle = util.join_title(fields.journaltitle, fields.journalsubtitle)
@@ -242,8 +310,12 @@ function bibtex2csl.convert_field(bib_field, value, keep_unknown_commands, case_
     end
 
   elseif field_type == "date" then
-    csl_value = latex_parser.latex_to_pseudo_html(value, false, false)
-    csl_value = bibtex2csl._parse_edtf_date(csl_value)
+    if string.match(value, "\\") then
+      -- "{\noopsort{1973c}}1981"
+      value = latex_parser.latex_to_pseudo_html(value, false, false)
+    end
+    -- "-3000~" should not be converted to "-3000 "
+    csl_value = util.parse_edtf(value)
 
   elseif bib_field == "title" or bib_field == "shorttitle"
       or bib_field == "booktitle" or bib_field == "container-title-short" then
@@ -295,11 +367,126 @@ function bibtex2csl.convert_to_csl_name(bibtex_name)
 end
 
 
+local arxiv_url_prefix = "https://arxiv.org/abs/"
+local pubmed_url_prefix = "https://www.ncbi.nlm.nih.gov/pubmed/"
+local pubmed_central_url_prefix = "https://www.ncbi.nlm.nih.gov/pmc/articles/"
+
+
 ---@param item CslItem
 ---@param entry BibtexEntry
 function bibtex2csl.post_process_special_fields(item, entry, disable_journal_abbreviation)
   local bib_type = entry.type
   local bib_fields = entry.fields
+
+  -- biblatex-apa
+  if item.type == "article-journal" and entry.fields.entrysubtype == "nonacademic" then
+    item.type = "article-magazine"
+    item.genre = nil
+
+  elseif item.type == "motion_picture" then
+    if entry.fields.entrysubtype == "tvseries" then
+      item.type = "broadcast"
+      if item.genre == "tvseries" then
+        item.genre = "TV series"
+      end
+    elseif entry.fields.entrysubtype == "tvepisode" then
+      item.type = "broadcast"
+      if item.genre == "tvepisode" then
+        item.genre = "TV series episode"
+      end
+    end
+
+  elseif item.type == "song" then
+    if entry.fields.entrysubtype == "podcast" then
+      item.type = "broadcast"
+      if item.genre == "podcast" then
+        item.genre = "Audio podcast"
+      end
+
+    elseif entry.fields.entrysubtype == "podcastepisode" then
+      item.type = "broadcast"
+      if item.genre == "podcastepisode" then
+        item.genre = "Audio podcast episode"
+      end
+
+    elseif entry.fields.entrysubtype == "interview" then
+      item.type = "interview"
+
+    elseif entry.fields.entrysubtype == "speech" then
+      item.type = "speech"
+
+    end
+
+  elseif item.type == "graphic" then
+    item["archive-place"] = item["publisher-place"]
+
+    if entry.fields.entrysubtype == "map" then
+      item.type = "map"
+    end
+
+  elseif item.type == "webpage" then
+
+    -- eprinttype is mapped to
+    -- - `archive` for Google books;
+    -- - `container-title` for twitter post;
+    -- - `publisher` for arXiv preprint;
+
+    local eprint_type_map = {
+      facebook = "post",
+      instagram = "post",
+      reddit = "post",
+      twitter = "post",
+      arxiv = "preprint",
+      psyarxiv = "preprint",
+      pubmed = "preprint",
+      ["pubmed central"] = "preprint",
+    }
+
+    -- Biblatex's `online` type can be mapped to `post`, `preprint`
+    -- local eprinttype = entry.fields.eprinttype or entry.fields.archiveprefix
+    if item.archive then
+      local eprint_type = eprint_type_map[string.lower(item.archive)]
+      if eprint_type then
+        item.type = eprint_type
+      elseif item.number then
+        item.type = "preprint"
+      elseif entry.fields.eprint then
+        item.type = "preprint"
+        item.numerb = entry.fields.eprint
+      elseif item.DOI then
+        item.type = "preprint"
+      elseif item.URL then
+        if util.startswith(item.URL, arxiv_url_prefix) then
+          item.type = "preprint"
+        elseif util.startswith(item.URL, pubmed_url_prefix) then
+          item.type = "preprint"
+        elseif util.startswith(item.URL, pubmed_central_url_prefix) then
+          item.type = "preprint"
+        end
+      end
+      if item.type == "preprint" then
+        if not item.publisher then
+          item.publisher = item.archive
+          item.archive = nil
+        end
+        if not item.number then
+          item.number = entry.fields.eprint
+        end
+      else
+        if not item["container-title"] then
+          item["container-title"] = item.archive
+          item.archive = nil
+        end
+      end
+    end
+
+  end
+
+  -- event-date
+  if item["event-date"] and not item.issued then
+    item.issued = util.deep_copy(item["event-date"])
+  end
+
   -- event-title: for compatibility with CSL v1.0.1 and earlier versions
   if item["event-title"] then
     item.event = item["event-title"]
@@ -310,6 +497,15 @@ function bibtex2csl.post_process_special_fields(item, entry, disable_journal_abb
     if item.type == "article-journal" or item.type == "article-magazine"
         or item.type == "article-newspaper" then
       bibtex2csl.check_journal_abbreviations(item)
+    end
+  end
+
+  if not item.genre then
+    if bib_type == "phdthesis" then
+      -- from APA
+      item.genre = "Doctoral dissertation"
+    elseif bib_type == "mastersthesis" then
+      item.genre = "Master’s thesis"
     end
   end
 
@@ -377,6 +573,46 @@ function bibtex2csl.post_process_special_fields(item, entry, disable_journal_abb
     item.PMID = bib_fields.eprint
   end
 
+  if item.URL then
+    if item.type == "preprint" and util.startswith(item.URL, arxiv_url_prefix) then
+      if not item.publisher then
+        item.publisher = "arXiv"
+        item.archive = nil
+      end
+      if not item.number then
+        item.number = util.remove_prefix(item.URL, pubmed_url_prefix)
+      end
+    end
+
+    if util.startswith(item.URL, pubmed_url_prefix) then
+      if not item.publisher then
+        item.publisher = "PubMed"
+        item.archive = nil
+      end
+      if not item.PMID then
+        item.PMID = util.remove_prefix(item.URL, pubmed_url_prefix)
+      end
+    end
+
+    if util.startswith(item.URL, pubmed_central_url_prefix) then
+      if not item.publisher then
+        item.publisher = "PubMed Central"
+        item.archive = nil
+      end
+      if not item.PMCID then
+        item.PMCID = util.remove_prefix(item.URL, pubmed_central_url_prefix)
+      end
+    end
+  end
+
+  -- `APA Education [@APAEducation], (2018, June 29). College students are forming menta/-health c/ubs-and they're making a difference @washingtonpost [Thumbnail with link attached]`
+  -- The `[Thumbnail with link attached]` should not be italicized.
+  -- if bib_fields.titleaddon and item.genre and item.genre ~= bib_fields.titleaddon then
+  --   if item.title then
+  --     item.title = string.format("%s [%s]", item.title, bib_fields.titleaddon)
+  --   end
+  -- end
+
 end
 
 
@@ -404,43 +640,59 @@ function bibtex2csl.check_journal_abbreviations(item)
 end
 
 
-function bibtex2csl._parse_edtf_date(str)
-  local date_range = util.split(str, "/")
-  if str == "" then
-    return nil
-  end
-  if #date_range == 1 then
-    date_range = util.split(str, util.unicode["en dash"])
-  end
+local original_field_dict = {
+  author = "original-author",
+  issued = "original-date",
+  publisher = "original-publisher",
+  ["publisher-place"] = "original-publisher-place",
+  title = "original-title",
+}
 
-  local literal = { literal = str }
+local reviewed_field_dict = {
+  author = "reviewed-author",
+  genre = "reviewed-genre",
+  title = "reviewed-title",
+}
 
-  if #date_range > 2 then
-    return literal
-  end
 
-  local date = {}
-  date["date-parts"] = {}
-  for _, date_part in ipairs(date_range) do
-    local date_ = bibtex2csl._parse_single_date(date_part)
-    if not date_ then
-      return literal
+---@param csl_item_dict table<string, CslItem>
+---@param bib_entry_dict table<string, BibtexEntry>
+function bibtex2csl.resolve_related(csl_item_dict, bib_entry_dict)
+  for key, entry in pairs(bib_entry_dict) do
+    local related_key = entry.fields.related
+    local related_type = entry.fields.relatedtype
+    if related_key then
+      local related_bib_entry = bib_entry_dict[unicode.casefold(related_key)]
+      if related_bib_entry then
+        local csl_item = csl_item_dict[entry.key]
+        local related_csl_item = csl_item_dict[related_bib_entry.key]
+        if related_type == "reprintof" or related_type == "reprintfrom" then
+          for original_field, new_field in pairs(original_field_dict) do
+            if not csl_item[new_field] and related_csl_item[original_field] then
+              csl_item[new_field] = util.deep_copy(related_csl_item[original_field])
+            end
+          end
+
+        elseif related_type == "translationof" or related_type == "translationfrom" then
+          for original_field, new_field in pairs(original_field_dict) do
+            if not csl_item[new_field] and related_csl_item[original_field] then
+              csl_item[new_field] = util.deep_copy(related_csl_item[original_field])
+            end
+          end
+
+        elseif related_type == "reviewof" then
+          for reviewed_field, new_field in pairs(reviewed_field_dict) do
+            if not csl_item[new_field] and related_csl_item[reviewed_field] then
+              csl_item[new_field] = util.deep_copy(related_csl_item[reviewed_field])
+            end
+          end
+
+        end
+      else
+        util.warning(string.format('Related entry "%s" of "%s" not found.', related_key, entry.key))
+      end
     end
-    table.insert(date["date-parts"], date_)
   end
-  return date
-end
-
-
-function bibtex2csl._parse_single_date(str)
-  local date = {}
-  for _, date_part in ipairs(util.split(str, "%-")) do
-    if not string.match(date_part, "^%d+$") then
-      return nil
-    end
-    table.insert(date, tonumber(date_part))
-  end
-  return date
 end
 
 

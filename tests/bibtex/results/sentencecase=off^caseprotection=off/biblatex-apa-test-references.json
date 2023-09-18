@@ -728,7 +728,7 @@
 				"given": "S. N."
 			}
 		],
-		"status": "inpress"
+		"status": "in press"
 	},
 	{
 		"id": "9.46:6",
@@ -1133,7 +1133,7 @@
 				"given": "B."
 			}
 		],
-		"status": "inpress"
+		"status": "in press"
 	},
 	{
 		"id": "9.47:13",
@@ -1144,7 +1144,7 @@
 				"given": "B."
 			}
 		],
-		"status": "inpress"
+		"status": "in press"
 	},
 	{
 		"id": "9.48:1",
@@ -1193,7 +1193,12 @@
 			}
 		],
 		"issued": {
-			"literal": "-3000 "
+			"circa": true,
+			"date-parts": [
+				[
+					-3001
+				]
+			]
 		},
 		"title": "The Pnakotic Manuscript"
 	},
@@ -1201,7 +1206,12 @@
 		"id": "9.49:2",
 		"type": "book",
 		"issued": {
-			"literal": "-2000 "
+			"circa": true,
+			"date-parts": [
+				[
+					-2001
+				]
+			]
 		},
 		"title": "The Book of Eibon"
 	},
@@ -1299,6 +1309,7 @@
 			}
 		],
 		"container-title": "The Psychologically Healthy Workplace: Building a Win-Win Environment for Organizations and Employees",
+		"container-title-short": "The Psychologically Healthy Workplace",
 		"DOI": "10.1037/14731-006",
 		"editor": [
 			{
@@ -1430,6 +1441,7 @@
 			}
 		],
 		"container-title": "New Science of Learning: Cognition, Computers and Collaboration in Education",
+		"container-title-short": "New Science of Learning",
 		"DOI": "10.1007/978-1-4419-57160_6",
 		"editor": [
 			{
@@ -1634,7 +1646,7 @@
 	},
 	{
 		"id": "10.1:3b",
-		"type": "article-journal",
+		"type": "article-magazine",
 		"author": [
 			{
 				"family": "Goldman",
@@ -1864,6 +1876,7 @@
 				]
 			]
 		},
+		"status": "Advance online publication",
 		"title": "Are Face-Incongruent Voices Harder to Process? Effects of Face-Voice Gender Incongruity on Basic Cognitive Information Processing"
 	},
 	{
@@ -1881,7 +1894,7 @@
 		],
 		"container-title": "Psychonomic Bulletin & Review",
 		"container-title-short": "Psychon Bull Rev",
-		"status": "inpress",
+		"status": "in press",
 		"title": "Unpacking Buyer-Seller Differences in Valuation from Experience: A Cognitive Modeling Approach",
 		"title-short": "Unpacking Buyer-Seller Differences in Valuation from Experience: A Cognitive Modeling Approach"
 	},
@@ -1999,6 +2012,14 @@
 				]
 			]
 		},
+		"original-date": {
+			"date-parts": [
+				[
+					1981
+				]
+			]
+		},
+		"original-title": "Marking Time in the Land Of Plenty: Reflections on Mental Health in the United States",
 		"page": "611-618",
 		"title": "Marking Time in the Land Of Plenty: Reflections on Mental Health in the United States",
 		"title-short": "Marking Time in the Land Of Plenty: Reflections on Mental Health in the United States",
@@ -2143,7 +2164,7 @@
 	},
 	{
 		"id": "10.1:15a",
-		"type": "article-journal",
+		"type": "article-magazine",
 		"author": [
 			{
 				"family": "Bergeson",
@@ -2168,7 +2189,7 @@
 	},
 	{
 		"id": "10.1:15b",
-		"type": "article-journal",
+		"type": "article-magazine",
 		"author": [
 			{
 				"family": "Bustillos",
@@ -2191,7 +2212,7 @@
 	},
 	{
 		"id": "10.1:15c",
-		"type": "article-journal",
+		"type": "article-magazine",
 		"author": [
 			{
 				"family": "Weir",
@@ -2214,7 +2235,7 @@
 	},
 	{
 		"id": "10.1:16a",
-		"type": "article-journal",
+		"type": "article-magazine",
 		"author": [
 			{
 				"family": "Guarino",
@@ -2237,7 +2258,7 @@
 	},
 	{
 		"id": "10.1:16b",
-		"type": "article-journal",
+		"type": "article-magazine",
 		"author": [
 			{
 				"family": "Hess",
@@ -2282,7 +2303,7 @@
 	},
 	{
 		"id": "10.1:18",
-		"type": "article-journal",
+		"type": "article-magazine",
 		"author": [
 			{
 				"literal": "KS in NJ"
@@ -2336,6 +2357,7 @@
 		"container-title": "Journal of Transcultural Nursing",
 		"container-title-short": "J. Transcult. Nurs.",
 		"DOI": "10.1177/1043659616638722",
+		"genre": "Editorial",
 		"issue": "3",
 		"issued": {
 			"date-parts": [
@@ -2398,6 +2420,7 @@
 				"given": "S."
 			}
 		],
+		"genre": "Audiobook",
 		"issued": {
 			"date-parts": [
 				[
@@ -2671,6 +2694,7 @@
 				"given": "J. K."
 			}
 		],
+		"genre": "Audiobook",
 		"issued": {
 			"date-parts": [
 				[
@@ -2993,7 +3017,12 @@
 			]
 		},
 		"original-date": {
-			"literal": "-0349 "
+			"circa": true,
+			"date-parts": [
+				[
+					-350
+				]
+			]
 		},
 		"publisher": "The Internet Classics Archive",
 		"title": "Poetics",
@@ -3063,6 +3092,7 @@
 			}
 		],
 		"container-title": "Culturally Responsive Cognitive Behaviour Therapy: Practice and Supervision",
+		"container-title-short": "Culturally Responsive Cognitive Behaviour Therapy",
 		"DOI": "10.1037/0000119-012",
 		"edition": "2",
 		"editor": [
@@ -3249,6 +3279,7 @@
 			}
 		],
 		"container-title": "Cognitive Psychology: Key Readings in Cognition",
+		"container-title-short": "Cognitive Psychology",
 		"editor": [
 			{
 				"family": "Balota",
@@ -3266,6 +3297,24 @@
 				]
 			]
 		},
+		"original-author": [
+			{
+				"family": "Sacchett",
+				"given": "C."
+			},
+			{
+				"family": "Humphreys",
+				"given": "G. W."
+			}
+		],
+		"original-date": {
+			"date-parts": [
+				[
+					1992
+				]
+			]
+		},
+		"original-title": "Calling a Squirrel and Squirrel but a Canoe a Wigwam: A Category-Specific Deficit for Artefactual Objects and Body Parts",
 		"page": "100-108",
 		"publisher": "Psychology Press",
 		"title": "Calling a Squirrel and Squirrel but a Canoe a Wigwam: A Category-Specific Deficit for Artefactual Objects and Body Parts",
@@ -3310,6 +3359,7 @@
 			}
 		],
 		"container-title": "Making Human Beings Human: Bioecological Perspectives on Human Development",
+		"container-title-short": "Making Human Beings Human",
 		"editor": [
 			{
 				"family": "Bronfenbrenner",
@@ -3323,6 +3373,15 @@
 				]
 			]
 		},
+		"original-date": {
+			"date-parts": [
+				[
+					1973
+				]
+			]
+		},
+		"original-publisher": "National Education Press",
+		"original-title": "Brain and Intelligence: The Ecology of Child Development",
 		"page": "27-40",
 		"publisher": "SAGE Publications",
 		"title": "The Social Ecology of Human Development: A Retrospective Conclusion",
@@ -3359,6 +3418,7 @@
 			}
 		],
 		"container-title": "Handbook of Child Psychology and Developmental Science: Vol. 2. Cognitive Processes",
+		"container-title-short": "Handbook of Child Psychology and Developmental Science",
 		"DOI": "10.1002/9781118963418.childpsy209",
 		"edition": "7",
 		"editor": [
@@ -3392,6 +3452,7 @@
 			}
 		],
 		"container-title": "The Complete Social Scientist: A Kurt Lewin Reader",
+		"container-title-short": "The Complete Social Scientist",
 		"DOI": "10.1037/10319-000",
 		"editor": [
 			{
@@ -3795,6 +3856,7 @@
 				"given": "M."
 			}
 		],
+		"genre": "Policy Brief",
 		"issued": {
 			"date-parts": [
 				[
@@ -3815,6 +3877,7 @@
 				"literal": "U.S. Food and Drug Administration"
 			}
 		],
+		"genre": "Press release",
 		"issued": {
 			"date-parts": [
 				[
@@ -3862,6 +3925,21 @@
 		},
 		"event-place": "Milwaukee, WI, United States",
 		"event-title": "Autism Society National Conference",
+		"genre": "Conference session",
+		"issued": {
+			"date-parts": [
+				[
+					2017,
+					7,
+					12
+				],
+				[
+					2017,
+					7,
+					15
+				]
+			]
+		},
 		"title": "Everybody’s Got a Little Music in Them: Using Music Therapy to Connect, Engage, and Motivate",
 		"title-short": "Everybody’s Got a Little Music in Them: Using Music Therapy to Connect, Engage, and Motivate",
 		"URL": "https://asa.confex.com/asa/2017/webprogramarchives/Session9517.html"
@@ -3904,6 +3982,21 @@
 		},
 		"event-place": "New Orleans, LA, United States",
 		"event-title": "Southeastern Psychological Association 62nd Annual Meeting",
+		"genre": "Paper presentation",
+		"issued": {
+			"date-parts": [
+				[
+					2016,
+					3,
+					30
+				],
+				[
+					2016,
+					4,
+					2
+				]
+			]
+		},
 		"title": "If Mama Ain’t Happy, Nobody’s Happy: The Effect of Parental Depression on Mood Dysregulation in Children",
 		"title-short": "If Mama Ain’t Happy, Nobody’s Happy: The Effect of Parental Depression on Mood Dysregulation in Children"
 	},
@@ -3933,6 +4026,21 @@
 		},
 		"event-place": "Sydney, NSW, Australia",
 		"event-title": "Australian Psychological Society Congress",
+		"genre": "Poster presentation",
+		"issued": {
+			"date-parts": [
+				[
+					2018,
+					9,
+					27
+				],
+				[
+					2018,
+					9,
+					30
+				]
+			]
+		},
 		"title": "Fat Talk and its Effects on State-Based Body Image in Women",
 		"URL": "http://bit.ly/2XGSThP"
 	},
@@ -3966,8 +4074,23 @@
 		},
 		"event-place": "Portland, OR, United States",
 		"event-title": "Western Psychological Association 98th Annual Convention",
-		"title": "The Art and Significance of Successfully Identifying Resilient Individuals: A Person-Focused Approach",
-		"title-short": "The Art and Significance of Successfully Identifying Resilient Individuals: A Person-Focused Approach"
+		"issued": {
+			"date-parts": [
+				[
+					2018,
+					4,
+					26
+				],
+				[
+					2018,
+					4,
+					29
+				]
+			]
+		},
+		"title": "Perspectives on Resilience: Conceptualization, Measurement, and Enhancement",
+		"title-short": "The Art and Significance of Successfully Identifying Resilient Individuals: A Person-Focused Approach",
+		"volume-title": "The Art and Significance of Successfully Identifying Resilient Individuals: A Person-Focused Approach"
 	},
 	{
 		"id": "10.5:A1",
@@ -4034,7 +4157,8 @@
 			]
 		},
 		"publisher": "Springer",
-		"title": "Theory of Cryptography"
+		"title": "Lecture Notes in Computer Science: Vol. 9562",
+		"volume-title": "Theory of Cryptography"
 	},
 	{
 		"id": "10.5:A3",
@@ -4053,7 +4177,7 @@
 				"given": "C."
 			}
 		],
-		"container-title": "Learning and Intelligent Optimization",
+		"container-title": "Lecture Notes in Computer Science: Vol. 11353",
 		"DOI": "10.1007/978-3-030-05348-2_21",
 		"editor": [
 			{
@@ -4082,7 +4206,8 @@
 		},
 		"page": "225-240",
 		"publisher": "Springer",
-		"title": "Probability Estimation by an Adapted Genetic Algorithm in Web Insurance"
+		"title": "Probability Estimation by an Adapted Genetic Algorithm in Web Insurance",
+		"volume-title": "Learning and Intelligent Optimization"
 	},
 	{
 		"id": "10.6:64",
@@ -4113,6 +4238,7 @@
 				"given": "M. M."
 			}
 		],
+		"genre": "Doctoral dissertation",
 		"issued": {
 			"date-parts": [
 				[
@@ -4134,6 +4260,7 @@
 				"given": "V. H."
 			}
 		],
+		"genre": "Master’s thesis",
 		"issued": {
 			"date-parts": [
 				[
@@ -4162,6 +4289,7 @@
 		"container-title": "Psychology of Sexual Orientation and Gender Diversity",
 		"container-title-short": "Psychol Sex Orientat Gend Divers",
 		"DOI": "10.1037/sgd0000205",
+		"genre": "Review of the film",
 		"issue": "4",
 		"issued": {
 			"date-parts": [
@@ -4171,6 +4299,14 @@
 			]
 		},
 		"page": "499-500",
+		"reviewed-author": [
+			{
+				"family": "Brodsky",
+				"given": "E."
+			}
+		],
+		"reviewed-genre": "film",
+		"reviewed-title": "The Year We Thought About Love",
 		"title": "Bringing LGBTQ Youth Theater into the Spotlight",
 		"volume": "3"
 	},
@@ -4183,6 +4319,7 @@
 				"given": "E."
 			}
 		],
+		"genre": "film",
 		"issued": {
 			"date-parts": [
 				[
@@ -4194,7 +4331,7 @@
 	},
 	{
 		"id": "10.7:68",
-		"type": "article-journal",
+		"type": "article-magazine",
 		"author": [
 			{
 				"family": "Santos",
@@ -4212,6 +4349,13 @@
 				]
 			]
 		},
+		"reviewed-author": [
+			{
+				"family": "Yousafzai",
+				"given": "M."
+			}
+		],
+		"reviewed-title": "We are Displaced: My Journey and Stories From Refugee Girls Around the World",
 		"title": "Reframing Refugee Children’s Stories",
 		"URL": "https://nyt.ms/2Hlgjk3"
 	},
@@ -4237,13 +4381,14 @@
 	{
 		"id": "10.7:69",
 		"type": "webpage",
-		"archive": "A.V. Club",
 		"author": [
 			{
 				"family": "Perkins",
 				"given": "D."
 			}
 		],
+		"container-title": "A.V. Club",
+		"genre": "Review of the TV series episode",
 		"issued": {
 			"date-parts": [
 				[
@@ -4253,18 +4398,27 @@
 				]
 			]
 		},
+		"reviewed-author": [
+			{
+				"family": "Schur",
+				"given": "M."
+			}
+		],
+		"reviewed-genre": "TV series episode",
+		"reviewed-title": "Somewhere Else",
 		"title": "<code>\\textup{The good place}</code> ends its Remarkable Second Season With Irrational Hope, Unexpected Gifts, and a Smile",
 		"URL": "https://www.avclub.com/the-good-place-ends-its-remarkable-second-season-with-i-1822649316"
 	},
 	{
 		"id": "10.7:69r",
-		"type": "motion_picture",
+		"type": "broadcast",
 		"author": [
 			{
 				"family": "Schur",
 				"given": "M."
 			}
 		],
+		"genre": "TV series episode",
 		"issued": {
 			"date-parts": [
 				[
@@ -4295,6 +4449,7 @@
 				"given": "C."
 			}
 		],
+		"genre": "Unpublished manuscript",
 		"issued": {
 			"date-parts": [
 				[
@@ -4315,6 +4470,7 @@
 				"given": "M."
 			}
 		],
+		"genre": "Manuscript in preparation",
 		"issued": {
 			"date-parts": [
 				[
@@ -4338,6 +4494,7 @@
 				"given": "E. K."
 			}
 		],
+		"genre": "Manuscript submitted for publication",
 		"issued": {
 			"date-parts": [
 				[
@@ -4351,8 +4508,7 @@
 	},
 	{
 		"id": "10.8:73a",
-		"type": "webpage",
-		"archive": "PsyArXiv",
+		"type": "preprint",
 		"author": [
 			{
 				"family": "Leuker",
@@ -4379,13 +4535,13 @@
 				]
 			]
 		},
+		"publisher": "PsyArXiv",
 		"title": "When Money Talks: Judging Risk and Coercion in High-Paying Clinical Trials",
 		"title-short": "When Money Talks: Judging Risk and Coercion in High-Paying Clinical Trials"
 	},
 	{
 		"id": "10.8:73b",
-		"type": "webpage",
-		"archive": "PubMed Central",
+		"type": "preprint",
 		"author": [
 			{
 				"family": "Stults-Kolehmainen",
@@ -4403,19 +4559,21 @@
 				]
 			]
 		},
+		"PMCID": "PMC3894304",
+		"publisher": "PubMed Central",
 		"title": "The Effects of Stress on Physical Activity and Exercise",
 		"URL": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3894304"
 	},
 	{
 		"id": "10.8:74",
 		"type": "webpage",
-		"archive": "ERIC",
 		"author": [
 			{
 				"family": "Ho",
 				"given": "H-K"
 			}
 		],
+		"container-title": "ERIC",
 		"issued": {
 			"date-parts": [
 				[
@@ -4441,6 +4599,7 @@
 			}
 		],
 		"DOI": "10.3886/ICPSR37080.v1",
+		"genre": "Data Set",
 		"issued": {
 			"date-parts": [
 				[
@@ -4462,6 +4621,7 @@
 			}
 		],
 		"DOI": "10.3886/ICPSR335531.v3",
+		"genre": "Data set and code book",
 		"issued": {
 			"date-parts": [
 				[
@@ -4483,6 +4643,7 @@
 				"literal": "Pew Research Center"
 			}
 		],
+		"genre": "Data set",
 		"issued": {
 			"date-parts": [
 				[
@@ -4502,6 +4663,7 @@
 				"given": "R. A."
 			}
 		],
+		"genre": "Unpublished raw data on the correlations between the Five Facet Mindfulness Questionnaire and the Kentucky Inventory of Mindfulness Skills",
 		"issued": {
 			"date-parts": [
 				[
@@ -4519,6 +4681,7 @@
 				"literal": "Oregan Youth Authority"
 			}
 		],
+		"genre": "Unpublished raw data",
 		"issued": {
 			"date-parts": [
 				[
@@ -4549,6 +4712,7 @@
 				"given": "H."
 			}
 		],
+		"genre": "Computer software",
 		"issued": {
 			"date-parts": [
 				[
@@ -4569,6 +4733,7 @@
 				"literal": "SR Research"
 			}
 		],
+		"genre": "Apparatus and software",
 		"issued": {
 			"date-parts": [
 				[
@@ -4587,6 +4752,7 @@
 				"literal": "Tactile Labs"
 			}
 		],
+		"genre": "Apparatus",
 		"issued": {
 			"date-parts": [
 				[
@@ -4605,6 +4771,7 @@
 				"family": "Epocrates"
 			}
 		],
+		"genre": "Mobile app",
 		"issued": {
 			"date-parts": [
 				[
@@ -4625,6 +4792,7 @@
 				"family": "Epocrates\\relax"
 			}
 		],
+		"genre": "Mobile app",
 		"issued": {
 			"date-parts": [
 				[
@@ -4698,6 +4866,7 @@
 			}
 		],
 		"DOI": "10.1037/t66267-000",
+		"genre": "Database record",
 		"issued": {
 			"date-parts": [
 				[
@@ -4729,6 +4898,7 @@
 				"given": "N."
 			}
 		],
+		"genre": "Database record",
 		"issued": {
 			"date-parts": [
 				[
@@ -4749,6 +4919,7 @@
 				"given": "M."
 			}
 		],
+		"genre": "film",
 		"issued": {
 			"date-parts": [
 				[
@@ -4772,6 +4943,7 @@
 				"given": "H."
 			}
 		],
+		"genre": "film",
 		"issued": {
 			"date-parts": [
 				[
@@ -4793,6 +4965,7 @@
 				"given": "P."
 			}
 		],
+		"genre": "film",
 		"issued": {
 			"date-parts": [
 				[
@@ -4814,6 +4987,7 @@
 				"given": "L."
 			}
 		],
+		"genre": "film",
 		"issued": {
 			"date-parts": [
 				[
@@ -4827,7 +5001,7 @@
 	},
 	{
 		"id": "10.12:86",
-		"type": "motion_picture",
+		"type": "broadcast",
 		"author": [
 			{
 				"family": "Simon",
@@ -4842,6 +5016,7 @@
 				"given": "N."
 			}
 		],
+		"genre": "TV series",
 		"issued": {
 			"date-parts": [
 				[
@@ -4857,13 +5032,14 @@
 	},
 	{
 		"id": "10.12:87a",
-		"type": "motion_picture",
+		"type": "broadcast",
 		"author": [
 			{
 				"family": "Barris",
 				"given": "K."
 			}
 		],
+		"container-title": "Black-ish",
 		"executive-producer": [
 			{
 				"family": "Barris",
@@ -4890,6 +5066,7 @@
 				"given": "H."
 			}
 		],
+		"genre": "TV series episode",
 		"issued": {
 			"date-parts": [
 				[
@@ -4904,7 +5081,7 @@
 	},
 	{
 		"id": "10.12:87b",
-		"type": "motion_picture",
+		"type": "broadcast",
 		"author": [
 			{
 				"family": "Oakley",
@@ -4919,6 +5096,7 @@
 				"given": "J."
 			}
 		],
+		"container-title": "The Simpsons",
 		"executive-producer": [
 			{
 				"family": "Mirkin",
@@ -4937,6 +5115,7 @@
 				"given": "S."
 			}
 		],
+		"genre": "TV series episode",
 		"issued": {
 			"date-parts": [
 				[
@@ -4958,6 +5137,7 @@
 				"given": "S."
 			}
 		],
+		"genre": "video",
 		"issued": {
 			"date-parts": [
 				[
@@ -4978,6 +5158,7 @@
 				"family": "TED"
 			}
 		],
+		"genre": "video",
 		"issued": {
 			"date-parts": [
 				[
@@ -5001,6 +5182,7 @@
 				"given": "J. F."
 			}
 		],
+		"genre": "Webinar",
 		"issued": {
 			"date-parts": [
 				[
@@ -5021,6 +5203,7 @@
 				"given": "S."
 			}
 		],
+		"genre": "video",
 		"issued": {
 			"date-parts": [
 				[
@@ -5043,6 +5226,7 @@
 				"given": "M."
 			}
 		],
+		"genre": "video",
 		"issued": {
 			"date-parts": [
 				[
@@ -5064,6 +5248,7 @@
 				"literal": "University of Oxford"
 			}
 		],
+		"genre": "video",
 		"issued": {
 			"date-parts": [
 				[
@@ -5086,6 +5271,7 @@
 				"given": "J. S."
 			}
 		],
+		"genre": "Album recorded by Academy of St Martin in the Fields",
 		"issued": {
 			"date-parts": [
 				[
@@ -5113,6 +5299,7 @@
 				"given": "D."
 			}
 		],
+		"genre": "album",
 		"issued": {
 			"date-parts": [
 				[
@@ -5133,6 +5320,8 @@
 				"non-dropping-particle": "van"
 			}
 		],
+		"container-title": "Beethoven: Complete Symphonies",
+		"genre": "Song recorded by Staatskapelle Dresden",
 		"issued": {
 			"date-parts": [
 				[
@@ -5158,6 +5347,8 @@
 				"family": "Beyoncé"
 			}
 		],
+		"container-title": "Lemonade",
+		"genre": "song",
 		"issued": {
 			"date-parts": [
 				[
@@ -5176,6 +5367,7 @@
 				"literal": "Childish Gambino"
 			}
 		],
+		"genre": "song",
 		"issued": {
 			"date-parts": [
 				[
@@ -5195,6 +5387,8 @@
 				"given": "K."
 			}
 		],
+		"container-title": "Damn",
+		"genre": "song",
 		"issued": {
 			"date-parts": [
 				[
@@ -5207,13 +5401,14 @@
 	},
 	{
 		"id": "10.13:93",
-		"type": "song",
+		"type": "broadcast",
 		"author": [
 			{
 				"family": "Vedantam",
 				"given": "S."
 			}
 		],
+		"genre": "Audio podcast",
 		"issued": {
 			"date-parts": [
 				[
@@ -5228,13 +5423,15 @@
 	},
 	{
 		"id": "10.13:94",
-		"type": "song",
+		"type": "broadcast",
 		"author": [
 			{
 				"family": "Glass",
 				"given": "I."
 			}
 		],
+		"container-title": "This American Life",
+		"genre": "Audio podcast episode",
 		"issued": {
 			"date-parts": [
 				[
@@ -5251,7 +5448,7 @@
 	},
 	{
 		"id": "10.13:95",
-		"type": "song",
+		"type": "interview",
 		"author": [
 			{
 				"family": "Beauvoir",
@@ -5259,6 +5456,7 @@
 				"non-dropping-particle": "de"
 			}
 		],
+		"genre": "interview",
 		"issued": {
 			"date-parts": [
 				[
@@ -5274,7 +5472,7 @@
 	},
 	{
 		"id": "10.13:96",
-		"type": "song",
+		"type": "speech",
 		"author": [
 			{
 				"family": "King",
@@ -5282,6 +5480,7 @@
 				"suffix": "Jr."
 			}
 		],
+		"genre": "speech",
 		"issued": {
 			"date-parts": [
 				[
@@ -5298,12 +5497,14 @@
 	{
 		"id": "10.14:97a",
 		"type": "graphic",
+		"archive-place": "The Louvre, Paris, France",
 		"author": [
 			{
 				"family": "Delacroix",
 				"given": "E."
 			}
 		],
+		"genre": "lithograph",
 		"issued": {
 			"date-parts": [
 				[
@@ -5320,12 +5521,14 @@
 	{
 		"id": "10.14:97b",
 		"type": "graphic",
+		"archive-place": "Art Institute of Chicago, Chicago, IL, United States",
 		"author": [
 			{
 				"family": "Wood",
 				"given": "G."
 			}
 		],
+		"genre": "painting",
 		"issued": {
 			"date-parts": [
 				[
@@ -5345,6 +5548,7 @@
 				"family": "GDJ"
 			}
 		],
+		"genre": "Clip art",
 		"issued": {
 			"date-parts": [
 				[
@@ -5369,6 +5573,7 @@
 				"given": "R."
 			}
 		],
+		"genre": "Infographic",
 		"issued": {
 			"date-parts": [
 				[
@@ -5382,13 +5587,15 @@
 	},
 	{
 		"id": "10.14:100a",
-		"type": "graphic",
+		"type": "map",
+		"archive-place": "University of Virginia",
 		"author": [
 			{
 				"family": "Cable",
 				"given": "D."
 			}
 		],
+		"genre": "map",
 		"issued": {
 			"date-parts": [
 				[
@@ -5418,6 +5625,7 @@
 				"family": "Google"
 			}
 		],
+		"genre": "Google Maps directions for driving from La Paz, Bolivia, to Lima, Peru",
 		"URL": "https://goo.gl/YYE3GR"
 	},
 	{
@@ -5429,6 +5637,7 @@
 				"given": "S."
 			}
 		],
+		"genre": "photograph",
 		"issued": {
 			"date-parts": [
 				[
@@ -5449,6 +5658,7 @@
 				"given": "Jessica"
 			}
 		],
+		"genre": "Photograph series of a boy who finds his footing after abuse by those he trusted",
 		"issued": {
 			"date-parts": [
 				[
@@ -5462,6 +5672,7 @@
 	{
 		"id": "10.14:102a",
 		"type": "graphic",
+		"archive-place": "Department of Management Control and Information Systems",
 		"author": [
 			{
 				"family": "Canan",
@@ -5472,6 +5683,7 @@
 				"given": "J."
 			}
 		],
+		"genre": "Lecture notes on resource allocation",
 		"issued": {
 			"date-parts": [
 				[
@@ -5494,6 +5706,7 @@
 				"given": "Brian"
 			}
 		],
+		"genre": "powerpoint",
 		"issued": {
 			"date-parts": [
 				[
@@ -5518,6 +5731,7 @@
 				"given": "G."
 			}
 		],
+		"genre": "powerpoint",
 		"issued": {
 			"date-parts": [
 				[
@@ -5531,13 +5745,14 @@
 	},
 	{
 		"id": "10.15:103a",
-		"type": "webpage",
-		"archive": "Twitter",
+		"type": "post",
 		"author": [
 			{
 				"literal": "APA Education"
 			}
 		],
+		"container-title": "Twitter",
+		"genre": "Tweet",
 		"issued": {
 			"date-parts": [
 				[
@@ -5552,13 +5767,14 @@
 	},
 	{
 		"id": "10.15:103b",
-		"type": "webpage",
-		"archive": "Twitter",
+		"type": "post",
 		"author": [
 			{
 				"literal": "Badlands National Park"
 			}
 		],
+		"container-title": "Twitter",
+		"genre": "Tweet",
 		"issued": {
 			"date-parts": [
 				[
@@ -5573,14 +5789,15 @@
 	},
 	{
 		"id": "10.15:103c",
-		"type": "webpage",
-		"archive": "Twitter",
+		"type": "post",
 		"author": [
 			{
 				"family": "White",
 				"given": "B."
 			}
 		],
+		"container-title": "Twitter",
+		"genre": "Tweet",
 		"issued": {
 			"date-parts": [
 				[
@@ -5595,7 +5812,7 @@
 	},
 	{
 		"id": "10.15:104",
-		"type": "webpage",
+		"type": "post",
 		"accessed": {
 			"date-parts": [
 				[
@@ -5605,25 +5822,27 @@
 				]
 			]
 		},
-		"archive": "Twitter",
 		"author": [
 			{
 				"literal": "APA Style"
 			}
 		],
+		"container-title": "Twitter",
+		"genre": "Twitter profile",
 		"title": "Tweets",
 		"URL": "https://twitter.com/APA_Style"
 	},
 	{
 		"id": "10.15:105a",
-		"type": "webpage",
-		"archive": "Facebook",
+		"type": "post",
 		"author": [
 			{
 				"family": "Gaiman",
 				"given": "N."
 			}
 		],
+		"container-title": "Facebook",
+		"genre": "Status update",
 		"issued": {
 			"date-parts": [
 				[
@@ -5638,13 +5857,14 @@
 	},
 	{
 		"id": "10.15:105b",
-		"type": "webpage",
-		"archive": "Facebook",
+		"type": "post",
 		"author": [
 			{
 				"literal": "National Institute of Mental Health"
 			}
 		],
+		"container-title": "Facebook",
+		"genre": "Infographic",
 		"issued": {
 			"date-parts": [
 				[
@@ -5659,13 +5879,14 @@
 	},
 	{
 		"id": "10.15:105c",
-		"type": "webpage",
-		"archive": "Facebook",
+		"type": "post",
 		"author": [
 			{
 				"literal": "News From Science"
 			}
 		],
+		"container-title": "Facebook",
+		"genre": "video",
 		"issued": {
 			"date-parts": [
 				[
@@ -5681,7 +5902,7 @@
 	},
 	{
 		"id": "10.15:106",
-		"type": "webpage",
+		"type": "post",
 		"accessed": {
 			"date-parts": [
 				[
@@ -5691,24 +5912,26 @@
 				]
 			]
 		},
-		"archive": "Facebook",
 		"author": [
 			{
 				"literal": "Smithsonian’s National Zoo and Conservation Biology Institute"
 			}
 		],
+		"container-title": "Facebook",
+		"genre": "Facebook page",
 		"title": "Home",
 		"URL": "https://www.facebookcom/nationalzoo"
 	},
 	{
 		"id": "10.15:107",
-		"type": "webpage",
-		"archive": "Instagram",
+		"type": "post",
 		"author": [
 			{
 				"literal": "Zeitz MOCAA"
 			}
 		],
+		"container-title": "Instagram",
+		"genre": "photographs",
 		"issued": {
 			"date-parts": [
 				[
@@ -5723,7 +5946,7 @@
 	},
 	{
 		"id": "10.15:108",
-		"type": "webpage",
+		"type": "post",
 		"accessed": {
 			"date-parts": [
 				[
@@ -5733,24 +5956,26 @@
 				]
 			]
 		},
-		"archive": "Instagram",
 		"author": [
 			{
 				"literal": "The New York Public Library"
 			}
 		],
+		"container-title": "Instagram",
+		"genre": "Highlight",
 		"title": "The Raven",
 		"URL": "https://bitly.com/2FV8bu3"
 	},
 	{
 		"id": "10.15:109",
-		"type": "webpage",
-		"archive": "Reddit",
+		"type": "post",
 		"author": [
 			{
 				"literal": "National Aeronautics and Space Administration"
 			}
 		],
+		"container-title": "Reddit",
+		"genre": "Online forum post",
 		"issued": {
 			"date-parts": [
 				[
@@ -5766,13 +5991,13 @@
 	{
 		"id": "10.16:110a",
 		"type": "webpage",
-		"archive": "CNN",
 		"author": [
 			{
 				"family": "Avramova",
 				"given": "N."
 			}
 		],
+		"container-title": "CNN",
 		"issued": {
 			"date-parts": [
 				[
@@ -5788,13 +6013,13 @@
 	{
 		"id": "10.16:110b",
 		"type": "webpage",
-		"archive": "HuffPost",
 		"author": [
 			{
 				"family": "Bologna",
 				"given": "C."
 			}
 		],
+		"container-title": "HuffPost",
 		"issued": {
 			"date-parts": [
 				[
@@ -5849,13 +6074,13 @@
 	{
 		"id": "10.16:112",
 		"type": "webpage",
-		"archive": "Mayo Clinic",
 		"author": [
 			{
 				"family": "Martin Lillie",
 				"given": "C. M."
 			}
 		],
+		"container-title": "Mayo Clinic",
 		"issued": {
 			"date-parts": [
 				[
@@ -5872,7 +6097,6 @@
 	{
 		"id": "10.16:113a",
 		"type": "webpage",
-		"archive": "The Research Ethics Guidebook: A Resource for Social Scientists",
 		"author": [
 			{
 				"family": "Boddy",
@@ -5903,6 +6127,7 @@
 				"given": "W."
 			}
 		],
+		"container-title": "The Research Ethics Guidebook: A Resource for Social Scientists",
 		"title": "Ethics Principles",
 		"URL": "http://www.ethicsguidebook.ac.uk/EthicsPrinciples"
 	},
@@ -6041,6 +6266,7 @@
 	{
 		"id": "11.5:8",
 		"type": "legislation",
+		"genre": "of 1990",
 		"issued": {
 			"date-parts": [
 				[
@@ -6055,6 +6281,7 @@
 	{
 		"id": "11.5:9",
 		"type": "legislation",
+		"genre": "of 1964",
 		"issued": {
 			"date-parts": [
 				[
@@ -6083,6 +6310,7 @@
 	{
 		"id": "11.5:11",
 		"type": "legislation",
+		"genre": "of 2009",
 		"issued": {
 			"date-parts": [
 				[
@@ -6315,6 +6543,13 @@
 			]
 		},
 		"genre": "constitution",
+		"issued": {
+			"date-parts": [
+				[
+					1933
+				]
+			]
+		},
 		"source": "us"
 	},
 	{

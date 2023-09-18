@@ -49,8 +49,8 @@ describe("BibTeX data", function ()
         end
 
         local sentence_case_options = {"on+guess", "on", "off"}
-        -- local case_protection_options = {"as-needed", "strict", "off"}
-        local case_protection_options = {"strict", "off"}  -- TODO: "as-needed" not implemented
+        -- TODO: "as-needed" not implemented
+        local case_protection_options = {"as-needed", "strict", "off"}
 
         for _, sentence_case in ipairs(sentence_case_options) do
           for _, case_protection in ipairs(case_protection_options) do

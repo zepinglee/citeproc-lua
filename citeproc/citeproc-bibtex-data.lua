@@ -1697,8 +1697,8 @@ return {
       type = "entrykey",
     },
     entrysubtype = {
-      csl = nil,
-      notes = "Not supported.",
+      csl = "genre",
+      notes = "May be used to determine the entry type (article-magazine).",
       source = "biblatex",
       type = "literal",
     },
@@ -3192,8 +3192,8 @@ return {
       type = "option",
     },
     relatedstring = {
-      csl = nil,
-      notes = "Not supported.",
+      csl = "genre",
+      notes = "The style apa.csl assumes that `genre` is entered as “Review of the book” or similar.",
       source = "biblatex",
       type = "literal",
     },
@@ -3793,7 +3793,7 @@ return {
       type = "literal",
     },
     titleaddon = {
-      csl = nil,
+      csl = "genre",
       source = "biblatex",
       type = "literal",
     },
@@ -4483,6 +4483,7 @@ return {
   },
   primary_fields = {
     annotation = "note",
+    archive = "archive",
     ["archive-place"] = "archive-place",
     author = "author",
     bookauthor = "container-author",

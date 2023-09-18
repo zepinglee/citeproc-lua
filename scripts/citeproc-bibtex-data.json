@@ -881,8 +881,8 @@
             "type": "entrykey"
         },
         "entrysubtype": {
-            "csl": null,
-            "notes": "Not supported.",
+            "csl": "genre",
+            "notes": "May be used to determine the entry type (article-magazine).",
             "source": "biblatex",
             "type": "literal"
         },
@@ -2376,8 +2376,8 @@
             "type": "option"
         },
         "relatedstring": {
-            "csl": null,
-            "notes": "Not supported.",
+            "csl": "genre",
+            "notes": "The style apa.csl assumes that `genre` is entered as “Review of the book” or similar.",
             "source": "biblatex",
             "type": "literal"
         },
@@ -2977,7 +2977,7 @@
             "type": "literal"
         },
         "titleaddon": {
-            "csl": null,
+            "csl": "genre",
             "source": "biblatex",
             "type": "literal"
         },
@@ -3667,6 +3667,7 @@
     },
     "primary_fields": {
         "annotation": "note",
+        "archive": "archive",
         "archive-place": "archive-place",
         "author": "author",
         "bookauthor": "container-author",
@@ -4183,6 +4184,7 @@
         },
         "legmaterial": {
             "csl": "legislation",
+            "notes": "APA §11.6: Legislative materials include federal testimony, hearings, bills, resolutions, reports, and related documents.",
             "source": "apa.dbx"
         },
         "letter": {

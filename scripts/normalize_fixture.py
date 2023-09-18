@@ -1,6 +1,6 @@
 import argparse
 
-from csltest import CslTest
+from csl_test import CslTest
 
 
 def main():
@@ -10,7 +10,7 @@ def main():
 
     for path in args.files:
         print(path)
-        fixture = CslTest(path)
+        fixture = CslTest.from_path(path)
         # print(fixture.data)
         with open(path, 'w') as f:
             f.write(fixture.dumps())

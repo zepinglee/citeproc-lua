@@ -9,6 +9,7 @@
 			}
 		],
 		"container-title": "Space and Beyond: The Frontier Theme in Science Fiction",
+		"container-title-short": "Space and Beyond",
 		"editor": [
 			{
 				"family": "Westfahl",
@@ -180,6 +181,7 @@
 			}
 		],
 		"container-title": "The Journal of Narrative Technique",
+		"genre": "<code>\\autocap{e}</code>xcerpt in",
 		"issue": "3",
 		"issued": {
 			"date-parts": [
@@ -938,9 +940,10 @@
 		"part": "2",
 		"publisher": "Routledge and Kegan Paul",
 		"publisher-place": "London",
-		"title": "Biographia literaria, or Biographical sketches of my literary life and opinions",
+		"title": "The collected works of Samuel Taylor Coleridge",
 		"title-short": "Biographia literaria",
-		"volume": "7"
+		"volume": "7",
+		"volume-title": "Biographia literaria, or Biographical sketches of my literary life and opinions"
 	},
 	{
 		"id": "companion",
@@ -1155,9 +1158,10 @@
 		"note": "The first volume of a five-volume book. Note the <code>\\texttt{sorttitle}</code> field. We want this volume to be listed after the entry referring to the entire five-volume set. Also note the <code>\\texttt{indextitle}</code> and <code>\\texttt{indexsorttitle}</code> fields. Indexing packages that don’t generate robust index entries require some control sequences to be protected from expansion",
 		"publisher": "Addison-Wesley",
 		"publisher-place": "Reading, Mass.",
-		"title": "The <code>{\\TeX </code>book<code>}</code>",
+		"title": "Computers & Typesetting",
 		"title-short": "<code>\\TeX </code>book",
-		"volume": "A"
+		"volume": "A",
+		"volume-title": "The <code>{\\TeX </code>book<code>}</code>"
 	},
 	{
 		"id": "knuth:ct:b",
@@ -1179,9 +1183,10 @@
 		"note": "The second volume of a five-volume book. Note the <code>\\texttt{sorttitle}</code> field. Also note the <code>\\texttt{indexsorttitle}</code> field",
 		"publisher": "Addison-Wesley",
 		"publisher-place": "Reading, Mass.",
-		"title": "<code>{\\TeX}</code>: The Program",
+		"title": "Computers & Typesetting",
 		"title-short": "<code>\\TeX</code>",
-		"volume": "B"
+		"volume": "B",
+		"volume-title": "<code>{\\TeX}</code>: The Program"
 	},
 	{
 		"id": "knuth:ct:c",
@@ -1203,9 +1208,10 @@
 		"note": "The third volume of a five-volume book. Note the <code>\\texttt{sorttitle}</code> field as well as the <code>\\texttt{indextitle}</code> field",
 		"publisher": "Addison-Wesley",
 		"publisher-place": "Reading, Mass.",
-		"title": "The METAFONTbook",
+		"title": "Computers & Typesetting",
 		"title-short": "METAFONTbook",
-		"volume": "C"
+		"volume": "C",
+		"volume-title": "The METAFONTbook"
 	},
 	{
 		"id": "knuth:ct:d",
@@ -1227,9 +1233,10 @@
 		"note": "The fourth volume of a five-volume book. Note the <code>\\texttt{sorttitle}</code> field",
 		"publisher": "Addison-Wesley",
 		"publisher-place": "Reading, Mass.",
-		"title": "METAFONT: The Program",
+		"title": "Computers & Typesetting",
 		"title-short": "METAFONT",
-		"volume": "D"
+		"volume": "D",
+		"volume-title": "METAFONT: The Program"
 	},
 	{
 		"id": "knuth:ct:e",
@@ -1251,8 +1258,9 @@
 		"note": "The fifth volume of a five-volume book. Note the <code>\\texttt{sorttitle}</code> field",
 		"publisher": "Addison-Wesley",
 		"publisher-place": "Reading, Mass.",
-		"title": "Computer Modern Typefaces",
-		"volume": "E"
+		"title": "Computers & Typesetting",
+		"volume": "E",
+		"volume-title": "Computer Modern Typefaces"
 	},
 	{
 		"id": "knuth:ct:related",
@@ -1466,6 +1474,20 @@
 		},
 		"language": "en-US",
 		"note": "A reprint of Moore’s law. Note the <code>\\texttt{related}</code> and <code>\\texttt{relatedtype}</code> fields",
+		"original-author": [
+			{
+				"family": "Moore",
+				"given": "Gordon E."
+			}
+		],
+		"original-date": {
+			"date-parts": [
+				[
+					1965
+				]
+			]
+		},
+		"original-title": "Cramming more components onto integrated circuits",
 		"page": "82-85",
 		"title": "Cramming more components onto integrated circuits",
 		"volume": "86"
@@ -1542,9 +1564,10 @@
 		"note": "A single volume from the critical edition of Nietzsche’s works. This <code>\\texttt{book}</code> entry explicitly refers to the first volume only. Note the <code>\\texttt{title}</code> and <code>\\texttt{maintitle}</code> fields. Also note the <code>\\texttt{sorttitle}</code> field. We want this entry to be listed after the entry referring to the entire edition",
 		"publisher": "Deutscher Taschenbuch-Verlag and Walter de Gruyter",
 		"publisher-place": "München and Berlin and New York",
-		"title": "Die Geburt der Tragödie. Unzeitgemäße Betrachtungen I–IV. Nachgelassene Schriften 1870–1973",
+		"title": "Sämtliche Werke: Kritische Studienausgabe",
 		"title-short": "Sämtliche Werke I",
-		"volume": "1"
+		"volume": "1",
+		"volume-title": "Die Geburt der Tragödie. Unzeitgemäße Betrachtungen I–IV. Nachgelassene Schriften 1870–1973"
 	},
 	{
 		"id": "nussbaum",
@@ -1684,6 +1707,23 @@
 		},
 		"language": "en-US",
 		"note": "A translated work from <code>\\texttt{vangennep}</code>. Note the format of the <code>\\texttt{related}</code> and <code>\\texttt{relatedtype}</code> fields",
+		"original-author": [
+			{
+				"family": "Gennep",
+				"given": "Arnold",
+				"non-dropping-particle": "van"
+			}
+		],
+		"original-date": {
+			"date-parts": [
+				[
+					1909
+				]
+			]
+		},
+		"original-publisher": "Nourry",
+		"original-publisher-place": "Paris",
+		"original-title": "Les rites de passage",
 		"publisher": "University of Chicago Press",
 		"title": "The Rites of Passage",
 		"title-short": "Rites of Passage",
@@ -1883,6 +1923,7 @@
 		"id": "westfahl:frontier",
 		"type": "book",
 		"container-title": "Space and Beyond: The Frontier Theme in Science Fiction",
+		"container-title-short": "Space and Beyond",
 		"editor": [
 			{
 				"family": "Westfahl",
@@ -1919,7 +1960,7 @@
 				"given": "Immanuel"
 			}
 		],
-		"container-title": "Kritik der praktischen Vernunft. Kritik der Urtheilskraft",
+		"container-title": "Kants Werke. Akademie Textausgabe",
 		"issued": {
 			"date-parts": [
 				[
@@ -1934,7 +1975,8 @@
 		"publisher-place": "Berlin",
 		"title": "Kritik der praktischen Vernunft",
 		"title-short": "Kritik der praktischen Vernunft",
-		"volume": "5"
+		"volume": "5",
+		"volume-title": "Kritik der praktischen Vernunft. Kritik der Urtheilskraft"
 	},
 	{
 		"id": "kant:ku",
@@ -1952,7 +1994,7 @@
 				"given": "Immanuel"
 			}
 		],
-		"container-title": "Kritik der praktischen Vernunft. Kritik der Urtheilskraft",
+		"container-title": "Kants Werke. Akademie Textausgabe",
 		"issued": {
 			"date-parts": [
 				[
@@ -1966,7 +2008,8 @@
 		"publisher": "Walter de Gruyter",
 		"publisher-place": "Berlin",
 		"title": "Kritik der Urtheilskraft",
-		"volume": "5"
+		"volume": "5",
+		"volume-title": "Kritik der praktischen Vernunft. Kritik der Urtheilskraft"
 	},
 	{
 		"id": "nietzsche:historie",
@@ -1983,7 +2026,7 @@
 				"given": "Friedrich"
 			}
 		],
-		"container-title": "Die Geburt der Tragödie. Unzeitgemäße Betrachtungen I–IV. Nachgelassene Schriften 1870–1973",
+		"container-title": "Sämtliche Werke: Kritische Studienausgabe",
 		"editor": [
 			{
 				"family": "Colli",
@@ -2008,7 +2051,8 @@
 		"publisher-place": "München and Berlin and New York",
 		"title": "Unzeitgemässe Betrachtungen. Zweites Stück: Vom Nutzen und Nachtheil der Historie für das Leben",
 		"title-short": "Vom Nutzen und Nachtheil der Historie",
-		"volume": "1"
+		"volume": "1",
+		"volume-title": "Die Geburt der Tragödie. Unzeitgemäße Betrachtungen I–IV. Nachgelassene Schriften 1870–1973"
 	},
 	{
 		"id": "brandt",
@@ -2164,6 +2208,7 @@
 			}
 		],
 		"container-title": "Elementary particle theory: Relativistic groups and analyticity",
+		"container-title-short": "Elementary particle theory",
 		"editor": [
 			{
 				"family": "Svartholm",
@@ -2218,8 +2263,7 @@
 	},
 	{
 		"id": "baez/online",
-		"type": "webpage",
-		"archive": "arxiv",
+		"type": "preprint",
 		"author": [
 			{
 				"family": "Baez",
@@ -2241,6 +2285,8 @@
 		},
 		"language": "en-US",
 		"note": "An <code>\\texttt{online}</code> reference from arXiv. Note the <code>\\texttt{eprint}</code> and <code>\\texttt{eprinttype}</code> fields. Compare <code>\\texttt{baez\\slash article}</code> which is the same item given as an <code>\\texttt{article}</code> entry with eprint information",
+		"number": "math/0307200v3",
+		"publisher": "arxiv",
 		"title": "Higher-Dimensional Algebra V: 2-Groups",
 		"version": "3"
 	},
@@ -2271,9 +2317,8 @@
 	},
 	{
 		"id": "itzhaki",
-		"type": "webpage",
+		"type": "preprint",
 		"abstract": "We discuss the limitations of ’t Hooft’s proposal for the black hole S-matrix. We find that the validity of the S-matrix implies violation of the semi-classical approximation at scales large compared to the Planck scale. We also show that the effect of the centrifugal barrier on the S-matrix is crucial even for large transverse distances.",
-		"archive": "arxiv",
 		"author": [
 			{
 				"family": "Itzhaki",
@@ -2291,6 +2336,8 @@
 		},
 		"language": "en-US",
 		"note": "An <code>\\texttt{online}</code> reference from arXiv. Note the <code>\\texttt{eprint}</code> and <code>\\texttt{eprinttype}</code> fields. Also note that the arXiv reference is transformed into a clickable link if <code>\\texttt{hyperref}</code> support has been enabled",
+		"number": "hep-th/9603067",
+		"publisher": "arxiv",
 		"title": "Some remarks on ’t Hooft’s S-matrix for black holes",
 		"version": "1"
 	},
@@ -2330,9 +2377,8 @@
 	},
 	{
 		"id": "wassenberg",
-		"type": "webpage",
+		"type": "preprint",
 		"abstract": "Sorting algorithms are the deciding factor for the performance of common operations such as removal of duplicates or database sort-merge joins. This work focuses on 32-bit integer keys, optionally paired with a 32-bit value. We present a fast radix sorting algorithm that builds upon a microarchitecture-aware variant of counting sort",
-		"archive": "arxiv",
 		"author": [
 			{
 				"family": "Wassenberg",
@@ -2354,6 +2400,8 @@
 		},
 		"language": "en-US",
 		"note": "A recent <code>\\texttt{online}</code> reference from arXiv using the new (April 2007 onward) identifier format. Note the <code>\\texttt{eprint}</code>, <code>\\texttt{eprinttype}</code>, and <code>\\texttt{eprintclass}</code> fields. Also note that the arXiv reference is transformed into a clickable link if <code>\\texttt{hyperref}</code> support has been enabled",
+		"number": "1008.2849v1",
+		"publisher": "arxiv",
 		"title": "Faster Radix Sort via Virtual Memory and Write-Combining",
 		"version": "1"
 	},

@@ -1,8 +1,22 @@
-\input{regression-test}
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
 
-\documentclass{article}
 
-\begin{filecontents}[noheader, overwrite]{\jobname.csl}
+>>===== DESCRIPTION =====>>
+
+<<===== DESCRIPTION =====<<
+
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry">Blackwell, D. L., Lucas, J. W., &#38; Clarke, T. C. (2014). <i>Summary health statistics for U.S. adults: National Health Interview Survey, 2012</i> (Vital and Health Statistics Series 10, Issue 260). Centers for Disease Control and Prevention. https://www.atlantic.org/images/publications/Democratic_Defense_Against_Disinformation_FINAL.pdf</div>
+</div>
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="never" page-range-format="expanded">
   <info>
     <title>American Psychological Association 7th edition</title>
@@ -18,7 +32,7 @@
     <category citation-format="author-date"/>
     <category field="psychology"/>
     <category field="generic-base"/>
-    <updated>2025-01-22T13:45:37-05:00</updated>
+    <updated>2024-09-04T16:02:26+08:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -96,11 +110,6 @@
       <term name="et-al">et al.</term>
     </terms>
   </locale>
-  <locale xml:lang="ro">
-    <terms>
-      <term name="et-al">et al.</term>
-    </terms>
-  </locale>
   <!-- For Indigeneous Knowledge, assume the item is stored as `document` or `speech`
        and that Nation/Community, treaty, where the Elder lives,
        and topic are all stored in `title`
@@ -142,7 +151,7 @@
   <!-- APA references contain four parts: author, date, title, source -->
   <macro name="author-bib">
     <group delimiter=" ">
-      <names variable="composer" delimiter=", &amp; ">
+      <names variable="composer" delimiter=", ">
         <name name-as-sort-order="all" and="symbol" sort-separator=", " initialize-with=". " delimiter=", " delimiter-precedes-last="always"/>
         <substitute>
           <names variable="author"/>
@@ -151,7 +160,7 @@
           <!-- TODO: Replace `delimiter` with `collapse` to combine names variables when that becomes available. -->
           <choose>
             <if type="broadcast">
-              <names variable="script-writer director">
+              <names variable="script-writer director" delimiter=", &amp; ">
                 <!-- Note: Actors/performers and producers [not executive] not cited in APA style. -->
                 <name name-as-sort-order="all" and="symbol" sort-separator=", " initialize-with=". " delimiter=", " delimiter-precedes-last="always"/>
                 <label form="long" prefix=" (" suffix=")" text-case="title"/>
@@ -164,7 +173,7 @@
             <label form="long" prefix=" (" suffix=")" text-case="title"/>
           </names>
           <!-- TODO: Replace `delimiter` with `collapse` to combine names variables when that becomes available. -->
-          <names variable="guest host">
+          <names variable="guest host" delimiter=", &amp; ">
             <name name-as-sort-order="all" and="symbol" sort-separator=", " initialize-with=". " delimiter=", " delimiter-precedes-last="always"/>
             <label form="long" prefix=" (" suffix=")" text-case="title"/>
           </names>
@@ -297,7 +306,7 @@
         </choose>
       </else-if>
       <else>
-        <names variable="composer" delimiter=" &amp; ">
+        <names variable="composer" delimiter=", ">
           <name form="short" and="symbol" delimiter=", " initialize-with=". "/>
           <substitute>
             <names variable="author"/>
@@ -305,12 +314,12 @@
             <!-- TODO: Replace `delimiter` with `collapse` to combine names variables when that becomes available. -->
             <choose>
               <if type="broadcast">
-                <names variable="script-writer director"/>
+                <names variable="script-writer director" delimiter=", &amp; "/>
               </if>
             </choose>
             <names variable="director"/>
             <!-- TODO: Replace `delimiter` with `collapse` to combine names variables when that becomes available. -->
-            <names variable="guest host"/>
+            <names variable="guest host" delimiter=", &amp; "/>
             <names variable="producer"/>
             <choose>
               <if variable="container-title">
@@ -2104,13 +2113,13 @@
     </layout>
   </citation>
   <bibliography hanging-indent="true" et-al-min="21" et-al-use-first="19" et-al-use-last="true" entry-spacing="0" line-spacing="2">
-    <!-- <sort>
+    <sort>
       <key macro="author-sort"/>
       <key macro="date-sort-group" sort="ascending"/>
       <key macro="date-sort" sort="ascending"/>
       <key variable="status"/>
       <key macro="title"/>
-    </sort> -->
+    </sort>
     <layout>
       <choose>
         <if type="bill hearing legal_case legislation regulation treaty" match="any">
@@ -2135,25 +2144,47 @@
     </layout>
   </bibliography>
 </style>
-\end{filecontents}
-
-\input{csl-test}
-
-\usepackage[style=\jobname]{citation-style-language}
-\cslsetup{regression-test = true}
-\addbibresource{biblatex-apa-test-references.bib}
-
-\usepackage{hyperref}
-
-\nocite{*}
+<<===== CSL =====<<
 
 
-\begin{document}
-\START
+>>===== INPUT =====>>
+[
+    {
+        "id": "10.4:52",
+        "type": "report",
+        "author": [
+            {
+                "family": "Blackwell",
+                "given": "D. L."
+            },
+            {
+                "family": "Lucas",
+                "given": "J. W."
+            },
+            {
+                "family": "Clarke",
+                "given": "T. C."
+            }
+        ],
+        "collection-number": "10",
+        "collection-title": "Vital and Health Statistics Series",
+        "issue": "260",
+        "issued": {
+            "date-parts": [
+                [
+                    2014
+                ]
+            ]
+        },
+        "publisher": "<span class=\"nocase\">Centers for Disease Control and Prevention</span>",
+        "title": "Summary health statistics for <span class=\"nocase\">U.S.</span> adults: National <span class=\"nocase\">Health</span> <span class=\"nocase\">Interview</span> <span class=\"nocase\">Survey</span>, 2012",
+        "title-short": "Summary health statistics for <span class=\"nocase\">U.S.</span> adults",
+        "URL": "https://www.atlantic.org/images/publications/Democratic_Defense_Against_Disinformation_FINAL.pdf"
+    }
+]
+<<===== INPUT =====<<
 
-\TEST{Bibliography contents}{
-  \printbibliography
-}
 
-\OMIT
-\end{document}
+>>===== VERSION =====>>
+1.0
+<<===== VERSION =====<<
