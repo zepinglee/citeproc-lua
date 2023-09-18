@@ -1291,10 +1291,11 @@ local function transform_each_word(str, seen_one, is_last_inline, transform)
 
     elseif uni_utf8.match(segment, "%p") then
       segment_type_list[i] = SegmentType.Puctuation
-      if segment == "!" or segment == "?" then
+      -- In the case of `Form ({MMPI-2-RF}): Technical Manual`, use `endswith()`.
+      if util.endswith(segment, "!") or util.endswith(segment, "?") then
         segment_type_list[i] = SegmentType.EndingPunctuation
       -- elseif segment == ":" or segment == "—" then
-      elseif segment == ":" then
+      elseif util.endswith(segment, ":") then
         -- Em dash is not taken into consideration, see "Stability—with Job" in `textcase_TitleWithEmDash.txt`
         segment_type_list[i] = SegmentType.Colon
       end
@@ -2029,7 +2030,7 @@ LatexWriter.markups = {
 }
 
 local latex_escape_table = {
-  ["\\"] = "\\textbackslash{}",
+  ["\\"] = "\\textbackslash ",
   ["{"] = "\\{",
   ["}"] = "\\}",
   ["$"] = "\\$",

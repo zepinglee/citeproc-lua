@@ -1,0 +1,60 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+>>===== RESULT =====>>
+true; true; false
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2023-06-25T16:15:12+08:00</updated>
+  </info>
+  <citation>
+    <layout delimiter="; ">
+      <choose>
+        <if type="chapter paper-conference" variable="container-title" match="all">
+          <text value="true"/>
+        </if>
+        <else>
+          <text value="false"/>
+        </else>
+      </choose>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1",
+        "type": "chapter",
+        "container-title": "Foo"
+    },
+    {
+        "id": "ITEM-2",
+        "type": "paper-conference",
+        "container-title": "Foo"
+    },
+    {
+        "id": "ITEM-3",
+        "type": "article-journal",
+        "container-title": "Foo"
+    }
+]
+<<===== INPUT =====<<
+
+
+>>===== VERSION =====>>
+1.0
+<<===== VERSION =====<<

@@ -10,12 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Convert BibTeX entry keys to NFC and fold the case.
+- Add citation option `unsorted`.
 
 ### Fixed
 
 - Fix an infinite loop bug of unrecognized `babel` language name ([#65](https://github.com/zepinglee/citeproc-lua/issues/65)).
 - Bib2csl: The hyphens in `number` fields are correctly escaped when converted to CSL-JSON.
 - Bib2csl: Map `shorthand` field to CSL `citation-label` variable.
+- BibTeX parser: Fix hyphen in family name.
+- Fix a bug in EDTF parsing.
+- Bib2csl: Fix a sentence case conversion bug that words after colons are not capitalized.
 
 ## [0.7.0] - 2025-02-23
 
@@ -90,6 +94,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add support for multiple bibliographies (`refsection` environment).
 - Add global `ref-section` option.
+- Add support for `biber`'s `%`-style inline comment in `.bib` files.
 
 ### Fixed
 
@@ -108,13 +113,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `\fullcite` command ([#64](https://github.com/zepinglee/citeproc-lua/issues/64)).
 - Add support for annotated bibliography ([#64](https://github.com/zepinglee/citeproc-lua/issues/64)).
 
-## Changed
+### Changed
 
 - Check if the `\cite` command is in a footnote.
 
 ## [0.4.9] - 2024-04-21
 
-## Added
+### Added
 
 - Add normal paragraph style for list of references ([#60](https://github.com/zepinglee/citeproc-lua/discussions/60)).
 

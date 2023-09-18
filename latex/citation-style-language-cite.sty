@@ -21,6 +21,8 @@
       }
   }
 
+\NewCommandCopy \autocite \cite
+
 \NewDocumentCommand \parencite { s o o m }
   {
     \IfBooleanTF {#1}
@@ -49,11 +51,15 @@
 \NewDocumentCommand \cites { }
   { \__csl_cites: }
 
+\NewDocumentCommand \parencites { }
+  { \__csl_cites: }
+
 \NewDocumentCommand \citeauthor { o o m }
   { \__csl_cite_in_text:nnnn {#1} {#2} {#3} { author-only } }
 
-\NewDocumentCommand \citeyear{ o o m }
+\NewDocumentCommand \citeyear { o o m }
   { \__csl_cite_in_text:nnnn {#1} {#2} {#3} { cite-year } }
+
 
 % Suppresses the author (from `natbib`).
 \NewDocumentCommand \citeyearpar { o o m }
@@ -66,6 +72,7 @@
 \seq_new:N \l__csl_cite_keys_seq
 \seq_new:N \l__csl_citation_items_seq
 \prop_new:N \l__csl_citation_properties_prop
+\bool_new:N \l__csl_citation_unsorted_bool
 \prop_new:N \l__csl_citation_info_prop
 
 % #1: prenote
@@ -193,6 +200,7 @@
     \seq_clear:N \l__csl_cite_keys_seq
     \seq_clear:N \l__csl_citation_items_seq
     \prop_clear:N \l__csl_citation_properties_prop
+    \bool_set_false:N \l__csl_citation_unsorted_bool
     \tl_clear:N \l__csl_cite_prefix_tl
     \tl_clear:N \l__csl_cite_suffix_tl
   }
@@ -342,6 +350,7 @@
     volume          .code:n = { \__csl_set_locator:nn { volume          } {#1} } ,
     % Citation properties
     infix           .prop_put:N = \l__csl_citation_properties_prop,
+    unsorted        .bool_set:N = \l__csl_citation_unsorted_bool
   }
 
 
@@ -359,6 +368,10 @@
     \prop_put:NnV \l__csl_citation_properties_prop { noteIndex } \l__csl_note_index_tl
     \__csl_make_chapter_property:
     \__csl_add_back_ref_info:
+    \bool_if:NT \l__csl_citation_unsorted_bool
+      {
+        \prop_put:Nnn \l__csl_citation_properties_prop { unsorted } { true }
+      }
   }
 
 \cs_new:Npn \__csl_make_chapter_property:

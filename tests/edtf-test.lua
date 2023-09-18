@@ -149,7 +149,7 @@ describe("EDTF", function ()
 
       assert.same({
         ["date-parts"] = {
-          {-170000002},
+          {-170000003},
         },
       }, util.parse_edtf("Y-170000002"))
     end)
@@ -233,6 +233,16 @@ describe("EDTF", function ()
           },
           circa = true,
         }, util.parse_edtf("1985-XX-XX"))
+      end)
+
+      -- biblatex-apap-test-references.bib 10.2:36
+      it("AD", function ()
+        assert.same({
+          ["date-parts"] = {
+            {-350},
+          },
+          circa = true,
+        }, util.parse_edtf("-0349~"))
       end)
     end)
   end)

@@ -1,0 +1,26 @@
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\usepackage[style=apa]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{test.json}
+
+
+\begin{document}
+\START
+
+\TEST{Cited in regular order}{
+  \cite{ITEM-1, ITEM-2}
+}
+
+\TEST{Unsorted items in citation}{
+  \cites{ITEM-1}[prefix={, as cited in}, unsorted = true]{ITEM-2}
+}
+
+\TEST{Bibliography contents}{
+  \printbibliography
+}
+
+\OMIT
+\end{document}

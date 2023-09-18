@@ -189,9 +189,6 @@ function Citation:build_cluster(citation_items, engine, properties)
   local output_format = engine.output_format
   ---@type CiteIr[]
   local irs = {}
-  -- The citation_items are already sorted when evaluate the positions
-  -- To be removed
-  citation_items = self:sorted_citation_items(citation_items, engine)
   for _, cite_item in ipairs(citation_items) do
     local ir = self:build_fully_disambiguated_ir(cite_item, output_format, engine, properties)
     table.insert(irs, ir)

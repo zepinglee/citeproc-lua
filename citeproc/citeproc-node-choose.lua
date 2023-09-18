@@ -50,7 +50,7 @@ function Choose:build_ir(engine, state, context)
   local ir = SeqIr:new({}, self)
   ---@case ir SeqIr
   ir.should_inherit_delim = true
-  ir.group_var = GroupVar.UnresolvedPlain
+  ir.group_var = GroupVar.Missing
 
   for _, child in ipairs(self.children) do
     if child:evaluate_conditions(engine, state, context) then
@@ -120,6 +120,7 @@ local If = Element:derive("if", {
   match = "all"
 })
 
+---@return If
 function If:new()
   local o = Element.new(self)
   o.conditions = {}
@@ -147,14 +148,25 @@ function If:from_node(node)
   return o
 end
 
+---@param node Node
+---@param attribute string
 function If:add_conditions(node, attribute)
   local values = node:get_attribute(attribute)
   if not values then
     return
   end
-  for _, value in ipairs(util.split(values)) do
-    local condition = Condition:new(attribute, value, self.match)
+  if attribute == "type" then
+    local type_dict = {}
+    for _, value in ipairs(util.split(values)) do
+      type_dict[value] = true
+    end
+    local condition = Condition:new(attribute, type_dict, self.match)
     table.insert(self.conditions, condition)
+  else
+    for _, value in ipairs(util.split(values)) do
+      local condition = Condition:new(attribute, value, self.match)
+      table.insert(self.conditions, condition)
+    end
   end
 end
 
@@ -299,7 +311,7 @@ function If:evaluate_condition(condition, state, context)
 
   elseif condition.condition == "type" then
     local item_type = context:get_variable("type")
-    return item_type == condition.value
+    return condition.value[item_type] ~= nil
 
   elseif condition.condition == "variable" then
     local var = condition.value

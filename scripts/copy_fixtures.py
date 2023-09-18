@@ -2,7 +2,7 @@ import glob
 import os
 import shutil
 
-from csltest import CslTest
+from csl_test import CslTest
 
 std_dir = "tests/fixtures/test-suite/processor-tests/humans"
 
@@ -29,14 +29,14 @@ def copy_fixtures():
     for path in sorted(glob.glob(os.path.join(std_dir, '*.txt'))):
         _, file = os.path.split(path)
         # print(path)
-        std_fixtures[file] = CslTest(path)
+        std_fixtures[file] = CslTest.from_path(path=path=path)
         fixture_sources[file] = std_dir
 
     for dir in processor_std_dirs:
         for path in sorted(glob.glob(os.path.join(dir, '*.txt'))):
             _, file = os.path.split(path)
             # print(path)
-            fixture = CslTest(path)
+            fixture = CslTest.from_path(path)
             if file not in std_fixtures:
                 print(f'Not in std: {path}')
                 continue
@@ -50,7 +50,7 @@ def copy_fixtures():
         for path in sorted(glob.glob(os.path.join(dir, '*.txt'))):
             _, file = os.path.split(path)
             # print(path)
-            fixture = CslTest(path)
+            fixture = CslTest.from_path(path)
             if file not in std_fixtures:
                 print(f'Not in std: {path}')
                 continue
@@ -65,7 +65,7 @@ def copy_fixtures():
             _, file = os.path.split(path)
             # print(path)
             try:
-                fixture = CslTest(path)
+                fixture = CslTest.from_path(path)
             except ValueError as e:
                 print(f'{path}: Value error {e}')
                 continue
@@ -98,7 +98,7 @@ def copy_fixtures():
     #     _, file = os.path.split(path)
     #     # print(path)
     #     try:
-    #         fixture = CslTest(path)
+    #         fixture = CslTest.from_path(path)
     #     except ValueError as e:
     #         print(f'{path}: Value error {e}')
     #         continue

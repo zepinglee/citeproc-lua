@@ -198,6 +198,14 @@ describe("LaTeX parser", function ()
       assert.equal(expected, res)
     end)
 
+    it("after colon 2", function ()
+      -- biblatex-apa-test-references 10.11:81
+      local s = "Form ({MMPI-2-RF}): Technical Manual"
+      local res = latex_parser.latex_to_sentence_case_pseudo_html(s, true, true, false)
+      local expected = 'Form (<span class="nocase">MMPI-2-RF</span>): Technical manual'
+      assert.equal(expected, res)
+    end)
+
   end)
 
 

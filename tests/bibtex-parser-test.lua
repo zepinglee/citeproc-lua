@@ -267,6 +267,16 @@ describe("BibTeX parser", function ()
       )
     end)
 
+    it("with hyphen in last name", function ()
+      assert.same(
+        {
+          first = "F. Phidias",
+          last = "Phony-Baloney",
+        },
+        bibtex_parser.split_name_parts("F. Phidias Phony-Baloney")
+      )
+    end)
+
     it('with conbinations of format "First von Last" in sec. 11 of ttb', function ()
 
       assert.same(

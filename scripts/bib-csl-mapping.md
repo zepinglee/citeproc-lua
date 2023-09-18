@@ -90,7 +90,7 @@ Bib(La)TeX | CSL | Notes
 `editortype` | - |
 `eid` | `number` |
 `entryset` | - | Not supported.
-`entrysubtype` | - | Not supported.
+`entrysubtype` | `genre` | May be used to determine the entry type (article-magazine).
 `eprint` | - | Mapped to `PMID` if `eprinttype` is "PubMed".
 `eprintclass` | - |
 `eprinttype` | `archive` |
@@ -155,7 +155,7 @@ Bib(La)TeX | CSL | Notes
 `pubstate` | `status` | The publication state of the work, e. g., ‘in press’.
 `related` | - | Not supported.
 `relatedoptions` | - | Not supported.
-`relatedstring` | - | Not supported.
+`relatedstring` | `genre` | The style apa.csl assumes that `genre` is entered as “Review of the book” or similar.
 `relatedtype` | - | Not supported.
 `reprinttitle` | - |
 `school` | `publisher` | Alias for `institution`.
@@ -174,7 +174,7 @@ Bib(La)TeX | CSL | Notes
 `sortyear` | - |
 `subtitle` | - |
 `title` | `title` |
-`titleaddon` | - |
+`titleaddon` | `genre` |
 `translator` | `translator` |
 `type` | `genre` |
 `url` | `URL` |

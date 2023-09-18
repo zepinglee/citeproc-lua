@@ -55,6 +55,10 @@ function Label:from_node(node)
   return o
 end
 
+---@param engine CiteProc
+---@param state table
+---@param context Context
+---@return Rendered?
 function Label:build_ir(engine, state, context)
   -- local variable = context:get_variable(self.variable, self.form)
 

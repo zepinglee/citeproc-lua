@@ -151,6 +151,13 @@ describe("Name initializer", function ()
         assert.equal("Ph. M. E.", name:initialize_name("Ph. M.E.", ". ", context))
       end)
     end)
+
+    -- biblatex-apa-test-references.bib 10.5:A3
+    -- Alan-Louis.
+    it("extra dot", function ()
+      assert.equal("A.-Louis.", name:initialize_name("Alan-Louis.", ". ", context))
+    end)
+
   end)
 
   describe("with 'initialize=\"false\":", function ()

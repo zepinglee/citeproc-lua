@@ -215,7 +215,7 @@ function Terms:from_node(node)
     end
 
     local key = term.name
-    if form then
+    if form and form ~= "long" then
       key = key .. '/form-' .. form
     end
     -- if gender then

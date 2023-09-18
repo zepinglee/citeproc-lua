@@ -78,6 +78,7 @@ local Position = util.Position
 ---@field mode string?
 ---@field prefix string?
 ---@field suffix string?
+---@field unsorted boolean?
 
 
 ---@class NameVariable
@@ -323,7 +324,7 @@ function CiteProc:processCitationCluster(citation, citations_pre, citations_post
 
   local citation_list, item_ids = self:_build_reconstituted_citation_list(citation, citations_pre, citations_post)
   self:updateItems(item_ids)
-  if #citation.sorted_items > 1 and self.style.citation.sort then
+  if #citation.sorted_items > 1 and self.style.citation.sort and not citation.properties.unsorted then
     citation.sorted_items = self.style.citation:sorted_citation_items(citation.citationItems, self)
   end
 
@@ -362,7 +363,7 @@ function CiteProc:process_citation(citation)
   for i, cite_item in ipairs(citation.citationItems) do
     self:get_item(cite_item.id)
   end
-  if #citation.sorted_items > 1 and self.style.citation.sort then
+  if #citation.sorted_items > 1 and self.style.citation.sort and not citation.properties.unsorted then
     citation.sorted_items = self.style.citation:sorted_citation_items(citation.citationItems, self)
   end
 
@@ -435,6 +436,9 @@ function CiteProc:makeCitationCluster(citation_items)
     citation_element = self.style.intext
   end
 
+  if #items > 1 and self.style.citation.sort then
+    items = self.style.citation:sorted_citation_items(items, self)
+  end
   local res = citation_element:build_cluster(items, self)
 
   -- local context = {

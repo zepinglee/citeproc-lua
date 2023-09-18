@@ -310,6 +310,16 @@ An example is as follows.
   \cite[prefix = {See }, page = 42]{ITEM-1}
 \end{LaTeXdemo}
 
+\DescribeOption{unsorted}
+Some styles specify the order of items in the citations (e.g., alphabetical
+or chronological) and the \opt{unsorted} option can be used to disable this
+behavior. This is useful in cases like citing secondary sources. The following
+exapmle produces “(Rabitt, 1982, as cited in Lyon 2014)”.
+
+\begin{LaTeXdemo}
+  \cites{rabitt1982}[prefix={, as cited in}, unsorted = true]{lyon2014}
+\end{LaTeXdemo}
+
 \begin{table}
   \centering
   \caption{The locators supported in CSL v1.0.2.}

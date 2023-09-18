@@ -107,6 +107,15 @@ function IrNode:_debug(level)
   level = level or 0
   local ir_info_str = ""
   local ir_info = {}
+  if self.group_var == GroupVar.Plain then
+    table.insert(ir_info, "[Plain]")
+  elseif self.group_var == GroupVar.Important then
+    table.insert(ir_info, "[Important]")
+  elseif self.group_var == GroupVar.Missing then
+    table.insert(ir_info, "[Missing]")
+  elseif self.group_var == GroupVar.UnresolvedPlain then
+    table.insert(ir_info, "[UnresolvedPlain]")
+  end
   if self.delimiter then
     table.insert(ir_info, string.format('delimiter: "%s"', self.delimiter))
   end
