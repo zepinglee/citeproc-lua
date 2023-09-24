@@ -1742,18 +1742,25 @@ LatexWriter.markups = {
   -- ["@display/indent"] = '<div class="csl-indent">%s</div>\n  ',
 }
 
+local latex_escape_table = {
+  ["\\"] = "\\textbackslash{}",
+  ["{"] = "\\{",
+  ["}"] = "\\}",
+  ["$"] = "\\$",
+  ["&"] = "\\&",
+  ["#"] = "\\#",
+  ["^"] = "\\^",
+  ["_"] = "\\_",
+  ["%"] = "\\%",
+  ["~"] = "\\~",
+}
+
+---@param str string
+---@param context Context
+---@return string
 function LatexWriter:write_escaped(str, context)
   -- TeXbook, p. 38
-  str = str:gsub("\\", "\\textbackslash{}")
-  str = str:gsub("{", "\\{")
-  str = str:gsub("}", "\\}")
-  str = str:gsub("%$", "\\$")
-  str = str:gsub("&", "\\&")
-  str = str:gsub("#", "\\#")
-  str = str:gsub("%^", "\\^")
-  str = str:gsub("_", "\\_")
-  str = str:gsub("%%", "\\%%")
-  str = str:gsub("~", "\\~")
+  str = str:gsub("[\\{}$&#^_%%~]", latex_escape_table)
   str = str:gsub(util.unicode["em space"], "\\quad ")
   str = str:gsub(util.unicode["no-break space"], "~")
   for char, sub in pairs(util.superscripts) do
