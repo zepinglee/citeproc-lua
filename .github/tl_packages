@@ -33,6 +33,7 @@ iftex
 infwarerr
 kvoptions
 pdftexcmds
+sansmathaccent
 #
 # Dependencies for typesetting
 alphalph
