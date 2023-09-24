@@ -152,6 +152,7 @@ function util.error(message)
     -- The luatexbase.module_error() prints the traceback, which causes panic
     -- luatexbase.module_error("citeproc", message)
 
+    -- TODO: Enhance the error output. Make it like `\msg_error`.
     texio.write_nl("term", "\n")
     tex.error("Module citeproc Error: " .. message)
 

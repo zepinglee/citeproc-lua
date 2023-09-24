@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix tilde (nonbreakable space) incorrectly displayed in LuaTeX ([#42](https://github.com/zepinglee/citeproc-lua/issues/42)).
 - If no style is defined, a warning is given and the default APA style will be used ([#43](https://github.com/zepinglee/citeproc-lua/issues/43)).
+- The JSON decoding error is now correctly issued.
 
 ## [0.4.4] - 2023-09-16
 

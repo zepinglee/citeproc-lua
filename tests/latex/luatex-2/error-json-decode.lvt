@@ -1,0 +1,55 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\begin{filecontents}[overwrite,noheader]{\jobname.json}
+[
+    {
+        "id": "ITEM-3",
+        "type": "book",
+        "author": [
+            {
+                "family": "Lamport",
+                "given": "Leslie"
+            }
+        ],
+        "citation-key": "ITEM-3",
+        "edition": "2",
+        "issued": {
+            "date-parts": [
+                [
+                    1994
+                ]
+            ]
+        },
+        "publisher": "Addison-Wesley",
+        "publisher-place": "Reading, MA, USA",
+        "title": "<script>\\LaTeX</script>: A document preparation system: User’s guide and reference manual"
+    },
+]
+\end{filecontents}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+
+\START
+
+\cslsetup{
+  regression-test = true,
+  style = apa,
+}
+\addbibresource{\jobname.json}
+
+
+\begin{document}
+
+\TEST{Citation}{
+  \cite{ITEM-3}
+}
+
+\TEST{Bibliography}{
+  \printbibliography
+}
+
+\end{document}

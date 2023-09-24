@@ -129,7 +129,7 @@ local function read_data_files(data_files)
 
       if format == "json" then
         local ok, res = pcall(json_decode, contents)
-        if ok then
+        if ok and res then
           ---@cast res CslData
           csl_items = res
         else
@@ -138,7 +138,13 @@ local function read_data_files(data_files)
 
       elseif format == "yaml" then
         yaml = yaml or require("citeproc-yaml")
-        csl_items = yaml.parse(contents)
+        local ok, res = pcall(yaml.parse, contents)
+        if ok and res then
+          ---@cast res CslData
+          csl_items = res
+        else
+          util.error(string.format('YAML decode error in file "%s".', file))
+        end
 
       elseif format == "bibtex" then
         local bib_data, exceptions = bibtex_parser.parse(contents, bibtex_strings)
