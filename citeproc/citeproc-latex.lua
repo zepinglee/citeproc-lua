@@ -111,7 +111,11 @@ function csl.cite(citation_info)
   -- tex.sprint(citation_str)
   -- tex.setcatcode(35, 12)  -- #
   -- tex.setcatcode(37, 12)  -- %
-  token.set_macro("l__csl_citation_tl", citation_str)
+  -- token.set_macro("l__csl_citation_tl", citation_str)
+  -- Don't use `token.set_macro`.
+  -- See <https://github.com/zepinglee/citeproc-lua/issues/42>
+  -- and <https://tex.stackexchange.com/questions/519954/backslashes-in-macros-defined-in-lua-code>.
+  tex.sprint(string.format("\\expandafter\\def\\csname l__csl_citation_tl\\endcsname{%s}", citation_str))
 
   for _, cite_item in ipairs(citation.citationItems) do
     if not core.item_dict[cite_item.id] then

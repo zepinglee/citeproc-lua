@@ -1,0 +1,29 @@
+\input{regression-test}
+
+\documentclass{article}
+
+% <https://github.com/zepinglee/citeproc-lua/issues/42>
+% <https://tex.stackexchange.com/q/618254/82731>
+
+\input{csl-test}
+
+\usepackage[ngerman]{babel}
+
+\usepackage[style=modern-language-association]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{test.bib}
+
+\begin{document}
+
+\START
+\showoutput
+
+\TEST{Tilde in citation}{
+  \parencite{ITEM-4}
+}
+
+\TEST{Citation output}{
+  \clearpage
+}
+
+\end{document}
