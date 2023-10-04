@@ -24,7 +24,11 @@ csl.preview_mode = false  -- Whether to use citeproc:preview_citation
 
 
 function csl.init(style_name, bib_files, lang)
-  bib_files = util.split(util.strip(bib_files), "%s*,%s*")
+  if string.match(bib_files, "^%s*$") then
+    bib_files = {}
+  else
+    bib_files = util.split(util.strip(bib_files), "%s*,%s*")
+  end
 
   csl.engine = core.init(style_name, bib_files, lang)
 
