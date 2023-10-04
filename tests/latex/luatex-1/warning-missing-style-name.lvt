@@ -1,0 +1,27 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+
+\cslsetup{
+  regression-test = true,
+}
+\addbibresource{test.json}
+
+\START
+
+
+\begin{document}
+
+\TEST{Citation}{
+  \cite{ITEM-1}
+}
+
+\TEST{Bibliography}{
+  \printbibliography
+}
+
+\end{document}

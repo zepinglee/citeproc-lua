@@ -177,12 +177,12 @@ function util.warning(message)
     -- tex.print(string.format("\\PackageWarning{citation-style-language}{%s}{}", message))
 
   else
-    message  = "Warning: " .. message
+    message = "Warning: " .. message
     if util.logging_file then
       util.logging_file:write(message .. "\n")
     end
     if util.warning_enabled then
-      io.stderr:write("Warning: " .. message, "\n")
+      io.stderr:write(message, "\n")
     end
   end
 end

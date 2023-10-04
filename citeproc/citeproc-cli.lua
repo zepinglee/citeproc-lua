@@ -209,7 +209,8 @@ local function process_aux_file(aux_file)
   if style_name and style_name ~= "" then
     util.info(string.format("The style file: %s.csl", style_name))
   else
-    util.error("citeproc-lua: missing style name")
+    util.warning("Missing style name. Will use default APA style.")
+    style_name = "apa"
   end
 
   if #citations == 0 then

@@ -25,12 +25,17 @@
 
 \cs_new:Npn \__csl_write_aux_info:
   {
-    \tl_if_empty:NTF \l__csl_style_tl
+    \tl_if_empty:NT \l__csl_style_tl
       {
         \tl_set_eq:NN \l__csl_style_tl \g__csl_aux_bibstyle_tl
         \edef \csl@style { \g__csl_aux_bibstyle_tl }
       }
-      { \exp_args:Nx \__csl_write_aux_bibstyle:n { \l__csl_style_tl } }
+    \tl_if_empty:VTF \l__csl_style_tl
+      {
+        \msg_warning:nn { citation-style-language } { missing-style-name }
+        \tl_set:Nn \l__csl_style_tl { apa }
+      }
+      { \exp_args:NV \__csl_write_aux_bibstyle:n \l__csl_style_tl }
     \clist_if_empty:NTF \l__csl_bib_resources_clist
       { \clist_set_eq:NN \l__csl_bib_resources_clist \g__csl_aux_bib_files_clist }
       {
@@ -65,22 +70,18 @@
 
 \cs_new:Npn \__csl_initialize_lua_module:
   {
-    \tl_if_blank:VTF \l__csl_style_tl
-      { \msg_warning:nn { citation-style-language } { empty-style-name } }
+    \clist_if_empty:NT \l__csl_bib_resources_clist
+      { \msg_warning:nn { citation-style-language } { empty-bib-resources } }
+    \lua_now:e
       {
-        \clist_if_empty:NTF \l__csl_bib_resources_clist
-          { \msg_warning:nn { citation-style-language } { empty-bib-resources } }
-          {
-            \lua_now:e
-              {
-                csl.init(
-                  "\l__csl_style_tl",
-                  "\l__csl_bib_resources_clist",
-                  "\l__csl_locale_tl"
-                )
-              }
-          }
+        csl.init(
+          "\l__csl_style_tl",
+          "\l__csl_bib_resources_clist",
+          "\l__csl_locale_tl"
+        )
       }
+
+
     \str_if_eq:eeT { \lua_now:n { tex.print(csl.initialized) } } { true }
       { \bool_set_true:N \l__csl_engine_initialized_bool }
     \__csl_get_style_class:
@@ -89,8 +90,8 @@
       { }
   }
 
-\msg_new:nnn { citation-style-language } { empty-style-name }
-  { Style~ name~ not~ specified. }
+\msg_new:nnn { citation-style-language } { missing-style-name }
+  { Missing~ style~ name.\\Will~ use~ default~ APA~ style. }
 
 \msg_new:nnn { citation-style-language } { empty-bib-resources }
   { Empty~ bibliographic~ resources. Use~ \token_to_str:N \addbibresource. }
@@ -325,18 +326,22 @@
 \ior_new:N \l__csl_style_ior
 \cs_new:Npn \__csl_read_style_class:
   {
-    \exp_args:NNx \ior_open:Nn \l__csl_style_ior { \l__csl_style_tl .csl }
-    \ior_map_inline:Nn \l__csl_style_ior
+    \bool_set_false:N \l__csl_note_bool
+    \tl_if_blank:VF \l__csl_style_tl
       {
-        % \tl_show:n {##1}
-        \tl_if_in:nnT {##1} { class="note" }
+        \exp_args:NNx \ior_open:Nn \l__csl_style_ior { \l__csl_style_tl .csl }
+        \ior_map_inline:Nn \l__csl_style_ior
           {
-            \tl_set:Nn \l__csl_class_tl { note }
-            \bool_set_true:N \l__csl_note_bool
-            \ior_map_break:
+            % \tl_show:n {##1}
+            \tl_if_in:nnT {##1} { class="note" }
+              {
+                \tl_set:Nn \l__csl_class_tl { note }
+                \bool_set_true:N \l__csl_note_bool
+                \ior_map_break:
+              }
           }
+        \ior_close:N \l__csl_style_ior
       }
-    \ior_close:N \l__csl_style_ior
   }
 
 % \msg_new:nnn { citation-style-language } { file / non-exist }
