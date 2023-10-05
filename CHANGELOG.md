@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.5] - 2023-10-05
+
 ### Fixed
 
 - Fix tilde (nonbreakable space) incorrectly displayed in LuaTeX ([#42](https://github.com/zepinglee/citeproc-lua/issues/42)).
@@ -152,7 +154,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial CTAN release.
 
-[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.4...HEAD
+[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.5...HEAD
+[0.4.5]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.4...v0.4.5
 [0.4.4]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.3...v0.4.4
 [0.4.3]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.2...v0.4.3
 [0.4.2]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.1...v0.4.2

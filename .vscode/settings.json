@@ -24,9 +24,10 @@
         "citeproc-test-skip.txt": "shellscript"
     },
     "latex-workshop.intellisense.update.aggressive.enabled": true,
-    "Lua.diagnostics.globals": [
-        "describe",
-        "it",
-        "pending"
+    "Lua.workspace.checkThirdParty": false,
+    "Lua.workspace.library": [
+        "${3rd}/busted/library",
+        "${3rd}/lfs/library",
+        "${3rd}/luassert/library"
     ]
 }

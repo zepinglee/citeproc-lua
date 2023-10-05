@@ -9,20 +9,21 @@ done
 
 cd submodules/locales
 git fetch upstream
+git checkout ctan
 git merge upstream/v1.0.2
 git push
 cd ../..
 
 git submodule update --init --remote --merge
 
-py scripts/update-bibtex-data.py
-py scripts/update-latex-data.py
-py scripts/collect-journal-abbrevs.py
+python3 scripts/update-bibtex-data.py
+python3 scripts/update-latex-data.py
+python3 scripts/collect-journal-abbrevs.py
 
 busted --run citeproc
 busted
 
-l3build tag 0.4.2
+l3build tag 0.x.x
 l3build ctan
 l3build upload
 ```

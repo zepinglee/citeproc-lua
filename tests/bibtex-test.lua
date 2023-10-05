@@ -1,6 +1,7 @@
-local bibtex2csl 
+local bibtex2csl
+local lfs = require("lfs")
 local json_decode
-local util 
+local util
 if kpse then
   kpse.set_program_name("luatex")
   local kpse_searcher = package.searchers[2]

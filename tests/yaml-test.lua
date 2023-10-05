@@ -1,3 +1,4 @@
+local lfs = require("lfs")
 local yaml
 local json_decode
 local util
