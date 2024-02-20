@@ -3,21 +3,12 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Bibliography contents
 ============================================================
-The sequence \l__csl_bibliography_seq contains the items (without outer
-braces):
->  {\begin {thebibliography}{index = 1, line-spacing = 1, entry-spacing = 0,
-widest-label = [1]}}
->  {\bibitem [{[1]}]{ITEM-1} B. D’Arcus, \textit {Boundaries of dissent:
-Protest and state power in the media age}. Routledge, 2005.}
->  {\bibitem [{[2]}]{ITEM-2} F. G. Bennett Jr., “Getting property right:
-‘Informal’ mortgages in the Japanese courts,” \textit {Pac. Rim L. \& Pol’y
-J.}, vol. 18, pp. 463–509, Aug. 2009.}
->  {\bibitem [{[3]}]{ITEM-3} L. Lamport, \textit {LaTeX: A document
-preparation system: User’s guide and reference manual}, 2nd ed. Reading, MA,
-USA: Addison-Wesley, 1994.}
->  {\bibitem [{[4]}]{ITEM-4} F. Mittelbach, M. Goossens, J. Braams, D.
-Carlisle, and C. Rowley, \textit {The LaTeX companion}, 2nd ed. Reading, MA,
-USA: Addison-Wesley, 2004.}
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, line-spacing = 1, entry-spacing = 0, widest-label = [1]}}
+>  {\bibitem [{[1]}]{ITEM-1} B. D’Arcus, \textit {Boundaries of dissent: Protest and state power in the media age}. Routledge, 2005.}
+>  {\bibitem [{[2]}]{ITEM-2} F. G. Bennett Jr., “Getting property right: ‘Informal’ mortgages in the Japanese courts,” \textit {Pac. Rim L. \& Pol’y J.}, vol. 18, pp. 463–509, Aug. 2009.}
+>  {\bibitem [{[3]}]{ITEM-3} L. Lamport, \textit {LaTeX: A document preparation system: User’s guide and reference manual}, 2nd ed. Reading, MA, USA: Addison-Wesley, 1994.}
+>  {\bibitem [{[4]}]{ITEM-4} F. Mittelbach, M. Goossens, J. Braams, D. Carlisle, and C. Rowley, \textit {The LaTeX companion}, 2nd ed. Reading, MA, USA: Addison-Wesley, 2004.}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}

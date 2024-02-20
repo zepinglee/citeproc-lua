@@ -1,7 +1,6 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
-> 
-\l__csl_citation_info_tl=citationID={zankl_kunstliche_2019@1},citationItems={{id={zankl_kunstliche_2019}}},properties={noteIndex={1}}.
+> \l__csl_citation_info_tl=citationID={zankl_kunstliche_2019@1},citationItems={{id={zankl_kunstliche_2019}}},properties={noteIndex={1}}.
 <recently read> }
 l. ...\footcite{zankl_kunstliche_2019}
 LaTeX Warning: Citation `zankl_kunstliche_2019' on page 1 undefined on input line ....
@@ -16,8 +15,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
-> 
-\l__csl_citation_info_tl=citationID={schweighofer_rechtsinformatik_1999@1},citationItems={{id={schweighofer_rechtsinformatik_1999}}},properties={noteIndex={2}}.
+> \l__csl_citation_info_tl=citationID={schweighofer_rechtsinformatik_1999@1},citationItems={{id={schweighofer_rechtsinformatik_1999}}},properties={noteIndex={2}}.
 <recently read> }
 l. ...\footcite{schweighofer_rechtsinformatik_1999}
 LaTeX Warning: Citation `schweighofer_rechtsinformatik_1999' on page 1 undefined on input line ....

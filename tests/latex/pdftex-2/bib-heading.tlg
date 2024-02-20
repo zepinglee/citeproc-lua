@@ -337,15 +337,10 @@ Completed box being shipped out [1]
 ============================================================
 TEST 3: Customize bib heading
 ============================================================
-The sequence \l__csl_bibliography_seq contains the items (without outer
-braces):
->  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing =
-2, entry-spacing = 0}}
->  {\bibitem {ITEM-2} Bennett, F. G., Jr. (2009). Getting property right:
-“Informal” mortgages in the Japanese courts. \textit {Pac. Rim L. \&
-Pol’y J.}, \textit {18}, 463–509.}
->  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of dissent:
-Protest and state power in the media age}. Routledge.}
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 2, entry-spacing = 0}}
+>  {\bibitem {ITEM-2} Bennett, F. G., Jr. (2009). Getting property right: “Informal” mortgages in the Japanese courts. \textit {Pac. Rim L. \& Pol’y J.}, \textit {18}, 463–509.}
+>  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of dissent: Protest and state power in the media age}. Routledge.}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}
@@ -673,15 +668,10 @@ Completed box being shipped out [2]
 ============================================================
 TEST 4: Customize bib heading and title
 ============================================================
-The sequence \l__csl_bibliography_seq contains the items (without outer
-braces):
->  {\begin {thebibliography}{index = 2, hanging-indent = true, line-spacing =
-2, entry-spacing = 0}}
->  {\bibitem {ITEM-2} Bennett, F. G., Jr. (2009). Getting property right:
-“Informal” mortgages in the Japanese courts. \textit {Pac. Rim L. \&
-Pol’y J.}, \textit {18}, 463–509.}
->  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of dissent:
-Protest and state power in the media age}. Routledge.}
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 2, hanging-indent = true, line-spacing = 2, entry-spacing = 0}}
+>  {\bibitem {ITEM-2} Bennett, F. G., Jr. (2009). Getting property right: “Informal” mortgages in the Japanese courts. \textit {Pac. Rim L. \& Pol’y J.}, \textit {18}, 463–509.}
+>  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of dissent: Protest and state power in the media age}. Routledge.}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}
@@ -1011,15 +1001,10 @@ Completed box being shipped out [3]
 ============================================================
 TEST 5: Default bib heading and title
 ============================================================
-The sequence \l__csl_bibliography_seq contains the items (without outer
-braces):
->  {\begin {thebibliography}{index = 3, hanging-indent = true, line-spacing =
-2, entry-spacing = 0}}
->  {\bibitem {ITEM-2} Bennett, F. G., Jr. (2009). Getting property right:
-“Informal” mortgages in the Japanese courts. \textit {Pac. Rim L. \&
-Pol’y J.}, \textit {18}, 463–509.}
->  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of dissent:
-Protest and state power in the media age}. Routledge.}
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 3, hanging-indent = true, line-spacing = 2, entry-spacing = 0}}
+>  {\bibitem {ITEM-2} Bennett, F. G., Jr. (2009). Getting property right: “Informal” mortgages in the Japanese courts. \textit {Pac. Rim L. \& Pol’y J.}, \textit {18}, 463–509.}
+>  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of dissent: Protest and state power in the media age}. Routledge.}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}

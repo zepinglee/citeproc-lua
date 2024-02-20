@@ -3,12 +3,10 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Citation format
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
 <recently read> }
 l. ...\end{frame}
-> \l__csl_citation_tl=\cslcite {ITEM-1}{Bruce D’Arcus, \textit {Boundaries of
-Dissent: Protest and State Power in the Media Age} (Routledge, 2005)}..
+> \l__csl_citation_tl=\cslcite {ITEM-1}{Bruce D’Arcus, \textit {Boundaries of Dissent: Protest and State Power in the Media Age} (Routledge, 2005)}..
 <recently read> }
 l. ...\end{frame}
 LaTeX Font Info:    Trying to load font information for U+msa on input line ....
@@ -29,12 +27,9 @@ LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <5> not available
 ============================================================
 TEST 2: Bibliography contents
 ============================================================
-The sequence \l__csl_bibliography_seq contains the items (without outer
-braces):
->  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing =
-1, entry-spacing = 0}}
->  {\bibitem {ITEM-1} D’Arcus, Bruce. \textit {Boundaries of Dissent: Protest
-and State Power in the Media Age}. Routledge, 2005.}
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 1, entry-spacing = 0}}
+>  {\bibitem {ITEM-1} D’Arcus, Bruce. \textit {Boundaries of Dissent: Protest and State Power in the Media Age}. Routledge, 2005.}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...\end{frame}

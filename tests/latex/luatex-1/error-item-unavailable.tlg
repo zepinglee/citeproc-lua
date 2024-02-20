@@ -21,8 +21,7 @@ LaTeX Font Info:    ... okay on input line ....
 ============================================================
 TEST 1: Entry not available
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE@1},citationItems={{id={ITEM-UNAVAILABLE}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE@1},citationItems={{id={ITEM-UNAVAILABLE}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 Module citeproc Warning: Didn't find a database entry for 'ITEM-UNAVAILABLE' on input line ...
@@ -34,8 +33,7 @@ l. ...}
 ============================================================
 TEST 2: Multiple enties
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE,ANOTHER-ITEM@1},citationItems={{id={ITEM-UNAVAILABLE}},{id={ANOTHER-ITEM}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE,ANOTHER-ITEM@1},citationItems={{id={ITEM-UNAVAILABLE}},{id={ANOTHER-ITEM}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 Module citeproc Warning: Didn't find a database entry for 'ITEM-UNAVAILABLE' on input line ...
@@ -49,16 +47,14 @@ l. ...}
 ============================================================
 TEST 3: Mixture
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE,ITEM-1,ANOTHER-ITEM@1},citationItems={{id={ITEM-UNAVAILABLE}},{id={ITEM-1}},{id={ANOTHER-ITEM}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE,ITEM-1,ANOTHER-ITEM@1},citationItems={{id={ITEM-UNAVAILABLE}},{id={ITEM-1}},{id={ANOTHER-ITEM}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 Module citeproc Warning: Didn't find a database entry for 'ITEM-UNAVAILABLE' on input line ...
 Module citeproc Warning: Didn't find a database entry for 'ANOTHER-ITEM' on input line ...
 LaTeX Warning: Citation `ITEM-UNAVAILABLE' on page 1 undefined on input line ....
 LaTeX Warning: Citation `ANOTHER-ITEM' on page 1 undefined on input line ....
-> \l__csl_citation_tl=(D’Arcus, 2005; \textbf {ITEM-UNAVAILABLE}, \textbf
-{ANOTHER-ITEM}).
+> \l__csl_citation_tl=(D’Arcus, 2005; \textbf {ITEM-UNAVAILABLE}, \textbf {ANOTHER-ITEM}).
 <recently read> }
 l. ...}
 ============================================================
@@ -73,12 +69,9 @@ l. ...}
 ============================================================
 TEST 5: Bibliography
 ============================================================
-The sequence \l__csl_bibliography_seq contains the items (without outer
-braces):
->  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing =
-2, entry-spacing = 0}}
->  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of dissent:
-Protest and state power in the media age}. Routledge.}
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 2, entry-spacing = 0}}
+>  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of dissent: Protest and state power in the media age}. Routledge.}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}

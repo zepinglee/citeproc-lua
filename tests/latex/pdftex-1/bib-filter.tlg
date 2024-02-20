@@ -3,8 +3,7 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Citations
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2,ITEM-3,ITEM-4@1},citationItems={{id={ITEM-1}},{id={ITEM-2}},{id={ITEM-3}},{id={ITEM-4}}},properties={noteIndex={1}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2,ITEM-3,ITEM-4@1},citationItems={{id={ITEM-1}},{id={ITEM-2}},{id={ITEM-3}},{id={ITEM-4}}},properties={noteIndex={1}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....

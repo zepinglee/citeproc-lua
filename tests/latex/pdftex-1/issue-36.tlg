@@ -3,9 +3,7 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: LaTeX command in prefix
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={Wallace1996-GreekG@1},citationItems={{id={Wallace1996-GreekG},prefix={\myCommandToday
-word. },label={page},locator={419}}},properties={noteIndex={1}}.
+> \l__csl_citation_info_tl=citationID={Wallace1996-GreekG@1},citationItems={{id={Wallace1996-GreekG},prefix={\myCommandToday word. },label={page},locator={419}}},properties={noteIndex={1}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `Wallace1996-GreekG' on page 1 undefined on input line ....

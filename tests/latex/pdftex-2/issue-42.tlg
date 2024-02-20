@@ -3,8 +3,7 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Tilde in citation
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-4@1},citationItems={{id={ITEM-4}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-4@1},citationItems={{id={ITEM-4}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=(Mittelbach u.~a.).

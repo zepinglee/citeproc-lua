@@ -3,12 +3,10 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Citation with URL
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=\cslcite {ITEM-1}{John Doe, \textit {Foo \#1 \& 20\% of
-Bar}, 2007, \url {https://abc.zyx/foo%20bar#baz}}..
+> \l__csl_citation_tl=\cslcite {ITEM-1}{John Doe, \textit {Foo \#1 \& 20\% of Bar}, 2007, \url {https://abc.zyx/foo%20bar#baz}}..
 <recently read> }
 l. ...}
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -218,12 +216,9 @@ Completed box being shipped out [1]
 ============================================================
 TEST 3: Bibliography with URL
 ============================================================
-The sequence \l__csl_bibliography_seq contains the items (without outer
-braces):
->  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing =
-1, entry-spacing = 0}}
->  {\bibitem {ITEM-1} Doe, John. \textit {Foo \#1 \& 20\% of Bar}, 2007. \url
-{https://abc.zyx/foo%20bar#baz}.}
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 1, entry-spacing = 0}}
+>  {\bibitem {ITEM-1} Doe, John. \textit {Foo \#1 \& 20\% of Bar}, 2007. \url {https://abc.zyx/foo%20bar#baz}.}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}

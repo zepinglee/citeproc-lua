@@ -1,11 +1,9 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
-> 
-\l__csl_citation_info_tl=citationID={zankl_kunstliche_2019@1},citationItems={{id={zankl_kunstliche_2019}}},properties={noteIndex={1}}.
+> \l__csl_citation_info_tl=citationID={zankl_kunstliche_2019@1},citationItems={{id={zankl_kunstliche_2019}}},properties={noteIndex={1}}.
 <recently read> }
 l. ...\footcite{zankl_kunstliche_2019}
-> \l__csl_citation_tl=Zankl, “Künstliche Intelligenz Und Immaterialgüterrecht
-Bei Computerkunst.”.
+> \l__csl_citation_tl=Zankl, “Künstliche Intelligenz Und Immaterialgüterrecht Bei Computerkunst.”.
 <recently read> }
 l. ...\footcite{zankl_kunstliche_2019}
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -16,26 +14,18 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
-> 
-\l__csl_citation_info_tl=citationID={schweighofer_rechtsinformatik_1999@1},citationItems={{id={schweighofer_rechtsinformatik_1999}}},properties={noteIndex={2}}.
+> \l__csl_citation_info_tl=citationID={schweighofer_rechtsinformatik_1999@1},citationItems={{id={schweighofer_rechtsinformatik_1999}}},properties={noteIndex={2}}.
 <recently read> }
 l. ...\footcite{schweighofer_rechtsinformatik_1999}
-> \l__csl_citation_tl=Schweighofer, \textit {Rechtsinformatik Und
-Wissensrepräsentation}..
+> \l__csl_citation_tl=Schweighofer, \textit {Rechtsinformatik Und Wissensrepräsentation}..
 <recently read> }
 l. ...\footcite{schweighofer_rechtsinformatik_1999}
 [1
 ]
-The sequence \l__csl_bibliography_seq contains the items (without outer
-braces):
->  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing =
-1, entry-spacing = 0}}
->  {\bibitem {schweighofer_rechtsinformatik_1999} Schweighofer, Erich. \textit
-{Rechtsinformatik Und Wissensrepräsentation: Automatische Textanalyse Im
-Völkerrecht Und Europarecht}, 1999.}
->  {\bibitem {zankl_kunstliche_2019} Zankl, Wolfgang. “Künstliche Intelligenz
-Und Immaterialgüterrecht Bei Computerkunst.” \textit {Ecolex} 2019 (2019):
-244–46.}
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 1, entry-spacing = 0}}
+>  {\bibitem {schweighofer_rechtsinformatik_1999} Schweighofer, Erich. \textit {Rechtsinformatik Und Wissensrepräsentation: Automatische Textanalyse Im Völkerrecht Und Europarecht}, 1999.}
+>  {\bibitem {zankl_kunstliche_2019} Zankl, Wolfgang. “Künstliche Intelligenz Und Immaterialgüterrecht Bei Computerkunst.” \textit {Ecolex} 2019 (2019): 244–46.}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...

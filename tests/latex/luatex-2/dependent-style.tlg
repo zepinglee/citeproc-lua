@@ -22,8 +22,7 @@ LaTeX Font Info:    ... okay on input line ....
 ============================================================
 TEST 1: Single cite item in a citation
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=\textsuperscript {1}.
@@ -37,8 +36,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 ============================================================
 TEST 2: Multiple cite items in a citation
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@1},citationItems={{id={ITEM-1}},{id={ITEM-2}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@1},citationItems={{id={ITEM-1}},{id={ITEM-2}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=\textsuperscript {1,2}.
@@ -48,8 +46,7 @@ l. ...}
 ============================================================
 TEST 3: Citation with page locator
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=\textsuperscript {1}.
@@ -59,8 +56,7 @@ l. ...}
 ============================================================
 TEST 4: Citation with section locator
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1@3},citationItems={{id={ITEM-1},label={section},locator={2.3}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@3},citationItems={{id={ITEM-1},label={section},locator={2.3}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=\textsuperscript {1}.
@@ -70,8 +66,7 @@ l. ...}
 ============================================================
 TEST 5: Citation with implicit page locator
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1@4},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@4},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=\textsuperscript {1}.
@@ -81,9 +76,7 @@ l. ...}
 ============================================================
 TEST 6: Citation with prefix and suffix
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1@5},citationItems={{id={ITEM-1},prefix={prefix
-},suffix={ suffix}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@5},citationItems={{id={ITEM-1},prefix={prefix },suffix={ suffix}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=\textsuperscript {prefix 1 suffix}.
@@ -93,9 +86,7 @@ l. ...}
 ============================================================
 TEST 7: Citation with implicit prefix and suffix
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1@6},citationItems={{id={ITEM-1},prefix={prefix
-},suffix={, suffix}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@6},citationItems={{id={ITEM-1},prefix={prefix },suffix={, suffix}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=\textsuperscript {prefix 1, suffix}.
@@ -105,9 +96,7 @@ l. ...}
 ============================================================
 TEST 8: Citation with implicit suffix
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1@7},citationItems={{id={ITEM-1},suffix={,
-suffix}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@7},citationItems={{id={ITEM-1},suffix={, suffix}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=\textsuperscript {1, suffix}.
@@ -117,9 +106,7 @@ l. ...}
 ============================================================
 TEST 9: Citation with implicit prefix
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1@8},citationItems={{id={ITEM-1},prefix={prefix
-}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@8},citationItems={{id={ITEM-1},prefix={prefix }}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=\textsuperscript {prefix 1}.
@@ -129,8 +116,7 @@ l. ...}
 ============================================================
 TEST 10: Narrative citation
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={composite}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={composite}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=[NO\_PRINTED\_FORM] \textsuperscript {1}.
@@ -140,9 +126,7 @@ l. ...}
 ============================================================
 TEST 11: Narrative citation
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1@10},citationItems={{id={ITEM-1}}},properties={infix={'s
-early work},noteIndex={0},mode={composite}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@10},citationItems={{id={ITEM-1}}},properties={infix={'s early work},noteIndex={0},mode={composite}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=[NO\_PRINTED\_FORM]’s early work \textsuperscript {1}.
@@ -152,9 +136,7 @@ l. ...}
 ============================================================
 TEST 12: Multiple cite items with options
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@2},citationItems={{id={ITEM-1},prefix={See
-},label={page},locator={6}},{id={ITEM-2},label={figure},locator={2}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@2},citationItems={{id={ITEM-1},prefix={See },label={page},locator={6}},{id={ITEM-2},label={figure},locator={2}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=\textsuperscript {See 1,2}.
@@ -164,8 +146,7 @@ l. ...}
 ============================================================
 TEST 13: Cite only author
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1@11},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@11},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=[NO\_PRINTED\_FORM].
@@ -175,8 +156,7 @@ l. ...}
 ============================================================
 TEST 14: Uncited entry
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=.
@@ -581,17 +561,11 @@ Completed box being shipped out [1]
 ============================================================
 TEST 16: Bibliography contents
 ============================================================
-The sequence \l__csl_bibliography_seq contains the items (without outer
-braces):
->  {\begin {thebibliography}{index = 1, line-spacing = 2, entry-spacing = 0,
-widest-label = 1.}}
->  {\bibitem [1.]{ITEM-1} D’Arcus, B. \textit {Boundaries of dissent: Protest
-and state power in the media age}. (Routledge, 2005).}
->  {\bibitem [2.]{ITEM-2} Bennett, F. G., Jr. Getting property right:
-‘Informal’ mortgages in the Japanese courts. \textit {Pac. Rim L. \& Pol’y J.}
-\textbf {18}, 463–509 (2009).}
->  {\bibitem [3.]{ITEM-3} Lamport, L. \textit {LaTeX: A document preparation
-system: User’s guide and reference manual}. (Addison-Wesley, 1994).}
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, line-spacing = 2, entry-spacing = 0, widest-label = 1.}}
+>  {\bibitem [1.]{ITEM-1} D’Arcus, B. \textit {Boundaries of dissent: Protest and state power in the media age}. (Routledge, 2005).}
+>  {\bibitem [2.]{ITEM-2} Bennett, F. G., Jr. Getting property right: ‘Informal’ mortgages in the Japanese courts. \textit {Pac. Rim L. \& Pol’y J.} \textbf {18}, 463–509 (2009).}
+>  {\bibitem [3.]{ITEM-3} Lamport, L. \textit {LaTeX: A document preparation system: User’s guide and reference manual}. (Addison-Wesley, 1994).}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}

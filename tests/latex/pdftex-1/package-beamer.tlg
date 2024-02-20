@@ -3,8 +3,7 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Citation format
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
 <recently read> }
 l. ...\end{frame}
 LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....

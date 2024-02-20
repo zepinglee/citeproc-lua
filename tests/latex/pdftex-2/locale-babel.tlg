@@ -3,8 +3,7 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Babel locale
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=French.
@@ -14,8 +13,7 @@ l. ...}
 ============================================================
 TEST 2: Bibliography
 ============================================================
-The sequence \l__csl_bibliography_seq contains the items (without outer
-braces):
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 1, line-spacing = 1, entry-spacing = 1}}
 >  {\bibitem {ITEM-1} French}
 >  {\end {thebibliography}}.

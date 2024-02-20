@@ -3,13 +3,10 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Citation with hyperlink
 ============================================================
-> 
-\l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2,ITEM-3,ITEM-4@1},citationItems={{id={ITEM-1}},{id={ITEM-2}},{id={ITEM-3}},{id={ITEM-4}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2,ITEM-3,ITEM-4@1},citationItems={{id={ITEM-1}},{id={ITEM-2}},{id={ITEM-3}},{id={ITEM-4}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=(\cslcite {ITEM-2}{Bennett, 2009}; \cslcite
-{ITEM-1}{D’Arcus, 2005}; \cslcite {ITEM-3}{Lamport, 1994}; \cslcite
-{ITEM-4}{Mittelbach et al., 2004}).
+> \l__csl_citation_tl=(\cslcite {ITEM-2}{Bennett, 2009}; \cslcite {ITEM-1}{D’Arcus, 2005}; \cslcite {ITEM-3}{Lamport, 1994}; \cslcite {ITEM-4}{Mittelbach et al., 2004}).
 <recently read> }
 l. ...}
 ============================================================
@@ -143,21 +140,12 @@ Completed box being shipped out [1]
 ============================================================
 TEST 3: Bibliography
 ============================================================
-The sequence \l__csl_bibliography_seq contains the items (without outer
-braces):
->  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing =
-2, entry-spacing = 0}}
->  {\bibitem {ITEM-2} Bennett, F. G., Jr. (2009). Getting property right:
-“Informal” mortgages in the Japanese courts. \textit {Pac. Rim L. \&
-Pol’y J.}, \textit {18}, 463–509.}
->  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of dissent:
-Protest and state power in the media age}. Routledge.}
->  {\bibitem {ITEM-3} Lamport, L. (1994). \textit {LaTeX: A document
-preparation system: User’s guide and reference manual} (2nd ed.).
-Addison-Wesley.}
->  {\bibitem {ITEM-4} Mittelbach, F., Goossens, M., Braams, J., Carlisle, D.,
-\& Rowley, C. (2004). \textit {The LaTeX companion} (2nd ed.).
-Addison-Wesley.}
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 2, entry-spacing = 0}}
+>  {\bibitem {ITEM-2} Bennett, F. G., Jr. (2009). Getting property right: “Informal” mortgages in the Japanese courts. \textit {Pac. Rim L. \& Pol’y J.}, \textit {18}, 463–509.}
+>  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of dissent: Protest and state power in the media age}. Routledge.}
+>  {\bibitem {ITEM-3} Lamport, L. (1994). \textit {LaTeX: A document preparation system: User’s guide and reference manual} (2nd ed.). Addison-Wesley.}
+>  {\bibitem {ITEM-4} Mittelbach, F., Goossens, M., Braams, J., Carlisle, D., \& Rowley, C. (2004). \textit {The LaTeX companion} (2nd ed.). Addison-Wesley.}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}
