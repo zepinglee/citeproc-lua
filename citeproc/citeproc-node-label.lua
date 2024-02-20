@@ -1,5 +1,5 @@
 --
--- Copyright (c) 2021-2023 Zeping Lee
+-- Copyright (c) 2021-2024 Zeping Lee
 -- Released under the MIT license.
 -- Repository: https://github.com/zepinglee/citeproc-lua
 --
@@ -75,6 +75,9 @@ function Label:build_ir(engine, state, context)
     end
   end
   local text = context:get_simple_term(variable, self.form, is_plural)
+  if variable == "sub-verbo" and (not text or text == "") then
+    text = context:get_simple_term("sub verbo", self.form, is_plural)
+  end
   if not text or text == "" then
     return nil
   end

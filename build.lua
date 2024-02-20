@@ -92,8 +92,8 @@ function update_tag(file, content, tagname, tagdate)
   version = string.gsub(tagname, "^v", "")
 
   content = string.gsub(content,
-    "Copyright %(C%) (%d%d%d%d)%-%d%d%d%d",
-    "Copyright (C) %1-" .. os.date("%Y"))
+    "Copyright %(c%) (%d%d%d%d)%-%d%d%d%d",
+    "Copyright (c) %1-" .. os.date("%Y"))
 
   if file == "CHANGELOG.md" then
     local previous = string.match(content, "compare/v(" .. version_pattern .. ")%.%.%.HEAD")

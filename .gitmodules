@@ -26,3 +26,6 @@
 [submodule "submodules/unicode-data"]
 	path = submodules/unicode-data
 	url = https://github.com/latex3/unicode-data.git
+[submodule "tests/locales"]
+	path = tests/locales
+	url = https://github.com/citation-style-language/locales.git

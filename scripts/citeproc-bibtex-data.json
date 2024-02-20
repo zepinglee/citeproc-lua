@@ -402,6 +402,10 @@
             "source": "windycity.dbx",
             "type": "literal"
         },
+        "by": {
+            "csl": null,
+            "source": "iran-unsrt.bst"
+        },
         "call-number": {
             "csl": "call-number",
             "source": "csl"
@@ -1252,6 +1256,10 @@
             "source": "publist.dbx",
             "type": "literal"
         },
+        "impression": {
+            "csl": null,
+            "source": "iran-unsrt.bst"
+        },
         "inafterword": {
             "csl": null,
             "source": "archaeologie.dbx",
@@ -2080,6 +2088,10 @@
             "csl": "page",
             "source": "bibtex",
             "type": "range"
+        },
+        "pagesnodashify": {
+            "csl": null,
+            "source": "tugboat.bst"
         },
         "pagetotal": {
             "csl": "number-of-pages",
@@ -2991,6 +3003,10 @@
         "transjournal": {
             "csl": null,
             "source": "iopart-num.bst"
+        },
+        "translateyear": {
+            "csl": null,
+            "source": "iran-unsrt.bst"
         },
         "translation": {
             "csl": null,

@@ -477,9 +477,9 @@ TEST 16: Bibliography contents
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 1, line-spacing = 2, entry-spacing = 0, widest-label = 1.}}
->  {\bibitem [1.]{ITEM-1} D’Arcus, B. \textit {Boundaries of dissent: Protest and state power in the media age}. (Routledge, 2005).}
+>  {\bibitem [1.]{ITEM-1} D’Arcus, B. \textit {Boundaries of Dissent: Protest and State Power in the Media Age}. (Routledge, 2005).}
 >  {\bibitem [2.]{ITEM-2} Bennett, F. G., Jr. Getting property right: ‘Informal’ mortgages in the Japanese courts. \textit {Pac. Rim L. \& Pol’y J.} \textbf {18}, 463–509 (2009).}
->  {\bibitem [3.]{ITEM-3} Lamport, L. \textit {LaTeX: A document preparation system: User’s guide and reference manual}. (Addison-Wesley, 1994).}
+>  {\bibitem [3.]{ITEM-3} Lamport, L. \textit {LaTeX: A Document Preparation System: User’s Guide and Reference Manual}. (Addison-Wesley, Reading, MA, USA, 1994).}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}
@@ -521,7 +521,7 @@ Completed box being shipped out [2]
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\baselineskip) 17.05556
-...\hbox(6.94444+1.94444)x332.2222, glue set - 0.47218, shifted 12.7778
+...\hbox(6.94444+1.94444)x332.2222, glue set 0.45795, shifted 12.7778
 ....\hbox(6.44444+0.0)x0.0
 .....\glue 0.0
 .....\glue -7.7778
@@ -559,7 +559,7 @@ Completed box being shipped out [2]
 ....\OT1/cmr/m/it/10 o
 ....\OT1/cmr/m/it/10 f
 ....\glue 3.57774 plus 1.53333 minus 1.0222
-....\OT1/cmr/m/it/10 d
+....\OT1/cmr/m/it/10 D
 ....\OT1/cmr/m/it/10 i
 ....\OT1/cmr/m/it/10 s
 ....\OT1/cmr/m/it/10 s
@@ -581,14 +581,13 @@ Completed box being shipped out [2]
 ....\OT1/cmr/m/it/10 n
 ....\OT1/cmr/m/it/10 d
 ....\glue 3.57774 plus 1.53333 minus 1.0222
-....\OT1/cmr/m/it/10 s
+....\OT1/cmr/m/it/10 S
 ....\OT1/cmr/m/it/10 t
 ....\OT1/cmr/m/it/10 a
 ....\OT1/cmr/m/it/10 t
 ....\OT1/cmr/m/it/10 e
 ....\glue 3.57774 plus 1.53333 minus 1.0222
-....\OT1/cmr/m/it/10 p
-....\kern-0.51112
+....\OT1/cmr/m/it/10 P
 ....\OT1/cmr/m/it/10 o
 ....\OT1/cmr/m/it/10 w
 ....\OT1/cmr/m/it/10 e
@@ -601,21 +600,22 @@ Completed box being shipped out [2]
 ....\OT1/cmr/m/it/10 h
 ....\OT1/cmr/m/it/10 e
 ....\glue 3.57774 plus 1.53333 minus 1.0222
-....\OT1/cmr/m/it/10 m
+....\OT1/cmr/m/it/10 M
 ....\OT1/cmr/m/it/10 e
 ....\kern-0.51112
 ....\OT1/cmr/m/it/10 d
 ....\OT1/cmr/m/it/10 i
 ....\OT1/cmr/m/it/10 a
-....\glue 3.57774 plus 1.53333 minus 1.0222
-....\OT1/cmr/m/it/10 a
-....\OT1/cmr/m/it/10 g
-....\OT1/cmr/m/it/10 e
-....\OT1/cmr/m/n/10 .
 ....\glue(\rightskip) 0.0
 ...\penalty 14000
 ...\glue(\baselineskip) 14.55556
-...\hbox(7.5+2.5)x332.2222, glue set 251.52757fil, shifted 12.7778
+...\hbox(7.5+2.5)x332.2222, glue set 229.29437fil, shifted 12.7778
+....\OT1/cmr/m/it/10 A
+....\kern-0.51112
+....\OT1/cmr/m/it/10 g
+....\OT1/cmr/m/it/10 e
+....\OT1/cmr/m/n/10 .
+....\glue 3.33333 plus 1.66666 minus 1.11111
 ....\OT1/cmr/m/n/10 (
 ....\OT1/cmr/m/n/10 R
 ....\OT1/cmr/m/n/10 o
@@ -812,7 +812,7 @@ Completed box being shipped out [2]
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\baselineskip) 14.55556
-...\hbox(6.94444+1.94444)x332.2222, glue set 0.2188, shifted 12.7778
+...\hbox(6.94444+1.94444)x332.2222, glue set 0.93565, shifted 12.7778
 ....\hbox(6.44444+0.0)x0.0
 .....\glue 0.0
 .....\glue -7.7778
@@ -840,8 +840,6 @@ Completed box being shipped out [2]
 ....\OT1/cmr/m/it/10 L
 ....\kern-0.51112
 ....\OT1/cmr/m/it/10 a
-....\discretionary
-.....\OT1/cmr/m/it/10 -
 ....\OT1/cmr/m/it/10 T
 ....\kern-0.76666
 ....\OT1/cmr/m/it/10 e
@@ -850,44 +848,34 @@ Completed box being shipped out [2]
 ....\glue 3.57774 plus 1.53333 minus 1.0222
 ....\OT1/cmr/m/it/10 A
 ....\glue 3.57774 plus 1.53178 minus 1.02322
-....\OT1/cmr/m/it/10 d
+....\OT1/cmr/m/it/10 D
 ....\OT1/cmr/m/it/10 o
 ....\kern-0.51112
 ....\OT1/cmr/m/it/10 c
-....\discretionary
-.....\OT1/cmr/m/it/10 -
 ....\OT1/cmr/m/it/10 u
-....\discretionary
-.....\OT1/cmr/m/it/10 -
 ....\OT1/cmr/m/it/10 m
 ....\OT1/cmr/m/it/10 e
 ....\OT1/cmr/m/it/10 n
 ....\OT1/cmr/m/it/10 t
 ....\glue 3.57774 plus 1.53333 minus 1.0222
-....\OT1/cmr/m/it/10 p
+....\OT1/cmr/m/it/10 P
 ....\OT1/cmr/m/it/10 r
 ....\kern-0.51112
 ....\OT1/cmr/m/it/10 e
 ....\OT1/cmr/m/it/10 p
 ....\kern-0.51112
 ....\OT1/cmr/m/it/10 a
-....\discretionary
-.....\OT1/cmr/m/it/10 -
 ....\OT1/cmr/m/it/10 r
 ....\kern-0.51112
 ....\OT1/cmr/m/it/10 a
-....\discretionary
-.....\OT1/cmr/m/it/10 -
 ....\OT1/cmr/m/it/10 t
 ....\OT1/cmr/m/it/10 i
 ....\OT1/cmr/m/it/10 o
 ....\OT1/cmr/m/it/10 n
 ....\glue 3.57774 plus 1.53333 minus 1.0222
-....\OT1/cmr/m/it/10 s
+....\OT1/cmr/m/it/10 S
 ....\OT1/cmr/m/it/10 y
 ....\OT1/cmr/m/it/10 s
-....\discretionary
-.....\OT1/cmr/m/it/10 -
 ....\OT1/cmr/m/it/10 t
 ....\OT1/cmr/m/it/10 e
 ....\OT1/cmr/m/it/10 m
@@ -900,7 +888,7 @@ Completed box being shipped out [2]
 ....\OT1/cmr/m/it/10 '
 ....\OT1/cmr/m/it/10 s
 ....\glue 3.57774 plus 1.53333 minus 1.0222
-....\OT1/cmr/m/it/10 g
+....\OT1/cmr/m/it/10 G
 ....\OT1/cmr/m/it/10 u
 ....\OT1/cmr/m/it/10 i
 ....\OT1/cmr/m/it/10 d
@@ -909,21 +897,15 @@ Completed box being shipped out [2]
 ....\OT1/cmr/m/it/10 a
 ....\OT1/cmr/m/it/10 n
 ....\OT1/cmr/m/it/10 d
-....\glue 3.57774 plus 1.53333 minus 1.0222
-....\OT1/cmr/m/it/10 r
+....\glue(\rightskip) 0.0
+...\penalty 8000
+...\glue(\baselineskip) 14.55556
+...\hbox(7.5+2.5)x332.2222, glue set 51.49461fil, shifted 12.7778
+....\OT1/cmr/m/it/10 R
 ....\kern-0.51112
 ....\OT1/cmr/m/it/10 e
 ....\OT1/cmr/m/it/10 f
-....\discretionary
-....\OT1/cmr/m/it/10 -
-....\glue(\rightskip) 0.0
-...\penalty 8100
-...\glue(\baselineskip) 14.55556
-...\hbox(7.5+2.5)x332.2222, glue set 157.98355fil, shifted 12.7778
 ....\OT1/cmr/m/it/10 e
-....\discretionary replacing 2
-.....\OT1/cmr/m/it/10 r
-.....\OT1/cmr/m/it/10 -
 ....\OT1/cmr/m/it/10 r
 ....\kern-0.51112
 ....\OT1/cmr/m/it/10 e
@@ -932,11 +914,9 @@ Completed box being shipped out [2]
 ....\kern-0.51112
 ....\OT1/cmr/m/it/10 e
 ....\glue 3.57774 plus 1.53333 minus 1.0222
-....\OT1/cmr/m/it/10 m
+....\OT1/cmr/m/it/10 M
 ....\OT1/cmr/m/it/10 a
 ....\OT1/cmr/m/it/10 n
-....\discretionary
-.....\OT1/cmr/m/it/10 -
 ....\OT1/cmr/m/it/10 u
 ....\OT1/cmr/m/it/10 a
 ....\OT1/cmr/m/it/10 l
@@ -960,6 +940,24 @@ Completed box being shipped out [2]
 ....\OT1/cmr/m/n/10 e
 ....\OT1/cmr/m/n/10 y
 ....\kern-0.83334
+....\OT1/cmr/m/n/10 ,
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\OT1/cmr/m/n/10 R
+....\OT1/cmr/m/n/10 e
+....\OT1/cmr/m/n/10 a
+....\OT1/cmr/m/n/10 d
+....\OT1/cmr/m/n/10 i
+....\OT1/cmr/m/n/10 n
+....\OT1/cmr/m/n/10 g
+....\OT1/cmr/m/n/10 ,
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\OT1/cmr/m/n/10 M
+....\OT1/cmr/m/n/10 A
+....\OT1/cmr/m/n/10 ,
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\OT1/cmr/m/n/10 U
+....\OT1/cmr/m/n/10 S
+....\OT1/cmr/m/n/10 A
 ....\OT1/cmr/m/n/10 ,
 ....\glue 3.33333 plus 1.66666 minus 1.11111
 ....\OT1/cmr/m/n/10 1

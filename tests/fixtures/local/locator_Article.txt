@@ -44,6 +44,11 @@ art. 42 is article-locator
     <title />
     <updated>2023-07-29T19:51:21+08:00</updated>
   </info>
+  <locale>
+    <terms>
+      <term name="article-locator" form="short">art.</term>
+    </terms>
+  </locale>
   <citation>
     <layout>
       <group delimiter=" ">

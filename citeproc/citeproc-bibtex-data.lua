@@ -4189,6 +4189,22 @@ return {
       csl = nil,
       source = "adrbirthday.bst",
     },
+    pagesnodashify = {
+      csl = nil,
+      source = "tugboat.bst",
+    },
+    by = {
+      csl = nil,
+      source = "iran-unsrt.bst",
+    },
+    impression = {
+      csl = nil,
+      source = "iran-unsrt.bst",
+    },
+    translateyear = {
+      csl = nil,
+      source = "iran-unsrt.bst",
+    },
   },
   macros = {
     acmcs = {

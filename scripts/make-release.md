@@ -23,7 +23,9 @@ python3 scripts/collect-journal-abbrevs.py
 busted --run citeproc
 busted
 
-l3build tag 0.x.x
+git commit -a -m "Bump to vx.x.x"
+
+l3build tag x.x.x
 l3build ctan
 l3build upload
 ```

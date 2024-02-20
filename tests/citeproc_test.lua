@@ -267,7 +267,7 @@ local function run_test(path)
       if not lang then
         return nil
       end
-      local locale_path = "./submodules/locales/csl-locales-" .. lang .. ".xml"
+      local locale_path = "./tests/locales/locales-" .. lang .. ".xml"
       return util.read_file(locale_path, true)
     end,
     retrieveItem = function (id)
