@@ -14,17 +14,20 @@ jobs:
 
   test-latex:
     if: ${{ !contains(github.event.head_commit.message, 'ci skip') }}
-    name: LaTeX Test
+    name: LaTeX test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        config: ['luatex-1', 'luatex-2', 'pdftex-1', 'pdftex-2', 'doc']
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: recursive
 
       - name: Set up TeX Live
-        uses: zauguin/install-texlive@v2
+        uses: zauguin/install-texlive@v3
         with:
           package_file: .github/tl_packages
 
@@ -34,25 +37,8 @@ jobs:
       #     package-file: .github/tl_packages
       #     update-all-packages: true
 
-      - name: Test LaTeX package
-        run: l3build ctan
-
-      - name: Upload CTAN archive
-        uses: actions/upload-artifact@v3
-        with:
-          name: ctan-archive
-          path: "*-ctan.zip"
-          retention-days: 3
-
-      - name: Upload diffs of failed tests
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: testfiles
-          path: build/**/*.diff
-          retention-days: 3
-
-      - name: Run examples
+      - name: Run example
+        if: ${{ matrix.config == 'doc' }}
         run: |
           l3build install
           cd examples
@@ -63,20 +49,36 @@ jobs:
           lualatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
           lualatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
 
+      - name: Test LaTeX doc
+        if: ${{ matrix.config == 'doc' }}
+        run: l3build doc
+
+      - name: Test LaTeX package
+        if: ${{ matrix.config != 'doc' }}
+        run: l3build check --config tests/latex/config-${{ matrix.config }}
+
+      - name: Upload diffs of failed tests
+        if: ${{ matrix.config != 'doc' && failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: testfiles
+          path: build/**/*.diff
+          retention-days: 3
+
 
   test-texlua:
     if: ${{ !contains(github.event.head_commit.message, 'ci skip') }}
-    name: Lua Test (texlua)
+    name: Lua test (texlua)
     runs-on: ubuntu-latest
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: recursive
 
       - name: Set up TeX Live
-        uses: zauguin/install-texlive@v2
+        uses: zauguin/install-texlive@v3
         with:
           package_file: .github/tl_packages
 
@@ -114,7 +116,7 @@ jobs:
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: recursive
 
