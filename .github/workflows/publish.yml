@@ -18,7 +18,7 @@ jobs:
 
       - name: Extract release notes
         id: extract-release-notes
-        uses: ffurrer2/extract-release-notes@v1
+        uses: ffurrer2/extract-release-notes@v2
 
       - name: Create GitHub release
         uses: ncipollo/release-action@v1
@@ -97,7 +97,7 @@ jobs:
 
       - name: Extract release notes
         id: extract-release-notes
-        uses: ffurrer2/extract-release-notes@v1
+        uses: ffurrer2/extract-release-notes@v2
         with:
           release_notes_file: RELEASE_NOTES.md
 
