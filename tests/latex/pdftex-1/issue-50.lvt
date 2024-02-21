@@ -1,0 +1,376 @@
+\input{regression-test}
+
+\documentclass{article}
+
+% <https://github.com/zepinglee/citeproc-lua/issues/50>
+
+\begin{filecontents}[overwrite, noheader]{custom-style.csl}
+<style class="note" version="1.0" et-al-min="3" et-al-use-first="1" et-al-subsequent-min="3"
+        et-al-subsequent-use-first="1" name-as-sort-order="first" page-range-format="expanded" default-locale="fr-FR"
+        xmlns="http://purl.org/net/xbiblio/csl">
+  <!-- This style was edited with the Visual CSL Editor (https://editor.citationstyles.org/visualEditor/) -->
+  <info>
+    <title>Université Catholique de Louvain - FIAL</title>
+    <title-short>FIAL</title-short>
+    <id>http://www.zotero.org/styles/universite-catholique-de-louvain-fial</id>
+    <link href="http://www.zotero.org/styles/universite-catholique-de-louvain-fial" rel="self"/>
+    <link href="http://zeus.fltr.ucl.ac.be/Harmonisation_bibliographique.pdf" rel="documentation" xml:lang="fr-FR"/>
+    <author>
+      <name>Edgar Pireyn</name>
+      <email>edgar.pireyn@student.uclouvain.be</email>
+    </author>
+    <category field="humanities" citation-format="note"/>
+    <updated>2023-12-01T16:45:53+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <locale xml:lang="fr">
+    <terms>
+      <term name="ordinal">e</term>
+      <term name="cited">op. cit.</term>
+      <term name="editor" form="short">éd.</term>
+      <term name="in">dans</term>
+      <term name="translator">traduit par </term>
+      <term name="director">dirigée par </term>
+      <term name="ordinal-01" match="last-two-digits">er</term>
+    </terms>
+  </locale>
+  <macro name="Author">
+    <names variable="author" delimiter=", ">
+      <name and="text" delimiter-precedes-last="never" initialize="false" initialize-with="." name-as-sort-order="all" sort-separator=" ">
+        <name-part name="family" text-case="capitalize-first" font-variant="small-caps"/>
+      </name>
+      <substitute>
+        <text macro="editor"/>
+      </substitute>
+    </names>
+  </macro>
+  <macro name="editor">
+    <names variable="editor" delimiter=", ">
+      <name and="text" delimiter-precedes-last="never" initialize="false" initialize-with="." name-as-sort-order="all" sort-separator=" ">
+        <name-part name="family" text-case="capitalize-first" font-variant="small-caps"/>
+      </name>
+    </names>
+    <text term="editor" form="short" prefix=" (" suffix=")"/>
+  </macro>
+  <macro name="translator">
+    <text term="translator"/>
+    <names variable="translator" font-variant="normal" delimiter=", ">
+      <name and="text" delimiter-precedes-last="never" et-al-min="3" et-al-use-first="1" name-as-sort-order="all" sort-separator=" ">
+        <name-part name="family" font-variant="normal"/>
+      </name>
+    </names>
+  </macro>
+  <macro name="Title">
+    <group delimiter=", ">
+      <choose>
+        <if type="article-journal article-magazine article-newspaper entry-dictionary entry-encyclopedia chapter" match="any">
+          <text macro="Title-in-title"/>
+        </if>
+        <else>
+          <text variable="title" text-case="capitalize-first" font-style="italic"/>
+        </else>
+      </choose>
+      <choose>
+        <if type="thesis" match="any">
+          <group delimiter=", ">
+            <text variable="genre" text-case="capitalize-first"/>
+            <choose>
+              <if match="any" variable="director">
+                <group delimiter=" ">
+                  <text term="director"/>
+                  <names variable="director" delimiter=",">
+                    <name and="text" initialize="false" name-as-sort-order="all">
+                      <name-part name="family" text-case="capitalize-first" font-variant="small-caps"/>
+                    </name>
+                  </names>
+                </group>
+              </if>
+            </choose>
+          </group>
+        </if>
+      </choose>
+    </group>
+  </macro>
+  <macro name="Edition-Publisher-Issued">
+    <group delimiter=", ">
+      <choose>
+        <if match="any" is-numeric="edition">
+          <group delimiter=" ">
+            <number variable="edition" form="ordinal"/>
+            <text term="edition" form="short" vertical-align="baseline"/>
+          </group>
+        </if>
+        <else>
+          <text variable="edition" text-case="capitalize-first"/>
+        </else>
+      </choose>
+      <text variable="publisher-place"/>
+      <text variable="publisher"/>
+      <choose>
+        <if type="webpage post-weblog article-journal article-magazine article-newspaper" match="none">
+          <choose>
+            <if match="any" variable="issued">
+              <choose>
+                <if match="any" is-numeric="issued">
+                  <date date-parts="year" form="text" variable="issued"/>
+                </if>
+                <else>
+                  <date form="text" date-parts="year-month-day" variable="issued"/>
+                </else>
+              </choose>
+            </if>
+            <else>
+              <text term="no date" form="short"/>
+            </else>
+          </choose>
+        </if>
+      </choose>
+    </group>
+  </macro>
+  <macro name="Volume-Issue">
+    <choose>
+      <if match="none" variable="volume">
+        <choose>
+          <if match="any" is-numeric="number-of-volumes">
+            <group delimiter=" ">
+              <text variable="number-of-volumes"/>
+              <text term="volume" form="short"/>
+            </group>
+          </if>
+        </choose>
+      </if>
+    </choose>
+    <group delimiter=", ">
+      <group delimiter=", ">
+        <choose>
+          <if match="any" is-numeric="issue">
+            <group>
+              <text term="issue" form="short" suffix=" "/>
+              <number variable="issue"/>
+            </group>
+          </if>
+          <else>
+            <text variable="issue" suffix="hello"/>
+          </else>
+        </choose>
+      </group>
+      <group>
+        <choose>
+          <if type="article-journal article-magazine article-newspaper" match="any">
+            <date form="text" variable="issued"/>
+          </if>
+        </choose>
+      </group>
+    </group>
+  </macro>
+  <macro name="Page-URL">
+    <group delimiter=", ">
+      <text macro="Locator-or-Page"/>
+      <group delimiter=", ">
+        <choose>
+          <if match="any" variable="URL">
+            <text term="online" text-case="capitalize-first" prefix="[" suffix="]"/>
+            <text variable="URL" prefix="&lt;" suffix="&gt;"/>
+            <group delimiter=" " prefix="(" suffix=")">
+              <text term="accessed" text-case="capitalize-first"/>
+              <date form="text" variable="accessed"/>
+            </group>
+          </if>
+        </choose>
+      </group>
+    </group>
+  </macro>
+  <macro name="Locator-or-Page">
+    <choose>
+      <if match="any" variable="locator">
+        <text macro="Locator"/>
+      </if>
+      <else>
+        <group delimiter=" ">
+          <label variable="page" form="short"/>
+          <text variable="page"/>
+        </group>
+      </else>
+    </choose>
+  </macro>
+  <macro name="Locator">
+    <group delimiter=" ">
+      <label variable="locator" form="short"/>
+      <text variable="locator"/>
+    </group>
+  </macro>
+  <macro name="Archive">
+    <group delimiter=", ">
+      <text variable="publisher-place" font-variant="small-caps"/>
+      <text variable="archive"/>
+      <text variable="archive_location" font-style="italic"/>
+      <text variable="source"/>
+      <text variable="call-number"/>
+      <text macro="Locator"/>
+    </group>
+  </macro>
+  <macro name="Title-in-title">
+    <group delimiter=", ">
+      <text variable="title" text-case="capitalize-first" quotes="true"/>
+      <choose>
+        <if match="any" variable="container-author editor">
+          <group delimiter=", ">
+            <group delimiter=" ">
+              <text term="in"/>
+              <choose>
+                <if type="chapter" match="all" variable="container-author">
+                  <names variable="container-author" delimiter=", ">
+                    <name and="text" delimiter-precedes-last="never" initialize="false" initialize-with="." name-as-sort-order="all" sort-separator=" ">
+                      <name-part name="family" font-variant="small-caps"/>
+                    </name>
+                  </names>
+                </if>
+                <else-if match="any" variable="editor">
+                  <text macro="editor"/>
+                </else-if>
+              </choose>
+            </group>
+            <text variable="container-title" text-case="title" font-style="italic"/>
+          </group>
+        </if>
+        <else>
+          <group delimiter=" ">
+            <text term="in"/>
+            <text variable="container-title" text-case="title" font-style="italic"/>
+          </group>
+        </else>
+      </choose>
+    </group>
+  </macro>
+  <macro name="Title-subsequent"/>
+  <macro name="Volume-alpha">
+    <choose>
+      <if match="all" variable="volume">
+        <group delimiter=" ">
+          <number vertical-align="baseline" variable="volume"/>
+          <text term="volume" form="short"/>
+        </group>
+      </if>
+    </choose>
+  </macro>
+  <macro name="Collection">
+    <group delimiter=", " prefix="(" suffix=")">
+      <text variable="collection-title"/>
+      <number prefix=" " variable="collection-number"/>
+    </group>
+  </macro>
+  <citation et-al-min="4" et-al-use-first="1">
+    <layout delimiter=" ">
+      <group display="block" suffix=".">
+        <choose>
+          <if position="ibid-with-locator">
+            <group delimiter=", " suffix=".">
+              <text term="ibid" text-case="capitalize-first" font-style="italic" suffix="."/>
+              <text macro="Locator"/>
+            </group>
+          </if>
+          <else-if position="ibid">
+            <text term="ibid" text-case="capitalize-first" font-style="italic"/>
+          </else-if>
+          <else-if position="subsequent">
+            <group delimiter=", " suffix=".">
+              <text macro="Author"/>
+              <text macro="Title-subsequent"/>
+              <text term="cited" text-case="lowercase" font-style="italic"/>
+              <text macro="Locator"/>
+            </group>
+          </else-if>
+          <else>
+            <choose>
+              <if type="manuscript" match="any">
+                <text macro="Archive"/>
+              </if>
+              <else>
+                <group delimiter=", ">
+                  <text macro="Author"/>
+                  <text macro="Title"/>
+                  <text macro="Edition-Publisher-Issued"/>
+                  <text macro="translator"/>
+                  <text macro="Volume-alpha"/>
+                  <text macro="Volume-Issue"/>
+                  <text macro="Collection"/>
+                  <text macro="Page-URL"/>
+                </group>
+              </else>
+            </choose>
+          </else>
+        </choose>
+      </group>
+    </layout>
+  </citation>
+  <bibliography et-al-min="4" et-al-use-first="1">
+    <sort>
+      <key macro="Author"/>
+      <key variable="issued" sort="descending"/>
+      <key macro="Archive"/>
+    </sort>
+    <layout suffix=".">
+      <choose>
+        <if type="manuscript" match="any">
+          <text macro="Archive"/>
+        </if>
+        <else>
+          <group delimiter=", ">
+            <text macro="Author"/>
+            <text macro="Title"/>
+            <text macro="translator"/>
+            <text macro="Volume-alpha"/>
+            <text macro="Edition-Publisher-Issued"/>
+            <text macro="Volume-Issue"/>
+            <text macro="Collection"/>
+            <text macro="Page-URL"/>
+          </group>
+        </else>
+      </choose>
+    </layout>
+  </bibliography>
+</style>
+\end{filecontents}
+
+\begin{filecontents}[overwrite, noheader]{\jobname.json}
+[
+    {
+        "id": "ITEM-1",
+        "type": "book",
+        "author": [
+            {
+                "family": "D’Arcus",
+                "given": "Bruce"
+            }
+        ],
+        "issued": {
+            "date-parts": [
+                [
+                    2005
+                ]
+            ]
+        },
+        "publisher": "Routledge",
+        "title": "Boundaries of dissent: Protest and state power in the media age"
+    }
+]
+\end{filecontents}
+
+\usepackage[style=custom-style]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{\jobname.json}
+
+
+\begin{document}
+
+\START
+
+\TEST{Citation}{
+  \cite{ITEM-1}
+}
+
+\TEST{Bibliography}{
+  \printbibliography
+}
+
+\end{document}

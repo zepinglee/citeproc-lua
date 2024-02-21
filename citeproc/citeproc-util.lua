@@ -398,6 +398,8 @@ function util.endswith(str, suffix)
   return string.sub(str, -#suffix) == suffix
 end
 
+---@param str string | number
+---@return boolean
 function util.is_numeric(str)
   if str == nil or str == "" then
     return false

@@ -52,7 +52,7 @@ local Position = util.Position
 ---@alias ItemId string | number
 ---@alias NoteIndex integer
 ---@alias CitationId string
----@alias CitationData {citationID: CitationId, citationItems: table[], properties: table, citation_index: integer}
+---@alias CitationData {citationID: CitationId, citationItems: CitationItem[], properties: table, citation_index: integer}
 
 ---@class NameVariable
 ---@field family string?
@@ -95,7 +95,7 @@ local Registry = {}
 ---@field locales Locale[]
 ---@field system_locales Locale[]
 ---@field lang string
----@field output_format any
+---@field output_format OutputFormat
 ---@field opt table
 ---@field registry Registry
 ---@field cite_first_note_numbers table<ItemId, NoteIndex>

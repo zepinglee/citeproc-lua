@@ -250,13 +250,37 @@ function If:evaluate_condition(condition, state, context)
     return context.disambiguate or (context.in_bibliography and context.reference.disambiguate)
 
   elseif condition.condition == "is-numeric" then
-    local variable = context:get_variable(condition.value)
-    return util.is_numeric(variable)
+    local variable = condition.value
+    local variable_type = util.variable_types[variable] or "standard"
+
+    if variable_type ~= "standard" and variable_type ~= "number"  then
+      util.warning(string.format('Expecting number variable for condition "is-numeric", got %s "%s"', variable_type, variable))
+      return false
+    end
+
+    local value = context:get_variable(variable)
+    if not value then
+      return false
+    end
+    if type(value) ~= "string" and type(value) ~= "number" then
+      util.error(string.format('Expecting a string or number for variable "%s", got "%s"', variable, type(value)))
+    end
+    return util.is_numeric(value)
 
   elseif condition.condition == "is-uncertain-date" then
-    local variable = context:get_variable(condition.value)
-    -- TODO
-    return self:is_uncertain_date(variable)
+    local variable = condition.value
+
+    local variable_type = util.variable_types[variable] or "standard"
+
+    if variable_type ~= "date" then
+      util.warning(string.format('Expecting date variable for condition "is-uncertain-date", got "%s"', variable_type, variable))
+      return false
+    end
+    local value = context:get_variable(variable)
+    if not value then
+      return false
+    end
+    return self:is_uncertain_date(value)
 
   elseif condition.condition == "locator" then
     local locator_label = context:get_variable("label")

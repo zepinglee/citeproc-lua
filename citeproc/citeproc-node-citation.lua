@@ -150,6 +150,9 @@ function Citation:from_node(node, style)
   return o
 end
 
+---@param citation CitationData
+---@param engine CiteProc
+---@return string
 function Citation:build_citation_str(citation, engine)
   if engine.registry.requires_sorting then
     engine:sort_bibliography()
