@@ -1,0 +1,43 @@
+\input{regression-test}
+
+\documentclass{article}
+
+% <https://github.com/zepinglee/citeproc-lua/issues/42>
+
+\begin{filecontents}[force, noheader]{\jobname.bib}
+@article{afGeijersstam1998Stability,
+  title = {Stability over Time of Serum Antibody Levels to Human Papillomavirus Type 16},
+  author = {family=Geijersstam, given=V., prefix=af, useprefix=true and Kibur, M. and Wang, Z. and Koskela, P. and Pukkala, E. and Schiller, J. and Lehtinen, M. and Dillner, J.},
+  date = {1998-06},
+  journaltitle = {J Infect Dis},
+  volume = {177},
+  number = {6},
+  eprint = {9607854},
+  eprinttype = {pmid},
+  pages = {1710--1714},
+  issn = {0022-1899},
+  doi = {10.1086/517428},
+  abstract = {The stability over time of serum IgG antibody levels to human papillomavirus type 16 (HPV-16) was determined by comparing the HPV-16 capsid antibody levels in serial serum samples of an age-stratified random subsample of 1656 primiparous mothers resident in Helsinki who were followed until their second pregnancy, on average 29.5 months later. The correlation between the first and second pregnancy HPV-16 serum antibody levels of the same woman was high, even when {$>$}4 years had elapsed between pregnancies (r = .822). Between negativity, indeterminate results, or quartiles of positivity, the predictive values for being classified in the same category on both occasions ranged between 42\% and 91\%. Correlation coefficients, predictive values, and kappa coefficients between serial samples all were comparable with those of repeat analyses of the same sample, indicating that HPV capsid antibody levels are generally stable during several years of follow-up.},
+  langid = {english},
+  keywords = {Adolescent,Adult,Antibodies,Capsid,Capsid Proteins,Female,Humans,Infectious,Oncogene Proteins,Papillomaviridae,Papillomavirus Infections,Pregnancy,Pregnancy Complications,Time Factors,Tumor Virus Infections,Viral}
+}
+\end{filecontents}
+
+\usepackage[style=apa]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{\jobname.bib}
+
+
+\begin{document}
+
+\START
+
+\TEST{Citation}{
+  \cite{afGeijersstam1998Stability}
+}
+
+\TEST{Bibliography}{
+  \printbibliography
+}
+
+\end{document}

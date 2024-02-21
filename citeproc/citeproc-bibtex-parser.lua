@@ -292,7 +292,7 @@ local function ignore_case(str)
 end
 
 
----@alias NameDict table
+---@alias NameDict table<string, string>
 ---@alias NameStr string
 
 ---Split BibTeX names
@@ -320,8 +320,16 @@ function bibtex_parser.split_name_parts(str)
   local comma_parts = Ct(C(comma_part) * (comma * white_space * C(comma_part))^0)
   local parts = comma_parts:match(str)
 
+  local is_biblatex_extended_format = false
+  if #parts > 0 and (string.match(parts[1], "^[a-zA-Z]+%-?i?%s*=")
+      or string.match(parts[1], '^"[a-zA-Z]+%-?i?%s*=.*"$')) then
+    is_biblatex_extended_format = true
+  end
+
   local name = {}
-  if #parts == 1 then
+  if is_biblatex_extended_format then
+    name = bibtex_parser._split_extended_name_format(parts)
+  elseif #parts == 1 then
     name = bibtex_parser._split_first_von_last_parts(parts[1])
   elseif #parts == 2 then
     name = bibtex_parser._split_von_last_parts(parts[1])
@@ -329,18 +337,10 @@ function bibtex_parser.split_name_parts(str)
       name.first = parts[2]
     end
   elseif #parts == 3 then
-    name = bibtex_parser._split_von_last_parts(parts[1])
-    if parts[2] ~= "" then
-      name.jr = parts[2]
-    end
-    if parts[3] ~= "" then
-      name.first = parts[3]
-    end
+    name = bibtex_parser._split_last_jr_first_parts(parts)
   elseif #parts > 3 then
-    util.warning()
-    name = bibtex_parser._split_last_jr_fist_parts(util.slice(parts, 1, 3))
-  else
-    util.warning()
+    util.error(string.format('Too many commas in name "%s"', str))
+    name = bibtex_parser._split_last_jr_first_parts(util.slice(parts, 1, 3))
   end
 
   return name
@@ -394,6 +394,49 @@ local function join_words_and_seps(words, seps, start, stop)
     return nil
   end
   return res
+end
+
+
+---@param parts string[]
+---@return table<string, string>
+function bibtex_parser._split_extended_name_format(parts)
+  local name = {}
+  for _, part in ipairs(parts) do
+    local key, value = string.match(part, "^([a-zA-Z]+%-?i?)%s*=%s*(.-)%s*$")
+    if not key then
+      key, value = string.match(part, '^"([a-zA-Z]+%-?i?)%s*=%s*(.-)%s*"%s*$')
+    end
+    if not key then
+      util.error(string.format('Invalid extended name part "%s"', part))
+    end
+
+    if key == "given" then
+      key = "first"
+    elseif key == "given-i" then
+      key = "first-i"
+    elseif key == "prefix" then
+      key = "von"
+    elseif key == "prefix-i" then
+      key = "von-i"
+    elseif key == "family" then
+      key = "last"
+    elseif key == "family-i" then
+      key = "last-i"
+    elseif key == "suffix" then
+      key = "jr"
+    elseif key == "suffix-i" then
+      key = "jr-i"
+    end
+
+    local braced_pattern = P"{" * C(balanced^0) * P"}" * P(-1)
+    local stripped = braced_pattern:match(value)
+    if stripped then
+      value = stripped
+    end
+
+    name[key] = value
+  end
+  return name
 end
 
 function bibtex_parser._split_first_von_last_parts(str)
@@ -488,6 +531,19 @@ function bibtex_parser._split_von_last_parts(str)
   name.last = join_words_and_seps(words, seps, last_start, #words)
 
   return name
+end
+
+---@param parts string[]
+---@return NameDict
+function bibtex_parser._split_last_jr_first_parts(parts)
+    local name = bibtex_parser._split_von_last_parts(parts[1])
+    if parts[2] ~= "" then
+      name.jr = parts[2]
+    end
+    if parts[3] ~= "" then
+      name.first = parts[3]
+    end
+    return name
 end
 
 

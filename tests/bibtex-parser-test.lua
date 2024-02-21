@@ -1,5 +1,5 @@
-local bibtex_parser 
-local util 
+local bibtex_parser
+local util
 if kpse then
   kpse.set_program_name("luatex")
   local kpse_searcher = package.searchers[2]
@@ -712,6 +712,78 @@ describe("BibTeX parser", function ()
 
       end)
 
+    end)
+
+    describe("biblatex extended name format", function ()
+      local names = {
+        {
+          "given=Hans, family=Harman and given=Simon, prefix=de, family=Beumont",
+          {
+            {
+              last = "Harman",
+              first = "Hans",
+            },
+            {
+              last = "Beumont",
+              first = "Simon",
+              von = "de",
+            },
+          },
+        },
+        {
+          "given=Jean, prefix=de la, prefix-i=d, family=Rousse",
+          {
+            {
+              last = "Rousse",
+              first = "Jean",
+              von = "de la",
+              ["von-i"] = "d"
+            }
+          }
+        },
+        {
+          "given={Jean Pierre Simon}, given-i=JPS",
+          {
+            {
+              first = "Jean Pierre Simon",
+              ["first-i"] = "JPS"
+            }
+          }
+        },
+        {
+          '"family={Robert and Sons, Inc.}"',
+          {
+            {
+              last = "Robert and Sons, Inc.",
+            }
+          }
+        },
+        {
+          "Hans Harman and given=Simon, prefix=de, family=Beumont",
+          {
+            {
+              last = "Harman",
+              first = "Hans",
+            },
+            {
+              last = "Beumont",
+              first = "Simon",
+              von = "de",
+            },
+          }
+        },
+      }
+      for _, name_str_pair in ipairs(names) do
+        local name_str, name_list = table.unpack(name_str_pair)
+        it(name_str, function ()
+          local parsed_names = bibtex_parser.split_names(name_str)
+          local parsed_name_parts = {}
+          for i, parsed_name in ipairs(parsed_names) do
+            parsed_name_parts[i] = bibtex_parser.split_name_parts(parsed_name)
+          end
+          assert.same(name_list, parsed_name_parts)
+        end)
+      end
     end)
 
   end)
