@@ -713,7 +713,7 @@
 			]
 		},
 		"publisher": "Fanstord University",
-		"title": "An <span class=\"nocase\"><mathtex>O(n \\log n / \\! \\log\\log n)</mathtex></span> sorting algorithm"
+		"title": "An <span class=\"nocase\"><math-tex>O(n \\log n / \\! \\log\\log n)</math-tex></span> sorting algorithm"
 	},
 	{
 		"id": "techreport-full",
@@ -737,7 +737,7 @@
 		"number": "7",
 		"publisher": "Fanstord University",
 		"publisher-place": "Computer Science Department, Fanstord, California",
-		"title": "An <span class=\"nocase\"><mathtex>O(n \\log n / \\! \\log\\log n)</mathtex></span> sorting algorithm"
+		"title": "An <span class=\"nocase\"><math-tex>O(n \\log n / \\! \\log\\log n)</math-tex></span> sorting algorithm"
 	},
 	{
 		"id": "unpublished-minimal",

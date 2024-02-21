@@ -85,7 +85,7 @@ describe("LaTeX parser", function ()
     end)
 
     it("math", function ()
-      assert.same("Foo <mathtex>y = \\alpha_1 x^2</mathtex> bar",
+      assert.same("Foo <math-tex>y = \\alpha_1 x^2</math-tex> bar",
         latex_parser.latex_to_pseudo_html("Foo $y = \\alpha_1 x^2$ bar")
       )
     end)

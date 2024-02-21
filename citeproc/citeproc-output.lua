@@ -415,7 +415,7 @@ local function get_inline_element_grammar()
   local spaces = P(" ")^1
   local grammar = P{
     "content";
-    token = V"italic" + V"bold" + V"sup" + V"sub" + V"sc" + V"small_caps" + V"span_nocase" + V"nodecor" + V"mathtex" + V"mathml" + V"code" + V"script" + C(1),
+    token = V"italic" + V"bold" + V"sup" + V"sub" + V"sc" + V"small_caps" + V"span_nocase" + V"nodecor" + V"math_tex" + V"math_ml" + V"code" + V"script" + C(1),
     content = Ct((V"token")^0) / tokens2inlines,
     italic = P"<i>" * Ct((V"token" - P"</i>")^0) * P"</i>" / function (tokens)
       return Formatted:new(tokens2inlines(tokens), {["font-style"] = "italic"})
@@ -453,10 +453,10 @@ local function get_inline_element_grammar()
     nodecor = P"<span" * spaces * P'class="nodecor">' * Ct((V"token" - P"</span>")^0) * P"</span>" / function (tokens)
       return NoDecor:new(tokens2inlines(tokens))
     end,
-    mathtex = P"<mathtex>" * C((1- P"</mathtex>")^0) * P"</mathtex>" / function (text)
+    math_tex = P"<math-tex>" * C((1- P"</math-tex>")^0) * P"</math-tex>" / function (text)
       return MathTeX:new(text)
     end,
-    mathml = P"<math>" * C((1- P"</math>")^0) * P"</math>" / function (text)
+    math_ml = P"<math>" * C((1- P"</math>")^0) * P"</math>" / function (text)
       return MathML:new(text)
     end,
     code = P"<code>" * C((1 - P"</code>")^0) * P"</code>" / function (text)
@@ -1639,7 +1639,7 @@ function Markup:write_inline(inline, context)
       return self:write_code(inline, context)
 
     elseif inline._type == "MathML" then
-      return self:write_mathml(inline, context)
+      return self:write_math_ml(inline, context)
 
     elseif inline._type == "MathTeX" then
       return self:write_math_tex(inline, context)
@@ -1690,7 +1690,7 @@ function Markup:write_code(inline, context)
   return inline.value
 end
 
-function Markup:write_mathml(inline, context)
+function Markup:write_math_ml(inline, context)
   return inline.value
 end
 
@@ -1834,7 +1834,7 @@ function LatexWriter:write_code(inline, context)
   return inline.value
 end
 
-function LatexWriter:write_mathml(inline, context)
+function LatexWriter:write_math_ml(inline, context)
   util.error("MathML is not supported in LaTeX output.")
   return ""
 end
@@ -1941,7 +1941,7 @@ function HtmlWriter:write_code(inline, context)
   return string.format("<code>%s</code>", inline.value)
 end
 
-function HtmlWriter:write_mathml(inline, context)
+function HtmlWriter:write_math_ml(inline, context)
   return string.format('<math xmlns="http://www.w3.org/1998/Math/MathML">%s</math>', inline.value)
 end
 
@@ -2057,12 +2057,12 @@ function PseudoHtml :write_escaped(str, context)
   return str
 end
 
-function PseudoHtml:write_mathml(inline, context)
+function PseudoHtml:write_math_ml(inline, context)
   return string.format('<math>%s</math>', inline.value)
 end
 
 function PseudoHtml:write_math_tex(inline, context)
-  return string.format("<mathtex>%s</mathtex>", inline.value)
+  return string.format("<math-tex>%s</math-tex>", inline.value)
 end
 
 function PseudoHtml:write_nocase(inline, context)

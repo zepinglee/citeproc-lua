@@ -54,7 +54,7 @@ describe("BibTeX data to CSL converter", function ()
     it("math", function ()
       local title = "A study of the excited {1$\\Sigma$g+} states in {Na2}"
       local _, csl_title = bibtex2csl.convert_field("title", title, true, true, true, "en-US", true)
-      local expected = 'A study of the excited <span class="nocase">1<mathtex>\\Sigma</mathtex>g+</span> states in <span class="nocase">Na2</span>'
+      local expected = 'A study of the excited <span class="nocase">1<math-tex>\\Sigma</math-tex>g+</span> states in <span class="nocase">Na2</span>'
       assert.same(expected, csl_title)
     end)
 
