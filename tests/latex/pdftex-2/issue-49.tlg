@@ -1,0 +1,28 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Citation
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1},prefix={That typically happens in 10$^{-15}$ seconds. See }}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=(That typically happens in 10$^{-15}$ seconds. See D’Arcus, 2005).
+<recently read> }
+l. ...}
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+============================================================
+============================================================
+TEST 2: Bibliography
+============================================================
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 2, entry-spacing = 0}}
+>  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of dissent: Protest and state power in the media age}. Routledge.}
+>  {\end {thebibliography}}.
+<recently read> }
+l. ...}
+============================================================
+[1
+] (issue-49.aux)

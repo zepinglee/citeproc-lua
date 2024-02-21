@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add support of biblatex's extended name format ([#48](https://github.com/zepinglee/citeproc-lua/issues/48)).
 
+### Fixed
+
+- Fix an error in parsing TeX math contents ([#49](https://github.com/zepinglee/citeproc-lua/issues/49)).
+
 ## [0.4.6] - 2024-02-20
 
 ### Fixed

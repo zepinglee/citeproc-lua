@@ -1,0 +1,48 @@
+\input{regression-test}
+
+\documentclass{article}
+
+% <https://github.com/zepinglee/citeproc-lua/issues/49>
+
+\begin{filecontents}[force, noheader]{\jobname.json}
+[
+    {
+        "id": "ITEM-1",
+        "type": "book",
+        "author": [
+            {
+                "family": "D’Arcus",
+                "given": "Bruce"
+            }
+        ],
+        "issued": {
+            "date-parts": [
+                [
+                    2005
+                ]
+            ]
+        },
+        "publisher": "Routledge",
+        "title": "Boundaries of dissent: Protest and state power in the media age"
+    }
+]
+\end{filecontents}
+
+\usepackage[style=apa]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{\jobname.json}
+
+
+\begin{document}
+
+\START
+
+\TEST{Citation}{
+  \cite[prefix = {That typically happens in 10$^{-15}$ seconds. See }]{ITEM-1}
+}
+
+\TEST{Bibliography}{
+  \printbibliography
+}
+
+\end{document}

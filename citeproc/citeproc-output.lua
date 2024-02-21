@@ -453,8 +453,8 @@ local function get_inline_element_grammar()
     nodecor = P"<span" * spaces * P'class="nodecor">' * Ct((V"token" - P"</span>")^0) * P"</span>" / function (tokens)
       return NoDecor:new(tokens2inlines(tokens))
     end,
-    mathtex = P"<mathtex>" * Ct((1- P"</mathtex>")^0) * P"</mathtex>" / function (text)
-      return MathML:new(text)
+    mathtex = P"<mathtex>" * C((1- P"</mathtex>")^0) * P"</mathtex>" / function (text)
+      return MathTeX:new(text)
     end,
     mathml = P"<math>" * C((1- P"</math>")^0) * P"</math>" / function (text)
       return MathML:new(text)
