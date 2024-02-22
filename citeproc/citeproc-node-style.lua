@@ -80,7 +80,7 @@ function Style:parse(xml_str)
     return nil
   end
   local style_node = csl_xml:get_path("style")[1]
-  if not csl_xml then
+  if not style_node then
     error('Element "style" not found.')
   end
   return Style:from_node(style_node)

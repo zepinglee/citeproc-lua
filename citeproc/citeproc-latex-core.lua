@@ -318,6 +318,9 @@ function core.make_citation(citation_info)
 end
 
 
+---@param engine CiteProc
+---@param citations CitationData[]
+---@return table<CitationId, string>
 function core.process_citations(engine, citations)
   local citations_pre = {}
 

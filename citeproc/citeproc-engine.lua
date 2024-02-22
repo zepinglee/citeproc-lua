@@ -52,7 +52,9 @@ local Position = util.Position
 ---@alias ItemId string | number
 ---@alias NoteIndex integer
 ---@alias CitationId string
----@alias CitationData {citationID: CitationId, citationItems: CitationItem[], properties: table, citation_index: integer}
+---@alias CitationData {citationID: CitationId, citationItems: CitationItem[], properties: CitationProperties, citation_index: integer}
+
+---@alias CitationProperties { noteIndex: integer, mode: string? }
 
 ---@class NameVariable
 ---@field family string?
@@ -197,6 +199,7 @@ function CiteProc:check_valid_citation_element()
   end
 end
 
+---@param ids CiteId[]
 function CiteProc:updateItems(ids)
   -- util.debug(string.format('updateItems(%s)', table.concat(ids, ", ")))
   self.registry.reflist = {}
@@ -282,8 +285,12 @@ function CiteProc:updateUncitedItems(uncited_ids)
 end
 
 
+---@param citation CitationData
+---@param citationsPre (CitationId | NoteIndex)[]
+---@param citationsPost (CitationId | NoteIndex)[]
+---@return (table | (integer | string | CitationId)[])[]
 function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
-  -- util.debug(citation.citationID)
+  -- util.debug(string.format('processCitationCluster(%s)', citation.citationID))
   self:check_valid_citation_element()
   citation = self:normalize_citation_input(citation)
 

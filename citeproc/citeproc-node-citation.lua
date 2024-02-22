@@ -175,8 +175,10 @@ local function remove_name_formatting(ir)
   end
 end
 
+---@alias CiteId string | number
+
 ---@class CitationItem
----@field id string | number
+---@field id CiteId
 ---@field prefix string?
 ---@field suffix string?
 ---@field locator string?
@@ -420,12 +422,8 @@ end
 ---@param properties table
 ---@return CiteIr
 function Citation:build_fully_disambiguated_ir(cite_item, output_format, engine, properties)
+  -- util.debug(cite_item.id)
   local cite_ir = self:build_ambiguous_ir(cite_item, output_format, engine)
-  -- util.debug(cite_ir)
-  -- if cite_item.id == "ITEM-3" then
-  --   util.debug(cite_item.id)
-  --   util.debug(cite_ir)
-  -- end
   cite_ir = self:apply_disambiguate_add_givenname(cite_ir, engine)
   cite_ir = self:apply_disambiguate_add_names(cite_ir, engine)
   cite_ir = self:apply_disambiguate_conditionals(cite_ir, engine)
