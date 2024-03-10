@@ -183,7 +183,7 @@ function BibtexParser:parse(bib_str, strings)
     strings = setmetatable({}, {__index = self.strings})
   end
   if type(bib_str) ~= "string" then
-    util.error("Invalid string.")
+    util.error("Invalid string")
   end
   local bib_objects = self.grammar:match(bib_str)
   if not bib_objects then

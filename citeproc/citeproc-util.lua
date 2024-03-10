@@ -233,7 +233,7 @@ end
 ---@return string[]
 function util.split(str, sep, maxsplit)
   if type(str) ~= "string" then
-    util.error("Invalid string.")
+    util.error("Invalid string")
   end
   sep = sep or "%s+"
   if sep == "" then
