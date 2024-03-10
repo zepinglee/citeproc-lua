@@ -6,14 +6,14 @@
 
 % ## Citation commands
 
-\DeclareDocumentCommand \cite { o o m }
-  { \__csl_cite:nnn {#1} {#2} {#3} }
+\DeclareDocumentCommand \cite { s o o m }
+  { \__csl_cite:nnnn {#1} {#2} {#3} {#4} }
 
-\NewDocumentCommand \parencite { o o m }
-  { \__csl_cite:nnn {#1} {#2} {#3} }
+\NewDocumentCommand \parencite { s o o m }
+  { \__csl_cite:nnnn {#1} {#2} {#3} {#4} }
 
 \NewDocumentCommand \citep { o o m }
-  { \__csl_cite:nnn {#1} {#2} {#3} }
+  { \__csl_cite:nnnn { \BooleanFalse } {#1} {#2} {#3} }
 
 \NewDocumentCommand \textcite { o o m }
   { \__csl_text_cite:nnn {#1} {#2} {#3} }
@@ -22,7 +22,7 @@
   { \__csl_text_cite:nnn {#1} {#2} {#3} }
 
 \NewDocumentCommand \footcite { o o m }
-  { \__csl_cite:nnn {#1} {#2} {#3} }
+  { \__csl_cite:nnnn { \BooleanFalse } {#1} {#2} {#3} }
 
 
 % \cites[⟨prenote⟩][⟨postnote⟩]{⟨key⟩}...[⟨prenote⟩][⟨postnote⟩]{⟨key⟩}
@@ -32,26 +32,55 @@
 \NewDocumentCommand \citeauthor { o o m }
   { \__csl_cite_author:nnn {#1} {#2} {#3} }
 
+% TODO: \citeyear
+
+% ATM the starred form is the same as non-star form.
+\NewDocumentCommand \citeyearpar { s o o m }
+  {
+    \IfBooleanT {#1}
+      {
+        \bool_if:NTF \l__csl_note_bool
+          { \msg_error:nn { citation-style-language } { starred-cite-in-note-style } }
+      }
+    \__csl_cite_suppress_author:nnn {#2} {#3} {#4}
+  }
+
 
 \seq_new:N \l__csl_cite_keys_seq
 \seq_new:N \l__csl_citation_items_seq
 \prop_new:N \l__csl_citation_properties_prop
 \prop_new:N \l__csl_citation_info_prop
 
-% \__csl_cite:nnn #1#2#3
-\cs_new:Npn \__csl_cite:nnn #1#2#3
+% \__csl_cite:nnnn #1#2#3#
+% #1: boolean of star form
+% #2: prenote
+% #3: postnote
+% #4: cite keys
+\cs_new:Npn \__csl_cite:nnnn #1#2#3#4
   {
-    \tl_if_blank:nTF {#3}
-      { \__csl_print_undefined_citation:n {#3} }
+    \tl_if_blank:nTF {#4}
+      { \__csl_print_undefined_citation:n {#4} }
       {
         \seq_clear:N \l__csl_cite_keys_seq
         \seq_clear:N \l__csl_citation_items_seq
         \prop_clear:N \l__csl_citation_properties_prop
-        \__csl_process_cite_input:nnn {#1} {#2} {#3}
+        \__csl_process_cite_input:nnn {#2} {#3} {#4}
         \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
+        \IfBooleanT {#1}
+          {
+            \bool_if:NTF \l__csl_note_bool
+              { \msg_warning:nn { citation-style-language } { starred-cite-in-note-style } }
+              {
+                \prop_put:Nnn \l__csl_citation_properties_prop { noteIndex } { 0 }
+                \prop_put:Nnn \l__csl_citation_properties_prop { mode } { suppress-author }
+              }
+          }
         \__csl_make_citation:N \l__csl_citation_info_prop
       }
   }
+
+\msg_new:nnn { citation-style-language } { starred-cite-in-note-style }
+  { Starred~ variant~ of~ cite~ command~ does~ not~ work~ with~ note~ styles. }
 
 
 \cs_new:Npn \__csl_text_cite:nnn #1#2#3
@@ -62,7 +91,7 @@
         \bool_set_false:N \l__csl_note_bool
         \__csl_cite_author:nnn {#1} {#2} {#3}
         \bool_set_true:N \l__csl_note_bool
-        \__csl_cite:nnn {#1} {#2} {#3}
+        \__csl_cite:nnnn { \BooleanFalse } {#1} {#2} {#3}
       }
       {
         \seq_clear:N \l__csl_cite_keys_seq
@@ -108,6 +137,20 @@
     \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
     \prop_put:Nnn \l__csl_citation_properties_prop { noteIndex } { 0 }
     \prop_put:Nnn \l__csl_citation_properties_prop { mode } { author-only }
+    \bool_set_false:N \l__csl_note_bool
+    \__csl_make_citation:N \l__csl_citation_info_prop
+  }
+
+
+\cs_new:Npn \__csl_cite_suppress_author:nnn #1#2#3
+  {
+    \seq_clear:N \l__csl_cite_keys_seq
+    \seq_clear:N \l__csl_citation_items_seq
+    \prop_clear:N \l__csl_citation_properties_prop
+    \__csl_process_cite_input:nnn {#1} {#2} {#3}
+    \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
+    \prop_put:Nnn \l__csl_citation_properties_prop { noteIndex } { 0 }
+    \prop_put:Nnn \l__csl_citation_properties_prop { mode } { suppress-author }
     \bool_set_false:N \l__csl_note_bool
     \__csl_make_citation:N \l__csl_citation_info_prop
   }
