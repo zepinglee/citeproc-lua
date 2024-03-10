@@ -132,7 +132,27 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 14: Uncited entry
+TEST 14: \parencite *
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@12},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={suppress-author}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=(2005).
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 15: \citeyearpar 
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@13},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={suppress-author}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=(2005).
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 16: Uncited entry
 ============================================================
 > \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
 <recently read> }
@@ -143,7 +163,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 15: Citation format
+TEST 17: Citation format
 ============================================================
 Completed box being shipped out [1]
 \vbox(633.0+0.0)x407.0
@@ -155,7 +175,7 @@ Completed box being shipped out [1]
 ....\hbox(0.0+0.0)x345.0
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 395.9577fil
+..\vbox(550.0+0.0)x345.0, glue set 371.96027fil
 ...\write-{}
 ...\glue(\topskip) 2.5
 ...\hbox(7.5+2.5)x345.0, glue set 271.99986fil
@@ -575,6 +595,37 @@ Completed box being shipped out [1]
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.5
+...\hbox(7.5+2.5)x345.0, glue set 313.88881fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 (
+....\OT1/cmr/m/n/10 2
+....\OT1/cmr/m/n/10 0
+....\OT1/cmr/m/n/10 0
+....\OT1/cmr/m/n/10 5
+....\OT1/cmr/m/n/10 )
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 313.88881fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 (
+....\OT1/cmr/m/n/10 2
+....\OT1/cmr/m/n/10 0
+....\OT1/cmr/m/n/10 0
+....\OT1/cmr/m/n/10 5
+....\OT1/cmr/m/n/10 )
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue -2.5
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
 ...\glue 0.0 plus 0.0001fil
@@ -583,7 +634,7 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x345.0
 ============================================================
 ============================================================
-TEST 16: Bibliography contents
+TEST 18: Bibliography contents
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 2, entry-spacing = 0}}
@@ -595,7 +646,7 @@ The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 l. ...}
 ============================================================
 ============================================================
-TEST 17: Bibliography format
+TEST 19: Bibliography format
 ============================================================
 Completed box being shipped out [2]
 \vbox(633.0+0.0)x407.0

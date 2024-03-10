@@ -150,7 +150,27 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 14: Uncited entry
+TEST 14: \parencite *
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@12},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={suppress-author}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=(2005).
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 15: \citeyearpar 
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@13},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={suppress-author}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=(2005).
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 16: Uncited entry
 ============================================================
 > \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
 <recently read> }
@@ -161,7 +181,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 15: Bibliography
+TEST 17: Bibliography
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 2, entry-spacing = 0}}
