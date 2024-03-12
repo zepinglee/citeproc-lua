@@ -1217,6 +1217,10 @@ return {
       source = "windycity.dbx",
       type = "literal",
     },
+    by = {
+      csl = nil,
+      source = "iran-unsrt.bst",
+    },
     ["call-number"] = {
       csl = "call-number",
       source = "csl",
@@ -2067,6 +2071,10 @@ return {
       source = "publist.dbx",
       type = "literal",
     },
+    impression = {
+      csl = nil,
+      source = "iran-unsrt.bst",
+    },
     inafterword = {
       csl = nil,
       source = "archaeologie.dbx",
@@ -2895,6 +2903,10 @@ return {
       csl = "page",
       source = "bibtex",
       type = "range",
+    },
+    pagesnodashify = {
+      csl = nil,
+      source = "tugboat.bst",
     },
     pagetotal = {
       csl = "number-of-pages",
@@ -3807,6 +3819,10 @@ return {
       csl = nil,
       source = "iopart-num.bst",
     },
+    translateyear = {
+      csl = nil,
+      source = "iran-unsrt.bst",
+    },
     translation = {
       csl = nil,
       source = "apsrev4-2.bst",
@@ -4188,22 +4204,6 @@ return {
     zip = {
       csl = nil,
       source = "adrbirthday.bst",
-    },
-    pagesnodashify = {
-      csl = nil,
-      source = "tugboat.bst",
-    },
-    by = {
-      csl = nil,
-      source = "iran-unsrt.bst",
-    },
-    impression = {
-      csl = nil,
-      source = "iran-unsrt.bst",
-    },
-    translateyear = {
-      csl = nil,
-      source = "iran-unsrt.bst",
     },
   },
   macros = {

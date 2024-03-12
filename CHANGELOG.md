@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.8] - 2024-03-12
+
+### Fixed
+
+- Fix unexpected "nil" with empty page ([#58](https://github.com/zepinglee/citeproc-lua/issues/58)).
+
 ## [0.4.7] - 2024-03-10
 
 ### Added
@@ -172,7 +178,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial CTAN release.
 
-[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.7...HEAD
+[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.8...HEAD
+[0.4.8]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.7...v0.4.8
 [0.4.7]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.6...v0.4.7
 [0.4.6]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.5...v0.4.6
 [0.4.5]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.4...v0.4.5
