@@ -1,0 +1,26 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Citation
+============================================================
+> \l__csl_citation_info_tl=citationID={ansariHowMetaBroke2023@1},citationItems={{id={ansariHowMetaBroke2023}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ansariHowMetaBroke2023' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ansariHowMetaBroke2023}].
+<recently read> }
+l. ...}
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line ....
+============================================================
+============================================================
+TEST 2: Bibliography
+============================================================
+Package citation-style-language Warning: The bibliography is empty.
+============================================================

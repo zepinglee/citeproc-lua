@@ -1,0 +1,221 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Citation
+============================================================
+> \l__csl_citation_info_tl=citationID={ansariHowMetaBroke2023@1},citationItems={{id={ansariHowMetaBroke2023}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=Tasmia Ansari, ‘How Meta Broke the Barriers To Entry With LLaMA 2’ [2023] \textit {Analytics India Magazine} <\url {https://analyticsindiamag.com/how-meta-broke-the-barriers-to-entry-with-llama-2/}> accessed 27 December 2023..
+<recently read> }
+l. ...}
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line ....
+Underfull \hbox (badness 10000) in paragraph at lines 733--733
+[][]\TU/lmr/m/n/8 Tas-mia Ansari, ‘How Meta Broke the Bar-ri-ers To En-try With LLaMA
+\hbox(6.81334+1.632)x345.0, glue set 4.72647, direction TLT
+.\localpar
+..\localinterlinepenalty=0
+..\localbrokenpenalty=0
+..\localleftbox=null
+..\localrightbox=null
+.\hbox(6.81334+0.0)x14.40002, glue set 10.23402fil, direction TLT
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\hbox(6.81334+0.0)x4.166, direction TLT
+...\mathon
+...\hbox(0.0+0.0)x0.0, direction TLT
+...\hbox(3.99+0.0)x4.166, shifted -2.82333, direction TLT
+....\TU/lmr/m/n/6 1
+...\mathoff
+.\hbox(6.65+0.0)x0.0, direction TLT
+..\rule(6.65+0.0)x0.0
+.\TU/lmr/m/n/8 T
+.\kern-0.712 (font)
+.\TU/lmr/m/n/8 a
+.\TU/lmr/m/n/8 s
+.\discretionary (penalty 50)
+..< \TU/lmr/m/n/8 -
+.\TU/lmr/m/n/8 m
+.\TU/lmr/m/n/8 i
+.\TU/lmr/m/n/8 a
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/n/8 A
+.\TU/lmr/m/n/8 n
+.\TU/lmr/m/n/8 s
+.\TU/lmr/m/n/8 a
+.\TU/lmr/m/n/8 r
+.\TU/lmr/m/n/8 i
+.\TU/lmr/m/n/8 ,
+.\glue(\spaceskip) 2.832 plus 1.76999 minus 0.75519
+.\TU/lmr/m/n/8 ‘
+.\TU/lmr/m/n/8 H
+.\TU/lmr/m/n/8 o
+.\kern-0.24 (font)
+.\TU/lmr/m/n/8 w
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/n/8 M
+.\TU/lmr/m/n/8 e
+.\TU/lmr/m/n/8 t
+.\TU/lmr/m/n/8 a
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/n/8 B
+.\TU/lmr/m/n/8 r
+.\TU/lmr/m/n/8 o
+.\TU/lmr/m/n/8 k
+.\kern-0.24 (font)
+.\TU/lmr/m/n/8 e
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/n/8 t
+.\TU/lmr/m/n/8 h
+.\TU/lmr/m/n/8 e
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/n/8 B
+.\TU/lmr/m/n/8 a
+.\TU/lmr/m/n/8 r
+.\discretionary (penalty 50)
+..< \TU/lmr/m/n/8 -
+.\TU/lmr/m/n/8 r
+.\TU/lmr/m/n/8 i
+.\discretionary (penalty 50)
+..< \TU/lmr/m/n/8 -
+.\TU/lmr/m/n/8 e
+.\TU/lmr/m/n/8 r
+.\TU/lmr/m/n/8 s
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/n/8 T
+.\kern-0.712 (font)
+.\TU/lmr/m/n/8 o
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/n/8 E
+.\TU/lmr/m/n/8 n
+.\discretionary (penalty 50)
+..< \TU/lmr/m/n/8 -
+..= \kern-0.24 (font)
+.\TU/lmr/m/n/8 t
+.\TU/lmr/m/n/8 r
+.\TU/lmr/m/n/8 y
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/n/8 W
+.\TU/lmr/m/n/8 i
+.\TU/lmr/m/n/8 t
+.\TU/lmr/m/n/8 h
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/n/8 L
+.\TU/lmr/m/n/8 L
+.\TU/lmr/m/n/8 a
+.\TU/lmr/m/n/8 M
+.\TU/lmr/m/n/8 A
+.\glue(\rightskip) 0.0
+Underfull \hbox (badness 10000) in paragraph at lines 733--733
+\TU/lmr/m/n/8 2’ [2023] \TU/lmr/m/it/8 An-a-lyt-ics In-dia Mag-a-zine \TU/lmr/m/n/8 <$\TU/lmtt/m/n/8 https://analyticsindiamag.com/
+\hbox(6.0+2.0)x345.0, glue set 10.71257, direction TLT
+.\TU/lmr/m/n/8 2
+.\TU/lmr/m/n/8 ’
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/n/8 [
+.\TU/lmr/m/n/8 2
+.\TU/lmr/m/n/8 0
+.\TU/lmr/m/n/8 2
+.\TU/lmr/m/n/8 3
+.\TU/lmr/m/n/8 ]
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/it/8 A
+.\kern-0.44 (font)
+.\TU/lmr/m/it/8 n
+.\discretionary (penalty 50)
+..< \TU/lmr/m/it/8 -
+.\TU/lmr/m/it/8 a
+.\discretionary (penalty 50)
+..< \TU/lmr/m/it/8 -
+.\TU/lmr/m/it/8 l
+.\TU/lmr/m/it/8 y
+.\TU/lmr/m/it/8 t
+.\discretionary (penalty 50)
+..< \TU/lmr/m/it/8 -
+.\TU/lmr/m/it/8 i
+.\TU/lmr/m/it/8 c
+.\TU/lmr/m/it/8 s
+.\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+.\TU/lmr/m/it/8 I
+.\TU/lmr/m/it/8 n
+.\discretionary (penalty 50)
+..< \TU/lmr/m/it/8 -
+.\TU/lmr/m/it/8 d
+.\TU/lmr/m/it/8 i
+.\TU/lmr/m/it/8 a
+.\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+.\TU/lmr/m/it/8 M
+.\TU/lmr/m/it/8 a
+.\TU/lmr/m/it/8 g
+.\discretionary (penalty 50)
+..< \TU/lmr/m/it/8 -
+.\TU/lmr/m/it/8 a
+.\discretionary (penalty 50)
+..< \TU/lmr/m/it/8 -
+.\TU/lmr/m/it/8 z
+.\TU/lmr/m/it/8 i
+.\TU/lmr/m/it/8 n
+.\TU/lmr/m/it/8 e
+.\kern0.224 (italic)
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/n/8 <
+.\mathon
+.\TU/lmtt/m/n/8 h
+.\TU/lmtt/m/n/8 t
+.\TU/lmtt/m/n/8 t
+.\TU/lmtt/m/n/8 p
+.\TU/lmtt/m/n/8 s
+.\glue(\thickmuskip) 0.0
+.\TU/lmtt/m/n/8 :
+.\penalty 500
+.\glue(\thickmuskip) 0.0
+.\TU/lmtt/m/n/8 /
+.\glue(\medmuskip) 0.0
+.\TU/lmtt/m/n/8 /
+.\penalty 700
+.\glue(\medmuskip) 0.0
+.\TU/lmtt/m/n/8 a
+.\TU/lmtt/m/n/8 n
+.\TU/lmtt/m/n/8 a
+.\TU/lmtt/m/n/8 l
+.\TU/lmtt/m/n/8 y
+.\TU/lmtt/m/n/8 t
+.\TU/lmtt/m/n/8 i
+.\TU/lmtt/m/n/8 c
+.\TU/lmtt/m/n/8 s
+.\TU/lmtt/m/n/8 i
+.\TU/lmtt/m/n/8 n
+.\TU/lmtt/m/n/8 d
+.\TU/lmtt/m/n/8 i
+.\TU/lmtt/m/n/8 a
+.\TU/lmtt/m/n/8 m
+.\TU/lmtt/m/n/8 a
+.\TU/lmtt/m/n/8 g
+.\glue(\medmuskip) 0.0
+.\TU/lmtt/m/n/8 .
+.\penalty 700
+.\glue(\medmuskip) 0.0
+.\TU/lmtt/m/n/8 c
+.\TU/lmtt/m/n/8 o
+.\TU/lmtt/m/n/8 m
+.\glue(\medmuskip) 0.0
+.\TU/lmtt/m/n/8 /
+.\penalty 700
+.\glue(\rightskip) 0.0
+============================================================
+============================================================
+TEST 2: Bibliography
+============================================================
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, line-spacing = 1, entry-spacing = 1}}
+>  {\bibitem {ansariHowMetaBroke2023} Ansari T, ‘How Meta Broke the Barriers To Entry With LLaMA 2’ [2023] \textit {Analytics India Magazine} <\url {https://analyticsindiamag.com/how-meta-broke-the-barriers-to-entry-with-llama-2/}> accessed 27 December 2023}
+>  {\end {thebibliography}}.
+<recently read> }
+l. ...}
+============================================================

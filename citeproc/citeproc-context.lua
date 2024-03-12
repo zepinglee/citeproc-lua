@@ -319,8 +319,11 @@ function Context:get_localized_quotes()
 end
 
 ---@param page string|number
----@return string
+---@return string?
 function Context.page_first(page)
+  if not page then
+    return nil
+  end
   page = tostring(page)
   local page_first = util.split(page, "%s*[&,-]%s*")[1]
   return util.split(page_first, util.unicode["en dash"])[1]
