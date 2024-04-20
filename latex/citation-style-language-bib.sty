@@ -117,6 +117,8 @@
 
 \tl_new:N \l__csl_bib_index_tl
 \bool_new:N \l__csl_hanging_indent_bool
+\bool_new:N \l__csl_second_field_align_flush_bool
+\bool_new:N \l__csl_second_field_align_margin_bool
 \tl_new:N \l__csl_line_spacing_tl
 \tl_new:N \l__csl_entry_spacing_tl
 \tl_new:N \l__csl_bib_wides_label_tl
@@ -124,6 +126,22 @@
 \keys_define:nn { csl / bib-options }
   {
     index          .tl_set:N   = \l__csl_bib_index_tl ,
+    second-field-align .choice:,
+    second-field-align / flush  .code:n =
+      {
+        \bool_set_true:N  \l__csl_second_field_align_flush_bool
+        \bool_set_false:N \l__csl_second_field_align_margin_bool
+      } ,
+    second-field-align / margin .code:n =
+      {
+        \bool_set_false:N \l__csl_second_field_align_flush_bool
+        \bool_set_true:N  \l__csl_second_field_align_margin_bool
+      } ,
+    second-field-align / false  .code:n =
+      {
+        \bool_set_false:N \l__csl_second_field_align_flush_bool
+        \bool_set_false:N \l__csl_second_field_align_margin_bool
+      } ,
     hanging-indent .bool_set:N = \l__csl_hanging_indent_bool ,
     line-spacing   .tl_set:N   = \l__csl_line_spacing_tl ,
     entry-spacing  .tl_set:N   = \l__csl_entry_spacing_tl ,
@@ -133,6 +151,7 @@
 \keys_set:nn { csl / bib-options }
   {
     index          = 1 ,
+    second-field-align = false ,
     hanging-indent = false ,
     line-spacing   = 1 ,
     entry-spacing  = 1 ,
@@ -147,7 +166,6 @@
     \group_begin:
       \tl_set:Nn \l__csl_bib_index_tl { 1 }
       \keys_set:nn { csl / bib-options } {#1}
-      \dim_zero:N \parindent
       \tl_if_eq:NnF \l__csl_line_spacing_tl { 1 }
         { \linespread { \l__csl_line_spacing_tl } \selectfont }
       \l__csl_bib_font_tl
@@ -185,9 +203,24 @@
         \dim_set:Nn \itemindent { - \leftmargin }
       }
       {
-        \settowidth \labelwidth { \@biblabel {#1} }
-        \dim_set_eq:NN \leftmargin \labelwidth
-        \dim_add:Nn \leftmargin { \labelsep }
+        \bool_if:NTF \l__csl_second_field_align_flush_bool
+          {
+            \settowidth \labelwidth { \@biblabel {#1} }
+            \dim_set_eq:NN \leftmargin \labelwidth
+            \dim_add:Nn \leftmargin { \labelsep }
+          }
+          {
+            \bool_if:NTF \l__csl_second_field_align_margin_bool
+              {
+                \dim_zero:N \leftmargin
+                \settowidth \labelwidth { \@biblabel {#1} }
+                \dim_add:Nn \leftmargin { \labelsep }
+              }
+              {
+                \dim_zero:N \leftmargin
+                \dim_set:Nn \itemindent { \l__csl_bib_par_indent_tl }
+              }
+          }
       }
   }
 

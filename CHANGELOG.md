@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## Added
+
+- Add normal paragraph style for list of references ([#60](https://github.com/zepinglee/citeproc-lua/discussions/60)).
+
+- Add `bib-par-indent` option for the amount of paragraph indentation.
+
 ## [0.4.8] - 2024-03-12
 
 ### Fixed

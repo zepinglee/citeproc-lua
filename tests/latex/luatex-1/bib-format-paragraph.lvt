@@ -1,0 +1,41 @@
+% https://github.com/zepinglee/citeproc-lua/discussions/60
+
+\input{regression-test}
+
+\documentclass{article}
+
+\usepackage{citation-style-language}
+
+\START
+
+\cslsetup{
+  regression-test = true,
+  style = harvard-cite-them-right,
+  bib-par-indent = 2em,
+}
+\addbibresource{test.json}
+
+
+\begin{document}
+
+\showoutput
+
+Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim
+labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet.
+
+Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim
+labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet.
+
+\OMIT
+\nocite{*}
+\TIMO
+
+\TEST{Bibliography contents}{
+  \printbibliography
+}
+
+\TEST{Bibliography format}{
+  \clearpage
+}
+
+\end{document}

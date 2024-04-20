@@ -444,6 +444,7 @@ function core.make_bibliography(engine, option_str)
   }
 
   local bib_option_map = {
+    ["second-field-align"] = "second-field-align",
     ["hanging-indent"] = "hangingindent",
     ["entry-spacing"] = "entryspacing",
     ["line-spacing"] = "linespacing",
@@ -451,6 +452,7 @@ function core.make_bibliography(engine, option_str)
   }
   local bib_option_order = {
     "index",
+    "second-field-align",
     "hanging-indent",
     "line-spacing",
     "entry-spacing",

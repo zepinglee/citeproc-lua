@@ -765,7 +765,7 @@ function CiteProc:makeBibliography(bibsection)
 
   local params = {
     hangingindent = self.style.bibliography.hanging_indent,
-    ["second-field-align"] = self.style.bibliography.second_field_align ~= nil,
+    ["second-field-align"] = self.style.bibliography.second_field_align or false,
     linespacing = self.style.bibliography.line_spacing,
     entryspacing = self.style.bibliography.entry_spacing,
     maxoffset = self.registry.maxoffset,
