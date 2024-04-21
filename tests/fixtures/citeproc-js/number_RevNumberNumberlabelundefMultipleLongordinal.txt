@@ -4,7 +4,7 @@ citation
 
 
 >>===== RESULT =====>>
->>[0] first–third, fifth &#38; eighth
+>>[0] numbers first–third, fifth &#38; eighth
 <<===== RESULT =====<<
 
 >>===== CITATIONS =====>>

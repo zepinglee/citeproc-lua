@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.9] - 2024-04-21
+
 ## Added
 
 - Add normal paragraph style for list of references ([#60](https://github.com/zepinglee/citeproc-lua/discussions/60)).
@@ -184,7 +186,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial CTAN release.
 
-[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.8...HEAD
+[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.9...HEAD
+[0.4.9]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.8...v0.4.9
 [0.4.8]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.7...v0.4.8
 [0.4.7]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.6...v0.4.7
 [0.4.6]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.5...v0.4.6

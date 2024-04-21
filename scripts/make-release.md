@@ -25,7 +25,8 @@ busted
 
 l3build tag x.x.x
 git commit -a -m "Bump to vx.x.x"
+git push
 
-l3build ctan
-l3build upload
+git tag vxx.x.x
+git push vx.x.x
 ```
