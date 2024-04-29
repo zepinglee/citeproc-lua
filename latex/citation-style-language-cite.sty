@@ -479,6 +479,15 @@
     \fi
   }
 
+% Should be set to true when located in a footnote, and to false otherwise
+\bool_new:N \l__csl_in_note_bool
+
+\hook_gput_code:nnn { cmd / @makefntext / before } { . }
+  { \bool_set_true:N \l__csl_in_note_bool }
+
+\hook_gput_code:nnn { cmd / @makefntext / after } { . }
+  { \bool_set_false:N \l__csl_in_note_bool }
+
 
 % #1: \l__csl_citation_tl
 \cs_new:Npn \__csl_print_citation:N #1
@@ -486,7 +495,11 @@
     \bool_if:NT \l__csl_regression_test_bool
       { \tl_show:N #1 }
     \bool_if:NTF \l__csl_note_bool
-      { \footnote {#1} }
+      {
+        \bool_if:NTF \l__csl_in_note_bool
+          {#1}
+          { \footnote {#1} }
+      }
       {#1}
   }
 

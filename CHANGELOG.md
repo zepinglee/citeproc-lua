@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## Added
+
+- Check if the `\cite` command is in a footnote.
+
 ## [0.4.9] - 2024-04-21
 
 ## Added

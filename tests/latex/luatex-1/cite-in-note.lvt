@@ -1,0 +1,33 @@
+\input{regression-test}
+
+\documentclass{article}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+
+\cslsetup{
+  regression-test = true,
+  style = chicago-fullnote-bibliography,
+}
+\addbibresource{test.json}
+
+
+\begin{document}
+
+\START
+\showoutput
+
+\TEST{Citation as footnote}{
+  Foo\cite{ITEM-1}.
+}
+
+\TEST{Citation in footnote}{
+  Foo\footnote{This citation is in a footnote: \cite{ITEM-2}.}.
+}
+
+\TEST{Page format}{
+  \clearpage
+}
+
+\end{document}
