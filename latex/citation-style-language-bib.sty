@@ -9,21 +9,21 @@
 % The options like `notcategory` can be used multiple times and thus we save
 % them into a seq instead of a prop.
 \seq_new:N \l__csl_bib_filter_seq
-\int_new:N \g__bib_list_index_int
-\tl_new:N \g__bib_list_index_tl
+\int_new:N \g__csl_bib_list_index_int
+\tl_new:N \g__csl_bib_list_index_tl
 \tl_new:N \l__csl_bibliography_tl
 \seq_new:N \l__csl_bibliography_seq
 
 \NewDocumentCommand \printbibliography { O { } }
   {
-    \int_gincr:N \g__bib_list_index_int
-    \tl_gset:Nx \g__bib_list_index_tl { \int_use:N \g__bib_list_index_int }
+    \int_gincr:N \g__csl_bib_list_index_int
+    \tl_gset:Nx \g__csl_bib_list_index_tl { \int_use:N \g__csl_bib_list_index_int }
     \__csl_set_categories:
     % Bibliography filter
     \group_begin:
       \seq_clear:N \l__csl_bib_filter_seq
       \seq_put_right:Nx \l__csl_bib_filter_seq
-        { index = \g__bib_list_index_tl }
+        { index = \g__csl_bib_list_index_tl }
       \keys_set:nn { csl / bibliography } {#1}
       \__csl_serialize_seq:NN \l__csl_bib_filter_seq \l__csl_bib_filter_tl
       % Collect the bibliography to token list
@@ -43,7 +43,7 @@
           \exp_args:NV \__csl_write_aux_bibliography:n \l__csl_bib_filter_tl
         }
       % Print the bibliography
-      \prop_get:NVNTF \g__csl_bibliographies_prop \g__bib_list_index_tl
+      \prop_get:NVNTF \g__csl_bibliographies_prop \g__csl_bib_list_index_tl
           \l__csl_bibliography_tl
         {
           \bool_if:NT \l__csl_regression_test_bool
