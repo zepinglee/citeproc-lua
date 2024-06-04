@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## Added
+### Added
+
+- Add support for annotated bibliography ([#64](https://github.com/zepinglee/citeproc-lua/issues/64)).
+
+## Changed
 
 - Check if the `\cite` command is in a footnote.
 

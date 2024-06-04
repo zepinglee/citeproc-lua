@@ -1,0 +1,31 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Citation
+============================================================
+> \l__csl_citation_info_tl=citationID={barber2016work-life,carlson2019double@1},citationItems={{id={barber2016work-life}},{id={carlson2019double}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=(Barber et al., 2016; Carlson et al., 2019).
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 2: Bibliography
+============================================================
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 2, entry-spacing = 0}}
+>  {\bibitem {barber2016work-life} Barber, L. K., Grawitch, M. J., \& Maloney, P. W. (2016). Work-life balance: Contemporary perspectives. In \textit {The psychologically healthy workplace: Building a win-win environment for organizations and employees} (pp. 111–133). American Psychological Association. \url {https://doi.org/10.1037/14731-006}}
+>  {This book chapter provides an overview of the psychosociological concept of work-life balance. The authors discuss findings from studies showing harmful effects of work-life conflict on psychological and behavioral health as well as beneficial effects of work-life facilitation, wherein one role makes a positive contribution to the other. The chapter concludes with a description of work-life balance initiatives that organizations have adopted to help employees manage their dual work and nonwork obligations and some of the key factors influencing their effectiveness.}
+>  {\bibitem {carlson2019double} Carlson, D. S., Thompson, M. J., \& Kacmar, K. M. (2019). Double crossed: The spillover and crossover effects of work demands on work outcomes through the family. \textit {Journal of Applied Psychology}, \textit {104}(2), 214–228. \url {https://doi.org/10.1037/apl0000348}}
+>  {Carlson et al. (2019) conducted an empirical study to examine the multiple paths through which work and family variables can affect work outcomes. Whereas Barber et al. (2016) explored how work obligations can increase stress or enhance fulfillment at home, Carlson et al. viewed work demands as raising family stress, with potential negative consequences on work performance. Results supported a model in which direct effects of work demands and spillover effects of work demands to work-to-family conflict led to lower job satisfaction and affective commitment, as well as crossover effects of work-to-family conflict, spousal stress transmission, and later family- to-work conflict on organizational citizenship and absenteeism. Overall, the study demonstrated a link from work demands to work outcomes when considering the family, but those paths differed depending on whether altitudinal or behavioral work outcomes were examined.}
+>  {\end {thebibliography}}.
+<recently read> }
+l. ...}
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+[1
+]
+============================================================

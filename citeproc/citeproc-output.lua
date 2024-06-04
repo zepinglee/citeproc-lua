@@ -1806,7 +1806,7 @@ function LatexWriter:write_display(inline, context)
     return res
 
   elseif inline.div == "block" then
-    util.warning("display=\"block\" is not supported in LaTeX output.")
+    res = "\n\n" .. res
     return res
   end
   return res
