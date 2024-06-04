@@ -9,7 +9,7 @@
 \usepackage{url}
 
 \ExplSyntaxOn
-\debug_on:n { all }
+\debug_on:n { check-declarations, check-expressions, deprecation }
 \ExplSyntaxOff
 
 \START
