@@ -169,7 +169,18 @@ LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
 l. ...}
 ============================================================
 ============================================================
-TEST 16: Uncited entry
+TEST 16: Full cite
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@14},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={full-cite}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 17: Uncited entry
 ============================================================
 > \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
 <recently read> }
@@ -180,7 +191,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 17: Bibilography
+TEST 18: Bibilography
 ============================================================
 Package citation-style-language Warning: The bibliography is empty.
 ============================================================

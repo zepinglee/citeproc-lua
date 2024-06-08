@@ -152,7 +152,17 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 16: Uncited entry
+TEST 16: Full cite
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@14},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={full-cite}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=D’Arcus, B. (2005). \textit {Boundaries of dissent: Protest and state power in the media age}. Routledge..
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 17: Uncited entry
 ============================================================
 > \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
 <recently read> }
@@ -163,7 +173,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 17: Citation format
+TEST 18: Citation format
 ============================================================
 Completed box being shipped out [1]
 \vbox(633.0+0.0)x407.0
@@ -175,7 +185,7 @@ Completed box being shipped out [1]
 ....\hbox(0.0+0.0)x345.0
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 371.96027fil
+..\vbox(550.0+0.0)x345.0, glue set 347.96283fil
 ...\write-{}
 ...\glue(\topskip) 2.5
 ...\hbox(7.5+2.5)x345.0, glue set 271.99986fil
@@ -625,7 +635,117 @@ Completed box being shipped out [1]
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
-...\glue -2.5
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set - 0.76443
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 D
+....\OT1/cmr/m/n/10 '
+....\OT1/cmr/m/n/10 A
+....\OT1/cmr/m/n/10 r
+....\OT1/cmr/m/n/10 c
+....\OT1/cmr/m/n/10 u
+....\OT1/cmr/m/n/10 s
+....\OT1/cmr/m/n/10 ,
+....\glue 3.33333 plus 2.08331 minus 0.88889
+....\OT1/cmr/m/n/10 B
+....\OT1/cmr/m/n/10 .
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\OT1/cmr/m/n/10 (
+....\OT1/cmr/m/n/10 2
+....\OT1/cmr/m/n/10 0
+....\OT1/cmr/m/n/10 0
+....\OT1/cmr/m/n/10 5
+....\OT1/cmr/m/n/10 )
+....\OT1/cmr/m/n/10 .
+....\glue 4.44444 plus 4.99997 minus 0.37036
+....\OT1/cmr/m/it/10 B
+....\OT1/cmr/m/it/10 o
+....\OT1/cmr/m/it/10 u
+....\OT1/cmr/m/it/10 n
+....\OT1/cmr/m/it/10 d
+....\OT1/cmr/m/it/10 a
+....\OT1/cmr/m/it/10 r
+....\OT1/cmr/m/it/10 i
+....\OT1/cmr/m/it/10 e
+....\OT1/cmr/m/it/10 s
+....\glue 3.57774 plus 1.53333 minus 1.0222
+....\OT1/cmr/m/it/10 o
+....\OT1/cmr/m/it/10 f
+....\glue 3.57774 plus 1.53333 minus 1.0222
+....\OT1/cmr/m/it/10 d
+....\OT1/cmr/m/it/10 i
+....\OT1/cmr/m/it/10 s
+....\OT1/cmr/m/it/10 s
+....\OT1/cmr/m/it/10 e
+....\OT1/cmr/m/it/10 n
+....\OT1/cmr/m/it/10 t
+....\OT1/cmr/m/it/10 :
+....\glue 4.59995 plus 3.06665 minus 0.5111
+....\OT1/cmr/m/it/10 P
+....\OT1/cmr/m/it/10 r
+....\kern-0.51112
+....\OT1/cmr/m/it/10 o
+....\OT1/cmr/m/it/10 t
+....\OT1/cmr/m/it/10 e
+....\OT1/cmr/m/it/10 s
+....\OT1/cmr/m/it/10 t
+....\glue 3.57774 plus 1.53333 minus 1.0222
+....\OT1/cmr/m/it/10 a
+....\OT1/cmr/m/it/10 n
+....\OT1/cmr/m/it/10 d
+....\glue 3.57774 plus 1.53333 minus 1.0222
+....\OT1/cmr/m/it/10 s
+....\OT1/cmr/m/it/10 t
+....\OT1/cmr/m/it/10 a
+....\OT1/cmr/m/it/10 t
+....\OT1/cmr/m/it/10 e
+....\glue 3.57774 plus 1.53333 minus 1.0222
+....\OT1/cmr/m/it/10 p
+....\kern-0.51112
+....\OT1/cmr/m/it/10 o
+....\OT1/cmr/m/it/10 w
+....\OT1/cmr/m/it/10 e
+....\OT1/cmr/m/it/10 r
+....\glue 3.57774 plus 1.53333 minus 1.0222
+....\OT1/cmr/m/it/10 i
+....\OT1/cmr/m/it/10 n
+....\glue 3.57774 plus 1.53333 minus 1.0222
+....\OT1/cmr/m/it/10 t
+....\OT1/cmr/m/it/10 h
+....\OT1/cmr/m/it/10 e
+....\glue 3.57774 plus 1.53333 minus 1.0222
+....\OT1/cmr/m/it/10 m
+....\OT1/cmr/m/it/10 e
+....\kern-0.51112
+....\OT1/cmr/m/it/10 d
+....\OT1/cmr/m/it/10 i
+....\OT1/cmr/m/it/10 a
+....\glue(\rightskip) 0.0
+...\penalty 300
+...\glue(\baselineskip) 2.55556
+...\hbox(6.94444+1.94444)x345.0, glue set 272.21667fil
+....\OT1/cmr/m/it/10 a
+....\OT1/cmr/m/it/10 g
+....\OT1/cmr/m/it/10 e
+....\OT1/cmr/m/n/10 .
+....\glue 4.44444 plus 4.99997 minus 0.37036
+....\OT1/cmr/m/n/10 R
+....\OT1/cmr/m/n/10 o
+....\OT1/cmr/m/n/10 u
+....\OT1/cmr/m/n/10 t
+....\OT1/cmr/m/n/10 l
+....\OT1/cmr/m/n/10 e
+....\OT1/cmr/m/n/10 d
+....\OT1/cmr/m/n/10 g
+....\OT1/cmr/m/n/10 e
+....\OT1/cmr/m/n/10 .
+....\glue 4.44444 plus 4.99997 minus 0.37036
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue -1.94444
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
 ...\glue 0.0 plus 0.0001fil
@@ -634,7 +754,7 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x345.0
 ============================================================
 ============================================================
-TEST 18: Bibliography contents
+TEST 19: Bibliography contents
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 2, entry-spacing = 0}}
@@ -646,7 +766,7 @@ The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 l. ...}
 ============================================================
 ============================================================
-TEST 19: Bibliography format
+TEST 20: Bibliography format
 ============================================================
 Completed box being shipped out [2]
 \vbox(633.0+0.0)x407.0

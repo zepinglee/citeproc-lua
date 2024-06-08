@@ -172,7 +172,17 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 16: Uncited entry
+TEST 16: Full cite
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@16},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={full-cite}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=D’Arcus, Bruce. \textit {Boundaries of Dissent: Protest and State Power in the Media Age}. Routledge, 2005..
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 17: Uncited entry
 ============================================================
 > \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
 <recently read> }
@@ -183,7 +193,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 17: Citation format
+TEST 18: Citation format
 ============================================================
 Completed box being shipped out [1]
 \vbox(633.0+0.0)x407.0, direction TLT
@@ -195,7 +205,7 @@ Completed box being shipped out [1]
 ....\hbox(0.0+0.0)x345.0, direction TLT
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 221.24007fil, direction TLT
+..\vbox(550.0+0.0)x345.0, glue set 197.24263fil, direction TLT
 ...\write-{}
 ...\glue(\topskip) 1.72308
 ...\hbox(8.27692+0.0)x345.0, glue set 337.18701fil, direction TLT
@@ -631,7 +641,134 @@ Completed box being shipped out [1]
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
-...\glue -0.11
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 4.73
+...\hbox(7.16+2.05)x345.0, glue set - 0.00468, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x0.0, direction TLT
+....\TU/lmr/m/n/10 D
+....\TU/lmr/m/n/10 ’
+....\TU/lmr/m/n/10 A
+....\TU/lmr/m/n/10 r
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/n/10 -
+....\TU/lmr/m/n/10 c
+....\TU/lmr/m/n/10 u
+....\TU/lmr/m/n/10 s
+....\TU/lmr/m/n/10 ,
+....\glue(\spaceskip) 3.33 plus 2.08124 minus 0.888
+....\TU/lmr/m/n/10 B
+....\TU/lmr/m/n/10 r
+....\TU/lmr/m/n/10 u
+....\TU/lmr/m/n/10 c
+....\TU/lmr/m/n/10 e
+....\TU/lmr/m/n/10 .
+....\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+....\TU/lmr/m/it/10 B
+....\TU/lmr/m/it/10 o
+....\TU/lmr/m/it/10 u
+....\TU/lmr/m/it/10 n
+....\TU/lmr/m/it/10 d
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/it/10 -
+....\TU/lmr/m/it/10 a
+....\TU/lmr/m/it/10 r
+....\TU/lmr/m/it/10 i
+....\TU/lmr/m/it/10 e
+....\TU/lmr/m/it/10 s
+....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+....\TU/lmr/m/it/10 o
+....\TU/lmr/m/it/10 f
+....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+....\TU/lmr/m/it/10 D
+....\TU/lmr/m/it/10 i
+....\TU/lmr/m/it/10 s
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/it/10 -
+....\TU/lmr/m/it/10 s
+....\TU/lmr/m/it/10 e
+....\TU/lmr/m/it/10 n
+....\TU/lmr/m/it/10 t
+....\TU/lmr/m/it/10 :
+....\glue(\spaceskip) 4.77333 plus 3.57999 minus 0.59666
+....\TU/lmr/m/it/10 P
+....\TU/lmr/m/it/10 r
+....\kern-0.51 (font)
+....\TU/lmr/m/it/10 o
+....\TU/lmr/m/it/10 t
+....\TU/lmr/m/it/10 e
+....\TU/lmr/m/it/10 s
+....\TU/lmr/m/it/10 t
+....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+....\TU/lmr/m/it/10 a
+....\TU/lmr/m/it/10 n
+....\TU/lmr/m/it/10 d
+....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+....\TU/lmr/m/it/10 S
+....\TU/lmr/m/it/10 t
+....\TU/lmr/m/it/10 a
+....\TU/lmr/m/it/10 t
+....\TU/lmr/m/it/10 e
+....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+....\TU/lmr/m/it/10 P
+....\TU/lmr/m/it/10 o
+....\TU/lmr/m/it/10 w
+....\TU/lmr/m/it/10 e
+....\TU/lmr/m/it/10 r
+....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+....\TU/lmr/m/it/10 i
+....\TU/lmr/m/it/10 n
+....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+....\TU/lmr/m/it/10 t
+....\TU/lmr/m/it/10 h
+....\TU/lmr/m/it/10 e
+....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+....\TU/lmr/m/it/10 M
+....\TU/lmr/m/it/10 e
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/it/10 -
+.....= \kern-0.51 (font)
+....\TU/lmr/m/it/10 d
+....\TU/lmr/m/it/10 i
+....\TU/lmr/m/it/10 a
+....\glue(\rightskip) 0.0
+...\penalty 300
+...\glue(\baselineskip) 2.79
+...\hbox(7.16+2.06)x345.0, glue set 244.29999fil, direction TLT
+....\TU/lmr/m/it/10 A
+....\kern-0.51 (font)
+....\TU/lmr/m/it/10 g
+....\TU/lmr/m/it/10 e
+....\TU/lmr/m/n/10 .
+....\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+....\TU/lmr/m/n/10 R
+....\TU/lmr/m/n/10 o
+....\TU/lmr/m/n/10 u
+....\TU/lmr/m/n/10 t
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/n/10 -
+....\TU/lmr/m/n/10 l
+....\TU/lmr/m/n/10 e
+....\TU/lmr/m/n/10 d
+....\TU/lmr/m/n/10 g
+....\TU/lmr/m/n/10 e
+....\TU/lmr/m/n/10 ,
+....\glue(\spaceskip) 3.33 plus 2.08124 minus 0.888
+....\TU/lmr/m/n/10 2
+....\TU/lmr/m/n/10 0
+....\TU/lmr/m/n/10 0
+....\TU/lmr/m/n/10 5
+....\TU/lmr/m/n/10 .
+....\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue -2.06
 ...\glue 0.0 plus 1.0fil
 ...\glue 9.0 plus 4.0 minus 2.0
 ...\kern-3.0
@@ -1621,7 +1758,7 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x345.0, direction TLT
 ============================================================
 ============================================================
-TEST 18: Bibliography contents
+TEST 19: Bibliography contents
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 1, entry-spacing = 0}}
@@ -1633,7 +1770,7 @@ The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 l. ...}
 ============================================================
 ============================================================
-TEST 19: Bibliography format
+TEST 20: Bibliography format
 ============================================================
 Completed box being shipped out [2]
 \vbox(633.0+0.0)x407.0, direction TLT

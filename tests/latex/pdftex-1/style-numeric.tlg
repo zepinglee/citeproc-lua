@@ -169,7 +169,18 @@ LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
 l. ...}
 ============================================================
 ============================================================
-TEST 16: Uncited entry
+TEST 16: Full cite
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@14},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={full-cite}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 17: Uncited entry
 ============================================================
 > \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
 <recently read> }
@@ -180,7 +191,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 17: Citation format
+TEST 18: Citation format
 ============================================================
 Completed box being shipped out [1]
 \vbox(633.0+0.0)x407.0
@@ -192,7 +203,7 @@ Completed box being shipped out [1]
 ....\hbox(0.0+0.0)x345.0
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 371.96027fil
+..\vbox(550.0+0.0)x345.0, glue set 359.96155fil
 ...\write-{}
 ...\glue(\topskip) 2.5
 ...\hbox(7.5+2.5)x345.0, glue set 295.69466fil
@@ -510,6 +521,26 @@ Completed box being shipped out [1]
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 295.69466fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 [
+....\kern 0.0
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 1
+....\kern 0.0
+....\OT1/cmr/m/n/10 ]
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
 ...\glue -2.5
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
@@ -519,12 +550,12 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x345.0
 ============================================================
 ============================================================
-TEST 18: Bibliography contents
+TEST 19: Bibliography contents
 ============================================================
 Package citation-style-language Warning: The bibliography is empty.
 ============================================================
 ============================================================
-TEST 19: Bibliography format
+TEST 20: Bibliography format
 ============================================================
 ============================================================
 (style-numeric.aux)
