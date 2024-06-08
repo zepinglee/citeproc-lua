@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add `\fullcite` command ([#64](https://github.com/zepinglee/citeproc-lua/issues/64)).
 - Add support for annotated bibliography ([#64](https://github.com/zepinglee/citeproc-lua/issues/64)).
 
 ## Changed

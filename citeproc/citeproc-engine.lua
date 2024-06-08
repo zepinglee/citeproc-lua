@@ -362,14 +362,14 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
     if mode == "suppress-author" and self.style.class == "note" then
       mode = nil
     end
-    local citation_elemement = self.style.citation
+    local citation_element = self.style.citation
     if mode == "author-only" and self.style.intext then
-      citation_elemement = self.style.intext
+      citation_element = self.style.intext
     elseif mode == "full-cite" then
-      citation_elemement = self.style.full_citation
+      citation_element = self.style.full_citation
     end
 
-    local citation_str = citation_elemement:build_citation_str(citation_, self)
+    local citation_str = citation_element:build_citation_str(citation_, self)
     table.insert(output, {citation_index, citation_str, citation_id})
   end
 
@@ -471,14 +471,14 @@ function CiteProc:process_citation(citation)
   if mode == "suppress-author" and self.style.class == "note" then
     mode = nil
   end
-  local citation_elemement = self.style.citation
+  local citation_element = self.style.citation
   if mode == "author-only" and self.style.intext then
-    citation_elemement = self.style.intext
+    citation_element = self.style.intext
   elseif mode == "full-cite" then
-    citation_elemement = self.style.full_citation
+    citation_element = self.style.full_citation
   end
 
-  local citation_str = citation_elemement:build_citation_str(citation, self)
+  local citation_str = citation_element:build_citation_str(citation, self)
 
   return citation_str
 end

@@ -11,6 +11,8 @@
 \usepackage{listings}
 
 \NewDocumentCommand\opt{m}{\texttt{#1}}
+\NewDocumentCommand\field{m}{\texttt{#1}}
+\NewDocumentCommand\entrytype{m}{\texttt{#1}}
 
 \lstnewenvironment{LaTeXdemo}{
   \lstset{
@@ -115,11 +117,7 @@ An example of using \pkg{citation-style-language} package is as follows.
 
 \begin{LaTeXdemo}
   \documentclass{...}
-  \usepackage{citation-style-language}
-  \cslsetup{
-    style = ...,
-    ...
-  }
+  \usepackage[style = apa]{citation-style-language}
   \addbibresource{bibfile.json}
   \begin{document}
   \cite{...}
@@ -155,7 +153,7 @@ The general procedure is similar to the traditional BibTeX workflow.
 
 
 
-\section{Package commands}
+\section{Package setup}
 
 \begin{function}{\cslsetup}
   \begin{syntax}
@@ -264,6 +262,8 @@ their extension names and the content should be encoded in UTF-8.
 \end{LaTeXdemo}
 
 
+\section{Citation commands}
+
 \begin{function}{\cite}
   \begin{syntax}
     \cs{cite}\oarg{options}\marg{keys}
@@ -328,14 +328,24 @@ brackets, which is different from other packages.
   \end{syntax}
 \end{function}
 
-\DescribeOption{infix}
 These commands proceduce narrative in-text citation where the author name is
 part of the running text followed by the year in parentheses.
 These commands only work with author-date styles.
+
+\DescribeOption{infix}
 An extra option \opt{infix} can be given to specify the text inserted between
 then author and year parts. For example, “Kesey’s early work (1962)” can be
 produced by |\textcite[infix={'s early work}]{ITEM-1}|.
 By default the infix is a space.
+
+\begin{function}{\footcite}
+  \begin{syntax}
+    \cs{footcite}\oarg{options}\marg{keys}
+  \end{syntax}
+\end{function}
+
+This command is similar to \cs{cite}. It is for compatibility with
+\pkg{biblatex}.
 
 \begin{function}{\cites}
   \begin{syntax}
@@ -365,6 +375,25 @@ style), an optional |<intext>| element can be suppplied as a sibling to the
 |<citation>| and |<bibliography>| elements in the CSL style (see
 \href{https://citeproc-js.readthedocs.io/en/latest/running.html#citation-flags-with-processcitationcluster}{citeproc-js's documentation} for details).
 
+\begin{function}{\citeyearpar}
+  \begin{syntax}
+    \cs{citeyearpar}\oarg{options}\marg{keys}
+  \end{syntax}
+\end{function}
+
+This command suppresses the author names in the citation.
+It is equivalent to \cs{cite} with \opt{suppress-author} option enabled.
+
+\begin{function}{\fullcite}
+  \begin{syntax}
+    \cs{fullcite}\oarg{options}\marg{keys}
+  \end{syntax}
+\end{function}
+
+This command prints a full citation similar to the bibliographic entry.
+The contents are genreated from the |<bibliography>| element in the CSL style
+rather than the |<citation>| element.
+
 \begin{function}{\nocite}
   \begin{syntax}
     \cs{nocite}\marg{keys}
@@ -377,23 +406,149 @@ If the special key |*| is given (\cs{notecite\{*\}}), all the entries in the
 database are included.
 
 
+\section{Bibliography commands}
 
 \begin{function}{\printbibliography}
   \begin{syntax}
+    \cs{printbibliography}
     \cs{printbibliography}\oarg{options}
   \end{syntax}
 \end{function}
 
 This command prints the reference list.
-Currently no options are available.
+It also accepts an optional argument in square brackets which is a list of
+key-value options. The following options are available.
+
+\begin{variable}{heading}
+  \begin{syntax}
+    heading = \meta{name}
+  \end{syntax}
+\end{variable}
+
+This option selects the section heading style defined with \cs{defbibheading}.
+The default heading for \cs{printbibliography} is \opt{bibliography}.
+
+\begin{variable}{title}
+  \begin{syntax}
+    title = \meta{text}
+  \end{syntax}
+\end{variable}
+
+This option sets the title in the heading.
+
+\begin{variable}{label}
+  \begin{syntax}
+    label = \meta{label}
+  \end{syntax}
+\end{variable}
+
+This option is equivalent to \cs{label}\marg{label} after the heading so that
+it can be \cs{ref}ed from other parts in the document.
+
+\begin{variable}{prenote, postnote}
+  \begin{syntax}
+    prenote = \meta{name}
+    postnote = \meta{name}
+  \end{syntax}
+\end{variable}
+
+\begin{variable}{type}
+  \begin{syntax}
+    type = \meta{entrytype}
+  \end{syntax}
+\end{variable}
+
+Print only the entries of the given \meta{entrytype}.
+Note that the \meta{entrytype} should be the name of a CSL entry type rather
+than BibTeX entry type (e.g., use |article-journal| rather than |article|).
+
+\begin{variable}{nottype}
+  \begin{syntax}
+    nottype = \meta{entrytype}
+  \end{syntax}
+\end{variable}
+
+Print only the entries that are not \meta{entrycategory}.
+This option may be used multiple times.
+
+\begin{variable}{keyword}
+  \begin{syntax}
+    keyword = \meta{keyword}
+  \end{syntax}
+\end{variable}
+
+Print only the entries whose \field{keyword} field includes the given
+\meta{keyword}. This option may be used multiple times.
+
+\begin{variable}{notkeyword}
+  \begin{syntax}
+    notkeyword = \meta{keyword}
+  \end{syntax}
+\end{variable}
+
+Print only the entries whose \field{keyword} field does not include the given
+\meta{keyword}. This option may be used multiple times.
+
+\begin{variable}{category}
+  \begin{syntax}
+    category = \meta{category}
+  \end{syntax}
+\end{variable}
+
+Print only the entries assigned to the given category.
+This option may be used multiple times.
 
 
-% \begin{function}{\cites}
-%   \begin{syntax}
-%     \cs{cite}\oarg{options}\marg{keys}
-%   \end{syntax}
-% \end{function}
+\begin{variable}{notcategory}
+  \begin{syntax}
+    notcategory = \meta{category}
+  \end{syntax}
+\end{variable}
 
+Print only the entries assigned to the given category.
+This option may be used multiple times.
+
+
+\subsection{Bibliography Headings}
+
+\begin{function}{\defbibheading}
+  \begin{syntax}
+    \cs{defbibheading}\marg{name}\oarg{title}\marg{code}
+  \end{syntax}
+\end{function}
+
+This command defines a bibliographic heading which can be used with the
+\opt{bibheading} option of \cs{printbibliography}. The \meta{name} is an
+identifier assigned to the defined style.
+If a \opt{title} option is given in the \cs{printbibliography}, it is passed
+to the \opt{code} as |#1|. Otherwise the value \meta{title} in the optional
+argument is used by default. The following is the definition of the default
+heading when used in a \cls{book} class.
+
+\begin{LaTeXdemo}
+  \defbibheading{bibliography}[\bibname]{%
+    \chapter*{#1}%
+    \markboth{\MakeUppercase{#1}}{\MakeUppercase{#1}}%
+  }
+\end{LaTeXdemo}
+
+
+The following are predefined headings which can be used directly.
+
+\begin{description}
+  \item[\opt{bibliography}] The default heading used by \cs{printbibliography}.
+  \item[\opt{subbibliography}] Similar to \opt{bibliography} but one sectioning level lower.
+  \item[\opt{bibintoc}] Similar to \opt{bibliography} but adds an entry to the table of contents.
+  \item[\opt{subbibintoc}] Similar to \opt{subbibliography} but adds an entry to the table of contents.
+  \item[\opt{bibnumbered}] Similar to \opt{bibliography} but uses \cs{chapter}
+    or \cs{section} to create a numbered heading which is also added to the table of contents.
+  \item[\opt{subbibnumbered}] Similar to \opt{subbibliography} but uses \cs{chapter}
+    or \cs{section} to create a numbered heading which is also added to the table of contents.
+  \item[\opt{none}] An empty heading.
+  % \item[\opt{biblist}]
+  % \item[\opt{biblistintoc}]
+  % \item[\opt{biblistnumbered}]
+\end{description}
 
 
 
@@ -440,52 +595,6 @@ An error will be triggered if any of them is loaded together with \pkg{citation-
   \item \pkg{natbib}
   \item \pkg{splitbib}
 \end{itemize}
-
-
-
-\section{To-do list}
-
-The \pkg{citation-style-language} package is in early development stage and
-some features may not work as expected.
-Bug report are welcome at the GitHub issue tracker
-\footnote{\url{https://github.com/zepinglee/citeproc-lua/issues}}.
-The following is a list of features to be implemented.
-If you need any of them or new features, please post a issue to let me know
-so that I can give it a priority.
-
-\begin{itemize}
-  \item The \pkg{citeproc-lua} engine has not passed all the fixures from the
-    CSL standard test-suite. The skipped fixtures are lists in
-    \href{https://github.com/zepinglee/citeproc-lua/blob/main/tests/citeproc-test-skip.txt}{citeproc-test-skip.txt}
-    and they need to be handled (though less than 6\% of test-suite).
-
-  \item The Unicode sorting method is provided by \pkg{lua-uca} package and
-    CJK scripts are not supported so far.
-
-  \item Citation commands that capitalize the first letter (\cs{Cite},
-    \cs{Textcite}, etc.).
-
-  \item Back references: page numbers of the citations appears after the entry
-    item in bibliography (even without the hyperref).
-
-  \item \cs{footcite} command.
-
-  \item \cs{cite} in a footnote should work as in-text citations (similar to
-    \cs{smartcite}).
-
-  \item CSL-YAML support.
-
-  \item Multiple bibliographies in a document like \pkg{chapterbib} package or
-    \texttt{refsection} and \texttt{refsegment} options in \pkg{biblatex}.
-
-  \item Journal abbreviation.
-
-  \item Sentences case conversion: the title and booktitle fields in BibTeX
-    database are converted to sentences case if they are in title case.
-
-  \item Distinguish dropping and non-dropping particles in names.
-\end{itemize}
-
 
 \end{documentation}
 
