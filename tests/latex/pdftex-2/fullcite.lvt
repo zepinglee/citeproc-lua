@@ -1,0 +1,112 @@
+\input{regression-test}
+
+\documentclass{article}
+
+% <https://github.com/zepinglee/citeproc-lua/issues/64>
+
+\begin{filecontents}[overwrite, noheader]{\jobname.json}
+[
+	{
+		"id": "apa.9.47:1",
+		"type": "article-journal",
+		"language": "en-US",
+		"title": "Title 1",
+		"author": [
+			{
+				"family": "Azikiwe",
+				"given": "H."
+			},
+			{
+				"family": "Bello",
+				"given": "A."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2020"
+				]
+			]
+		}
+	},
+	{
+		"id": "apa.9.47:2",
+		"type": "article-magazine",
+		"language": "en-US",
+		"title": "Title 2",
+		"author": [
+			{
+				"family": "Azikiwe",
+				"given": "H."
+			},
+			{
+				"family": "Bello",
+				"given": "A."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2020",
+					3,
+					26
+				]
+			]
+		}
+	},
+	{
+		"id": "apa.9.47:3",
+		"type": "webpage",
+		"language": "en-US",
+		"title": "Title 3",
+		"author": [
+			{
+				"family": "Azikiwe",
+				"given": "H."
+			},
+			{
+				"family": "Bello",
+				"given": "A."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2020",
+					4,
+					2
+				]
+			]
+		}
+	}
+]
+\end{filecontents}
+
+\usepackage[style=apa]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{\jobname.json}
+
+
+\begin{document}
+
+\START
+
+\TEST{Full citation}{
+  \fullcite{apa.9.47:1}
+}
+
+\TEST{Disambiguation with \fullcite}{
+  \fullcite{apa.9.47:2}
+}
+
+\TEST{Disambiguation with \cite}{
+  \cite{apa.9.47:3}
+}
+
+\TEST{Bibliography}{
+  \printbibliography
+}
+
+\OMIT
+
+\end{document}

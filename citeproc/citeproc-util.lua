@@ -23,6 +23,10 @@ function util.deep_copy(obj)
   local res
   if type(obj) == "table" then
     res = {}
+    local meta_table = getmetatable(obj)
+    if meta_table then
+      setmetatable(res, meta_table)
+    end
     for key, value in pairs(obj) do
       res[key] = util.deep_copy(value)
     end

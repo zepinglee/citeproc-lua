@@ -45,6 +45,9 @@
     \__csl_cite_suppress_author:nnn {#2} {#3} {#4}
   }
 
+\NewDocumentCommand \fullcite { o o m }
+  { \__csl_full_cite:nnn {#1} {#2} {#3} }
+
 
 \seq_new:N \l__csl_cite_keys_seq
 \seq_new:N \l__csl_citation_items_seq
@@ -151,6 +154,20 @@
     \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
     \prop_put:Nnn \l__csl_citation_properties_prop { noteIndex } { 0 }
     \prop_put:Nnn \l__csl_citation_properties_prop { mode } { suppress-author }
+    \bool_set_false:N \l__csl_note_bool
+    \__csl_make_citation:N \l__csl_citation_info_prop
+  }
+
+
+\cs_new:Npn \__csl_full_cite:nnn #1#2#3
+  {
+    \seq_clear:N \l__csl_cite_keys_seq
+    \seq_clear:N \l__csl_citation_items_seq
+    \prop_clear:N \l__csl_citation_properties_prop
+    \__csl_process_cite_input:nnn {#1} {#2} {#3}
+    \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
+    \prop_put:Nnn \l__csl_citation_properties_prop { noteIndex } { 0 }
+    \prop_put:Nnn \l__csl_citation_properties_prop { mode } { full-cite }
     \bool_set_false:N \l__csl_note_bool
     \__csl_make_citation:N \l__csl_citation_info_prop
   }

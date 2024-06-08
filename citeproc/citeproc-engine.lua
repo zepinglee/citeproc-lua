@@ -365,6 +365,8 @@ function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
     local citation_elemement = self.style.citation
     if mode == "author-only" and self.style.intext then
       citation_elemement = self.style.intext
+    elseif mode == "full-cite" then
+      citation_elemement = self.style.full_citation
     end
 
     local citation_str = citation_elemement:build_citation_str(citation_, self)
@@ -472,6 +474,8 @@ function CiteProc:process_citation(citation)
   local citation_elemement = self.style.citation
   if mode == "author-only" and self.style.intext then
     citation_elemement = self.style.intext
+  elseif mode == "full-cite" then
+    citation_elemement = self.style.full_citation
   end
 
   local citation_str = citation_elemement:build_citation_str(citation, self)

@@ -50,6 +50,7 @@ local DisamStringFormat = output.DisamStringFormat
 ---@field citation Citation
 ---@field intext Citation?
 ---@field bibliography Bibliography?
+---@field full_citation Citation This is used for the `\fullcite` command.
 ---@field has_disambiguate boolean
 local Style = Element:derive("style")
 
@@ -133,6 +134,8 @@ function Style:from_node(node)
     end
   end
 
+  o.full_citation = Style._make_full_citation(o.citation, o.bibliography)
+
   o.has_disambiguate = false
   if #node:query_selector('[disambiguate="true"]') > 0 then
     o.has_disambiguate = true
@@ -148,6 +151,68 @@ Style._default_options = {
   ["demote-non-dropping-particle"] = "display-and-sort",
 }
 
+local function remove_display_attribute(element)
+  if not element.children then
+    return
+  end
+  for i = #element.children, 1, -1 do
+    local child = element.children[i]
+    if child.display == "left-margin" then
+      table.remove(element.children, i)
+    elseif child.display then
+      child.display = nil
+      remove_display_attribute(child)
+    else
+      remove_display_attribute(child)
+    end
+  end
+end
+
+--- This is used for the `\fullcite` command.
+---@param citation Citation
+---@param bibliography Bibliography
+function Style._make_full_citation(citation, bibliography)
+  if not citation then
+    return nil
+  end
+  local full_citation = util.clone(citation)
+  if not bibliography then
+    full_citation.children = {}
+    full_citation.layout = nil
+    full_citation.layouts_by_language = {}
+    return full_citation
+  end
+
+  full_citation.children = util.deep_copy(bibliography.children)
+  if bibliography.second_field_align then
+    for _, child in ipairs(full_citation.children) do
+      if child.element_name == "layout" then
+        if #child.children > 1 then
+          table.remove(child.children, 1)
+        end
+      end
+    end
+  end
+  remove_display_attribute(full_citation)
+  full_citation.layout = nil
+  full_citation.layouts_by_language = {}
+  for _, child in ipairs(full_citation.children) do
+    local element_name = child.element_name
+    if element_name == "layout" then
+      if child.locale then
+        for _, lang in ipairs(util.split(util.strip(child.locale))) do
+          full_citation.layouts_by_language[lang] = child
+        end
+      else
+        full_citation.layout = child
+      end
+    elseif element_name == "sort" then
+      full_citation.sort = child
+    end
+  end
+
+  return full_citation
+end
 
 ---@class Info: Element
 ---@field author table?

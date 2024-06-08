@@ -1,0 +1,44 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Full citation
+============================================================
+> \l__csl_citation_info_tl=citationID={apa.9.47:1@1},citationItems={{id={apa.9.47:1}}},properties={noteIndex={0},mode={full-cite}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=Azikiwe, H., \& Bello, A. (2020a). \textit {Title 1}..
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 2: Disambiguation with \fullcite 
+============================================================
+> \l__csl_citation_info_tl=citationID={apa.9.47:2@1},citationItems={{id={apa.9.47:2}}},properties={noteIndex={0},mode={full-cite}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=Azikiwe, H., \& Bello, A. (2020b, March 26). \textit {Title 2}..
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 3: Disambiguation with \cite 
+============================================================
+> \l__csl_citation_info_tl=citationID={apa.9.47:3@1},citationItems={{id={apa.9.47:3}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=(Azikiwe \& Bello, 2020c).
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 4: Bibliography
+============================================================
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 2, entry-spacing = 0}}
+>  {\bibitem {apa.9.47:1} Azikiwe, H., \& Bello, A. (2020a). \textit {Title 1}.}
+>  {\bibitem {apa.9.47:2} Azikiwe, H., \& Bello, A. (2020b, March 26). \textit {Title 2}.}
+>  {\bibitem {apa.9.47:3} Azikiwe, H., \& Bello, A. (2020c, April 2). \textit {Title 3}.}
+>  {\end {thebibliography}}.
+<recently read> }
+l. ...}
+============================================================
