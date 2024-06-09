@@ -27,6 +27,6 @@ l3build tag x.x.x
 git commit -a -m "Bump to vx.x.x"
 git push
 
-git tag vxx.x.x
+git tag vx.x.x
 git push vx.x.x
 ```

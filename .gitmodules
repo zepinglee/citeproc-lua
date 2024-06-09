@@ -1,7 +1,7 @@
 [submodule "schema"]
 	path = submodules/schema
 	url = https://github.com/citation-style-language/schema.git
-[submodule "locales"]
+[submodule "submodules/locales"]
 	path = submodules/locales
 	url = https://github.com/zepinglee/csl-locales.git
 	branch = ctan
@@ -29,3 +29,4 @@
 [submodule "tests/locales"]
 	path = tests/locales
 	url = https://github.com/citation-style-language/locales.git
+	branch = v1.0.2

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2024-06-09
+
 ### Added
 
 - Add `\fullcite` command ([#64](https://github.com/zepinglee/citeproc-lua/issues/64)).
@@ -195,7 +197,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial CTAN release.
 
-[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.9...HEAD
+[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.9...v0.5.0
 [0.4.9]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.8...v0.4.9
 [0.4.8]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.7...v0.4.8
 [0.4.7]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.6...v0.4.7
