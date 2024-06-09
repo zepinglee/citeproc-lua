@@ -176,6 +176,11 @@ function Style._make_full_citation(citation, bibliography)
     return nil
   end
   local full_citation = util.clone(citation)
+
+  full_citation.cite_group_delimiter = nil
+  full_citation.cite_grouping = false
+  full_citation.collapse = nil
+
   if not bibliography then
     full_citation.children = {}
     full_citation.layout = nil
@@ -183,6 +188,7 @@ function Style._make_full_citation(citation, bibliography)
     return full_citation
   end
 
+  full_citation.name_inheritance = bibliography.name_inheritance
   full_citation.children = util.deep_copy(bibliography.children)
   if bibliography.second_field_align then
     for _, child in ipairs(full_citation.children) do
