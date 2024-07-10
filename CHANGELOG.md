@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.1] - 2024-07-10
+
 ### Fixed
 
 - Fix a bug in font style flip-flopping with raw code ([#67](https://github.com/zepinglee/citeproc-lua/issues/67)).
@@ -201,7 +203,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial CTAN release.
 
-[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/zepinglee/citeproc-lua/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.9...v0.5.0
 [0.4.9]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.8...v0.4.9
 [0.4.8]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.7...v0.4.8

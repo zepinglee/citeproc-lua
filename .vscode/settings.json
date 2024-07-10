@@ -23,5 +23,6 @@
         "DEPENDS.txt": "shellscript",
         "citeproc-test-skip.txt": "shellscript"
     },
-    "latex-workshop.intellisense.update.aggressive.enabled": true
+    "latex-workshop.intellisense.update.aggressive.enabled": true,
+    "Lua.runtime.version": "Lua 5.3"
 }
