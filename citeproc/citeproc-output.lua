@@ -93,19 +93,28 @@ function InlineElement:new(inlines)
 end
 
 
-function InlineElement:_debug()
-  local text = self._type .. "("
+function InlineElement:_debug(level)
+  level = level or 0
+  local text = ""
+  if level == 0 then
+    text = "\n"
+  end
+  text = text .. self._type
+  if self.formatting then
+    text = text .. "["
+    for attr, value in pairs(self.formatting) do
+      text = text .. attr .. '="' .. value .. '"'
+    end
+    text = text .. "]"
+  end
+  text = text .. "("
   if self.value then
     text = text .. '"' .. self.value .. '"'
   elseif self.inlines then
-    local inlines_text = ""
     for _, inline in ipairs(self.inlines) do
-      if inlines_text ~= "" then
-        inlines_text = inlines_text .. ", "
-      end
-      inlines_text = inlines_text .. inline:_debug()
+      text = text .. "\n" .. string.rep("  ", level + 1) .. inline:_debug(level + 1) .. ", "
     end
-    text = text .. inlines_text
+    text = text .. "\n" .. string.rep("  ", level)
   end
   text = text .. ")"
   return text

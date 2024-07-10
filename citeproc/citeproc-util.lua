@@ -207,8 +207,15 @@ local remove_all_metatables = nil
 
 function util.debug(obj)
   local text
-  if type(obj) == "table" and obj._debug then
-    text = obj:_debug()
+  if type(obj) == "table" and (obj._debug or (obj[1] and obj[1]._debug)) then
+    if obj._debug then
+      text = obj:_debug()
+    else
+      text = ""
+      for _, child in ipairs(obj) do
+        text = text .. child:_debug()
+      end
+    end
   else
     if not inspect then
       inspect = require("inspect")

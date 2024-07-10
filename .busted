@@ -10,6 +10,6 @@ return {
   },
   citeproc = {
     ROOT = {"tests/citeproc_test.lua"},
-    output = "tests/bust-output.lua",
+    -- output = "tests/bust-output.lua",
   },
 }
