@@ -37,7 +37,7 @@ TEST 4: Citation with section locator
 > \l__csl_citation_info_tl=citationID={ITEM-1@3},citationItems={{id={ITEM-1},label={section},locator={2.3}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=(D’Arcus, 2005, sec. 2.3).
+> \l__csl_citation_tl=(D’Arcus, 2005, Section 2.3).
 <recently read> }
 l. ...}
 ============================================================
@@ -117,7 +117,7 @@ TEST 12: Multiple cite items with options
 > \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@2},citationItems={{id={ITEM-1},prefix={See },label={page},locator={6}},{id={ITEM-2},label={figure},locator={2}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=(Bennett, 2009, fig. 2; See D’Arcus, 2005, p. 6).
+> \l__csl_citation_tl=(Bennett, 2009, Figure 2; See D’Arcus, 2005, p. 6).
 <recently read> }
 l. ...}
 ============================================================
@@ -304,7 +304,7 @@ Completed box being shipped out [1]
 ...\glue(\parskip) 0.0 plus 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\baselineskip) 2.0
-...\hbox(7.5+2.5)x345.0, glue set 233.06999fil, direction TLT
+...\hbox(7.5+2.5)x345.0, glue set 218.11fil, direction TLT
 ....\localpar
 .....\localinterlinepenalty=0
 .....\localbrokenpenalty=0
@@ -329,11 +329,16 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/10 5
 ....\TU/lmr/m/n/10 ,
 ....\glue(\spaceskip) 3.33 plus 2.08124 minus 0.888
-....\TU/lmr/m/n/10 s
+....\TU/lmr/m/n/10 S
 ....\TU/lmr/m/n/10 e
 ....\TU/lmr/m/n/10 c
-....\TU/lmr/m/n/10 .
-....\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/n/10 -
+....\TU/lmr/m/n/10 t
+....\TU/lmr/m/n/10 i
+....\TU/lmr/m/n/10 o
+....\TU/lmr/m/n/10 n
+....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\TU/lmr/m/n/10 2
 ....\TU/lmr/m/n/10 .
 ....\TU/lmr/m/n/10 3
@@ -633,7 +638,7 @@ Completed box being shipped out [1]
 ...\glue(\parskip) 0.0 plus 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\baselineskip) 2.0
-...\hbox(7.5+2.5)x345.0, glue set 134.37fil, direction TLT
+...\hbox(7.5+2.5)x345.0, glue set 120.59fil, direction TLT
 ....\localpar
 .....\localinterlinepenalty=0
 .....\localbrokenpenalty=0
@@ -658,10 +663,15 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/10 9
 ....\TU/lmr/m/n/10 ,
 ....\glue(\spaceskip) 3.33 plus 2.08124 minus 0.888
-....\TU/lmr/m/n/10 ﬁ
+....\TU/lmr/m/n/10 F
+....\TU/lmr/m/n/10 i
 ....\TU/lmr/m/n/10 g
-....\TU/lmr/m/n/10 .
-....\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/n/10 -
+....\TU/lmr/m/n/10 u
+....\TU/lmr/m/n/10 r
+....\TU/lmr/m/n/10 e
+....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\TU/lmr/m/n/10 2
 ....\TU/lmr/m/n/10 ;
 ....\glue(\spaceskip) 3.33 plus 2.49748 minus 0.73999

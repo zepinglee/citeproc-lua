@@ -28,5 +28,5 @@ git commit -a -m "Bump to vx.x.x"
 git push
 
 git tag vx.x.x
-git push vx.x.x
+git push origin vx.x.x
 ```

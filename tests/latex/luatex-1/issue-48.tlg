@@ -15,7 +15,7 @@ TEST 2: Bibliography
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 2, entry-spacing = 0}}
->  {\bibitem {afGeijersstam1998Stability} af Geijersstam, V., Kibur, M., Wang, Z., Koskela, P., Pukkala, E., Schiller, J., Lehtinen, M., \& Dillner, J. (1998). Stability over time of serum antibody levels to human papillomavirus type 16. \textit {The Journal of Infectious Diseases}, \textit {177}(6), 1710–1714. pmid. \url {https://doi.org/10.1086/517428}}
+>  {\bibitem {afGeijersstam1998Stability} af Geijersstam, V., Kibur, M., Wang, Z., Koskela, P., Pukkala, E., Schiller, J., Lehtinen, M., \& Dillner, J. (1998). Stability over time of serum antibody levels to human papillomavirus type 16. \textit {The Journal of Infectious Diseases}, \textit {177}(6), 1710–1714. \url {https://doi.org/10.1086/517428}}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}

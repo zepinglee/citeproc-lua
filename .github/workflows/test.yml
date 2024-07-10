@@ -17,6 +17,7 @@ jobs:
     name: LaTeX test
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         config: ['luatex-1', 'luatex-2', 'pdftex-1', 'pdftex-2', 'doc']
     steps:
@@ -111,6 +112,7 @@ jobs:
     name: Lua Test
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         luaVersion: ["5.3", "5.4"]
     steps:

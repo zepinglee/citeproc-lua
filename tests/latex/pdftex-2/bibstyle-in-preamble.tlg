@@ -52,7 +52,7 @@ TEST 4: Citation with section locator
 > \l__csl_citation_info_tl=citationID={ITEM-1@3},citationItems={{id={ITEM-1},label={section},locator={2.3}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=(D’Arcus, 2005, sec. 2.3).
+> \l__csl_citation_tl=(D’Arcus, 2005, Section 2.3).
 <recently read> }
 l. ...}
 ============================================================
@@ -132,7 +132,7 @@ TEST 12: Multiple cite items with options
 > \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@2},citationItems={{id={ITEM-1},prefix={See },label={page},locator={6}},{id={ITEM-2},label={figure},locator={2}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=(Bennett, 2009, fig. 2; See D’Arcus, 2005, p. 6).
+> \l__csl_citation_tl=(Bennett, 2009, Figure 2; See D’Arcus, 2005, p. 6).
 <recently read> }
 l. ...}
 ============================================================
