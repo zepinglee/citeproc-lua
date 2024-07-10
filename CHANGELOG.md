@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix a bug in font style flip-flopping with raw code ([#67](https://github.com/zepinglee/citeproc-lua/issues/67)).
+
 ## [0.5.0] - 2024-06-09
 
 ### Added

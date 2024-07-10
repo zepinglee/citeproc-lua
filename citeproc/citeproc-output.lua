@@ -1273,7 +1273,6 @@ function OutputFormat:flip_flop(inlines, state)
     elseif inline._type == "Code" or
         inline._type == "MathML" or
         inline._type == "MathTeX" then
-      return
 
     elseif inline.inlines then  -- Div, ...
       self:flip_flop(inline.inlines, state)
@@ -1336,7 +1335,6 @@ function OutputFormat:flip_flop_micro_inlines(inlines, state)
     elseif inline._type == "Code" or
         inline._type == "MathML" or
         inline._type == "MathTeX" then
-      return
 
     elseif inline.inlines then  -- Div, ...
       self:flip_flop_micro_inlines(inline.inlines, state)

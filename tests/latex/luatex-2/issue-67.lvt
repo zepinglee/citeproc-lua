@@ -1,0 +1,52 @@
+\input{regression-test}
+
+\documentclass{article}
+
+% <https://github.com/zepinglee/citeproc-lua/issues/67>
+
+\begin{filecontents}[overwrite, noheader]{\jobname.json}
+[
+    {
+        "id": "Hardy2019-Gemsfr",
+        "type": "book",
+        "author": [
+            {
+                "family": "Hardy",
+                "given": "H. H.",
+                "suffix": "II"
+            }
+        ],
+        "title": "Exegetical Gems from Biblical Hebrew: A Refreshing Guide to Grammar and Interpretation",
+        "title-short": "Gems from Biblical Hebrew",
+        "publisher-place": "Grand Rapids, MI",
+        "publisher": "Baker Academic",
+        "issued": {
+            "date-parts": [
+                [
+                    "2019"
+                ]
+            ]
+        }
+    }
+]
+\end{filecontents}
+
+\usepackage[style = chicago-fullnote-bibliography]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{\jobname.json}
+
+
+\begin{document}
+\START
+
+\dots\ dalam Kej.\ 8:11 sebagai penanda keterkejutan:
+``\emph{The dove returned to him
+at sunset, \emph{and incredibly}, a fresh-picked olive branch
+was in its mouth!}''\cite[prefix = {\dots\ dalam Kej.\ 8:11
+sebagai penanda keterkejutan: ``\emph{The dove returned to him
+at sunset, \emph{and incredibly}, a fresh-picked olive branch
+was in its mouth!}''; lihat },
+page = {194 (tekanan saya)}]{Hardy2019-Gemsfr}
+
+\OMIT
+\end{document}

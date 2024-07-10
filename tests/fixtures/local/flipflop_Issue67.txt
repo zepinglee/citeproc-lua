@@ -1,0 +1,67 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+>>===== DESCRIPTION =====>>
+<https://github.com/zepinglee/citeproc-lua/issues/67>
+<<===== DESCRIPTION =====<<
+
+
+>>===== RESULT =====>>
+<code>\dots \ </code>dalam Kej.<code>\ </code>8:11 sebagai penanda keterkejutan: “<i>The dove returned to him at sunset, <span style="font-style:normal;">and incredibly</span>, a fresh-picked olive branch was in its mouth!</i>”; lihat Exegetical Gems from Biblical Hebrew: A Refreshing Guide to Grammar and Interpretation
+8:11 sebagai penanda keterkejutan: “<i>The dove returned to him at sunset, <span style="font-style:normal;">and incredibly</span>, a fresh-picked olive branch was in its mouth!</i>”; lihat Exegetical Gems from Biblical Hebrew: A Refreshing Guide to Grammar and Interpretation
+<<===== RESULT =====<<
+
+
+>>===== CITATION-ITEMS =====>>
+[
+    [
+        {
+            "id": "Hardy2019-Gemsfr",
+            "prefix": "<code>\\dots \\ </code>dalam Kej.<code>\\ </code>8:11 sebagai penanda keterkejutan: “<i>The dove returned to him at sunset, <i>and incredibly</i>, a fresh-picked olive branch was in its mouth!</i>”; lihat "
+        }
+    ],
+    [
+        {
+            "id": "Hardy2019-Gemsfr",
+            "prefix": "8:11 sebagai penanda keterkejutan: “<i>The dove returned to him at sunset, <i>and incredibly</i>, a fresh-picked olive branch was in its mouth!</i>”; lihat "
+        }
+    ]
+]
+<<===== CITATION-ITEMS =====<<
+
+
+>>===== CSL =====>>
+<style
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2024-07-10T10:04:59+08:00</updated>
+  </info>
+  <citation>
+    <layout>
+      <text variable="title"/>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "Hardy2019-Gemsfr",
+        "type": "book",
+        "title": "Exegetical Gems from Biblical Hebrew: A Refreshing Guide to Grammar and Interpretation"
+    }
+]
+<<===== INPUT =====<<
+
+
+>>===== VERSION =====>>
+1.0
+<<===== VERSION =====<<
