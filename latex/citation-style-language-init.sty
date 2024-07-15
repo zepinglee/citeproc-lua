@@ -48,7 +48,11 @@
 \cs_new:Npn \__csl_write_aux_bibstyle:n #1
   {
     \if@filesw
-      \iow_now:Nx \@auxout { \token_to_str:N \csl@aux@style {#1} }
+      \iow_now:Nx \@auxout
+        {
+          \token_to_str:N \csl@aux@style
+            { \int_use:N \g__csl_ref_section_index_int } {#1}
+        }
     \fi
   }
 
@@ -56,37 +60,58 @@
   {
     \if@filesw
       % Full expansion for files like \jobname.bib
-      \iow_now:Nx \@auxout { \token_to_str:N \csl@aux@data {#1} }
+      \iow_now:Nx \@auxout
+        {
+          \token_to_str:N \csl@aux@data
+            { \int_use:N \g__csl_ref_section_index_int } {#1}
+        }
     \fi
   }
 
 % In earlier time, \bibdata{xxx.json} was used but this causes latexmk unable
 % to find xxx.json.bib and it refuses to run the $bibtex procedure.
 % John Collins suggests using a different command than \bibdata.
-\cs_new:Npn \csl@aux@data #1
-  { \clist_gput_right:Nn \g__csl_aux_bib_files_clist {#1} }
+\cs_new:Npn \csl@aux@data #1#2
+  {
+    \str_if_eq:nnT {#1} { 0 }
+      { \clist_gput_right:Nn \g__csl_aux_bib_files_clist {#2} }
+  }
 
 
 
 \cs_new:Npn \__csl_initialize_lua_module:
   {
-    \clist_if_empty:NT \l__csl_bib_resources_clist
-      { \msg_warning:nn { citation-style-language } { empty-bib-resources } }
-    \lua_now:e
+    \tl_if_blank:VTF \l__csl_style_tl
+      { \msg_warning:nn { citation-style-language } { empty-style-name } }
       {
-        csl.init(
-          "\l__csl_style_tl",
-          "\l__csl_bib_resources_clist",
-          "\l__csl_locale_tl"
-        )
+        \clist_if_empty:NTF \l__csl_bib_resources_clist
+          { \msg_warning:nn { citation-style-language } { empty-bib-resources } }
+          {
+            \lua_now:e
+              {
+                csl_citation_manager:init(
+                  "\l__csl_style_tl",
+                  "\l__csl_bib_resources_clist",
+                  "\l__csl_locale_tl"
+                )
+              }
+          }
       }
-
-
-    \str_if_eq:eeT { \lua_now:n { tex.print(csl.initialized) } } { true }
+    \str_if_eq:eeTF
+      {
+        \lua_now:n
+          {
+            tex.print(tostring(
+              csl_citation_manager.ref_section.initialized
+            ))
+          }
+      }
+      { true }
       { \bool_set_true:N \l__csl_engine_initialized_bool }
+      { \bool_set_false:N \l__csl_engine_initialized_bool }
     \__csl_get_style_class:
     \@ifpackageloaded { hyperref }
-      { \lua_now:n { csl.enable_linking() } }
+      { \lua_now:n { csl_citation_manager:enable_linking() } }
       { }
   }
 
@@ -104,7 +129,7 @@
 \cs_new:Npn \__csl_get_style_class: {
   \bool_if:NT \l__csl_engine_initialized_bool
     {
-      \tl_set:Nx \l__csl_class_tl { \lua_now:n { csl.get_style_class() } }
+      \tl_set:Nx \l__csl_class_tl { \lua_now:n { tex.print(csl_citation_manager:get_style_class()) } }
       \tl_if_eq:NnT \l__csl_class_tl { note }
         { \bool_set_true:N \l__csl_note_bool }
     }
@@ -266,14 +291,19 @@
 \cs_new:Npn \__csl_write_aux_options:n #1
   {
     \if@filesw
-      \iow_now:Nn \@auxout { \csl@aux@options {#1} }
+      \iow_now:Nx \@auxout
+        {
+          \token_to_str:N \csl@aux@options
+          { \int_use:N \g__csl_ref_section_index_int } {#1}
+        }
     \fi
   }
 
-\cs_new:Npn \csl@aux@options #1 { }
+\cs_new:Npn \csl@aux@options #1#2 { }
 
 
-\tl_new:N \g__csl_bibliography_setup_tl
+% This map contains the options read from .bbl file.
+\prop_new:N \g__csl_ref_section_options_prop
 
 % Load .bbl at the beginning of document to save one pass of latex.
 % In this procedure, the \cslcitation command is processed and the contents
@@ -283,10 +313,8 @@
     % The \@input@ prints "No file ....bbl" in the .log file from which
     % the latexmk decides to run $bibtex or not.
     \__csl_collect_bibliography:n { \@input@ { \jobname .bbl } }
-    % Execute the \cslsetup part to set the style class.
-    % \tl_show:N \g__csl_bibliography_setup_tl
-    \tl_use:N \g__csl_bibliography_setup_tl
-    % \bool_show:N \l__csl_note_bool
+    \prop_get:NnNT \g__csl_ref_section_options_prop { 0 } \l_tmpa_tl
+      { \exp_args:NV \cslsetup \l_tmpa_tl }
   }
 
 
@@ -302,8 +330,6 @@
       % URLs may contain "%" and "#" characters.
       \char_set_catcode_other:N \%
       \char_set_catcode_other:N \#
-      \RenewDocumentCommand \cslsetup { m }
-        { \tl_gset:Nn \g__csl_bibliography_setup_tl { \cslsetup { ##1 } } }
       \RenewDocumentEnvironment { thebibliography } { m +b }
         {
           \tl_set:Nn \l__csl_bib_index_tl { 1 }
@@ -319,6 +345,16 @@
       % Perform the execution
       #1
     \group_end:
+  }
+
+% #1: refsection index
+% #2: refsection options
+\NewDocumentCommand \csloptions { m m }
+  {
+    \prop_get:NnNTF \g__csl_ref_section_options_prop {#1} \l_tmpa_tl
+      { \tl_put_right:Nn \l_tmpa_tl {#2} }
+      { \tl_set:Nn \l_tmpa_tl {#2} }
+    \prop_gput:NnV \g__csl_ref_section_options_prop {#1} \l_tmpa_tl
   }
 
 

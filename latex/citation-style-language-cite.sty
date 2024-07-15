@@ -376,7 +376,7 @@
     \__csl_serialize_prop:NN \l__csl_citation_info_prop \l__csl_citation_info_tl
     % Write to .aux file
     % \tl_show:N \l__csl_citation_info_tl
-    \exp_args:NV \__csl_write_aux_citation:n \l__csl_citation_info_tl
+    \exp_args:NVV \__csl_write_aux_citation:nn \g__csl_ref_section_index_int \l__csl_citation_info_tl
     \bool_if:NT \l__csl_regression_test_bool
       { \tl_show:N \l__csl_citation_info_tl }
     % Print the citation string
@@ -404,7 +404,7 @@
   }
 
 \cs_new:Npn \__csl_cite_aux:n #1
-  { \lua_now:e { csl.cite("\lua_escape:n {#1}") } }
+  { \lua_now:e { csl_citation_manager:cite("\lua_escape:n {#1}") } }
 
 % #1: seq
 % #2: tl
@@ -488,11 +488,12 @@
   }
 
 
-\cs_new:Npn \__csl_write_aux_citation:n #1
-  % #1: citation info "{<citationID>}{{id=ITEM-1},{id=ITEM-2}}{<noteIndex>}"
+\cs_new:Npn \__csl_write_aux_citation:nn #1#2
+  % #1: refsection index (already converted to tl)
+  % #2: citation info "{<citationID>}{{id=ITEM-1},{id=ITEM-2}}{<noteIndex>}"
   {
     \if@filesw
-      \iow_now:Nn \@auxout { \csl@aux@cite {#1} }
+      \iow_now:Nn \@auxout { \csl@aux@cite {#1} {#2} }
     \fi
   }
 
@@ -580,23 +581,23 @@
       }
     \bool_if:NT \l__csl_regression_test_bool
       { \tl_show:N \l__csl_citation_info_tl }
-    \exp_args:NV \__csl_no_cite_write_aux:n \l__csl_citation_info_tl
+    \exp_args:NVV \__csl_no_cite_write_aux:nn \g__csl_ref_section_index_int \l__csl_citation_info_tl
     \sys_if_engine_luatex:T
-      { \lua_now:n { csl.nocite("#1") } }
+      { \lua_now:n { csl_citation_manager:nocite("#1") } }
     \tl_clear:N \l__csl_citation_tl
     \bool_if:NT \l__csl_regression_test_bool
       { \tl_show:N \l__csl_citation_tl }
 }
 
 
-\cs_new:Npn \__csl_no_cite_write_aux:n #1
+\cs_new:Npn \__csl_no_cite_write_aux:nn #1#2
   {
     \__csl_if_preamble:TF
       {
         \hook_gput_code:nnn { begindocument } { . }
-          { \exp_args:Nx \__csl_write_aux_citation:n { #1 } }
+          { \__csl_write_aux_citation:nn {#1} {#2} }
       }
-      { \exp_args:Nx \__csl_write_aux_citation:n { #1 } }
+      { \__csl_write_aux_citation:nn {#1} {#2} }
   }
 
 
@@ -612,10 +613,10 @@
 
 % Used in aux files to register cite items.
 % #1: a citation object
-\cs_set:Npn \csl@aux@cite #1
+\cs_set:Npn \csl@aux@cite #1#2
   {
     \sys_if_engine_luatex:T
-      { \lua_now:e { csl.register_citation_info("\lua_escape:n {#1}") } }
+      { \lua_now:e { csl_citation_manager:register_citation_info(#1, "\lua_escape:n {#2}") } }
   }
 
 
@@ -627,3 +628,10 @@
 % #1: cite id
 % #2: cite contents
 \cs_new:Npn \cslcite #1#2 {#2}
+
+% This command is for use with hyperref.
+% #1: cite id
+\cs_new:Npn \cslundefinedcite #1 {
+  \textbf {#1}
+  \__csl_warn_citation_undefined:n {#1}
+}

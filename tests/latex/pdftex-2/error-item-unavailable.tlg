@@ -22,7 +22,7 @@ TEST 1: Entry not available
 > \l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE@1},citationItems={{id={ITEM-UNAVAILABLE}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=\cslsetup {undefined-cites={ITEM-UNAVAILABLE}}(\textbf {ITEM-UNAVAILABLE}).
+> \l__csl_citation_tl=(\cslundefinedcite {ITEM-UNAVAILABLE}).
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-UNAVAILABLE' on page 1 undefined on input line ....
@@ -33,7 +33,7 @@ TEST 2: Multiple enties
 > \l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE,ANOTHER-ITEM@1},citationItems={{id={ITEM-UNAVAILABLE}},{id={ANOTHER-ITEM}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=\cslsetup {undefined-cites={ITEM-UNAVAILABLE,ANOTHER-ITEM}}(\textbf {ITEM-UNAVAILABLE}, \textbf {ANOTHER-ITEM}).
+> \l__csl_citation_tl=(\cslundefinedcite {ITEM-UNAVAILABLE}, \cslundefinedcite {ANOTHER-ITEM}).
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-UNAVAILABLE' on page 1 undefined on input line ....
@@ -45,7 +45,7 @@ TEST 3: Mixture
 > \l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE,ITEM-1,ANOTHER-ITEM@1},citationItems={{id={ITEM-UNAVAILABLE}},{id={ITEM-1}},{id={ANOTHER-ITEM}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=\cslsetup {undefined-cites={ITEM-UNAVAILABLE,ANOTHER-ITEM}}(D’Arcus, 2005; \textbf {ITEM-UNAVAILABLE}, \textbf {ANOTHER-ITEM}).
+> \l__csl_citation_tl=(D’Arcus, 2005; \cslundefinedcite {ITEM-UNAVAILABLE}, \cslundefinedcite {ANOTHER-ITEM}).
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-UNAVAILABLE' on page 1 undefined on input line ....

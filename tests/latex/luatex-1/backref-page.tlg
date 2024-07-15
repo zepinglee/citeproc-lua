@@ -78,7 +78,7 @@ Completed box being shipped out [3]
 .....\glue(\rightskip) 0.0
 ....\penalty 10000
 ....\glue 9.913 plus 0.86198
-....\pdfdest name{cite.ITEM-2} xyz
+....\pdfdest name{cite0.ITEM-2} xyz
 ....\penalty 10000
 ....\glue -9.913 plus -0.86198
 ....\glue 9.913 plus 0.86198
@@ -266,7 +266,7 @@ Completed box being shipped out [3]
 .....\glue(\rightskip) 0.0
 ....\penalty -51
 ....\glue 0.0
-....\pdfdest name{cite.ITEM-1} xyz
+....\pdfdest name{cite0.ITEM-1} xyz
 ....\penalty 10000
 ....\glue(\parskip) 0.0
 ....\glue(\parskip) 0.0
@@ -411,7 +411,7 @@ Completed box being shipped out [3]
 .....\glue(\rightskip) 0.0
 ....\penalty -51
 ....\glue 0.0
-....\pdfdest name{cite.ITEM-3} xyz
+....\pdfdest name{cite0.ITEM-3} xyz
 ....\penalty 10000
 ....\glue(\parskip) 0.0
 ....\glue(\parskip) 0.0
@@ -598,7 +598,7 @@ Completed box being shipped out [3]
 .....\glue(\rightskip) 0.0
 ....\penalty -51
 ....\glue 0.0
-....\pdfdest name{cite.ITEM-4} xyz
+....\pdfdest name{cite0.ITEM-4} xyz
 ....\penalty 10000
 ....\glue(\parskip) 0.0
 ....\glue(\parskip) 0.0

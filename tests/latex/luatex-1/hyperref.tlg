@@ -50,7 +50,7 @@ Completed box being shipped out [1]
 ......\localrightbox=null
 .....\hbox(0.0+0.0)x0.0, direction TLT
 .....\TU/lmr/m/n/10 (
-.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite.ITEM-2}
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite0.ITEM-2}
 .....\TU/lmr/m/n/10 B
 .....\TU/lmr/m/n/10 e
 .....\TU/lmr/m/n/10 n
@@ -69,7 +69,7 @@ Completed box being shipped out [1]
 .....\pdfendlink
 .....\TU/lmr/m/n/10 ;
 .....\glue(\spaceskip) 3.33 plus 2.49748 minus 0.73999
-.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite.ITEM-1}
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite0.ITEM-1}
 .....\TU/lmr/m/n/10 D
 .....\TU/lmr/m/n/10 ’
 .....\TU/lmr/m/n/10 A
@@ -88,7 +88,7 @@ Completed box being shipped out [1]
 .....\pdfendlink
 .....\TU/lmr/m/n/10 ;
 .....\glue(\spaceskip) 3.33 plus 2.49748 minus 0.73999
-.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite.ITEM-3}
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite0.ITEM-3}
 .....\TU/lmr/m/n/10 L
 .....\TU/lmr/m/n/10 a
 .....\TU/lmr/m/n/10 m
@@ -108,7 +108,7 @@ Completed box being shipped out [1]
 .....\pdfendlink
 .....\TU/lmr/m/n/10 ;
 .....\glue(\spaceskip) 3.33 plus 2.49748 minus 0.73999
-.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite.ITEM-4}
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite0.ITEM-4}
 .....\TU/lmr/m/n/10 M
 .....\TU/lmr/m/n/10 i
 .....\TU/lmr/m/n/10 t
@@ -230,7 +230,7 @@ Completed box being shipped out [2]
 .....\glue(\rightskip) 0.0
 ....\penalty 10000
 ....\glue 9.913 plus 0.86198
-....\pdfdest name{cite.ITEM-2} xyz
+....\pdfdest name{cite0.ITEM-2} xyz
 ....\penalty 10000
 ....\glue -9.913 plus -0.86198
 ....\glue 9.913 plus 0.86198
@@ -408,7 +408,7 @@ Completed box being shipped out [2]
 .....\glue(\rightskip) 0.0
 ....\penalty -51
 ....\glue 0.0
-....\pdfdest name{cite.ITEM-1} xyz
+....\pdfdest name{cite0.ITEM-1} xyz
 ....\penalty 10000
 ....\glue(\parskip) 0.0
 ....\glue(\parskip) 0.0
@@ -543,7 +543,7 @@ Completed box being shipped out [2]
 .....\glue(\rightskip) 0.0
 ....\penalty -51
 ....\glue 0.0
-....\pdfdest name{cite.ITEM-3} xyz
+....\pdfdest name{cite0.ITEM-3} xyz
 ....\penalty 10000
 ....\glue(\parskip) 0.0
 ....\glue(\parskip) 0.0
@@ -725,7 +725,7 @@ Completed box being shipped out [2]
 .....\glue(\rightskip) 0.0
 ....\penalty -51
 ....\glue 0.0
-....\pdfdest name{cite.ITEM-4} xyz
+....\pdfdest name{cite0.ITEM-4} xyz
 ....\penalty 10000
 ....\glue(\parskip) 0.0
 ....\glue(\parskip) 0.0

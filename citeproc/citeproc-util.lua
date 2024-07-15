@@ -375,6 +375,8 @@ function util.concat_list(first, second)
   return res
 end
 
+---@param str string
+---@return string
 function util.lstrip (str)
   if not str then
     error("Invalid input")
@@ -383,6 +385,8 @@ function util.lstrip (str)
   return res
 end
 
+---@param str string
+---@return string
 function util.rstrip (str)
   if not str then
     error("Invalid input")
@@ -391,6 +395,8 @@ function util.rstrip (str)
   return res
 end
 
+---@param str string
+---@return string
 function util.strip (str)
   return util.lstrip(util.rstrip(str))
 end

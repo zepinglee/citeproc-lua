@@ -34,7 +34,7 @@
               \__csl_collect_bibliography:n
                 {
                   \lua_now:e
-                    { csl.bibliography("\l__csl_bib_filter_tl") }
+                    { csl_citation_manager:bibliography("\l__csl_bib_filter_tl") }
                 }
             }
         }
@@ -108,11 +108,16 @@
 \cs_new:Npn \__csl_write_aux_bibliography:n #1
   {
     \if@filesw
-      \iow_now:Nn \@auxout { \csl@aux@bibliography {#1} }
+      \iow_now:Nx \@auxout
+        {
+          \token_to_str:N \csl@aux@bibliography
+          { \int_use:N \g__csl_ref_section_index_int }
+          {#1}
+        }
     \fi
   }
 
-\cs_new:Npn \csl@aux@bibliography #1 { }
+\cs_new:Npn \csl@aux@bibliography #1#2 { }
 
 
 \tl_new:N \l__csl_bib_index_tl
@@ -355,6 +360,37 @@
   }
 
 
+% ### Bibliography sections and segments
+
+
+\int_new:N \g__csl_ref_section_index_int
+\int_new:N \g__csl_max_ref_section_index_int
+\int_gset:Nn \g__csl_ref_section_index_int { 0 }
+\int_gset:Nn \g__csl_max_ref_section_index_int { 0 }
+
+\cs_new:Npn \refsection {
+  \int_gincr:N \g__csl_max_ref_section_index_int
+  \int_gset_eq:NN \g__csl_ref_section_index_int \g__csl_max_ref_section_index_int
+  \sys_if_engine_luatex:T
+    { \lua_now:n { csl_citation_manager:begin_ref_section() } }
+  \prop_get:NxNT \g__csl_ref_section_options_prop
+    { \int_use:N \g__csl_ref_section_index_int }
+    \l_tmpa_tl
+    { \exp_args:NV \cslsetup \l_tmpa_tl }
+}
+
+\cs_new:Npn \endrefsection {
+  \int_compare:nNnT { \g__csl_ref_section_index_int } > { 0 }
+    {
+      \int_gzero:N \g__csl_ref_section_index_int
+      \sys_if_engine_luatex:T
+        { \lua_now:n { csl_citation_manager:end_ref_section() } }
+      \prop_get:NnNT \g__csl_ref_section_options_prop { 0 } \l_tmpa_tl
+        { \exp_args:NV \cslsetup \l_tmpa_tl }
+    }
+}
+
+
 % ### Bibliography Headings and Environments
 
 \prop_new:N \l__csl_bib_env_begin_prop
@@ -426,6 +462,10 @@
     \expandafter \newcommand \csname __csl_head_ #1 :n \endcsname [1] [ {#2} ]
   }
 
+
+\cs_if_exist:NF \refname
+  { \cs_set:Npn \refname { References } }
+
 \cs_if_exist:NTF \chapter
   {
     % `book` or `report`
@@ -437,19 +477,19 @@
     \defbibheading { biblist } [ \biblistname ]
       {
         \chapter* {#1}
-        \@mkboth { \MakeMarkcase {#1} } { \MakeMarkcase {#1} }
+        \@mkboth { \MakeUppercase {#1} } { \MakeUppercase {#1} }
       }
     \defbibheading { bibintoc } [ \bibname ]
       {
         \chapter* {#1}
         \addcontentsline { toc } { chapter } {#1}
-        \@mkboth { \MakeMarkcase {#1} } { \MakeMarkcase {#1} }
+        \@mkboth { \MakeUppercase {#1} } { \MakeUppercase {#1} }
       }
     \defbibheading { biblistintoc } [ \biblistname ]
       {
         \chapter* {#1}
         \addcontentsline { toc } { chapter } {#1}
-        \@mkboth { \MakeMarkcase {#1} } { \MakeMarkcase {#1} }
+        \@mkboth { \MakeUppercase {#1} } { \MakeUppercase {#1} }
       }
     \defbibheading { bibnumbered } [ \bibname ]
       { \chapter {#1} }
@@ -459,7 +499,7 @@
       {
         \section* {#1}
         \if@twoside
-          \markright { \MakeMarkcase {#1} }
+          \markright { \MakeUppercase {#1} }
         \fi
       }
     \defbibheading { subbibintoc } [ \refname ]
@@ -467,7 +507,7 @@
         \section* {#1}
           \addcontentsline { toc } { section } {#1}
           \if@twoside
-            \markright { \MakeMarkcase {#1} }
+            \markright { \MakeUppercase {#1} }
           \fi
       }
     \defbibheading { subbibnumbered } [ \refname ]
@@ -483,19 +523,19 @@
     \defbibheading { biblist } [ \biblistname ]
       {
         \section* {#1}
-        \@mkboth { \MakeMarkcase {#1} } { \MakeMarkcase {#1} }
+        \@mkboth { \MakeUppercase {#1} } { \MakeUppercase {#1} }
       }
     \defbibheading { bibintoc } [ \refname ]
       {
         \section* {#1}
         \addcontentsline { toc } { section } {#1}
-        \@mkboth { \MakeMarkcase {#1} } { \MakeMarkcase {#1} }
+        \@mkboth { \MakeUppercase {#1} } { \MakeUppercase {#1} }
       }
     \defbibheading { biblistintoc } [ \biblistname ]
       {
         \section* {#1}
         \addcontentsline { toc } { section } {#1}
-        \@mkboth { \MakeMarkcase {#1} } { \MakeMarkcase {#1} }
+        \@mkboth { \MakeUppercase {#1} } { \MakeUppercase {#1} }
       }
     \defbibheading { bibnumbered } [ \refname ]
       { \section {#1} }
@@ -593,7 +633,7 @@
             \tl_put_right:Nn \l_tmpa_tl { ##1 = {##2} }
           }
         \sys_if_engine_luatex:T
-          { \lua_now:e { csl.set_categories("\l_tmpa_tl") } }
+          { \lua_now:e { csl_citation_manager:set_categories("\l_tmpa_tl") } }
           {
             \tl_put_left:Nx \l_tmpa_tl { categories = \c_left_brace_str }
             \tl_put_right:NV \l_tmpa_tl \c_right_brace_str
