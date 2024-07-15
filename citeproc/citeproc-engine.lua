@@ -103,6 +103,10 @@ local Registry = {}
 ---@field cite_first_note_numbers table<ItemId, NoteIndex>
 local CiteProc = {}
 
+---@class CiteProcSys
+---@field retrieveLocale fun(LanguageCode): string?
+---@field retrieveItem fun(ItemId): ItemData?
+
 ---comment
 ---@param sys table
 ---@param style string
@@ -213,8 +217,10 @@ function CiteProc:updateItems(ids)
   local loaded_ids = {}
 
   for _, id in ipairs(ids) do
-    table.insert(cite_items, {id = id})
-    loaded_ids[id] = true
+    if not loaded_ids[id] then
+      table.insert(cite_items, {id = id})
+      loaded_ids[id] = true
+    end
   end
   for _, id in ipairs(self.registry.uncited_list) do
     if not loaded_ids[id] then

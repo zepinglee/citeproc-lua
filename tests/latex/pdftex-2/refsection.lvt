@@ -1,6 +1,6 @@
 \input{regression-test}
 
-\documentclass{article}
+\documentclass{book}
 
 \input{csl-test}
 
@@ -8,7 +8,7 @@
 
 \cslsetup{
   regression-test = true,
-  style = IEEE,
+  style = ieee,
 }
 \addbibresource{test.json}
 
@@ -20,20 +20,20 @@
 \START
 \showoutput
 
-\section{Title of first section}
+\chapter{Title of first chapter}
 \begin{refsection}
 This is just filler text \cite{ITEM-1}.\par
 This is just filler text \cite{ITEM-2}.\par
 \printbibliography[heading=subbibliography]
 \end{refsection}
 
-\section{Title of second section}
+\chapter{Title of second chapter}
 \begin{refsection}
 This is just filler text \cite{ITEM-1}.\par
 \printbibliography[heading=subbibliography]
 \end{refsection}
 
-\section{Title of third section}
+\chapter{Title of third chapter}
 \begin{refsection}
 This is just filler text \cite{ITEM-3}.\par
 This is just filler text \cite{ITEM-4}.\par
@@ -41,6 +41,6 @@ This is just filler text \cite{ITEM-4}.\par
 \end{refsection}
 
 \clearpage
-\OMIT
 
+\OMIT
 \end{document}

@@ -98,7 +98,7 @@ Completed box being shipped out [3]
 .......\penalty 10000
 .......\hbox(0.0+0.0)x0.0, direction TLT
 ........\hbox(0.0+0.0)x0.0, shifted -12.0, direction TLT
-.........\pdfdest name{cite.ITEM-1} xyz
+.........\pdfdest name{cite0.ITEM-1} xyz
 .........\penalty 10000
 .......\TU/lmr/m/n/10 [
 .......\TU/lmr/m/n/10 1
@@ -239,7 +239,7 @@ Completed box being shipped out [3]
 .......\penalty 10000
 .......\hbox(0.0+0.0)x0.0, direction TLT
 ........\hbox(0.0+0.0)x0.0, shifted -12.0, direction TLT
-.........\pdfdest name{cite.ITEM-2} xyz
+.........\pdfdest name{cite0.ITEM-2} xyz
 .........\penalty 10000
 .......\TU/lmr/m/n/10 [
 .......\TU/lmr/m/n/10 2
@@ -438,7 +438,7 @@ Completed box being shipped out [3]
 .......\penalty 10000
 .......\hbox(0.0+0.0)x0.0, direction TLT
 ........\hbox(0.0+0.0)x0.0, shifted -12.0, direction TLT
-.........\pdfdest name{cite.ITEM-3} xyz
+.........\pdfdest name{cite0.ITEM-3} xyz
 .........\penalty 10000
 .......\TU/lmr/m/n/10 [
 .......\TU/lmr/m/n/10 3
@@ -644,7 +644,7 @@ Completed box being shipped out [3]
 .......\penalty 10000
 .......\hbox(0.0+0.0)x0.0, direction TLT
 ........\hbox(0.0+0.0)x0.0, shifted -12.0, direction TLT
-.........\pdfdest name{cite.ITEM-4} xyz
+.........\pdfdest name{cite0.ITEM-4} xyz
 .........\penalty 10000
 .......\TU/lmr/m/n/10 [
 .......\TU/lmr/m/n/10 4

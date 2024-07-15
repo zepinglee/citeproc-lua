@@ -41,6 +41,7 @@ local Micro = output.Micro
 local Formatted = output.Formatted
 local PlainText = output.PlainText
 local InlineElement = output.InlineElement
+local UndefinedCite = output.UndefinedCite
 local CiteInline = output.CiteInline
 local DisamStringFormat = output.DisamStringFormat
 local SortStringFormat = output.SortStringFormat
@@ -470,7 +471,7 @@ function Citation:build_ambiguous_ir(cite_item, output_format, engine)
   if context.reference then
     ir = self:build_ir(engine, state, context, active_layout)
   else
-    ir = Rendered:new({Formatted:new({PlainText:new(tostring(cite_item.id))}, {["font-weight"] = "bold"})}, self)
+    ir = Rendered:new({UndefinedCite:new({PlainText:new(tostring(cite_item.id))}, cite_item)}, self)
   end
 
   ir.cite_item = cite_item

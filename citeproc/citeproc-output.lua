@@ -301,6 +301,23 @@ function CiteInline:new(inlines, cite_item)
 end
 
 
+---@class UndefinedCite: InlineElement
+---@field cite_item CitationItem
+local UndefinedCite = InlineElement:derive("UndefinedCite")
+
+---@param inlines InlineElement[]
+---@param cite_item CitationItem
+---@return UndefinedCite
+function UndefinedCite:new(inlines, cite_item)
+  local o = InlineElement.new(self)
+  o.inlines = inlines
+  o.cite_item = cite_item
+  setmetatable(o, self)
+  return o
+end
+
+
+
 ---@param text string
 ---@param context Context?
 ---@param is_external boolean?
@@ -873,6 +890,7 @@ function OutputFormat:is_sentence_case(inlines)
         or util.is_instance(inline, NoCase)
         or util.is_instance(inline, NoDecor)
         or util.is_instance(inline, CiteInline)
+        or util.is_instance(inline, UndefinedCite)
         or (util.is_instance(inline, Formatted)
             and inline.formatting["font-variant"] ~= "small-caps"
             and inline.formatting["vertical-align"] ~= "sup"
@@ -962,7 +980,8 @@ function OutputFormat:apply_text_case_inner(inlines, text_case, seen_one, is_upp
            (inline._type == "Formatted" and inline.formatting["vertical-align"] == "sub") then
       seen_one = seen_one or inline_contains_word(inline)
 
-    elseif inline._type == "Formatted" or inline._type == "Quoted" or inline._type == "CiteInline" then
+    elseif inline._type == "Formatted" or inline._type == "Quoted"
+      or inline._type == "CiteInline" or inline._type == "UndefinedCite" then
       seen_one = self:apply_text_case_inner(inline.inlines, text_case, seen_one, is_uppercase) or seen_one
 
     end
@@ -1482,8 +1501,8 @@ local function normalise_text_elements(inlines)
         idx = idx + 1
       end
 
-    elseif (first._type == "Formatted" or first._type == "CiteInline")
-        and second._type == "PlainText" then
+    elseif (first._type == "Formatted" or first._type == "CiteInline"
+        or first._type == "UndefinedCite") and second._type == "PlainText" then
       local success = smash_just_punc(first, second)
       if success then
         if second.value == "" then
@@ -1579,7 +1598,8 @@ function OutputFormat:move_punctuation(inlines, punctuation_in_quote)
 
   for _, inline in ipairs(inlines) do
     if inline._type == "Quoted" or inline._type == "Formatted" or
-        inline._type == "Div" or inline._type == "CiteInline" then
+        inline._type == "Div" or inline._type == "CiteInline"
+        or inline._type == "UndefinedCite" then
       self:move_punctuation(inline.inlines)
     end
   end
@@ -1642,6 +1662,9 @@ function Markup:write_inline(inline, context)
     elseif inline._type == "CiteInline" then
       return self:write_cite(inline, context)
 
+    elseif inline._type == "UndefinedCite" then
+      return self:write_undefined_cite(inline, context)
+
     elseif inline._type == "Code" then
       return self:write_code(inline, context)
 
@@ -1691,6 +1714,11 @@ end
 
 function Markup:write_cite(inline, context)
   return self:write_inlines(inline.inlines, context)
+end
+
+function Markup:write_undefined_cite(inline, context)
+  local bold_inline = Formatted:new({PlainText:new(inline.cite_item.id)}, {["font-weight"] = "bold"})
+  return self:write_formatted(bold_inline, context)
 end
 
 function Markup:write_code(inline, context)
@@ -1836,6 +1864,10 @@ function LatexWriter:write_cite(inline, context)
     str = string.format("\\cslcite{%s}{%s}", inline.cite_item.id, str)
   end
   return str
+end
+
+function LatexWriter:write_undefined_cite(inline, context)
+  return string.format("\\cslundefinedcite{%s}", inline.cite_item.id)
 end
 
 function LatexWriter:write_code(inline, context)
@@ -2162,6 +2194,7 @@ output_module.Quoted = Quoted
 output_module.Linked = Linked
 output_module.Div = Div
 output_module.CiteInline = CiteInline
+output_module.UndefinedCite = UndefinedCite
 output_module.Code = Code
 output_module.MathTeX = MathTeX
 output_module.MathTML = MathML

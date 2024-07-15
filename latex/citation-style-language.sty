@@ -34,7 +34,13 @@
 
 % Load Lua module in LuaTeX
 \sys_if_engine_luatex:T
-  { \lua_now:n { csl = require("citeproc-latex") } }
+  {
+    \lua_now:n
+      {
+        citeproc_manager = require("citeproc-manager")
+        csl_citation_manager = citeproc_manager.CslCitationManager:new()
+      }
+  }
 
 
 % Global options
@@ -92,13 +98,6 @@
     bib-item-sep .tl_set:N = \l__csl_bib_item_sep_tl ,
     bib-par-indent .tl_set:N = \l__csl_bib_par_indent_tl ,
     bib-hang .tl_set:N = \l__csl_bib_hang_tl ,
-    % The following keys are for easier interaction between LaTeX and
-    % citeproc-lua engine and they are not designed for end-users.
-    undefined-cites .code:n =
-      {
-        \clist_map_inline:nn {#1}
-          { \__csl_warn_citation_undefined:n {##1} }
-      } ,
   }
 
 \cs_new:Npn \__csl_set_back_ref:n #1
@@ -138,8 +137,11 @@
   }
 
 \tl_new:N \g__csl_aux_bibstyle_tl
-\cs_set:Npn \csl@aux@style #1
-  { \tl_gset:Nn \g__csl_aux_bibstyle_tl {#1} }
+\cs_set:Npn \csl@aux@style #1#2
+  {
+    \str_if_eq:nnT {#1} { 0 }
+      { \tl_gset:Nn \g__csl_aux_bibstyle_tl {#2} }
+  }
 
 
 % Write to an empty `.ccf` file for use with latexmk

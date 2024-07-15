@@ -29,10 +29,10 @@ TEST 1: Citation
 <recently read> }
 l. ...}
 Module citeproc Warning: Didn't find a database entry for 'ITEM-1' on input line ...
-LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
-> \l__csl_citation_tl=(\textbf {ITEM-1}).
+> \l__csl_citation_tl=(\cslundefinedcite {ITEM-1}).
 <recently read> }
 l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
 ============================================================
 ============================================================
 TEST 2: Bibliography

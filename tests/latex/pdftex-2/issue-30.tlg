@@ -107,7 +107,7 @@ Completed box being shipped out [1]
 ......\hbox(0.0+0.0)x0.0, shifted -9.5
 .......\pdfdest name{Hfootnote.1} xyz
 .......\penalty 10000
-.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite.ITEM-1}
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite0.ITEM-1}
 .....\OT1/cmr/m/n/8 J
 .....\OT1/cmr/m/n/8 o
 .....\OT1/cmr/m/n/8 h
@@ -276,7 +276,7 @@ Completed box being shipped out [2]
 .....\glue(\rightskip) 0.0
 ....\penalty 10000
 ....\glue 9.90276 plus 0.86108
-....\pdfdest name{cite.ITEM-1} xyz
+....\pdfdest name{cite0.ITEM-1} xyz
 ....\penalty 10000
 ....\glue -9.90276 plus -0.86108
 ....\glue 9.90276 plus 0.86108
