@@ -3,6 +3,7 @@
 \documentclass{article}
 
 \input{csl-test}
+\pagestyle{headings}
 
 \usepackage{citation-style-language}
 
@@ -23,37 +24,77 @@
 \showoutput
 
 \OMIT
-\cite{ITEM-1, ITEM-2}
+\cite{ITEM-1}
 \TIMO
 
-\TEST{Print selected bibliography heading}{
-  Lorem ipsum dolor sit amet consecture lorem ipsum dolor sit amet.
+\TEST{Test default bibliography}{
+  \printbibliography
+  \clearpage
+}
+
+\TEST{Test default bibliography heading}{
+  \printbibliography[heading = bibliography, title = {Heading bibliography}]
+  \clearpage
+}
+
+\TEST{Test biblist heading}{
+  \printbibliography[heading = biblist, title = {Heading biblist}]
+  \clearpage
+}
+
+\TEST{Test bibintoc heading}{
+  \printbibliography[heading = bibintoc, title = {Heading bibintoc}]
+  \clearpage
+}
+
+\TEST{Test biblistintoc heading}{
+  \printbibliography[heading = biblistintoc, title = {Heading biblistintoc}]
+  \clearpage
+}
+
+\TEST{Test bibnumbered heading}{
+  \printbibliography[heading = bibnumbered, title = {Heading bibnumbered}]
+  \clearpage
+}
+
+\TEST{Test biblistnumbered heading}{
+  \printbibliography[heading = biblistnumbered, title = {Heading biblistnumbered}]
+  \clearpage
+}
+
+\TEST{Test subbibliography heading}{
+  \printbibliography[heading = subbibliography, title = {Heading subbibliography}]
+  \clearpage
+}
+
+\TEST{Test subbibintoc heading}{
+  \printbibliography[heading = subbibintoc, title = {Heading subbibintoc}]
+  \clearpage
+}
+
+\TEST{Test subbibnumbered heading}{
+  \printbibliography[heading = subbibnumbered, title = {Heading subbibnumbered}]
+  \clearpage
+}
+
+
+\TEST{Test bib title}{
+  \printbibheading[title = {Reference List}]
+  \clearpage
+}
+
+\TEST{Test custom heading}{
   \printbibheading[heading = subsection]
-  Lorem ipsum dolor sit amet consecture lorem ipsum dolor sit amet.
-}
-
-\TEST{Print default bibliography heading}{
-  \printbibheading
-  Lorem ipsum dolor sit amet consecture lorem ipsum dolor sit amet.
   \clearpage
 }
 
-\TEST{Customize bib heading}{
-  \printbibliography[heading = subsection]
-  \clearpage
-}
-
-\TEST{Customize bib heading and title}{
-  \printbibliography[
+\TEST{Test custom heading and title}{
+  \printbibheading[
     heading = subsection,
     title   = {Reference List},
   ]
   \clearpage
 }
 
-\TEST{Default bib heading and title}{
-  \printbibliography
-  \clearpage
-}
-
+\OMIT
 \end{document}
