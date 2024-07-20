@@ -1,0 +1,638 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+Chapter 1.
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...This is just filler text \cite{ITEM-1}
+                                           .\par
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...This is just filler text \cite{ITEM-1}
+                                           .\par
+> \l__csl_citation_info_tl=citationID={ITEM-2@1},citationItems={{id={ITEM-2}}},properties={noteIndex={2}}.
+<recently read> }
+l. ...This is just filler text \cite{ITEM-2}
+                                           .\par
+LaTeX Warning: Citation `ITEM-2' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-2}].
+<recently read> }
+l. ...This is just filler text \cite{ITEM-2}
+                                           .\par
+Package citation-style-language Warning: The bibliography is empty.
+Completed box being shipped out [1]
+\vbox(627.36243+0.0)x380.0
+.\hbox(0.0+0.0)x0.0
+.\vbox(0.0+0.0)x0.0, glue set - 20.99626fil
+..\kern 0.0
+..\kern 22.0
+..\kern -1.00374
+..\hbox(0.0+0.0)x0.0, glue set - 33.99626fil
+...\kern 0.0
+...\kern 35.0
+...\kern -1.00374
+...\pdfdest name{page.1} xyz
+...\penalty 10000
+...\glue 0.0 plus 1.0fil minus 1.0fil
+..\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue(\lineskip) 0.0
+.\vbox(627.36243+0.0)x380.0
+..\glue 22.0
+..\vbox(605.36243+0.0)x345.0, shifted 35.0
+...\vbox(12.0+0.0)x345.0, glue set 12.0fil
+....\glue 0.0 plus 1.0fil
+....\hbox(0.0+0.0)x345.0
+.....\hbox(0.0+0.0)x345.0
+...\glue 18.06749
+...\glue(\lineskip) 0.0
+...\vbox(550.0+0.0)x345.0, glue set 349.66225fil
+....\write-{}
+....\pdfdest name{Doc-Start} xyz
+....\write-{}
+....\pdfdest name{chapter.1} xyz
+....\write4{\protect \BOOKMARK [0][-]{chapter.1}{\376\377\000T\000i\000t\000l\000e\000\040\000o\000f\000\040\000f\000i\000r\000s\000t\000\040\000c\000h\000a\000p\000t\000e\000r}{}% 1}
+....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {1}Title of first chapter}{\thepage }{chapter.1}\protected@file@percent }}
+....\marks1{\__mark_id:n {1}\MakeUppercase    []{Chapter\ 1. \ Title of first chapter}}
+....\marks2{\__mark_id:n {2}}
+....\mark{{\MakeUppercase    []{Chapter\ 1. \ Title of first chapter}}{}}
+....\write1{\@writefile{lof}{\protect \addvspace {10\p@ }}}
+....\write1{\@writefile{lot}{\protect \addvspace {10\p@ }}}
+....\glue(\topskip) 10.0
+....\rule(0.0+0.0)x*
+....\penalty 10000
+....\glue 50.0
+....\glue 0.0
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 10.59724
+....\hbox(14.40276+4.03276)x345.0, glue set 121.0941fil
+.....\hbox(0.0+0.0)x0.0
+.....\OT1/cmr/bx/n/20.74 C
+.....\OT1/cmr/bx/n/20.74 h
+.....\OT1/cmr/bx/n/20.74 a
+.....\OT1/cmr/bx/n/20.74 p
+.....\OT1/cmr/bx/n/20.74 t
+.....\OT1/cmr/bx/n/20.74 e
+.....\OT1/cmr/bx/n/20.74 r
+.....\glue 7.7775 plus 3.88875 minus 2.5925
+.....\OT1/cmr/bx/n/20.74 1
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0 plus 1.0fil
+....\penalty 10000
+....\glue 20.0
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 8.68948
+....\hbox(17.27776+4.83775)x345.0, glue set 47.71269fil
+.....\hbox(0.0+0.0)x0.0
+.....\OT1/cmr/bx/n/24.88 T
+.....\OT1/cmr/bx/n/24.88 i
+.....\OT1/cmr/bx/n/24.88 t
+.....\OT1/cmr/bx/n/24.88 l
+.....\OT1/cmr/bx/n/24.88 e
+.....\glue 9.33 plus 4.665 minus 3.11
+.....\OT1/cmr/bx/n/24.88 o
+.....\OT1/cmr/bx/n/24.88 f
+.....\glue 9.33 plus 4.665 minus 3.11
+.....\OT1/cmr/bx/n/24.88 ^^L (ligature fi)
+.....\OT1/cmr/bx/n/24.88 r
+.....\OT1/cmr/bx/n/24.88 s
+.....\OT1/cmr/bx/n/24.88 t
+.....\glue 9.33 plus 4.665 minus 3.11
+.....\OT1/cmr/bx/n/24.88 c
+.....\kern-0.77751
+.....\OT1/cmr/bx/n/24.88 h
+.....\OT1/cmr/bx/n/24.88 a
+.....\OT1/cmr/bx/n/24.88 p
+.....\OT1/cmr/bx/n/24.88 t
+.....\OT1/cmr/bx/n/24.88 e
+.....\OT1/cmr/bx/n/24.88 r
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0 plus 1.0fil
+....\penalty 10000
+....\glue 40.0
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\lineskip) 1.0
+....\hbox(7.5+2.5)x345.0, glue set 199.9445fil
+.....\OT1/cmr/m/n/10 T
+.....\OT1/cmr/m/n/10 h
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 s
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 s
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 j
+.....\OT1/cmr/m/n/10 u
+.....\OT1/cmr/m/n/10 s
+.....\OT1/cmr/m/n/10 t
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 ^^L (ligature fi)
+.....\OT1/cmr/m/n/10 l
+.....\OT1/cmr/m/n/10 l
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 r
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 t
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 x
+.....\OT1/cmr/m/n/10 t
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 [
+.....\kern 0.0
+.....\OT1/cmr/bx/n/10 I
+.....\OT1/cmr/bx/n/10 T
+.....\OT1/cmr/bx/n/10 E
+.....\OT1/cmr/bx/n/10 M
+.....\OT1/cmr/bx/n/10 -
+.....\discretionary
+.....\OT1/cmr/bx/n/10 1
+.....\kern 0.0
+.....\OT1/cmr/m/n/10 ]
+.....\OT1/cmr/m/n/10 .
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 2.0
+....\hbox(7.5+2.5)x345.0, glue set 199.9445fil
+.....\hbox(0.0+0.0)x0.0
+.....\OT1/cmr/m/n/10 T
+.....\OT1/cmr/m/n/10 h
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 s
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 s
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 j
+.....\OT1/cmr/m/n/10 u
+.....\OT1/cmr/m/n/10 s
+.....\OT1/cmr/m/n/10 t
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 ^^L (ligature fi)
+.....\OT1/cmr/m/n/10 l
+.....\OT1/cmr/m/n/10 l
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 r
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 t
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 x
+.....\OT1/cmr/m/n/10 t
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 [
+.....\kern 0.0
+.....\OT1/cmr/bx/n/10 I
+.....\OT1/cmr/bx/n/10 T
+.....\OT1/cmr/bx/n/10 E
+.....\OT1/cmr/bx/n/10 M
+.....\OT1/cmr/bx/n/10 -
+.....\discretionary
+.....\OT1/cmr/bx/n/10 2
+.....\kern 0.0
+.....\OT1/cmr/m/n/10 ]
+.....\OT1/cmr/m/n/10 .
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue -2.5
+....\glue 0.0 plus 1.0fil
+....\glue 0.0
+...\glue(\baselineskip) 18.8505
+...\hbox(6.44444+0.0)x345.0
+....\hbox(6.44444+0.0)x345.0, glue set 170.0fil
+.....\glue 0.0 plus 1.0fil
+.....\OT1/cmr/m/n/10 1
+.....\glue 0.0 plus 1.0fil
+.\kern 0.0
+Completed box being shipped out [2]
+\vbox(627.36243+0.0)x434.0
+.\vbox(0.0+0.0)x0.0, glue set - 20.99626fil
+..\kern 0.0
+..\kern 22.0
+..\kern -1.00374
+..\hbox(0.0+0.0)x0.0, glue set - 87.99626fil
+...\kern 0.0
+...\kern 89.0
+...\kern -1.00374
+...\pdfdest name{page.2} xyz
+...\penalty 10000
+...\glue 0.0 plus 1.0fil minus 1.0fil
+..\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue(\lineskip) 0.0
+.\vbox(627.36243+0.0)x434.0
+..\glue 22.0
+..\vbox(605.36243+0.0)x345.0, shifted 89.0
+...\vbox(12.0+0.0)x345.0, glue set 12.0fil
+....\glue 0.0 plus 1.0fil
+....\hbox(0.0+0.0)x345.0
+.....\hbox(0.0+0.0)x345.0
+...\glue 18.06749
+...\glue(\lineskip) 0.0
+...\vbox(550.0+0.0)x0.0, glue set 540.0fil
+....\write-{}
+....\glue(\topskip) 10.0
+....\hbox(0.0+0.0)x0.0
+....\glue 0.0 plus 1.0fil
+....\glue 0.0
+...\glue(\baselineskip) 25.29494
+...\hbox(0.0+0.0)x345.0
+....\hbox(0.0+0.0)x345.0
+Chapter 2.
+> \l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1}}},properties={noteIndex={3}}.
+<recently read> }
+l. ...This is just filler text \cite{ITEM-1}
+                                           .\par
+LaTeX Warning: Citation `ITEM-1' on page 3 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...This is just filler text \cite{ITEM-1}
+                                           .\par
+Package citation-style-language Warning: The bibliography is empty.
+Completed box being shipped out [3]
+\vbox(627.36243+0.0)x380.0
+.\vbox(0.0+0.0)x0.0, glue set - 20.99626fil
+..\kern 0.0
+..\kern 22.0
+..\kern -1.00374
+..\hbox(0.0+0.0)x0.0, glue set - 33.99626fil
+...\kern 0.0
+...\kern 35.0
+...\kern -1.00374
+...\pdfdest name{page.3} xyz
+...\penalty 10000
+...\glue 0.0 plus 1.0fil minus 1.0fil
+..\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue(\lineskip) 0.0
+.\vbox(627.36243+0.0)x380.0
+..\glue 22.0
+..\vbox(605.36243+0.0)x345.0, shifted 35.0
+...\vbox(12.0+0.0)x345.0, glue set 12.0fil
+....\glue 0.0 plus 1.0fil
+....\hbox(0.0+0.0)x345.0
+.....\hbox(0.0+0.0)x345.0
+...\glue 18.06749
+...\glue(\lineskip) 0.0
+...\vbox(550.0+0.0)x345.0, glue set 361.66225fil
+....\pdfdest name{chapter.2} xyz
+....\write4{\protect \BOOKMARK [0][-]{chapter.2}{\376\377\000T\000i\000t\000l\000e\000\040\000o\000f\000\040\000s\000e\000c\000o\000n\000d\000\040\000c\000h\000a\000p\000t\000e\000r}{}% 2}
+....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {2}Title of second chapter}{\thepage }{chapter.2}\protected@file@percent }}
+....\marks1{\__mark_id:n {3}\MakeUppercase    []{Chapter\ 2. \ Title of second chapter}}
+....\marks2{\__mark_id:n {4}}
+....\mark{{\MakeUppercase    []{Chapter\ 2. \ Title of second chapter}}{}}
+....\write1{\@writefile{lof}{\protect \addvspace {10\p@ }}}
+....\write1{\@writefile{lot}{\protect \addvspace {10\p@ }}}
+....\glue(\topskip) 10.0
+....\rule(0.0+0.0)x*
+....\penalty 10000
+....\glue 50.0
+....\glue 0.0
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 10.59724
+....\hbox(14.40276+4.03276)x345.0, glue set 121.0941fil
+.....\hbox(0.0+0.0)x0.0
+.....\OT1/cmr/bx/n/20.74 C
+.....\OT1/cmr/bx/n/20.74 h
+.....\OT1/cmr/bx/n/20.74 a
+.....\OT1/cmr/bx/n/20.74 p
+.....\OT1/cmr/bx/n/20.74 t
+.....\OT1/cmr/bx/n/20.74 e
+.....\OT1/cmr/bx/n/20.74 r
+.....\glue 7.7775 plus 3.88875 minus 2.5925
+.....\OT1/cmr/bx/n/20.74 2
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0 plus 1.0fil
+....\penalty 10000
+....\glue 20.0
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 8.68948
+....\hbox(17.27776+4.83775)x345.0, glue set 31.49318fil
+.....\hbox(0.0+0.0)x0.0
+.....\OT1/cmr/bx/n/24.88 T
+.....\OT1/cmr/bx/n/24.88 i
+.....\OT1/cmr/bx/n/24.88 t
+.....\OT1/cmr/bx/n/24.88 l
+.....\OT1/cmr/bx/n/24.88 e
+.....\glue 9.33 plus 4.665 minus 3.11
+.....\OT1/cmr/bx/n/24.88 o
+.....\OT1/cmr/bx/n/24.88 f
+.....\glue 9.33 plus 4.665 minus 3.11
+.....\OT1/cmr/bx/n/24.88 s
+.....\OT1/cmr/bx/n/24.88 e
+.....\OT1/cmr/bx/n/24.88 c
+.....\OT1/cmr/bx/n/24.88 o
+.....\OT1/cmr/bx/n/24.88 n
+.....\OT1/cmr/bx/n/24.88 d
+.....\glue 9.33 plus 4.665 minus 3.11
+.....\OT1/cmr/bx/n/24.88 c
+.....\kern-0.77751
+.....\OT1/cmr/bx/n/24.88 h
+.....\OT1/cmr/bx/n/24.88 a
+.....\OT1/cmr/bx/n/24.88 p
+.....\OT1/cmr/bx/n/24.88 t
+.....\OT1/cmr/bx/n/24.88 e
+.....\OT1/cmr/bx/n/24.88 r
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0 plus 1.0fil
+....\penalty 10000
+....\glue 40.0
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\lineskip) 1.0
+....\hbox(7.5+2.5)x345.0, glue set 199.9445fil
+.....\OT1/cmr/m/n/10 T
+.....\OT1/cmr/m/n/10 h
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 s
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 s
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 j
+.....\OT1/cmr/m/n/10 u
+.....\OT1/cmr/m/n/10 s
+.....\OT1/cmr/m/n/10 t
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 ^^L (ligature fi)
+.....\OT1/cmr/m/n/10 l
+.....\OT1/cmr/m/n/10 l
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 r
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 t
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 x
+.....\OT1/cmr/m/n/10 t
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 [
+.....\kern 0.0
+.....\OT1/cmr/bx/n/10 I
+.....\OT1/cmr/bx/n/10 T
+.....\OT1/cmr/bx/n/10 E
+.....\OT1/cmr/bx/n/10 M
+.....\OT1/cmr/bx/n/10 -
+.....\discretionary
+.....\OT1/cmr/bx/n/10 1
+.....\kern 0.0
+.....\OT1/cmr/m/n/10 ]
+.....\OT1/cmr/m/n/10 .
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue -2.5
+....\glue 0.0 plus 1.0fil
+....\glue 0.0
+...\glue(\baselineskip) 18.8505
+...\hbox(6.44444+0.0)x345.0
+....\hbox(6.44444+0.0)x345.0, glue set 170.0fil
+.....\glue 0.0 plus 1.0fil
+.....\OT1/cmr/m/n/10 3
+.....\glue 0.0 plus 1.0fil
+Completed box being shipped out [4]
+\vbox(627.36243+0.0)x434.0
+.\vbox(0.0+0.0)x0.0, glue set - 20.99626fil
+..\kern 0.0
+..\kern 22.0
+..\kern -1.00374
+..\hbox(0.0+0.0)x0.0, glue set - 87.99626fil
+...\kern 0.0
+...\kern 89.0
+...\kern -1.00374
+...\pdfdest name{page.4} xyz
+...\penalty 10000
+...\glue 0.0 plus 1.0fil minus 1.0fil
+..\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue(\lineskip) 0.0
+.\vbox(627.36243+0.0)x434.0
+..\glue 22.0
+..\vbox(605.36243+0.0)x345.0, shifted 89.0
+...\vbox(12.0+0.0)x345.0, glue set 12.0fil
+....\glue 0.0 plus 1.0fil
+....\hbox(0.0+0.0)x345.0
+.....\hbox(0.0+0.0)x345.0
+...\glue 18.06749
+...\glue(\lineskip) 0.0
+...\vbox(550.0+0.0)x0.0, glue set 540.0fil
+....\write-{}
+....\glue(\topskip) 10.0
+....\hbox(0.0+0.0)x0.0
+....\glue 0.0 plus 1.0fil
+....\glue 0.0
+...\glue(\baselineskip) 25.29494
+...\hbox(0.0+0.0)x345.0
+....\hbox(0.0+0.0)x345.0
+Chapter 3.
+> \l__csl_citation_info_tl=citationID={ITEM-3@1},citationItems={{id={ITEM-3}}},properties={noteIndex={4}}.
+<recently read> }
+l. ...This is just filler text \cite{ITEM-3}
+                                           .\par
+LaTeX Warning: Citation `ITEM-3' on page 5 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-3}].
+<recently read> }
+l. ...This is just filler text \cite{ITEM-3}
+                                           .\par
+> \l__csl_citation_info_tl=citationID={ITEM-4@1},citationItems={{id={ITEM-4}}},properties={noteIndex={5}}.
+<recently read> }
+l. ...This is just filler text \cite{ITEM-4}
+                                           .\par
+LaTeX Warning: Citation `ITEM-4' on page 5 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-4}].
+<recently read> }
+l. ...This is just filler text \cite{ITEM-4}
+                                           .\par
+Package citation-style-language Warning: The bibliography is empty.
+Completed box being shipped out [5]
+\vbox(627.36243+0.0)x380.0
+.\vbox(0.0+0.0)x0.0, glue set - 20.99626fil
+..\kern 0.0
+..\kern 22.0
+..\kern -1.00374
+..\hbox(0.0+0.0)x0.0, glue set - 33.99626fil
+...\kern 0.0
+...\kern 35.0
+...\kern -1.00374
+...\pdfdest name{page.5} xyz
+...\penalty 10000
+...\glue 0.0 plus 1.0fil minus 1.0fil
+..\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue(\lineskip) 0.0
+.\vbox(627.36243+0.0)x380.0
+..\glue 22.0
+..\vbox(605.36243+0.0)x345.0, shifted 35.0
+...\vbox(12.0+0.0)x345.0, glue set 12.0fil
+....\glue 0.0 plus 1.0fil
+....\hbox(0.0+0.0)x345.0
+.....\hbox(0.0+0.0)x345.0
+...\glue 18.06749
+...\glue(\lineskip) 0.0
+...\vbox(550.0+0.0)x345.0, glue set 349.66225fil
+....\pdfdest name{chapter.3} xyz
+....\write4{\protect \BOOKMARK [0][-]{chapter.3}{\376\377\000T\000i\000t\000l\000e\000\040\000o\000f\000\040\000t\000h\000i\000r\000d\000\040\000c\000h\000a\000p\000t\000e\000r}{}% 3}
+....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {3}Title of third chapter}{\thepage }{chapter.3}\protected@file@percent }}
+....\marks1{\__mark_id:n {5}\MakeUppercase    []{Chapter\ 3. \ Title of third chapter}}
+....\marks2{\__mark_id:n {6}}
+....\mark{{\MakeUppercase    []{Chapter\ 3. \ Title of third chapter}}{}}
+....\write1{\@writefile{lof}{\protect \addvspace {10\p@ }}}
+....\write1{\@writefile{lot}{\protect \addvspace {10\p@ }}}
+....\glue(\topskip) 10.0
+....\rule(0.0+0.0)x*
+....\penalty 10000
+....\glue 50.0
+....\glue 0.0
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 10.59724
+....\hbox(14.40276+4.03276)x345.0, glue set 121.0941fil
+.....\hbox(0.0+0.0)x0.0
+.....\OT1/cmr/bx/n/20.74 C
+.....\OT1/cmr/bx/n/20.74 h
+.....\OT1/cmr/bx/n/20.74 a
+.....\OT1/cmr/bx/n/20.74 p
+.....\OT1/cmr/bx/n/20.74 t
+.....\OT1/cmr/bx/n/20.74 e
+.....\OT1/cmr/bx/n/20.74 r
+.....\glue 7.7775 plus 3.88875 minus 2.5925
+.....\OT1/cmr/bx/n/20.74 3
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0 plus 1.0fil
+....\penalty 10000
+....\glue 20.0
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 8.68948
+....\hbox(17.27776+4.83775)x345.0, glue set 41.57045fil
+.....\hbox(0.0+0.0)x0.0
+.....\OT1/cmr/bx/n/24.88 T
+.....\OT1/cmr/bx/n/24.88 i
+.....\OT1/cmr/bx/n/24.88 t
+.....\OT1/cmr/bx/n/24.88 l
+.....\OT1/cmr/bx/n/24.88 e
+.....\glue 9.33 plus 4.665 minus 3.11
+.....\OT1/cmr/bx/n/24.88 o
+.....\OT1/cmr/bx/n/24.88 f
+.....\glue 9.33 plus 4.665 minus 3.11
+.....\OT1/cmr/bx/n/24.88 t
+.....\OT1/cmr/bx/n/24.88 h
+.....\OT1/cmr/bx/n/24.88 i
+.....\OT1/cmr/bx/n/24.88 r
+.....\OT1/cmr/bx/n/24.88 d
+.....\glue 9.33 plus 4.665 minus 3.11
+.....\OT1/cmr/bx/n/24.88 c
+.....\kern-0.77751
+.....\OT1/cmr/bx/n/24.88 h
+.....\OT1/cmr/bx/n/24.88 a
+.....\OT1/cmr/bx/n/24.88 p
+.....\OT1/cmr/bx/n/24.88 t
+.....\OT1/cmr/bx/n/24.88 e
+.....\OT1/cmr/bx/n/24.88 r
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0 plus 1.0fil
+....\penalty 10000
+....\glue 40.0
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\lineskip) 1.0
+....\hbox(7.5+2.5)x345.0, glue set 199.9445fil
+.....\OT1/cmr/m/n/10 T
+.....\OT1/cmr/m/n/10 h
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 s
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 s
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 j
+.....\OT1/cmr/m/n/10 u
+.....\OT1/cmr/m/n/10 s
+.....\OT1/cmr/m/n/10 t
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 ^^L (ligature fi)
+.....\OT1/cmr/m/n/10 l
+.....\OT1/cmr/m/n/10 l
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 r
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 t
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 x
+.....\OT1/cmr/m/n/10 t
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 [
+.....\kern 0.0
+.....\OT1/cmr/bx/n/10 I
+.....\OT1/cmr/bx/n/10 T
+.....\OT1/cmr/bx/n/10 E
+.....\OT1/cmr/bx/n/10 M
+.....\OT1/cmr/bx/n/10 -
+.....\discretionary
+.....\OT1/cmr/bx/n/10 3
+.....\kern 0.0
+.....\OT1/cmr/m/n/10 ]
+.....\OT1/cmr/m/n/10 .
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 2.0
+....\hbox(7.5+2.5)x345.0, glue set 199.9445fil
+.....\hbox(0.0+0.0)x0.0
+.....\OT1/cmr/m/n/10 T
+.....\OT1/cmr/m/n/10 h
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 s
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 s
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 j
+.....\OT1/cmr/m/n/10 u
+.....\OT1/cmr/m/n/10 s
+.....\OT1/cmr/m/n/10 t
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 ^^L (ligature fi)
+.....\OT1/cmr/m/n/10 l
+.....\OT1/cmr/m/n/10 l
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 r
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 t
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 x
+.....\OT1/cmr/m/n/10 t
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 [
+.....\kern 0.0
+.....\OT1/cmr/bx/n/10 I
+.....\OT1/cmr/bx/n/10 T
+.....\OT1/cmr/bx/n/10 E
+.....\OT1/cmr/bx/n/10 M
+.....\OT1/cmr/bx/n/10 -
+.....\discretionary
+.....\OT1/cmr/bx/n/10 4
+.....\kern 0.0
+.....\OT1/cmr/m/n/10 ]
+.....\OT1/cmr/m/n/10 .
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue -2.5
+....\glue 0.0 plus 1.0fil
+....\glue 0.0
+...\glue(\baselineskip) 18.8505
+...\hbox(6.44444+0.0)x345.0
+....\hbox(6.44444+0.0)x345.0, glue set 170.0fil
+.....\glue 0.0 plus 1.0fil
+.....\OT1/cmr/m/n/10 5
+.....\glue 0.0 plus 1.0fil

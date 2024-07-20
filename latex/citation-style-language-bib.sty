@@ -379,6 +379,8 @@
     { \exp_args:NV \cslsetup \l_tmpa_tl }
 }
 
+\cs_set_eq:NN \newrefsection \refsection
+
 \cs_new:Npn \endrefsection {
   \int_compare:nNnT { \g__csl_ref_section_index_int } > { 0 }
     {

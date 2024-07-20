@@ -1,0 +1,41 @@
+\input{regression-test}
+
+\documentclass{book}
+
+\input{csl-test}
+
+\usepackage{citation-style-language}
+
+\cslsetup{
+  regression-test = true,
+  style = ieee,
+  ref-section = chapter,
+}
+\addbibresource{test.json}
+
+\usepackage{hyperref}
+
+
+\begin{document}
+
+\START
+\showoutput
+
+\chapter{Title of first chapter}
+This is just filler text \cite{ITEM-1}.\par
+This is just filler text \cite{ITEM-2}.\par
+\printbibliography[heading=subbibliography]
+
+\chapter{Title of second chapter}
+This is just filler text \cite{ITEM-1}.\par
+\printbibliography[heading=subbibliography]
+
+\chapter{Title of third chapter}
+This is just filler text \cite{ITEM-3}.\par
+This is just filler text \cite{ITEM-4}.\par
+\printbibliography[heading=subbibliography]
+
+\clearpage
+
+\OMIT
+\end{document}

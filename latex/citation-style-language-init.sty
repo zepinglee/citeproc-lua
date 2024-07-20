@@ -18,6 +18,7 @@
         \__csl_load_bbl:
         \__csl_read_style_class:
       }
+    \__csl_set_ref_section_level:
   }
 
 
@@ -383,3 +384,42 @@
 
 % \msg_new:nnn { citation-style-language } { file / non-exist }
 %   { No~ file~ #1. }
+
+\cs_new:Npn \__csl_set_ref_section_level:
+  {
+    \str_case:Vn \l__csl_bib_ref_section_str
+      {
+        { none } { }
+        { part }
+          { \__csl_patch_ref_section:n { part } }
+        { chapter }
+          { \__csl_patch_ref_section:n { chapter } }
+        { chapter+ }
+          {
+            \__csl_patch_ref_section:n { part }
+            \__csl_patch_ref_section:n { chapter }
+          }
+        { section }
+          { \__csl_patch_ref_section:n { section } }
+        { section+ }
+          {
+            \__csl_patch_ref_section:n { part }
+            \__csl_patch_ref_section:n { chapter }
+            \__csl_patch_ref_section:n { section }
+          }
+        { subsection }
+          { \__csl_patch_ref_section:n { subsection } }
+        { subsection+ }
+          {
+            \__csl_patch_ref_section:n { part }
+            \__csl_patch_ref_section:n { chapter }
+            \__csl_patch_ref_section:n { section }
+            \__csl_patch_ref_section:n { subsection }
+          }
+      }
+  }
+
+\cs_new:Npn \__csl_patch_ref_section:n #1
+  {
+    \hook_gput_code:nnn { cmd / #1 / before } { . } { \newrefsection }
+  }
