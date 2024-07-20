@@ -68,6 +68,7 @@
 \tl_new:N \l__csl_bib_item_sep_tl
 \tl_new:N \l__csl_bib_par_indent_tl
 \tl_new:N \l__csl_bib_hang_tl
+\str_new:N \l__csl_bib_ref_section_str
 
 
 \keys_define:nn { csl }
@@ -98,6 +99,10 @@
     bib-item-sep .tl_set:N = \l__csl_bib_item_sep_tl ,
     bib-par-indent .tl_set:N = \l__csl_bib_par_indent_tl ,
     bib-hang .tl_set:N = \l__csl_bib_hang_tl ,
+    % ref section
+    ref-section .choices:nn =
+      { none, part, chapter, chapter+, section, section+, subsection, subsection+ }
+      { \str_set:NV \l__csl_bib_ref_section_str \l_keys_choice_tl } ,
   }
 
 \cs_new:Npn \__csl_set_back_ref:n #1
@@ -123,6 +128,7 @@
     bib-entry-page-break = true ,
     bib-par-indent = { \parindent } ,
     bib-hang = { 1 em } ,
+    refsection = none ,
   }
 
 
