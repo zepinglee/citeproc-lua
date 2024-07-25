@@ -1,24 +1,24 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
 Chapter 1.
-> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
 <recently read> }
-l. ...This is just filler text \cite{ITEM-1}
-                                           .\par
+l. ...  This is just filler text \cite{ITEM-1}
+                                             .\par
 LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
-l. ...This is just filler text \cite{ITEM-1}
-                                           .\par
-> \l__csl_citation_info_tl=citationID={ITEM-2@1},citationItems={{id={ITEM-2}}},properties={noteIndex={2}}.
+l. ...  This is just filler text \cite{ITEM-1}
+                                             .\par
+> \l__csl_citation_info_tl=citationID={ITEM-2@1},citationItems={{id={ITEM-2}}},properties={noteIndex={0}}.
 <recently read> }
-l. ...This is just filler text \cite{ITEM-2}
-                                           .\par
+l. ...  This is just filler text \cite{ITEM-2}
+                                             .\par
 LaTeX Warning: Citation `ITEM-2' on page 1 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-2}].
 <recently read> }
-l. ...This is just filler text \cite{ITEM-2}
-                                           .\par
+l. ...  This is just filler text \cite{ITEM-2}
+                                             .\par
 Package citation-style-language Warning: The bibliography is empty.
 Completed box being shipped out [1]
 \vbox(627.36243+0.0)x380.0
@@ -50,11 +50,11 @@ Completed box being shipped out [1]
 ....\pdfdest name{Doc-Start} xyz
 ....\write-{}
 ....\pdfdest name{chapter.1} xyz
-....\write4{\protect \BOOKMARK [0][-]{chapter.1}{\376\377\000T\000i\000t\000l\000e\000\040\000o\000f\000\040\000f\000i\000r\000s\000t\000\040\000c\000h\000a\000p\000t\000e\000r}{}% 1}
-....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {1}Title of first chapter}{\thepage }{chapter.1}\protected@file@percent }}
-....\marks1{\__mark_id:n {1}\MakeUppercase    []{Chapter\ 1. \ Title of first chapter}}
+....\write4{\protect \BOOKMARK [0][-]{chapter.1}{\376\377\000I\000E\000E\000E\000\040\000s\000t\000y\000l\000e}{}% 1}
+....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {1}IEEE style}{\thepage }{chapter.1}\protected@file@percent }}
+....\marks1{\__mark_id:n {1}\MakeUppercase    []{Chapter\ 1. \ IEEE style}}
 ....\marks2{\__mark_id:n {2}}
-....\mark{{\MakeUppercase    []{Chapter\ 1. \ Title of first chapter}}{}}
+....\mark{{\MakeUppercase    []{Chapter\ 1. \ IEEE style}}{}}
 ....\write1{\@writefile{lof}{\protect \addvspace {10\p@ }}}
 ....\write1{\@writefile{lot}{\protect \addvspace {10\p@ }}}
 ....\glue(\topskip) 10.0
@@ -84,30 +84,19 @@ Completed box being shipped out [1]
 ....\glue(\parskip) 0.0 plus 1.0
 ....\glue(\parskip) 0.0
 ....\glue(\baselineskip) 8.68948
-....\hbox(17.27776+4.83775)x345.0, glue set 47.71269fil
+....\hbox(17.27776+4.83775)x345.0, glue set 106.83147fil
 .....\hbox(0.0+0.0)x0.0
-.....\OT1/cmr/bx/n/24.88 T
-.....\OT1/cmr/bx/n/24.88 i
-.....\OT1/cmr/bx/n/24.88 t
-.....\OT1/cmr/bx/n/24.88 l
-.....\OT1/cmr/bx/n/24.88 e
-.....\glue 9.33 plus 4.665 minus 3.11
-.....\OT1/cmr/bx/n/24.88 o
-.....\OT1/cmr/bx/n/24.88 f
-.....\glue 9.33 plus 4.665 minus 3.11
-.....\OT1/cmr/bx/n/24.88 ^^L (ligature fi)
-.....\OT1/cmr/bx/n/24.88 r
+.....\OT1/cmr/bx/n/24.88 I
+.....\OT1/cmr/bx/n/24.88 E
+.....\OT1/cmr/bx/n/24.88 E
+.....\OT1/cmr/bx/n/24.88 E
+.....\glue 9.33 plus 4.66032 minus 3.11311
 .....\OT1/cmr/bx/n/24.88 s
 .....\OT1/cmr/bx/n/24.88 t
-.....\glue 9.33 plus 4.665 minus 3.11
-.....\OT1/cmr/bx/n/24.88 c
 .....\kern-0.77751
-.....\OT1/cmr/bx/n/24.88 h
-.....\OT1/cmr/bx/n/24.88 a
-.....\OT1/cmr/bx/n/24.88 p
-.....\OT1/cmr/bx/n/24.88 t
+.....\OT1/cmr/bx/n/24.88 y
+.....\OT1/cmr/bx/n/24.88 l
 .....\OT1/cmr/bx/n/24.88 e
-.....\OT1/cmr/bx/n/24.88 r
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0 plus 1.0fil
@@ -244,15 +233,15 @@ Completed box being shipped out [2]
 ...\hbox(0.0+0.0)x345.0
 ....\hbox(0.0+0.0)x345.0
 Chapter 2.
-> \l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1}}},properties={noteIndex={3}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
 <recently read> }
-l. ...This is just filler text \cite{ITEM-1}
-                                           .\par
+l. ...  This is just filler text \cite{ITEM-1}
+                                             .\par
 LaTeX Warning: Citation `ITEM-1' on page 3 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-1}].
 <recently read> }
-l. ...This is just filler text \cite{ITEM-1}
-                                           .\par
+l. ...  This is just filler text \cite{ITEM-1}
+                                             .\par
 Package citation-style-language Warning: The bibliography is empty.
 Completed box being shipped out [3]
 \vbox(627.36243+0.0)x380.0
@@ -280,11 +269,11 @@ Completed box being shipped out [3]
 ...\glue(\lineskip) 0.0
 ...\vbox(550.0+0.0)x345.0, glue set 361.66225fil
 ....\pdfdest name{chapter.2} xyz
-....\write4{\protect \BOOKMARK [0][-]{chapter.2}{\376\377\000T\000i\000t\000l\000e\000\040\000o\000f\000\040\000s\000e\000c\000o\000n\000d\000\040\000c\000h\000a\000p\000t\000e\000r}{}% 2}
-....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {2}Title of second chapter}{\thepage }{chapter.2}\protected@file@percent }}
-....\marks1{\__mark_id:n {3}\MakeUppercase    []{Chapter\ 2. \ Title of second chapter}}
+....\write4{\protect \BOOKMARK [0][-]{chapter.2}{\376\377\000A\000P\000A\000\040\000s\000t\000y\000l\000e}{}% 2}
+....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {2}APA style}{\thepage }{chapter.2}\protected@file@percent }}
+....\marks1{\__mark_id:n {3}\MakeUppercase    []{Chapter\ 2. \ APA style}}
 ....\marks2{\__mark_id:n {4}}
-....\mark{{\MakeUppercase    []{Chapter\ 2. \ Title of second chapter}}{}}
+....\mark{{\MakeUppercase    []{Chapter\ 2. \ APA style}}{}}
 ....\write1{\@writefile{lof}{\protect \addvspace {10\p@ }}}
 ....\write1{\@writefile{lot}{\protect \addvspace {10\p@ }}}
 ....\glue(\topskip) 10.0
@@ -314,32 +303,19 @@ Completed box being shipped out [3]
 ....\glue(\parskip) 0.0 plus 1.0
 ....\glue(\parskip) 0.0
 ....\glue(\baselineskip) 8.68948
-....\hbox(17.27776+4.83775)x345.0, glue set 31.49318fil
+....\hbox(17.27776+4.83775)x345.0, glue set 110.07104fil
 .....\hbox(0.0+0.0)x0.0
-.....\OT1/cmr/bx/n/24.88 T
-.....\OT1/cmr/bx/n/24.88 i
+.....\OT1/cmr/bx/n/24.88 A
+.....\OT1/cmr/bx/n/24.88 P
+.....\kern-2.3325
+.....\OT1/cmr/bx/n/24.88 A
+.....\glue 9.33 plus 4.66032 minus 3.11311
+.....\OT1/cmr/bx/n/24.88 s
 .....\OT1/cmr/bx/n/24.88 t
+.....\kern-0.77751
+.....\OT1/cmr/bx/n/24.88 y
 .....\OT1/cmr/bx/n/24.88 l
 .....\OT1/cmr/bx/n/24.88 e
-.....\glue 9.33 plus 4.665 minus 3.11
-.....\OT1/cmr/bx/n/24.88 o
-.....\OT1/cmr/bx/n/24.88 f
-.....\glue 9.33 plus 4.665 minus 3.11
-.....\OT1/cmr/bx/n/24.88 s
-.....\OT1/cmr/bx/n/24.88 e
-.....\OT1/cmr/bx/n/24.88 c
-.....\OT1/cmr/bx/n/24.88 o
-.....\OT1/cmr/bx/n/24.88 n
-.....\OT1/cmr/bx/n/24.88 d
-.....\glue 9.33 plus 4.665 minus 3.11
-.....\OT1/cmr/bx/n/24.88 c
-.....\kern-0.77751
-.....\OT1/cmr/bx/n/24.88 h
-.....\OT1/cmr/bx/n/24.88 a
-.....\OT1/cmr/bx/n/24.88 p
-.....\OT1/cmr/bx/n/24.88 t
-.....\OT1/cmr/bx/n/24.88 e
-.....\OT1/cmr/bx/n/24.88 r
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0 plus 1.0fil
@@ -431,24 +407,32 @@ Completed box being shipped out [4]
 ...\hbox(0.0+0.0)x345.0
 ....\hbox(0.0+0.0)x345.0
 Chapter 3.
-> \l__csl_citation_info_tl=citationID={ITEM-3@1},citationItems={{id={ITEM-3}}},properties={noteIndex={4}}.
+> \l__csl_citation_info_tl=citationID={ITEM-3@1},citationItems={{id={ITEM-3}}},properties={noteIndex={1}}.
 <recently read> }
-l. ...This is just filler text \cite{ITEM-3}
-                                           .\par
+l. ...  This is just filler text\cite{ITEM-3}
+                                            .\par
 LaTeX Warning: Citation `ITEM-3' on page 5 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-3}].
 <recently read> }
-l. ...This is just filler text \cite{ITEM-3}
-                                           .\par
-> \l__csl_citation_info_tl=citationID={ITEM-4@1},citationItems={{id={ITEM-4}}},properties={noteIndex={5}}.
+l. ...  This is just filler text\cite{ITEM-3}
+                                            .\par
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line ....
+> \l__csl_citation_info_tl=citationID={ITEM-4@1},citationItems={{id={ITEM-4}}},properties={noteIndex={2}}.
 <recently read> }
-l. ...This is just filler text \cite{ITEM-4}
-                                           .\par
+l. ...  This is just filler text\cite{ITEM-4}
+                                            .\par
 LaTeX Warning: Citation `ITEM-4' on page 5 undefined on input line ....
 > \l__csl_citation_tl=[\textbf {ITEM-4}].
 <recently read> }
-l. ...This is just filler text \cite{ITEM-4}
-                                           .\par
+l. ...  This is just filler text\cite{ITEM-4}
+                                            .\par
 Package citation-style-language Warning: The bibliography is empty.
 Completed box being shipped out [5]
 \vbox(627.36243+0.0)x380.0
@@ -474,13 +458,13 @@ Completed box being shipped out [5]
 .....\hbox(0.0+0.0)x345.0
 ...\glue 18.06749
 ...\glue(\lineskip) 0.0
-...\vbox(550.0+0.0)x345.0, glue set 349.66225fil
+...\vbox(550.0+0.0)x345.0, glue set 323.79222fil
 ....\pdfdest name{chapter.3} xyz
-....\write4{\protect \BOOKMARK [0][-]{chapter.3}{\376\377\000T\000i\000t\000l\000e\000\040\000o\000f\000\040\000t\000h\000i\000r\000d\000\040\000c\000h\000a\000p\000t\000e\000r}{}% 3}
-....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {3}Title of third chapter}{\thepage }{chapter.3}\protected@file@percent }}
-....\marks1{\__mark_id:n {5}\MakeUppercase    []{Chapter\ 3. \ Title of third chapter}}
+....\write4{\protect \BOOKMARK [0][-]{chapter.3}{\376\377\000C\000h\000i\000c\000a\000g\000o\000\040\000n\000o\000t\000e\000s\000\040\000s\000t\000y\000l\000e}{}% 3}
+....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {3}Chicago notes style}{\thepage }{chapter.3}\protected@file@percent }}
+....\marks1{\__mark_id:n {5}\MakeUppercase    []{Chapter\ 3. \ Chicago notes style}}
 ....\marks2{\__mark_id:n {6}}
-....\mark{{\MakeUppercase    []{Chapter\ 3. \ Title of third chapter}}{}}
+....\mark{{\MakeUppercase    []{Chapter\ 3. \ Chicago notes style}}{}}
 ....\write1{\@writefile{lof}{\protect \addvspace {10\p@ }}}
 ....\write1{\@writefile{lot}{\protect \addvspace {10\p@ }}}
 ....\glue(\topskip) 10.0
@@ -510,31 +494,28 @@ Completed box being shipped out [5]
 ....\glue(\parskip) 0.0 plus 1.0
 ....\glue(\parskip) 0.0
 ....\glue(\baselineskip) 8.68948
-....\hbox(17.27776+4.83775)x345.0, glue set 41.57045fil
+....\hbox(17.27776+4.83775)x345.0, glue set 54.02771fil
 .....\hbox(0.0+0.0)x0.0
-.....\OT1/cmr/bx/n/24.88 T
+.....\OT1/cmr/bx/n/24.88 C
+.....\OT1/cmr/bx/n/24.88 h
 .....\OT1/cmr/bx/n/24.88 i
+.....\OT1/cmr/bx/n/24.88 c
+.....\OT1/cmr/bx/n/24.88 a
+.....\OT1/cmr/bx/n/24.88 g
+.....\OT1/cmr/bx/n/24.88 o
+.....\glue 9.33 plus 4.665 minus 3.11
+.....\OT1/cmr/bx/n/24.88 n
+.....\OT1/cmr/bx/n/24.88 o
 .....\OT1/cmr/bx/n/24.88 t
+.....\OT1/cmr/bx/n/24.88 e
+.....\OT1/cmr/bx/n/24.88 s
+.....\glue 9.33 plus 4.665 minus 3.11
+.....\OT1/cmr/bx/n/24.88 s
+.....\OT1/cmr/bx/n/24.88 t
+.....\kern-0.77751
+.....\OT1/cmr/bx/n/24.88 y
 .....\OT1/cmr/bx/n/24.88 l
 .....\OT1/cmr/bx/n/24.88 e
-.....\glue 9.33 plus 4.665 minus 3.11
-.....\OT1/cmr/bx/n/24.88 o
-.....\OT1/cmr/bx/n/24.88 f
-.....\glue 9.33 plus 4.665 minus 3.11
-.....\OT1/cmr/bx/n/24.88 t
-.....\OT1/cmr/bx/n/24.88 h
-.....\OT1/cmr/bx/n/24.88 i
-.....\OT1/cmr/bx/n/24.88 r
-.....\OT1/cmr/bx/n/24.88 d
-.....\glue 9.33 plus 4.665 minus 3.11
-.....\OT1/cmr/bx/n/24.88 c
-.....\kern-0.77751
-.....\OT1/cmr/bx/n/24.88 h
-.....\OT1/cmr/bx/n/24.88 a
-.....\OT1/cmr/bx/n/24.88 p
-.....\OT1/cmr/bx/n/24.88 t
-.....\OT1/cmr/bx/n/24.88 e
-.....\OT1/cmr/bx/n/24.88 r
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0 plus 1.0fil
@@ -543,7 +524,7 @@ Completed box being shipped out [5]
 ....\glue(\parskip) 0.0 plus 1.0
 ....\glue(\parskip) 0.0
 ....\glue(\lineskip) 1.0
-....\hbox(7.5+2.5)x345.0, glue set 199.9445fil
+....\hbox(8.14003+1.94444)x345.0, glue set 244.76372fil
 .....\OT1/cmr/m/n/10 T
 .....\OT1/cmr/m/n/10 h
 .....\OT1/cmr/m/n/10 i
@@ -567,26 +548,22 @@ Completed box being shipped out [5]
 .....\OT1/cmr/m/n/10 e
 .....\OT1/cmr/m/n/10 x
 .....\OT1/cmr/m/n/10 t
-.....\glue 3.33333 plus 1.66666 minus 1.11111
-.....\OT1/cmr/m/n/10 [
-.....\kern 0.0
-.....\OT1/cmr/bx/n/10 I
-.....\OT1/cmr/bx/n/10 T
-.....\OT1/cmr/bx/n/10 E
-.....\OT1/cmr/bx/n/10 M
-.....\OT1/cmr/bx/n/10 -
-.....\discretionary
-.....\OT1/cmr/bx/n/10 3
-.....\kern 0.0
-.....\OT1/cmr/m/n/10 ]
+.....\penalty 10000
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[1 0 0]} action goto name{Hfootnote.1}
+.....\hbox(8.14003+0.0)x4.48613
+......\mathon
+......\hbox(4.51111+0.0)x4.48613, shifted -3.62892
+.......\OT1/cmr/m/n/7 1
+......\mathoff
+.....\pdfendlink
 .....\OT1/cmr/m/n/10 .
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0
 ....\glue(\parskip) 0.0 plus 1.0
 ....\glue(\parskip) 0.0
-....\glue(\baselineskip) 2.0
-....\hbox(7.5+2.5)x345.0, glue set 199.9445fil
+....\glue(\baselineskip) 1.91553
+....\hbox(8.14003+1.94444)x345.0, glue set 244.76372fil
 .....\hbox(0.0+0.0)x0.0
 .....\OT1/cmr/m/n/10 T
 .....\OT1/cmr/m/n/10 h
@@ -611,25 +588,87 @@ Completed box being shipped out [5]
 .....\OT1/cmr/m/n/10 e
 .....\OT1/cmr/m/n/10 x
 .....\OT1/cmr/m/n/10 t
-.....\glue 3.33333 plus 1.66666 minus 1.11111
-.....\OT1/cmr/m/n/10 [
-.....\kern 0.0
-.....\OT1/cmr/bx/n/10 I
-.....\OT1/cmr/bx/n/10 T
-.....\OT1/cmr/bx/n/10 E
-.....\OT1/cmr/bx/n/10 M
-.....\OT1/cmr/bx/n/10 -
-.....\discretionary
-.....\OT1/cmr/bx/n/10 4
-.....\kern 0.0
-.....\OT1/cmr/m/n/10 ]
+.....\penalty 10000
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[1 0 0]} action goto name{Hfootnote.2}
+.....\hbox(8.14003+0.0)x4.48613
+......\mathon
+......\hbox(4.51111+0.0)x4.48613, shifted -3.62892
+.......\OT1/cmr/m/n/7 2
+......\mathoff
+.....\pdfendlink
 .....\OT1/cmr/m/n/10 .
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0
-....\glue -2.5
+....\glue -1.94444
 ....\glue 0.0 plus 1.0fil
-....\glue 0.0
+....\glue 9.0 plus 4.0 minus 2.0
+....\kern -3.0
+....\rule(0.4+0.0)x137.9979
+....\kern 2.6
+....\hbox(6.68999+2.85002)x345.0, glue set 290.62724fil
+.....\hbox(6.68999+0.0)x15.30023, glue set 11.13362fil
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\hbox(6.68999+0.0)x4.16661
+.......\mathon
+.......\hbox(3.86665+0.0)x4.16661, shifted -2.82333
+........\OT1/cmr/m/n/6 1
+.......\mathoff
+.....\hbox(6.65+0.0)x0.0
+......\rule(6.65+0.0)x0.0
+.....\penalty 10000
+.....\hbox(0.0+0.0)x0.0
+......\hbox(0.0+0.0)x0.0, shifted -9.5
+.......\pdfdest name{Hfootnote.1} xyz
+.......\penalty 10000
+.....\OT1/cmr/m/n/8 [
+.....\kern 0.0
+.....\OT1/cmr/bx/n/8 I
+.....\OT1/cmr/bx/n/8 T
+.....\OT1/cmr/bx/n/8 E
+.....\OT1/cmr/bx/n/8 M
+.....\OT1/cmr/bx/n/8 -
+.....\discretionary
+.....\OT1/cmr/bx/n/8 3
+.....\kern 0.0
+.....\OT1/cmr/m/n/8 ]
+.....\penalty 10000
+.....\rule(0.0+2.85002)x0.0
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\hbox(6.68999+2.85002)x345.0, glue set 290.62724fil
+.....\hbox(6.68999+0.0)x15.30023, glue set 11.13362fil
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\hbox(6.68999+0.0)x4.16661
+.......\mathon
+.......\hbox(3.86665+0.0)x4.16661, shifted -2.82333
+........\OT1/cmr/m/n/6 2
+.......\mathoff
+.....\hbox(6.65+0.0)x0.0
+......\rule(6.65+0.0)x0.0
+.....\penalty 10000
+.....\hbox(0.0+0.0)x0.0
+......\hbox(0.0+0.0)x0.0, shifted -9.5
+.......\pdfdest name{Hfootnote.2} xyz
+.......\penalty 10000
+.....\OT1/cmr/m/n/8 [
+.....\kern 0.0
+.....\OT1/cmr/bx/n/8 I
+.....\OT1/cmr/bx/n/8 T
+.....\OT1/cmr/bx/n/8 E
+.....\OT1/cmr/bx/n/8 M
+.....\OT1/cmr/bx/n/8 -
+.....\discretionary
+.....\OT1/cmr/bx/n/8 4
+.....\kern 0.0
+.....\OT1/cmr/m/n/8 ]
+.....\penalty 10000
+.....\rule(0.0+2.85002)x0.0
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue -2.85002
 ...\glue(\baselineskip) 18.8505
 ...\hbox(6.44444+0.0)x345.0
 ....\hbox(6.44444+0.0)x345.0, glue set 170.0fil

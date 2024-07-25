@@ -8,7 +8,7 @@
 
 \cslsetup{
   regression-test = true,
-  style = ieee,
+  style = apa,
 }
 \addbibresource{test.json}
 
@@ -20,24 +20,24 @@
 \START
 \showoutput
 
-\chapter{Title of first chapter}
-\begin{refsection}
-This is just filler text \cite{ITEM-1}.\par
-This is just filler text \cite{ITEM-2}.\par
-\printbibliography[heading=subbibliography]
+\chapter{IEEE style}
+\begin{refsection}[style = ieee]
+  This is just filler text \cite{ITEM-1}.\par
+  This is just filler text \cite{ITEM-2}.\par
+  \printbibliography[heading=subbibliography]
 \end{refsection}
 
-\chapter{Title of second chapter}
+\chapter{APA style}
 \begin{refsection}
-This is just filler text \cite{ITEM-1}.\par
-\printbibliography[heading=subbibliography]
+  This is just filler text \cite{ITEM-1}.\par
+  \printbibliography[heading=subbibliography]
 \end{refsection}
 
-\chapter{Title of third chapter}
-\begin{refsection}
-This is just filler text \cite{ITEM-3}.\par
-This is just filler text \cite{ITEM-4}.\par
-\printbibliography[heading=subbibliography]
+\chapter{Chicago notes style}
+\begin{refsection}[style = chicago-note-bibliography]
+  This is just filler text\cite{ITEM-3}.\par
+  This is just filler text\cite{ITEM-4}.\par
+  \printbibliography[heading=subbibliography]
 \end{refsection}
 
 \clearpage

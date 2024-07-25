@@ -3,7 +3,7 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Citation
 ============================================================
-> \l__csl_citation_info_tl=citationID={barber2016work-life,carlson2019double@1},citationItems={{id={barber2016work-life}},{id={carlson2019double}}},properties={noteIndex={1}}.
+> \l__csl_citation_info_tl=citationID={barber2016work-life,carlson2019double@1},citationItems={{id={barber2016work-life}},{id={carlson2019double}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `barber2016work-life' on page 1 undefined on input line ....

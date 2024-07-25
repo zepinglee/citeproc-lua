@@ -1,7 +1,7 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
 Chapter 1.
-> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...This is just filler text \cite{ITEM-1}
                                            .\par
@@ -10,7 +10,7 @@ LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
 <recently read> }
 l. ...This is just filler text \cite{ITEM-1}
                                            .\par
-> \l__csl_citation_info_tl=citationID={ITEM-2@1},citationItems={{id={ITEM-2}}},properties={noteIndex={2}}.
+> \l__csl_citation_info_tl=citationID={ITEM-2@1},citationItems={{id={ITEM-2}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...This is just filler text \cite{ITEM-2}
                                            .\par
@@ -244,7 +244,7 @@ Completed box being shipped out [2]
 ...\hbox(0.0+0.0)x345.0
 ....\hbox(0.0+0.0)x345.0
 Chapter 2.
-> \l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1}}},properties={noteIndex={3}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...This is just filler text \cite{ITEM-1}
                                            .\par
@@ -431,7 +431,7 @@ Completed box being shipped out [4]
 ...\hbox(0.0+0.0)x345.0
 ....\hbox(0.0+0.0)x345.0
 Chapter 3.
-> \l__csl_citation_info_tl=citationID={ITEM-3@1},citationItems={{id={ITEM-3}}},properties={noteIndex={4}}.
+> \l__csl_citation_info_tl=citationID={ITEM-3@1},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...This is just filler text \cite{ITEM-3}
                                            .\par
@@ -440,7 +440,7 @@ LaTeX Warning: Citation `ITEM-3' on page 5 undefined on input line ....
 <recently read> }
 l. ...This is just filler text \cite{ITEM-3}
                                            .\par
-> \l__csl_citation_info_tl=citationID={ITEM-4@1},citationItems={{id={ITEM-4}}},properties={noteIndex={5}}.
+> \l__csl_citation_info_tl=citationID={ITEM-4@1},citationItems={{id={ITEM-4}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...This is just filler text \cite{ITEM-4}
                                            .\par

@@ -403,7 +403,7 @@ end
 ---@alias FilePathsString string
 
 ---@param style_id string?
----@param bib_resources_str FilePathsString
+---@param bib_resources_str FilePathsString?
 ---@param lang LanguageCode?
 function CslCitationManager:begin_ref_section(style_id, bib_resources_str, lang)
   self.max_ref_section_index = self.max_ref_section_index + 1
@@ -415,7 +415,8 @@ function CslCitationManager:begin_ref_section(style_id, bib_resources_str, lang)
   end
 
   self.ref_section.style_id = style_id or self.global_ref_section.style_id
-  self.ref_section.bib_resources = self.global_ref_section.bib_resources if bib_resources_str and bib_resources_str ~= "" then
+  self.ref_section.bib_resources = self.global_ref_section.bib_resources
+  if bib_resources_str and bib_resources_str ~= "" then
     self.ref_section.bib_resources = util.split(util.strip(bib_resources_str), "%s*,%s*")
   end
   self.ref_section.lang = self.global_ref_section.lang
@@ -838,7 +839,7 @@ function CslCitationManager:read_aux_file(aux_content)
           ref_section.engine:enable_linking()
         end
         local style_class = ref_section.engine:get_style_class()
-        local style_class_setup = string.format("\\csloptions{%d}{class = %s}", ref_section_index, style_class)
+        local style_class_setup = string.format("\\csloptions{%d}{class = {%s = %s}}", ref_section_index, ref_section.style_id, style_class)
         table.insert(output_lines, style_class_setup)
       end
       self:register_citation_info(tostring(ref_section_index), content)

@@ -20,7 +20,7 @@ No file bibstyle-in-preamble.bbl.
 ============================================================
 TEST 1: Single cite item in a citation
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
@@ -31,7 +31,7 @@ l. ...}
 ============================================================
 TEST 2: Multiple cite items in a citation
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@1},citationItems={{id={ITEM-1}},{id={ITEM-2}}},properties={noteIndex={2}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@1},citationItems={{id={ITEM-1}},{id={ITEM-2}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
@@ -43,7 +43,7 @@ l. ...}
 ============================================================
 TEST 3: Citation with page locator
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={3}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
@@ -54,7 +54,7 @@ l. ...}
 ============================================================
 TEST 4: Citation with section locator
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1@3},citationItems={{id={ITEM-1},label={section},locator={2.3}}},properties={noteIndex={4}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@3},citationItems={{id={ITEM-1},label={section},locator={2.3}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
@@ -65,7 +65,7 @@ l. ...}
 ============================================================
 TEST 5: Citation with implicit page locator
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1@4},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={5}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@4},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
@@ -76,7 +76,7 @@ l. ...}
 ============================================================
 TEST 6: Citation with prefix and suffix
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1@5},citationItems={{id={ITEM-1},prefix={prefix },suffix={ suffix}}},properties={noteIndex={6}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@5},citationItems={{id={ITEM-1},prefix={prefix },suffix={ suffix}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
@@ -87,7 +87,7 @@ l. ...}
 ============================================================
 TEST 7: Citation with implicit prefix and suffix
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1@6},citationItems={{id={ITEM-1},prefix={prefix },suffix={, suffix}}},properties={noteIndex={7}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@6},citationItems={{id={ITEM-1},prefix={prefix },suffix={, suffix}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
@@ -98,7 +98,7 @@ l. ...}
 ============================================================
 TEST 8: Citation with implicit suffix
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1@7},citationItems={{id={ITEM-1},suffix={, suffix}}},properties={noteIndex={8}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@7},citationItems={{id={ITEM-1},suffix={, suffix}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
@@ -109,7 +109,7 @@ l. ...}
 ============================================================
 TEST 9: Citation with implicit prefix
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1@8},citationItems={{id={ITEM-1},prefix={prefix }}},properties={noteIndex={9}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@8},citationItems={{id={ITEM-1},prefix={prefix }}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
@@ -142,7 +142,7 @@ l. ...}
 ============================================================
 TEST 12: Multiple cite items with options
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@2},citationItems={{id={ITEM-1},prefix={See },label={page},locator={6}},{id={ITEM-2},label={figure},locator={2}}},properties={noteIndex={12}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@2},citationItems={{id={ITEM-1},prefix={See },label={page},locator={6}},{id={ITEM-2},label={figure},locator={2}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....

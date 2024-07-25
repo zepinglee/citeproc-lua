@@ -19,7 +19,7 @@ No file error-item-unavailable.bbl.
 ============================================================
 TEST 1: Entry not available
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE@1},citationItems={{id={ITEM-UNAVAILABLE}}},properties={noteIndex={1}}.
+> \l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE@1},citationItems={{id={ITEM-UNAVAILABLE}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-UNAVAILABLE' on page 1 undefined on input line ....
@@ -30,7 +30,7 @@ l. ...}
 ============================================================
 TEST 2: Multiple enties
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE,ANOTHER-ITEM@1},citationItems={{id={ITEM-UNAVAILABLE}},{id={ANOTHER-ITEM}}},properties={noteIndex={2}}.
+> \l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE,ANOTHER-ITEM@1},citationItems={{id={ITEM-UNAVAILABLE}},{id={ANOTHER-ITEM}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-UNAVAILABLE' on page 1 undefined on input line ....
@@ -42,7 +42,7 @@ l. ...}
 ============================================================
 TEST 3: Mixture
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE,ITEM-1,ANOTHER-ITEM@1},citationItems={{id={ITEM-UNAVAILABLE}},{id={ITEM-1}},{id={ANOTHER-ITEM}}},properties={noteIndex={3}}.
+> \l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE,ITEM-1,ANOTHER-ITEM@1},citationItems={{id={ITEM-UNAVAILABLE}},{id={ITEM-1}},{id={ANOTHER-ITEM}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-UNAVAILABLE' on page 1 undefined on input line ....
