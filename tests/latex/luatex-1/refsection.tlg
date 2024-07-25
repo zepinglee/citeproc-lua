@@ -3,27 +3,27 @@ Don't change this file in any respect.
 Chapter 1.
 > \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
 <recently read> }
-l. ...This is just filler text \cite{ITEM-1}
-                                         .\par
+l. ...  This is just filler text \cite{ITEM-1}
+                                           .\par
 > \l__csl_citation_tl=\cslcite {ITEM-1}{[1]}.
 <recently read> }
-l. ...This is just filler text \cite{ITEM-1}
-                                         .\par
+l. ...  This is just filler text \cite{ITEM-1}
+                                           .\par
 > \l__csl_citation_info_tl=citationID={ITEM-2@1},citationItems={{id={ITEM-2}}},properties={noteIndex={0}}.
 <recently read> }
-l. ...This is just filler text \cite{ITEM-2}
-                                         .\par
+l. ...  This is just filler text \cite{ITEM-2}
+                                           .\par
 > \l__csl_citation_tl=\cslcite {ITEM-2}{[2]}.
 <recently read> }
-l. ...This is just filler text \cite{ITEM-2}
-                                         .\par
+l. ...  This is just filler text \cite{ITEM-2}
+                                           .\par
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 1, second-field-align = flush, line-spacing = 1, entry-spacing = 0, widest-label = [1]}}
 >  {\bibitem [{[1]}]{ITEM-1} B. D’Arcus, \textit {Boundaries of dissent: Protest and state power in the media age}. Routledge, 2005.}
 >  {\bibitem [{[2]}]{ITEM-2} F. G. Bennett Jr., “Getting property right: ‘Informal’ mortgages in the Japanese courts,” \textit {Pac. Rim L. \& Pol’y J.}, vol. 18, pp. 463–509, Aug. 2009.}
 >  {\end {thebibliography}}.
 <recently read> }
-l. ...\printbibliography[heading=subbibliography]
+l. ...  \printbibliography[heading=subbibliography]
 Completed box being shipped out [1]
 \vbox(627.36243+0.0)x380.0, direction TLT
 .\hbox(0.0+0.0)x0.0, direction TLT
@@ -49,16 +49,16 @@ Completed box being shipped out [1]
 .....\hbox(0.0+0.0)x345.0, direction TLT
 ...\glue 18.06749
 ...\glue(\lineskip) 0.0
-...\vbox(550.0+0.0)x345.0, glue set 248.6753fil, direction TLT
+...\vbox(550.0+0.0)x345.0, glue set 248.52602fil, direction TLT
 ....\write-{}
 ....\pdfdest name{Doc-Start} xyz
 ....\write-{}
 ....\pdfdest name{chapter.1} xyz
-....\write4{\protect \BOOKMARK [0][-]{chapter.1}{\376\377\000T\000i\000t\000l\000e\000\040\000o\000f\000\040\000f\000i\000r\000s\000t\000\040\000c\000h\000a\000p\000t\000e\000r}{}% 1}
-....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {1}Title of first chapter}{\thepage }{chapter.1}\protected@file@percent }}
-....\marks1{\__mark_id:n {1}\MakeUppercase    []{Chapter\ 1. \ Title of first chapter}}
+....\write4{\protect \BOOKMARK [0][-]{chapter.1}{\376\377\000I\000E\000E\000E\000\040\000s\000t\000y\000l\000e}{}% 1}
+....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {1}IEEE style}{\thepage }{chapter.1}\protected@file@percent }}
+....\marks1{\__mark_id:n {1}\MakeUppercase    []{Chapter\ 1. \ IEEE style}}
 ....\marks2{\__mark_id:n {2}}
-....\mark{{\MakeUppercase    []{Chapter\ 1. \ Title of first chapter}}{}}
+....\mark{{\MakeUppercase    []{Chapter\ 1. \ IEEE style}}{}}
 ....\write1{\@writefile{lof}{\protect \addvspace {10\p@ }}}
 ....\write1{\@writefile{lot}{\protect \addvspace {10\p@ }}}
 ....\glue(\topskip) 10.0
@@ -94,40 +94,25 @@ Completed box being shipped out [1]
 ....\glue 20.0
 ....\glue(\parskip) 0.0 plus 1.0
 ....\glue(\parskip) 0.0
-....\glue(\baselineskip) 8.56044
-....\hbox(17.416+4.82672)x345.0, glue set 47.66457fil, direction TLT
+....\glue(\baselineskip) 8.70972
+....\hbox(17.26672+4.976)x345.0, glue set 106.82922fil, direction TLT
 .....\localpar
 ......\localinterlinepenalty=0
 ......\localbrokenpenalty=0
 ......\localleftbox=null
 ......\localrightbox=null
 .....\hbox(0.0+0.0)x0.0, direction TLT
-.....\TU/lmr/bx/n/24.88 T
-.....\TU/lmr/bx/n/24.88 i
-.....\discretionary (penalty 50)
-......< \TU/lmr/bx/n/24.88 -
-.....\TU/lmr/bx/n/24.88 t
-.....\TU/lmr/bx/n/24.88 l
-.....\TU/lmr/bx/n/24.88 e
-.....\glue(\spaceskip) 9.33 plus 4.66501 minus 3.11
-.....\TU/lmr/bx/n/24.88 o
-.....\TU/lmr/bx/n/24.88 f
-.....\glue(\spaceskip) 9.33 plus 4.66501 minus 3.11
-.....\TU/lmr/bx/n/24.88 ﬁ
-.....\TU/lmr/bx/n/24.88 r
+.....\TU/lmr/bx/n/24.88 I
+.....\TU/lmr/bx/n/24.88 E
+.....\TU/lmr/bx/n/24.88 E
+.....\TU/lmr/bx/n/24.88 E
+.....\glue(\spaceskip) 9.33 plus 4.66034 minus 3.11311
 .....\TU/lmr/bx/n/24.88 s
 .....\TU/lmr/bx/n/24.88 t
-.....\glue(\spaceskip) 9.33 plus 4.66501 minus 3.11
-.....\TU/lmr/bx/n/24.88 c
 .....\kern-0.77129 (font)
-.....\TU/lmr/bx/n/24.88 h
-.....\TU/lmr/bx/n/24.88 a
-.....\TU/lmr/bx/n/24.88 p
-.....\discretionary (penalty 50)
-......< \TU/lmr/bx/n/24.88 -
-.....\TU/lmr/bx/n/24.88 t
+.....\TU/lmr/bx/n/24.88 y
+.....\TU/lmr/bx/n/24.88 l
 .....\TU/lmr/bx/n/24.88 e
-.....\TU/lmr/bx/n/24.88 r
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0 plus 1.0fil
@@ -260,7 +245,7 @@ Completed box being shipped out [1]
 ....\glue 9.913 plus 0.86198
 ....\marks2{\__mark_id:n {3}\MakeUppercase    []{References}}
 ....\marks3{\__mark_id:n {4}\MakeUppercase    []{References}}
-....\mark{{\MakeUppercase    []{Chapter\ 1. \ Title of first chapter}}{\MakeUppercase    []{References}}}
+....\mark{{\MakeUppercase    []{Chapter\ 1. \ IEEE style}}{\MakeUppercase    []{References}}}
 ....\penalty 10000
 ....\glue 0.0 plus 1.0
 ....\glue(\parskip) 0.0
@@ -647,18 +632,18 @@ Completed box being shipped out [2]
 Chapter 2.
 > \l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
 <recently read> }
-l. ...This is just filler text \cite{ITEM-1}
-                                         .\par
-> \l__csl_citation_tl=\cslcite {ITEM-1}{[1]}.
+l. ...  This is just filler text \cite{ITEM-1}
+                                           .\par
+> \l__csl_citation_tl=(\cslcite {ITEM-1}{D’Arcus, 2005}).
 <recently read> }
-l. ...This is just filler text \cite{ITEM-1}
-                                         .\par
+l. ...  This is just filler text \cite{ITEM-1}
+                                           .\par
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
->  {\begin {thebibliography}{index = 2, second-field-align = flush, line-spacing = 1, entry-spacing = 0, widest-label = [1]}}
->  {\bibitem [{[1]}]{ITEM-1} B. D’Arcus, \textit {Boundaries of dissent: Protest and state power in the media age}. Routledge, 2005.}
+>  {\begin {thebibliography}{index = 2, hanging-indent = true, line-spacing = 2, entry-spacing = 0}}
+>  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of dissent: Protest and state power in the media age}. Routledge.}
 >  {\end {thebibliography}}.
 <recently read> }
-l. ...\printbibliography[heading=subbibliography]
+l. ...  \printbibliography[heading=subbibliography]
 Completed box being shipped out [3]
 \vbox(627.36243+0.22)x380.0, direction TLT
 .\vbox(0.0+0.0)x0.0, glue set - 20.99626fil, direction TLT
@@ -683,13 +668,13 @@ Completed box being shipped out [3]
 .....\hbox(0.0+0.0)x345.0, direction TLT
 ...\glue 18.06749
 ...\glue(\lineskip) 0.0
-...\vbox(550.0+0.0)x345.0, glue set 284.6753fil, direction TLT
+...\vbox(550.0+0.0)x345.0, glue set 260.526fil, direction TLT
 ....\pdfdest name{chapter.2} xyz
-....\write4{\protect \BOOKMARK [0][-]{chapter.2}{\376\377\000T\000i\000t\000l\000e\000\040\000o\000f\000\040\000s\000e\000c\000o\000n\000d\000\040\000c\000h\000a\000p\000t\000e\000r}{}% 2}
-....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {2}Title of second chapter}{\thepage }{chapter.2}\protected@file@percent }}
-....\marks1{\__mark_id:n {5}\MakeUppercase    []{Chapter\ 2. \ Title of second chapter}}
+....\write4{\protect \BOOKMARK [0][-]{chapter.2}{\376\377\000A\000P\000A\000\040\000s\000t\000y\000l\000e}{}% 2}
+....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {2}APA style}{\thepage }{chapter.2}\protected@file@percent }}
+....\marks1{\__mark_id:n {5}\MakeUppercase    []{Chapter\ 2. \ APA style}}
 ....\marks2{\__mark_id:n {6}}
-....\mark{{\MakeUppercase    []{Chapter\ 2. \ Title of second chapter}}{}}
+....\mark{{\MakeUppercase    []{Chapter\ 2. \ APA style}}{}}
 ....\write1{\@writefile{lof}{\protect \addvspace {10\p@ }}}
 ....\write1{\@writefile{lot}{\protect \addvspace {10\p@ }}}
 ....\glue(\topskip) 10.0
@@ -726,43 +711,24 @@ Completed box being shipped out [3]
 ....\glue(\parskip) 0.0 plus 1.0
 ....\glue(\parskip) 0.0
 ....\glue(\baselineskip) 8.56044
-....\hbox(17.416+4.82672)x345.0, glue set 31.45525fil, direction TLT
+....\hbox(17.416+4.976)x345.0, glue set 110.03874fil, direction TLT
 .....\localpar
 ......\localinterlinepenalty=0
 ......\localbrokenpenalty=0
 ......\localleftbox=null
 ......\localrightbox=null
 .....\hbox(0.0+0.0)x0.0, direction TLT
-.....\TU/lmr/bx/n/24.88 T
-.....\TU/lmr/bx/n/24.88 i
-.....\discretionary (penalty 50)
-......< \TU/lmr/bx/n/24.88 -
+.....\TU/lmr/bx/n/24.88 A
+.....\TU/lmr/bx/n/24.88 P
+.....\kern-2.33871 (font)
+.....\TU/lmr/bx/n/24.88 A
+.....\glue(\spaceskip) 9.33 plus 4.66034 minus 3.11311
+.....\TU/lmr/bx/n/24.88 s
 .....\TU/lmr/bx/n/24.88 t
+.....\kern-0.77129 (font)
+.....\TU/lmr/bx/n/24.88 y
 .....\TU/lmr/bx/n/24.88 l
 .....\TU/lmr/bx/n/24.88 e
-.....\glue(\spaceskip) 9.33 plus 4.66501 minus 3.11
-.....\TU/lmr/bx/n/24.88 o
-.....\TU/lmr/bx/n/24.88 f
-.....\glue(\spaceskip) 9.33 plus 4.66501 minus 3.11
-.....\TU/lmr/bx/n/24.88 s
-.....\TU/lmr/bx/n/24.88 e
-.....\TU/lmr/bx/n/24.88 c
-.....\discretionary (penalty 50)
-......< \TU/lmr/bx/n/24.88 -
-.....\TU/lmr/bx/n/24.88 o
-.....\TU/lmr/bx/n/24.88 n
-.....\TU/lmr/bx/n/24.88 d
-.....\glue(\spaceskip) 9.33 plus 4.66501 minus 3.11
-.....\TU/lmr/bx/n/24.88 c
-.....\kern-0.77129 (font)
-.....\TU/lmr/bx/n/24.88 h
-.....\TU/lmr/bx/n/24.88 a
-.....\TU/lmr/bx/n/24.88 p
-.....\discretionary (penalty 50)
-......< \TU/lmr/bx/n/24.88 -
-.....\TU/lmr/bx/n/24.88 t
-.....\TU/lmr/bx/n/24.88 e
-.....\TU/lmr/bx/n/24.88 r
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0 plus 1.0fil
@@ -771,7 +737,7 @@ Completed box being shipped out [3]
 ....\glue(\parskip) 0.0 plus 1.0
 ....\glue(\parskip) 0.0
 ....\glue(\lineskip) 1.0
-....\hbox(7.5+2.5)x345.0, glue set 235.36fil, direction TLT
+....\hbox(7.5+2.5)x345.0, glue set 176.25fil, direction TLT
 .....\localpar
 ......\localinterlinepenalty=0
 ......\localbrokenpenalty=0
@@ -801,11 +767,25 @@ Completed box being shipped out [3]
 .....\TU/lmr/m/n/10 x
 .....\TU/lmr/m/n/10 t
 .....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 (
 .....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite2.ITEM-1}
-.....\TU/lmr/m/n/10 [
-.....\TU/lmr/m/n/10 1
-.....\TU/lmr/m/n/10 ]
+.....\TU/lmr/m/n/10 D
+.....\TU/lmr/m/n/10 ’
+.....\TU/lmr/m/n/10 A
+.....\TU/lmr/m/n/10 r
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 c
+.....\TU/lmr/m/n/10 u
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 2.08124 minus 0.888
+.....\TU/lmr/m/n/10 2
+.....\TU/lmr/m/n/10 0
+.....\TU/lmr/m/n/10 0
+.....\TU/lmr/m/n/10 5
 .....\pdfendlink
+.....\TU/lmr/m/n/10 )
 .....\TU/lmr/m/n/10 .
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -852,38 +832,28 @@ Completed box being shipped out [3]
 ....\glue 9.913 plus 0.86198
 ....\marks2{\__mark_id:n {7}\MakeUppercase    []{References}}
 ....\marks3{\__mark_id:n {8}\MakeUppercase    []{References}}
-....\mark{{\MakeUppercase    []{Chapter\ 2. \ Title of second chapter}}{\MakeUppercase    []{References}}}
+....\mark{{\MakeUppercase    []{Chapter\ 2. \ APA style}}{\MakeUppercase    []{References}}}
 ....\penalty 10000
 ....\glue 0.0 plus 1.0
+....\pdfdest name{cite2.ITEM-1} xyz
+....\penalty 10000
 ....\glue(\parskip) 0.0
 ....\glue(\parskip) 0.0
-....\glue(\baselineskip) 4.3272
-....\hbox(7.5+2.5)x329.44, glue set - 0.6133, shifted 15.56, direction TLT
+....\glue(\baselineskip) 16.3272
+....\hbox(7.5+2.5)x335.0, glue set - 0.4506, shifted 10.0, direction TLT
 .....\localpar
 ......\localinterlinepenalty=0
 ......\localbrokenpenalty=0
 ......\localleftbox=null
 ......\localrightbox=null
-.....\hbox(7.5+2.5)x0.0, direction TLT
-......\glue 0.0
-......\glue -10.56
+.....\hbox(0.0+0.0)x-10.0, direction TLT
+......\glue -10.0
+......\glue -20.0
 ......\glue -5.0
-......\hbox(7.5+2.5)x10.56, direction TLT
+......\hbox(0.0+0.0)x20.0, glue set 20.0fil, direction TLT
 .......\glue 0.0 plus 1.0fil
-.......\penalty 10000
-.......\hbox(0.0+0.0)x0.0, direction TLT
-........\hbox(0.0+0.0)x0.0, shifted -12.0, direction TLT
-.........\pdfdest name{cite2.ITEM-1} xyz
-.........\penalty 10000
-.......\TU/lmr/m/n/10 [
-.......\TU/lmr/m/n/10 1
-.......\TU/lmr/m/n/10 ]
-.......\glue 0.0 plus 1.0fill
 ......\glue 5.0
 .....\penalty 0
-.....\TU/lmr/m/n/10 B
-.....\TU/lmr/m/n/10 .
-.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/n/10 D
 .....\TU/lmr/m/n/10 ’
 .....\TU/lmr/m/n/10 A
@@ -894,6 +864,17 @@ Completed box being shipped out [3]
 .....\TU/lmr/m/n/10 u
 .....\TU/lmr/m/n/10 s
 .....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 B
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 (
+.....\TU/lmr/m/n/10 2
+.....\TU/lmr/m/n/10 0
+.....\TU/lmr/m/n/10 0
+.....\TU/lmr/m/n/10 5
+.....\TU/lmr/m/n/10 )
+.....\TU/lmr/m/n/10 .
 .....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/it/10 B
 .....\TU/lmr/m/it/10 o
@@ -963,15 +944,15 @@ Completed box being shipped out [3]
 .....\TU/lmr/m/it/10 d
 .....\TU/lmr/m/it/10 i
 .....\TU/lmr/m/it/10 a
-.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.....\glue(\rightskip) 0.0
+....\penalty 14000
+....\glue(\baselineskip) 14.56
+....\hbox(6.94+2.06)x335.0, glue set 267.76999fil, shifted 10.0, direction TLT
 .....\TU/lmr/m/it/10 a
 .....\TU/lmr/m/it/10 g
 .....\TU/lmr/m/it/10 e
 .....\TU/lmr/m/n/10 .
-.....\glue(\rightskip) 0.0
-....\penalty 14000
-....\glue(\baselineskip) 2.56
-....\hbox(6.94+2.06)x329.44, glue set 256.52002fil, shifted 15.56, direction TLT
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/n/10 R
 .....\TU/lmr/m/n/10 o
 .....\TU/lmr/m/n/10 u
@@ -983,12 +964,6 @@ Completed box being shipped out [3]
 .....\TU/lmr/m/n/10 d
 .....\TU/lmr/m/n/10 g
 .....\TU/lmr/m/n/10 e
-.....\TU/lmr/m/n/10 ,
-.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
-.....\TU/lmr/m/n/10 2
-.....\TU/lmr/m/n/10 0
-.....\TU/lmr/m/n/10 0
-.....\TU/lmr/m/n/10 5
 .....\TU/lmr/m/n/10 .
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -1038,29 +1013,37 @@ Completed box being shipped out [4]
 ...\hbox(0.0+0.0)x345.0, direction TLT
 ....\hbox(0.0+0.0)x345.0, direction TLT
 Chapter 3.
-> \l__csl_citation_info_tl=citationID={ITEM-3@1},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-3@1},citationItems={{id={ITEM-3}}},properties={noteIndex={1}}.
 <recently read> }
-l. ...This is just filler text \cite{ITEM-3}
-                                         .\par
-> \l__csl_citation_tl=\cslcite {ITEM-3}{[1]}.
+l. ...  This is just filler text\cite{ITEM-3}
+                                          .\par
+> \l__csl_citation_tl=\cslcite {ITEM-3}{Lamport, \textit {LaTeX: A Document Preparation System: User’s Guide and Reference Manual}}..
 <recently read> }
-l. ...This is just filler text \cite{ITEM-3}
-                                         .\par
-> \l__csl_citation_info_tl=citationID={ITEM-4@1},citationItems={{id={ITEM-4}}},properties={noteIndex={0}}.
+l. ...  This is just filler text\cite{ITEM-3}
+                                          .\par
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line ....
+> \l__csl_citation_info_tl=citationID={ITEM-4@1},citationItems={{id={ITEM-4}}},properties={noteIndex={2}}.
 <recently read> }
-l. ...This is just filler text \cite{ITEM-4}
-                                         .\par
-> \l__csl_citation_tl=\cslcite {ITEM-4}{[2]}.
+l. ...  This is just filler text\cite{ITEM-4}
+                                          .\par
+> \l__csl_citation_tl=\cslcite {ITEM-4}{Mittelbach et al., \textit {The LaTeX Companion}}..
 <recently read> }
-l. ...This is just filler text \cite{ITEM-4}
-                                         .\par
+l. ...  This is just filler text\cite{ITEM-4}
+                                          .\par
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
->  {\begin {thebibliography}{index = 3, second-field-align = flush, line-spacing = 1, entry-spacing = 0, widest-label = [1]}}
->  {\bibitem [{[1]}]{ITEM-3} L. Lamport, \textit {LaTeX: A document preparation system: User’s guide and reference manual}, 2nd ed. Reading, MA, USA: Addison-Wesley, 1994.}
->  {\bibitem [{[2]}]{ITEM-4} F. Mittelbach, M. Goossens, J. Braams, D. Carlisle, and C. Rowley, \textit {The LaTeX companion}, 2nd ed. Reading, MA, USA: Addison-Wesley, 2004.}
+>  {\begin {thebibliography}{index = 3, hanging-indent = true, line-spacing = 1, entry-spacing = 0}}
+>  {\bibitem {ITEM-3} Lamport, Leslie. \textit {LaTeX: A Document Preparation System: User’s Guide and Reference Manual}. 2nd ed. Reading, MA, USA: Addison-Wesley, 1994.}
+>  {\bibitem {ITEM-4} Mittelbach, Frank, Michel Goossens, Johannes Braams, David Carlisle, and Chris Rowley. \textit {The LaTeX Companion}. 2nd ed. Reading, MA, USA: Addison-Wesley, 2004.}
 >  {\end {thebibliography}}.
 <recently read> }
-l. ...\printbibliography[heading=subbibliography]
+l. ...  \printbibliography[heading=subbibliography]
 Completed box being shipped out [5]
 \vbox(627.36243+0.22)x380.0, direction TLT
 .\vbox(0.0+0.0)x0.0, glue set - 20.99626fil, direction TLT
@@ -1085,13 +1068,13 @@ Completed box being shipped out [5]
 .....\hbox(0.0+0.0)x345.0, direction TLT
 ...\glue 18.06749
 ...\glue(\lineskip) 0.0
-...\vbox(550.0+0.0)x345.0, glue set 248.6753fil, direction TLT
+...\vbox(550.0+0.0)x345.0, glue set 210.24751fil, direction TLT
 ....\pdfdest name{chapter.3} xyz
-....\write4{\protect \BOOKMARK [0][-]{chapter.3}{\376\377\000T\000i\000t\000l\000e\000\040\000o\000f\000\040\000t\000h\000i\000r\000d\000\040\000c\000h\000a\000p\000t\000e\000r}{}% 3}
-....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {3}Title of third chapter}{\thepage }{chapter.3}\protected@file@percent }}
-....\marks1{\__mark_id:n {9}\MakeUppercase    []{Chapter\ 3. \ Title of third chapter}}
+....\write4{\protect \BOOKMARK [0][-]{chapter.3}{\376\377\000C\000h\000i\000c\000a\000g\000o\000\040\000n\000o\000t\000e\000s\000\040\000s\000t\000y\000l\000e}{}% 3}
+....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {3}Chicago notes style}{\thepage }{chapter.3}\protected@file@percent }}
+....\marks1{\__mark_id:n {9}\MakeUppercase    []{Chapter\ 3. \ Chicago notes style}}
 ....\marks2{\__mark_id:n {10}}
-....\mark{{\MakeUppercase    []{Chapter\ 3. \ Title of third chapter}}{}}
+....\mark{{\MakeUppercase    []{Chapter\ 3. \ Chicago notes style}}{}}
 ....\write1{\@writefile{lof}{\protect \addvspace {10\p@ }}}
 ....\write1{\@writefile{lot}{\protect \addvspace {10\p@ }}}
 ....\glue(\topskip) 10.0
@@ -1127,41 +1110,34 @@ Completed box being shipped out [5]
 ....\glue 20.0
 ....\glue(\parskip) 0.0 plus 1.0
 ....\glue(\parskip) 0.0
-....\glue(\baselineskip) 8.56044
-....\hbox(17.416+4.82672)x345.0, glue set 41.51921fil, direction TLT
+....\glue(\baselineskip) 8.6102
+....\hbox(17.36624+5.00089)x345.0, glue set 53.97165fil, direction TLT
 .....\localpar
 ......\localinterlinepenalty=0
 ......\localbrokenpenalty=0
 ......\localleftbox=null
 ......\localrightbox=null
 .....\hbox(0.0+0.0)x0.0, direction TLT
-.....\TU/lmr/bx/n/24.88 T
+.....\TU/lmr/bx/n/24.88 C
+.....\TU/lmr/bx/n/24.88 h
 .....\TU/lmr/bx/n/24.88 i
-.....\discretionary (penalty 50)
-......< \TU/lmr/bx/n/24.88 -
+.....\TU/lmr/bx/n/24.88 c
+.....\TU/lmr/bx/n/24.88 a
+.....\TU/lmr/bx/n/24.88 g
+.....\TU/lmr/bx/n/24.88 o
+.....\glue(\spaceskip) 9.33 plus 4.66501 minus 3.11
+.....\TU/lmr/bx/n/24.88 n
+.....\TU/lmr/bx/n/24.88 o
 .....\TU/lmr/bx/n/24.88 t
+.....\TU/lmr/bx/n/24.88 e
+.....\TU/lmr/bx/n/24.88 s
+.....\glue(\spaceskip) 9.33 plus 4.66501 minus 3.11
+.....\TU/lmr/bx/n/24.88 s
+.....\TU/lmr/bx/n/24.88 t
+.....\kern-0.77129 (font)
+.....\TU/lmr/bx/n/24.88 y
 .....\TU/lmr/bx/n/24.88 l
 .....\TU/lmr/bx/n/24.88 e
-.....\glue(\spaceskip) 9.33 plus 4.66501 minus 3.11
-.....\TU/lmr/bx/n/24.88 o
-.....\TU/lmr/bx/n/24.88 f
-.....\glue(\spaceskip) 9.33 plus 4.66501 minus 3.11
-.....\TU/lmr/bx/n/24.88 t
-.....\TU/lmr/bx/n/24.88 h
-.....\TU/lmr/bx/n/24.88 i
-.....\TU/lmr/bx/n/24.88 r
-.....\TU/lmr/bx/n/24.88 d
-.....\glue(\spaceskip) 9.33 plus 4.66501 minus 3.11
-.....\TU/lmr/bx/n/24.88 c
-.....\kern-0.77129 (font)
-.....\TU/lmr/bx/n/24.88 h
-.....\TU/lmr/bx/n/24.88 a
-.....\TU/lmr/bx/n/24.88 p
-.....\discretionary (penalty 50)
-......< \TU/lmr/bx/n/24.88 -
-.....\TU/lmr/bx/n/24.88 t
-.....\TU/lmr/bx/n/24.88 e
-.....\TU/lmr/bx/n/24.88 r
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0 plus 1.0fil
@@ -1170,7 +1146,7 @@ Completed box being shipped out [5]
 ....\glue(\parskip) 0.0 plus 1.0
 ....\glue(\parskip) 0.0
 ....\glue(\lineskip) 1.0
-....\hbox(7.5+2.5)x345.0, glue set 235.36fil, direction TLT
+....\hbox(8.27692+2.05)x345.0, glue set 244.767fil, direction TLT
 .....\localpar
 ......\localinterlinepenalty=0
 ......\localbrokenpenalty=0
@@ -1199,11 +1175,14 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/n/10 e
 .....\TU/lmr/m/n/10 x
 .....\TU/lmr/m/n/10 t
-.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
-.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite3.ITEM-3}
-.....\TU/lmr/m/n/10 [
-.....\TU/lmr/m/n/10 1
-.....\TU/lmr/m/n/10 ]
+.....\penalty 10000
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[1 0 0]} action goto name{Hfootnote.1}
+.....\hbox(8.27692+0.0)x4.483, direction TLT
+......\mathon
+......\hbox(0.0+0.0)x0.0, direction TLT
+......\hbox(4.648+0.0)x4.483, shifted -3.62892, direction TLT
+.......\TU/lmr/m/n/7 1
+......\mathoff
 .....\pdfendlink
 .....\TU/lmr/m/n/10 .
 .....\penalty 10000
@@ -1211,8 +1190,8 @@ Completed box being shipped out [5]
 .....\glue(\rightskip) 0.0
 ....\glue(\parskip) 0.0 plus 1.0
 ....\glue(\parskip) 0.0
-....\glue(\baselineskip) 2.0
-....\hbox(7.5+2.5)x345.0, glue set 235.36fil, direction TLT
+....\glue(\baselineskip) 1.67308
+....\hbox(8.27692+2.05)x345.0, glue set 244.767fil, direction TLT
 .....\localpar
 ......\localinterlinepenalty=0
 ......\localbrokenpenalty=0
@@ -1242,11 +1221,14 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/n/10 e
 .....\TU/lmr/m/n/10 x
 .....\TU/lmr/m/n/10 t
-.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
-.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite3.ITEM-4}
-.....\TU/lmr/m/n/10 [
-.....\TU/lmr/m/n/10 2
-.....\TU/lmr/m/n/10 ]
+.....\penalty 10000
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[1 0 0]} action goto name{Hfootnote.2}
+.....\hbox(8.27692+0.0)x4.483, direction TLT
+......\mathon
+......\hbox(0.0+0.0)x0.0, direction TLT
+......\hbox(4.648+0.0)x4.483, shifted -3.62892, direction TLT
+.......\TU/lmr/m/n/7 2
+......\mathoff
 .....\pdfendlink
 .....\TU/lmr/m/n/10 .
 .....\penalty 10000
@@ -1256,7 +1238,7 @@ Completed box being shipped out [5]
 ....\glue 15.08499 plus 4.31 minus 0.86198
 ....\glue(\parskip) 0.0 plus 1.0
 ....\glue(\parskip) 0.0
-....\glue(\baselineskip) 5.42
+....\glue(\baselineskip) 5.87
 ....\hbox(10.08+0.1728)x345.0, glue set 269.19846fil, direction TLT
 .....\localpar
 ......\localinterlinepenalty=0
@@ -1294,38 +1276,28 @@ Completed box being shipped out [5]
 ....\glue 9.913 plus 0.86198
 ....\marks2{\__mark_id:n {11}\MakeUppercase    []{References}}
 ....\marks3{\__mark_id:n {12}\MakeUppercase    []{References}}
-....\mark{{\MakeUppercase    []{Chapter\ 3. \ Title of third chapter}}{\MakeUppercase    []{References}}}
+....\mark{{\MakeUppercase    []{Chapter\ 3. \ Chicago notes style}}{\MakeUppercase    []{References}}}
 ....\penalty 10000
 ....\glue 0.0 plus 1.0
+....\pdfdest name{cite3.ITEM-3} xyz
+....\penalty 10000
 ....\glue(\parskip) 0.0
 ....\glue(\parskip) 0.0
-....\glue(\baselineskip) 4.3272
-....\hbox(7.5+2.5)x329.44, glue set 0.06175, shifted 15.56, direction TLT
+....\glue(\baselineskip) 4.66719
+....\hbox(7.16+2.05)x335.0, glue set 0.50636, shifted 10.0, direction TLT
 .....\localpar
 ......\localinterlinepenalty=0
 ......\localbrokenpenalty=0
 ......\localleftbox=null
 ......\localrightbox=null
-.....\hbox(7.5+2.5)x0.0, direction TLT
-......\glue 0.0
-......\glue -10.56
+.....\hbox(0.0+0.0)x-10.0, direction TLT
+......\glue -10.0
+......\glue -20.0
 ......\glue -5.0
-......\hbox(7.5+2.5)x10.56, direction TLT
+......\hbox(0.0+0.0)x20.0, glue set 20.0fil, direction TLT
 .......\glue 0.0 plus 1.0fil
-.......\penalty 10000
-.......\hbox(0.0+0.0)x0.0, direction TLT
-........\hbox(0.0+0.0)x0.0, shifted -12.0, direction TLT
-.........\pdfdest name{cite3.ITEM-3} xyz
-.........\penalty 10000
-.......\TU/lmr/m/n/10 [
-.......\TU/lmr/m/n/10 1
-.......\TU/lmr/m/n/10 ]
-.......\glue 0.0 plus 1.0fill
 ......\glue 5.0
 .....\penalty 0
-.....\TU/lmr/m/n/10 L
-.....\TU/lmr/m/n/10 .
-.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/n/10 L
 .....\TU/lmr/m/n/10 a
 .....\TU/lmr/m/n/10 m
@@ -1337,6 +1309,14 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/n/10 r
 .....\TU/lmr/m/n/10 t
 .....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 L
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 l
+.....\TU/lmr/m/n/10 i
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 .
 .....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/it/10 L
 .....\kern-0.51 (font)
@@ -1351,7 +1331,7 @@ Completed box being shipped out [5]
 .....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
 .....\TU/lmr/m/it/10 A
 .....\glue(\spaceskip) 3.58 plus 1.7882 minus 1.19452
-.....\TU/lmr/m/it/10 d
+.....\TU/lmr/m/it/10 D
 .....\TU/lmr/m/it/10 o
 .....\kern-0.51 (font)
 .....\TU/lmr/m/it/10 c
@@ -1365,7 +1345,7 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/it/10 n
 .....\TU/lmr/m/it/10 t
 .....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
-.....\TU/lmr/m/it/10 p
+.....\TU/lmr/m/it/10 P
 .....\TU/lmr/m/it/10 r
 .....\kern-0.51 (font)
 .....\TU/lmr/m/it/10 e
@@ -1384,7 +1364,7 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/it/10 o
 .....\TU/lmr/m/it/10 n
 .....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
-.....\TU/lmr/m/it/10 s
+.....\TU/lmr/m/it/10 S
 .....\TU/lmr/m/it/10 y
 .....\TU/lmr/m/it/10 s
 .....\discretionary (penalty 50)
@@ -1402,7 +1382,7 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/it/10 ’
 .....\TU/lmr/m/it/10 s
 .....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
-.....\TU/lmr/m/it/10 g
+.....\TU/lmr/m/it/10 G
 .....\TU/lmr/m/it/10 u
 .....\TU/lmr/m/it/10 i
 .....\TU/lmr/m/it/10 d
@@ -1411,17 +1391,16 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/it/10 a
 .....\TU/lmr/m/it/10 n
 .....\TU/lmr/m/it/10 d
-.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
-.....\TU/lmr/m/it/10 r
+.....\glue(\rightskip) 0.0
+....\penalty 14000
+....\glue(\baselineskip) 2.79
+....\hbox(7.16+2.06)x335.0, glue set 26.73997fil, shifted 10.0, direction TLT
+.....\TU/lmr/m/it/10 R
 .....\kern-0.51 (font)
 .....\TU/lmr/m/it/10 e
 .....\TU/lmr/m/it/10 f
-.....\TU/lmr/m/it/10 -
 .....\discretionary (penalty 50)
-.....\glue(\rightskip) 0.0
-....\penalty 14100
-....\glue(\baselineskip) 2.34
-....\hbox(7.16+2.06)x329.44, glue set 36.42fil, shifted 15.56, direction TLT
+......< \TU/lmr/m/it/10 -
 .....\TU/lmr/m/it/10 e
 .....\TU/lmr/m/it/10 r
 .....\discretionary (penalty 50)
@@ -1433,7 +1412,7 @@ Completed box being shipped out [5]
 .....\kern-0.51 (font)
 .....\TU/lmr/m/it/10 e
 .....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
-.....\TU/lmr/m/it/10 m
+.....\TU/lmr/m/it/10 M
 .....\TU/lmr/m/it/10 a
 .....\TU/lmr/m/it/10 n
 .....\discretionary (penalty 50)
@@ -1441,7 +1420,7 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/it/10 u
 .....\TU/lmr/m/it/10 a
 .....\TU/lmr/m/it/10 l
-.....\TU/lmr/m/n/10 ,
+.....\TU/lmr/m/n/10 .
 .....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/n/10 2
 .....\TU/lmr/m/n/10 n
@@ -1502,35 +1481,25 @@ Completed box being shipped out [5]
 .....\glue(\rightskip) 0.0
 ....\penalty -51
 ....\glue 0.0
+....\pdfdest name{cite3.ITEM-4} xyz
+....\penalty 10000
 ....\glue(\parskip) 0.0
 ....\glue(\parskip) 0.0
-....\glue(\baselineskip) 2.44
-....\hbox(7.5+2.5)x329.44, glue set 0.65738, shifted 15.56, direction TLT
+....\glue(\baselineskip) 2.89
+....\hbox(7.05+1.93)x335.0, glue set 1.0886, shifted 10.0, direction TLT
 .....\localpar
 ......\localinterlinepenalty=0
 ......\localbrokenpenalty=0
 ......\localleftbox=null
 ......\localrightbox=null
-.....\hbox(7.5+2.5)x0.0, direction TLT
-......\glue 0.0
-......\glue -10.56
+.....\hbox(0.0+0.0)x-10.0, direction TLT
+......\glue -10.0
+......\glue -20.0
 ......\glue -5.0
-......\hbox(7.5+2.5)x10.56, direction TLT
+......\hbox(0.0+0.0)x20.0, glue set 20.0fil, direction TLT
 .......\glue 0.0 plus 1.0fil
-.......\penalty 10000
-.......\hbox(0.0+0.0)x0.0, direction TLT
-........\hbox(0.0+0.0)x0.0, shifted -12.0, direction TLT
-.........\pdfdest name{cite3.ITEM-4} xyz
-.........\penalty 10000
-.......\TU/lmr/m/n/10 [
-.......\TU/lmr/m/n/10 2
-.......\TU/lmr/m/n/10 ]
-.......\glue 0.0 plus 1.0fill
 ......\glue 5.0
 .....\penalty 0
-.....\TU/lmr/m/n/10 F
-.....\TU/lmr/m/n/10 .
-.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/n/10 M
 .....\TU/lmr/m/n/10 i
 .....\TU/lmr/m/n/10 t
@@ -1548,8 +1517,21 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/n/10 h
 .....\TU/lmr/m/n/10 ,
 .....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 F
+.....\kern-0.83 (font)
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 n
+.....\TU/lmr/m/n/10 k
+.....\TU/lmr/m/n/10 ,
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/n/10 M
-.....\TU/lmr/m/n/10 .
+.....\TU/lmr/m/n/10 i
+.....\TU/lmr/m/n/10 c
+.....\kern-0.28 (font)
+.....\TU/lmr/m/n/10 h
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 l
 .....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/n/10 G
 .....\TU/lmr/m/n/10 o
@@ -1563,7 +1545,15 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/n/10 ,
 .....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/n/10 J
-.....\TU/lmr/m/n/10 .
+.....\TU/lmr/m/n/10 o
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 h
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 n
+.....\TU/lmr/m/n/10 n
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 s
 .....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/n/10 B
 .....\TU/lmr/m/n/10 r
@@ -1574,7 +1564,11 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/n/10 ,
 .....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/n/10 D
-.....\TU/lmr/m/n/10 .
+.....\TU/lmr/m/n/10 a
+.....\kern-0.28 (font)
+.....\TU/lmr/m/n/10 v
+.....\TU/lmr/m/n/10 i
+.....\TU/lmr/m/n/10 d
 .....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/n/10 C
 .....\TU/lmr/m/n/10 a
@@ -1589,9 +1583,15 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/n/10 a
 .....\TU/lmr/m/n/10 n
 .....\TU/lmr/m/n/10 d
-.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\glue(\rightskip) 0.0
+....\penalty 4000
+....\glue(\baselineskip) 2.91
+....\hbox(7.16+2.06)x335.0, glue set - 0.32039, shifted 10.0, direction TLT
 .....\TU/lmr/m/n/10 C
-.....\TU/lmr/m/n/10 .
+.....\TU/lmr/m/n/10 h
+.....\TU/lmr/m/n/10 r
+.....\TU/lmr/m/n/10 i
+.....\TU/lmr/m/n/10 s
 .....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/n/10 R
 .....\TU/lmr/m/n/10 o
@@ -1603,15 +1603,12 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/n/10 e
 .....\TU/lmr/m/n/10 y
 .....\kern-0.83 (font)
-.....\TU/lmr/m/n/10 ,
+.....\TU/lmr/m/n/10 .
 .....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/it/10 T
 .....\TU/lmr/m/it/10 h
 .....\TU/lmr/m/it/10 e
-.....\glue(\rightskip) 0.0
-....\penalty 8000
-....\glue(\baselineskip) 2.34
-....\hbox(7.16+2.06)x329.44, glue set 19.79fil, shifted 15.56, direction TLT
+.....\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
 .....\TU/lmr/m/it/10 L
 .....\kern-0.51 (font)
 .....\TU/lmr/m/it/10 a
@@ -1622,8 +1619,7 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/it/10 e
 .....\TU/lmr/m/it/10 X
 .....\glue(\spaceskip) 3.58 plus 1.7882 minus 1.19452
-.....\TU/lmr/m/it/10 c
-.....\kern-0.51 (font)
+.....\TU/lmr/m/it/10 C
 .....\TU/lmr/m/it/10 o
 .....\TU/lmr/m/it/10 m
 .....\discretionary (penalty 50)
@@ -1637,7 +1633,7 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/it/10 i
 .....\TU/lmr/m/it/10 o
 .....\TU/lmr/m/it/10 n
-.....\TU/lmr/m/n/10 ,
+.....\TU/lmr/m/n/10 .
 .....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/n/10 2
 .....\TU/lmr/m/n/10 n
@@ -1675,9 +1671,12 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/n/10 s
 .....\TU/lmr/m/n/10 o
 .....\TU/lmr/m/n/10 n
+.....\TU/lmr/m/n/10 -
 .....\discretionary (penalty 50)
-......< \TU/lmr/m/n/10 -
-......= \TU/lmr/m/n/10 -
+.....\glue(\rightskip) 0.0
+....\penalty 4100
+....\glue(\baselineskip) 3.0
+....\hbox(6.94+2.05)x335.0, glue set 276.60999fil, shifted 10.0, direction TLT
 .....\TU/lmr/m/n/10 W
 .....\kern-0.83 (font)
 .....\TU/lmr/m/n/10 e
@@ -1698,9 +1697,236 @@ Completed box being shipped out [5]
 .....\glue(\rightskip) 0.0
 ....\penalty -51
 ....\glue 10.0 plus 3.0 minus 5.0
-....\glue -2.06
+....\glue -2.05
 ....\glue 0.0 plus 1.0fil
-....\glue 0.0
+....\glue 9.0 plus 4.0 minus 2.0
+....\kern-3.0
+....\rule(0.4+0.0)x137.9979
+....\kern2.6
+....\hbox(6.81334+2.85002)x345.0, glue set - 0.61224, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(6.81334+0.0)x14.40002, glue set 10.23402fil, direction TLT
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\hbox(6.81334+0.0)x4.166, direction TLT
+.......\mathon
+.......\hbox(0.0+0.0)x0.0, direction TLT
+.......\hbox(3.99+0.0)x4.166, shifted -2.82333, direction TLT
+........\TU/lmr/m/n/6 1
+.......\mathoff
+.....\hbox(6.65+0.0)x0.0, direction TLT
+......\rule(6.65+0.0)x0.0
+.....\penalty 10000
+.....\hbox(0.0+0.0)x0.0, direction TLT
+......\hbox(0.0+0.0)x0.0, shifted -9.5, direction TLT
+.......\pdfdest name{Hfootnote.1} xyz
+.......\penalty 10000
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite3.ITEM-3}
+.....\TU/lmr/m/n/8 L
+.....\TU/lmr/m/n/8 a
+.....\TU/lmr/m/n/8 m
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/8 -
+.....\TU/lmr/m/n/8 p
+.....\kern0.24 (font)
+.....\TU/lmr/m/n/8 o
+.....\TU/lmr/m/n/8 r
+.....\TU/lmr/m/n/8 t
+.....\TU/lmr/m/n/8 ,
+.....\glue(\spaceskip) 2.832 plus 1.76999 minus 0.75519
+.....\TU/lmr/m/it/8 L
+.....\kern-0.44 (font)
+.....\TU/lmr/m/it/8 a
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/8 -
+.....\TU/lmr/m/it/8 T
+.....\kern-0.656 (font)
+.....\TU/lmr/m/it/8 e
+.....\TU/lmr/m/it/8 X
+.....\TU/lmr/m/it/8 :
+.....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+.....\TU/lmr/m/it/8 A
+.....\glue(\spaceskip) 3.072 plus 1.53445 minus 1.02502
+.....\TU/lmr/m/it/8 D
+.....\TU/lmr/m/it/8 o
+.....\kern-0.44 (font)
+.....\TU/lmr/m/it/8 c
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/8 -
+.....\TU/lmr/m/it/8 u
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/8 -
+.....\TU/lmr/m/it/8 m
+.....\TU/lmr/m/it/8 e
+.....\TU/lmr/m/it/8 n
+.....\TU/lmr/m/it/8 t
+.....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+.....\TU/lmr/m/it/8 P
+.....\TU/lmr/m/it/8 r
+.....\kern-0.44 (font)
+.....\TU/lmr/m/it/8 e
+.....\TU/lmr/m/it/8 p
+.....\kern-0.44 (font)
+.....\TU/lmr/m/it/8 a
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/8 -
+.....\TU/lmr/m/it/8 r
+.....\kern-0.44 (font)
+.....\TU/lmr/m/it/8 a
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/8 -
+.....\TU/lmr/m/it/8 t
+.....\TU/lmr/m/it/8 i
+.....\TU/lmr/m/it/8 o
+.....\TU/lmr/m/it/8 n
+.....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+.....\TU/lmr/m/it/8 S
+.....\TU/lmr/m/it/8 y
+.....\TU/lmr/m/it/8 s
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/8 -
+.....\TU/lmr/m/it/8 t
+.....\TU/lmr/m/it/8 e
+.....\TU/lmr/m/it/8 m
+.....\TU/lmr/m/it/8 :
+.....\glue(\spaceskip) 4.09601 plus 3.07199 minus 0.512
+.....\TU/lmr/m/it/8 U
+.....\kern-0.44 (font)
+.....\TU/lmr/m/it/8 s
+.....\TU/lmr/m/it/8 e
+.....\TU/lmr/m/it/8 r
+.....\TU/lmr/m/it/8 ’
+.....\TU/lmr/m/it/8 s
+.....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+.....\TU/lmr/m/it/8 G
+.....\TU/lmr/m/it/8 u
+.....\TU/lmr/m/it/8 i
+.....\TU/lmr/m/it/8 d
+.....\TU/lmr/m/it/8 e
+.....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+.....\TU/lmr/m/it/8 a
+.....\TU/lmr/m/it/8 n
+.....\TU/lmr/m/it/8 d
+.....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+.....\TU/lmr/m/it/8 R
+.....\kern-0.44 (font)
+.....\TU/lmr/m/it/8 e
+.....\TU/lmr/m/it/8 f
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/8 -
+.....\TU/lmr/m/it/8 e
+.....\TU/lmr/m/it/8 r
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/8 -
+......= \kern-0.44 (font)
+.....\TU/lmr/m/it/8 e
+.....\TU/lmr/m/it/8 n
+.....\TU/lmr/m/it/8 c
+.....\kern-0.44 (font)
+.....\TU/lmr/m/it/8 e
+.....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+.....\TU/lmr/m/it/8 M
+.....\TU/lmr/m/it/8 a
+.....\TU/lmr/m/it/8 n
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/8 -
+.....\TU/lmr/m/it/8 u
+.....\TU/lmr/m/it/8 a
+.....\TU/lmr/m/it/8 l
+.....\kern0.48 (italic)
+.....\pdfendlink
+.....\TU/lmr/m/n/8 .
+.....\penalty 10000
+.....\rule(0.0+2.85002)x0.0
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\hbox(6.81334+2.85002)x345.0, glue set 172.49597fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(6.81334+0.0)x14.40002, glue set 10.23402fil, direction TLT
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\hbox(6.81334+0.0)x4.166, direction TLT
+.......\mathon
+.......\hbox(0.0+0.0)x0.0, direction TLT
+.......\hbox(3.99+0.0)x4.166, shifted -2.82333, direction TLT
+........\TU/lmr/m/n/6 2
+.......\mathoff
+.....\hbox(6.65+0.0)x0.0, direction TLT
+......\rule(6.65+0.0)x0.0
+.....\penalty 10000
+.....\hbox(0.0+0.0)x0.0, direction TLT
+......\hbox(0.0+0.0)x0.0, shifted -9.5, direction TLT
+.......\pdfdest name{Hfootnote.2} xyz
+.......\penalty 10000
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite3.ITEM-4}
+.....\TU/lmr/m/n/8 M
+.....\TU/lmr/m/n/8 i
+.....\TU/lmr/m/n/8 t
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/8 -
+.....\TU/lmr/m/n/8 t
+.....\TU/lmr/m/n/8 e
+.....\TU/lmr/m/n/8 l
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/8 -
+.....\TU/lmr/m/n/8 b
+.....\TU/lmr/m/n/8 a
+.....\TU/lmr/m/n/8 c
+.....\kern-0.24 (font)
+.....\TU/lmr/m/n/8 h
+.....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.....\TU/lmr/m/n/8 e
+.....\TU/lmr/m/n/8 t
+.....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.....\TU/lmr/m/n/8 a
+.....\TU/lmr/m/n/8 l
+.....\TU/lmr/m/n/8 .
+.....\TU/lmr/m/n/8 ,
+.....\glue(\spaceskip) 2.832 plus 1.76999 minus 0.75519
+.....\TU/lmr/m/it/8 T
+.....\TU/lmr/m/it/8 h
+.....\TU/lmr/m/it/8 e
+.....\glue(\spaceskip) 3.072 plus 1.536 minus 1.024
+.....\TU/lmr/m/it/8 L
+.....\kern-0.44 (font)
+.....\TU/lmr/m/it/8 a
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/8 -
+.....\TU/lmr/m/it/8 T
+.....\kern-0.656 (font)
+.....\TU/lmr/m/it/8 e
+.....\TU/lmr/m/it/8 X
+.....\glue(\spaceskip) 3.072 plus 1.53445 minus 1.02502
+.....\TU/lmr/m/it/8 C
+.....\TU/lmr/m/it/8 o
+.....\TU/lmr/m/it/8 m
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/8 -
+.....\TU/lmr/m/it/8 p
+.....\kern-0.44 (font)
+.....\TU/lmr/m/it/8 a
+.....\TU/lmr/m/it/8 n
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/it/8 -
+.....\TU/lmr/m/it/8 i
+.....\TU/lmr/m/it/8 o
+.....\TU/lmr/m/it/8 n
+.....\kern0.368 (italic)
+.....\pdfendlink
+.....\TU/lmr/m/n/8 .
+.....\penalty 10000
+.....\rule(0.0+2.85002)x0.0
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue -2.85002
 ...\glue(\baselineskip) 18.63493
 ...\hbox(6.66+0.22)x345.0, direction TLT
 ....\hbox(6.66+0.22)x345.0, glue set 170.0fil, direction TLT

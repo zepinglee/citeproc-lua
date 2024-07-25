@@ -368,16 +368,75 @@
 \int_gset:Nn \g__csl_ref_section_index_int { 0 }
 \int_gset:Nn \g__csl_max_ref_section_index_int { 0 }
 
-\cs_new:Npn \refsection {
-  \int_gincr:N \g__csl_max_ref_section_index_int
-  \int_gset_eq:NN \g__csl_ref_section_index_int \g__csl_max_ref_section_index_int
-  \sys_if_engine_luatex:T
-    { \lua_now:n { csl_citation_manager:begin_ref_section() } }
-  \prop_get:NxNT \g__csl_ref_section_options_prop
-    { \int_use:N \g__csl_ref_section_index_int }
-    \l_tmpa_tl
-    { \exp_args:NV \cslsetup \l_tmpa_tl }
-}
+\keys_define:nn { csl / ref-section }
+  {
+    style .code:n =
+      {
+        \tl_set:Nn \l__csl_style_tl {#1}
+        \renewcommand \csl@style {#1}
+      } ,
+    bib-resource .clist_set:N = \l__csl_bib_resources_clist ,
+    locale .tl_set:N = \l__csl_locale_tl ,
+  }
+
+\NewDocumentCommand \refsection { O { } }
+  {
+    \int_gincr:N \g__csl_max_ref_section_index_int
+    \int_gset_eq:NN \g__csl_ref_section_index_int \g__csl_max_ref_section_index_int
+
+    \tl_clear:N \l__csl_style_tl
+    \clist_clear:N \l__csl_bib_resources_clist
+    \tl_clear:N \l__csl_locale_tl
+    \keys_set:nn { csl / ref-section } { #1 }
+    \tl_if_empty:NTF \l__csl_style_tl
+      {
+        \tl_set_eq:NN \l__csl_style_tl \g__csl_global_style_tl
+        \tl_set_eq:NN \csl@style \l__csl_style_tl
+      }
+      {
+        \tl_set_eq:NN \csl@style \l__csl_style_tl
+        \exp_args:NV \__csl_write_aux_bibstyle:n \l__csl_style_tl
+      }
+    \clist_if_empty:NF \l__csl_bib_resources_clist
+      % { \clist_set_eq:NN \l__csl_bib_resources_clist \g__csl_global_bib_resources_clist }
+      {
+        \exp_args:Nx \__csl_write_aux_bibdata:n
+          { \clist_use:Nn \l__csl_bib_resources_clist { , } }
+      }
+    \tl_if_empty:NTF \l__csl_locale_tl
+      { \tl_set_eq:NN \l__csl_locale_tl \g__csl_global_locale_tl }
+      {
+        \exp_args:Nx \__csl_write_aux_options:n
+          { locale = \l__csl_locale_tl }
+      }
+    \sys_if_engine_luatex:TF
+      {
+        \lua_now:e
+          {
+            csl_citation_manager:begin_ref_section(
+              "\l__csl_style_tl",
+              "\clist_use:Nn \l__csl_bib_resources_clist { , }",
+              "\l__csl_locale_tl"
+            )
+          }
+        \str_if_eq:eeTF
+          {
+            \lua_now:n
+              {
+                tex.print(tostring(
+                  csl_citation_manager.ref_section.initialized
+                ))
+              }
+          }
+          { true }
+          { \bool_set_true:N \l__csl_engine_initialized_bool }
+          { \bool_set_false:N \l__csl_engine_initialized_bool }
+        \__csl_get_style_class_luatex:
+      }
+      {
+        \__csl_get_style_class:
+      }
+  }
 
 \cs_set_eq:NN \newrefsection \refsection
 
@@ -387,8 +446,6 @@
       \int_gzero:N \g__csl_ref_section_index_int
       \sys_if_engine_luatex:T
         { \lua_now:n { csl_citation_manager:end_ref_section() } }
-      \prop_get:NnNT \g__csl_ref_section_options_prop { 0 } \l_tmpa_tl
-        { \exp_args:NV \cslsetup \l_tmpa_tl }
     }
 }
 

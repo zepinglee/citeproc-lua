@@ -25,7 +25,7 @@ l. ...}
 ============================================================
 TEST 3: Disambiguation with \cite 
 ============================================================
-> \l__csl_citation_info_tl=citationID={apa.9.47:3@1},citationItems={{id={apa.9.47:3}}},properties={noteIndex={3}}.
+> \l__csl_citation_info_tl=citationID={apa.9.47:3@1},citationItems={{id={apa.9.47:3}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `apa.9.47:3' on page 1 undefined on input line ....

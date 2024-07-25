@@ -50,11 +50,15 @@
 
 
 \bool_new:N \l__csl_regression_test_bool
+\tl_new:N \g__csl_global_style_tl
 \tl_new:N \l__csl_style_tl
 \newcommand \csl@style {}  % For latex2e interface
 \tl_new:N \l__csl_class_tl  % TODO: This should be removed
+\bool_new:N \g__csl_global_note_class_bool
 \bool_new:N \l__csl_note_bool
+\clist_new:N \g__csl_global_bib_resources_clist
 \clist_new:N \l__csl_bib_resources_clist
+\tl_new:N \g__csl_global_locale_tl
 \tl_new:N \l__csl_locale_tl
 \bool_new:N \l__csl_back_ref_bool
 \str_new:N \l__csl_back_ref_type_str
@@ -78,14 +82,19 @@
       {
         \tl_set:Nn \l__csl_style_tl {#1}
         \renewcommand \csl@style {#1}
+        \tl_gset:Nn \g__csl_global_style_tl {#1}
       } ,
-    class .code:n =
+    class .code:n = {} ,  % Deprecated, should be removed in the next release.
+    bib-resource .code:n =
       {
-        \tl_set:Nn \l__csl_class_tl {#1}
-        \tl_if_eq:NnT \l__csl_class_tl { note }
-          { \bool_set_true:N \l__csl_note_bool }
+        \clist_set:Nn \l__csl_bib_resources_clist {#1}
+        \clist_gset_eq:NN \g__csl_global_bib_resources_clist \l__csl_bib_resources_clist
       } ,
-    locale .tl_set:N = \l__csl_locale_tl ,
+    locale .code:n =
+      {
+        \tl_set:Nn \l__csl_locale_tl {#1}
+        \tl_gset:Nn \g__csl_global_locale {#1}
+      } ,
     backref .choices:nn =
       { true, page, section, false }
       { \exp_args:NV \__csl_set_back_ref:n \l_keys_choice_tl } ,
@@ -128,7 +137,7 @@
     bib-entry-page-break = true ,
     bib-par-indent = { \parindent } ,
     bib-hang = { 1 em } ,
-    refsection = none ,
+    ref-section = none ,
   }
 
 
