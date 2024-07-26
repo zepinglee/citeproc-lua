@@ -212,6 +212,24 @@ The locale falls back to ``\opt{en}'' (English) if the attribute is not set.
 When \pkg{babel} package is loaded, the selected main language is implicitly set
 as the \opt{locale} for \pkg{citation-style-language}.
 
+\DescribeOption{ref-section}
+This option automatically starts a new reference section at the given document
+heading such as a chapter or a section. This is equivalent to the
+\cs{newrefsection} command. The following choices are available:
+
+\begin{description}
+  \item[\opt{none}] Disable this feature (default).
+  \item[\opt{part}] Start a reference section at every \cs{part} command.
+  \item[\opt{chapter}] Start a reference section at every \cs{chapter} command.
+  \item[\opt{chapter+}] Start a reference section at every \cs{chapter} and
+    every higher level of sectioning, i.e. \cs{part}.
+  \item[\opt{section}] Start a reference section at every \cs{section} command.
+  \item[\opt{section+}] Start a reference section at every \cs{section} and
+    every higher level of sectioning, i.e. \cs{part} and \cs{chapter}.
+  \item[\opt{subsection}] Start a reference section at every \cs{subsection} command.
+  \item[\opt{subsection+}] Start a reference section at every \cs{subsection} and every higher level of sectioning, i.e. \cs{part}, \cs{chapter} and \cs{section}.
+\end{description}
+
 \DescribeOption{bib-font}
 Usually, the list of references is printed in the same font style and size as
 the main text.
@@ -507,6 +525,68 @@ This option may be used multiple times.
 
 Print only the entries assigned to the given category.
 This option may be used multiple times.
+
+
+\subsection{Bibliography Sections}
+
+The \env{refsection} environment is used in the document body to mark a
+reference section.
+This environment is useful if you want separate, independent
+bibliographies and bibliography lists in each chapter, section, or any other
+part of a document.
+Within a reference section, all cited works are assigned labels which are local
+to the environment. Technically, reference sections are completely independent
+from document divisions such as \cs{chapter} and \cs{section} even though they
+will most likely be used per chapter or section.
+See the refsection package option in § 3.1.2.1 for a way to automate this.
+Also see § 3.14.3 for usage examples.
+
+\begin{function}{\begin{refsection}, \end{refsection}}
+  \begin{syntax}
+    \cs{begin}\{refsection\}
+    \cs{begin}\{refsection\}[style = \meta{style-id}, bib-resource = <datafile>, ...]
+  \end{syntax}
+\end{function}
+
+All citations given outside a \env{refsection} environment are assigned to
+the global section.
+If \cs{printbibliography} is used within a refsection, it will automatically
+select the current section.
+Note that \env{refsection} environments may not be nested.
+Beginning a new reference section automatically ends the active reference context (see § 3.8.10).
+The optional argument is a list of key-value configurations. That following options are available.
+
+
+\DescribeOption{style}
+The \opt{style} option specifies the CSL style used in this reference section.
+If this is not given, the global style will be used by default which is defined
+via package options or \cs{cslsetup}.
+
+\DescribeOption{bib-resource}
+The bibliographic data files are specified with this option.
+In case of multiple data files, remember to enclose the file with curly brackets
+so that the key-values are correctly parsed
+(e.g., \texttt{bib-resource = \{foo.json, bar.bib\}}).
+By default the global bib resources are used if no \opt{bib-resource} is given.
+
+\DescribeOption{locale}
+This option sets the locale used in this reference section.
+By default the global locale is used.
+
+
+\begin{function}{\newrefsection, \endrefsection}
+  \begin{syntax}
+    \cs{newrefsection}[style = \meta{style-id}, bib-resource = <datafile>, ...]
+    \cs{endrefsection}
+  \end{syntax}
+\end{function}
+
+The \cs{newrefsection} command is similar to the \env{refsection} environment
+except that it is a standalone command rather than an environment.
+It automatically ends the previous reference section (if any) and immediately
+starts a new one.
+The \cs{endrefsection} can terminate the current reference section and restore
+to the global section.
 
 
 \subsection{Bibliography Headings}
