@@ -1,0 +1,72 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+(package-babel-babelprovide.aux)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+Package CSL Warning: Unrecognized babel language "quack".
+============================================================
+TEST 1: CSL locale
+============================================================
+> \l__csl_locale_tl=.
+<recently read> }
+l. ...}
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\cite{ITEM-1}
+                \par
+> \l__csl_citation_tl=(D’Arcus, 2005).
+<recently read> }
+l. ...\cite{ITEM-1}
+                \par
+> \l__csl_citation_info_tl=citationID={ITEM-2@1},citationItems={{id={ITEM-2}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\cite{ITEM-2}
+                \par
+> \l__csl_citation_tl=(Bennett, 2009).
+<recently read> }
+l. ...\cite{ITEM-2}
+                \par
+> \l__csl_citation_info_tl=citationID={ITEM-3@1},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\cite{ITEM-3}
+                \par
+> \l__csl_citation_tl=(Lamport, 1994).
+<recently read> }
+l. ...\cite{ITEM-3}
+                \par
+> \l__csl_citation_info_tl=citationID={ITEM-4@1},citationItems={{id={ITEM-4}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\cite{ITEM-4}
+                \par
+> \l__csl_citation_tl=(Mittelbach et al., 2004).
+<recently read> }
+l. ...\cite{ITEM-4}
+                \par
+============================================================
+TEST 2: Bibliography
+============================================================
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 2, entry-spacing = 0}}
+>  {\bibitem {ITEM-2} Bennett, F. G., Jr. (2009). Getting property right: “Informal” mortgages in the Japanese courts. \textit {Pac. Rim L. \& Pol’y J.}, \textit {18}, 463–509.}
+>  {\bibitem {ITEM-1} D’Arcus, B. (2005). \textit {Boundaries of dissent: Protest and state power in the media age}. Routledge.}
+>  {\bibitem {ITEM-3} Lamport, L. (1994). \textit {LaTeX: A document preparation system: User’s guide and reference manual} (2nd ed.). Addison-Wesley.}
+>  {\bibitem {ITEM-4} Mittelbach, F., Goossens, M., Braams, J., Carlisle, D., \& Rowley, C. (2004). \textit {The LaTeX companion} (2nd ed.). Addison-Wesley.}
+>  {\end {thebibliography}}.
+<recently read> }
+l. ...}
+============================================================

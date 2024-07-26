@@ -8,7 +8,6 @@
 
 % ### `babel`
 
-% This should be disabled.
 \hook_gput_code:nnn { package / babel / after } { . }
   {
     \RenewDocumentCommand \nocite { m }
@@ -21,6 +20,31 @@
     \cs_set_eq:NN \bbl@cite@choice \relax
     \cs_set_eq:NN \@lbibitem \__csl_lbibitem_plain:nn
     \cs_set_eq:NN \@bibitem \__csl_bibitem_plain:n
+    %
+    \cs_set:Npn \__csl_get_locale_from_babel:
+      {
+        % `babel`'s main language
+        \tl_if_exist:NT \bbl@main@language
+          {
+            \prop_get:NVNTF \l__csl_language_code_map_prop \bbl@main@language
+              \l__csl_locale_tl
+              {
+                \msg_info:nnVV { citation-style-language }
+                  { locale-from-babel-language } \l__csl_locale_tl
+                  \bbl@main@language
+              }
+              {
+                \msg_warning:nnV { citation-style-language }
+                  { unrecognized-babel-language } \bbl@main@language
+                \tl_clear:N \l__csl_locale_tl
+              }
+          }
+      }
+    %
+    \msg_new:nnn { citation-style-language } { locale-from-babel-language }
+      { CSL~ locale~ "#1"~ from~ babel~ language~ "#2". }
+    \msg_new:nnn { citation-style-language } { unrecognized-babel-language }
+      { Unrecognized~ babel~ language~ "#1". }
   }
 
 

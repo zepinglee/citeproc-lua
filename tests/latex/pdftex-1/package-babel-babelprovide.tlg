@@ -1,0 +1,67 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+No file package-babel-babelprovide.aux.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line ....
+LaTeX Font Info:    ... okay on input line ....
+Package CSL Warning: Unrecognized babel language "quack".
+No file package-babel-babelprovide.bbl.
+============================================================
+TEST 1: CSL locale
+============================================================
+> \l__csl_locale_tl=.
+<recently read> }
+l. ...}
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\cite{ITEM-1}
+                  \par
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...\cite{ITEM-1}
+                  \par
+> \l__csl_citation_info_tl=citationID={ITEM-2@1},citationItems={{id={ITEM-2}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\cite{ITEM-2}
+                  \par
+LaTeX Warning: Citation `ITEM-2' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-2}].
+<recently read> }
+l. ...\cite{ITEM-2}
+                  \par
+> \l__csl_citation_info_tl=citationID={ITEM-3@1},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\cite{ITEM-3}
+                  \par
+LaTeX Warning: Citation `ITEM-3' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-3}].
+<recently read> }
+l. ...\cite{ITEM-3}
+                  \par
+> \l__csl_citation_info_tl=citationID={ITEM-4@1},citationItems={{id={ITEM-4}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\cite{ITEM-4}
+                  \par
+LaTeX Warning: Citation `ITEM-4' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-4}].
+<recently read> }
+l. ...\cite{ITEM-4}
+                  \par
+============================================================
+TEST 2: Bibliography
+============================================================
+Package CSL Warning: The bibliography is empty.
+============================================================

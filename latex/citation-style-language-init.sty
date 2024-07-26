@@ -279,13 +279,7 @@
     \clist_clear:N \l_tmpa_clist  % list of options to write to aux file
     % locale
     \tl_if_empty:NT \l__csl_locale_tl
-      {
-        \tl_if_exist:NT \bbl@main@language
-          {
-            \prop_get:NVN \l__csl_language_code_map_prop \bbl@main@language
-              \l__csl_locale_tl
-          }
-      }
+      { \__csl_get_locale_from_babel: }
     \tl_if_empty:NF \l__csl_locale_tl
       {
         \clist_put_right:Ne \l_tmpa_clist
@@ -302,6 +296,9 @@
           { \clist_use:Nn \l_tmpa_clist { , } }
       }
   }
+
+% This is the hook for `babel` package.
+\cs_new:Npn \__csl_get_locale_from_babel: { }
 
 \cs_new:Npn \__csl_write_aux_options:n #1
   {

@@ -1,0 +1,37 @@
+% <https://github.com/zepinglee/citeproc-lua/issues/65>
+% <https://github.com/plk/biblatex/issues/1362>
+
+\input{regression-test}
+
+\documentclass{article}
+\input{csl-test}
+
+\usepackage{babel}
+\babelprovide[import=fr, main]{quack}
+
+\usepackage[style=apa]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{test.json}
+
+
+\START
+
+\begin{document}
+
+\ExplSyntaxOn
+\TEST{CSL~ locale}{
+  \tl_show:N \l__csl_locale_tl
+}
+\ExplSyntaxOff
+
+\cite{ITEM-1}\par
+\cite{ITEM-2}\par
+\cite{ITEM-3}\par
+\cite{ITEM-4}\par
+
+\TEST{Bibliography}{
+  \printbibliography
+}
+
+\OMIT
+\end{document}
