@@ -1,5 +1,6 @@
 from collections import OrderedDict
 import json
+from pathlib import Path
 import re
 import os
 import glob
@@ -380,6 +381,94 @@ class BibData(OrderedDict):
                             self['primary_fields'][field] = csl_field
                             break
 
+    def update_language_code_map(self):
+        language_code_map = {}
+        primary_dialects = json.loads(
+            Path("./submodules/locales/locales.json").read_text()
+        )["primary-dialects"]
+        babel_tex_files = Path(self.texmf_dist).glob(
+            "tex/generic/babel/locale/**/babel-*.tex"
+        )
+        babel_ini_files = Path(self.texmf_dist).glob(
+            "tex/generic/babel/locale/**/babel-*.ini"
+        )
+        ini_path_dict = {path.name.casefold(): path for path in babel_ini_files}
+        for tex_file in sorted(babel_tex_files):
+            tex_contents = tex_file.read_text()
+            if matched := re.search(r"babel-(.*).tex", tex_file.name):
+                language_name = matched[1]
+            else:
+                raise ValueError(str(tex_file))
+            if matched := re.search(r"\\BabelBeforeIni\{([^}]+)\}", tex_contents):
+                locale_name = matched[1]
+                if "\\" in locale_name:
+                    if matched := re.search(
+                        rf"\\g?def\{locale_name}\{{([^}}]+)\}}", tex_contents
+                    ):
+                        locale_name = matched[1]
+
+            else:
+                raise ValueError(str(tex_file))
+
+            ini_path = ini_path_dict[f"babel-{locale_name}.ini".casefold()]
+            ini_contents = ini_path.read_text()
+            language_code = ""
+            region = ""
+            if matched := re.search(r"language.tag.bcp47 = ([\w-]+)", ini_contents):
+                language_code = matched[1]
+            if matched := re.search(r"region.tag.bcp47 = ([\w-]+)", ini_contents):
+                region = matched[1]
+            if matched := re.search(r"script.tag.bcp47 = ([\w-]+)", ini_contents):
+                script = matched[1]
+                if language_code == "zh":
+                    # print(language_code, region, script, language_name, sep="\t")
+                    if (
+                        script == "Hans"
+                        and (script.lower() in language_name or region)
+                        and region != "SG"
+                    ):
+                        region = "CN"
+                    elif script == "Hant":
+                        region = "TW"
+            if region:
+                language_code += "-" + region
+            elif language_code in primary_dialects:
+                language_code = primary_dialects[language_code]
+
+            language_code_map[language_name] = language_code
+
+        deprecated_language_dict = {
+            "bahasa": "id-ID",
+            "bahasai": "id-ID",
+            "bahasam": "ms",
+            "bgreek": "el-GR",
+            "brazil": "pt-BR",
+            "canadien": "fr-CA",
+            "ethiopia": "am-ET",  # from biber
+            "francais": "fr-FR",
+            "frenchle": "fr-FR",
+            "germanb": "de-DE",
+            "ibygreek": "el-CY",  # from biber
+            "indon": "id-ID",
+            "indonesia": "id-ID",
+            "meyalu": "id-ID",  # from biber
+            "polutonikogreek": "el-GR",
+            "portuges": "pt-PT",
+            # "swiss": "",
+            "thaicjk": "th-TH",
+        }
+        for language_name, language_code in deprecated_language_dict.items():
+            if language_name not in language_code_map:
+                language_code_map[language_name] = language_code
+
+        language_code_map = dict(sorted(language_code_map.items()))
+
+        latex_key_value_lines = [""]
+        longest_key = max([len(key) for key in language_code_map.keys()])
+        for language_name, language_code in language_code_map.items():
+            print(f"{language_name.ljust(longest_key)} = {language_code},")
+        self["language_code_map"] = language_code_map
+
     def export_lua(self):
         res = "-- This file is generated from citeproc-bibtex-data.json by scripts/update_bibtex_data.py\n\n"
         res += 'return ' + luadata.dumps(self)
@@ -443,6 +532,8 @@ if __name__ == '__main__':
 
     bib_data.check_csl_schema()
     bib_data.check_primary_fields()
+
+    # bib_data.update_language_code_map()
 
     bib_data.export_lua()
     bib_data.export_markdown()
