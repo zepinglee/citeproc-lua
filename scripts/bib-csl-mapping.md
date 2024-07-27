@@ -162,7 +162,7 @@ Bib(La)TeX | CSL | Notes
 `series` | `collection-title` |
 `shortauthor` | - |
 `shorteditor` | - |
-`shorthand` | - | Not supported.
+`shorthand` | `citation-label` | A special designation to be used by the citation style instead of the usual label.
 `shorthandintro` | - | Not supported.
 `shortjournal` | `container-title-short` |
 `shortseries` | - |

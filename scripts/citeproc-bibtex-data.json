@@ -2618,8 +2618,8 @@
             "type": "literal"
         },
         "shorthand": {
-            "csl": null,
-            "notes": "Not supported.",
+            "csl": "citation-label",
+            "notes": "A special designation to be used by the citation style instead of the usual label.",
             "source": "biblatex",
             "type": "literal"
         },

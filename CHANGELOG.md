@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix an infinite loop bug of unrecognized `babel` language name ([#65](https://github.com/zepinglee/citeproc-lua/issues/65)).
 - Bib2csl: The hyphens in `number` fields are correctly escaped when converted to CSL-JSON.
+- Bib2csl: Map `shorthand` field to CSL `citation-label` variable.
 
 ## [0.7.0] - 2025-02-23
 

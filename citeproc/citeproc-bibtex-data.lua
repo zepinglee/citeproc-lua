@@ -478,6 +478,7 @@ return {
     },
     legmaterial = {
       csl = "legislation",
+      notes = "APA §11.6: Legislative materials include federal testimony, hearings, bills, resolutions, reports, and related documents.",
       source = "apa.dbx",
     },
     letter = {
@@ -3433,8 +3434,8 @@ return {
       type = "literal",
     },
     shorthand = {
-      csl = nil,
-      notes = "Not supported.",
+      csl = "citation-label",
+      notes = "A special designation to be used by the citation style instead of the usual label.",
       source = "biblatex",
       type = "literal",
     },
