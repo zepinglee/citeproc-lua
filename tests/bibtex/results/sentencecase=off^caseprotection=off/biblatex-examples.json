@@ -2385,7 +2385,7 @@
 		},
 		"language": "de-DE",
 		"note": "This is a <code>\\texttt{patent}</code> entry with a <code>\\texttt{location}</code> field. The number is given in the <code>\\texttt{number}</code> field. Note the format of the <code>\\texttt{location}</code> field in the database file. Compare <code>\\texttt{laufenberg}</code>, <code>\\texttt{sorace}</code>, and <code>\\texttt{kowalik}</code>",
-		"number": "EU-29702195U",
+		"number": "EU\\-29702195U",
 		"publisher-place": "countryfr and countryuk and countryde",
 		"title": "Elektromagnetisches Signalhorn"
 	},
@@ -2558,7 +2558,7 @@
 		},
 		"language": "en-US",
 		"note": "This is a <code>\\texttt{report}</code> entry for a research report. Note the format of the <code>\\texttt{type}</code> field in the database file which uses a localization key. The number of the report is given in the <code>\\texttt{number}</code> field. Also note the <code>\\texttt{sorttitle}</code> and <code>\\texttt{indextitle}</code> fields",
-		"number": "RC-6947",
+		"number": "RC\\-6947",
 		"publisher": "IBM",
 		"title": "A Hybrid Hierarchical Model of a Multiple Virtual Storage (MVS) Operating System"
 	},
@@ -2590,7 +2590,7 @@
 		},
 		"language": "en-US",
 		"note": "This is a <code>\\texttt{report}</code> entry for a technical report. Note the format of the <code>\\texttt{type}</code> field in the database file which uses a localization key. The number of the report is given in the <code>\\texttt{number}</code> field. Also note the <code>\\texttt{sorttitle}</code> and <code>\\texttt{indextitle}</code> fields",
-		"number": "99-02",
+		"number": "99\\-02",
 		"publisher": "University of Massachusetts",
 		"publisher-place": "Amherst, Mass.",
 		"title": "A Stochastic Model of TCP Reno Congestion Avoidance and Control"

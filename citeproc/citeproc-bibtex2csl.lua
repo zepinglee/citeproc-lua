@@ -348,7 +348,7 @@ function bibtex2csl.post_process_special_fields(item, entry, disable_journal_abb
     elseif item["collection-title"] and not item["collection-number"] then
       item["collection-number"] = bib_fields.number
     elseif not item.number then
-      item.number = bib_fields.number
+      item.number = string.gsub(bib_fields.number, "([^-])%-([^-])", "%1\\-%2")
     end
   end
 
