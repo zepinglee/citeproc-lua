@@ -1,0 +1,87 @@
+[
+	{
+		"id": "no-gnats",
+		"type": "paper-conference",
+		"author": [
+			{
+				"family": "Gneisser",
+				"given": "Rocky"
+			}
+		],
+		"container-title": "The gnats and gnus 1988 proceedings",
+		"editor": [
+			{
+				"family": "Ford",
+				"given": "Gerald"
+			},
+			{
+				"family": "Carter",
+				"given": "Jimmy"
+			}
+		],
+		"page": "133-139",
+		"title": "No gnats are taken for granite"
+	},
+	{
+		"id": "gg-proceedings",
+		"type": "book",
+		"container-title": "The gnats and gnus 1988 proceedings",
+		"editor": [
+			{
+				"family": "Ford",
+				"given": "Gerald"
+			},
+			{
+				"family": "Carter",
+				"given": "Jimmy"
+			}
+		],
+		"title": "The gnats and gnus 1988 proceedings"
+	},
+	{
+		"id": "btxdoc.4.17:1",
+		"type": "book",
+		"author": [
+			{
+				"family": "Gödel",
+				"given": "Åke José Édouard"
+			}
+		]
+	},
+	{
+		"id": "btxdoc.4.17:2",
+		"type": "book",
+		"title": "The <code>{\\TeX </code>BOOK<code>\\NOOP}</code> experience"
+	},
+	{
+		"id": "btxdoc.4.18:1",
+		"type": "book",
+		"author": [
+			{
+				"family": "Brinch Hansen",
+				"given": "Per"
+			}
+		]
+	},
+	{
+		"id": "btxdoc.4.18:2",
+		"type": "book",
+		"author": [
+			{
+				"family": "Hansen",
+				"given": "Per Brinch"
+			}
+		]
+	},
+	{
+		"id": "btxdoc.4.18:3",
+		"type": "book",
+		"author": [
+			{
+				"family": "Vallée Poussin",
+				"given": "Charles Louis Xavier Joseph",
+				"non-dropping-particle": "de la"
+			}
+		]
+	}
+]

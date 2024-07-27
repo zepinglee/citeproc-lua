@@ -60,8 +60,10 @@ end
 
 -- Based on the grammar described at <https://github.com/aclements/biblib>.
 local function get_bibtex_grammar()
-  local comment = (1 - P"@")^0
-  local space = S(" \t\r\n")^0
+  local inline_comment = P"%" * (1-P"\n")^0 * P"\n"
+  local comment = (inline_comment + 1 - P"@")^0
+  -- local ws = S(" \t\r\n")^0
+  local ws = (S" \t\r\n" + inline_comment)^0
   local comment_cmd = case_insensitive_pattern("comment")
   local balanced = P{ "{" * V(1)^0 * "}" + (1 - S"{}") }
   local ident = (- R"09") * (R"\x20\x7F" - S" \t\"#%'(),={}")^1
@@ -75,31 +77,31 @@ local function get_bibtex_grammar()
                     name = string.lower(name),
                   }
                 end
-  local value = Ct(piece * (space * P"#" * space * piece)^0)
+  local value = Ct(piece * (ws * P"#" * ws * piece)^0)
 
-  local string_body = Cg(ident / string.lower, "name") * space * P"=" * space * Cg(value, "contents")
-  local string_cmd = Ct(Cg(Cc"string", "category") * case_insensitive_pattern("string") * space * (
-    P"{" * space * string_body * space * P"}"
-    + P"(" * space * string_body * space * P")"
+  local string_body = Cg(ident / string.lower, "name") * ws * P"=" * ws * Cg(value, "contents")
+  local string_cmd = Ct(Cg(Cc"string", "category") * case_insensitive_pattern("string") * ws * (
+    P"{" * ws * string_body * ws * P"}"
+    + P"(" * ws * string_body * ws * P")"
   ))
 
   local preamble_body = Cg(value, "contents")
-  local preamble_cmd = Ct(Cg(Cc"preamble", "category") * case_insensitive_pattern("preamble") * space * (
-    P"{" * space * preamble_body * space * P"}"
-    + P"(" * space * preamble_body * space * P")"
+  local preamble_cmd = Ct(Cg(Cc"preamble", "category") * case_insensitive_pattern("preamble") * ws * (
+    P"{" * ws * preamble_body * ws * P"}"
+    + P"(" * ws * preamble_body * ws * P")"
   ))
 
   local key = (1 - S", \t}\r\n")^0
   local key_paren = (1 - S", \t\r\n")^0
-  local field_value_pair = (ident / string.lower) * space * P"=" * space * value  -- * record_success_position()
+  local field_value_pair = (ident / string.lower) * ws * P"=" * ws * value  -- * record_success_position()
 
-  local entry_body = Cf(Ct"" * (P"," * space * Cg(field_value_pair))^0 * (P",")^-1, rawset)
-  local entry = Ct(Cg(Cc"entry", "category") * Cg(ident / string.lower, "type") * space * (
-    P"{" * space * Cg(key, "key") * space * Cg(entry_body, "fields")^-1 * space * (P"}")
-    + P"(" * space * Cg(key_paren, "key") * space * Cg(entry_body, "fields")^-1 * space * (P")")
+  local entry_body = Cf(Ct"" * (P"," * ws * Cg(field_value_pair))^0 * (P",")^-1, rawset)
+  local entry = Ct(Cg(Cc"entry", "category") * Cg(ident / string.lower, "type") * ws * (
+    P"{" * ws * Cg(key, "key") * ws * Cg(entry_body, "fields")^-1 * ws * (P"}")
+    + P"(" * ws * Cg(key_paren, "key") * ws * Cg(entry_body, "fields")^-1 * ws * (P")")
   ))
 
-  local command_or_entry = P"@" * space * (comment_cmd + preamble_cmd + string_cmd + entry)
+  local command_or_entry = P"@" * ws * (comment_cmd + preamble_cmd + string_cmd + entry)
 
   -- The P(-1) causes nil parsing result in case of error.
   local bibtex_grammar = Ct(comment * (command_or_entry * comment)^0) * P(-1)
@@ -162,9 +164,8 @@ function BibtexParser:new()
   return obj
 end
 
----@alias EntryKey string
 
----@alias BibtexEntry { key: EntryKey, type: string, fields: table<string, string> }
+---@alias BibtexEntry { key: string, type: string, fields: table<string, string> }
 ---@class BibtexData
 ---@field entries BibtexEntry[]
 ---@field entries_by_id table<string, BibtexEntry>
@@ -442,7 +443,7 @@ function bibtex_parser._split_extended_name_format(parts)
 end
 
 function bibtex_parser._split_first_von_last_parts(str)
-  local word_sep = P"-" + P"~" + P(util.unicode['no-break space'])
+  local word_sep = P" " + P"~" + P(util.unicode['no-break space'])
   local word_tokens = Ct(C(utf8_balanced - space_char - word_sep)^0)
   local words_and_seps = Ct(word_tokens * (C(space + word_sep) * word_tokens)^0)
   local pieces = words_and_seps:match(str)

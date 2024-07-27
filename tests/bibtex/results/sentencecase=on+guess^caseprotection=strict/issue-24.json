@@ -1,0 +1,115 @@
+[
+	{
+		"id": "Albers2003",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Albers",
+				"given": "Albert"
+			},
+			{
+				"family": "Nowicki",
+				"given": "Lukas"
+			}
+		],
+		"container-title": "A journal",
+		"issued": {
+			"date-parts": [
+				[
+					2003
+				]
+			]
+		},
+		"language": "de-DE",
+		"page": "8",
+		"title": "<span class=\"nocase\">Integration der Simulation in die Produktentwicklung - Neue Möglichkeiten zur Steigerung der Qualität und Effizienz in der Produktentwicklung</span>"
+	},
+	{
+		"id": "Arakelian2018",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Arakelian",
+				"given": "Vigen"
+			}
+		],
+		"container-title": "Journal of Robotics and Mechanical Engineering Research",
+		"DOI": "10.24218/jrmer.2018.27",
+		"ISSN": "20594909",
+		"issue": "3",
+		"issued": {
+			"date-parts": [
+				[
+					2018,
+					8
+				]
+			]
+		},
+		"page": "1-7",
+		"title": "Design of a <span class=\"nocase\">Single Actuator Walking Robot</span> via <span class=\"nocase\">Mechanism Synthesis Based</span> on <span class=\"nocase\">Genetic Algorithms</span>",
+		"volume": "2"
+	},
+	{
+		"id": "Berry2020",
+		"type": "thesis",
+		"author": [
+			{
+				"family": "Berry",
+				"given": "Jasmine Anaíís"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2020
+				]
+			]
+		},
+		"language": "Englisch",
+		"publisher": "University of Southern California",
+		"title": "<span class=\"nocase\">Sensory acquisition for emergent body representation neuro-robotic systems</span>"
+	},
+	{
+		"id": "Brillowski2004",
+		"type": "book",
+		"author": [
+			{
+				"family": "Brillowski",
+				"given": "Klaus"
+			}
+		],
+		"collection-title": "Berichte Aus Der <span class=\"nocase\">Robotik</span>",
+		"ISBN": "3-8322-3416-0",
+		"issued": {
+			"date-parts": [
+				[
+					2004
+				]
+			]
+		},
+		"publisher": "<span class=\"nocase\">Shaker</span>",
+		"publisher-place": "<span class=\"nocase\">Aachen</span>",
+		"title": "Einführung in die <span class=\"nocase\">Robotik</span>: <span class=\"nocase\">Auslegung</span> und <span class=\"nocase\">Steuerung</span> serieller <span class=\"nocase\">Roboter</span>"
+	},
+	{
+		"id": "Bruls2005",
+		"type": "thesis",
+		"author": [
+			{
+				"family": "Brüls",
+				"given": "Olivier"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2005
+				]
+			]
+		},
+		"language": "en-US",
+		"publisher": "Universite de Liege",
+		"publisher-place": "Liege",
+		"title": "Integrated <span class=\"nocase\">Simulation</span> and <span class=\"nocase\">Reduced-Order Modeling</span> of <span class=\"nocase\">Controlled Flexible Multibody Systems</span>"
+	}
+]

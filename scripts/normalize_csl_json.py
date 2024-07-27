@@ -1,7 +1,5 @@
 import argparse
-from collections import OrderedDict
 import json
-import logging
 
 
 def get_item_sort_key(item):
@@ -21,11 +19,11 @@ def main():
 
     for path in args.files:
         if not path.endswith('.json'):
-            logging.warning(f'Path "{path}" is not likely a JSON file.')
+            raise ValueError(f'Path "{path}" is not a CSL-JSON file.')
         with open(path) as f:
             data = json.load(f)
         data = [
-            OrderedDict(sorted(entry.items(), key=get_item_sort_key))
+            dict(sorted(entry.items(), key=get_item_sort_key))
             for entry in data
         ]
         with open(path, 'w') as f:

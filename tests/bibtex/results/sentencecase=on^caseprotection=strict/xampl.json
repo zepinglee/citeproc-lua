@@ -1,0 +1,791 @@
+[
+	{
+		"id": "article-minimal",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Aamport",
+				"given": "L[eslie] A."
+			}
+		],
+		"container-title": "<code>\\mbox{G-Animal's}</code> Journal",
+		"issued": {
+			"date-parts": [
+				[
+					1986
+				]
+			]
+		},
+		"title": "The gnats and gnus document preparation system"
+	},
+	{
+		"id": "article-full",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Aamport",
+				"given": "L[eslie] A."
+			}
+		],
+		"container-title": "<code>\\mbox{G-Animal's}</code> Journal",
+		"issue": "7",
+		"issued": {
+			"date-parts": [
+				[
+					1986,
+					7
+				]
+			]
+		},
+		"note": "This is a full ARTICLE entry",
+		"page": "73+",
+		"title": "The gnats and gnus document preparation system",
+		"volume": "41"
+	},
+	{
+		"id": "article-crossref",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Aamport",
+				"given": "L[eslie] A."
+			}
+		],
+		"note": "This is a cross-referencing ARTICLE entry",
+		"page": "73+",
+		"title": "The gnats and gnus document preparation system"
+	},
+	{
+		"id": "whole-journal",
+		"type": "article-journal",
+		"container-title": "<code>\\mbox{G-Animal's}</code> Journal",
+		"issue": "7",
+		"issued": {
+			"date-parts": [
+				[
+					1986,
+					7
+				]
+			]
+		},
+		"note": "The entire issue is devoted to gnats and gnus (this entry is a cross-referenced ARTICLE (journal))",
+		"volume": "41"
+	},
+	{
+		"id": "inbook-minimal",
+		"type": "chapter",
+		"author": [
+			{
+				"family": "Knuth",
+				"given": "Donald E."
+			}
+		],
+		"chapter-number": "1.2",
+		"issued": {
+			"date-parts": [
+				[
+					1973
+				]
+			]
+		},
+		"publisher": "Addison-Wesley",
+		"title": "Fundamental algorithms"
+	},
+	{
+		"id": "inbook-full",
+		"type": "chapter",
+		"author": [
+			{
+				"family": "Knuth",
+				"given": "Donald E."
+			}
+		],
+		"chapter-number": "1.2",
+		"collection-title": "The Art of Computer Programming",
+		"edition": "2",
+		"genre": "Section",
+		"issued": {
+			"date-parts": [
+				[
+					1973,
+					1,
+					10
+				]
+			]
+		},
+		"note": "This is a full INBOOK entry",
+		"page": "10-119",
+		"publisher": "Addison-Wesley",
+		"publisher-place": "Reading, Massachusetts",
+		"title": "Fundamental algorithms",
+		"volume": "1"
+	},
+	{
+		"id": "inbook-crossref",
+		"type": "chapter",
+		"author": [
+			{
+				"family": "Knuth",
+				"given": "Donald E."
+			}
+		],
+		"chapter-number": "1.2",
+		"collection-title": "The Art of Computer Programming",
+		"edition": "2",
+		"genre": "Section",
+		"issued": {
+			"date-parts": [
+				[
+					1973
+				]
+			]
+		},
+		"note": "This is a cross-referencing INBOOK entry",
+		"publisher": "Addison-Wesley",
+		"title": "Fundamental algorithms",
+		"volume": "1"
+	},
+	{
+		"id": "book-minimal",
+		"type": "book",
+		"author": [
+			{
+				"family": "Knuth",
+				"given": "Donald E."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1981
+				]
+			]
+		},
+		"publisher": "Addison-Wesley",
+		"title": "Seminumerical algorithms"
+	},
+	{
+		"id": "book-full",
+		"type": "book",
+		"author": [
+			{
+				"family": "Knuth",
+				"given": "Donald E."
+			}
+		],
+		"collection-title": "The Art of Computer Programming",
+		"edition": "2",
+		"issued": {
+			"date-parts": [
+				[
+					1981,
+					1,
+					10
+				]
+			]
+		},
+		"note": "This is a full BOOK entry",
+		"publisher": "Addison-Wesley",
+		"publisher-place": "Reading, Massachusetts",
+		"title": "Seminumerical algorithms",
+		"volume": "2"
+	},
+	{
+		"id": "book-crossref",
+		"type": "book",
+		"author": [
+			{
+				"family": "Knuth",
+				"given": "Donald E."
+			}
+		],
+		"collection-title": "The Art of Computer Programming",
+		"edition": "2",
+		"issued": {
+			"date-parts": [
+				[
+					1981
+				]
+			]
+		},
+		"note": "This is a cross-referencing BOOK entry",
+		"publisher": "Addison-Wesley",
+		"title": "Seminumerical algorithms",
+		"volume": "2"
+	},
+	{
+		"id": "whole-set",
+		"type": "book",
+		"author": [
+			{
+				"family": "Knuth",
+				"given": "Donald E."
+			}
+		],
+		"collection-title": "Four volumes",
+		"note": "Seven volumes planned (this is a cross-referenced set of BOOKs)",
+		"publisher": "Addison-Wesley",
+		"title": "The art of computer programming"
+	},
+	{
+		"id": "booklet-minimal",
+		"type": "pamphlet",
+		"title": "The programming of computer art"
+	},
+	{
+		"id": "booklet-full",
+		"type": "pamphlet",
+		"author": [
+			{
+				"family": "Knvth",
+				"given": "Jill C."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1988,
+					2
+				]
+			]
+		},
+		"note": "This is a full BOOKLET entry",
+		"publisher-place": "Stanford, California",
+		"title": "The programming of computer art"
+	},
+	{
+		"id": "incollection-minimal",
+		"type": "chapter",
+		"author": [
+			{
+				"family": "Lincoll",
+				"given": "Daniel D."
+			}
+		],
+		"container-title": "High speed computer and algorithm organization",
+		"issued": {
+			"date-parts": [
+				[
+					1977
+				]
+			]
+		},
+		"publisher": "Academic Press",
+		"title": "Semigroups of recurrences"
+	},
+	{
+		"id": "incollection-full",
+		"type": "chapter",
+		"author": [
+			{
+				"family": "Lincoll",
+				"given": "Daniel D."
+			}
+		],
+		"chapter-number": "3",
+		"collection-number": "23",
+		"collection-title": "Fast Computers",
+		"container-title": "High speed computer and algorithm organization",
+		"edition": "3",
+		"editor": [
+			{
+				"family": "Lipcoll",
+				"given": "David J."
+			},
+			{
+				"family": "Lawrie",
+				"given": "D. H."
+			},
+			{
+				"family": "Sameh",
+				"given": "A. H."
+			}
+		],
+		"genre": "Part",
+		"issued": {
+			"date-parts": [
+				[
+					1977,
+					9
+				]
+			]
+		},
+		"note": "This is a full INCOLLECTION entry",
+		"page": "179-183",
+		"publisher": "Academic Press",
+		"publisher-place": "New York",
+		"title": "Semigroups of recurrences"
+	},
+	{
+		"id": "incollection-crossref",
+		"type": "chapter",
+		"author": [
+			{
+				"family": "Lincoll",
+				"given": "Daniel D."
+			}
+		],
+		"collection-number": "23",
+		"collection-title": "Fast Computers",
+		"container-title": "High speed computer and algorithm organization",
+		"edition": "3",
+		"editor": [
+			{
+				"family": "Lipcoll",
+				"given": "David J."
+			},
+			{
+				"family": "Lawrie",
+				"given": "D. H."
+			},
+			{
+				"family": "Sameh",
+				"given": "A. H."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1977,
+					9
+				]
+			]
+		},
+		"note": "This is a cross-referencing INCOLLECTION entry",
+		"page": "179-183",
+		"publisher": "Academic Press",
+		"publisher-place": "New York",
+		"title": "Semigroups of recurrences"
+	},
+	{
+		"id": "whole-collection",
+		"type": "book",
+		"collection-number": "23",
+		"collection-title": "Fast Computers",
+		"container-title": "High speed computer and algorithm organization",
+		"edition": "3",
+		"editor": [
+			{
+				"family": "Lipcoll",
+				"given": "David J."
+			},
+			{
+				"family": "Lawrie",
+				"given": "D. H."
+			},
+			{
+				"family": "Sameh",
+				"given": "A. H."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1977,
+					9
+				]
+			]
+		},
+		"note": "This is a cross-referenced BOOK (collection) entry",
+		"publisher": "Academic Press",
+		"publisher-place": "New York",
+		"title": "High speed computer and algorithm organization"
+	},
+	{
+		"id": "manual-minimal",
+		"type": "report",
+		"title": "The definitive computer manual"
+	},
+	{
+		"id": "manual-full",
+		"type": "report",
+		"author": [
+			{
+				"family": "Manmaker",
+				"given": "Larry"
+			}
+		],
+		"edition": "Silver",
+		"issued": {
+			"date-parts": [
+				[
+					1986
+				]
+			]
+		},
+		"note": "This is a full MANUAL entry",
+		"publisher": "Chips-R-Us",
+		"publisher-place": "Silicon Valley",
+		"title": "The definitive computer manual"
+	},
+	{
+		"id": "mastersthesis-minimal",
+		"type": "thesis",
+		"author": [
+			{
+				"family": "Masterly",
+				"given": "Édouard"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1988
+				]
+			]
+		},
+		"publisher": "Stanford University",
+		"title": "Mastering thesis writing"
+	},
+	{
+		"id": "mastersthesis-full",
+		"type": "thesis",
+		"author": [
+			{
+				"family": "Masterly",
+				"given": "Édouard"
+			}
+		],
+		"genre": "Master’s project",
+		"issued": {
+			"date-parts": [
+				[
+					1988
+				]
+			]
+		},
+		"note": "This is a full MASTERSTHESIS entry",
+		"publisher": "Stanford University",
+		"publisher-place": "English Department",
+		"title": "Mastering thesis writing"
+	},
+	{
+		"id": "misc-minimal",
+		"type": "document",
+		"note": "This is a minimal MISC entry"
+	},
+	{
+		"id": "misc-full",
+		"type": "document",
+		"author": [
+			{
+				"family": "Missilany",
+				"given": "Joe-Bob"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1984,
+					10
+				]
+			]
+		},
+		"note": "This is a full MISC entry",
+		"title": "Handing out random pamphlets in airports"
+	},
+	{
+		"id": "inproceedings-minimal",
+		"type": "paper-conference",
+		"author": [
+			{
+				"family": "Oaho",
+				"given": "Alfred V."
+			},
+			{
+				"family": "Ullman",
+				"given": "Jeffrey D."
+			},
+			{
+				"family": "Yannakakis",
+				"given": "Mihalis"
+			}
+		],
+		"container-title": "Proc. fifteenth annual ACM symposium on the theory of computing",
+		"issued": {
+			"date-parts": [
+				[
+					1983
+				]
+			]
+		},
+		"title": "On notions of information transfer in <span class=\"nocase\">VLSI</span> circuits"
+	},
+	{
+		"id": "inproceedings-full",
+		"type": "paper-conference",
+		"author": [
+			{
+				"family": "Oaho",
+				"given": "Alfred V."
+			},
+			{
+				"family": "Ullman",
+				"given": "Jeffrey D."
+			},
+			{
+				"family": "Yannakakis",
+				"given": "Mihalis"
+			}
+		],
+		"collection-number": "17",
+		"collection-title": "All ACM Conferences",
+		"container-title": "Proc. fifteenth annual ACM symposium on the theory of computing",
+		"editor": [
+			{
+				"family": "Oz",
+				"given": "Wizard V."
+			},
+			{
+				"family": "Yannakakis",
+				"given": "Mihalis"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1983,
+					3
+				]
+			]
+		},
+		"note": "This is a full INPROCEDINGS entry",
+		"organizer": {
+			"literal": "The OX Association for Computing Machinery"
+		},
+		"page": "133-139",
+		"publisher": "Academic Press",
+		"publisher-place": "Boston",
+		"title": "On notions of information transfer in <span class=\"nocase\">VLSI</span> circuits"
+	},
+	{
+		"id": "inproceedings-crossref",
+		"type": "paper-conference",
+		"author": [
+			{
+				"family": "Oaho",
+				"given": "Alfred V."
+			},
+			{
+				"family": "Ullman",
+				"given": "Jeffrey D."
+			},
+			{
+				"family": "Yannakakis",
+				"given": "Mihalis"
+			}
+		],
+		"container-title": "Proc. fifteenth annual ACM symposium on the theory of computing",
+		"issued": {
+			"date-parts": [
+				[
+					1983
+				]
+			]
+		},
+		"note": "This is a cross-referencing INPROCEEDINGS entry",
+		"organizer": {
+			"literal": ""
+		},
+		"page": "133-139",
+		"publisher-place": "Boston",
+		"title": "On notions of information transfer in <span class=\"nocase\">VLSI</span> circuits"
+	},
+	{
+		"id": "proceedings-minimal",
+		"type": "book",
+		"issued": {
+			"date-parts": [
+				[
+					1983
+				]
+			]
+		},
+		"title": "Proc. fifteenth annual symposium on the theory of computing"
+	},
+	{
+		"id": "proceedings-full",
+		"type": "book",
+		"collection-number": "17",
+		"collection-title": "All ACM Conferences",
+		"editor": [
+			{
+				"family": "Oz",
+				"given": "Wizard V."
+			},
+			{
+				"family": "Yannakakis",
+				"given": "Mihalis"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1983,
+					3
+				]
+			]
+		},
+		"note": "This is a full PROCEEDINGS entry",
+		"organizer": {
+			"literal": "The OX Association for Computing Machinery"
+		},
+		"publisher": "Academic Press",
+		"publisher-place": "Boston",
+		"title": "Proc. fifteenth annual symposium on the theory of computing"
+	},
+	{
+		"id": "whole-proceedings",
+		"type": "book",
+		"container-title": "Proc. fifteenth annual ACM symposium on the theory of computing",
+		"issued": {
+			"date-parts": [
+				[
+					1983
+				]
+			]
+		},
+		"note": "This is a cross-referenced PROCEEDINGS",
+		"organizer": {
+			"literal": "The OX Association for Computing Machinery"
+		},
+		"publisher-place": "Boston",
+		"title": "Proc. fifteenth annual symposium on the theory of computing"
+	},
+	{
+		"id": "phdthesis-minimal",
+		"type": "thesis",
+		"author": [
+			{
+				"family": "Phony-Baloney",
+				"given": "F. Phidias"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1988
+				]
+			]
+		},
+		"publisher": "Fanstord University",
+		"title": "Fighting fire with fire: Festooning <span class=\"nocase\">F</span>rench phrases"
+	},
+	{
+		"id": "phdthesis-full",
+		"type": "thesis",
+		"author": [
+			{
+				"family": "Phony-Baloney",
+				"given": "F. Phidias"
+			}
+		],
+		"genre": "<span class=\"nocase\">PhD</span> Dissertation",
+		"issued": {
+			"date-parts": [
+				[
+					1988
+				]
+			]
+		},
+		"note": "This is a full PHDTHESIS entry",
+		"publisher": "Fanstord University",
+		"publisher-place": "Department of French",
+		"title": "Fighting fire with fire: Festooning <span class=\"nocase\">F</span>rench phrases"
+	},
+	{
+		"id": "techreport-minimal",
+		"type": "report",
+		"author": [
+			{
+				"family": "Terrific",
+				"given": "Tom"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1988
+				]
+			]
+		},
+		"publisher": "Fanstord University",
+		"title": "An <span class=\"nocase\"><math-tex>O(n \\log n / \\! \\log\\log n)</math-tex></span> sorting algorithm"
+	},
+	{
+		"id": "techreport-full",
+		"type": "report",
+		"author": [
+			{
+				"family": "Térrific",
+				"given": "Tom"
+			}
+		],
+		"genre": "Wishful Research Result",
+		"issued": {
+			"date-parts": [
+				[
+					1988,
+					10
+				]
+			]
+		},
+		"note": "This is a full TECHREPORT entry",
+		"number": "7",
+		"publisher": "Fanstord University",
+		"publisher-place": "Computer Science Department, Fanstord, California",
+		"title": "An <span class=\"nocase\"><math-tex>O(n \\log n / \\! \\log\\log n)</math-tex></span> sorting algorithm"
+	},
+	{
+		"id": "unpublished-minimal",
+		"type": "manuscript",
+		"author": [
+			{
+				"family": "Ünderwood",
+				"given": "Ulrich"
+			},
+			{
+				"family": "Ñet",
+				"given": "Ned"
+			},
+			{
+				"family": "P̄ot",
+				"given": "Paul"
+			}
+		],
+		"note": "Talk at Fanstord University (this is a minimal UNPUBLISHED entry)",
+		"title": "Lower bounds for wishful research results"
+	},
+	{
+		"id": "unpublished-full",
+		"type": "manuscript",
+		"author": [
+			{
+				"family": "Ünderwood",
+				"given": "Ulrich"
+			},
+			{
+				"family": "Ñet",
+				"given": "Ned"
+			},
+			{
+				"family": "P̄ot",
+				"given": "Paul"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1988
+				]
+			]
+		},
+		"note": "Talk at Fanstord University (this is a full UNPUBLISHED entry)",
+		"title": "Lower bounds for wishful research results"
+	},
+	{
+		"id": "random-note-crossref",
+		"type": "document",
+		"note": "Volume 2 is listed under Knuth <code>\\cite{book-full}</code>"
+	}
+]

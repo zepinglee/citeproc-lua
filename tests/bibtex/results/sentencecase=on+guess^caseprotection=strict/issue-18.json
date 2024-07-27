@@ -1,0 +1,120 @@
+[
+	{
+		"id": "Chen2008",
+		"type": "article-journal",
+		"abstract": "The myocardial tissue lacks significant intrinsic regenerative capability to replace the lost cells. Therefore, the heart is a major target of research within the field of tissue engineering, which aims to replace infarcted myocardium and enhance cardiac function. The primary objective of this work was to develop a biocompatible, degradable and superelastic heart patch from poly(glycerol sebacate) (PGS). PGS was synthesised at 110, 120 and 130 °C by polycondensation of glycerol and sebacic acid with a mole ratio of 1:1. The investigation was focused on the mechanical and biodegrading behaviours of the developed PGS. PGS materials synthesised at 110, 120 and 130 °C have Young’s moduli of 0.056, 0.22 and 1.2 MPa, respectively, which satisfy the mechanical requirements on the materials applied for the heart patch and 3D myocardial tissue engineering construction. Degradation assessment in phosphate buffered saline and Knockout™ DMEM culture medium has demonstrated that the PGS has a wide range of degradability, from being degradable in a couple of weeks to being nearly inert. The matching of physical characteristics to those of the heart, the ability to fine tune degradation rates in biologically relevant media and initial data showing biocompatibility indicate that this material has promise for cardiac tissue engineering applications. © 2007 Elsevier Ltd. All rights reserved.",
+		"author": [
+			{
+				"family": "Chen",
+				"given": "Qi-Zhi"
+			},
+			{
+				"family": "Bismarck",
+				"given": "Alexander"
+			},
+			{
+				"family": "Hansen",
+				"given": "Ulrich"
+			},
+			{
+				"family": "Junaid",
+				"given": "Sarah"
+			},
+			{
+				"family": "Tran",
+				"given": "Michael Q."
+			},
+			{
+				"family": "Harding",
+				"given": "Siân E."
+			},
+			{
+				"family": "Ali",
+				"given": "Nadire N."
+			},
+			{
+				"family": "Boccaccini",
+				"given": "Aldo R."
+			}
+		],
+		"container-title": "Biomaterials",
+		"DOI": "10.1016/j.biomaterials.2007.09.010",
+		"ISBN": "0142-9612",
+		"ISSN": "01429612",
+		"issue": "1",
+		"issued": {
+			"date-parts": [
+				[
+					2008,
+					1
+				]
+			]
+		},
+		"page": "47-57",
+		"PMID": "17915309",
+		"title": "<span class=\"nocase\">Characterisation of a soft elastomer poly(glycerol sebacate) designed to match the mechanical properties of myocardial tissue</span>",
+		"URL": "http://linkinghub.elsevier.com/retrieve/pii/S0142961207007156",
+		"volume": "29"
+	},
+	{
+		"id": "Strachinaru2017",
+		"type": "article-journal",
+		"abstract": "The propagation velocity of shear waves relates to tissue stiffness. We prove that a regular clinical cardiac ultrasound system can determine shear wave velocity with a conventional unmodified tissue Doppler imaging (TDI) application. The investigation was performed on five tissue phantoms with different stiffness using a research platform capable of inducing and tracking shear waves and a clinical cardiac system (Philips iE33, achieving frame rates of 400–700 Hz in TDI by tuning the normal system settings). We also tested the technique in vivo on a normal individual and on typical pathologies modifying the consistency of the left ventricular wall. The research platform scanner was used as reference. Shear wave velocities measured with TDI on the clinical cardiac system were very close to those measured by the research platform scanner. The mean difference between the clinical and research systems was 0.18 ± 0.22 m/s, and the limits of agreement, from −0.27 to +0.63 m/s. In vivo, the velocity of the wave induced by aortic valve closure in the interventricular septum increased in patients with expected increased wall stiffness.",
+		"author": [
+			{
+				"family": "Strachinaru",
+				"given": "Mihai"
+			},
+			{
+				"family": "Bosch",
+				"given": "Johan G."
+			},
+			{
+				"family": "Dalen",
+				"given": "Bas M.",
+				"non-dropping-particle": "van"
+			},
+			{
+				"family": "Gils",
+				"given": "Lennart",
+				"non-dropping-particle": "van"
+			},
+			{
+				"family": "Steen",
+				"given": "Antonius F.W.",
+				"non-dropping-particle": "van der"
+			},
+			{
+				"family": "Jong",
+				"given": "Nico",
+				"non-dropping-particle": "de"
+			},
+			{
+				"family": "Geleijnse",
+				"given": "Marcel L."
+			},
+			{
+				"family": "Vos",
+				"given": "Hendrik J."
+			}
+		],
+		"container-title": "Ultrasound in Medicine & Biology",
+		"container-title-short": "Ultrasound Med Biol",
+		"DOI": "10.1016/j.ultrasmedbio.2017.04.012",
+		"ISSN": "03015629",
+		"issue": "8",
+		"issued": {
+			"date-parts": [
+				[
+					2017,
+					8
+				]
+			]
+		},
+		"page": "1596-1606",
+		"PMID": "28545859",
+		"title": "<span class=\"nocase\">Cardiac Shear Wave Elastography Using a Clinical Ultrasound System</span>",
+		"URL": "https://linkinghub.elsevier.com/retrieve/pii/S0301562917301771",
+		"volume": "43"
+	}
+]

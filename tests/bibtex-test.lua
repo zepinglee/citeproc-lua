@@ -1,6 +1,6 @@
 local bibtex2csl
-local lfs = require("lfs")
 local json_decode
+local lfs = require("lfs")
 local util
 local using_luatex, kpse = pcall(require, "kpse")
 if using_luatex then
@@ -47,16 +47,43 @@ describe("BibTeX data", function ()
         if not bib_contents then
           error(string.format('File not found: "%s"', bib_path))
         end
-        local csl_data = bibtex2csl.parse_bibtex_to_csl(bib_contents, true, true, true, true)
 
-        local json_path = bibtex_dir .. "/" .. string.gsub(file, "%.bib$", ".json")
-        local json_contents = util.read_file(json_path)
-        local expected = json_decode(json_contents)
-        for i, item in ipairs(csl_data) do
-          it(item.id, function ()
-            assert.same(expected[i], item)
-          end)
+        local sentence_case_options = {"on+guess", "on", "off"}
+        -- local case_protection_options = {"as-needed", "strict", "off"}
+        local case_protection_options = {"strict", "off"}  -- TODO: "as-needed" not implemented
+
+        for _, sentence_case in ipairs(sentence_case_options) do
+          for _, case_protection in ipairs(case_protection_options) do
+            local sentence_case_title = (sentence_case ~= "off")
+            local protect_case = (case_protection ~= "off")
+            local check_sentence_case = (sentence_case == "on+guess")
+
+            local config = string.format("sentencecase=%s^caseprotection=%s", sentence_case, case_protection)
+            local result_dir = string.format("./tests/bibtex/results/%s", config)
+            local json_path = string.format("%s/%s", result_dir, file:gsub("%.bib$", ".json"))
+
+            describe(json_path, function ()
+              local csl_items, exceptions = bibtex2csl.parse_bibtex_to_csl(bib_contents, true, protect_case, sentence_case_title, check_sentence_case)
+
+              if not csl_items then
+                error("Cannot parse bib to CSL-JSON.")
+              end
+
+              local json_contents = util.read_file(json_path)
+              local expected = json_decode(json_contents)
+              if not expected then
+                error('Cannot load json baseline.')
+              end
+
+              for i, expected_item in ipairs(expected) do
+                it(tostring(expected_item.id), function ()
+                  assert.same(expected_item, csl_items[i])
+                end)
+              end
+            end)
+          end
         end
+
       end)
     end
   end

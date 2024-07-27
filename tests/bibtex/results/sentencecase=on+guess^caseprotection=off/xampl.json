@@ -509,7 +509,7 @@
 				]
 			]
 		},
-		"title": "On notions of information transfer in <span class=\"nocase\">VLSI</span> circuits"
+		"title": "On notions of information transfer in VLSI circuits"
 	},
 	{
 		"id": "inproceedings-full",
@@ -556,7 +556,7 @@
 		"page": "133-139",
 		"publisher": "Academic Press",
 		"publisher-place": "Boston",
-		"title": "On notions of information transfer in <span class=\"nocase\">VLSI</span> circuits"
+		"title": "On notions of information transfer in VLSI circuits"
 	},
 	{
 		"id": "inproceedings-crossref",
@@ -589,7 +589,7 @@
 		},
 		"page": "133-139",
 		"publisher-place": "Boston",
-		"title": "On notions of information transfer in <span class=\"nocase\">VLSI</span> circuits"
+		"title": "On notions of information transfer in VLSI circuits"
 	},
 	{
 		"id": "proceedings-minimal",
@@ -657,8 +657,8 @@
 		"type": "thesis",
 		"author": [
 			{
-				"family": "Baloney",
-				"given": "F. Phidias Phony"
+				"family": "Phony-Baloney",
+				"given": "F. Phidias"
 			}
 		],
 		"issued": {
@@ -669,18 +669,18 @@
 			]
 		},
 		"publisher": "Fanstord University",
-		"title": "Fighting Fire with Fire: Festooning <span class=\"nocase\">F</span>rench Phrases"
+		"title": "Fighting Fire with Fire: Festooning French Phrases"
 	},
 	{
 		"id": "phdthesis-full",
 		"type": "thesis",
 		"author": [
 			{
-				"family": "Baloney",
-				"given": "F. Phidias Phony"
+				"family": "Phony-Baloney",
+				"given": "F. Phidias"
 			}
 		],
-		"genre": "<span class=\"nocase\">PhD</span> Dissertation",
+		"genre": "PhD Dissertation",
 		"issued": {
 			"date-parts": [
 				[
@@ -691,7 +691,7 @@
 		"note": "This is a full PHDTHESIS entry",
 		"publisher": "Fanstord University",
 		"publisher-place": "Department of French",
-		"title": "Fighting Fire with Fire: Festooning <span class=\"nocase\">F</span>rench Phrases"
+		"title": "Fighting Fire with Fire: Festooning French Phrases"
 	},
 	{
 		"id": "techreport-minimal",
@@ -710,7 +710,7 @@
 			]
 		},
 		"publisher": "Fanstord University",
-		"title": "An <span class=\"nocase\"><math-tex>O(n \\log n / \\! \\log\\log n)</math-tex></span> sorting algorithm"
+		"title": "An <math-tex>O(n \\log n / \\! \\log\\log n)</math-tex> sorting algorithm"
 	},
 	{
 		"id": "techreport-full",
@@ -734,7 +734,7 @@
 		"number": "7",
 		"publisher": "Fanstord University",
 		"publisher-place": "Computer Science Department, Fanstord, California",
-		"title": "An <span class=\"nocase\"><math-tex>O(n \\log n / \\! \\log\\log n)</math-tex></span> sorting algorithm"
+		"title": "An <math-tex>O(n \\log n / \\! \\log\\log n)</math-tex> sorting algorithm"
 	},
 	{
 		"id": "unpublished-minimal",
