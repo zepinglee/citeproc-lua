@@ -1,0 +1,6347 @@
+[
+	{
+		"id": "9.8:1",
+		"type": "book",
+		"author": [
+			{
+				"family": "Author",
+				"given": "A. A."
+			},
+			{
+				"family": "Author",
+				"given": "B. B."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		}
+	},
+	{
+		"id": "9.8:2",
+		"type": "book",
+		"author": [
+			{
+				"literal": "American Psychological Association"
+			},
+			{
+				"literal": "National Institutes of Health"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		}
+	},
+	{
+		"id": "9.8:3",
+		"type": "book",
+		"author": [
+			{
+				"family": "Author",
+				"given": "A. A."
+			},
+			{
+				"family": "Author",
+				"given": "B. B."
+			},
+			{
+				"family": "Author",
+				"given": "C. C."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		}
+	},
+	{
+		"id": "9.8:4",
+		"type": "book",
+		"author": [
+			{
+				"family": "First"
+			},
+			{
+				"family": "Second"
+			},
+			{
+				"family": "Third"
+			},
+			{
+				"family": "Fourth"
+			},
+			{
+				"family": "Fifth"
+			},
+			{
+				"family": "Sixth"
+			},
+			{
+				"family": "Seventh"
+			},
+			{
+				"family": "Eighth"
+			},
+			{
+				"family": "Ninth"
+			},
+			{
+				"family": "Tenth"
+			},
+			{
+				"family": "Eleventh"
+			},
+			{
+				"family": "Twelfth"
+			},
+			{
+				"family": "Thirteenth"
+			},
+			{
+				"family": "Fourteenth"
+			},
+			{
+				"family": "Fifteenth"
+			},
+			{
+				"family": "Sixteenth"
+			},
+			{
+				"family": "Seventeenth"
+			},
+			{
+				"family": "Eighteenth"
+			},
+			{
+				"family": "Nineteenth"
+			},
+			{
+				"family": "Twentieth"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		}
+	},
+	{
+		"id": "9.8:5",
+		"type": "book",
+		"author": [
+			{
+				"family": "First"
+			},
+			{
+				"family": "Second"
+			},
+			{
+				"family": "Third"
+			},
+			{
+				"family": "Fourth"
+			},
+			{
+				"family": "Fifth"
+			},
+			{
+				"family": "Sixth"
+			},
+			{
+				"family": "Seventh"
+			},
+			{
+				"family": "Eighth"
+			},
+			{
+				"family": "Ninth"
+			},
+			{
+				"family": "Tenth"
+			},
+			{
+				"family": "Eleventh"
+			},
+			{
+				"family": "Twelfth"
+			},
+			{
+				"family": "Thirteenth"
+			},
+			{
+				"family": "Fourteenth"
+			},
+			{
+				"family": "Fifteenth"
+			},
+			{
+				"family": "Sixteenth"
+			},
+			{
+				"family": "Seventeenth"
+			},
+			{
+				"family": "Eighteenth"
+			},
+			{
+				"family": "Nineteenth"
+			},
+			{
+				"family": "Twentieth"
+			},
+			{
+				"family": "Twentyfirst"
+			},
+			{
+				"family": "Twentysecond"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		}
+	},
+	{
+		"id": "9.8:6",
+		"type": "book",
+		"author": [
+			{
+				"family": "Xu",
+				"given": "Ai-Jun"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		}
+	},
+	{
+		"id": "9.8:7",
+		"type": "book",
+		"author": [
+			{
+				"family": "Raboso",
+				"given": "Lee-ann"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		}
+	},
+	{
+		"id": "9.8:8",
+		"type": "book",
+		"author": [
+			{
+				"family": "Author",
+				"given": "A. A.",
+				"suffix": "Jr."
+			},
+			{
+				"family": "Author",
+				"given": "B. B."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		}
+	},
+	{
+		"id": "9.8:9",
+		"type": "book",
+		"author": [
+			{
+				"family": "Meyers",
+				"given": "K."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		},
+		"title": "Withering worrying"
+	},
+	{
+		"id": "9.8:10",
+		"type": "book",
+		"author": [
+			{
+				"family": "Plato"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		}
+	},
+	{
+		"id": "9.8:11",
+		"type": "book",
+		"author": [
+			{
+				"family": "Author",
+				"given": "U."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		}
+	},
+	{
+		"id": "9.14:1",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Test",
+				"given": "Arthur"
+			}
+		],
+		"container-title": "Seasonal Journal",
+		"issue": "2",
+		"issued": {
+			"date-parts": [
+				[
+					2012,
+					22
+				]
+			]
+		},
+		"title": "Test title",
+		"volume": "33"
+	},
+	{
+		"id": "9.14:2",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Test",
+				"given": "Arthur"
+			}
+		],
+		"container-title": "Seasonal Journal",
+		"issue": "3",
+		"issued": {
+			"date-parts": [
+				[
+					2012,
+					22
+				],
+				[
+					2012,
+					23
+				]
+			]
+		},
+		"title": "Test title 2",
+		"volume": "34"
+	},
+	{
+		"id": "9.44:1a",
+		"type": "document",
+		"author": [
+			{
+				"family": "Benjamin",
+				"given": "A. S."
+			}
+		]
+	},
+	{
+		"id": "9.44:1b",
+		"type": "document",
+		"author": [
+			{
+				"family": "Yaakov",
+				"given": "D.",
+				"non-dropping-particle": "ben"
+			}
+		]
+	},
+	{
+		"id": "9.44:2a",
+		"type": "document",
+		"author": [
+			{
+				"family": "Denzin",
+				"given": "N. K."
+			}
+		]
+	},
+	{
+		"id": "9.44:2b",
+		"type": "document",
+		"author": [
+			{
+				"family": "Onís",
+				"given": "C.",
+				"non-dropping-particle": "de"
+			}
+		]
+	},
+	{
+		"id": "9.44:2c",
+		"type": "document",
+		"author": [
+			{
+				"family": "Devlin",
+				"given": "J. T."
+			}
+		]
+	},
+	{
+		"id": "9.44:3a",
+		"type": "document",
+		"author": [
+			{
+				"family": "Girard",
+				"given": "John-Bill"
+			}
+		]
+	},
+	{
+		"id": "9.44:3b",
+		"type": "document",
+		"author": [
+			{
+				"family": "Girard-Perregaux",
+				"given": "A. S."
+			}
+		]
+	},
+	{
+		"id": "9.44:4a",
+		"type": "document",
+		"author": [
+			{
+				"family": "Ibn Abdulaziz",
+				"given": "T."
+			}
+		]
+	},
+	{
+		"id": "9.44:4b",
+		"type": "document",
+		"author": [
+			{
+				"family": "Ibn Nidal",
+				"given": "A. K. M."
+			}
+		]
+	},
+	{
+		"id": "9.44:5a",
+		"type": "document",
+		"author": [
+			{
+				"family": "López",
+				"given": "M. E."
+			}
+		]
+	},
+	{
+		"id": "9.44:5b",
+		"type": "document",
+		"author": [
+			{
+				"family": "Molina",
+				"given": "G.",
+				"non-dropping-particle": "López de"
+			}
+		]
+	},
+	{
+		"id": "9.44:6a",
+		"type": "document",
+		"author": [
+			{
+				"family": "MacCallum",
+				"given": "T.",
+				"suffix": "II"
+			}
+		]
+	},
+	{
+		"id": "9.44:6b",
+		"type": "document",
+		"author": [
+			{
+				"family": "MacCallum",
+				"given": "T.",
+				"suffix": "III"
+			}
+		]
+	},
+	{
+		"id": "9.44:7a",
+		"type": "document",
+		"author": [
+			{
+				"family": "MacNeil",
+				"given": "E."
+			}
+		]
+	},
+	{
+		"id": "9.44:7b",
+		"type": "document",
+		"author": [
+			{
+				"family": "McAdoo",
+				"given": "Z. C. E."
+			}
+		]
+	},
+	{
+		"id": "9.44:7c",
+		"type": "document",
+		"author": [
+			{
+				"family": "M’Carthy",
+				"given": "L. L."
+			}
+		]
+	},
+	{
+		"id": "9.44:8a",
+		"type": "document",
+		"author": [
+			{
+				"family": "Olson",
+				"given": "S. R."
+			}
+		]
+	},
+	{
+		"id": "9.44:8b",
+		"type": "document",
+		"author": [
+			{
+				"family": "O’Neil",
+				"given": "U."
+			}
+		]
+	},
+	{
+		"id": "9.44:8c",
+		"type": "document",
+		"author": [
+			{
+				"family": "Oppenheimer",
+				"given": "R."
+			}
+		]
+	},
+	{
+		"id": "9.44:9a",
+		"type": "document",
+		"author": [
+			{
+				"family": "Partridge",
+				"given": "F."
+			}
+		]
+	},
+	{
+		"id": "9.44:9b",
+		"type": "document",
+		"author": [
+			{
+				"family": "Plato"
+			}
+		]
+	},
+	{
+		"id": "9.44:10a",
+		"type": "document",
+		"author": [
+			{
+				"family": "San Martin",
+				"given": "Q. E"
+			}
+		]
+	},
+	{
+		"id": "9.44:10b",
+		"type": "document",
+		"author": [
+			{
+				"family": "Santa Maria",
+				"given": "M."
+			}
+		]
+	},
+	{
+		"id": "9.44:10c",
+		"type": "document",
+		"author": [
+			{
+				"family": "Santayana",
+				"given": "F. E."
+			}
+		]
+	},
+	{
+		"id": "9.44:11a",
+		"type": "document",
+		"author": [
+			{
+				"family": "Santiago",
+				"given": "J.",
+				"suffix": "Sr."
+			}
+		]
+	},
+	{
+		"id": "9.44:11b",
+		"type": "document",
+		"author": [
+			{
+				"family": "Santiago",
+				"given": "J.",
+				"suffix": "Jr."
+			}
+		]
+	},
+	{
+		"id": "9.44:12a",
+		"type": "document",
+		"author": [
+			{
+				"family": "Villafuerte",
+				"given": "S. A."
+			}
+		]
+	},
+	{
+		"id": "9.44:12b",
+		"type": "document",
+		"author": [
+			{
+				"family": "Villa-Lobos",
+				"given": "J."
+			}
+		]
+	},
+	{
+		"id": "9.46:1",
+		"type": "book",
+		"author": [
+			{
+				"family": "Patel",
+				"given": "S. N."
+			}
+		]
+	},
+	{
+		"id": "9.46:2",
+		"type": "book",
+		"author": [
+			{
+				"family": "Patel",
+				"given": "S. N."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		}
+	},
+	{
+		"id": "9.46:3",
+		"type": "book",
+		"author": [
+			{
+				"family": "Patel",
+				"given": "S. N."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2020
+				]
+			]
+		}
+	},
+	{
+		"id": "9.46:4",
+		"type": "book",
+		"author": [
+			{
+				"family": "Patel",
+				"given": "S. N."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2020,
+					4
+				]
+			]
+		}
+	},
+	{
+		"id": "9.46:5",
+		"type": "book",
+		"author": [
+			{
+				"family": "Patel",
+				"given": "S. N."
+			}
+		],
+		"status": "inpress"
+	},
+	{
+		"id": "9.46:6",
+		"type": "book",
+		"author": [
+			{
+				"family": "Davidson",
+				"given": "T. E."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		}
+	},
+	{
+		"id": "9.46:7",
+		"type": "book",
+		"author": [
+			{
+				"family": "Davidson",
+				"given": "T. E."
+			},
+			{
+				"family": "McCabe",
+				"given": "M. P."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2015
+				]
+			]
+		}
+	},
+	{
+		"id": "9.46:8",
+		"type": "book",
+		"author": [
+			{
+				"family": "Costa",
+				"given": "P. T.",
+				"suffix": "Jr."
+			},
+			{
+				"family": "McCrae",
+				"given": "R. R."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2013
+				]
+			]
+		}
+	},
+	{
+		"id": "9.46:9",
+		"type": "book",
+		"author": [
+			{
+				"family": "Costa",
+				"given": "P. T.",
+				"suffix": "Jr."
+			},
+			{
+				"family": "McCrae",
+				"given": "R. R."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		}
+	},
+	{
+		"id": "9.46:10",
+		"type": "book",
+		"author": [
+			{
+				"family": "Jacobson",
+				"given": "T. E."
+			},
+			{
+				"family": "Duncan",
+				"given": "B."
+			},
+			{
+				"family": "Young",
+				"given": "S. E."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		}
+	},
+	{
+		"id": "9.46:11",
+		"type": "book",
+		"author": [
+			{
+				"family": "Jacobson",
+				"given": "T. E."
+			},
+			{
+				"family": "Raymond",
+				"given": "K. M."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2017
+				]
+			]
+		}
+	},
+	{
+		"id": "9.46:12",
+		"type": "book",
+		"author": [
+			{
+				"family": "Pfeiffer",
+				"given": "S. J."
+			},
+			{
+				"family": "Chu",
+				"given": "Wan-Wan"
+			},
+			{
+				"family": "Park",
+				"given": "S. H."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		}
+	},
+	{
+		"id": "9.46:13",
+		"type": "book",
+		"author": [
+			{
+				"family": "Pfeiffer",
+				"given": "S. J."
+			},
+			{
+				"family": "Chu",
+				"given": "Wan-Wan"
+			},
+			{
+				"family": "Wall",
+				"given": "T. L."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		}
+	},
+	{
+		"id": "9.47:1",
+		"type": "book",
+		"author": [
+			{
+				"family": "Azikiwe",
+				"given": "H."
+			},
+			{
+				"family": "Bello",
+				"given": "A."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2020
+				]
+			]
+		}
+	},
+	{
+		"id": "9.47:2",
+		"type": "book",
+		"author": [
+			{
+				"family": "Azikiwe",
+				"given": "H."
+			},
+			{
+				"family": "Bello",
+				"given": "A."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2020,
+					3,
+					26
+				]
+			]
+		}
+	},
+	{
+		"id": "9.47:3",
+		"type": "book",
+		"author": [
+			{
+				"family": "Azikiwe",
+				"given": "H."
+			},
+			{
+				"family": "Bello",
+				"given": "A."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2020,
+					4,
+					2
+				]
+			]
+		}
+	},
+	{
+		"id": "9.47:4",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Judge",
+				"given": "T. A."
+			},
+			{
+				"family": "Kammeyer-Mueller",
+				"given": "J. D"
+			}
+		],
+		"container-title": "Organizational Behaviour",
+		"DOI": "10.1002/job.764",
+		"issue": "2",
+		"issued": {
+			"date-parts": [
+				[
+					2012
+				]
+			]
+		},
+		"page": "161-174",
+		"title": "General and specific measures in organizational behaviour research: Considerations, examples, and recommandations for researchers",
+		"title-short": "General and specific measures in organizational behaviour research: Considerations, examples, and recommandations for researchers",
+		"volume": "33"
+	},
+	{
+		"id": "9.47:5",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Judge",
+				"given": "T. A."
+			},
+			{
+				"family": "Kammeyer-Mueller",
+				"given": "J. D"
+			}
+		],
+		"container-title": "Journal of Applied Psychology",
+		"container-title-short": "J. Appl. Psychol.",
+		"DOI": "10.1037/a0028084",
+		"issue": "4",
+		"issued": {
+			"date-parts": [
+				[
+					2012
+				]
+			]
+		},
+		"page": "758-775",
+		"title": "On the value of aiming high: The causes and consequences of ambition",
+		"title-short": "On the value of aiming high: The causes and consequences of ambition",
+		"volume": "97"
+	},
+	{
+		"id": "9.47:6",
+		"type": "book",
+		"author": [
+			{
+				"family": "Smith",
+				"given": "A."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		},
+		"title": "Interesting things"
+	},
+	{
+		"id": "9.47:7",
+		"type": "book",
+		"author": [
+			{
+				"family": "Smith",
+				"given": "A."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		},
+		"title": "A litany of special things"
+	},
+	{
+		"id": "9.47:8",
+		"type": "book",
+		"author": [
+			{
+				"family": "Smith",
+				"given": "A."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		},
+		"title": "An awful lot of special things"
+	},
+	{
+		"id": "9.47:9",
+		"type": "book",
+		"author": [
+			{
+				"family": "Smith",
+				"given": "A."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		},
+		"title": "The banality of special things"
+	},
+	{
+		"id": "9.47:10",
+		"type": "book",
+		"author": [
+			{
+				"family": "Brown",
+				"given": "B."
+			}
+		]
+	},
+	{
+		"id": "9.47:11",
+		"type": "book",
+		"author": [
+			{
+				"family": "Brown",
+				"given": "B."
+			}
+		]
+	},
+	{
+		"id": "9.47:12",
+		"type": "book",
+		"author": [
+			{
+				"family": "Brown",
+				"given": "B."
+			}
+		],
+		"status": "inpress"
+	},
+	{
+		"id": "9.47:13",
+		"type": "book",
+		"author": [
+			{
+				"family": "Brown",
+				"given": "B."
+			}
+		],
+		"status": "inpress"
+	},
+	{
+		"id": "9.48:1",
+		"type": "book",
+		"author": [
+			{
+				"family": "Taylor",
+				"given": "J. M."
+			},
+			{
+				"family": "Neimeyer",
+				"given": "G. J."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2015
+				]
+			]
+		}
+	},
+	{
+		"id": "9.48:2",
+		"type": "book",
+		"author": [
+			{
+				"family": "Taylor",
+				"given": "T."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		}
+	},
+	{
+		"id": "9.49:1",
+		"type": "book",
+		"author": [
+			{
+				"family": "Anonymous"
+			}
+		],
+		"issued": {
+			"literal": "-3000 "
+		},
+		"title": "The pnakotic manuscript"
+	},
+	{
+		"id": "9.49:2",
+		"type": "book",
+		"issued": {
+			"literal": "-2000 "
+		},
+		"title": "The book of eibon"
+	},
+	{
+		"id": "9.49:3",
+		"type": "book",
+		"author": [
+			{
+				"family": "Smith",
+				"given": "A."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		},
+		"title": "Top 100 silliest reference list sorting requirements"
+	},
+	{
+		"id": "9.49:4",
+		"type": "book",
+		"author": [
+			{
+				"family": "Smith",
+				"given": "A."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		},
+		"title": "Top 10 political pandering epithets in psychology"
+	},
+	{
+		"id": "9.49:5",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Jones",
+				"given": "J."
+			}
+		],
+		"container-title": "Journal of the Decline of Academia",
+		"issued": {
+			"date-parts": [
+				[
+					2012
+				]
+			]
+		},
+		"title": "Annoyingly casual titles: How to exhaust all effort on the title alone",
+		"title-short": "Annoyingly casual titles: How to exhaust all effort on the title alone"
+	},
+	{
+		"id": "9.49:6",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Jones",
+				"given": "J."
+			}
+		],
+		"container-title": "Journal of the Decline of Academia",
+		"issued": {
+			"date-parts": [
+				[
+					2012
+				]
+			]
+		},
+		"title": "Annoyingly casual titles: Creating titles to distract from vacuity",
+		"title-short": "Annoyingly casual titles: Creating titles to distract from vacuity"
+	},
+	{
+		"id": "9.51:1",
+		"type": "chapter",
+		"author": [
+			{
+				"family": "Barber",
+				"given": "L. K."
+			},
+			{
+				"family": "Grawitch",
+				"given": "M. J."
+			},
+			{
+				"family": "Maloney",
+				"given": "P. W."
+			}
+		],
+		"container-title": "The psychologically healthy workplace: Building a win-win environment for organizations and employees",
+		"DOI": "10.1037/14731-006",
+		"editor": [
+			{
+				"family": "Grawitch",
+				"given": "M. J."
+			},
+			{
+				"family": "Ballard",
+				"given": "D. W."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		},
+		"note": "This book chapter provides an overview of the psychosociological concept of work-life balance. The authors discuss findings from studies showing harmful effects of work-life conflict on psychological and behavioural health as well as beneficial effects of work-life facilitation, wherein one role makes a positive contribution to the other. The chapter concludes with a description of work-life balance initiatives that organizations have adopted to help employees manage their dual work and nonwork obligations and some of the key factors influencing their effectiveness.",
+		"page": "111-113",
+		"publisher": "American Psychological Association",
+		"title": "Work-life balance: Contemporary perspectives",
+		"title-short": "Work-life balance: Contemporary perspectives"
+	},
+	{
+		"id": "9.51:2",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Carlson",
+				"given": "D. S."
+			},
+			{
+				"family": "Thompson",
+				"given": "M. J."
+			},
+			{
+				"family": "Kacmar",
+				"given": "K. M."
+			}
+		],
+		"container-title": "Journal of Applied Psychology",
+		"container-title-short": "J. Appl. Psychol.",
+		"DOI": "10.1037/apl0000348",
+		"issue": "2",
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		},
+		"note": "<code>\\textcite{9.51:2}</code> conducted an empirical study to examine the multiple paths through which work and family variables can affect work outcomes. Whereas <code>\\textcite{9.51:1}</code> explored how work obligations can increase stress or enhance fulfillment at home, <code>\\citeauthor{9.51:2}</code> viewed work demands as raising family stress, with potential negative consequences on work performance. Results supported a model in which direct effects of work demands and spillover effects of work demands to work-to-family conflict led to a lower job satisfaction and affective commitment, as well as crossover effects of work-to-family conflict, spousal stress transmission, and later family-to-work conflict on organizational citizenship and absenteeism. Overall, the study demonstrated a link from work demands to work outcomes when considering the family, but those paths differed depending on whether attitudinal or behavioural work outcomes were examined.",
+		"page": "214-228",
+		"title": "Double crossed: The spillover and crossover effect of work demands on work outcomes through the family",
+		"title-short": "Double crossed: The spillover and crossover effect of work demands on work outcomes through the family",
+		"volume": "104"
+	},
+	{
+		"id": "9.52:1",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Angel",
+				"given": "L."
+			},
+			{
+				"family": "Bastin",
+				"given": "C."
+			},
+			{
+				"family": "Genon",
+				"given": "S."
+			},
+			{
+				"family": "Balteau",
+				"given": "E."
+			},
+			{
+				"family": "Phillips",
+				"given": "C."
+			},
+			{
+				"family": "Luxen",
+				"given": "A."
+			},
+			{
+				"family": "Maquet",
+				"given": "P."
+			},
+			{
+				"family": "Salmon",
+				"given": "E."
+			},
+			{
+				"family": "Collette",
+				"given": "F."
+			}
+		],
+		"container-title": "Cortex",
+		"DOI": "10.1016/j.cortex.2012.10.002",
+		"issue": "6",
+		"issued": {
+			"date-parts": [
+				[
+					2013
+				]
+			]
+		},
+		"page": "1585-1597",
+		"title": "Differential effects of aging on the neural correlates of recollection and familiarity",
+		"volume": "49"
+	},
+	{
+		"id": "9.52:2",
+		"type": "chapter",
+		"author": [
+			{
+				"family": "Finley",
+				"given": "J. R."
+			},
+			{
+				"family": "Tullis",
+				"given": "J. G."
+			},
+			{
+				"family": "Benjamin",
+				"given": "A. S."
+			}
+		],
+		"container-title": "New science of learning: Cognition, computers and collaboration in education",
+		"DOI": "10.1007/978-1-4419-57160_6",
+		"editor": [
+			{
+				"family": "Khine",
+				"given": "M. S."
+			},
+			{
+				"family": "Saleh",
+				"given": "I. M."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2010
+				]
+			]
+		},
+		"page": "109-131",
+		"publisher": "Springer",
+		"title": "Metacognitive control of learning and remembering"
+	},
+	{
+		"id": "9.52:3",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Hanaki",
+				"given": "R."
+			},
+			{
+				"family": "Abe",
+				"given": "N."
+			},
+			{
+				"family": "Fujii",
+				"given": "T."
+			},
+			{
+				"family": "Ueno",
+				"given": "A."
+			},
+			{
+				"family": "Nishio",
+				"given": "Y."
+			},
+			{
+				"family": "Hiraoka",
+				"given": "K."
+			},
+			{
+				"family": "Shimomura",
+				"given": "T."
+			},
+			{
+				"family": "Iizuka",
+				"given": "O."
+			},
+			{
+				"family": "Shinohara",
+				"given": "M."
+			},
+			{
+				"family": "Hirayama",
+				"given": "K."
+			},
+			{
+				"family": "Mori",
+				"given": "E."
+			}
+		],
+		"container-title": "Neurological Sciences",
+		"container-title-short": "Neurol. Sci.",
+		"DOI": "10.1007/s10072-011-0748-4",
+		"issue": "6",
+		"issued": {
+			"date-parts": [
+				[
+					2011
+				]
+			]
+		},
+		"page": "1115-1122",
+		"title": "The effects of aging and alzheimer’s disease on associative recognition memory",
+		"volume": "32"
+	},
+	{
+		"id": "9.52:4",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Hargis",
+				"given": "M. B."
+			},
+			{
+				"family": "Castel",
+				"given": "A. D."
+			}
+		],
+		"container-title": "Memory",
+		"DOI": "10.1080/09658211.2018.1441423",
+		"issue": "8",
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"page": "1151-1158",
+		"title": "Younger and older adults’ associative memory for medication interactions of varying severity",
+		"volume": "26"
+	},
+	{
+		"id": "10.1:1",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "McCauley",
+				"given": "S. M."
+			},
+			{
+				"family": "Christiansen",
+				"given": "M. H."
+			}
+		],
+		"container-title": "Psychological Review",
+		"container-title-short": "Psychol Rev",
+		"DOI": "10.1037/rev0000126",
+		"issue": "1",
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		},
+		"page": "1-51",
+		"title": "Language learning as language use: A cross-linguistic model of child language development",
+		"title-short": "Language learning as language use: A cross-linguistic model of child language development",
+		"URL": "http://some.url",
+		"volume": "126"
+	},
+	{
+		"id": "10.1:2",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Ahmann",
+				"given": "E."
+			},
+			{
+				"family": "Tuttle",
+				"given": "L. J."
+			},
+			{
+				"family": "Saviet",
+				"given": "M."
+			},
+			{
+				"family": "Wright",
+				"given": "S. D."
+			}
+		],
+		"container-title": "Journal of Postsecondary Education and Disability",
+		"container-title-short": "J Postsecond Educ Disabil",
+		"issue": "1",
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"page": "17-39",
+		"title": "A descriptive review of <span class=\"nocase\">ADHD</span> coaching research: Implications for college students",
+		"title-short": "A descriptive review of <span class=\"nocase\">ADHD</span> coaching research: Implications for college students",
+		"URL": "https://www.ahead.org/professional-resources/publications/jped/archived-jped/jped-volume-31",
+		"volume": "31"
+	},
+	{
+		"id": "10.1:3a",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Anderson",
+				"given": "M."
+			}
+		],
+		"container-title": "Educational Leadership",
+		"issue": "1",
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"page": "26-33",
+		"title": "Getting consistent with consequences",
+		"volume": "76"
+	},
+	{
+		"id": "10.1:3b",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Goldman",
+				"given": "C."
+			}
+		],
+		"container-title": "Chicago Tribune",
+		"issued": {
+			"date-parts": [
+				[
+					2018,
+					11,
+					28
+				]
+			]
+		},
+		"title": "The complicated calibration of love, especially in adoption"
+	},
+	{
+		"id": "10.1:4",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Kalnay",
+				"given": "E."
+			},
+			{
+				"family": "Kanamitsu",
+				"given": "M."
+			},
+			{
+				"family": "Kistler",
+				"given": "R."
+			},
+			{
+				"family": "Collins",
+				"given": "W."
+			},
+			{
+				"family": "Deaven",
+				"given": "D."
+			},
+			{
+				"family": "Gandin",
+				"given": "L."
+			},
+			{
+				"family": "Iredell",
+				"given": "M."
+			},
+			{
+				"family": "Saha",
+				"given": "S."
+			},
+			{
+				"family": "White",
+				"given": "G."
+			},
+			{
+				"family": "Wollen",
+				"given": "J."
+			},
+			{
+				"family": "Zhu",
+				"given": "Y."
+			},
+			{
+				"family": "Chelliah",
+				"given": "M."
+			},
+			{
+				"family": "Ebisuzaki",
+				"given": "W."
+			},
+			{
+				"family": "Higgins",
+				"given": "W."
+			},
+			{
+				"family": "Janowiak",
+				"given": "J."
+			},
+			{
+				"family": "Mo",
+				"given": "K. C."
+			},
+			{
+				"family": "Ropelewski",
+				"given": "C."
+			},
+			{
+				"family": "Wang",
+				"given": "J."
+			},
+			{
+				"family": "Leetma",
+				"given": "A."
+			},
+			{
+				"family": "Aaron",
+				"given": "A."
+			},
+			{
+				"family": "Court",
+				"given": "B. Baron C."
+			},
+			{
+				"family": "Joseph",
+				"given": "D."
+			}
+		],
+		"container-title": "Bulletin of the American Meteorological Society",
+		"container-title-short": "Bull. Am. Meteorol. Soc.",
+		"DOI": "fg6rf9",
+		"issue": "3",
+		"issued": {
+			"date-parts": [
+				[
+					1996,
+					1,
+					1
+				]
+			]
+		},
+		"page": "437-471",
+		"title": "The <span class=\"nocase\">NCEP/NCAR</span> 40-year reanalysis project",
+		"volume": "77"
+	},
+	{
+		"id": "10.1:5",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "De Vries",
+				"given": "R."
+			},
+			{
+				"family": "Nieuwenhuijze",
+				"given": "M."
+			},
+			{
+				"family": "Buitendijk",
+				"given": "S. E."
+			},
+			{
+				"literal": "the members of Midwifery Science Work Group"
+			}
+		],
+		"container-title": "Midwifery",
+		"DOI": "10.1016/j.midw.2013.07.007",
+		"issue": "10",
+		"issued": {
+			"date-parts": [
+				[
+					2013
+				]
+			]
+		},
+		"page": "1122-1128",
+		"title": "What does it take to have a strong and independent profession of midwifery? <span class=\"nocase\">Lessons</span> from the <span class=\"nocase\">Netherlands</span>",
+		"volume": "29"
+	},
+	{
+		"id": "10.1:6",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Burin",
+				"given": "D."
+			},
+			{
+				"family": "Kilteni",
+				"given": "K."
+			},
+			{
+				"family": "Rabuffetti",
+				"given": "M."
+			},
+			{
+				"family": "Slater",
+				"given": "M."
+			},
+			{
+				"family": "Pia",
+				"given": "L."
+			}
+		],
+		"container-title": "<span class=\"nocase\">PLOS ONE</span>",
+		"DOI": "10.1371/journal.pone.0209899",
+		"issue": "1",
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		},
+		"number": "e0209899",
+		"title": "Body ownership increases the interference between observed and executed movements",
+		"volume": "14"
+	},
+	{
+		"id": "10.1:7",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Huestegge",
+				"given": "S. M."
+			},
+			{
+				"family": "Raettig",
+				"given": "T."
+			},
+			{
+				"family": "Huestegge",
+				"given": "L."
+			}
+		],
+		"container-title": "Experimental Psychology",
+		"container-title-short": "Exp Psychol",
+		"DOI": "10.1027/1618-3169/a000440",
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		},
+		"title": "Are face-incongruent voices harder to process? <span class=\"nocase\">Effects</span> of face-voice gender incongruity on basic cognitive information processing"
+	},
+	{
+		"id": "10.1:8",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Pachur",
+				"given": "T."
+			},
+			{
+				"family": "Scheibehenne",
+				"given": "B."
+			}
+		],
+		"container-title": "Psychonomic Bulletin & Review",
+		"container-title-short": "Psychon Bull Rev",
+		"status": "inpress",
+		"title": "Unpacking buyer-seller differences in valuation from experience: A cognitive modeling approach",
+		"title-short": "Unpacking buyer-seller differences in valuation from experience: A cognitive modeling approach"
+	},
+	{
+		"id": "10.1:9",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Chaves-Morillo",
+				"given": "V."
+			},
+			{
+				"family": "Gómez Calero",
+				"given": "C."
+			},
+			{
+				"family": "Fernández-Muñoz",
+				"given": "J. J."
+			},
+			{
+				"family": "Toledano-Muñoz",
+				"given": "A."
+			},
+			{
+				"family": "Fernández-Heute",
+				"given": "J."
+			},
+			{
+				"family": "Martinez-Monge",
+				"given": "N."
+			},
+			{
+				"family": "Palacios-Ceña",
+				"given": "D."
+			},
+			{
+				"family": "Peñacoba-Puente",
+				"given": "C."
+			}
+		],
+		"container-title": "Clínica y Salud",
+		"DOI": "10.1016/j.clysa.2017.04.002",
+		"issue": "3",
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"original-title": "La anosmia neurosensorial: Relación entre subtipo, tiempo de reconocimiento y edad",
+		"page": "155-161",
+		"title": "Sensorineural anosmia: Relationship between subtype, recognition time, and age",
+		"title-short": "Sensorineural anosmia: Relationship between subtype, recognition time, and age",
+		"volume": "28"
+	},
+	{
+		"id": "10.1:10",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Piaget",
+				"given": "J."
+			}
+		],
+		"container-title": "Human Development",
+		"container-title-short": "Hum Dev",
+		"DOI": "10.1159/00027/1225",
+		"issue": "1",
+		"issued": {
+			"date-parts": [
+				[
+					1972
+				]
+			]
+		},
+		"original-date": {
+			"date-parts": [
+				[
+					1970
+				]
+			]
+		},
+		"page": "1-12",
+		"title": "Intellectual evolution from adolescence to adulthood",
+		"translator": [
+			{
+				"family": "Bliss",
+				"given": "J."
+			},
+			{
+				"family": "Furth",
+				"given": "H."
+			}
+		],
+		"volume": "15"
+	},
+	{
+		"id": "10.1:11",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Shore",
+				"given": "M. F."
+			}
+		],
+		"container-title": "American Journal of Orthopsychiatry",
+		"container-title-short": "Am. J. Orthopsychiatry",
+		"DOI": "10.1037/h0100165",
+		"issue": "6",
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		},
+		"page": "611-618",
+		"title": "Marking time in the land of plenty: Reflections on mental health in the <span class=\"nocase\">United</span> <span class=\"nocase\">States</span>",
+		"title-short": "Marking time in the land of plenty: Reflections on mental health in the <span class=\"nocase\">United</span> <span class=\"nocase\">States</span>",
+		"volume": "84"
+	},
+	{
+		"id": "10.1:11r",
+		"type": "article-journal",
+		"container-title": "American Journal of Orthopsychiatry",
+		"container-title-short": "Am. J. Orthopsychiatry",
+		"DOI": "10.1111/j.1939-0025.1981.tb01388.x",
+		"issue": "3",
+		"issued": {
+			"date-parts": [
+				[
+					1981
+				]
+			]
+		},
+		"page": "391-402",
+		"title": "Marking time in the land of plenty: Reflections on mental health in the <span class=\"nocase\">United</span> <span class=\"nocase\">States</span>",
+		"title-short": "Marking time in the land of plenty: Reflections on mental health in the <span class=\"nocase\">United</span> <span class=\"nocase\">States</span>",
+		"volume": "51"
+	},
+	{
+		"id": "10.1:12a",
+		"type": "periodical",
+		"container-title": "Archives of Scientific Psychology",
+		"editor": [
+			{
+				"family": "Lilienfeld",
+				"given": "S. O."
+			}
+		],
+		"issue": "1",
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"page": "51-104",
+		"title": "Heterodox issues in psychology",
+		"volume": "6",
+		"volume-title": "Special section"
+	},
+	{
+		"id": "10.1:12b",
+		"type": "periodical",
+		"container-title": "American Psychologist",
+		"editor": [
+			{
+				"family": "McDaniel",
+				"given": "S. H."
+			},
+			{
+				"family": "Salas",
+				"given": "E."
+			},
+			{
+				"family": "Kazak",
+				"given": "A. E."
+			}
+		],
+		"issue": "4",
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"title": "The science of teamwork",
+		"volume": "73",
+		"volume-title": "Special issue"
+	},
+	{
+		"id": "10.1:13",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Mehrholz",
+				"given": "J."
+			},
+			{
+				"family": "Pohl",
+				"given": "M."
+			},
+			{
+				"family": "Platz",
+				"given": "T."
+			},
+			{
+				"family": "Kugler",
+				"given": "J."
+			},
+			{
+				"family": "Elsner",
+				"given": "B."
+			}
+		],
+		"container-title": "Cochrane Database of Systematic Reviews",
+		"DOI": "10.1002/14651858.CD006876.pub5",
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"title": "Electromechanical and robot-assisted arm training for improving activities of daily living, arm function, and arm muscle strength after stroke"
+	},
+	{
+		"id": "10.1:14",
+		"type": "article-journal",
+		"accessed": {
+			"date-parts": [
+				[
+					2019,
+					7,
+					22
+				]
+			]
+		},
+		"author": [
+			{
+				"family": "Morey",
+				"given": "M. C."
+			}
+		],
+		"container-title": "<span class=\"nocase\">UpToDate</span>",
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		},
+		"title": "Physical activity and exercise in older adults",
+		"URL": "https://www.uptodate.com/contents/physical-activity-and-exercise-in-older-adults"
+	},
+	{
+		"id": "10.1:15a",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Bergeson",
+				"given": "S."
+			}
+		],
+		"container-title": "Science",
+		"DOI": "10.1126/science.aau7988",
+		"issue": "6422",
+		"issued": {
+			"date-parts": [
+				[
+					2019,
+					1,
+					4
+				]
+			]
+		},
+		"page": "33-34",
+		"title": "Really cool neutral plasmas",
+		"volume": "363"
+	},
+	{
+		"id": "10.1:15b",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Bustillos",
+				"given": "M."
+			}
+		],
+		"container-title": "The New Yorker",
+		"issued": {
+			"date-parts": [
+				[
+					2013,
+					3,
+					19
+				]
+			]
+		},
+		"title": "On video games and storytelling: An interview with <span class=\"nocase\">Tom</span> <span class=\"nocase\">Bissell</span>",
+		"title-short": "On video games and storytelling: An interview with <span class=\"nocase\">Tom</span> <span class=\"nocase\">Bissell</span>",
+		"URL": "https://www.newyorker.com/books/page-turner/on-video-games-and-storytelling-an-interview-with-tom-bissell"
+	},
+	{
+		"id": "10.1:15c",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Weir",
+				"given": "K."
+			}
+		],
+		"container-title": "Monitor on Psychology",
+		"issue": "1",
+		"issued": {
+			"date-parts": [
+				[
+					2017,
+					1
+				]
+			]
+		},
+		"page": "30",
+		"title": "Forgiveness can improve mental and physical health",
+		"volume": "48"
+	},
+	{
+		"id": "10.1:16a",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Guarino",
+				"given": "B."
+			}
+		],
+		"container-title": "The Washington Post",
+		"container-title-short": "Washington Post",
+		"issued": {
+			"date-parts": [
+				[
+					2017,
+					12,
+					4
+				]
+			]
+		},
+		"title": "How will humanity react to alien life? <span class=\"nocase\">Psychologists</span> have some predictions",
+		"URL": "https://www.washingtonpost.com/news/speaking-of-science/wp/2017/12/04/how-will-humanity-react-to-alien-life-psychologists-have-some-predictions"
+	},
+	{
+		"id": "10.1:16b",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Hess",
+				"given": "A."
+			}
+		],
+		"container-title": "The New York Times",
+		"container-title-short": "NY Times (Print)",
+		"issued": {
+			"date-parts": [
+				[
+					2019,
+					1,
+					3
+				]
+			]
+		},
+		"page": "C1",
+		"title": "Cats who take direction"
+	},
+	{
+		"id": "10.1:17",
+		"type": "document",
+		"author": [
+			{
+				"family": "Klymkowsky",
+				"given": "M."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018,
+					9,
+					15
+				]
+			]
+		},
+		"publisher": "Sci-Ed",
+		"title": "Can we talk scientifically about free will?",
+		"URL": "https://blogs.plos.org/scied/2018/09/15/can-we-talk-scientifically-about-free-will/"
+	},
+	{
+		"id": "10.1:18",
+		"type": "article-journal",
+		"author": [
+			{
+				"literal": "KS in NJ"
+			}
+		],
+		"container-title": "The Washington Post",
+		"container-title-short": "Washington Post",
+		"issued": {
+			"date-parts": [
+				[
+					2019,
+					1,
+					15
+				]
+			]
+		},
+		"title": "From this article, it sounds like men are figuring something out that women have known forever. <span class=\"nocase\">I</span> know of many",
+		"URL": "https://wapo.st/2HDToGJ"
+	},
+	{
+		"id": "10.1:18r",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Author",
+				"given": "A."
+			}
+		],
+		"container-title": "The Washington Post",
+		"container-title-short": "Washington Post",
+		"issued": {
+			"date-parts": [
+				[
+					2019,
+					1,
+					15
+				]
+			]
+		},
+		"title": "How workout buddies can help stave off loneliness"
+	},
+	{
+		"id": "10.1:19",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Cuellar",
+				"given": "N. G."
+			}
+		],
+		"container-title": "Journal of Transcultural Nursing",
+		"container-title-short": "J. Transcult. Nurs.",
+		"DOI": "10.1177/1043659616638722",
+		"issue": "3",
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		},
+		"page": "209",
+		"title": "Study abroad programs",
+		"volume": "27"
+	},
+	{
+		"id": "10.2:20",
+		"type": "book",
+		"author": [
+			{
+				"family": "Brown",
+				"given": "L. S."
+			}
+		],
+		"DOI": "10.1037/0000092-000",
+		"edition": "2",
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"publisher": "American Psychological Association",
+		"title": "Feminist therapy"
+	},
+	{
+		"id": "10.2:21",
+		"type": "book",
+		"author": [
+			{
+				"family": "Burgess",
+				"given": "R."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		},
+		"publisher": "Routledge",
+		"title": "Rethinking global health: Frameworks of power",
+		"title-short": "Rethinking global health: Frameworks of power"
+	},
+	{
+		"id": "10.2:22a",
+		"type": "book",
+		"author": [
+			{
+				"family": "Cain",
+				"given": "S."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2012
+				]
+			]
+		},
+		"narrator": [
+			{
+				"family": "Mazur",
+				"given": "K."
+			}
+		],
+		"publisher": "Random House Audio",
+		"title": "Quiet: The power of introverts in a world that can’t stop talking",
+		"title-short": "Quiet: The power of introverts in a world that can’t stop talking",
+		"URL": "http://bit.ly/2GOBpbl"
+	},
+	{
+		"id": "10.2:22b",
+		"type": "book",
+		"author": [
+			{
+				"family": "Christian",
+				"given": "B."
+			},
+			{
+				"family": "Griffiths",
+				"given": "T."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		},
+		"publisher": "<span class=\"nocase\">Henry Holt and Co.</span>",
+		"title": "Algorithms to live by: The computer science of human decisions",
+		"title-short": "Algorithms to live by: The computer science of human decisions",
+		"URL": "http://a.co/7qGBZAk"
+	},
+	{
+		"id": "10.2:23",
+		"type": "book",
+		"author": [
+			{
+				"family": "Meadows",
+				"given": "D. H."
+			}
+		],
+		"editor": [
+			{
+				"family": "Wright",
+				"given": "D."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2008
+				]
+			]
+		},
+		"publisher": "Chelsea Green Publishing",
+		"title": "Thinking in systems: A primer",
+		"title-short": "Thinking in systems: A primer"
+	},
+	{
+		"id": "10.2:24",
+		"type": "book",
+		"DOI": "10.1037/15969-000",
+		"editor": [
+			{
+				"family": "Schmid",
+				"given": "Henry-James"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2017
+				]
+			]
+		},
+		"publisher": "American Psychological Association and De Gruyter Mouton",
+		"title": "Entrenchment and the psychology of language learning: How we reorganize and adapt linguistic knowledge",
+		"title-short": "Entrenchment and the psychology of language learning: How we reorganize and adapt linguistic knowledge"
+	},
+	{
+		"id": "10.2:25",
+		"type": "book",
+		"editor": [
+			{
+				"family": "Hacker Hughes",
+				"given": "J."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2017
+				]
+			]
+		},
+		"publisher": "Routledge",
+		"title": "Military veteran psychological health and social care: Contemporary approaches",
+		"title-short": "Military veteran psychological health and social care: Contemporary approaches"
+	},
+	{
+		"id": "10.2:26",
+		"type": "book",
+		"editor": [
+			{
+				"family": "Pridham",
+				"given": "K. F."
+			},
+			{
+				"family": "Limbo",
+				"given": "R."
+			},
+			{
+				"family": "Schroeder",
+				"given": "M."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"publisher": "Springer Publishing Company",
+		"title": "Guided participation in pediatric nursing practice: Relationship-based teaching and learning with parents, children and adolescents",
+		"title-short": "Guided participation in pediatric nursing practice: Relationship-based teaching and learning with parents, children and adolescents",
+		"URL": "http://a.co/0IAiVgt"
+	},
+	{
+		"id": "10.2:27a",
+		"type": "book",
+		"author": [
+			{
+				"family": "Amano",
+				"given": "N."
+			},
+			{
+				"family": "Kondo",
+				"given": "H."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2000
+				]
+			]
+		},
+		"original-title": "Nihongo no goi tokusei",
+		"publisher": "Sansei-do",
+		"title": "Lexical characteristics of <span class=\"nocase\">Japanese</span> language",
+		"volume": "7"
+	},
+	{
+		"id": "10.2:27b",
+		"type": "book",
+		"author": [
+			{
+				"family": "Piaget",
+				"given": "J."
+			},
+			{
+				"family": "Inhelder",
+				"given": "B."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1966
+				]
+			]
+		},
+		"original-title": "La psychologie de l’enfant",
+		"publisher": "Quadrige",
+		"title": "The psychology of the child"
+	},
+	{
+		"id": "10.2:28",
+		"type": "book",
+		"author": [
+			{
+				"family": "Piaget",
+				"given": "J."
+			},
+			{
+				"family": "Inhelder",
+				"given": "B."
+			}
+		],
+		"edition": "2",
+		"issued": {
+			"date-parts": [
+				[
+					1969
+				]
+			]
+		},
+		"original-date": {
+			"date-parts": [
+				[
+					1966
+				]
+			]
+		},
+		"publisher": "Basic Books",
+		"title": "The psychology of the child",
+		"translator": [
+			{
+				"family": "Weaver",
+				"given": "H."
+			}
+		]
+	},
+	{
+		"id": "10.2:29a",
+		"type": "book",
+		"author": [
+			{
+				"family": "Freud",
+				"given": "S."
+			}
+		],
+		"editor": [
+			{
+				"family": "Strachey",
+				"given": "J."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2010
+				]
+			]
+		},
+		"original-date": {
+			"date-parts": [
+				[
+					1900
+				]
+			]
+		},
+		"publisher": "Basic Books",
+		"title": "The interpretation of dreams: The complete and definitive text",
+		"title-short": "The interpretation of dreams: The complete and definitive text",
+		"translator": [
+			{
+				"family": "Strachey",
+				"given": "J."
+			}
+		]
+	},
+	{
+		"id": "10.2:29b",
+		"type": "book",
+		"author": [
+			{
+				"family": "Rowling",
+				"given": "J. K."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2015
+				]
+			]
+		},
+		"narrator": [
+			{
+				"family": "Dale",
+				"given": "J."
+			}
+		],
+		"original-date": {
+			"date-parts": [
+				[
+					1997
+				]
+			]
+		},
+		"publisher": "Pottermore Publishing",
+		"title": "Harry <span class=\"nocase\">Potter</span> and the sorceror’s stone",
+		"URL": "http://bit.ly/2TcHchx"
+	},
+	{
+		"id": "10.2:30a",
+		"type": "book",
+		"author": [
+			{
+				"family": "Fiske",
+				"given": "S. T."
+			},
+			{
+				"family": "Gilbert",
+				"given": "D. T."
+			},
+			{
+				"family": "Lindzey",
+				"given": "G."
+			}
+		],
+		"DOI": "10.1002/9780470561119",
+		"edition": "5",
+		"issued": {
+			"date-parts": [
+				[
+					2010
+				]
+			]
+		},
+		"publisher": "John Wiley & Sons",
+		"title": "Handbook of social psychology",
+		"volume": "1"
+	},
+	{
+		"id": "10.2:30b",
+		"type": "book",
+		"DOI": "10.1037/0000059-000",
+		"editor": [
+			{
+				"family": "Travis",
+				"given": "C. B."
+			},
+			{
+				"family": "White",
+				"given": "J. W."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"publisher": "American Psychological Association",
+		"title": "<span class=\"nocase\">APA</span> handbook of the psychology of women: Vol. 1. history, theory, and battlegrounds",
+		"title-short": "<span class=\"nocase\">APA</span> handbook of the psychology of women: Vol. 1. history, theory, and battlegrounds"
+	},
+	{
+		"id": "10.2:31",
+		"type": "book",
+		"author": [
+			{
+				"family": "Madigan",
+				"given": "S."
+			}
+		],
+		"collection-title": "Theories of Psychotherapy Series",
+		"DOI": "10.1037/00000131-000",
+		"edition": "2",
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		},
+		"publisher": "American Psychological Association",
+		"title": "Narrative therapy"
+	},
+	{
+		"id": "10.2:32a",
+		"type": "report",
+		"author": [
+			{
+				"literal": "American Psychiatric Association"
+			}
+		],
+		"citation-label": "DSM-5",
+		"DOI": "10.1176/appi.books.9780890425596",
+		"edition": "5",
+		"issued": {
+			"date-parts": [
+				[
+					2013
+				]
+			]
+		},
+		"publisher": "American Psychiatric Association",
+		"title": "Diagnostic and statistical manual of mental disorders"
+	},
+	{
+		"id": "10.2:32b",
+		"type": "report",
+		"author": [
+			{
+				"literal": "World Health Organization"
+			}
+		],
+		"citation-label": "ICD-11",
+		"edition": "11",
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		},
+		"publisher": "<span class=\"nocase\">World Health Organization</span>",
+		"title": "International statistical classification of diseases and related health problems",
+		"URL": "https://icd.who.int/"
+	},
+	{
+		"id": "10.2:33a",
+		"type": "book",
+		"accessed": {
+			"date-parts": [
+				[
+					2019,
+					6,
+					14
+				]
+			]
+		},
+		"author": [
+			{
+				"literal": "American Psychological Association"
+			}
+		],
+		"title": "<span class=\"nocase\">APA</span> dictionary of psychology",
+		"URL": "https://dictionary.apa.org/"
+	},
+	{
+		"id": "10.2:33b",
+		"type": "book",
+		"accessed": {
+			"date-parts": [
+				[
+					2019,
+					5,
+					5
+				]
+			]
+		},
+		"author": [
+			{
+				"literal": "Merriam-Webster"
+			}
+		],
+		"title": "<span class=\"nocase\">Merriam-Webster.com</span> dictionary",
+		"URL": "https://www.merriam-webster.com/"
+	},
+	{
+		"id": "10.2:33c",
+		"type": "book",
+		"edition": "Summer 2019 ed.",
+		"editor": [
+			{
+				"family": "Zalta",
+				"given": "E. N."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		},
+		"publisher": "Stanford University",
+		"title": "The <span class=\"nocase\">Stanford</span> encyclopedia of philosophy",
+		"URL": "https://plato.stanford.edu/archives/sum2019/"
+	},
+	{
+		"id": "10.2:34",
+		"type": "book",
+		"DOI": "10.1037/10319-000",
+		"editor": [
+			{
+				"family": "Gold",
+				"given": "M."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1999
+				]
+			]
+		},
+		"publisher": "American Psychological Association",
+		"title": "The complete social scientist: A <span class=\"nocase\">Kurt</span> <span class=\"nocase\">Lewin</span> reader",
+		"title-short": "The complete social scientist: A <span class=\"nocase\">Kurt</span> <span class=\"nocase\">Lewin</span> reader"
+	},
+	{
+		"id": "10.2:35a",
+		"type": "book",
+		"issued": {
+			"date-parts": [
+				[
+					2017
+				]
+			]
+		},
+		"original-date": {
+			"date-parts": [
+				[
+					1769
+				]
+			]
+		},
+		"title": "<span class=\"nocase\">King</span> <span class=\"nocase\">James</span> <span class=\"nocase\">Bible</span>",
+		"URL": "https://www.kingjamesbibleonline.org/"
+	},
+	{
+		"id": "10.2:35b",
+		"type": "book",
+		"issued": {
+			"date-parts": [
+				[
+					2004
+				]
+			]
+		},
+		"publisher": "Oxford University Press",
+		"title": "The <span class=\"nocase\">Qur’an</span>",
+		"translator": [
+			{
+				"family": "Abdel Haleem",
+				"given": "M. A. S."
+			}
+		]
+	},
+	{
+		"id": "10.2:35c",
+		"type": "book",
+		"edition": "3",
+		"issued": {
+			"date-parts": [
+				[
+					2015
+				]
+			]
+		},
+		"original-date": {
+			"date-parts": [
+				[
+					1962
+				]
+			]
+		},
+		"publisher": "The Jewish Publication Society",
+		"title": "<span class=\"nocase\">The</span> <span class=\"nocase\">Torah</span>: The five books of <span class=\"nocase\">Moses</span>",
+		"title-short": "<span class=\"nocase\">The</span> <span class=\"nocase\">Torah</span>: The five books of <span class=\"nocase\">Moses</span>"
+	},
+	{
+		"id": "10.2:35d",
+		"type": "entry",
+		"container-title": "Encyclopedia of <span class=\"nocase\">Cleveland</span> history",
+		"editor": [
+			{
+				"family": "Grabowski",
+				"given": "John J."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2022
+				]
+			]
+		},
+		"publisher": "Case Western Reserve University",
+		"title": "Cleveland <span class=\"nocase\">FreeNet</span>"
+	},
+	{
+		"id": "10.2:36",
+		"type": "book",
+		"author": [
+			{
+				"family": "Aristotle"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1994
+				]
+			]
+		},
+		"original-date": {
+			"literal": "-0349 "
+		},
+		"publisher": "The Internet Classics Archive",
+		"title": "Poetics",
+		"translator": [
+			{
+				"family": "Butcher",
+				"given": "S. H."
+			}
+		],
+		"URL": "http://classics.mit.edu/Aristotle/poetics.html"
+	},
+	{
+		"id": "10.2:37",
+		"type": "book",
+		"author": [
+			{
+				"family": "Shakespeare",
+				"given": "W."
+			}
+		],
+		"editor": [
+			{
+				"family": "Mowat",
+				"given": "B. A."
+			},
+			{
+				"family": "Werstine",
+				"given": "P."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1995
+				]
+			]
+		},
+		"original-date": {
+			"date-parts": [
+				[
+					1623
+				]
+			]
+		},
+		"publisher": "Washington Square Press",
+		"title": "Much ado about nothing"
+	},
+	{
+		"id": "10.3:38",
+		"type": "chapter",
+		"author": [
+			{
+				"family": "Balsam",
+				"given": "K. F."
+			},
+			{
+				"family": "Martell",
+				"given": "C. R."
+			},
+			{
+				"family": "Jones",
+				"given": "K. P."
+			},
+			{
+				"family": "Safren",
+				"given": "S. A."
+			}
+		],
+		"container-title": "Culturally responsive cognitive behaviour therapy: Practice and supervision",
+		"DOI": "10.1037/0000119-012",
+		"edition": "2",
+		"editor": [
+			{
+				"family": "Iwamasa",
+				"given": "G. Y."
+			},
+			{
+				"family": "Hays",
+				"given": "P. A."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		},
+		"page": "287-314",
+		"publisher": "American Psychological Association",
+		"title": "Affirmative cognitive behaviour therapy with sexual and gender minority people"
+	},
+	{
+		"id": "10.3:39",
+		"type": "chapter",
+		"author": [
+			{
+				"family": "Weinstock",
+				"given": "R."
+			},
+			{
+				"family": "Leong",
+				"given": "G. B."
+			},
+			{
+				"family": "Silva",
+				"given": "J. A."
+			}
+		],
+		"container-title": "Principles and practise of forensic psychiatry",
+		"edition": "2",
+		"editor": [
+			{
+				"family": "Rosner",
+				"given": "R."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2003
+				]
+			]
+		},
+		"page": "7-13",
+		"publisher": "CRC Press",
+		"title": "Defining forensic psychiatry: Roles and responsibilities",
+		"title-short": "Defining forensic psychiatry: Roles and responsibilities"
+	},
+	{
+		"id": "10.3:40",
+		"type": "chapter",
+		"author": [
+			{
+				"family": "Tafoya",
+				"given": "N."
+			},
+			{
+				"family": "Del Vecchio",
+				"given": "A."
+			}
+		],
+		"container-title": "Ethnicity and family therapy",
+		"edition": "3",
+		"editor": [
+			{
+				"family": "McGoldrick",
+				"given": "M."
+			},
+			{
+				"family": "Giordano",
+				"given": "J."
+			},
+			{
+				"family": "Garcia-Preto",
+				"given": "N."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2005
+				]
+			]
+		},
+		"page": "55-63",
+		"publisher": "Guilford Press",
+		"title": "Back to the future: An examination of the <span class=\"nocase\">Native</span> <span class=\"nocase\">American</span> <span class=\"nocase\">Holocaust</span> experience",
+		"title-short": "Back to the future: An examination of the <span class=\"nocase\">Native</span> <span class=\"nocase\">American</span> <span class=\"nocase\">Holocaust</span> experience",
+		"URL": "http://a.co/36xRhBT"
+	},
+	{
+		"id": "10.3:41",
+		"type": "chapter",
+		"author": [
+			{
+				"family": "Carcavilla González",
+				"given": "N."
+			}
+		],
+		"container-title": "Guía práctica de terapias estimulativas en el <span class=\"nocase\">Alzhéimer</span>",
+		"editor": [
+			{
+				"family": "Garcia Meilán",
+				"given": "J. J."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2015
+				]
+			]
+		},
+		"original-title": "Terapia senorial auditiva: <span class=\"nocase\">Activation</span> cerebral por medio de la música",
+		"page": "67-86",
+		"publisher": "Editorial Síntesis",
+		"title": "Auditory sensory therapy: Brain activation through music",
+		"title-short": "Auditory sensory therapy: Brain activation through music",
+		"URL": "http://www.sintesis.com/guias-profesionales-203/guia-practica-de-terapias-estimulativas-en-el-alzheimer-libro-1943.html"
+	},
+	{
+		"id": "10.3:42",
+		"type": "chapter",
+		"author": [
+			{
+				"family": "Heidegger",
+				"given": "M."
+			}
+		],
+		"container-title": "Basic writings",
+		"editor": [
+			{
+				"family": "Krell",
+				"given": "D. F."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2008
+				]
+			]
+		},
+		"original-date": {
+			"date-parts": [
+				[
+					1961
+				]
+			]
+		},
+		"page": "111-138",
+		"publisher": "Harper Perennial Modern Thought",
+		"title": "On the essence of truth",
+		"translator": [
+			{
+				"family": "Sallis",
+				"given": "J."
+			}
+		]
+	},
+	{
+		"id": "10.3:43",
+		"type": "chapter",
+		"author": [
+			{
+				"family": "Sacchett",
+				"given": "C."
+			},
+			{
+				"family": "Humphreys",
+				"given": "G. W."
+			}
+		],
+		"container-title": "Cognitive psychology: Key readings in cognition",
+		"editor": [
+			{
+				"family": "Balota",
+				"given": "D. A."
+			},
+			{
+				"family": "Marsh",
+				"given": "E. J."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2004
+				]
+			]
+		},
+		"page": "100-108",
+		"publisher": "Psychology Press",
+		"title": "Calling a squirrel and squirrel but a canoe a wigwam: A category-specific deficit for artefactual objects and body parts",
+		"title-short": "Calling a squirrel and squirrel but a canoe a wigwam: A category-specific deficit for artefactual objects and body parts"
+	},
+	{
+		"id": "10.3:43r",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Sacchett",
+				"given": "C."
+			},
+			{
+				"family": "Humphreys",
+				"given": "G. W."
+			}
+		],
+		"container-title": "Cognitive Neuropsychology",
+		"container-title-short": "Cogn Neuropsychol",
+		"DOI": "d4vb59",
+		"issue": "1",
+		"issued": {
+			"date-parts": [
+				[
+					1992
+				]
+			]
+		},
+		"page": "73-86",
+		"title": "Calling a squirrel and squirrel but a canoe a wigwam: A category-specific deficit for artefactual objects and body parts",
+		"title-short": "Calling a squirrel and squirrel but a canoe a wigwam: A category-specific deficit for artefactual objects and body parts",
+		"volume": "9"
+	},
+	{
+		"id": "10.3:44",
+		"type": "chapter",
+		"author": [
+			{
+				"family": "Bronfenbrenner",
+				"given": "U."
+			}
+		],
+		"container-title": "Making human beings human: Bioecological perspectives on human development",
+		"editor": [
+			{
+				"family": "Bronfenbrenner",
+				"given": "U."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2005
+				]
+			]
+		},
+		"page": "27-40",
+		"publisher": "SAGE Publications",
+		"title": "The social ecology of human development: A retrospective conclusion",
+		"title-short": "The social ecology of human development: A retrospective conclusion"
+	},
+	{
+		"id": "10.3:44r",
+		"type": "book",
+		"editor": [
+			{
+				"family": "Richardson",
+				"given": "F."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1973
+				]
+			]
+		},
+		"page": "113-123",
+		"publisher": "National Education Press",
+		"title": "Brain and intelligence: The ecology of child development",
+		"title-short": "Brain and intelligence: The ecology of child development"
+	},
+	{
+		"id": "10.3:45",
+		"type": "chapter",
+		"author": [
+			{
+				"family": "Goldin-Meadow",
+				"given": "S."
+			}
+		],
+		"container-title": "Handbook of child psychology and developmental science: Vol. 2. <span class=\"nocase\">Cognitive</span> processes",
+		"DOI": "10.1002/9781118963418.childpsy209",
+		"edition": "7",
+		"editor": [
+			{
+				"family": "Liben",
+				"given": "L. S."
+			},
+			{
+				"family": "Mueller",
+				"given": "U."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2015
+				]
+			]
+		},
+		"page": "339-380",
+		"publisher": "John Wiley & Sons",
+		"title": "Gesture and cognitive development"
+	},
+	{
+		"id": "10.3:46",
+		"type": "chapter",
+		"author": [
+			{
+				"family": "Lewin",
+				"given": "K."
+			}
+		],
+		"container-title": "The complete social scientist: A <span class=\"nocase\">Kurt</span> <span class=\"nocase\">Lewin</span> reader",
+		"DOI": "10.1037/10319-000",
+		"editor": [
+			{
+				"family": "Gold",
+				"given": "M."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1999
+				]
+			]
+		},
+		"original-date": {
+			"date-parts": [
+				[
+					1948
+				]
+			]
+		},
+		"page": "265-284",
+		"publisher": "American Psychological Association",
+		"title": "Group decision and social change"
+	},
+	{
+		"id": "10.3:47a",
+		"type": "chapter",
+		"accessed": {
+			"date-parts": [
+				[
+					2019,
+					8,
+					31
+				]
+			]
+		},
+		"author": [
+			{
+				"literal": "American Psychological Association"
+			}
+		],
+		"container-title": "<span class=\"nocase\">APA</span> dictionary of psychology",
+		"title": "Positive transference",
+		"URL": "https://dictionary.apa.org/positive-transference"
+	},
+	{
+		"id": "10.3:47b",
+		"type": "chapter",
+		"accessed": {
+			"date-parts": [
+				[
+					2019,
+					7,
+					12
+				]
+			]
+		},
+		"author": [
+			{
+				"literal": "Merriam-Webster"
+			}
+		],
+		"container-title": "<span class=\"nocase\">Merriam-Webster.com</span> dictionary",
+		"title": "Self-report",
+		"URL": "https://www.merriam-webster.com/dictionary/self-report"
+	},
+	{
+		"id": "10.3:48",
+		"type": "entry",
+		"author": [
+			{
+				"family": "Graham",
+				"given": "G."
+			}
+		],
+		"container-title": "The <span class=\"nocase\">Stanford</span> encyclopedia of philosophy",
+		"edition": "Summer 2019 ed.",
+		"editor": [
+			{
+				"family": "Zalta",
+				"given": "E. N."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		},
+		"publisher": "Stanford University",
+		"title": "Behaviourism",
+		"URL": "https://plato.stanford.edu/archives/sum2019/entries/behaviourism"
+	},
+	{
+		"id": "10.3:49",
+		"type": "chapter",
+		"container-title": "Wikipedia",
+		"issued": {
+			"date-parts": [
+				[
+					2019,
+					1,
+					13
+				]
+			]
+		},
+		"title": "List of oldest companies",
+		"URL": "https://en.wikipedia.org/w/index.php?title=List_of_oldest_companies&oldid=878158136"
+	},
+	{
+		"id": "10.4:50a",
+		"type": "report",
+		"author": [
+			{
+				"literal": "Australian Government Productivity Commission"
+			},
+			{
+				"literal": "New Zealand Productivity Commission"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2012
+				]
+			]
+		},
+		"title": "Strengthening trans-<span class=\"nocase\">Tasman</span> economic relations",
+		"URL": "https://www.pc.gov.au/inquiries/completed/australia-new-zealand/report/trans-tasman.pdf"
+	},
+	{
+		"id": "10.4:50b",
+		"type": "report",
+		"author": [
+			{
+				"literal": "Canada Council for the Arts"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2013
+				]
+			]
+		},
+		"title": "What we heard: Summary of key findings: 2013 <span class=\"nocase\">Canada</span> <span class=\"nocase\">Council’s</span> <span class=\"nocase\">Inter-Arts</span> <span class=\"nocase\">Office</span> consultation",
+		"title-short": "What we heard: Summary of key findings: 2013 <span class=\"nocase\">Canada</span> <span class=\"nocase\">Council’s</span> <span class=\"nocase\">Inter-Arts</span> <span class=\"nocase\">Office</span> consultation",
+		"URL": "http://publications.gc.ca/collections/collection_2017/canadacouncil/K23-65-2013-eng.pdf"
+	},
+	{
+		"id": "10.4:50c",
+		"type": "report",
+		"author": [
+			{
+				"literal": "National Cancer Institute"
+			}
+		],
+		"genre": "NIH Publication",
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"number": "18\\-2424",
+		"title": "Facing forward: Life after cancer treatment",
+		"title-short": "Facing forward: Life after cancer treatment",
+		"URL": "https://www.cancer.gov/publications/patient-education/life-after-cancer-treatment.pdf"
+	},
+	{
+		"id": "10.4:51a",
+		"type": "report",
+		"author": [
+			{
+				"family": "Fried",
+				"given": "D."
+			},
+			{
+				"family": "Polyakova",
+				"given": "A."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"publisher": "Atlantic Council",
+		"title": "Democratic defense against disinformation",
+		"URL": "https://www.atlantic.org/images/publications/Democratic_Defense_Against_Disinformation_FINAL.pdf"
+	},
+	{
+		"id": "10.4:51b",
+		"type": "report",
+		"author": [
+			{
+				"family": "Segaert",
+				"given": "A."
+			},
+			{
+				"family": "Bauer",
+				"given": "A."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2015
+				]
+			]
+		},
+		"publisher": "<span class=\"nocase\">Employment and Social Development Canada</span>",
+		"title": "The extent and nature of veteran homelessness in <span class=\"nocase\">Canada</span>",
+		"URL": "https://www.canada.ca/en/employment-social-development/programs/communities/homelessness/publications-bulletins/veterans-report.html"
+	},
+	{
+		"id": "10.4:52",
+		"type": "report",
+		"author": [
+			{
+				"family": "Blackwell",
+				"given": "D. L."
+			},
+			{
+				"family": "Lucas",
+				"given": "J. W."
+			},
+			{
+				"family": "Clarke",
+				"given": "T. C."
+			}
+		],
+		"collection-number": "10",
+		"collection-title": "Vital and Health Statistics Series",
+		"issue": "260",
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		},
+		"publisher": "<span class=\"nocase\">Centers for Disease Control and Prevention</span>",
+		"title": "Summary health statistics for <span class=\"nocase\">U.S.</span> adults: National <span class=\"nocase\">Health</span> <span class=\"nocase\">Interview</span> <span class=\"nocase\">Survey</span>, 2012",
+		"title-short": "Summary health statistics for <span class=\"nocase\">U.S.</span> adults: National <span class=\"nocase\">Health</span> <span class=\"nocase\">Interview</span> <span class=\"nocase\">Survey</span>, 2012",
+		"URL": "https://www.atlantic.org/images/publications/Democratic_Defense_Against_Disinformation_FINAL.pdf"
+	},
+	{
+		"id": "10.4:53",
+		"type": "report",
+		"author": [
+			{
+				"literal": "British Cardiovascular Society Working Group"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		},
+		"publisher": "British Cardiovascular Society",
+		"title": "British <span class=\"nocase\">Cardiovascular</span> <span class=\"nocase\">Society</span> <span class=\"nocase\">Working</span> <span class=\"nocase\">Group</span> report: Out-of-hours cardiovascular care: <span class=\"nocase\">Management</span> of cardiac emergencies and hospital in-patients",
+		"title-short": "British <span class=\"nocase\">Cardiovascular</span> <span class=\"nocase\">Society</span> <span class=\"nocase\">Working</span> <span class=\"nocase\">Group</span> report: Out-of-hours cardiovascular care: <span class=\"nocase\">Management</span> of cardiac emergencies and hospital in-patients",
+		"URL": "http://www.bcs.com/documents/BCSOOHWP_Final_Report_05092016.pdf"
+	},
+	{
+		"id": "10.4:54",
+		"type": "report",
+		"author": [
+			{
+				"literal": "U.S. Securities and Exchange Commission"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2017
+				]
+			]
+		},
+		"title": "Agency financial report: Fiscal year 2017",
+		"title-short": "Agency financial report: Fiscal year 2017",
+		"URL": "https://www.sec.gov/files/sec-2017-agency-financial-report.pdf"
+	},
+	{
+		"id": "10.4:55a",
+		"type": "report",
+		"author": [
+			{
+				"literal": "American Counseling Association"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		},
+		"title": "2014 <span class=\"nocase\">ACA</span> code of ethics",
+		"URL": "https://www.counseling.org/knowledge-center"
+	},
+	{
+		"id": "10.4:55b",
+		"type": "report",
+		"author": [
+			{
+				"literal": "American Nurses Association"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2015
+				]
+			]
+		},
+		"title": "Code of ethics for nurses with interpretive statements",
+		"URL": "https://www.nursingworld.org/coe-view-only"
+	},
+	{
+		"id": "10.4:55c",
+		"type": "report",
+		"author": [
+			{
+				"literal": "American Psychological Association"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2017
+				]
+			]
+		},
+		"title": "Ethical principles of psychologists and code of conduct",
+		"URL": "https://www.apa.org/ethics/code/index.aspx",
+		"version": "2002, amended effective June 1, 2010, and January 1, 2017"
+	},
+	{
+		"id": "10.4:56",
+		"type": "report",
+		"author": [
+			{
+				"family": "Blair",
+				"given": "C. B."
+			}
+		],
+		"genre": "Project",
+		"issued": {
+			"date-parts": [
+				[
+					2015
+				],
+				[
+					2020
+				]
+			]
+		},
+		"number": "5R01HD081252\\-04",
+		"publisher": "Eunice Kennedy Shriver National Institute of Child Health & Human Development",
+		"title": "Stress, self-regulation and psychopathology in middle childhood",
+		"URL": "https://projectreporter.nih.gov/project_info_details.cfm?aid=9473071&icde=40092311"
+	},
+	{
+		"id": "10.4:57",
+		"type": "report",
+		"author": [
+			{
+				"family": "Lichtenstein",
+				"given": "J."
+			}
+		],
+		"genre": "Issue Brief",
+		"issued": {
+			"date-parts": [
+				[
+					2013
+				]
+			]
+		},
+		"number": "1",
+		"publisher": "U.S. Small Business Administration, Office of Advocacy",
+		"title": "Profile of veteran business owners: More young veterans appear to be starting businesses",
+		"title-short": "Profile of veteran business owners: More young veterans appear to be starting businesses",
+		"URL": "https://www.sba.org/sites/default/files/Issue%20Brief%201,%20Veteran%20Business%20Owners.pdf"
+	},
+	{
+		"id": "10.4:58",
+		"type": "report",
+		"author": [
+			{
+				"family": "Harwell",
+				"given": "M."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"publisher": "National Education Policy Center",
+		"title": "Don’t expect too much: The limited usefulness of common <span class=\"nocase\">SES</span> measures and a prescription for change",
+		"title-short": "Don’t expect too much: The limited usefulness of common <span class=\"nocase\">SES</span> measures and a prescription for change",
+		"URL": "https://nepc.colorado.edu/publication/SES"
+	},
+	{
+		"id": "10.4:59",
+		"type": "report",
+		"author": [
+			{
+				"literal": "U.S. Food and Drug Administration"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2019,
+					2,
+					14
+				]
+			]
+		},
+		"publisher": "<span class=\"nocase\">U.S. Food and Drug Administration</span>",
+		"title": "<span class=\"nocase\">FDA</span> authorizes first interoperable insulin pup intended to allow patients to customize treatment through their individual diabetes management devices",
+		"URL": "https://www.fds.gov/NewsEvents/Newsroom/PressAnnouncements/ucm631412.htm"
+	},
+	{
+		"id": "10.5:60",
+		"type": "speech",
+		"author": [
+			{
+				"family": "Fistek",
+				"given": "A."
+			},
+			{
+				"family": "Jester",
+				"given": "E."
+			},
+			{
+				"family": "Sonnenberg",
+				"given": "K."
+			}
+		],
+		"event": "Autism Society National Conference",
+		"event-date": {
+			"date-parts": [
+				[
+					2017,
+					7,
+					12
+				],
+				[
+					2017,
+					7,
+					15
+				]
+			]
+		},
+		"event-place": "Milwaukee, WI, United States",
+		"event-title": "Autism Society National Conference",
+		"title": "Everybody’s got a little music in them: Using music therapy to connect, engage, and motivate",
+		"title-short": "Everybody’s got a little music in them: Using music therapy to connect, engage, and motivate",
+		"URL": "https://asa.confex.com/asa/2017/webprogramarchives/Session9517.html"
+	},
+	{
+		"id": "10.5:61",
+		"type": "speech",
+		"author": [
+			{
+				"family": "Maddox",
+				"given": "S."
+			},
+			{
+				"family": "Hurling",
+				"given": "J."
+			},
+			{
+				"family": "Stewart",
+				"given": "E."
+			},
+			{
+				"family": "Edwards",
+				"given": "A."
+			}
+		],
+		"event": "Southeastern Psychological Association 62nd Annual Meeting",
+		"event-date": {
+			"date-parts": [
+				[
+					2016,
+					3,
+					30
+				],
+				[
+					2016,
+					4,
+					2
+				]
+			]
+		},
+		"event-place": "New Orleans, LA, United States",
+		"event-title": "Southeastern Psychological Association 62nd Annual Meeting",
+		"title": "If mama ain’t happy, nobody’s happy: The effect of parental depression on mood dysregulation in children",
+		"title-short": "If mama ain’t happy, nobody’s happy: The effect of parental depression on mood dysregulation in children"
+	},
+	{
+		"id": "10.5:62",
+		"type": "speech",
+		"author": [
+			{
+				"family": "Pearson",
+				"given": "J."
+			}
+		],
+		"event": "Australian Psychological Society Congress",
+		"event-date": {
+			"date-parts": [
+				[
+					2018,
+					9,
+					27
+				],
+				[
+					2018,
+					9,
+					30
+				]
+			]
+		},
+		"event-place": "Sydney, NSW, Australia",
+		"event-title": "Australian Psychological Society Congress",
+		"title": "Fat talk and its effects on state-based body image in women",
+		"URL": "http://bit.ly/2XGSThP"
+	},
+	{
+		"id": "10.5:63",
+		"type": "speech",
+		"author": [
+			{
+				"family": "De Boer",
+				"given": "D."
+			},
+			{
+				"family": "LaFavor",
+				"given": "T."
+			}
+		],
+		"event": "Western Psychological Association 98th Annual Convention",
+		"event-date": {
+			"date-parts": [
+				[
+					2018,
+					4,
+					26
+				],
+				[
+					2018,
+					4,
+					29
+				]
+			]
+		},
+		"event-place": "Portland, OR, United States",
+		"event-title": "Western Psychological Association 98th Annual Convention",
+		"title": "The art and significance of successfully identifying resilient individuals: A person-focused approach",
+		"title-short": "The art and significance of successfully identifying resilient individuals: A person-focused approach"
+	},
+	{
+		"id": "10.5:A1",
+		"type": "paper-conference",
+		"author": [
+			{
+				"family": "Duckworth",
+				"given": "A. L."
+			},
+			{
+				"family": "Quirk",
+				"given": "A."
+			},
+			{
+				"family": "Gallop",
+				"given": "R."
+			},
+			{
+				"family": "Hoyle",
+				"given": "R. H."
+			},
+			{
+				"family": "Kelly",
+				"given": "D. R."
+			},
+			{
+				"family": "Matthews",
+				"given": "M. D."
+			}
+		],
+		"container-title": "Proceedings of the national academy of sciences, USA",
+		"DOI": "10.1073/pnas.1910510116",
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		},
+		"number": "47",
+		"page": "23499-23504",
+		"title": "Cognitive and noncognitive predictors of success",
+		"volume": "116"
+	},
+	{
+		"id": "10.5:A2",
+		"type": "book",
+		"DOI": "10.1007/978-3-662-49096-9",
+		"editor": [
+			{
+				"family": "Kushilevitz",
+				"given": "E."
+			},
+			{
+				"family": "Malkin",
+				"given": "T."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		},
+		"publisher": "Springer",
+		"title": "Theory of cryptography"
+	},
+	{
+		"id": "10.5:A3",
+		"type": "paper-conference",
+		"author": [
+			{
+				"family": "Bedenel",
+				"given": "Alan-Louis"
+			},
+			{
+				"family": "Jourdan",
+				"given": "L."
+			},
+			{
+				"family": "Biernacki",
+				"given": "C."
+			}
+		],
+		"container-title": "Learning and intelligent optimization",
+		"DOI": "10.1007/978-3-030-05348-2_21",
+		"editor": [
+			{
+				"family": "Battiti",
+				"given": "R."
+			},
+			{
+				"family": "Brunato",
+				"given": "M."
+			},
+			{
+				"family": "Kotsireas",
+				"given": "I."
+			},
+			{
+				"family": "Pardalos",
+				"given": "P."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		},
+		"page": "225-240",
+		"publisher": "Springer",
+		"title": "Probability estimation by an adapted genetic algorithm in web insurance"
+	},
+	{
+		"id": "10.6:64",
+		"type": "thesis",
+		"author": [
+			{
+				"family": "Harris",
+				"given": "L."
+			}
+		],
+		"genre": "Unpublished doctoral dissertation",
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		},
+		"publisher": "University of Virginia",
+		"title": "Instructional leadership perceptions and practices of elementary school leaders"
+	},
+	{
+		"id": "10.6:65",
+		"type": "thesis",
+		"author": [
+			{
+				"family": "Hollander",
+				"given": "M. M."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2017
+				]
+			]
+		},
+		"number": "10289373",
+		"publisher": "ProQuest Dissertations <span class=\"nocase\">and</span> Theses Global",
+		"title": "Resistance to authority: Methodological innovations and new lessons from the <span class=\"nocase\">Milgram</span> experiment",
+		"title-short": "Resistance to authority: Methodological innovations and new lessons from the <span class=\"nocase\">Milgram</span> experiment"
+	},
+	{
+		"id": "10.6:66",
+		"type": "thesis",
+		"author": [
+			{
+				"family": "Hutcheson",
+				"given": "V. H."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2012
+				]
+			]
+		},
+		"publisher": "William & Mary Digital Archive",
+		"title": "Dealing with dual differences: Social coping strategies of gifted and lesbian, gay, bisexual, transgender, and queer adolescents",
+		"title-short": "Dealing with dual differences: Social coping strategies of gifted and lesbian, gay, bisexual, transgender, and queer adolescents",
+		"URL": "https://digitalarchive.wm.edu/bitstream/handle/10288/16594/HutchesonVirginia2012.pdf"
+	},
+	{
+		"id": "10.7:67",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Mirabito",
+				"given": "L. A."
+			},
+			{
+				"family": "Heck",
+				"given": "N. C."
+			}
+		],
+		"container-title": "Psychology of Sexual Orientation and Gender Diversity",
+		"container-title-short": "Psychol Sex Orientat Gend Divers",
+		"DOI": "10.1037/sgd0000205",
+		"issue": "4",
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		},
+		"page": "499-500",
+		"title": "Bringing <span class=\"nocase\">LGBTQ</span> youth theater into the spotlight",
+		"volume": "3"
+	},
+	{
+		"id": "10.7:67r",
+		"type": "motion_picture",
+		"author": [
+			{
+				"family": "Brodsky",
+				"given": "E."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		},
+		"title": "The year we thought about love"
+	},
+	{
+		"id": "10.7:68",
+		"type": "article-journal",
+		"author": [
+			{
+				"family": "Santos",
+				"given": "F."
+			}
+		],
+		"container-title": "The New York Times",
+		"container-title-short": "NY Times (Print)",
+		"issued": {
+			"date-parts": [
+				[
+					2019,
+					1,
+					11
+				]
+			]
+		},
+		"title": "Reframing refugee children’s stories",
+		"URL": "https://nyt.ms/2Hlgjk3"
+	},
+	{
+		"id": "10.7:68r",
+		"type": "book",
+		"author": [
+			{
+				"family": "Yousafzai",
+				"given": "M."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		},
+		"title": "We are displaced: My journey and stories from refugee girls around the world",
+		"title-short": "We are displaced: My journey and stories from refugee girls around the world"
+	},
+	{
+		"id": "10.7:69",
+		"type": "webpage",
+		"archive": "A.V. Club",
+		"author": [
+			{
+				"family": "Perkins",
+				"given": "D."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018,
+					2,
+					1
+				]
+			]
+		},
+		"title": "<code>\\textup{The good place}</code> Ends its remarkable second season with irrational hope, unexpected gifts, and a smile",
+		"URL": "https://www.avclub.com/the-good-place-ends-its-remarkable-second-season-with-i-1822649316"
+	},
+	{
+		"id": "10.7:69r",
+		"type": "motion_picture",
+		"author": [
+			{
+				"family": "Schur",
+				"given": "M."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"title": "Somewhere else"
+	},
+	{
+		"id": "10.8:70",
+		"type": "manuscript",
+		"author": [
+			{
+				"family": "Yoo",
+				"given": "J."
+			},
+			{
+				"family": "Miyamoto",
+				"given": "Y."
+			},
+			{
+				"family": "Rigotti",
+				"given": "A."
+			},
+			{
+				"family": "Ryff",
+				"given": "C."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		},
+		"publisher": "Department of Psychology, University of Wisconsin-Madison",
+		"title": "Linking positive affect to blood lipids: A cultural perspective",
+		"title-short": "Linking positive affect to blood lipids: A cultural perspective"
+	},
+	{
+		"id": "10.8:71",
+		"type": "manuscript",
+		"author": [
+			{
+				"family": "O’Shea",
+				"given": "M."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"publisher": "Department of Management, University of Kansas",
+		"title": "Understanding proactive behaviour in the workplace as a function of gender"
+	},
+	{
+		"id": "10.8:72",
+		"type": "manuscript",
+		"author": [
+			{
+				"family": "Lippincott",
+				"given": "T."
+			},
+			{
+				"family": "Poindexter",
+				"given": "E. K."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		},
+		"publisher": "Department of Psychology, University of Washington",
+		"title": "Emotion recognition as a function of facial cues: Implications for practice",
+		"title-short": "Emotion recognition as a function of facial cues: Implications for practice"
+	},
+	{
+		"id": "10.8:73a",
+		"type": "webpage",
+		"archive": "PsyArXiv",
+		"author": [
+			{
+				"family": "Leuker",
+				"given": "C."
+			},
+			{
+				"family": "Samartzidis",
+				"given": "L."
+			},
+			{
+				"family": "Hertwig",
+				"given": "R."
+			},
+			{
+				"family": "Pleskac",
+				"given": "T. J."
+			}
+		],
+		"DOI": "10.17605/OSF.IO/9P7CB",
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"title": "When money talks: Judging risk and coercion in high-paying clinical trials",
+		"title-short": "When money talks: Judging risk and coercion in high-paying clinical trials"
+	},
+	{
+		"id": "10.8:73b",
+		"type": "webpage",
+		"archive": "PubMed Central",
+		"author": [
+			{
+				"family": "Stults-Kolehmainen",
+				"given": "M. A."
+			},
+			{
+				"family": "Sinha",
+				"given": "R."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2015
+				]
+			]
+		},
+		"title": "The effects of stress on physical activity and exercise",
+		"URL": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3894304"
+	},
+	{
+		"id": "10.8:74",
+		"type": "webpage",
+		"archive": "ERIC",
+		"author": [
+			{
+				"family": "Ho",
+				"given": "H-K"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		},
+		"number": "ED545393",
+		"title": "Teacher preparation for early childhood special education in <span class=\"nocase\">Taiwan</span>",
+		"URL": "https://files.eric.ed.gov/fulltext/ED545393.pdf"
+	},
+	{
+		"id": "10.9:75a",
+		"type": "dataset",
+		"author": [
+			{
+				"family": "D’Souza",
+				"given": "A."
+			},
+			{
+				"family": "Wiseheart",
+				"given": "M."
+			}
+		],
+		"DOI": "10.3886/ICPSR37080.v1",
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"number": "ICPSR 37080",
+		"publisher": "ICPSR",
+		"title": "Cognitive effects of music and dance training in children",
+		"version": "V1"
+	},
+	{
+		"id": "10.9:75b",
+		"type": "dataset",
+		"author": [
+			{
+				"literal": "National Center for Education Statistics"
+			}
+		],
+		"DOI": "10.3886/ICPSR335531.v3",
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		},
+		"number": "ICPSR 35531",
+		"publisher": "<span class=\"nocase\">National Archive of Data on Arts and Culture</span>",
+		"title": "Fast response survey system (<span class=\"nocase\">FRSS</span>): Teacher’s use of educational technology in <span class=\"nocase\">U.S.</span> public schools, 2009",
+		"title-short": "Fast response survey system (<span class=\"nocase\">FRSS</span>): Teacher’s use of educational technology in <span class=\"nocase\">U.S.</span> public schools, 2009",
+		"version": "V3"
+	},
+	{
+		"id": "10.9:75c",
+		"type": "dataset",
+		"author": [
+			{
+				"literal": "Pew Research Center"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"title": "American trends panel <span class=\"nocase\">Wave</span> 26",
+		"URL": "https://www.pewsocialtrends.org/dataset/american-trends-panel-wave-26/"
+	},
+	{
+		"id": "10.9:76a",
+		"type": "dataset",
+		"author": [
+			{
+				"family": "Baer",
+				"given": "R. A."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2015
+				]
+			]
+		},
+		"publisher": "University of Kentucky"
+	},
+	{
+		"id": "10.9:76b",
+		"type": "dataset",
+		"author": [
+			{
+				"literal": "Oregan Youth Authority"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2011
+				]
+			]
+		},
+		"title": "Recidivism outcomes"
+	},
+	{
+		"id": "10.10:77",
+		"type": "software",
+		"author": [
+			{
+				"family": "Borenstein",
+				"given": "M."
+			},
+			{
+				"family": "Hedges",
+				"given": "L."
+			},
+			{
+				"family": "Higgins",
+				"given": "J."
+			},
+			{
+				"family": "Rothstein",
+				"given": "H."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		},
+		"publisher": "Biostat",
+		"title": "Comprehensive meta-analysis",
+		"URL": "https://www.meta-analysis.com/",
+		"version": "3.3.070"
+	},
+	{
+		"id": "10.10:78a",
+		"type": "webpage",
+		"author": [
+			{
+				"literal": "SR Research"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		},
+		"title": "Eyelink 1000 plus",
+		"URL": "https://www.sr-research.com/eyelink1000plus.html"
+	},
+	{
+		"id": "10.10:78b",
+		"type": "webpage",
+		"author": [
+			{
+				"literal": "Tactile Labs"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2015
+				]
+			]
+		},
+		"title": "Latero tactile display",
+		"URL": "https://www.tactilelabs.com/products/haptics/latero-tactile-display/"
+	},
+	{
+		"id": "10.10:79",
+		"type": "software",
+		"author": [
+			{
+				"family": "Epocrates"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		},
+		"publisher": "App Store",
+		"title": "Epocrates medical references",
+		"URL": "https://itunes.apple.com/us/app/epocrates/id281935788?mt=8",
+		"version": "18.12"
+	},
+	{
+		"id": "10.10:80",
+		"type": "software",
+		"author": [
+			{
+				"family": "Epocrates\\relax"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2019
+				]
+			]
+		},
+		"publisher": "Google Play Store",
+		"title": "Epocrates medical references",
+		"URL": "https://play.google.com/store/apps/details?id=com.epocrates&hl=en_US",
+		"version": "18.12"
+	},
+	{
+		"id": "10.11:81",
+		"type": "report",
+		"author": [
+			{
+				"family": "Tellegen",
+				"given": "A."
+			},
+			{
+				"family": "Ben-Porath",
+				"given": "Y. S."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2011
+				]
+			]
+		},
+		"publisher": "Pearson",
+		"title": "Minnesota <span class=\"nocase\">Multiphasic</span> <span class=\"nocase\">Personality</span> <span class=\"nocase\">Inventory</span>–2 <span class=\"nocase\">Restructured</span> <span class=\"nocase\">Form</span> (<span class=\"nocase\">MMPI-2-RF</span>): Technical manual",
+		"title-short": "Minnesota <span class=\"nocase\">Multiphasic</span> <span class=\"nocase\">Personality</span> <span class=\"nocase\">Inventory</span>–2 <span class=\"nocase\">Restructured</span> <span class=\"nocase\">Form</span> (<span class=\"nocase\">MMPI-2-RF</span>): Technical manual"
+	},
+	{
+		"id": "10.11:82",
+		"type": "software",
+		"author": [
+			{
+				"literal": "Project Implicit"
+			}
+		],
+		"title": "Gender-<span class=\"nocase\">Science</span> <span class=\"nocase\">IAT</span>",
+		"URL": "https://implicit.harvard.edi/implicit/takeatest.html"
+	},
+	{
+		"id": "10.11:83a",
+		"type": "software",
+		"author": [
+			{
+				"family": "Alonso-Tapia",
+				"given": "J."
+			},
+			{
+				"family": "Nieto",
+				"given": "C."
+			},
+			{
+				"family": "Merino-Tejedor",
+				"given": "E."
+			},
+			{
+				"family": "Huertas",
+				"given": "J. A."
+			},
+			{
+				"family": "Ruiz",
+				"given": "M."
+			}
+		],
+		"DOI": "10.1037/t66267-000",
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"publisher": "PsycTESTS",
+		"title": "Situated <span class=\"nocase\">Goals</span> <span class=\"nocase\">Questionnaire</span> for <span class=\"nocase\">University</span> <span class=\"nocase\">Students</span> (<span class=\"nocase\">SGQ-U</span>, <span class=\"nocase\">CMS-U</span>)"
+	},
+	{
+		"id": "10.11:83b",
+		"type": "software",
+		"author": [
+			{
+				"family": "Cardoza",
+				"given": "D."
+			},
+			{
+				"family": "Morris",
+				"given": "J. K."
+			},
+			{
+				"family": "Myers",
+				"given": "H. F."
+			},
+			{
+				"family": "Rodriguez",
+				"given": "N."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2000
+				]
+			]
+		},
+		"number": "TC022704",
+		"publisher": "ETS TestLink",
+		"title": "Acculturative <span class=\"nocase\">Stress</span> <span class=\"nocase\">Inventory</span> (<span class=\"nocase\">ASI</span>)"
+	},
+	{
+		"id": "10.12:84a",
+		"type": "motion_picture",
+		"author": [
+			{
+				"family": "Forman",
+				"given": "M."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1975
+				]
+			]
+		},
+		"publisher": "United Artists",
+		"title": "One flew over the cuckoo’s nest"
+	},
+	{
+		"id": "10.12:84b",
+		"type": "motion_picture",
+		"author": [
+			{
+				"family": "Fosha",
+				"given": "D."
+			},
+			{
+				"family": "Levenson",
+				"given": "H."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2017
+				]
+			]
+		},
+		"note": "educational DVD",
+		"publisher": "American Pychological Association",
+		"title": "Accelerated experiental dynamic psychotherapy (<span class=\"nocase\">AEDP</span>) supervision",
+		"URL": "http://www.apa.org/pubs/videos/4310958.aspx"
+	},
+	{
+		"id": "10.12:84c",
+		"type": "motion_picture",
+		"author": [
+			{
+				"family": "Jackson",
+				"given": "P."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2001
+				]
+			]
+		},
+		"medium": "four-disc special extended ed. on DVD",
+		"publisher": "WingNut Films and The Saul Zaentz Company",
+		"title": "The lord of the rings: The fellowship of the ring",
+		"title-short": "The lord of the rings: The fellowship of the ring"
+	},
+	{
+		"id": "10.12:85",
+		"type": "motion_picture",
+		"author": [
+			{
+				"family": "Malle",
+				"given": "L."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1987
+				]
+			]
+		},
+		"original-title": "Au revoir les enfants",
+		"publisher": "Nouvelles Éditions de Films",
+		"title": "Goodbye children"
+	},
+	{
+		"id": "10.12:86",
+		"type": "motion_picture",
+		"author": [
+			{
+				"family": "Simon",
+				"given": "D."
+			},
+			{
+				"family": "Colesberry",
+				"given": "R. F."
+			},
+			{
+				"family": "Kostroff Noble",
+				"given": "N."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2002
+				],
+				[
+					2008
+				]
+			]
+		},
+		"publisher": "Blown Deadline Productions and HBO",
+		"title": "The wire"
+	},
+	{
+		"id": "10.12:87a",
+		"type": "motion_picture",
+		"author": [
+			{
+				"family": "Barris",
+				"given": "K."
+			}
+		],
+		"executive-producer": [
+			{
+				"family": "Barris",
+				"given": "K."
+			},
+			{
+				"family": "Groff",
+				"given": "J."
+			},
+			{
+				"family": "Anderson",
+				"given": "A."
+			},
+			{
+				"family": "Dobbins",
+				"given": "E. B."
+			},
+			{
+				"family": "Fishburne",
+				"given": "L."
+			},
+			{
+				"family": "Sugland",
+				"given": "H."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2017,
+					1,
+					11
+				]
+			]
+		},
+		"publisher": "Wilmore Films and Artists First and Cinema Gypsy Productions and ABC Studios",
+		"title": "Lemons (<span class=\"nocase\">Season</span> 3, <span class=\"nocase\">Episode</span> 12)"
+	},
+	{
+		"id": "10.12:87b",
+		"type": "motion_picture",
+		"author": [
+			{
+				"family": "Oakley",
+				"given": "B."
+			},
+			{
+				"family": "Weinstein",
+				"given": "J."
+			},
+			{
+				"family": "Lynch",
+				"given": "J."
+			}
+		],
+		"executive-producer": [
+			{
+				"family": "Mirkin",
+				"given": "D."
+			},
+			{
+				"family": "Brooks",
+				"given": "J. L."
+			},
+			{
+				"family": "Groening",
+				"given": "M."
+			},
+			{
+				"family": "Simon",
+				"given": "S."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1995,
+					5,
+					21
+				]
+			]
+		},
+		"publisher": "Gracie Films and Twentieth Century Fox Film Corporation",
+		"title": "Who shot <span class=\"nocase\">Mr.</span> <span class=\"nocase\">Burns</span>? (<span class=\"nocase\">Part</span> <span class=\"nocase\">One</span>) (<span class=\"nocase\">Season</span> 6, <span class=\"nocase\">Episode</span> 25)"
+	},
+	{
+		"id": "10.12:88a",
+		"type": "motion_picture",
+		"author": [
+			{
+				"family": "Giertz",
+				"given": "S."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018,
+					4
+				]
+			]
+		},
+		"publisher": "TED Conferences",
+		"title": "Why you should make useless things",
+		"URL": "https://www.ted.com/talks/simone_giertz_why_you_should_make_useless_things"
+	},
+	{
+		"id": "10.12:88b",
+		"type": "motion_picture",
+		"author": [
+			{
+				"family": "TED"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2012,
+					3,
+					16
+				]
+			]
+		},
+		"publisher": "YouTube",
+		"title": "Brené <span class=\"nocase\">Brown</span>: Listening to shame",
+		"title-short": "Brené <span class=\"nocase\">Brown</span>: Listening to shame",
+		"URL": "https://www.youtube.com/watch?v=psN1DORYYV0"
+	},
+	{
+		"id": "10.12:89",
+		"type": "motion_picture",
+		"author": [
+			{
+				"family": "Goldberg",
+				"given": "J. F."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"publisher": "American Psychiatric Association",
+		"title": "Evaluating adverse drug effects",
+		"URL": "https://education.psychiatry.org/Users/ProductDetails.aspx?ActivityID=6172"
+	},
+	{
+		"id": "10.12:90a",
+		"type": "motion_picture",
+		"author": [
+			{
+				"family": "Cutts",
+				"given": "S."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2017,
+					11,
+					24
+				]
+			]
+		},
+		"publisher": "Vimeo",
+		"title": "Happiness",
+		"URL": "https://vimeo.com/244405542"
+	},
+	{
+		"id": "10.12:90b",
+		"type": "motion_picture",
+		"author": [
+			{
+				"family": "Fogarty",
+				"given": "M."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2016,
+					9,
+					30
+				]
+			]
+		},
+		"publisher": "YouTube",
+		"title": "How to diagram a sentence (absolute basics)",
+		"URL": "https://youtube.be/deiEY5Yq1ql"
+	},
+	{
+		"id": "10.12:90c",
+		"type": "motion_picture",
+		"author": [
+			{
+				"literal": "University of Oxford"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2016,
+					12,
+					6
+				]
+			]
+		},
+		"publisher": "YouTube",
+		"title": "How do geckos walk on water?",
+		"URL": "https://www.youtube.com/watch?v=qm1xGfOZJc8"
+	},
+	{
+		"id": "10.13:91a",
+		"type": "song",
+		"author": [
+			{
+				"family": "Bach",
+				"given": "J. S."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2010
+				]
+			]
+		},
+		"original-date": {
+			"date-parts": [
+				[
+					1721
+				]
+			]
+		},
+		"publisher": "Decca",
+		"title": "The <span class=\"nocase\">Brandenburg</span> concertos: Concertos <span class=\"nocase\">BVW</span> 1043 & 1060",
+		"title-short": "The <span class=\"nocase\">Brandenburg</span> concertos: Concertos <span class=\"nocase\">BVW</span> 1043 & 1060"
+	},
+	{
+		"id": "10.13:91b",
+		"type": "song",
+		"author": [
+			{
+				"family": "Bowie",
+				"given": "D."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		},
+		"publisher": "Columbia",
+		"title": "Blackstar"
+	},
+	{
+		"id": "10.13:92a",
+		"type": "song",
+		"author": [
+			{
+				"family": "Beethoven",
+				"given": "L.",
+				"non-dropping-particle": "van"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2012
+				]
+			]
+		},
+		"original-date": {
+			"date-parts": [
+				[
+					1804
+				]
+			]
+		},
+		"publisher": "Brilliant Classics",
+		"title": "Symphony <span class=\"nocase\">No.</span> 3 in <span class=\"nocase\">E-flat</span> major"
+	},
+	{
+		"id": "10.13:92b",
+		"type": "song",
+		"author": [
+			{
+				"family": "Beyoncé"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		},
+		"publisher": "Parkwood and Columbia",
+		"title": "Formation"
+	},
+	{
+		"id": "10.13:92c",
+		"type": "song",
+		"author": [
+			{
+				"literal": "Childish Gambino"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"publisher": "mcDJ and RCA",
+		"title": "This is <span class=\"nocase\">America</span>"
+	},
+	{
+		"id": "10.13:92d",
+		"type": "song",
+		"author": [
+			{
+				"family": "Lamar",
+				"given": "K."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2017
+				]
+			]
+		},
+		"publisher": "Aftermath Entertainment and Interscope Records and Top Dawg Entertainment",
+		"title": "Humble"
+	},
+	{
+		"id": "10.13:93",
+		"type": "song",
+		"author": [
+			{
+				"family": "Vedantam",
+				"given": "S."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2015
+				],
+				{}
+			]
+		},
+		"publisher": "NPR",
+		"title": "Hidden brain",
+		"URL": "https://www.npr.org/series/423302056/hidden-brain"
+	},
+	{
+		"id": "10.13:94",
+		"type": "song",
+		"author": [
+			{
+				"family": "Glass",
+				"given": "I."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2011,
+					8,
+					12
+				]
+			]
+		},
+		"number": "443",
+		"publisher": "WBEZ Chicago",
+		"title": "Amusement park",
+		"URL": "https://www.thisamericanlife.org/radio-archives/episode/443/amusement-park"
+	},
+	{
+		"id": "10.13:95",
+		"type": "song",
+		"author": [
+			{
+				"family": "Beauvoir",
+				"given": "S.",
+				"non-dropping-particle": "de"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1960,
+					5,
+					4
+				]
+			]
+		},
+		"publisher": "Studs Terkel Radio Archive and The Chicago History Museum",
+		"title": "Simone de <span class=\"nocase\">Beauvoir</span> discusses the art of writing",
+		"URL": "https://studsterkel.wfmt.com/programs/simone-de-beauvoir-discusses-art-writing"
+	},
+	{
+		"id": "10.13:96",
+		"type": "song",
+		"author": [
+			{
+				"family": "King",
+				"given": "M. L.",
+				"suffix": "Jr."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1963,
+					8,
+					28
+				]
+			]
+		},
+		"publisher": "American Rhetoric",
+		"title": "I have a dream",
+		"URL": "https://www.americanrhetoric.com/speeches/mlkihaveadream.htm"
+	},
+	{
+		"id": "10.14:97a",
+		"type": "graphic",
+		"author": [
+			{
+				"family": "Delacroix",
+				"given": "E."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1826
+				],
+				[
+					1827
+				]
+			]
+		},
+		"publisher-place": "The Louvre, Paris, France",
+		"title": "Faust attempts to seduce <span class=\"nocase\">Marguerite</span>"
+	},
+	{
+		"id": "10.14:97b",
+		"type": "graphic",
+		"author": [
+			{
+				"family": "Wood",
+				"given": "G."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1930
+				]
+			]
+		},
+		"publisher-place": "Art Institute of Chicago, Chicago, IL, United States",
+		"title": "American gothic",
+		"URL": "https://www.artic.edu/aic/collections/artwork/6565"
+	},
+	{
+		"id": "10.14:98",
+		"type": "graphic",
+		"author": [
+			{
+				"family": "GDJ"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"publisher": "Openclipart",
+		"title": "Neural network deep learning prismatic",
+		"URL": "https://openclipart.org/detail/309343/neural-network-deep-learning-prismatic"
+	},
+	{
+		"id": "10.14:99",
+		"type": "graphic",
+		"author": [
+			{
+				"family": "Rossman",
+				"given": "J."
+			},
+			{
+				"family": "Palmer",
+				"given": "R."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2015
+				]
+			]
+		},
+		"publisher": "World Science Festival",
+		"title": "Sorting through our space junk",
+		"URL": "https://www.worldsciencefestival.com/2015/11/space-junk-infographic/"
+	},
+	{
+		"id": "10.14:100a",
+		"type": "graphic",
+		"author": [
+			{
+				"family": "Cable",
+				"given": "D."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2013
+				]
+			]
+		},
+		"publisher": "Weldon Cooper Center for Public Service",
+		"publisher-place": "University of Virginia",
+		"title": "The racial dot map",
+		"URL": "https://demographics.coopercenter.org/Racial-Dot-Map"
+	},
+	{
+		"id": "10.14:100b",
+		"type": "graphic",
+		"accessed": {
+			"date-parts": [
+				[
+					2020,
+					2,
+					16
+				]
+			]
+		},
+		"author": [
+			{
+				"family": "Google"
+			}
+		],
+		"URL": "https://goo.gl/YYE3GR"
+	},
+	{
+		"id": "10.14:101a",
+		"type": "graphic",
+		"author": [
+			{
+				"family": "McCurry",
+				"given": "S."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					1985
+				]
+			]
+		},
+		"publisher": "National Geographic",
+		"title": "Afghan girl",
+		"URL": "https://www.nationalgeographic.com/magazine/national-geographic-magazine-50-years-of-covers/#/ngm-1985-jun-714.jpg"
+	},
+	{
+		"id": "10.14:101b",
+		"type": "graphic",
+		"author": [
+			{
+				"family": "Rinaldi",
+				"given": "Jessica"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		},
+		"publisher": "The Pulitzer Prizes",
+		"URL": "https://www.pulitzer.org/winners/jessica-rinaldi"
+	},
+	{
+		"id": "10.14:102a",
+		"type": "graphic",
+		"author": [
+			{
+				"family": "Canan",
+				"given": "E."
+			},
+			{
+				"family": "Vasilev",
+				"given": "J."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2019,
+					5,
+					22
+				]
+			]
+		},
+		"publisher": "University of Chile",
+		"publisher-place": "<span class=\"nocase\">Department of Management Control and Information Systems</span>",
+		"URL": "https://uchilefau.academia.edu/ElseZCanan"
+	},
+	{
+		"id": "10.14:102b",
+		"type": "graphic",
+		"author": [
+			{
+				"family": "Housand",
+				"given": "Brian"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		},
+		"publisher": "SlideShare",
+		"title": "Game on! <span class=\"nocase\">Integrating</span> games and simulations in the classroom",
+		"URL": "https://www.slideshare.net/brianhousand/game-on-iagc-2016/"
+	},
+	{
+		"id": "10.14:102c",
+		"type": "graphic",
+		"author": [
+			{
+				"family": "Mack",
+				"given": "R."
+			},
+			{
+				"family": "Spake",
+				"given": "G."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018
+				]
+			]
+		},
+		"publisher": "Canvas@FNU",
+		"title": "Citing open source images and formatting references for presentations",
+		"URL": "https://fnu.onelogin.com/login"
+	},
+	{
+		"id": "10.15:103a",
+		"type": "webpage",
+		"archive": "Twitter",
+		"author": [
+			{
+				"literal": "APA Education"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018,
+					6,
+					29
+				]
+			]
+		},
+		"title": "College students are forming mental-health clubs—and they’re making a difference @washingtonpost",
+		"URL": "https://twitter.com/apaeducation/status/1012810490530140161"
+	},
+	{
+		"id": "10.15:103b",
+		"type": "webpage",
+		"archive": "Twitter",
+		"author": [
+			{
+				"literal": "Badlands National Park"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018,
+					2,
+					26
+				]
+			]
+		},
+		"title": "Biologists have identified more than 400 different plant species growing in <span class=\"nocase\">@BadlandsNPS</span> #<span class=\"nocase\">DYK</span> #biodoversity",
+		"URL": "https://twitter.com/BadlandsNPS/status/968196500412133379"
+	},
+	{
+		"id": "10.15:103c",
+		"type": "webpage",
+		"archive": "Twitter",
+		"author": [
+			{
+				"family": "White",
+				"given": "B."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018,
+					6,
+					21
+				]
+			]
+		},
+		"title": "I treasure every minute we spent together #koko",
+		"URL": "https://twitter.com/BettyMWhite/status/1009951892846227456"
+	},
+	{
+		"id": "10.15:104",
+		"type": "webpage",
+		"accessed": {
+			"date-parts": [
+				[
+					2019,
+					11,
+					1
+				]
+			]
+		},
+		"archive": "Twitter",
+		"author": [
+			{
+				"literal": "APA Style"
+			}
+		],
+		"title": "Tweets",
+		"URL": "https://twitter.com/APA_Style"
+	},
+	{
+		"id": "10.15:105a",
+		"type": "webpage",
+		"archive": "Facebook",
+		"author": [
+			{
+				"family": "Gaiman",
+				"given": "N."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018,
+					3,
+					22
+				]
+			]
+		},
+		"title": "100,000+ <span class=\"nocase\">Rohingya</span> refugees could be at serious risk during <span class=\"nocase\">Bangladesh’s</span> monsoon season. <span class=\"nocase\">My</span> fellow <span class=\"nocase\">UNHCR</span> <span class=\"nocase\">Goodwill</span> <span class=\"nocase\">Ambassador</span> <span class=\"nocase\">Cate</span> <span class=\"nocase\">Blanchett</span> is",
+		"URL": "http://bit.ly/2JQxPAD"
+	},
+	{
+		"id": "10.15:105b",
+		"type": "webpage",
+		"archive": "Facebook",
+		"author": [
+			{
+				"literal": "National Institute of Mental Health"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018,
+					11,
+					28
+				]
+			]
+		},
+		"title": "Suicide affects all ages, genders, races, and ethnicities. <span class=\"nocase\">Check</span> out these 5 <span class=\"nocase\">Action</span> <span class=\"nocase\">Steps</span> for <span class=\"nocase\">Helping</span> <span class=\"nocase\">Someone</span> in <span class=\"nocase\">Emotional</span> <span class=\"nocase\">Pain</span>",
+		"URL": "http://bit.ly/321Qstq"
+	},
+	{
+		"id": "10.15:105c",
+		"type": "webpage",
+		"archive": "Facebook",
+		"author": [
+			{
+				"literal": "News From Science"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018,
+					6,
+					26
+				]
+			]
+		},
+		"title": "These frogs walk instead of hop: <span class=\"nocase\">h</span>ttps://scimag.2<span class=\"nocase\">K</span>lriw<span class=\"nocase\">H</span>",
+		"title-short": "These frogs walk instead of hop: <span class=\"nocase\">h</span>ttps://scimag.2<span class=\"nocase\">K</span>lriw<span class=\"nocase\">H</span>",
+		"URL": "https://www.facebook.com/ScienceNOW/videos/10155508587605108"
+	},
+	{
+		"id": "10.15:106",
+		"type": "webpage",
+		"accessed": {
+			"date-parts": [
+				[
+					2019,
+					7,
+					22
+				]
+			]
+		},
+		"archive": "Facebook",
+		"author": [
+			{
+				"literal": "Smithsonian’s National Zoo and Conservation Biology Institute"
+			}
+		],
+		"title": "Home",
+		"URL": "https://www.facebookcom/nationalzoo"
+	},
+	{
+		"id": "10.15:107",
+		"type": "webpage",
+		"archive": "Instagram",
+		"author": [
+			{
+				"literal": "Zeitz MOCAA"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018,
+					11,
+					26
+				]
+			]
+		},
+		"title": "Grade 6 learners from <span class=\"nocase\">Parkfields</span> <span class=\"nocase\">Primary</span> <span class=\"nocase\">School</span> in <span class=\"nocase\">Hanover</span> <span class=\"nocase\">Park</span> visited the museum for a tour and workshop hosted by",
+		"URL": "https://www.instagram.com/p/BqpHpjFBs3b"
+	},
+	{
+		"id": "10.15:108",
+		"type": "webpage",
+		"accessed": {
+			"date-parts": [
+				[
+					2019,
+					4,
+					16
+				]
+			]
+		},
+		"archive": "Instagram",
+		"author": [
+			{
+				"literal": "The New York Public Library"
+			}
+		],
+		"title": "The raven",
+		"URL": "https://bitly.com/2FV8bu3"
+	},
+	{
+		"id": "10.15:109",
+		"type": "webpage",
+		"archive": "Reddit",
+		"author": [
+			{
+				"literal": "National Aeronautics and Space Administration"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018,
+					9,
+					12
+				]
+			]
+		},
+		"title": "I’m <span class=\"nocase\">NASA</span> astronaut <span class=\"nocase\">Scott</span> <span class=\"nocase\">Tingle</span>. <span class=\"nocase\">Ask</span> me anything about adjusting to being back on <span class=\"nocase\">Earth</span> after my first spaceflight!",
+		"URL": "https://www.reddit.com/r/IAmA/comments/9fagqy/im_nasa_astronaut_scott_tingle_ask_me_anything/"
+	},
+	{
+		"id": "10.16:110a",
+		"type": "webpage",
+		"archive": "CNN",
+		"author": [
+			{
+				"family": "Avramova",
+				"given": "N."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2019,
+					1,
+					3
+				]
+			]
+		},
+		"title": "The secret to a long, happy, health life? <span class=\"nocase\">Think</span> age-positive",
+		"URL": "https://www.cnn.com/2019/01/03/health/respect-towards-elderly-leads-to-long-life-intl/index.html"
+	},
+	{
+		"id": "10.16:110b",
+		"type": "webpage",
+		"archive": "HuffPost",
+		"author": [
+			{
+				"family": "Bologna",
+				"given": "C."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018,
+					6,
+					27
+				]
+			]
+		},
+		"title": "What happens to your mind and body when you feel homesick?",
+		"URL": "https://www.huffingtonpost.com/entry/what-happens-mind-body-homesick_us_5b201ebde4b09d7a3d77eee1"
+	},
+	{
+		"id": "10.16:111a",
+		"type": "webpage",
+		"author": [
+			{
+				"literal": "Centers for Disease Control and Prevention"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018,
+					1,
+					23
+				]
+			]
+		},
+		"title": "People at high risk of developing flu-related complications",
+		"URL": "https://www.cdc.gov/flu/about/disease/high_risk.htm"
+	},
+	{
+		"id": "10.16:111b",
+		"type": "webpage",
+		"author": [
+			{
+				"literal": "World Health Organization"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2018,
+					3
+				]
+			]
+		},
+		"title": "Questions and answers on immunization and vaccine safety",
+		"URL": "https://www.who.int/features/qa/84/en/"
+	},
+	{
+		"id": "10.16:112",
+		"type": "webpage",
+		"archive": "Mayo Clinic",
+		"author": [
+			{
+				"family": "Martin Lillie",
+				"given": "C. M."
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					2016,
+					12,
+					29
+				]
+			]
+		},
+		"title": "Be kind to yourself: How self-compassion can improve your resiliency",
+		"title-short": "Be kind to yourself: How self-compassion can improve your resiliency",
+		"URL": "https://www.mayoclinic.org/healthy-lifestyle/adult-health/in-depth/self-compassion-can-improve-your-resiliency/art-20267193"
+	},
+	{
+		"id": "10.16:113a",
+		"type": "webpage",
+		"archive": "The Research Ethics Guidebook: A Resource for Social Scientists",
+		"author": [
+			{
+				"family": "Boddy",
+				"given": "J."
+			},
+			{
+				"family": "Neumann",
+				"given": "T."
+			},
+			{
+				"family": "Jennings",
+				"given": "S."
+			},
+			{
+				"family": "Morrow",
+				"given": "V."
+			},
+			{
+				"family": "Alderson",
+				"given": "P."
+			},
+			{
+				"family": "Rees",
+				"given": "R."
+			},
+			{
+				"family": "Gibson",
+				"given": "W."
+			}
+		],
+		"title": "Ethics principles",
+		"URL": "http://www.ethicsguidebook.ac.uk/EthicsPrinciples"
+	},
+	{
+		"id": "10.16:113b",
+		"type": "webpage",
+		"author": [
+			{
+				"literal": "National Nurses United"
+			}
+		],
+		"title": "What employers should do to protect nurses from <span class=\"nocase\">Zika</span>",
+		"URL": "https://www.nationalnursesunited.org/pages/what-employers-should-do-to-protect-rns-from-zika"
+	},
+	{
+		"id": "10.16:114",
+		"type": "webpage",
+		"accessed": {
+			"date-parts": [
+				[
+					2019,
+					7,
+					3
+				]
+			]
+		},
+		"author": [
+			{
+				"literal": "U.S. Census Bureau"
+			}
+		],
+		"publisher": "U.S. Department of Commerce",
+		"title": "<span class=\"nocase\">U.S.</span> and world population clock",
+		"URL": "https://www.census.gov/popclock/"
+	},
+	{
+		"id": "11.4:1",
+		"type": "legal_case",
+		"issued": {
+			"date-parts": [
+				[
+					1954
+				]
+			]
+		},
+		"title": "Brown v. board of education",
+		"URL": "http://www.oyez.org/cases/1940-1955/347us483"
+	},
+	{
+		"id": "11.4:2",
+		"type": "legal_case",
+		"issued": {
+			"date-parts": [
+				[
+					2015
+				]
+			]
+		},
+		"title": "Obergefell v. hodges",
+		"URL": "https://www.supremecourt.gov/opinions/14pdf/14-556_3204.pdf"
+	},
+	{
+		"id": "11.4:3",
+		"type": "legal_case",
+		"issued": {
+			"date-parts": [
+				[
+					1991
+				]
+			]
+		},
+		"publisher": "9th Cir.",
+		"title": "Daubert v. merrell dow pharmaceuticals, inc.",
+		"URL": "https://openjurist.org/951/f2d/1128/william-dabert-v-merrell-dow-pharmaceuticals"
+	},
+	{
+		"id": "11.4:4",
+		"type": "legal_case",
+		"issued": {
+			"date-parts": [
+				[
+					2001
+				]
+			]
+		},
+		"publisher": "N.D. Ohio",
+		"title": "Burriola v. greater toledo YMCA",
+		"URL": "https://law.justia.com/cases/federal/district-courts/FSupp2/133/1034/2293141/"
+	},
+	{
+		"id": "11.4:5",
+		"type": "legal_case",
+		"issued": {
+			"date-parts": [
+				[
+					1984
+				]
+			]
+		},
+		"original-date": {
+			"date-parts": [
+				[
+					1981
+				]
+			]
+		},
+		"title": "Durflinger v. artiles",
+		"URL": "https://openjurist.org/727/f2d/888/durflinger-v-artiles"
+	},
+	{
+		"id": "11.4:6",
+		"type": "legal_case",
+		"issued": {
+			"date-parts": [
+				[
+					1976
+				]
+			]
+		},
+		"title": "Tarasoff v. regents of the university of california",
+		"URL": "https://www.casebriefs.com/blog/law/torts/tors-keyed-to-dobbs/the-duty-to-protect-from-third-persons/tarasoff-v-regents-of-university-of-california"
+	},
+	{
+		"id": "11.4:7",
+		"type": "legal_case",
+		"issued": {
+			"date-parts": [
+				[
+					1992
+				]
+			]
+		},
+		"title": "Texas v. morales",
+		"URL": "https://www.leagle.com/decision/19921027826sw2d20111010"
+	},
+	{
+		"id": "11.5:8",
+		"type": "legislation",
+		"issued": {
+			"date-parts": [
+				[
+					1990
+				]
+			]
+		},
+		"publisher-place": "42 U.S.C § 12101 <i><span class=\"nocase\">et seq.</span></i>",
+		"title": "American with disabilities act",
+		"URL": "https://www.ada.gov/pubs/adastatute08.htm"
+	},
+	{
+		"id": "11.5:9",
+		"type": "legislation",
+		"issued": {
+			"date-parts": [
+				[
+					1964
+				]
+			]
+		},
+		"publisher-place": "Pub. L. No. 88–352, 78 Stat. 241",
+		"title": "Civil rights act",
+		"URL": "https://www.govinfo.gov/content/pkg/STATUE-78/pdf/STATUTE-78-Pg241.pdf"
+	},
+	{
+		"id": "11.5:10",
+		"type": "legislation",
+		"issued": {
+			"date-parts": [
+				[
+					2015
+				]
+			]
+		},
+		"publisher-place": "20 U.S.C § 6301",
+		"title": "Every student succeeds act",
+		"URL": "https://www.congress.gov/114/plaws/publ95/PLAW-114publ95.pdf"
+	},
+	{
+		"id": "11.5:11",
+		"type": "legislation",
+		"issued": {
+			"date-parts": [
+				[
+					2009
+				]
+			]
+		},
+		"publisher-place": "Pub. L. No. 111-2, 123 Stat. 5",
+		"title": "Lilly leadbetter fair play act",
+		"URL": "https://www.govinfo.gov/content/pkg/PLAW-111publ2/pdf/PLAW-111publ2.pdf"
+	},
+	{
+		"id": "11.5:12",
+		"type": "legislation",
+		"issued": {
+			"date-parts": [
+				[
+					1972
+				]
+			]
+		},
+		"publisher-place": "20 U.S.C § 1681 <i><span class=\"nocase\">et seq.</span></i>",
+		"title": "Patsy mink equal opportunity in education act",
+		"URL": "https://www.justice.org/crt/title-ix-education-amendments-1972"
+	},
+	{
+		"id": "11.5:13",
+		"type": "legislation",
+		"issued": {
+			"date-parts": [
+				[
+					2009
+				]
+			]
+		},
+		"original-date": {
+			"date-parts": [
+				[
+					1971
+				]
+			]
+		},
+		"publisher-place": "Fla. Stat. § 394",
+		"title": "Florida mental health act",
+		"URL": "http://www.leg.state.fl.us/statues/index.cfm?App_mode=Display_Statute&URL=0300-0399/0394/0394.html"
+	},
+	{
+		"id": "11.6:14",
+		"type": "legislation",
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		},
+		"note": "testimony of Norman Dong",
+		"publisher-place": "114th Cong.",
+		"title": "Federal real property reform: How cutting red tape and better management count achieve billions in savings, U.S. senate committee on homeland security and governmental affairs",
+		"title-short": "Federal real property reform: How cutting red tape and better management count achieve billions in savings, U.S. senate committee on homeland security and governmental affairs",
+		"URL": "http://www.gsa.gov/portal/content/233107"
+	},
+	{
+		"id": "11.6:15",
+		"type": "legislation",
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		},
+		"publisher-place": "113th Cong.",
+		"title": "Strengthening the federal student loan program for borrowers: Hearing before the U.S. senate committee on health, education, labor & pensions",
+		"title-short": "Strengthening the federal student loan program",
+		"URL": "https://www.help.senate.gov/hearings/strengthening-the-federal-student-load-program-for-borrowers"
+	},
+	{
+		"id": "11.6:16",
+		"type": "legislation",
+		"issued": {
+			"date-parts": [
+				[
+					2013
+				]
+			]
+		},
+		"publisher-place": "H.R 1100, 113th Cong.",
+		"title": "Mental health on campus improvement act",
+		"URL": "https://www.congress.gov/bill/113th-congress/house-bill/1100"
+	},
+	{
+		"id": "11.6:17",
+		"type": "legislation",
+		"genre": "resolution",
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		},
+		"note": "enacted",
+		"number": "438",
+		"publisher-place": "114th Cong. and 162 Cong. Rec. 2394",
+		"source": "senate",
+		"URL": "https://www.congress.gov/congressional-record/2016/04/21/senate-section/article/S2394-2"
+	},
+	{
+		"id": "11.6:18",
+		"type": "legislation",
+		"genre": "report",
+		"issued": {
+			"date-parts": [
+				[
+					2015
+				]
+			]
+		},
+		"number": "114\\-358",
+		"source": "houseofrepresentatives",
+		"URL": "https://www.gpo.gov/fdsys/pkg/CRPT-114rpt358/pdf/CRPT-114hrpt358.pdf"
+	},
+	{
+		"id": "11.7:19",
+		"type": "regulation",
+		"issued": {
+			"date-parts": [
+				[
+					2009
+				]
+			]
+		},
+		"title": "Protection of human subjects",
+		"URL": "https://www.hhs.gov/ohrp/sites/default/files/ohrp/policy/ohrpregulations.pdf"
+	},
+	{
+		"id": "11.7:20",
+		"type": "regulation",
+		"issued": {
+			"date-parts": [
+				[
+					2016,
+					5,
+					23
+				]
+			]
+		},
+		"note": "to be codified at 29 C.F.R. § 541",
+		"title": "Defining and delimiting the exemptions for executive, administrative, professional, outside sales and computer employees",
+		"title-short": "Defining and delimiting",
+		"URL": "https://www.federalregister.gov/articles/2016/05/23/2016-11754/defining-and-delimiting-the-exemptions-for-executive-administrative-professional-outside-sales-and"
+	},
+	{
+		"id": "11.7:21",
+		"type": "regulation",
+		"genre": "execorder",
+		"issued": {
+			"date-parts": [
+				[
+					2014
+				]
+			]
+		},
+		"number": "13,676",
+		"URL": "https://www.govinfo.gov/content/pkg/CFR-2015-title3-vol1/pdf/CFR-2015-title3-vol1-eo13676.pdf"
+	},
+	{
+		"id": "11.8:22",
+		"type": "patent",
+		"author": [
+			{
+				"family": "Hiremath",
+				"given": "S. C."
+			},
+			{
+				"family": "Kumar",
+				"given": "S."
+			},
+			{
+				"family": "Lu",
+				"given": "F."
+			},
+			{
+				"family": "Salehi",
+				"given": "A"
+			}
+		],
+		"genre": "U.S. Patent",
+		"issued": {
+			"date-parts": [
+				[
+					2016
+				]
+			]
+		},
+		"number": "9,367,592",
+		"publisher": "<span class=\"nocase\">U.S. Patent and Trademark Office</span>",
+		"title": "Using metaphors to present concepts across different intellectual domains",
+		"URL": "http://patft.uspto.gov/netacgi/nph-Parser?patentnumber=9367592"
+	},
+	{
+		"id": "11.9:23",
+		"type": "legislation",
+		"genre": "constitution",
+		"section": "3",
+		"source": "us"
+	},
+	{
+		"id": "11.9:24",
+		"type": "legislation",
+		"genre": "constitution",
+		"section": "3",
+		"source": "southcarolina"
+	},
+	{
+		"id": "11.9:25",
+		"type": "legislation",
+		"genre": "constitution",
+		"source": "us"
+	},
+	{
+		"id": "11.9:26",
+		"type": "legislation",
+		"event-date": {
+			"date-parts": [
+				[
+					1933
+				]
+			]
+		},
+		"genre": "constitution",
+		"source": "us"
+	},
+	{
+		"id": "11.9:27",
+		"type": "legislation",
+		"genre": "constitution",
+		"source": "us"
+	},
+	{
+		"id": "11.9:28",
+		"type": "legislation",
+		"genre": "charter",
+		"part": "3",
+		"source": "unitednations"
+	},
+	{
+		"id": "11.10:29",
+		"type": "treaty",
+		"issued": {
+			"date-parts": [
+				[
+					1989,
+					11,
+					20
+				]
+			]
+		},
+		"title": "United nations convention on the rights of the child",
+		"URL": "https://www.ohchr.org/en/professionalinterest/pages/crc.aspx"
+	}
+]
