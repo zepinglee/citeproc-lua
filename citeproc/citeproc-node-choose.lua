@@ -283,6 +283,10 @@ function If:evaluate_condition(condition, state, context)
     return self:is_uncertain_date(value)
 
   elseif condition.condition == "locator" then
+    local locator = context:get_variable("locator")
+    if not locator or locator == "" then
+      return false
+    end
     local locator_label = context:get_variable("label")
     if locator_label == "sub verbo" then
       locator_label = "sub-verbo"

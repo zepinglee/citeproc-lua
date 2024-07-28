@@ -384,10 +384,20 @@ function Element:apply_strip_periods(str)
 end
 
 
+---@param number string Non-empty string
+---@param variable string
+---@param form string
+---@param context Context
+---@return string
 function Element:format_number(number, variable, form, context)
   number = util.strip(number)
   if variable == "locator" then
-    variable = context:get_variable("label")
+    local locator_variable = context:get_variable("label")
+    if not locator_variable or type(locator_variable) ~= "string" then
+      util.error("Invalid locator label")
+      locator_variable = "page"
+    end
+    variable = locator_variable
   end
   form = form or "numeric"
   local number_part_list = self:split_number_parts_lpeg(number, context)
@@ -431,9 +441,11 @@ function Element:format_number(number, variable, form, context)
   return res
 end
 
----comment
----@param number any
----@param context any
+---@alias NumberToken {type: string, value: string, delimiter_type: string}
+
+---@param number string
+---@param context Context
+---@return NumberToken[]
 function Element:parse_number_tokens(number, context)
   local and_text = "and"
   local and_symbol = "&"
@@ -465,9 +477,14 @@ function Element:parse_number_tokens(number, context)
       value = token,
     }
   end
-  local grammer = l.Ct(token_patt * (delimiter * token_patt)^0)
+  local grammer = l.Ct((token_patt * (delimiter * token_patt)^0)^-1)
   local tokens = grammer:match(number)
   -- util.debug(tokens)
+
+  if not tokens then
+    return {}
+  end
+  ---@cast tokens NumberToken[]
 
   for i, token in ipairs(tokens) do
     if token.type == "string" then

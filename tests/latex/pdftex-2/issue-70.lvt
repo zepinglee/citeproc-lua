@@ -1,0 +1,20 @@
+% <https://github.com/zepinglee/citeproc-lua/discussions/70>
+
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\usepackage[style=chicago-fullnote-bibliography]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{test.json}
+
+
+\begin{document}
+\START
+
+\TEST{Citation with empty locator}{
+  \cite[page = ]{ITEM-1}
+}
+
+\OMIT
+\end{document}

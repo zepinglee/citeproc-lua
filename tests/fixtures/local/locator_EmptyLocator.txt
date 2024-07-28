@@ -1,0 +1,86 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== DESCRIPTION =====>>
+<https://github.com/zepinglee/citeproc-lua/discussions/70>
+<<===== DESCRIPTION =====<<
+
+
+
+>>===== RESULT =====>>
+(Doe, condition false: Title Page)
+<<===== RESULT =====<<
+
+
+>>==== CITATION-ITEMS ====>>
+[
+    [
+        {
+            "id": "ITEM-1",
+            "label": "page",
+            "locator": ""
+        }
+    ]
+]
+<<==== CITATION-ITEMS ====<<
+
+
+>>===== CSL =====>>
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2024-07-28T11:35:35+08:00</updated>
+  </info>
+  <citation>
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <group delimiter=", ">
+        <names variable="author">
+          <name form="short" and="symbol" delimiter=", " initialize-with=". "/>
+        </names>
+        <group delimiter=" ">
+          <choose>
+            <if locator="page paragraph" match="any">
+              <text value="condition true:"/>
+              <text variable="title"/>
+              <label variable="locator" form="short"/>
+            </if>
+            <else>
+              <text value="condition false:"/>
+              <text variable="title"/>
+              <label variable="locator" text-case="capitalize-first"/>
+            </else>
+          </choose>
+          <text variable="locator"/>
+        </group>
+      </group>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1",
+        "type": "book",
+        "author": [
+            {
+                "family": "Doe",
+                "given": "John"
+            }
+        ],
+        "title": "Title"
+    }
+]
+<<===== INPUT =====<<
+
+
+>>===== VERSION =====>>
+1.0
+<<===== VERSION =====<<

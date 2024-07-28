@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for multiple bibliographies (`refsection` environment).
 - Add global `ref-section` option.
 
+### Fixed
+
+- Fix an error of empty locator in citation (([#70](https://github.com/zepinglee/citeproc-lua/discussions/70)))
+
 ## [0.5.1] - 2024-07-10
 
 ### Fixed

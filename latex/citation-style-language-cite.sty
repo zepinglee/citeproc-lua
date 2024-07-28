@@ -246,9 +246,16 @@
 
 \cs_new:Npn \__csl_set_locator:nn #1#2
   {
-    \prop_put:Nnn \l__csl_cite_item_prop { label } {#1}
-    \prop_put:Nnn \l__csl_cite_item_prop { locator } {#2}
+    \tl_if_empty:nTF {#2}
+      { \msg_warning:nnn { citation-style-language } { empty-locator } {#1} }
+      {
+        \prop_put:Nnn \l__csl_cite_item_prop { label } {#1}
+        \prop_put:Nnn \l__csl_cite_item_prop { locator } {#2}
+      }
   }
+
+\msg_new:nnn { citation-style-language } { empty-locator }
+  { Empty~ `#1'~ locator. }
 
 \keys_define:nn { csl / cite-item }
   {

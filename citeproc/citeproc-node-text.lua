@@ -86,6 +86,7 @@ function Text:build_ir(engine, state, context)
   if self.variable then
     ir = self:build_variable_ir(engine, state, context)
   elseif self.macro then
+    -- util.debug(self.macro)
     ir = self:build_macro_ir(engine, state, context)
   elseif self.term then
     ir = self:build_term_ir(engine, state, context)
@@ -108,9 +109,10 @@ function Text:build_variable_ir(engine, state, context)
 
   if not state.suppressed[variable] then
     text = context:get_variable(variable, self.form)
+    ---@case text string | number?
   end
 
-  if not text then
+  if not text or text == "" then
     local ir = Rendered:new({}, self)
     ir.group_var = GroupVar.Missing
     return ir

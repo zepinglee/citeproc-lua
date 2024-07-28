@@ -59,8 +59,9 @@ function Number:build_ir(engine, state, context)
   local number
   if not state.suppressed[self.variable] then
     number = context:get_variable(self.variable, self.form)
+    ---@cast number string | number?
   end
-  if not number then
+  if not number or number == "" then
     local ir = Rendered:new({}, self)
     ir.group_var = GroupVar.Missing
     return ir
