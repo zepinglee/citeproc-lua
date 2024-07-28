@@ -53,11 +53,11 @@
             }
           \tl_use:N \l__csl_bibliography_tl
         }
-        { \msg_warning:nn { citation-style-language } { bibliography / empty } }
+        { \msg_warning:nn { citation-style-language } { empty-bibliography } }
     \group_end:
   }
 
-\msg_new:nnn { citation-style-language } { bibliography / empty }
+\msg_new:nnn { citation-style-language } { empty-bibliography }
   { The~ bibliography~ is~ empty.  }
 
 \DeclareDocumentCommand \bibliography { m }
@@ -187,7 +187,7 @@
   }
   {
       \tl_set:Nn \@noitemerr
-        { \msg_warning:nn { citation-style-language } { bibliography / empty } }
+        { \msg_warning:nn { citation-style-language } { empty-bibliography } }
       \endlist
     \group_end:
     \exp_args:NV \__csl_print_bib_note:n \l__csl_bib_post_note_tl
@@ -476,7 +476,7 @@
       {
         \cs_if_exist:cF { __csl_head_ #1 :n }
           {
-            \msg_error:nnn { citation-style-language } { bib-heading-undefined }
+            \msg_error:nnn { citation-style-language } { undefined-bib-heading }
               {#1}
           }
         \tl_if_blank:nTF {#2}
@@ -488,7 +488,7 @@
       { \exp_args:NV \label \l__csl_bib_head_label_tl }
   }
 
-\msg_new:nnn { citation-style-language } { bib-heading-undefined }
+\msg_new:nnn { citation-style-language } { undefined-bib-heading }
   { Bibliography~ heading~ '#1'~ undefined. }
 
 \keys_define:nn { csl / bib-heading }
@@ -630,7 +630,7 @@
       {
         \prop_get:NnNF \l__csl_bib_notes_prop {#1} \l_tmpa_tl
           {
-            \msg_error:nnn { citation-style-language } { bib-note-undefined }
+            \msg_error:nnn { citation-style-language } { undefined-bib-note }
               {#1}
           }
         \tl_if_empty:NF \l_tmp_tl
@@ -646,7 +646,7 @@
       }
   }
 
-\msg_new:nnn { citation-style-language } { bib-note-undefined }
+\msg_new:nnn { citation-style-language } { undefined-bib-note }
   { Bibliography~ note~ '#1'~ undefined. }
 
 
