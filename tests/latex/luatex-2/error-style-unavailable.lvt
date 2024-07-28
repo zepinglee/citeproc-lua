@@ -4,15 +4,11 @@
 
 \input{csl-test}
 
-\usepackage{citation-style-language}
+\usepackage[style=style-unavailable]{citation-style-language}
 
 \START
 
-\cslsetup{
-  regression-test = true,
-  style = style-unavailable,
-}
-\addbibresource{test.json}
+\cslsetup{regression-test = true}
 
 
 \begin{document}

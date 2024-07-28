@@ -26,21 +26,24 @@
 
 \cs_new:Npn \__csl_write_aux_info:
   {
+    \tl_if_empty:NF \l__csl_style_tl
+      { \exp_args:NV \__csl_write_aux_bibstyle:n \l__csl_style_tl }
     \tl_if_empty:NT \l__csl_style_tl
       { \tl_set_eq:NN \l__csl_style_tl \g__csl_aux_bibstyle_tl }
-    \tl_if_empty:NTF \l__csl_style_tl
+    \tl_if_empty:NT \l__csl_style_tl
       {
         \msg_warning:nn { citation-style-language } { missing-style-name }
         \tl_set:Nn \l__csl_style_tl { apa }
       }
-      {
-        \exp_args:NV \__csl_write_aux_bibstyle:n \l__csl_style_tl
-      }
     \tl_set_eq:NN \csl@style \l__csl_style_tl
     \clist_if_empty:NT \l__csl_bib_resources_clist
       { \clist_set_eq:NN \l__csl_bib_resources_clist \g__csl_aux_bib_files_clist }
-    \exp_args:Nx \__csl_write_aux_bibdata:n
-      { \clist_use:Nn \l__csl_bib_resources_clist { , } }
+    \clist_if_empty:NTF \l__csl_bib_resources_clist
+      { \msg_warning:nn { citation-style-language } { empty-bib-resources } }
+      {
+        \exp_args:Nx \__csl_write_aux_bibdata:n
+          { \clist_use:Nn \l__csl_bib_resources_clist { , } }
+      }
     \__csl_write_aux_csl_options:
   }
 
@@ -80,22 +83,14 @@
 
 \cs_new:Npn \__csl_initialize_lua_module:
   {
-    \tl_if_blank:VTF \l__csl_style_tl
-      { \msg_warning:nn { citation-style-language } { empty-style-name } }
+    \tl_set:Nx \l_tmpa_tl { \clist_use:Nn \l__csl_bib_resources_clist { , } }
+    \lua_now:e
       {
-        \clist_if_empty:NTF \l__csl_bib_resources_clist
-          { \msg_warning:nn { citation-style-language } { empty-bib-resources } }
-          {
-            \tl_set:Nx \l_tmpa_tl { \clist_use:Nn \l__csl_bib_resources_clist { , } }
-            \lua_now:e
-              {
-                csl_citation_manager:init(
-                  "\l__csl_style_tl",
-                  "\l_tmpa_tl",
-                  "\l__csl_locale_tl"
-                )
-              }
-          }
+        csl_citation_manager:init(
+          "\l__csl_style_tl",
+          "\l_tmpa_tl",
+          "\l__csl_locale_tl"
+        )
       }
     \str_if_eq:eeTF
       {

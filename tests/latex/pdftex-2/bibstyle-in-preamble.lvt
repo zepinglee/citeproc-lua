@@ -5,12 +5,9 @@
 \input{csl-test}
 
 \usepackage{citation-style-language}
+\cslsetup{regression-test = true}
 
 \START
-
-\cslsetup{
-  regression-test = true,
-}
 
 \bibliographystyle{apa}
 

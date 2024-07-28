@@ -374,6 +374,9 @@ end
 
 function bibtex2csl._parse_edtf_date(str)
   local date_range = util.split(str, "/")
+  if str == "" then
+    return nil
+  end
   if #date_range == 1 then
     date_range = util.split(str, util.unicode["en dash"])
   end

@@ -206,6 +206,9 @@ local function make_citeproc_sys(item_dict)
     end,
     retrieveItem = function (id)
       local res = item_dict[id]
+      if not res and not luatexbase then
+        util.warning(string.format("Didn't find a database entry for '%s'", id))
+      end
       return res
     end
   }
@@ -260,8 +263,7 @@ function RefSection:make_citeproc_engine()
   end
   local style = read_file(self.style_id .. ".csl", nil, "style")
   if not style then
-    util.error(string.format('Failed to load style "%s.csl"', self.style_id))
-    return nil
+    return
   end
 
   self.items, self.item_dict = read_data_files(self.bib_resources)

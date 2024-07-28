@@ -250,6 +250,9 @@ function util.split(str, sep, maxsplit)
   if sep == "" then
     util.error("Empty separator")
   end
+  if str == "" then
+    return {}
+  end
   if string.find(str, sep) == nil then
     return { str }
   end

@@ -24,7 +24,6 @@ TEST 1: Entry not available
 > \l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE@1},citationItems={{id={ITEM-UNAVAILABLE}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-Module citeproc Warning: Didn't find a database entry for 'ITEM-UNAVAILABLE' on input line ...
 > \l__csl_citation_tl=(\cslundefinedcite {ITEM-UNAVAILABLE}).
 <recently read> }
 l. ...}
@@ -36,8 +35,6 @@ TEST 2: Multiple enties
 > \l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE,ANOTHER-ITEM@1},citationItems={{id={ITEM-UNAVAILABLE}},{id={ANOTHER-ITEM}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-Module citeproc Warning: Didn't find a database entry for 'ITEM-UNAVAILABLE' on input line ...
-Module citeproc Warning: Didn't find a database entry for 'ANOTHER-ITEM' on input line ...
 > \l__csl_citation_tl=(\cslundefinedcite {ITEM-UNAVAILABLE}, \cslundefinedcite {ANOTHER-ITEM}).
 <recently read> }
 l. ...}
@@ -50,8 +47,6 @@ TEST 3: Mixture
 > \l__csl_citation_info_tl=citationID={ITEM-UNAVAILABLE,ITEM-1,ANOTHER-ITEM@1},citationItems={{id={ITEM-UNAVAILABLE}},{id={ITEM-1}},{id={ANOTHER-ITEM}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-Module citeproc Warning: Didn't find a database entry for 'ITEM-UNAVAILABLE' on input line ...
-Module citeproc Warning: Didn't find a database entry for 'ANOTHER-ITEM' on input line ...
 > \l__csl_citation_tl=(D’Arcus, 2005; \cslundefinedcite {ITEM-UNAVAILABLE}, \cslundefinedcite {ANOTHER-ITEM}).
 <recently read> }
 l. ...}

@@ -5,15 +5,12 @@
 \input{csl-test}
 
 \usepackage{citation-style-language}
+\cslsetup{regression-test = true}
 
-\cslsetup{
-  regression-test = true,
-}
+\START
 
 
 \begin{document}
-
-\START
 
 \input{csl-citation-tests}
 

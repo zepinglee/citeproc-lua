@@ -271,7 +271,11 @@ local function run_test(path)
       return util.read_file(locale_path, true)
     end,
     retrieveItem = function (id)
-      return bib[id]
+      local res = bib[id]
+      if not res then
+        util.warning(string.format("Didn't find a database entry for '%s'", id))
+      end
+      return res
     end
   }
 

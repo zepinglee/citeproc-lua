@@ -8,7 +8,7 @@ local latex_parser = {}
 
 local bibtex_parser
 local latex_data
-local markup 
+local markup
 local util
 if kpse then
   latex_data = require("citeproc-latex-data")
@@ -365,6 +365,7 @@ function latex_parser.convert_cs_to_inlines(tokens, i, strict, case_protection)
   return inlines, i
 end
 
+-- TODO: raise a warning for unrecognized LaTeX command like `\switchargs`
 function latex_parser.convert_group_to_inlines(token, strict, case_protection, force_add_braces)
   if case_protection then
     local first_token = token.contents[1]

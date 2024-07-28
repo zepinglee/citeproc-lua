@@ -21,14 +21,12 @@ LaTeX Font Info:    ... okay on input line ....
 ! Module citeproc Error: Database file "bib-unavailable.bib" not found.
 \lua_now:e #1->\__lua_now:n {#1}
 l. ...\begin{document}
-Module citeproc Warning: Didn't find a database entry for 'ITEM-1' on input line ...
 ============================================================
 TEST 1: Citation
 ============================================================
 > \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-Module citeproc Warning: Didn't find a database entry for 'ITEM-1' on input line ...
 > \l__csl_citation_tl=(\cslundefinedcite {ITEM-1}).
 <recently read> }
 l. ...}

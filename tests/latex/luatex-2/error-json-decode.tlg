@@ -21,14 +21,12 @@ LaTeX Font Info:    ... okay on input line ....
 ! Module citeproc Error: JSON decode error in file "error-json-decode.json"..
 \lua_now:e #1->\__lua_now:n {#1}
 l. ...\begin{document}
-Module citeproc Warning: Didn't find a database entry for 'ITEM-3' on input line ...
 ============================================================
 TEST 1: Citation
 ============================================================
 > \l__csl_citation_info_tl=citationID={ITEM-3@1},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
-Module citeproc Warning: Didn't find a database entry for 'ITEM-3' on input line ...
 > \l__csl_citation_tl=(\cslundefinedcite {ITEM-3}).
 <recently read> }
 l. ...}
