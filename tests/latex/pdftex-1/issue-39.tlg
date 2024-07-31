@@ -24,6 +24,6 @@ LaTeX Warning: Citation `schweighofer_rechtsinformatik_1999' on page 1 undefined
 l. ...\footcite{schweighofer_rechtsinformatik_1999}
 [1
 ]
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 (issue-39.aux)
 LaTeX Warning: There were undefined references.

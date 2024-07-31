@@ -77,7 +77,7 @@ function Sort:sort(items, state, context)
       if uca_languages[language] then
         Sort.collator = uca_languages[language](Sort.collator)
       else
-        util.warning(string.format('Locale "%s" is not provided by lua-uca. The sorting order may be incorrect.', lang))
+        util.warning(string.format("Locale '%s' is not provided by lua-uca. The sorting order may be incorrect.", lang))
       end
     end
   end

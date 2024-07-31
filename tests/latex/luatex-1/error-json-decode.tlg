@@ -18,9 +18,13 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line ....
 LaTeX Font Info:    ... okay on input line ....
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line ....
 LaTeX Font Info:    ... okay on input line ....
-! Module citeproc Error: JSON decode error in file "error-json-decode.json"..
-\lua_now:e #1->\__lua_now:n {#1}
+! Module citeproc Error: JSON decode error in file 'error-json-decode.json'.
+Type <return> to continue.
+ ...                                              
 l. ...\begin{document}
+LaTeX does not know anything more about this error, sorry.
+Try typing <return> to proceed.
+If that doesn't work, type X <return> to quit.
 ============================================================
 TEST 1: Citation
 ============================================================
@@ -40,7 +44,7 @@ The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 [1
 ] (error-json-decode.aux)

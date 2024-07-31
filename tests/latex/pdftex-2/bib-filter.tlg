@@ -13,7 +13,7 @@ l. ...}
 ============================================================
 TEST 2: Undefined category
 ============================================================
-! Package citation-style-language Error: Category 'tex' not declared.
+! Package CSL Error: Category 'tex' not declared.
 Type <return> to continue.
  ...                                              
 l. ...}

@@ -6,8 +6,8 @@ TEST 1: Citation
 > \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
 <recently read> }
 l. ...}
-Module citeproc Warning: Expecting number variable for condition "is-numeric", got date "issued" on input line ...
-Module citeproc Warning: Expecting number variable for condition "is-numeric", got date "issued" on input line ...
+Module citeproc Warning: Expecting number variable for condition 'is-numeric', got date 'issued'
+Module citeproc Warning: Expecting number variable for condition 'is-numeric', got date 'issued'
 > \l__csl_citation_tl=\textsc {D’Arcus} Bruce, \textit {Boundaries of dissent: Protest and state power in the media age}, Routledge, 2005..
 <recently read> }
 l. ...}
@@ -23,8 +23,8 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 ============================================================
 TEST 2: Bibliography
 ============================================================
-Module citeproc Warning: Expecting number variable for condition "is-numeric", got date "issued" on input line ...
-Module citeproc Warning: Expecting number variable for condition "is-numeric", got date "issued" on input line ...
+Module citeproc Warning: Expecting number variable for condition 'is-numeric', got date 'issued'
+Module citeproc Warning: Expecting number variable for condition 'is-numeric', got date 'issued'
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 1, line-spacing = 1, entry-spacing = 1}}
 >  {\bibitem {ITEM-1} \textsc {D’Arcus} Bruce, \textit {Boundaries of dissent: Protest and state power in the media age}, Routledge, 2005.}

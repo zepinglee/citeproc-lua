@@ -297,7 +297,7 @@ end
 function Context:get_macro(name)
   local res = self.style.macros[name]
   if not res then
-    util.error(string.format('Undefined macro "%s"', name))
+    util.error(string.format("Undefined macro '%s'", name))
   end
   return res
 end
@@ -363,7 +363,7 @@ end
 function IrState:push_macro(macro_name)
   for _, name in ipairs(macro_name) do
     if name == macro_name then
-      util.error(string.format('Recursive macro "%s".', macro_name))
+      util.error(string.format("Recursive macro '%s'.", macro_name))
     end
     table.insert(self.macro_stack, macro_name)
   end

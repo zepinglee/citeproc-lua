@@ -568,7 +568,7 @@ Completed box being shipped out [1]
 ============================================================
 TEST 19: Bibliography contents
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 ============================================================
 TEST 20: Bibliography format

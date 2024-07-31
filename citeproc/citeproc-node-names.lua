@@ -131,7 +131,7 @@ function Names:from_node(node)
         child.after_name = true
       end
     else
-      util.warning(string.format('Unknown element "%s".', element_name))
+      util.warning(string.format("Unknown element '%s'.", element_name))
     end
   end
   o:get_delimiter_attribute(node)

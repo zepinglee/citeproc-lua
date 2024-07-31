@@ -15,7 +15,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line ....
 LaTeX Font Info:    ... okay on input line ....
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line ....
 LaTeX Font Info:    ... okay on input line ....
-Package citation-style-language Warning: Empty bibliographic resources. Use \addbibresource.
+Package CSL Warning: Empty bibliographic resources. Use \addbibresource.
 No file error-style-unavailable.bbl.
 ! LaTeX Error: File 'style-unavailable.csl' not found.
 For immediate help type H <return>.
@@ -36,7 +36,7 @@ l. ...}
 ============================================================
 TEST 2: Bibliography
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 [1
 ] (error-style-unavailable.aux)

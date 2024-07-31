@@ -17,7 +17,7 @@ l. ...}
 ============================================================
 TEST 2: Undefined category
 ============================================================
-! Package citation-style-language Error: Category 'tex' not declared.
+! Package CSL Error: Category 'tex' not declared.
 Type <return> to continue.
  ...                                              
 l. ...}
@@ -28,17 +28,17 @@ If that doesn't work, type X <return> to quit.
 ============================================================
 TEST 3: Bibliography with filter
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 ============================================================
 TEST 4: Bibliography with filter
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 ============================================================
 TEST 5: Bibliography with filter
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 [1
 ] (bib-filter.aux)

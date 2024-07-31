@@ -196,7 +196,7 @@ end
 function CiteProc:check_valid_citation_element()
   if not self.style.citation then
     if self.style.info and self.style.info.independent_parent then
-      util.error(string.format('This is a dependent style linked to "%s".', self.style.info.independent_parent))
+      util.error(string.format("This is a dependent style linked to '%s'.", self.style.info.independent_parent))
     else
       util.error('No <citation> in style.')
     end
@@ -743,6 +743,8 @@ function CiteProc:makeCitationCluster(citation_items)
   return res
 end
 
+---@param bibsection any
+---@return [{[string]: string | number | boolean}, string[]]
 function CiteProc:makeBibliography(bibsection)
   -- The bibsection works as a filter described in
   -- <https://citeproc-js.readthedocs.io/en/latest/running.html#selective-output-with-makebibliography>.
@@ -1144,7 +1146,7 @@ function CiteProc:get_system_locale(lang)
 
   local locale_str = self.sys.retrieveLocale(lang)
   if not locale_str then
-    util.warning(string.format("Failed to retrieve locale \"%s\"", lang))
+    util.warning(string.format("Failed to retrieve locale '%s'", lang))
     return nil
   end
   local locale_xml = dom.parse(locale_str)

@@ -19,7 +19,7 @@ No file bib-format-paragraph.bbl.
 ============================================================
 TEST 1: Bibliography contents
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 ============================================================
 TEST 2: Bibliography format

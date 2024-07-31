@@ -38,12 +38,12 @@ local function read_file(file_name, ftype, file_info)
     if ftype and not util.endswith(file_name, ftype) then
       file_name = file_name .. ftype
     end
-    util.error(string.format('%s "%s" not found', file_info, file_name))
+    util.error(string.format("%s '%s' not found", file_info, file_name))
     return nil
   end
   local file = io.open(path, "r")
   if not file then
-    util.error(string.format('Cannot open %s "%s"', file_info, path))
+    util.error(string.format("Cannot open %s '%s'", file_info, path))
     return nil
   end
   local contents = file:read("*a")
@@ -90,7 +90,7 @@ local function read_data_file(filename)
           format = "bibtex"
           contents = read_file(filename, "bib", "database file")
         else
-          util.error(string.format('Cannot find database file "%s"', filename .. ".json"))
+          util.error(string.format("Cannot find database file '%s'", filename .. ".json"))
           return file, format, nil
         end
       end
@@ -133,7 +133,7 @@ local function read_data_files(data_files)
           ---@cast res CslData
           csl_items = res
         else
-          util.error(string.format('JSON decode error in file "%s".', file))
+          util.error(string.format("JSON decode error in file '%s'.", file))
         end
 
       elseif format == "yaml" then
@@ -143,7 +143,7 @@ local function read_data_files(data_files)
           ---@cast res CslData
           csl_items = res
         else
-          util.error(string.format('YAML decode error in file "%s".', file))
+          util.error(string.format("YAML decode error in file '%s'.", file))
         end
 
       elseif format == "bibtex" then
@@ -168,7 +168,7 @@ local function read_data_files(data_files)
       for _, item in ipairs(csl_items) do
         local id = item.id
         if item_dict[id] then
-          util.warning(string.format('Duplicate entry key "%s" in "%s".', id, file))
+          util.warning(string.format("Duplicate entry key '%s' in '%s'.", id, file))
         else
           item_dict[id] = item
           table.insert(item_list, item)
@@ -301,7 +301,7 @@ function RefSection:_check_dependent_style(citeproc_sys)
     util.info(string.format('Style "%s" is a dependent style linked to "%s".', self.style_id, parent_style_id))
     local style = read_file(parent_style_id .. ".csl", nil, "style")
     if not style then
-      util.error(string.format('Failed to load style "%s.csl"', parent_style_id))
+      util.error(string.format("Failed to load style '%s.csl'", parent_style_id))
       return nil
     end
     local force_lang = false
@@ -448,7 +448,7 @@ end
 function CslCitationManager:register_citation_info(ref_section_index_str, citation_info)
   local ref_section_index = tonumber(ref_section_index_str)
   if not ref_section_index then
-    util.error(string.format('Invalid refsetion index "%s"', ref_section_index_str))
+    util.error(string.format("Invalid refsetion index '%s'", ref_section_index_str))
     return
   end
   local ref_section = self.ref_sections[ref_section_index]
@@ -569,7 +569,7 @@ function CslCitationManager:_make_citation(citation_info)
   elseif type(note_index) == "string" and string.match(note_index, "^%d+$") then
     citation.properties.noteIndex = tonumber(note_index)
   else
-    util.error(string.format('Invalid note index "%s".', note_index))
+    util.error(string.format("Invalid note index '%s'.", note_index))
   end
 
   -- util.debug(citation)
@@ -896,7 +896,7 @@ function CslCitationManager:_get_csl_commands(aux_content)
         else
           local ref_section_index = tonumber(arguments[1])
           if not ref_section_index then
-            util.error(string.format('Invalid refsection index "%s".', ref_section_index))
+            util.error(string.format("Invalid refsection index '%s'.", ref_section_index))
             return {}
           end
           local content = util.strip(arguments[2])

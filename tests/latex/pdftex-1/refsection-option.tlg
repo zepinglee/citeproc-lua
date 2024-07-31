@@ -19,7 +19,7 @@ LaTeX Warning: Citation `ITEM-2' on page 1 undefined on input line ....
 <recently read> }
 l. ...This is just filler text \cite{ITEM-2}
                                            .\par
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 Completed box being shipped out [1]
 \vbox(627.36243+0.0)x380.0
 .\hbox(0.0+0.0)x0.0
@@ -253,7 +253,7 @@ LaTeX Warning: Citation `ITEM-1' on page 3 undefined on input line ....
 <recently read> }
 l. ...This is just filler text \cite{ITEM-1}
                                            .\par
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 Completed box being shipped out [3]
 \vbox(627.36243+0.0)x380.0
 .\vbox(0.0+0.0)x0.0, glue set - 20.99626fil
@@ -449,7 +449,7 @@ LaTeX Warning: Citation `ITEM-4' on page 5 undefined on input line ....
 <recently read> }
 l. ...This is just filler text \cite{ITEM-4}
                                            .\par
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 Completed box being shipped out [5]
 \vbox(627.36243+0.0)x380.0
 .\vbox(0.0+0.0)x0.0, glue set - 20.99626fil

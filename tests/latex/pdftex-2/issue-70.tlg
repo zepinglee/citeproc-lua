@@ -3,7 +3,7 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Citation with empty locator
 ============================================================
-Package citation-style-language Warning: Empty `page' locator.
+Package CSL Warning: Empty 'page' locator.
 > \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
 <recently read> }
 l. ...}

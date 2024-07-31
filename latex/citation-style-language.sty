@@ -16,9 +16,16 @@
 \RequirePackage { url }
 
 
+\prop_gput:Nnn \g_msg_module_name_prop { citation-style-language } { CSL }
+\prop_gput:Nnn \g_msg_module_type_prop { citeproc } { Module }
+
+\msg_new:nnn { citeproc } { citeproc-error } {#1}
+\msg_new:nnn { citeproc } { citeproc-warning } {#1}
+
+
 % Check incompatible packages
 \msg_new:nnn { citation-style-language } { incompatible-package }
-  { The~ `#1'~ package~ is~ incompatible~ with~ `citation-style-language'. }
+  { Package~ '#1'~ is~ incompatible~ with~ 'citation-style-language'. }
 
 \clist_map_inline:nn
   {

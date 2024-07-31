@@ -117,7 +117,7 @@ local function concat_strings(pieces, strings)
       if piece_str then
         value = value .. piece_str
       else
-        util.warning(string.format('String name "%s" is undefined."', piece.name))
+        util.warning(string.format("String name '%s' is undefined.", piece.name))
       end
     end
   end
@@ -311,7 +311,7 @@ end
 function bibtex_parser.split_name_parts(str)
   str = util.strip(str)
   if string.match(str, ",$") then
-    util.warning(string.format('Name "%s" has has a comma at the end.', str))
+    util.warning(string.format("Name '%s' has has a comma at the end.", str))
     str = string.gsub(str, ",$", '')
   end
 
@@ -339,7 +339,7 @@ function bibtex_parser.split_name_parts(str)
   elseif #parts == 3 then
     name = bibtex_parser._split_last_jr_first_parts(parts)
   elseif #parts > 3 then
-    util.error(string.format('Too many commas in name "%s"', str))
+    util.error(string.format("Too many commas in name '%s'", str))
     name = bibtex_parser._split_last_jr_first_parts(util.slice(parts, 1, 3))
   end
 
@@ -407,7 +407,7 @@ function bibtex_parser._split_extended_name_format(parts)
       key, value = string.match(part, '^"([a-zA-Z]+%-?i?)%s*=%s*(.-)%s*"%s*$')
     end
     if not key then
-      util.error(string.format('Invalid extended name part "%s"', part))
+      util.error(string.format("Invalid extended name part '%s'", part))
     end
 
     if key == "given" then

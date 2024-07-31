@@ -3,7 +3,7 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Test default bibliography
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 Completed box being shipped out [1]
 \vbox(633.0+0.0)x407.0
 .\glue 16.0
@@ -46,47 +46,47 @@ Completed box being shipped out [1]
 ============================================================
 TEST 2: Test default bibliography heading
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 ============================================================
 TEST 3: Test biblist heading
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 ============================================================
 TEST 4: Test bibintoc heading
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 ============================================================
 TEST 5: Test biblistintoc heading
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 ============================================================
 TEST 6: Test bibnumbered heading
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 ============================================================
 TEST 7: Test biblistnumbered heading
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 ============================================================
 TEST 8: Test subbibliography heading
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 ============================================================
 TEST 9: Test subbibintoc heading
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 ============================================================
 TEST 10: Test subbibnumbered heading
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 ============================================================
 TEST 11: Test bib title

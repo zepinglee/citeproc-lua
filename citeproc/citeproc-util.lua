@@ -78,7 +78,7 @@ function util.to_boolean(str)
   elseif str == "false" then
     return false
   else
-    util.warning(string.format('Invalid boolean string "%s"', str))
+    util.warning(string.format("Invalid boolean string '%s'", str))
     return false
   end
 end
@@ -133,7 +133,7 @@ util.logging_file = nil
 function util.set_logging_file(path)
   util.logging_file = io.open(path, "w")
   if not util.logging_file then
-    util.error(string.format('Cannot write to "%s".', path))
+    util.error(string.format("Cannot write to '%s'.", path))
   end
   util.logging_file = io.open(path, 'a')
 end
@@ -150,20 +150,24 @@ util.num_errors = 0
 util.num_warnings = 0
 
 
+---@param message string
 function util.error(message)
   util.num_errors = util.num_errors + 1
   if luatexbase then
-    -- The luatexbase.module_error() prints the traceback, which causes panic
-    -- luatexbase.module_error("citeproc", message)
-
-    -- TODO: Enhance the error output. Make it like `\msg_error`.
-    texio.write_nl("term", "\n")
-    tex.error("Module citeproc Error: " .. message)
-
-    -- tex.print(string.format("\\PackageError{citation-style-language}{%s}{}", message))
-
+    -- Run in LuaLaTeX
+    tex.print(string.format("\\csname msg_error:nnn\\endcsname{citeproc}{citeproc-error}{%s}", message))
+    -- Don't use the following methods.
+    -- `error()` prints long traceback when run in LuaLaTeX.
+    -- texio.write_nl("term", "\n")
+    -- `tex.error()` prints annoying `\lua_now:e #1->` when called from LaTeX3 interface.
+    -- `luatexbase.module_error()` prints traceback.
+    -- tex.print(string.format("\\PackageError{CSL}{%s}{}", message))
   else
-    message  = "Error: " .. message
+    -- Run in citeproc-lua script
+    -- This format is used by latexmk. DO NOT change.
+    message = "Error: " .. message
+    -- Following bibtex and biber, the error message is printed to stdout rather than stderr.
+    -- And the error doesn't break the execution of the script.
     print(message)
     if util.logging_file then
       util.logging_file:write(message .. "\n")
@@ -176,12 +180,10 @@ util.warning_enabled = true
 function util.warning(message)
   util.num_warnings = util.num_warnings + 1
   if luatexbase then
-    texio.write_nl("term", "\n")
-    luatexbase.module_warning("citeproc", message)
-
-    -- tex.print(string.format("\\PackageWarning{citation-style-language}{%s}{}", message))
+    tex.print(string.format("\\csname msg_warning:nnn\\endcsname{citeproc}{citeproc-warning}{%s}", message))
 
   else
+    -- This format is used by latexmk. DO NOT change.
     message = "Warning: " .. message
     if util.logging_file then
       util.logging_file:write(message .. "\n")
@@ -389,6 +391,19 @@ function util.lstrip (str)
 end
 
 ---@param str string
+---@param prefix string
+---@return string
+function util.remove_prefix(str, prefix)
+  if type(str) ~= "string" or type(prefix) ~= "string" then
+    error("Invalid input")
+  end
+  if util.startswith(str, prefix) then
+    return string.sub(str, #prefix + 1)
+  end
+  return str
+end
+
+---@param str string
 ---@return string
 function util.rstrip (str)
   if not str then
@@ -406,7 +421,7 @@ end
 
 function util.startswith(str, prefix)
   if type(str) ~= "string" then
-    util.error(string.format('\n%s\n"%s" is not a string.', debug.traceback(), str))
+    util.error(string.format("\n%s\n'%s' is not a string.", debug.traceback(), str))
   end
   return string.sub(str, 1, #prefix) == prefix
 end
@@ -1156,7 +1171,7 @@ function util.read_file(path, allowe_missing)
   local file = io.open(path, "r")
   if not file then
     if not allowe_missing then
-      util.error(string.format('Cannot open file "%s".', path))
+      util.error(string.format("Cannot open file '%s'.", path))
     end
     return nil
   end
@@ -1172,7 +1187,7 @@ end
 function util.write_file(text, path)
   local file = io.open(path, "w")
   if not file then
-    util.error(string.format('Cannot write to file "%s".', path))
+    util.error(string.format("Cannot write to file '%s'.", path))
     return
   end
   file:write(text)
@@ -1302,7 +1317,7 @@ util.trigraph = "Aaaa00:AaAa00:AaAA00:AAAA00"
 ---@return { authors: integer[], year: integer }
 function util.get_trigraph_param(trigraph)
   if not trigraph or string.sub(trigraph, 1, 1) ~= "A" then
-    util.error(string.format('Bad trigraph definition: "%s"', trigraph))
+    util.error(string.format("Bad trigraph definition: '%s'", trigraph))
   end
   local param = {
     authors = {},
@@ -1319,7 +1334,7 @@ function util.get_trigraph_param(trigraph)
     elseif char == "0" then
       param.year = param.year + 1
     else
-      util.error(string.format('Invalid character "%s" in trigraph definition "%s"', char, trigraph))
+      util.error(string.format("Invalid character '%s' in trigraph definition '%s'", char, trigraph))
     end
   end
   return param

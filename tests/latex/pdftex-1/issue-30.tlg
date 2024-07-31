@@ -134,7 +134,7 @@ Completed box being shipped out [1]
 ============================================================
 TEST 3: Bibliography with URL
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 (issue-30.aux)
 LaTeX Warning: There were undefined references.

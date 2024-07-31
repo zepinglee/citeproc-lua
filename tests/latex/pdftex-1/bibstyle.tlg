@@ -15,9 +15,8 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line ....
 LaTeX Font Info:    ... okay on input line ....
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line ....
 LaTeX Font Info:    ... okay on input line ....
-Package citation-style-language Warning: Missing style name.
-(citation-style-language)                Will use default APA style.
-Package citation-style-language Warning: Empty bibliographic resources. Use \addbibresource.
+Package CSL Warning: Missing style name. Will use default APA style.
+Package CSL Warning: Empty bibliographic resources. Use \addbibresource.
 No file bibstyle.bbl.
 (csl-citation-tests.tex
 ============================================================
@@ -212,7 +211,7 @@ l. ...}
 ============================================================
 TEST 18: Bibliography
 ============================================================
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 [1
 ] (bibstyle.aux)

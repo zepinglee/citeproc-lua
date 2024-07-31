@@ -18,7 +18,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line ....
 LaTeX Font Info:    ... okay on input line ....
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line ....
 LaTeX Font Info:    ... okay on input line ....
-Package citation-style-language Warning: Empty bibliographic resources. Use \addbibresource.
+Package CSL Warning: Empty bibliographic resources. Use \addbibresource.
 (csl-citation-tests.tex
 ============================================================
 TEST 1: Single cite item in a citation
@@ -217,7 +217,7 @@ The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}
-Package citation-style-language Warning: The bibliography is empty.
+Package CSL Warning: The bibliography is empty.
 ============================================================
 [1
 ] (bibstyle-in-preamble.aux)

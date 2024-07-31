@@ -253,8 +253,8 @@ function If:evaluate_condition(condition, state, context)
     local variable = condition.value
     local variable_type = util.variable_types[variable] or "standard"
 
-    if variable_type ~= "standard" and variable_type ~= "number"  then
-      util.warning(string.format('Expecting number variable for condition "is-numeric", got %s "%s"', variable_type, variable))
+    if variable_type ~= "standard" and variable_type ~= "number" then
+      util.warning(string.format("Expecting number variable for condition 'is-numeric', got %s '%s'", variable_type, variable))
       return false
     end
 
@@ -263,7 +263,7 @@ function If:evaluate_condition(condition, state, context)
       return false
     end
     if type(value) ~= "string" and type(value) ~= "number" then
-      util.error(string.format('Expecting a string or number for variable "%s", got "%s"', variable, type(value)))
+      util.error(string.format("Expecting a string or number for variable '%s', got '%s'", variable, type(value)))
     end
     return util.is_numeric(value)
 
@@ -273,7 +273,7 @@ function If:evaluate_condition(condition, state, context)
     local variable_type = util.variable_types[variable] or "standard"
 
     if variable_type ~= "date" then
-      util.warning(string.format('Expecting date variable for condition "is-uncertain-date", got "%s"', variable_type, variable))
+      util.warning(string.format("Expecting date variable for condition 'is-uncertain-date', got '%s'", variable_type, variable))
       return false
     end
     local value = context:get_variable(variable)
