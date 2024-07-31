@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2024-07-31
+
 - Add support for multiple bibliographies (`refsection` environment).
 - Add global `ref-section` option.
 
@@ -210,7 +212,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial CTAN release.
 
-[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.5.1...HEAD
+[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.5.1...v0.6.0
 [0.5.1]: https://github.com/zepinglee/citeproc-lua/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.9...v0.5.0
 [0.4.9]: https://github.com/zepinglee/citeproc-lua/compare/v0.4.8...v0.4.9

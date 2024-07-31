@@ -16,7 +16,7 @@ else
   util = require("citeproc.util")
 end
 
-citeproc.__VERSION__ = "0.5.1"
+citeproc.__VERSION__ = "0.6.0"
 
 citeproc.new = engine.CiteProc.new
 citeproc.util = util
