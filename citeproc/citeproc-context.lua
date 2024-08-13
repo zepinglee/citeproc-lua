@@ -23,9 +23,11 @@ end
 
 ---@class Context
 ---@field reference ItemData?
----@field format any
+---@field format OutputFormat
 ---@field cite_id string?
+---@field engine CiteProc
 ---@field style any Style
+---@field lang LanguageCode
 ---@field locale Locale?
 ---@field name_citation any
 ---@field names_delimiter any
@@ -60,6 +62,7 @@ local Context = {
 
 function Context:new()
   local o = {
+    lang = "en-US",
     in_bibliography = false
   }
   setmetatable(o, self)
@@ -348,6 +351,9 @@ function Context:is_english()
 end
 
 
+---@class IrState
+---@field macro_stack string[]
+---@field suppressed {[string]: boolean}
 local IrState = {}
 
 function IrState:new(style, cite_id, cite, reference)

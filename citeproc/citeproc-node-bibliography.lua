@@ -118,7 +118,6 @@ function Bibliography:build_bibliography_str(id, engine)
     context.style = engine.style
     context.area = self
     context.in_bibliography = true
-    -- context.locale = engine:get_locale(engine.lang)
     context.name_inheritance = self.name_inheritance
     context.format = output_format
     context.id = id
@@ -127,6 +126,7 @@ function Bibliography:build_bibliography_str(id, engine)
 
     -- CSL-M: `layout` extension
     local active_layout, context_lang = util.get_layout_by_language(self, engine, context.reference)
+    context.lang = context_lang
     context.locale = engine:get_locale(context_lang)
 
     local ir = self:build_ir(engine, state, context, active_layout)

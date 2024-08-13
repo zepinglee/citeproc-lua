@@ -644,7 +644,7 @@ TEST 19: Bibliography contents
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 1, second-field-align = flush, line-spacing = 2, entry-spacing = 0, widest-label = 1.}}
 >  {\bibitem [1.]{ITEM-1} D’Arcus, B. \textit {Boundaries of Dissent: Protest and State Power in the Media Age}. (Routledge, 2005).}
->  {\bibitem [2.]{ITEM-2} Bennett, F. G., Jr. Getting property right: ‘Informal’ mortgages in the Japanese courts. \textit {Pac. Rim L. \& Pol’y J.} \textbf {18}, 463–509 (2009).}
+>  {\bibitem [2.]{ITEM-2} Bennett, F. G., Jr. Getting property right: “Informal” mortgages in the Japanese courts. \textit {Pac. Rim L. \& Pol’y J.} \textbf {18}, 463–509 (2009).}
 >  {\bibitem [3.]{ITEM-3} Lamport, L. \textit {LaTeX: A Document Preparation System: User’s Guide and Reference Manual}. (Addison-Wesley, Reading, MA, USA, 1994).}
 >  {\end {thebibliography}}.
 <recently read> }
@@ -808,7 +808,7 @@ Completed box being shipped out [2]
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\baselineskip) 14.55556
-...\hbox(6.94444+1.94444)x332.2222, glue set 1.3533, shifted 12.7778
+...\hbox(6.94444+1.94444)x332.2222, glue set 1.08664, shifted 12.7778
 ....\hbox(6.44444+0.0)x0.0
 .....\glue 0.0
 .....\glue -7.7778
@@ -872,7 +872,7 @@ Completed box being shipped out [2]
 ....\OT1/cmr/m/n/10 t
 ....\OT1/cmr/m/n/10 :
 ....\glue 3.33333 plus 1.66666 minus 1.11111
-....\OT1/cmr/m/n/10 `
+....\OT1/cmr/m/n/10 \
 ....\OT1/cmr/m/n/10 I
 ....\OT1/cmr/m/n/10 n
 ....\discretionary
@@ -885,7 +885,7 @@ Completed box being shipped out [2]
 ....\OT1/cmr/m/n/10 m
 ....\OT1/cmr/m/n/10 a
 ....\OT1/cmr/m/n/10 l
-....\OT1/cmr/m/n/10 '
+....\OT1/cmr/m/n/10 "
 ....\glue 3.33333 plus 1.66666 minus 1.11111
 ....\OT1/cmr/m/n/10 m
 ....\OT1/cmr/m/n/10 o

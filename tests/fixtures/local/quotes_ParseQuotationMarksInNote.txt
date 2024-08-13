@@ -1,0 +1,72 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
+
+
+>>===== DESCRIPTION =====>>
+<https://github.com/zepinglee/citeproc-lua/issues/71>
+<<===== DESCRIPTION =====<<
+
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry">Sari’s foo `yeah’. Bar “the speaker’s baz”. Quz `(baz) he’d sleep upstairs’.</div>
+  <div class="csl-entry">Sari’s foo `yeah’. Bar “the speaker’s baz”. Quz</div>
+  <div class="csl-entry">Sari’s foo ‘yeah’. Bar “the speaker’s baz”. Quz ‘(baz) he’d sleep upstairs’.</div>
+  <div class="csl-entry">Sari’s foo “yeah”. Bar ‘the speaker’s baz’. Quz “(baz) he’d sleep upstairs”.</div>
+</div>
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="in-text"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2024-08-13T10:18:08+08:00</updated>
+  </info>
+  <citation>
+    <layout>
+    </layout>
+  </citation>
+  <bibliography>
+    <layout>
+      <text variable="note"/>
+    </layout>
+  </bibliography>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "Sari2007-Pragma",
+        "type": "thesis",
+        "note": "Sari's foo `yeah'. Bar \"the speaker's baz\". Quz `(baz) he'd sleep upstairs'."
+    },
+    {
+        "id": "Sari2007-Pragma-shorterNote",
+        "type": "thesis",
+        "note": "Sari's foo `yeah'. Bar \"the speaker's baz\". Quz"
+    },
+    {
+        "id": "Sari2007-Pragma-curly-quotes",
+        "type": "thesis",
+        "note": "Sari’s foo ‘yeah’. Bar “the speaker’s baz”. Quz ‘(baz) he’d sleep upstairs’."
+    },
+    {
+        "id": "Sari2007-Pragma-straight-quotes",
+        "type": "thesis",
+        "note": "Sari's foo 'yeah'. Bar \"the speaker's baz\". Quz '(baz) he'd sleep upstairs'."
+    }
+]
+<<===== INPUT =====<<
+
+
+>>===== VERSION =====>>
+1.0
+<<===== VERSION =====<<

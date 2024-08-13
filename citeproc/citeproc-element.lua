@@ -245,6 +245,9 @@ function Element:build_group_ir(engine, state, context)
   return ir
 end
 
+---@param str string
+---@param context Context
+---@return InlineElement[]
 function Element:render_text_inlines(str, context)
   if str == "" then
     return {}

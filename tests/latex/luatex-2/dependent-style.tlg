@@ -757,7 +757,7 @@ TEST 19: Bibliography contents
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 1, second-field-align = flush, line-spacing = 2, entry-spacing = 0, widest-label = 1.}}
 >  {\bibitem [1.]{ITEM-1} D’Arcus, B. \textit {Boundaries of Dissent: Protest and State Power in the Media Age}. (Routledge, 2005).}
->  {\bibitem [2.]{ITEM-2} Bennett, F. G., Jr. Getting property right: ‘Informal’ mortgages in the Japanese courts. \textit {Pac. Rim L. \& Pol’y J.} \textbf {18}, 463–509 (2009).}
+>  {\bibitem [2.]{ITEM-2} Bennett, F. G., Jr. Getting property right: “Informal” mortgages in the Japanese courts. \textit {Pac. Rim L. \& Pol’y J.} \textbf {18}, 463–509 (2009).}
 >  {\bibitem [3.]{ITEM-3} Lamport, L. \textit {LaTeX: A Document Preparation System: User’s Guide and Reference Manual}. (Addison-Wesley, Reading, MA, USA, 1994).}
 >  {\end {thebibliography}}.
 <recently read> }
@@ -945,7 +945,7 @@ Completed box being shipped out [2]
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\baselineskip) 14.45
-...\hbox(7.05+2.06)x332.22, glue set 1.35255, shifted 12.78, direction TLT
+...\hbox(7.05+2.06)x332.22, glue set 1.11952, shifted 12.78, direction TLT
 ....\localpar
 .....\localinterlinepenalty=0
 .....\localbrokenpenalty=0
@@ -1015,7 +1015,7 @@ Completed box being shipped out [2]
 ....\TU/lmr/m/n/10 t
 ....\TU/lmr/m/n/10 :
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
-....\TU/lmr/m/n/10 ‘
+....\TU/lmr/m/n/10 “
 ....\TU/lmr/m/n/10 I
 ....\TU/lmr/m/n/10 n
 ....\discretionary (penalty 50)
@@ -1028,7 +1028,7 @@ Completed box being shipped out [2]
 ....\TU/lmr/m/n/10 m
 ....\TU/lmr/m/n/10 a
 ....\TU/lmr/m/n/10 l
-....\TU/lmr/m/n/10 ’
+....\TU/lmr/m/n/10 ”
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\TU/lmr/m/n/10 m
 ....\TU/lmr/m/n/10 o

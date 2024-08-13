@@ -292,7 +292,6 @@ end
 ---@param citeproc_sys CiteProcSys
 function RefSection:_check_dependent_style(citeproc_sys)
   if self.engine:is_dependent_style() then
-    local default_locale = self.engine.style.default_locale;
     local parent_style_link = self.engine:get_independent_parent()
     if not parent_style_link then
       return nil
@@ -304,14 +303,16 @@ function RefSection:_check_dependent_style(citeproc_sys)
       util.error(string.format("Failed to load style '%s.csl'", parent_style_id))
       return nil
     end
+    local default_locale = self.engine.style.default_locale;
     local force_lang = false
     if self.lang and self.lang ~= "" then
       force_lang = true
+    elseif default_locale and default_locale ~= "" then
+      self.lang = default_locale
     else
       self.lang = nil
     end
     self.engine = citeproc.new(citeproc_sys, style, self.lang, force_lang)
-    self.engine.style.default_locale = default_locale
   end
 end
 

@@ -1,0 +1,71 @@
+% <https://github.com/zepinglee/citeproc-lua/discussions/71>
+
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\begin{filecontents}[overwrite, noheader]{apa-annotated-bibliography.csl}
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="never" page-range-format="expanded">
+  <info>
+    <title>American Psychological Association 7th edition (annotated bibliography)</title>
+    <id>http://www.zotero.org/styles/apa-annotated-bibliography</id>
+    <updated>2024-07-19T10:52:31-04:00</updated>
+  </info>
+  <citation>
+    <layout prefix="(" suffix=")" delimiter="; ">
+    </layout>
+  </citation>
+  <bibliography hanging-indent="true" entry-spacing="0" line-spacing="2">
+    <layout>
+      <text variable="note"/>
+    </layout>
+  </bibliography>
+</style>
+\end{filecontents}
+
+
+\begin{filecontents}[overwrite, noheader]{\jobname.json}
+[
+    {
+        "id": "Sari2007-Pragma",
+        "type": "thesis",
+        "note": "Sari's dissertation aims to clarify the function of seven Indonesian particles (<i>kan</i>, <i>ya</i>, <i>kok</i>, <i>lho</i>, <i>dong</i>, <i>deh</i>, and <i>sih</i>) and the English particle `yeah'. Sari argues that <i>deh</i> takes sentence-final position and is an emphatic particle which enhances \"the speaker's explanation about an idea\". Usually <i>deh</i> has neutral or falling intonation. One of the conversation chunks Sari analyses is <i>tidur deh di atas</i> which Sari translates as `(we just had to accept that) he'd sleep upstairs'."
+    },
+    {
+        "id": "Sari2007-Pragma-shorterNote",
+        "type": "thesis",
+        "note": "Sari's dissertation aims to clarify the function of seven Indonesian particles (<i>kan</i>, <i>ya</i>, <i>kok</i>, <i>lho</i>, <i>dong</i>, <i>deh</i>, and <i>sih</i>) and the English particle `yeah'. Sari argues that <i>deh</i> takes sentence-final position and is an emphatic particle which enhances \"the speaker's explanation about an idea\". Usually <i>deh</i> has neutral or falling intonation. One of the conversation chunks Sari analyses is <i>tidur deh di atas</i> which Sari translates as "
+    },
+    {
+        "id": "Sari2007-Pragma-curly-quotes",
+        "type": "thesis",
+        "note": "Sari’s dissertation aims to clarify the function of seven Indonesian particles (<i>kan</i>, <i>ya</i>, <i>kok</i>, <i>lho</i>, <i>dong</i>, <i>deh</i>, and <i>sih</i>) and the English particle ‘yeah’. Sari argues that <i>deh</i> takes sentence-final position and is an emphatic particle which enhances “the speaker’s explanation about an idea”. Usually <i>deh</i> has neutral or falling intonation. One of the conversation chunks Sari analyses is <i>tidur deh di atas</i> which Sari translates as ‘(we just had to accept that) he’d sleep upstairs’."
+    },
+    {
+        "id": "Sari2007-Pragma-straight-quotes",
+        "type": "thesis",
+        "note": "Sari's dissertation aims to clarify the function of seven Indonesian particles (<i>kan</i>, <i>ya</i>, <i>kok</i>, <i>lho</i>, <i>dong</i>, <i>deh</i>, and <i>sih</i>) and the English particle 'yeah'. Sari argues that <i>deh</i> takes sentence-final position and is an emphatic particle which enhances \"the speaker's explanation about an idea\". Usually <i>deh</i> has neutral or falling intonation. One of the conversation chunks Sari analyses is <i>tidur deh di atas</i> which Sari translates as '(we just had to accept that) he'd sleep upstairs'."
+    }
+]
+\end{filecontents}
+
+\usepackage[style=apa-annotated-bibliography]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{\jobname.json}
+
+
+\begin{document}
+\START
+
+\nocite{Sari2007-Pragma} % note has problem with quotation marks
+\nocite{Sari2007-Pragma-shorterNote} % note has no problem with quotation marks
+\nocite{Sari2007-Pragma-curly-quotes}
+\nocite{Sari2007-Pragma-straight-quotes}
+
+\TEST{bibliography}{
+  \printbibliography
+}
+
+\OMIT
+\end{document}

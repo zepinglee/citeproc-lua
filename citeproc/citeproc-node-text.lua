@@ -229,7 +229,12 @@ function Text:build_citation_label_ir(engine, state, context)
 end
 
 function Text:build_macro_ir(engine, state, context)
+  ---@type Macro
   local macro = context:get_macro(self.macro)
+  if not macro then
+    util.error(string.format("Macro '%s' not found", self.macro))
+    return nil
+  end
   -- util.debug(string.format('<macro name="%s">', self.macro))
   state:push_macro(self.macro)
   local ir = macro:build_ir(engine, state, context)

@@ -101,11 +101,14 @@ function InlineElement:_debug(level)
   end
   text = text .. self._type
   if self.formatting then
-    text = text .. "["
+    text = text .. " ["
     for attr, value in pairs(self.formatting) do
       text = text .. attr .. '="' .. value .. '"'
     end
-    text = text .. "]"
+    text = text .. "] "
+  end
+  if self.is_inner then
+    text = text .. " [inner quotes]"
   end
   text = text .. "("
   if self.value then
@@ -167,16 +170,17 @@ end
 
 ---@class Quoted: InlineElement
 ---@field is_inner boolean
----@field quotes table
+---@field quotes LocalizedQuotes
 local Quoted = InlineElement:derive("Quoted")
 
 ---@param inlines InlineElement[]
----@param localized_quotes table?
+---@param localized_quotes LocalizedQuotes?
+---@param is_inner boolean?
 ---@return Quoted
-function Quoted:new(inlines, localized_quotes)
+function Quoted:new(inlines, localized_quotes, is_inner)
   local o = InlineElement.new(self)
   o.inlines = inlines
-  o.is_inner = false
+  o.is_inner = is_inner or false
   if localized_quotes then
     o.quotes = localized_quotes
   else
@@ -410,224 +414,457 @@ function InlineElement:parse_csl_rich_text(text)
   return inlines
 end
 
-local function tokens2inlines(tokens)
-  local inlines = {}
-  local i = 1
-  while i <= #tokens do
-    local token = tokens[i]
-    if type(token) == "string" then
-      local text = token
-      local j = i + 1
-      while j <= #tokens and type(tokens[j]) == "string" do
-        text = text .. tokens[j]
-        j = j + 1
-      end
-      i = j
-      table.insert(inlines, PlainText:new(text))
-    else
-      table.insert(inlines, token)
-      i = i + 1
+
+local P = lpeg.P
+local Ct = lpeg.Ct
+local Cp = lpeg.Cp
+
+-- Lua's regex doesn't support groups and thus we have to implement the same
+-- logic with `lpeg`.
+local code_pattern =
+    Ct(Cp() * P("<code>") * Cp()) * ((1 - P("</code>")) ^ 0) *
+    Ct(Cp() * P("</code>") * Cp())
+    + Ct(Cp() * P("<script>") * Cp()) * ((1 - P("</script>")) ^ 0) *
+    Ct(Cp() * P("</script>") * Cp())
+    + Ct(Cp() * P("<pre>") * Cp()) * ((1 - P("</pre>")) ^ 0) *
+    Ct(Cp() * P("</pre>") * Cp())
+    + Ct(Cp() * P("<math>") * Cp()) * ((1 - P("</math>")) ^ 0) * Ct(Cp() * P("</math>") * Cp())
+    + Ct(Cp() * P("<math-tex>") * Cp()) * ((1 - P("</math-tex>")) ^ 0) * Ct(Cp() * P("</math-tex>") * Cp())
+local basic_tag_pattern = P '<span class="nocase">'
+    + P '<span class="nodecor">'
+    + P '<span style="font-variant:small-caps;">'
+    + P '<sc>'
+    + P '<i>'
+    + P '<b>'
+    + P '<sup>'
+    + P '<sub>'
+    + P ' "'
+    + P " '"
+    + P '("'
+    + P "('"
+    + P "“"
+    + P "‘"
+    + P '</span>'
+    + P '</sc>'
+    + P '</i>'
+    + P '</b>'
+    + P '</sup>'
+    + P '</sub>'
+    + P '"'
+    + P "'"
+    + P "”"
+    + P "’"
+
+local default_tag_pattern = Ct((code_pattern + Ct(Cp() * basic_tag_pattern * Cp()) + P(1)) ^ 0)
+
+local default_openers_info = {
+  ['<span class="nocase">'] = {
+    closer = "</span>",
+    quotes = false,
+  },
+  ['<span class="nodecor">'] = {
+    closer = "</span>",
+    quotes = false,
+  },
+  ['<span style="font-variant:small-caps;">'] = {
+    closer = "</span>",
+    quotes = false,
+  },
+  ['<sc>'] = {
+    closer = "</sc>",
+    quotes = false,
+  },
+  ['<i>'] = {
+    closer = "</i>",
+    quotes = false,
+  },
+  ['<b>'] = {
+    closer = "</b>",
+    quotes = false,
+  },
+  ['<sup>'] = {
+    closer = "</sup>",
+    quotes = false,
+  },
+  ['<sub>'] = {
+    closer = "</sub>",
+    quotes = false,
+  },
+  [' "'] = {
+    closer = '"',
+    quotes = true,
+  },
+  [" '"] = {
+    closer = "'",
+    quotes = true,
+  },
+  ["“"] = {
+    closer = "”",
+    quotes = true,
+  },
+  ["‘"] = {
+    closer = "’",
+    quotes = true,
+  },
+  ['<code>'] = {
+    closer = "</code>",
+    quotes = false,
+  },
+  ['<script>'] = {
+    closer = "</script>",
+    quotes = false,
+  },
+  ['<pre>'] = {
+    closer = "</pre>",
+    quotes = false,
+  },
+  ['<math>'] = {
+    closer = "</math>",
+    quotes = false,
+  },
+  ['<math-tex>'] = {
+    closer = "</math-tex>",
+    quotes = false,
+  },
+}
+
+local function _quoted(str)
+  str = string.gsub(str, "'", "\'")
+  return string.format("'%s'", str)
+end
+
+---@param locale string
+---@param context Context
+local function make_locale_tag_info(locale, context)
+  if context.engine.locale_tags_info_dict[locale] then
+    return
+  end
+  local localed_quotes = context:get_localized_quotes()
+
+  local tag_pattern = basic_tag_pattern
+  local openers_info = util.deep_copy(default_openers_info)
+
+  if localed_quotes.outer_open and localed_quotes.outer_close then
+    tag_pattern = tag_pattern + P(_quoted(localed_quotes.outer_open))
+    tag_pattern = tag_pattern + P(_quoted(localed_quotes.outer_close))
+
+    openers_info[localed_quotes.outer_open] = {
+      closer = localed_quotes.outer_close,
+      quotes = true,
+      inner = false
+    }
+  end
+
+  if localed_quotes.inner_open and localed_quotes.inner_close then
+    tag_pattern = tag_pattern + P(_quoted(localed_quotes.inner_open))
+    tag_pattern = tag_pattern + P(_quoted(localed_quotes.inner_close))
+
+    openers_info[localed_quotes.inner_open] = {
+      closer = localed_quotes.inner_close,
+      quotes = true,
+      inner = true
+    }
+  end
+
+  context.engine.locale_tags_info_dict[locale] = {
+    tag_pattern = Ct((code_pattern + Ct(Cp() * tag_pattern * Cp()) + P(1)) ^ 0),
+    openers_info = openers_info,
+  }
+end
+
+
+local straight_quotes_flip = {
+  [" '"] = ' "',
+  [' "'] = " '",
+};
+
+---@param str any
+---@param context Context?
+---@return string[]
+---@return string[]
+local function split_tags_and_strings(str, context)
+  local tags = {}
+  local strings = {}
+
+  str = string.gsub(str, '(<span)%s+(style="font%-variant:)%s*(small%-caps);?"[^>]*(>)', '%1 %2%3;"%4');
+
+  str = string.gsub(str, '(<span)%s+(class="nocase")[^>]*(>)', "%1 %2%3");
+  str = string.gsub(str, '(<span)%s+(class="nodecor")[^>]*(>)', "%1 %2%3");
+
+  local tag_pattern = default_tag_pattern
+  local openers_info = default_openers_info
+  if context and context.lang then
+    tag_pattern = context.engine.locale_tags_info_dict[context.lang].tag_pattern
+  end
+
+  local tag_positions_list = lpeg.match(tag_pattern, str)
+  if not tag_positions_list then
+    error('Pattern not match')
+  end
+  local start = 1
+  local stop = 1
+  local new_stop = 1
+  for _, postion_tuple in ipairs(tag_positions_list) do
+    start, new_stop = table.unpack(postion_tuple)
+    table.insert(strings, string.sub(str, stop, start - 1))
+    table.insert(tags, string.sub(str, start, new_stop - 1))
+    stop = new_stop
+  end
+  table.insert(strings, string.sub(str, stop, -1))
+
+  for i, tag in ipairs(tags) do
+    if string.match(tag, "^.['\"]$") then
+      strings[i] = strings[i] .. string.sub(tag, 1, 1)
+      tags[i] = " " .. string.sub(tag, 2)
+    elseif (tag == "'" or tag == '"') and strings[i] == "" and (i == 1 or openers_info[tags[i - 1]]) then
+      -- See `bugreports_NoCaseEscape.txt`.
+      -- '"PIAAC-Longitudinal (PIAAC-L) 2015"'
+      -- <span class=\"nocase\">\"PIAAC-Longitudinal (PIAAC-Lx) 2015\"</span>
+      tags[i] = " " .. tag
     end
   end
-  return inlines
+
+  return tags, strings
 end
 
-local function get_inline_element_grammar()
-  local P = lpeg.P
-  local C = lpeg.C
-  local Ct = lpeg.Ct
-  local S = lpeg.S
-  local V = lpeg.V
-  local spaces = P(" ")^1
-  local grammar = P{
-    "content";
-    token = V"italic" + V"bold" + V"sup" + V"sub" + V"sc" + V"small_caps" + V"span_nocase" + V"nodecor" + V"math_tex" + V"math_ml" + V"code" + V"script" + C(1),
-    content = Ct((V"token")^0) / tokens2inlines,
-    italic = P"<i>" * Ct((V"token" - P"</i>")^0) * P"</i>" / function (tokens)
-      return Formatted:new(tokens2inlines(tokens), {["font-style"] = "italic"})
-    end,
-    bold = P"<b>" * Ct((V"token" - P"</b>")^0) * P"</b>" / function (tokens)
-      return Formatted:new(tokens2inlines(tokens), {["font-weight"] = "bold"})
-    end,
-    sup = P"<sup>" * Ct((V"token" - P"</sup>")^0) * P"</sup>" / function (tokens)
-      return Formatted:new(tokens2inlines(tokens), {["vertical-align"] = "sup"})
-    end,
-    sub = P"<sub>" * Ct((V"token" - P"</sub>")^0) * P"</sub>" / function (tokens)
-      return Formatted:new(tokens2inlines(tokens), {["vertical-align"] = "sub"})
-    end,
-    sc = P"<sc>" * Ct((V"token" - P"</sc>")^0) * P"</sc>" / function (tokens)
-      return Formatted:new(tokens2inlines(tokens), {["font-variant"] = "small-caps"})
-    end,
-    quoted = (
-          C(P'"') * Ct((V"token" - P'"')^0) * C(P'"')
-          + C(P"'") * Ct((V"token" - P"'")^0) * C(P"'")
-          + C(P'“') * Ct((V"token" - P'”')^0) * C(P'”')
-          + C(P"‘") * Ct((V"token" - P"’")^0) * C(P"’")
-          + C(P"«") * Ct((V"token" - P"»")^0) * C(P"»")
-        ) / function (open, tokens, close)
-      return Quoted:new(tokens2inlines(tokens), LocalizedQuotes:new(open, close))
-    end,
-    small_caps = P"<span" * spaces * P'style="font-variant:' * spaces^0 * P'small-caps;">' * Ct((V"token" - P"</span>")^0) * P"</span>" / function (tokens)
-      return Formatted:new(tokens2inlines(tokens), {["font-variant"] = "small-caps"})
-    end,
-    -- nocase = P"<nocase>" * Ct((V"token" - P"</nocase>")^0) * P"</nocase>" / function (tokens)
-    --   return NoCase:new(tokens2inlines(tokens))
-    -- end,
-    span_nocase = P"<span" * spaces * P'class="nocase">' * Ct((V"token" - P"</span>")^0) * P"</span>" / function (tokens)
-      return NoCase:new(tokens2inlines(tokens))
-    end,
-    nodecor = P"<span" * spaces * P'class="nodecor">' * Ct((V"token" - P"</span>")^0) * P"</span>" / function (tokens)
-      return NoDecor:new(tokens2inlines(tokens))
-    end,
-    math_tex = P"<math-tex>" * C((1- P"</math-tex>")^0) * P"</math-tex>" / function (text)
-      return MathTeX:new(text)
-    end,
-    math_ml = P"<math>" * C((1- P"</math>")^0) * P"</math>" / function (text)
-      return MathML:new(text)
-    end,
-    code = P"<code>" * C((1 - P"</code>")^0) * P"</code>" / function (text)
-      return Code:new(text)
-    end,
-    script = P"<script>" * C((1- P"</script>")^0) * P"</script>" / function (text)
-      return Code:new(text)
-    end,
-  }
-  return grammar
+
+---@param tag string
+---@param str string
+---@return string?
+local function _apostrophe_force(tag, str)
+  if tag == "'" or tag == "’" then
+    if str ~= "" and string.match(str, "^[^,.?:; ]") then
+      return util.unicode["right single quotation mark"]
+    end
+  elseif (tag == " '" or tag == "’") and str ~= "" and string.match(str, "^%s") then
+    return util.unicode["right single quotation mark"]
+  end
+  return nil
 end
 
-local inline_element_grammar = get_inline_element_grammar()
 
+---@param quote string
+---@param openers_info table
+local function set_outer_quote_form(quote, openers_info)
+  openers_info[quote].inner = false;
+  openers_info[straight_quotes_flip[quote]].inner = true;
+end
+
+
+---@param tag string
+---@param inlines InlineElement[]
+---@param openers_info table
+---@param context Context
+---@return InlineElement
+local function make_inline_from_tag(tag, inlines, openers_info, context)
+  if tag == '<span class="nocase">' then
+    return NoCase:new(inlines)
+  elseif tag == '<span class="nodecor">' then
+    return NoDecor:new(inlines)
+  elseif tag == '<span style="font-variant:small-caps;">' then
+    return Formatted:new(inlines, {["font-variant"] = "small-caps"})
+  elseif tag == '<sc>' then
+    return Formatted:new(inlines, {["font-variant"] = "small-caps"})
+  elseif tag == '<i>' then
+    return Formatted:new(inlines, {["font-style"] = "italic"})
+  elseif tag == '<b>' then
+    return Formatted:new(inlines, {["font-weight"] = "bold"})
+  elseif tag == '<sup>' then
+    return Formatted:new(inlines, {["vertical-align"] = "sup"})
+  elseif tag == '<sub>' then
+    return Formatted:new(inlines, {["vertical-align"] = "sub"})
+  elseif openers_info[tag] and openers_info[tag].quotes then
+    local localized_quotes = context:get_localized_quotes()
+    return Quoted:new(inlines, localized_quotes, openers_info[tag].inner)
+  elseif tag == "<code>" or tag == "<script>" or tag == "<pre>" then
+    return Code:new(inlines[1].value)
+  elseif tag == "<math>" or tag == "<math-tex>" then
+    return MathTeX:new(inlines[1].value)
+  else
+    error(string.format("Invalid tag '%s'", tag))
+    return PlainText:new("")
+  end
+end
+
+
+--- processTags() in
+--- <https://github.com/Juris-M/citeproc-js/blob/master/src/util_flipflop.js#L474>
 ---@param str string
 ---@param context Context?
 ---@param is_external boolean?
 ---@return InlineElement[]
 function InlineElement:parse_html_tags(str, context, is_external)
-  local inlines = inline_element_grammar:match(str)
-  inlines = InlineElement:parse_quotes(inlines, context, is_external)
-  return inlines
-end
-
--- TODO: Rewrite with lpeg
----@param inlines InlineElement[]
----@param context Context
----@param is_external boolean?
----@return table
-function InlineElement:parse_quotes(inlines, context, is_external)
-  local quote_fragments = InlineElement:get_quote_fragments(inlines)
-  -- util.debug(quote_fragments)
-
-  local quote_stack = {}
-  local text_stack = {{}}
-
-  local localized_quotes
-  if context then
-    localized_quotes = context:get_localized_quotes()
-  else
-    localized_quotes = LocalizedQuotes:new()
+  if str == "" then
+    return {}
   end
 
-  for _, fragment in ipairs(quote_fragments) do
-    local top_text_list = text_stack[#text_stack]
+  str = string.gsub(str, "(\u{00ab}) ", "\u{00ab}\u{202f}")
+  str = string.gsub(str, " (\u{00bb})", "\u{202f}%1")
+  str = string.gsub(str, " ([:;?!])", "\u{202f}%1")
+  -- str = " " .. string.gsub(str, util.unicode["right single quotation mark"], "'")
 
-    if type(fragment) == "table" then
-      if fragment.inlines then
-        fragment.inlines = self:parse_quotes(fragment.inlines, context, is_external)
-      end
-      table.insert(top_text_list, fragment)
-
-    elseif type(fragment) == "string" then
-      local quote = fragment
-      local top_quote = quote_stack[#quote_stack]
-
-      if quote == "'" then
-        if top_quote == "'" and #top_text_list > 0 then
-          table.remove(quote_stack)
-          local quoted = Quoted:new(top_text_list, localized_quotes)
-          table.remove(text_stack)
-          table.insert(text_stack[#text_stack], quoted)
-        else
-          table.insert(quote_stack, quote)
-          table.insert(text_stack, {})
-        end
-
-      elseif quote == '"' then
-        if top_quote == '"' then
-          table.remove(quote_stack)
-          local quoted = Quoted:new(top_text_list, localized_quotes)
-          table.remove(text_stack)
-          table.insert(text_stack[#text_stack], quoted)
-        else
-          table.insert(quote_stack, quote)
-          table.insert(text_stack, {})
-        end
-
-      elseif quote == util.unicode["left single quotation mark"] or
-             quote == util.unicode["left double quotation mark"] or
-             quote == util.unicode["left-pointing double angle quotation mark"] then
-        table.insert(quote_stack, quote)
-        table.insert(text_stack, {})
-
-      elseif (quote == util.unicode["right single quotation mark"] and
-              top_quote == util.unicode["left single quotation mark"]) or
-             (quote == util.unicode["right double quotation mark"] and
-              top_quote == util.unicode["left double quotation mark"]) or
-             (quote == util.unicode["right-pointing double angle quotation mark"] and
-              top_quote == util.unicode["left-pointing double angle quotation mark"]) then
-          table.remove(quote_stack)
-          if is_external then
-            -- The text is from prefix or suffix of citationItem.
-            -- See flipflop_LeadingMarkupWithApostrophe.txt
-            localized_quotes.outer_open = top_quote
-            localized_quotes.outer_close = quote
-            localized_quotes.inner_open = top_quote
-            localized_quotes.inner_close = quote
-          end
-          local quoted = Quoted:new(top_text_list, localized_quotes)
-          table.remove(text_stack)
-          table.insert(text_stack[#text_stack], quoted)
-
-      else
-        local last_inline = top_text_list[#top_text_list]
-        if last_inline and last_inline._type == "PlainText" then
-          last_inline.value = last_inline.value .. fragment
-        else
-          table.insert(top_text_list, PlainText:new(fragment))
-        end
-      end
-
+  local openers_info = default_openers_info
+  if context and context.lang then
+    if not context.engine.locale_tags_info_dict[context.lang] then
+      make_locale_tag_info(context.lang, context)
     end
+    openers_info = context.engine.locale_tags_info_dict[context.lang].openers_info
   end
 
-  local elements = text_stack[1]
-  if #text_stack > 1 then
-    -- assert(#text_stack == #quote_stack + 1)
-    for i, quote in ipairs(quote_stack) do
-      if quote == "'" then
-        quote = util.unicode["apostrophe"]
-      end
-      local last_inline = elements[#elements]
-      if last_inline and last_inline._type == "PlainText" then
-        last_inline.value = last_inline.value .. quote
-      else
-        table.insert(elements, PlainText:new(quote))
-      end
+  local tags, strings = split_tags_and_strings(str, context)
 
-      for _, inline in ipairs(text_stack[i + 1]) do
-        if inline._type == "PlainText" then
-          local last_inline = elements[#elements]
-          if last_inline and last_inline._type == "PlainText" then
-            last_inline.value = last_inline.value .. inline.value
+  -- util.debug(tags)
+  -- util.debug(strings)
+
+  -- if #tags == 0 then
+  --   return {PlainText:new(str)}
+  -- end
+
+  ---@type {tag: string, closer: string, pos: number}[]
+  local opener_stack = {}
+
+  for i, tag in ipairs(tags) do
+    -- util.debug(i)
+    -- util.debug(strings[i])
+    -- util.debug(tag)
+    -- util.debug(opener_stack)
+    local apostrophe = _apostrophe_force(tag, strings[i + 1])
+    if apostrophe then
+      strings[i + 1] = apostrophe .. strings[i + 1]
+      tags[i] = "";
+    else
+      local opener_info = openers_info[tag]
+      local last_opener_info = opener_stack[#opener_stack]
+      if opener_info then
+        if opener_info.quotes and last_opener_info and tag == last_opener_info.tag then
+          local pos = last_opener_info.pos
+          strings[pos + 1] = string.gsub(tag, "^%s", "") .. strings[pos + 1]
+          tags[pos] = "";
+          table.remove(opener_stack)
+        end
+        table.insert(opener_stack, {
+          tag = tag,
+          closer = openers_info[tag].closer,
+          pos = i,
+        })
+      else
+        -- Closer tag
+        if last_opener_info then
+          if last_opener_info.closer == tag then
+            table.remove(opener_stack)
           else
-            table.insert(elements, inline)
+            if tag == "'" or tag == "’" then
+              strings[i + 1] = "’" .. strings[i + 1]
+              tags[i] = ""
+            else
+              while #opener_stack > 0 and opener_stack[#opener_stack].closer ~= tag do
+                local pos = opener_stack[#opener_stack].pos
+                strings[pos + 1] = tags[pos] .. strings[pos + 1]
+                tags[pos] = ""
+                table.remove(opener_stack)
+              end
+              if #opener_stack > 0 then
+                table.remove(opener_stack)
+              else
+                strings[i + 1] = tags[i] .. strings[i + 1]
+                tags[i] = ""
+              end
+            end
           end
         else
-          table.insert(elements, inline)
+          if tag == "'" or tag == "’" then
+            strings[i + 1] = "’" .. strings[i + 1]
+            tags[i] = ""
+          else
+            strings[i + 1] = tags[i] .. strings[i + 1]
+            tags[i] = ""
+          end
         end
       end
     end
   end
 
-  return elements
+  -- util.debug(opener_stack)
+
+  -- Process remainders in the stack
+  if #opener_stack > 0 then
+    for _, opener_info in ipairs(opener_stack) do
+      local pos = opener_info.pos
+      local orphan = string.gsub(tags[pos], "^%s", "")
+      orphan = string.gsub(orphan, "'", "’")
+      strings[pos + 1] = orphan .. strings[pos + 1]
+      tags[pos] = ""
+    end
+  end
+
+  -- Remove empty tag
+  for i = #tags, 1, -1 do
+    local tag = tags[i]
+    if tag == "" then
+      strings[i + 1] = strings[i] .. strings[i + 1]
+      table.remove(strings, i)
+      table.remove(tags, i)
+    end
+  end
+
+  -- The first appearance of straight quote is treated as outer quote.
+  for _, tag in ipairs(tags) do
+    -- util.debug(i)
+    -- util.debug(tag)
+    if straight_quotes_flip[tag] then
+      set_outer_quote_form(tag, openers_info)
+      break
+    end
+  end
+
+  -- util.debug(tags)
+  -- util.debug(strings)
+
+  ---@type InlineElement[]
+  local output = {}
+
+  if strings[1] ~= "" then
+    table.insert(output, PlainText:new(strings[1]))
+  end
+
+  ---@type {tag: string, closer: string, pos: number, output_pos: number}[]
+  opener_stack = {}
+
+  for i, tag in ipairs(tags) do
+    if openers_info[tag] then
+      table.insert(opener_stack, {
+        tag = tag,
+        closer = openers_info[tag].closer,
+        pos = i,
+        output_pos = #output + 1
+      })
+    else
+      assert(#opener_stack > 0)
+      local opener_info = opener_stack[#opener_stack]
+      assert(opener_info.closer == tag)
+      local output_pos = opener_info.output_pos
+      local inlines = util.slice(output, output_pos)
+      for j = #output, output_pos, -1 do
+        table.remove(output, j)
+      end
+      table.remove(opener_stack)
+      local inline = make_inline_from_tag(opener_info.tag, inlines, openers_info, context)
+      if inline._type == "Quoted" then
+        ---@cast inline Quoted
+        local quotes = context:get_localized_quotes()
+        inline.punctuation_in_quote = quotes.punctuation_in_quote
+      end
+      table.insert(output, inline)
+    end
+
+    if strings[i + 1] ~= "" then
+      table.insert(output, PlainText:new(strings[i + 1]))
+    end
+
+  end
+
+  -- util.debug(output)
+  return output
 end
 
 local function merge_fragments_at(fragments, i)
@@ -792,6 +1029,9 @@ function OutputFormat:flatten_ir(ir, override_delim)
   return inlines
 end
 
+---@param ir IrNode
+---@param override_delim boolean
+---@return InlineElement[]
 function OutputFormat:flatten_seq_ir(ir, override_delim)
   -- if not ir.children then
   --   print(debug.traceback())
@@ -1174,10 +1414,14 @@ function OutputFormat:affixed(inlines, affixes)
   return inlines
 end
 
+---@param inlines InlineElement[]
+---@param affixes table
+---@param localized_quotes LocalizedQuotes
+---@return InlineElement[]
 function OutputFormat:affixed_quoted(inlines, affixes, localized_quotes)
   inlines = util.clone(inlines)
   if localized_quotes then
-    inlines = self:quoted(inlines, localized_quotes)
+    inlines = {Quoted:new(inlines, localized_quotes)}
   end
   if affixes and affixes.prefix and affixes.prefix ~= "" then
     table.insert(inlines, 1, PlainText:new(affixes.prefix))
@@ -1186,10 +1430,6 @@ function OutputFormat:affixed_quoted(inlines, affixes, localized_quotes)
     table.insert(inlines, PlainText:new(affixes.suffix))
   end
   return inlines
-end
-
-function OutputFormat:quoted(inlines, localized_quotes)
-  return {Quoted:new(inlines, localized_quotes)}
 end
 
 function OutputFormat:with_display(nodes, display)
@@ -1242,7 +1482,8 @@ function OutputFormat:flip_flop_inlines(inlines)
     ["font-weight"] = "normal",
     ["text-decoration"] = "none",
     ["vertical-alignment"] = "baseline",
-    in_inner_quotes = false,
+    in_quotes = false,
+    inner_quotes = false,
   }
   self:flip_flop(inlines, flip_flop_state)
 end
@@ -1275,9 +1516,13 @@ function OutputFormat:flip_flop(inlines, state)
       self:flip_flop(inline.inlines, new_state)
 
     elseif inline._type == "Quoted" then
-      inline.is_inner = state.in_inner_quotes
+      ---@cast inline Quoted
+      if state.in_quotes then
+        inline.is_inner = not state.inner_quotes
+      end
       local new_state = util.clone(state)
-      new_state.in_inner_quotes = not new_state.in_inner_quotes
+      new_state.in_quotes = true
+      new_state.inner_quotes = inline.is_inner
       self:flip_flop(inline.inlines, new_state)
 
     elseif inline._type == "NoDecor" then
@@ -1337,9 +1582,13 @@ function OutputFormat:flip_flop_micro_inlines(inlines, state)
       self:flip_flop_micro_inlines(inline.inlines, new_state)
 
     elseif inline._type == "Quoted" then
-      inline.is_inner = state.in_inner_quotes
+      ---@cast inline Quoted
+      if state.in_quotes then
+        inline.is_inner = not state.inner_quotes
+      end
       local new_state = util.clone(state)
-      new_state.in_inner_quotes = not new_state.in_inner_quotes
+      new_state.in_quotes = true
+      new_state.inner_quotes = inline.is_inner
       self:flip_flop_micro_inlines(inline.inlines, new_state)
 
     elseif inline._type == "NoDecor" then
@@ -1410,6 +1659,7 @@ end
 
 --- "'Foo,' bar" => ,
 ---@param inline InlineElement
+---@return boolean
 local function find_right_quoted(inline)
   if inline._type == "Quoted" and #inline.inlines > 0 then
     ---@cast inline Quoted
@@ -2024,6 +2274,8 @@ end
 
 
 -- Omit formatting and quotes
+
+---@class DisamStringFormat: OutputFormat
 local DisamStringFormat = OutputFormat:new()
 
 function DisamStringFormat:output(inlines, context)

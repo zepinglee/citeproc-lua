@@ -101,6 +101,7 @@ local Registry = {}
 ---@field opt table
 ---@field registry Registry
 ---@field cite_first_note_numbers table<ItemId, NoteIndex>
+---@field locale_tags_info_dict {[LanguageCode]: table}
 local CiteProc = {}
 
 ---@class CiteProcSys
@@ -178,6 +179,8 @@ function CiteProc.new(sys, style, lang, force_lang)
 
   o.person_names = {}
   o.person_names_by_output = {}
+
+  o.locale_tags_info_dict = {}
 
   setmetatable(o, { __index = CiteProc })
   return o
@@ -420,19 +423,28 @@ function CiteProc:normalize_cite_item(cite_item)
     cite_item.label = "page"
   end
 
+  local the_context = Context:new()
+  the_context.engine = self
+  the_context.style = self.style
+  the_context.area = self
+  the_context.in_bibliography = false
+  the_context.lang = self.lang
+  the_context.locale = self:get_locale(self.lang)
+  the_context.format = self.output_format
+
   if cite_item.prefix then
     -- Assert CSL rich-text or HTML-like tagged string
     if cite_item.prefix == "" then
       cite_item.prefix = nil
     else
-      cite_item.prefix_inlines = InlineElement:parse(cite_item.prefix, nil, true)
+      cite_item.prefix_inlines = InlineElement:parse(cite_item.prefix, the_context, true)
     end
   end
   if cite_item.suffix then
     if cite_item.suffix == "" then
       cite_item.suffix = nil
     else
-      cite_item.suffix_inlines = InlineElement:parse(cite_item.suffix, nil, true)
+      cite_item.suffix_inlines = InlineElement:parse(cite_item.suffix, the_context, true)
     end
   end
 
@@ -1065,6 +1077,7 @@ function CiteProc:sort_bibliography()
   context.style = self.style
   context.area = self.style.bibliography
   context.in_bibliography = true
+  context.lang = self.lang
   context.locale = self:get_locale(self.lang)
   context.name_inheritance = self.style.bibliography.name_inheritance
   context.format = SortStringFormat:new()
@@ -1177,6 +1190,10 @@ function Macro:from_node(node)
   return o
 end
 
+---@param engine CiteProc
+---@param state IrState
+---@param context Context
+---@return IrNode?
 function Macro:build_ir(engine, state, context)
   local ir = self:build_group_ir(engine, state, context)
   return ir

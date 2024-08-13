@@ -255,6 +255,7 @@ function Citation:build_cluster(citation_items, engine, properties)
   context.style = engine.style
   context.area = self
   context.in_bibliography = false
+  context.lang = engine.lang
   context.locale = engine:get_locale(engine.lang)
   context.name_inheritance = self.name_inheritance
   context.format = output_format
@@ -394,6 +395,7 @@ function Citation:sorted_citation_items(items, engine)
   context.style = engine.style
   context.area = self
   context.in_bibliography = false
+  context.lang = engine.lang
   context.locale = engine:get_locale(engine.lang)
   context.name_inheritance = self.name_inheritance
   context.format = SortStringFormat:new()
@@ -456,7 +458,6 @@ function Citation:build_ambiguous_ir(cite_item, output_format, engine)
   context.engine = engine
   context.style = engine.style
   context.area = self
-  -- context.locale = engine:get_locale(engine.lang)
   context.name_inheritance = self.name_inheritance
   context.format = output_format
   context.id = cite_item.id
@@ -465,6 +466,7 @@ function Citation:build_ambiguous_ir(cite_item, output_format, engine)
   context.reference = engine.registry.registry[cite_item.id]
 
   local active_layout, context_lang = util.get_layout_by_language(self, engine, context.reference)
+  context.lang = context_lang
   context.locale = engine:get_locale(context_lang)
 
   local ir

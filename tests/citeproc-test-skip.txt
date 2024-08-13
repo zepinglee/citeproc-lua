@@ -22,9 +22,6 @@ name_HebrewAnd.txt
 name_InTextMarkupInitialize.txt
 name_InTextMarkupNormalizeInitials.txt
 
-# French punctuation
-punctuation_FrenchOrthography.txt
-
 # Do not ommit empty entry output.
 sort_OmittedBibRefMixedNumericStyle.txt
 sort_OmittedBibRefNonNumericStyle.txt

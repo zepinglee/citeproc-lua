@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix parsing quotation marks ([#71](https://github.com/zepinglee/citeproc-lua/discussions/71)).
+
 ## [0.6.0] - 2024-07-31
 
 ### Added
@@ -16,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fix an error of empty locator in citation (([#70](https://github.com/zepinglee/citeproc-lua/discussions/70)))
+- Fix an error of empty locator in citation ([#70](https://github.com/zepinglee/citeproc-lua/discussions/70)).
 
 ## [0.5.1] - 2024-07-10
 

@@ -32,6 +32,8 @@ local GroupVar = {
 ---@field text string?
 ---@field formatting any
 ---@field affixes any
+---@field display any
+---@field quotes LocalizedQuotes
 ---@field inlines InlineElement[]?
 ---@field children IrNode[]?
 ---@field delimiter string?
