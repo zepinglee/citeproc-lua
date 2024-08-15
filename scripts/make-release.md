@@ -14,7 +14,7 @@ git merge upstream/v1.0.2
 git push
 cd ../..
 
-git submodule update --init --remote --merge
+git submodule update --init --remote --checkout
 
 python3 scripts/update-bibtex-data.py
 python3 scripts/update-latex-data.py
