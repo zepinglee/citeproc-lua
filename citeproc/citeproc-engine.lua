@@ -49,12 +49,13 @@ local SortStringFormat = output.SortStringFormat
 local Position = util.Position
 
 
+---@alias CitationId string
 ---@alias ItemId string | number
 ---@alias NoteIndex integer
----@alias CitationId string
+---@alias ChapterIndex number
 ---@alias CitationData {citationID: CitationId, citationItems: CitationItem[], properties: CitationProperties, citation_index: integer}
 
----@alias CitationProperties { noteIndex: integer, mode: string? }
+---@alias CitationProperties { noteIndex: NoteIndex, chapterIndex: ChapterIndex, mode: string? }
 
 ---@class NameVariable
 ---@field family string?
@@ -294,14 +295,18 @@ function CiteProc:updateUncitedItems(uncited_ids)
 end
 
 
+---@alias PreCitation [CitationId, NoteIndex, ChapterIndex]
+---@alias PostCitation [CitationId, NoteIndex, ChapterIndex]
+
 ---@param citation CitationData
----@param citationsPre (CitationId | NoteIndex)[]
----@param citationsPost (CitationId | NoteIndex)[]
+---@param citationsPre PreCitation[]
+---@param citationsPost PostCitation[]
 ---@return (table | (integer | string | CitationId)[])[]
 function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
   -- util.debug(string.format('processCitationCluster(%s)', citation.citationID))
   self:check_valid_citation_element()
   citation = self:normalize_citation_input(citation)
+  self:_check_input(citation, citationsPre, citationsPost)
 
   -- Registor citation
   self.registry.citations_by_id[citation.citationID] = citation
@@ -406,6 +411,9 @@ function CiteProc:normalize_citation_input(citation)
   if not citation.properties.noteIndex then
     citation.properties.noteIndex = 0
   end
+  if not citation.properties.chapterIndex then
+    citation.properties.chapterIndex = 0
+  end
 
   return citation
 end
@@ -449,6 +457,83 @@ function CiteProc:normalize_cite_item(cite_item)
   end
 
   return cite_item
+end
+
+---@param citation CitationData
+---@param citationsPre PreCitation[]
+---@param citationsPost PostCitation[]
+function CiteProc:_check_input(citation, citationsPre, citationsPost)
+  ---@type {[CitationId]: boolean}
+  local citation_dict = {}
+  local last_note_number = 0
+  local last_chapter_number = 0
+
+  for i, pre_citation in ipairs(citationsPre) do
+    local citation_id = pre_citation[1]
+    local note_number = pre_citation[2]
+    local chapter_number = pre_citation[3]
+    if citation_dict[citation_id] then
+      error(string.format("Previously referenced citationID '%s' encountered in citationsPre", citation_id))
+    end
+    if note_number and note_number > 0 then
+      if note_number < last_note_number then
+        util.warning(string.format("Note index sequence is not sane at citationsPre[%d]", i))
+      end
+      last_note_number = note_number
+    end
+    if chapter_number and chapter_number > 0 then
+      if chapter_number < last_chapter_number then
+        util.warning(string.format("Chapter index sequence is not sane at citationsPre[%d]", i))
+      end
+      last_chapter_number = chapter_number
+    end
+    citation_dict[citation_id] = true
+  end
+
+  do
+    local citation_id = citation.citationID
+    local note_number = citation.properties.noteIndex
+    local chapter_number = citation.properties.chapterIndex
+    if (citation_dict[citation_id]) then
+      error("Citation with previously referenced citationID " .. citation_id)
+    end
+    if note_number and note_number > 0 then
+      if note_number < last_note_number then
+        util.warning("Note index sequence is not sane for citation " .. citation_id)
+      end
+      last_note_number = note_number
+    end
+    if chapter_number and chapter_number > 0 then
+      if chapter_number < last_chapter_number then
+        util.warning("Chapter index sequence is not sane for citation " .. citation_id)
+      end
+      last_chapter_number = chapter_number
+    end
+    citation_dict[citation_id] = true
+  end
+
+  for i, post_citation in ipairs(citationsPost) do
+    local citation_id = post_citation[1]
+    local note_number = post_citation[2]
+    local chapter_number = post_citation[3]
+    if citation_dict[citation_id] then
+      error(string.format("Previously referenced citationID '%s' encountered in citationsPost", citation_id))
+    end
+    if note_number and note_number > 0 then
+      if note_number < last_note_number then
+        util.warning(string.format("Note index sequence is not sane at citationsPost[%d]", i))
+      end
+      last_note_number = note_number
+    end
+    if chapter_number and chapter_number > 0 then
+      if chapter_number < last_chapter_number then
+        util.warning(string.format("Chapter index sequence is not sane at citationsPost[%d]", i))
+      end
+      last_chapter_number = chapter_number
+    end
+    citation_dict[citation_id] = true
+  end
+
 end
 
 -- A variant of processCitationCluster() for easy use with LaTeX.
@@ -517,6 +602,8 @@ function CiteProc:get_tainted_citation_ids(citation_note_pairs)
   -- have position properties.
   local in_text_citations = {}
 
+  local last_chapter_number = 0
+
   local previous_citation
   for citation_index, pair in ipairs(citation_note_pairs) do
     local citation_id, note_number = table.unpack(pair)
@@ -524,6 +611,15 @@ function CiteProc:get_tainted_citation_ids(citation_note_pairs)
     local citation = self.registry.citations_by_id[citation_id]
     citation.properties.noteIndex = note_number
     citation.citation_index = citation_index
+
+    local chapter_number = citation.properties.chapterIndex
+    if chapter_number and chapter_number ~= last_chapter_number then
+      self.cite_first_note_numbers = {}
+      self.cite_last_note_numbers = {}
+      self.note_citations_map = {}
+      previous_citation = nil
+    end
+
 
     local tainted = false
 
@@ -559,6 +655,8 @@ function CiteProc:get_tainted_citation_ids(citation_note_pairs)
         previous_citation = citation
       end
     end
+
+    last_chapter_number = chapter_number
   end
 
   -- Update tainted citation ids because of citation-number's change

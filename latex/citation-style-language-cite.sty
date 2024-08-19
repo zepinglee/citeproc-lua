@@ -316,6 +316,11 @@
     \__csl_process_citation_id:NN \l__csl_citation_id_tl #1
     \__csl_get_note_index:N \l__csl_note_index_tl
     \prop_put:NnV \l__csl_citation_properties_prop { noteIndex } \l__csl_note_index_tl
+    \int_if_exist:NT \c@chapter
+      {
+        \prop_put:Nnx \l__csl_citation_properties_prop { chapterIndex }
+          { \int_use:N \c@chapter }
+      }
     \__csl_add_back_ref_info:
   }
 

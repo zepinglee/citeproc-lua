@@ -573,6 +573,15 @@ function CslCitationManager:_make_citation(citation_info)
     util.error(string.format("Invalid note index '%s'.", note_index))
   end
 
+  local chapter_index = citation.properties.chapterIndex
+  if not chapter_index or chapter_index == "" then
+    citation.properties.chapterIndex = nil
+  elseif type(chapter_index) == "string" and string.match(chapter_index, "^%d+$") then
+    citation.properties.chapterIndex = tonumber(chapter_index)
+  else
+    util.error(string.format("Invalid chapter index '%s'.", chapter_index))
+  end
+
   -- util.debug(citation)
   return citation
 end
