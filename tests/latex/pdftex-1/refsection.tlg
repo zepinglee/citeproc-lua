@@ -1,7 +1,7 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
 Chapter 1.
-> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0},chapterIndex={1}}.
 <recently read> }
 l. ...  This is just filler text \cite{ITEM-1}
                                              .\par
@@ -10,7 +10,7 @@ LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
 <recently read> }
 l. ...  This is just filler text \cite{ITEM-1}
                                              .\par
-> \l__csl_citation_info_tl=citationID={ITEM-2@1},citationItems={{id={ITEM-2}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-2@1},citationItems={{id={ITEM-2}}},properties={noteIndex={0},chapterIndex={1}}.
 <recently read> }
 l. ...  This is just filler text \cite{ITEM-2}
                                              .\par
@@ -233,7 +233,7 @@ Completed box being shipped out [2]
 ...\hbox(0.0+0.0)x345.0
 ....\hbox(0.0+0.0)x345.0
 Chapter 2.
-> \l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1}}},properties={noteIndex={0},chapterIndex={2}}.
 <recently read> }
 l. ...  This is just filler text \cite{ITEM-1}
                                              .\par
@@ -407,7 +407,7 @@ Completed box being shipped out [4]
 ...\hbox(0.0+0.0)x345.0
 ....\hbox(0.0+0.0)x345.0
 Chapter 3.
-> \l__csl_citation_info_tl=citationID={ITEM-3@1},citationItems={{id={ITEM-3}}},properties={noteIndex={1}}.
+> \l__csl_citation_info_tl=citationID={ITEM-3@1},citationItems={{id={ITEM-3}}},properties={noteIndex={1},chapterIndex={3}}.
 <recently read> }
 l. ...  This is just filler text\cite{ITEM-3}
                                             .\par
@@ -424,7 +424,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
-> \l__csl_citation_info_tl=citationID={ITEM-4@1},citationItems={{id={ITEM-4}}},properties={noteIndex={2}}.
+> \l__csl_citation_info_tl=citationID={ITEM-4@1},citationItems={{id={ITEM-4}}},properties={noteIndex={2},chapterIndex={3}}.
 <recently read> }
 l. ...  This is just filler text\cite{ITEM-4}
                                             .\par
