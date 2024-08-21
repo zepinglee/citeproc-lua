@@ -381,7 +381,7 @@ class BibData(OrderedDict):
                             break
 
     def export_lua(self):
-        res = '-- This file is generated from citeproc-bibtex-data.json by scripts/update-bibtex-data.py\n\n'
+        res = "-- This file is generated from citeproc-bibtex-data.json by scripts/update_bibtex_data.py\n\n"
         res += 'return ' + luadata.dumps(self)
         with open('citeproc/citeproc-bibtex-data.lua', 'w') as f:
             f.write(res + '\n')

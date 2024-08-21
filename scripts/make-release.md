@@ -16,9 +16,9 @@ cd ../..
 
 git submodule update --init --remote --checkout
 
-python3 scripts/update-bibtex-data.py
-python3 scripts/update-latex-data.py
-python3 scripts/collect-journal-abbrevs.py
+python3 scripts/update_bibtex_data.py
+python3 scripts/update_latex_data.py
+python3 scripts/collect_journal_abbrevs.py
 
 busted --run citeproc
 busted
