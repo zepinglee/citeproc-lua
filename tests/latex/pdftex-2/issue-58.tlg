@@ -3,12 +3,6 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Citation
 ============================================================
-> \l__csl_citation_info_tl=citationID={ansariHowMetaBroke2023@1},citationItems={{id={ansariHowMetaBroke2023}}},properties={noteIndex={1}}.
-<recently read> }
-l. ...}
-> \l__csl_citation_tl=Tasmia Ansari, ‘How Meta Broke the Barriers To Entry With LLaMA 2’ [2023] \textit {Analytics India Magazine} <\url {https://analyticsindiamag.com/how-meta-broke-the-barriers-to-entry-with-llama-2/}> accessed 27 December 2023..
-<recently read> }
-l. ...}
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -17,6 +11,12 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
+> \l__csl_citation_info_tl=citationID={ansariHowMetaBroke2023@1},citationItems={{id={ansariHowMetaBroke2023}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=Tasmia Ansari, ‘How Meta Broke the Barriers To Entry With LLaMA 2’ [2023] \textit {Analytics India Magazine} <\url {https://analyticsindiamag.com/how-meta-broke-the-barriers-to-entry-with-llama-2/}> accessed 27 December 2023..
+<recently read> }
+l. ...}
 Underfull \hbox (badness 10000) in paragraph at lines 733--733
 [][]\OT1/cmr/m/n/8 Tasmia Ansari, `How Meta Broke the Bar-ri-ers To En-try With LLaMA
 \hbox(6.68999+1.55556)x345.0, glue set 4.65657

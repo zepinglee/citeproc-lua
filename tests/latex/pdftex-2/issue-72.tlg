@@ -1,12 +1,6 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
 Chapter 1.
-> \l__csl_citation_info_tl=citationID={King2008-Gramma@1},citationItems={{id={King2008-Gramma}}},properties={noteIndex={1},chapterIndex={1}}.
-<recently read> }
-l. ...test cite1\cite{King2008-Gramma}
-> \l__csl_citation_tl=John T. King, “A Grammar of Dhimal” (doctoral dissertation, Universiteit Leiden, 2008), \url {https://scholarlypublications.universiteitleiden.nl/handle/1887/13072}..
-<recently read> }
-l. ...test cite1\cite{King2008-Gramma}
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -15,6 +9,12 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@1},citationItems={{id={King2008-Gramma}}},properties={noteIndex={1},chapterIndex={1}}.
+<recently read> }
+l. ...test cite1\cite{King2008-Gramma}
+> \l__csl_citation_tl=John T. King, “A Grammar of Dhimal” (doctoral dissertation, Universiteit Leiden, 2008), \url {https://scholarlypublications.universiteitleiden.nl/handle/1887/13072}..
+<recently read> }
+l. ...test cite1\cite{King2008-Gramma}
 > \l__csl_citation_info_tl=citationID={King2008-Gramma@2},citationItems={{id={King2008-Gramma}}},properties={noteIndex={2},chapterIndex={1}}.
 <recently read> }
 l. ...test cite2\cite{King2008-Gramma}

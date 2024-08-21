@@ -162,3 +162,21 @@
         \cs_gset_eq:NN \cslcite \__csl_hyperref_cite_item:nn
       }
   }
+
+
+% ### `perpage`
+
+\hook_gput_code:nnn { package / perpage / after } { . }
+  {
+    \hook_gput_code:nnn { begindocument } { . }
+      {
+        \cs_if_exist:cT { c@pchk@footnote }
+          {
+            \cs_set:Npn \__csl_make_chapter_property:
+              {
+                \prop_put:Nnx \l__csl_citation_properties_prop { chapterIndex }
+                  { \int_use:N \c@page }
+              }
+          }
+      }
+  }

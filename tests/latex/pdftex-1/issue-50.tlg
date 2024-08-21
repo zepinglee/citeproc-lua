@@ -3,13 +3,6 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Citation
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
-<recently read> }
-l. ...}
-LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
-> \l__csl_citation_tl=[\textbf {ITEM-1}].
-<recently read> }
-l. ...}
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -18,6 +11,13 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
 ============================================================
 ============================================================
 TEST 2: Bibliography

@@ -919,14 +919,6 @@ Completed box being shipped out [4]
 ...\hbox(0.0+0.0)x345.0
 ....\hbox(0.0+0.0)x345.0
 Chapter 3.
-> \l__csl_citation_info_tl=citationID={ITEM-3@1},citationItems={{id={ITEM-3}}},properties={noteIndex={1},chapterIndex={3}}.
-<recently read> }
-l. ...  This is just filler text\cite{ITEM-3}
-                                            .\par
-> \l__csl_citation_tl=\cslcite {ITEM-3}{Lamport, \textit {LaTeX: A Document Preparation System: User’s Guide and Reference Manual}}..
-<recently read> }
-l. ...  This is just filler text\cite{ITEM-3}
-                                            .\par
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -935,6 +927,14 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
+> \l__csl_citation_info_tl=citationID={ITEM-3@1},citationItems={{id={ITEM-3}}},properties={noteIndex={1},chapterIndex={3}}.
+<recently read> }
+l. ...  This is just filler text\cite{ITEM-3}
+                                            .\par
+> \l__csl_citation_tl=\cslcite {ITEM-3}{Lamport, \textit {LaTeX: A Document Preparation System: User’s Guide and Reference Manual}}..
+<recently read> }
+l. ...  This is just filler text\cite{ITEM-3}
+                                            .\par
 > \l__csl_citation_info_tl=citationID={ITEM-4@1},citationItems={{id={ITEM-4}}},properties={noteIndex={2},chapterIndex={3}}.
 <recently read> }
 l. ...  This is just filler text\cite{ITEM-4}

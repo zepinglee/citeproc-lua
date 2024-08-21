@@ -3,13 +3,6 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Citation with empty locator
 ============================================================
-Package CSL Warning: Empty 'page' locator.
-> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
-<recently read> }
-l. ...}
-> \l__csl_citation_tl=Bruce D’Arcus, \textit {Boundaries of Dissent: Protest and State Power in the Media Age} (Routledge, 2005)..
-<recently read> }
-l. ...}
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -18,4 +11,11 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
+Package CSL Warning: Empty 'page' locator.
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=Bruce D’Arcus, \textit {Boundaries of Dissent: Protest and State Power in the Media Age} (Routledge, 2005)..
+<recently read> }
+l. ...}
 ============================================================

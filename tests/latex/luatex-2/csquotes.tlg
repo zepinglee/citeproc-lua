@@ -1,11 +1,5 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
-> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
-<recently read> }
-l. ...\enquote{Lorem ipsum.\cite{ITEM-1}}
-> \l__csl_citation_tl=Bruce D’Arcus, \textit {Boundaries of Dissent: Protest and State Power in the Media Age} (Routledge, 2005)..
-<recently read> }
-l. ...\enquote{Lorem ipsum.\cite{ITEM-1}}
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -14,6 +8,12 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...\enquote{Lorem ipsum.\cite{ITEM-1}}
+> \l__csl_citation_tl=Bruce D’Arcus, \textit {Boundaries of Dissent: Protest and State Power in the Media Age} (Routledge, 2005)..
+<recently read> }
+l. ...\enquote{Lorem ipsum.\cite{ITEM-1}}
 > \l__csl_citation_info_tl=citationID={ITEM-2@1},citationItems={{id={ITEM-2}}},properties={noteIndex={2}}.
 <recently read> }
 l. ...\blockquote{Lorem ipsum.\cite{ITEM-2}}

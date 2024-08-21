@@ -26,9 +26,11 @@ babel-english
 babel-french
 babel-german
 beamer
+bigfoot
 carlisle
 csquotes
 epstopdf-pkg
+footmisc
 hyperref
 iftex
 infwarerr

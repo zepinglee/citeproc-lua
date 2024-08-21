@@ -7,13 +7,33 @@
 % ## Citation commands
 
 \DeclareDocumentCommand \cite { s o o m }
-  { \__csl_cite:nnnn {#1} {#2} {#3} {#4} }
+  {
+    \IfBooleanTF {#1}
+      {
+        \bool_if:NTF \l__csl_note_bool
+          { \__csl_cite_in_text:nnnn {#2} {#3} {#4} { } }
+          { \__csl_cite_in_text:nnnn {#2} {#3} {#4} { suppress-author } }
+      }
+      {
+        \bool_if:NTF \l__csl_note_bool
+          { \__csl_cite_note:nnnn {#2} {#3} {#4} { } }
+          { \__csl_cite_in_text:nnnn {#2} {#3} {#4} { } }
+      }
+  }
 
 \NewDocumentCommand \parencite { s o o m }
-  { \__csl_cite:nnnn {#1} {#2} {#3} {#4} }
+  {
+    \IfBooleanTF {#1}
+      {
+        \bool_if:NTF \l__csl_note_bool
+          { \__csl_cite_in_text:nnnn {#2} {#3} {#4} { } }
+          { \__csl_cite_in_text:nnnn {#2} {#3} {#4} { suppress-author } }
+      }
+      { \__csl_cite_parens:nnn {#2} {#3} {#4} }
+  }
 
 \NewDocumentCommand \citep { o o m }
-  { \__csl_cite:nnnn { \BooleanFalse } {#1} {#2} {#3} }
+  { \__csl_cite_parens:nnn {#1} {#2} {#3} }
 
 \NewDocumentCommand \textcite { o o m }
   { \__csl_text_cite:nnn {#1} {#2} {#3} }
@@ -22,7 +42,7 @@
   { \__csl_text_cite:nnn {#1} {#2} {#3} }
 
 \NewDocumentCommand \footcite { o o m }
-  { \__csl_cite:nnnn { \BooleanFalse } {#1} {#2} {#3} }
+  { \__csl_cite_note:nnnn {#1} {#2} {#3} { } }
 
 
 % \cites[⟨prenote⟩][⟨postnote⟩]{⟨key⟩}...[⟨prenote⟩][⟨postnote⟩]{⟨key⟩}
@@ -30,23 +50,16 @@
   { \__csl_cites: }
 
 \NewDocumentCommand \citeauthor { o o m }
-  { \__csl_cite_author:nnn {#1} {#2} {#3} }
+  { \__csl_cite_in_text:nnnn {#1} {#2} {#3} { author-only } }
 
 % TODO: \citeyear
 
-% ATM the starred form is the same as non-star form.
-\NewDocumentCommand \citeyearpar { s o o m }
-  {
-    \IfBooleanT {#1}
-      {
-        \bool_if:NTF \l__csl_note_bool
-          { \msg_error:nn { citation-style-language } { starred-cite-in-note-style } }
-      }
-    \__csl_cite_suppress_author:nnn {#2} {#3} {#4}
-  }
+% Suppresses the author (from `natbib`).
+\NewDocumentCommand \citeyearpar { o o m }
+  { \__csl_cite_in_text:nnnn {#1} {#2} {#3} { suppress-author } }
 
 \NewDocumentCommand \fullcite { o o m }
-  { \__csl_full_cite:nnn {#1} {#2} {#3} }
+  { \__csl_cite_in_text:nnnn {#1} {#2} {#3} { full-cite } }
 
 
 \seq_new:N \l__csl_cite_keys_seq
@@ -54,48 +67,14 @@
 \prop_new:N \l__csl_citation_properties_prop
 \prop_new:N \l__csl_citation_info_prop
 
-% \__csl_cite:nnnn #1#2#3#
-% #1: boolean of star form
-% #2: prenote
-% #3: postnote
-% #4: cite keys
-\cs_new:Npn \__csl_cite:nnnn #1#2#3#4
+% #1: prenote
+% #2: postnote
+% #3: cite keys
+% #4: mode
+\cs_new:Npn \__csl_cite_in_text:nnnn #1#2#3#4
   {
-    \tl_if_blank:nTF {#4}
-      { \__csl_print_undefined_citation:n {#4} }
-      {
-        \seq_clear:N \l__csl_cite_keys_seq
-        \seq_clear:N \l__csl_citation_items_seq
-        \prop_clear:N \l__csl_citation_properties_prop
-        \__csl_process_cite_input:nnn {#2} {#3} {#4}
-        \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
-        \IfBooleanT {#1}
-          {
-            \bool_if:NTF \l__csl_note_bool
-              { \msg_warning:nn { citation-style-language } { starred-cite-in-note-style } }
-              {
-                \prop_put:Nnn \l__csl_citation_properties_prop { noteIndex } { 0 }
-                \prop_put:Nnn \l__csl_citation_properties_prop { mode } { suppress-author }
-              }
-          }
-        \__csl_make_citation:N \l__csl_citation_info_prop
-      }
-  }
-
-\msg_new:nnn { citation-style-language } { starred-cite-in-note-style }
-  { Starred~ variant~ of~ cite~ command~ does~ not~ work~ with~ note~ styles. }
-
-
-\cs_new:Npn \__csl_text_cite:nnn #1#2#3
-  {
-    \bool_if:NTF \l__csl_note_bool
-      {
-        % In note styles, the authors are printed in-text followed by a note.
-        \bool_set_false:N \l__csl_note_bool
-        \__csl_cite_author:nnn {#1} {#2} {#3}
-        \bool_set_true:N \l__csl_note_bool
-        \__csl_cite:nnnn { \BooleanFalse } {#1} {#2} {#3}
-      }
+    \tl_if_blank:nTF {#3}
+      { \__csl_print_undefined_citation:n {#3} }
       {
         \seq_clear:N \l__csl_cite_keys_seq
         \seq_clear:N \l__csl_citation_items_seq
@@ -103,9 +82,79 @@
         \__csl_process_cite_input:nnn {#1} {#2} {#3}
         \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
         \prop_put:Nnn \l__csl_citation_properties_prop { noteIndex } { 0 }
-        \prop_put:Nnn \l__csl_citation_properties_prop { mode } { composite }
+        \tl_if_empty:nF {#4}
+          {
+            \prop_put:Nnn \l__csl_citation_properties_prop { mode } {#4}
+          }
         \__csl_make_citation:N \l__csl_citation_info_prop
       }
+  }
+
+% #1: prenote
+% #2: postnote
+% #3: cite keys
+% #4: mode
+\cs_new:Npn \__csl_cite_note:nnnn #1#2#3#4
+  {
+    \bool_if:NTF \l__csl_in_note_bool
+      {
+        \tl_if_blank:nTF {#3}
+          { \__csl_print_undefined_citation:n {#3} }
+          {
+            \seq_clear:N \l__csl_cite_keys_seq
+            \seq_clear:N \l__csl_citation_items_seq
+            \prop_clear:N \l__csl_citation_properties_prop
+            \__csl_process_cite_input:nnn {#1} {#2} {#3}
+            \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
+            \tl_if_empty:nF {#4}
+              {
+                \prop_put:Nnn \l__csl_citation_properties_prop { mode } {#4}
+              }
+            \__csl_make_citation:N \l__csl_citation_info_prop
+          }
+      }
+      {
+        \footnote
+          {
+            \tl_if_blank:nTF {#3}
+              { \__csl_print_undefined_citation:n {#3} }
+              {
+                \seq_clear:N \l__csl_cite_keys_seq
+                \seq_clear:N \l__csl_citation_items_seq
+                \prop_clear:N \l__csl_citation_properties_prop
+                \__csl_process_cite_input:nnn {#1} {#2} {#3}
+                \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
+                \tl_if_empty:nF {#4}
+                  {
+                    \prop_put:Nnn \l__csl_citation_properties_prop { mode } {#4}
+                  }
+                \__csl_make_citation:N \l__csl_citation_info_prop
+              }
+          }
+      }
+  }
+
+
+% #1: prenote
+% #2: postnote
+% #3: cite keys
+\cs_new:Npn \__csl_cite_parens:nnn #1#2#3
+  {
+    \bool_if:NTF \l__csl_note_bool
+      { ( \__csl_cite_in_text:nnnn {#1} {#2} {#3} { } ) }
+      { \__csl_cite_in_text:nnnn {#1} {#2} {#3} { } }
+  }
+
+
+\cs_new:Npn \__csl_text_cite:nnn #1#2#3
+  {
+    \bool_if:NTF \l__csl_note_bool
+      {
+        % In note styles, the authors are printed in-text followed by a note.
+        \__csl_cite_in_text:nnnn {#1} {#2} {#3} { author-only }
+        \__csl_cite_note:nnnn {#1} {#2} {#3} { }
+      }
+      { \__csl_cite_in_text:nnnn {#1} {#2} {#3} { composite } }
   }
 
 
@@ -121,55 +170,23 @@
   {
     \tl_if_novalue:nTF {#3}
       {
-        \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
-        \__csl_make_citation:N \l__csl_citation_info_prop
+        \bool_if:NTF \l__csl_note_bool
+          {
+            \footnote
+              {
+                \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
+                \__csl_make_citation:N \l__csl_citation_info_prop
+              }
+          }
+          {
+            \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
+            \__csl_make_citation:N \l__csl_citation_info_prop
+          }
       }
       {
         \__csl_process_cite_input:nnn {#1} {#2} {#3}
         \__csl_next_cites:nnn
       }
-  }
-
-
-\cs_new:Npn \__csl_cite_author:nnn #1#2#3
-  {
-    \seq_clear:N \l__csl_cite_keys_seq
-    \seq_clear:N \l__csl_citation_items_seq
-    \prop_clear:N \l__csl_citation_properties_prop
-    \__csl_process_cite_input:nnn {#1} {#2} {#3}
-    \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
-    \prop_put:Nnn \l__csl_citation_properties_prop { noteIndex } { 0 }
-    \prop_put:Nnn \l__csl_citation_properties_prop { mode } { author-only }
-    \bool_set_false:N \l__csl_note_bool
-    \__csl_make_citation:N \l__csl_citation_info_prop
-  }
-
-
-\cs_new:Npn \__csl_cite_suppress_author:nnn #1#2#3
-  {
-    \seq_clear:N \l__csl_cite_keys_seq
-    \seq_clear:N \l__csl_citation_items_seq
-    \prop_clear:N \l__csl_citation_properties_prop
-    \__csl_process_cite_input:nnn {#1} {#2} {#3}
-    \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
-    \prop_put:Nnn \l__csl_citation_properties_prop { noteIndex } { 0 }
-    \prop_put:Nnn \l__csl_citation_properties_prop { mode } { suppress-author }
-    \bool_set_false:N \l__csl_note_bool
-    \__csl_make_citation:N \l__csl_citation_info_prop
-  }
-
-
-\cs_new:Npn \__csl_full_cite:nnn #1#2#3
-  {
-    \seq_clear:N \l__csl_cite_keys_seq
-    \seq_clear:N \l__csl_citation_items_seq
-    \prop_clear:N \l__csl_citation_properties_prop
-    \__csl_process_cite_input:nnn {#1} {#2} {#3}
-    \__csl_process_citation_info:NN \l__csl_cite_keys_seq \l__csl_citation_items_seq
-    \prop_put:Nnn \l__csl_citation_properties_prop { noteIndex } { 0 }
-    \prop_put:Nnn \l__csl_citation_properties_prop { mode } { full-cite }
-    \bool_set_false:N \l__csl_note_bool
-    \__csl_make_citation:N \l__csl_citation_info_prop
   }
 
 
@@ -316,12 +333,17 @@
     \__csl_process_citation_id:NN \l__csl_citation_id_tl #1
     \__csl_get_note_index:N \l__csl_note_index_tl
     \prop_put:NnV \l__csl_citation_properties_prop { noteIndex } \l__csl_note_index_tl
+    \__csl_make_chapter_property:
+    \__csl_add_back_ref_info:
+  }
+
+\cs_new:Npn \__csl_make_chapter_property:
+  {
     \int_if_exist:NT \c@chapter
       {
         \prop_put:Nnx \l__csl_citation_properties_prop { chapterIndex }
           { \int_use:N \c@chapter }
       }
-    \__csl_add_back_ref_info:
   }
 
 
@@ -481,11 +503,7 @@
   % #1: \l__csl_note_index_tl
   {
     \bool_if:NTF \l__csl_note_bool
-      {
-        \int_set_eq:Nc \l_tmpa_int { c@ \@mpfn }
-        \int_incr:N \l_tmpa_int
-        \tl_set:Nx #1 { \int_use:N \l_tmpa_int }
-      }
+      { \tl_set:Nx #1 { \int_use:c { c@ \@mpfn } } }
       {
         \tl_if_empty:NTF \l__csl_class_tl
           {
@@ -495,7 +513,7 @@
             \int_add:Nn \l_tmpa_int { \g__csl_pseudo_note_index_int }
             \tl_set:Nx #1 { \int_use:N \l_tmpa_int }
           }
-          { \tl_set:Nx #1 { 0 } }
+          { \tl_set:Nn #1 { 0 } }
       }
   }
 
@@ -524,13 +542,7 @@
   {
     \bool_if:NT \l__csl_regression_test_bool
       { \tl_show:N #1 }
-    \bool_if:NTF \l__csl_note_bool
-      {
-        \bool_if:NTF \l__csl_in_note_bool
-          {#1}
-          { \footnote {#1} }
-      }
-      {#1}
+    #1
   }
 
 
@@ -552,9 +564,7 @@
     \bool_if:NT \l__csl_regression_test_bool
       { \tl_show:N \l__csl_citation_tl }
     \group_begin:
-      \bool_if:NTF \l__csl_note_bool
-        { \footnote { \reset@font \l__csl_citation_tl } }
-        { \reset@font \l__csl_citation_tl }
+      \reset@font \l__csl_citation_tl
     \group_end:
   }
 

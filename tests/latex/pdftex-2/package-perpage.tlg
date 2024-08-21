@@ -1,0 +1,81 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+Chapter 1.
+============================================================
+TEST 1: Page 1
+============================================================
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line ....
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@1},citationItems={{id={King2008-Gramma}}},properties={noteIndex={2},chapterIndex={1}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=John T. King, “A Grammar of Dhimal” (doctoral dissertation, Universiteit Leiden, 2008), \url {https://scholarlypublications.universiteitleiden.nl/handle/1887/13072}..
+<recently read> }
+l. ...}
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@2},citationItems={{id={King2008-Gramma}}},properties={noteIndex={3},chapterIndex={1}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=Ibid..
+<recently read> }
+l. ...}
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@3},citationItems={{id={King2008-Gramma}}},properties={noteIndex={5},chapterIndex={1}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=King, “Grammar of Dhimal,” see 2..
+<recently read> }
+l. ...}
+[1
+]
+============================================================
+============================================================
+TEST 2: Page 2
+============================================================
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@4},citationItems={{id={King2008-Gramma}}},properties={noteIndex={1},chapterIndex={2}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=John T. King, “A Grammar of Dhimal” (doctoral dissertation, Universiteit Leiden, 2008), \url {https://scholarlypublications.universiteitleiden.nl/handle/1887/13072}..
+<recently read> }
+l. ...}
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@5},citationItems={{id={King2008-Gramma}}},properties={noteIndex={2},chapterIndex={2}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=Ibid..
+<recently read> }
+l. ...}
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@6},citationItems={{id={King2008-Gramma}}},properties={noteIndex={4},chapterIndex={2}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=King, “Grammar of Dhimal,” see 6..
+<recently read> }
+l. ...}
+[2
+]
+============================================================
+============================================================
+TEST 3: Page 3
+============================================================
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@7},citationItems={{id={King2008-Gramma}}},properties={noteIndex={2},chapterIndex={3}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=John T. King, “A Grammar of Dhimal” (doctoral dissertation, Universiteit Leiden, 2008), \url {https://scholarlypublications.universiteitleiden.nl/handle/1887/13072}..
+<recently read> }
+l. ...}
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@8},citationItems={{id={King2008-Gramma}}},properties={noteIndex={3},chapterIndex={3}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=Ibid..
+<recently read> }
+l. ...}
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@9},citationItems={{id={King2008-Gramma}}},properties={noteIndex={5},chapterIndex={3}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=King, “Grammar of Dhimal,” see 11..
+<recently read> }
+l. ...}
+============================================================

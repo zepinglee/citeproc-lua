@@ -3,12 +3,6 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Citation format
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
-<recently read> }
-l. ...\end{frame}
-> \l__csl_citation_tl=\cslcite {ITEM-1}{Bruce D’Arcus, \textit {Boundaries of Dissent: Protest and State Power in the Media Age} (Routledge, 2005)}..
-<recently read> }
-l. ...\end{frame}
 LaTeX Font Info:    Trying to load font information for U+msa on input line ....
 LaTeX Font Info:    Trying to load font information for U+msb on input line ....
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10.95> not available
@@ -21,6 +15,12 @@ LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <9> not available
 (Font)              Font shape `TU/lmss/m/sl' tried instead on input line ....
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <5> not available
 (Font)              Font shape `TU/lmss/m/sl' tried instead on input line ....
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...\end{frame}
+> \l__csl_citation_tl=\cslcite {ITEM-1}{Bruce D’Arcus, \textit {Boundaries of Dissent: Protest and State Power in the Media Age} (Routledge, 2005)}..
+<recently read> }
+l. ...\end{frame}
 ============================================================
 [1
 ]

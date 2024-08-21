@@ -475,17 +475,20 @@ function CiteProc:_check_input(citation, citationsPre, citationsPost)
     if citation_dict[citation_id] then
       error(string.format("Previously referenced citationID '%s' encountered in citationsPre", citation_id))
     end
+    if chapter_number and chapter_number > 0 then
+      if chapter_number < last_chapter_number then
+        util.warning(string.format("Chapter index sequence is not sane at citationsPre[%d]", i))
+      end
+      if chapter_number ~= last_chapter_number then
+        last_note_number = 0
+      end
+      last_chapter_number = chapter_number
+    end
     if note_number and note_number > 0 then
       if note_number < last_note_number then
         util.warning(string.format("Note index sequence is not sane at citationsPre[%d]", i))
       end
       last_note_number = note_number
-    end
-    if chapter_number and chapter_number > 0 then
-      if chapter_number < last_chapter_number then
-        util.warning(string.format("Chapter index sequence is not sane at citationsPre[%d]", i))
-      end
-      last_chapter_number = chapter_number
     end
     citation_dict[citation_id] = true
   end

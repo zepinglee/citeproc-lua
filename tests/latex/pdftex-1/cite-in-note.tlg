@@ -3,13 +3,6 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Citation as footnote
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
-<recently read> }
-l. ...}
-LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
-> \l__csl_citation_tl=[\textbf {ITEM-1}].
-<recently read> }
-l. ...}
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -18,11 +11,18 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
 ============================================================
 ============================================================
 TEST 2: Citation in footnote
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-2@1},citationItems={{id={ITEM-2}}},properties={noteIndex={3}}.
+> \l__csl_citation_info_tl=citationID={ITEM-2@1},citationItems={{id={ITEM-2}}},properties={noteIndex={2}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-2' on page 1 undefined on input line ....
@@ -116,7 +116,7 @@ Completed box being shipped out [1]
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
-...\hbox(6.68999+2.85002)x345.0, glue set 210.21483fil
+...\hbox(6.68999+2.85002)x345.0, glue set 175.30891fil
 ....\hbox(6.68999+0.0)x15.30023, glue set 11.13362fil
 .....\glue 0.0 plus 1.0fil minus 1.0fil
 .....\hbox(6.68999+0.0)x4.16661
@@ -159,45 +159,23 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/8 e
 ....\OT1/cmr/m/n/8 :
 ....\glue 3.77783 plus 2.83337 minus 0.47223
-....\penalty 10000
-....\hbox(6.68999+0.0)x4.16661
-.....\mathon
-.....\hbox(3.86665+0.0)x4.16661, shifted -2.82333
-......\OT1/cmr/m/n/6 3
-.....\mathoff
+....\OT1/cmr/m/n/8 [
+....\kern 0.0
+....\OT1/cmr/bx/n/8 I
+....\OT1/cmr/bx/n/8 T
+....\OT1/cmr/bx/n/8 E
+....\OT1/cmr/bx/n/8 M
+....\OT1/cmr/bx/n/8 -
+....\discretionary
+....\OT1/cmr/bx/n/8 2
+....\kern 0.0
+....\OT1/cmr/m/n/8 ]
 ....\OT1/cmr/m/n/8 .
 ....\penalty 10000
 ....\rule(0.0+2.85002)x0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
-...\insert253, natural size 9.54001; split(6.65,2.85002); float cost 20000
-....\hbox(6.68999+2.85002)x345.0, glue set 290.62724fil
-.....\hbox(6.68999+0.0)x15.30023, glue set 11.13362fil
-......\glue 0.0 plus 1.0fil minus 1.0fil
-......\hbox(6.68999+0.0)x4.16661
-.......\mathon
-.......\hbox(3.86665+0.0)x4.16661, shifted -2.82333
-........\OT1/cmr/m/n/6 3
-.......\mathoff
-.....\hbox(6.65+0.0)x0.0
-......\rule(6.65+0.0)x0.0
-.....\OT1/cmr/m/n/8 [
-.....\kern 0.0
-.....\OT1/cmr/bx/n/8 I
-.....\OT1/cmr/bx/n/8 T
-.....\OT1/cmr/bx/n/8 E
-.....\OT1/cmr/bx/n/8 M
-.....\OT1/cmr/bx/n/8 -
-.....\discretionary
-.....\OT1/cmr/bx/n/8 2
-.....\kern 0.0
-.....\OT1/cmr/m/n/8 ]
-.....\penalty 10000
-.....\rule(0.0+2.85002)x0.0
-.....\penalty 10000
-.....\glue(\parfillskip) 0.0 plus 1.0fil
-.....\glue(\rightskip) 0.0
 ...\glue -2.85002
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0

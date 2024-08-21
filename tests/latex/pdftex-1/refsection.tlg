@@ -407,6 +407,14 @@ Completed box being shipped out [4]
 ...\hbox(0.0+0.0)x345.0
 ....\hbox(0.0+0.0)x345.0
 Chapter 3.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line ....
 > \l__csl_citation_info_tl=citationID={ITEM-3@1},citationItems={{id={ITEM-3}}},properties={noteIndex={1},chapterIndex={3}}.
 <recently read> }
 l. ...  This is just filler text\cite{ITEM-3}
@@ -416,14 +424,6 @@ LaTeX Warning: Citation `ITEM-3' on page 5 undefined on input line ....
 <recently read> }
 l. ...  This is just filler text\cite{ITEM-3}
                                             .\par
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line ....
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line ....
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line ....
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line ....
 > \l__csl_citation_info_tl=citationID={ITEM-4@1},citationItems={{id={ITEM-4}}},properties={noteIndex={2},chapterIndex={3}}.
 <recently read> }
 l. ...  This is just filler text\cite{ITEM-4}

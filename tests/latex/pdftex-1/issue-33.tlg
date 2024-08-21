@@ -3,13 +3,6 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: LaTeX markup in prefix
 ============================================================
-> \l__csl_citation_info_tl=citationID={Williams1992-Heaven20@1},citationItems={{id={Williams1992-Heaven20},prefix={See the \textit {opposite} view in },label={page},locator={1}}},properties={noteIndex={1}}.
-<recently read> }
-l. ...}
-LaTeX Warning: Citation `Williams1992-Heaven20' on page 1 undefined on input line ....
-> \l__csl_citation_tl=[\textbf {Williams1992-Heaven20}].
-<recently read> }
-l. ...}
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -18,6 +11,13 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
+> \l__csl_citation_info_tl=citationID={Williams1992-Heaven20@1},citationItems={{id={Williams1992-Heaven20},prefix={See the \textit {opposite} view in },label={page},locator={1}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `Williams1992-Heaven20' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {Williams1992-Heaven20}].
+<recently read> }
+l. ...}
 ============================================================
 [1
 ] (issue-33.aux)

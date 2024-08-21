@@ -4,12 +4,6 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Single cite item in a citation
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
-<recently read> }
-l. ...}
-> \l__csl_citation_tl=Bruce D’Arcus, \textit {Boundaries of Dissent: Protest and State Power in the Media Age} (Routledge, 2005)..
-<recently read> }
-l. ...}
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -18,6 +12,12 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=Bruce D’Arcus, \textit {Boundaries of Dissent: Protest and State Power in the Media Age} (Routledge, 2005)..
+<recently read> }
+l. ...}
 ============================================================
 ============================================================
 TEST 2: Multiple cite items in a citation
@@ -154,7 +154,7 @@ l. ...}
 ============================================================
 TEST 14: \parencite *
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1@14},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={suppress-author}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@14},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=D’Arcus, \textit {Boundaries of Dissent: Protest and State Power in the Media Age}..

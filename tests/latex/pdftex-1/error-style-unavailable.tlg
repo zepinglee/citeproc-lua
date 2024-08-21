@@ -25,7 +25,7 @@ The requested file could not be found in the current directory, in the TeX searc
 ============================================================
 TEST 1: Citation
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...}
 LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....

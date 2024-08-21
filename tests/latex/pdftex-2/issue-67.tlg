@@ -1,11 +1,5 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
-> \l__csl_citation_info_tl=citationID={Hardy2019-Gemsfr@1},citationItems={{id={Hardy2019-Gemsfr},prefix={\dots \ dalam Kej.\ 8:11 sebagai penanda keterkejutan: ``\emph {The dove returned to him at sunset, \emph {and incredibly}, a fresh-picked olive branch was in its mouth!}''; lihat },label={page},locator={194 (tekanan saya)}}},properties={noteIndex={1}}.
-<recently read> }
-l. ...... = {194 (tekanan saya)}]{Hardy2019-Gemsfr}
-> \l__csl_citation_tl=\dots \ dalam Kej.\ 8:11 sebagai penanda keterkejutan: “\textit {The dove returned to him at sunset, {\normalshape and incredibly}, a fresh-picked olive branch was in its mouth!}”; lihat H. H. Hardy II, \textit {Exegetical Gems from Biblical Hebrew: A Refreshing Guide to Grammar and Interpretation} (Grand Rapids, MI: Baker Academic, 2019), 194 (tekanan saya)..
-<recently read> }
-l. ...... = {194 (tekanan saya)}]{Hardy2019-Gemsfr}
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -14,3 +8,9 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
+> \l__csl_citation_info_tl=citationID={Hardy2019-Gemsfr@1},citationItems={{id={Hardy2019-Gemsfr},prefix={\dots \ dalam Kej.\ 8:11 sebagai penanda keterkejutan: ``\emph {The dove returned to him at sunset, \emph {and incredibly}, a fresh-picked olive branch was in its mouth!}''; lihat },label={page},locator={194 (tekanan saya)}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...... = {194 (tekanan saya)}]{Hardy2019-Gemsfr}
+> \l__csl_citation_tl=\dots \ dalam Kej.\ 8:11 sebagai penanda keterkejutan: “\textit {The dove returned to him at sunset, {\normalshape and incredibly}, a fresh-picked olive branch was in its mouth!}”; lihat H. H. Hardy II, \textit {Exegetical Gems from Biblical Hebrew: A Refreshing Guide to Grammar and Interpretation} (Grand Rapids, MI: Baker Academic, 2019), 194 (tekanan saya)..
+<recently read> }
+l. ...... = {194 (tekanan saya)}]{Hardy2019-Gemsfr}
