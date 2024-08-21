@@ -1,0 +1,28 @@
+% <https://github.com/zepinglee/citeproc-lua/issues/6>
+
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\usepackage[style=apa]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{test.json}
+
+
+\begin{document}
+\START
+
+\TEST{Unicode apostrophe}{
+  \cite{ITEM-1}
+}
+
+\TEST{Non-break space}{
+  \cite{ITEM-4}
+}
+
+\TEST{Bibliography}{
+  \printbibliography
+}
+
+\OMIT
+\end{document}

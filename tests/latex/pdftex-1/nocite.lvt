@@ -1,0 +1,22 @@
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\usepackage[style=apa]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{test.json}
+
+\nocite{ITEM-1}
+
+\nocite{ITEM-3,ITEM-4}
+
+
+\begin{document}
+\START
+
+\TEST{Bibliography}{
+  \printbibliography
+}
+
+\OMIT
+\end{document}

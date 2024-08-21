@@ -1,0 +1,20 @@
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\usepackage[style=apa]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{test.bib}
+
+
+\begin{document}
+\START
+
+\input{csl-citation-tests}
+
+\TEST{Bibliography}{
+  \printbibliography
+}
+
+\OMIT
+\end{document}

@@ -1,0 +1,84 @@
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\begin{filecontents}[noheader, overwrite]{\jobname.csl}
+<style
+    xmlns="http://purl.org/net/xbiblio/csl"
+    class="in-text"
+    version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <citation>
+    <sort>
+      <key variable="title"/>
+    </sort>
+    <layout delimiter=", ">
+      <text variable="title"/>
+    </layout>
+  </citation>
+  <bibliography>
+    <sort>
+      <key variable="title"/>
+    </sort>
+    <layout>
+      <text variable="title"/>
+    </layout>
+  </bibliography>
+</style>
+\end{filecontents}
+
+\begin{filecontents}[noheader, overwrite]{\jobname.json}
+[
+    {
+        "id": "ITEM-1",
+        "title": "cihla",
+        "type": "book"
+    },
+    {
+        "id": "ITEM-2",
+        "title": "chochol",
+        "type": "article-journal"
+    },
+    {
+        "id": "ITEM-3",
+        "title": "hudba",
+        "type": "book"
+    },
+    {
+        "id": "ITEM-4",
+        "title": "jasan",
+        "type": "book"
+    },
+    {
+        "id": "ITEM-5",
+        "title": "čáp",
+        "type": "book"
+    }
+]
+\end{filecontents}
+
+\usepackage[style=\jobname]{citation-style-language}
+\cslsetup{
+  regression-test = true,
+  locale = cs-CZ,
+}
+\addbibresource{sort.json}
+
+
+\begin{document}
+\START
+
+\TEST{Locale sorting}{
+  \cite{ITEM-1,ITEM-2,ITEM-3,ITEM-4,ITEM-5}
+}
+
+\TEST{Bibliography}{
+  \printbibliography
+}
+
+\OMIT
+\end{document}

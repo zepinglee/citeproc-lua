@@ -1,0 +1,24 @@
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\usepackage[style=apa]{citation-style-language}
+\cslsetup{regression-test = true}
+
+\START
+
+\addbibresource{bib-unavailable.bib}
+
+
+\begin{document}
+
+\TEST{Citation}{
+  \cite{ITEM-1}
+}
+
+\TEST{Bibliography}{
+  \printbibliography
+}
+
+\OMIT
+\end{document}

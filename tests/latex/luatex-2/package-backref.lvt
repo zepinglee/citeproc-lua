@@ -34,6 +34,21 @@
   \printbibliography
 }
 
+% `backref` doesn't write to `.brf` file until the second run of latex.
+% We force to write to make the results presented after two passes.
+\makeatletter
+\if@filesw
+  \@ifundefined{tf@brf}{%
+    \expandafter\newwrite\csname tf@brf\endcsname
+  }{}%
+  \@ifundefined{tf@brf@open}{%
+    \BR@RerunFileCheck
+    \immediate\openout\csname tf@brf\endcsname\jobname.brf\relax
+    \gdef\tf@brf@open{}%
+  }{}%
+\fi
+\makeatother
+
 \TEST{Bibliography format}{
   \clearpage
 }

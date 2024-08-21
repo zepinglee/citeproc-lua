@@ -1,5 +1,5 @@
 \input{regression-test}
-\documentclass{beamer}
+\documentclass{article}
 \input{csl-test}
 
 \usepackage[style=chicago-fullnote-bibliography]{citation-style-language}
@@ -10,17 +10,13 @@
 \begin{document}
 \START
 
-\begin{frame}
-  \TEST{Citation format}{
-    \cite{ITEM-1}
-  }
-\end{frame}
+% <https://github.com/zepinglee/citeproc-lua/issues/21>
 
-\begin{frame}
-  \TEST{Bibliography contents}{
-    \printbibliography
-  }
-\end{frame}
+\TEST{Note citation in list}{
+  \begin{itemize}
+    \item Foo\cite{ITEM-1}.
+  \end{itemize}
+}
 
 \OMIT
 \end{document}

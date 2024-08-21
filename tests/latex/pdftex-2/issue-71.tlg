@@ -1,0 +1,45 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+> \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={Sari2007-Pragma}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\nocite{Sari2007-Pragma}
+                              % note has problem with quotation marks
+> \l__csl_citation_tl=.
+<recently read> }
+l. ...\nocite{Sari2007-Pragma}
+                              % note has problem with quotation marks
+> \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={Sari2007-Pragma-shorterNote}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\nocite{Sari2007-Pragma-shorterNote}
+                                          % note has no problem with quotati...
+> \l__csl_citation_tl=.
+<recently read> }
+l. ...\nocite{Sari2007-Pragma-shorterNote}
+                                          % note has no problem with quotati...
+> \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={Sari2007-Pragma-curly-quotes}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\nocite{Sari2007-Pragma-curly-quotes}
+> \l__csl_citation_tl=.
+<recently read> }
+l. ...\nocite{Sari2007-Pragma-curly-quotes}
+> \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={Sari2007-Pragma-straight-quotes}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\nocite{Sari2007-Pragma-straight-quotes}
+> \l__csl_citation_tl=.
+<recently read> }
+l. ...\nocite{Sari2007-Pragma-straight-quotes}
+============================================================
+TEST 1: bibliography
+============================================================
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 2, entry-spacing = 0}}
+>  {\bibitem {Sari2007-Pragma} Sari’s dissertation aims to clarify the function of seven Indonesian particles (\textit {kan}, \textit {ya}, \textit {kok}, \textit {lho}, \textit {dong}, \textit {deh}, and \textit {sih}) and the English particle `yeah’. Sari argues that \textit {deh} takes sentence-final position and is an emphatic particle which enhances “the speaker’s explanation about an idea”. Usually \textit {deh} has neutral or falling intonation. One of the conversation chunks Sari analyses is \textit {tidur deh di atas} which Sari translates as `(we just had to accept that) he’d sleep upstairs’.}
+>  {\bibitem {Sari2007-Pragma-shorterNote} Sari’s dissertation aims to clarify the function of seven Indonesian particles (\textit {kan}, \textit {ya}, \textit {kok}, \textit {lho}, \textit {dong}, \textit {deh}, and \textit {sih}) and the English particle `yeah’. Sari argues that \textit {deh} takes sentence-final position and is an emphatic particle which enhances “the speaker’s explanation about an idea”. Usually \textit {deh} has neutral or falling intonation. One of the conversation chunks Sari analyses is \textit {tidur deh di atas} which Sari translates as}
+>  {\bibitem {Sari2007-Pragma-curly-quotes} Sari’s dissertation aims to clarify the function of seven Indonesian particles (\textit {kan}, \textit {ya}, \textit {kok}, \textit {lho}, \textit {dong}, \textit {deh}, and \textit {sih}) and the English particle ‘yeah’. Sari argues that \textit {deh} takes sentence-final position and is an emphatic particle which enhances “the speaker’s explanation about an idea”. Usually \textit {deh} has neutral or falling intonation. One of the conversation chunks Sari analyses is \textit {tidur deh di atas} which Sari translates as ‘(we just had to accept that) he’d sleep upstairs’.}
+>  {\bibitem {Sari2007-Pragma-straight-quotes} Sari’s dissertation aims to clarify the function of seven Indonesian particles (\textit {kan}, \textit {ya}, \textit {kok}, \textit {lho}, \textit {dong}, \textit {deh}, and \textit {sih}) and the English particle “yeah”. Sari argues that \textit {deh} takes sentence-final position and is an emphatic particle which enhances ‘the speaker’s explanation about an idea’. Usually \textit {deh} has neutral or falling intonation. One of the conversation chunks Sari analyses is \textit {tidur deh di atas} which Sari translates as “(we just had to accept that) he’d sleep upstairs”.}
+>  {\end {thebibliography}}.
+<recently read> }
+l. ...}
+[1
+]
+============================================================

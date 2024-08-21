@@ -1,0 +1,197 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+(csl-citation-tests.tex
+============================================================
+TEST 1: Single cite item in a citation
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 2: Multiple cite items in a citation
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@1},citationItems={{id={ITEM-1}},{id={ITEM-2}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+LaTeX Warning: Citation `ITEM-2' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1, ITEM-2}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 3: Citation with page locator
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 4: Citation with section locator
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@3},citationItems={{id={ITEM-1},label={section},locator={2.3}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 5: Citation with implicit page locator
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@4},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 6: Citation with prefix and suffix
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@5},citationItems={{id={ITEM-1},prefix={prefix },suffix={ suffix}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 7: Citation with implicit prefix and suffix
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@6},citationItems={{id={ITEM-1},prefix={prefix },suffix={, suffix}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 8: Citation with implicit suffix
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@7},citationItems={{id={ITEM-1},suffix={, suffix}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 9: Citation with implicit prefix
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@8},citationItems={{id={ITEM-1},prefix={prefix }}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 10: Narrative citation
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={composite}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 11: Narrative citation
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@10},citationItems={{id={ITEM-1}}},properties={infix={'s early work},noteIndex={0},mode={composite}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 12: Multiple cite items with options
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@2},citationItems={{id={ITEM-1},prefix={See },label={page},locator={6}},{id={ITEM-2},label={figure},locator={2}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+LaTeX Warning: Citation `ITEM-2' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1, ITEM-2}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 13: Cite only author
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@11},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 14: \parencite *
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@12},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={suppress-author}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 15: \citeyearpar 
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@13},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={suppress-author}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 16: Full cite
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@14},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={full-cite}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 17: Uncited entry
+============================================================
+> \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=.
+<recently read> }
+l. ...}
+============================================================
+)
+============================================================
+TEST 18: Bibliography
+============================================================
+Package CSL Warning: The bibliography is empty.
+============================================================

@@ -1,3 +1,5 @@
+% <https://github.com/zepinglee/citeproc-lua/discussions/60>
+
 \input{regression-test}
 \documentclass{article}
 \input{csl-test}
