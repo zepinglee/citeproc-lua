@@ -455,17 +455,11 @@ function CiteProc:normalize_cite_item(cite_item)
     -- Assert CSL rich-text or HTML-like tagged string
     if cite_item.prefix == "" then
       cite_item.prefix = nil
-    else
-      local cite_prefix = util.check_prefix_space_append(cite_item.prefix)
-      cite_item.prefix_inlines = InlineElement:parse(cite_prefix, the_context, true)
     end
   end
   if cite_item.suffix then
     if cite_item.suffix == "" then
       cite_item.suffix = nil
-    else
-      local cite_suffix = util.check_suffix_prepend(cite_item.suffix)
-      cite_item.suffix_inlines = InlineElement:parse(cite_suffix, the_context, true)
     end
   end
 

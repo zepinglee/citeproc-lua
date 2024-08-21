@@ -184,8 +184,6 @@ end
 ---@field suffix string?
 ---@field locator string?
 ---@field label string?
----@field prefix_inlines InlineElement[]?
----@field suffix_inlines InlineElement[]?
 
 ---comment
 ---@param citation_items CitationItem[]
@@ -195,6 +193,7 @@ end
 function Citation:build_cluster(citation_items, engine, properties)
   properties = properties or {}
   local output_format = engine.output_format
+  ---@type CiteIr[]
   local irs = {}
   citation_items = self:sorted_citation_items(citation_items, engine)
   for _, cite_item in ipairs(citation_items) do
@@ -227,7 +226,7 @@ function Citation:build_cluster(citation_items, engine, properties)
       -- if layout_affixes then
       --   layout_prefix = layout_affixes.prefix
       -- end
-    local prefix_inlines = citation_items[i].prefix_inlines
+    local prefix_inlines = ir.cite_prefix
     if prefix_inlines then
       -- Prefix is inlines
       local prefix_str = output.SortStringFormat:new():output(prefix_inlines, context)
@@ -262,8 +261,8 @@ function Citation:build_cluster(citation_items, engine, properties)
 
   local previous_ir
   for i, ir in ipairs(irs) do
-    local cite_prefix = citation_items[i].prefix_inlines
-    local cite_suffix = citation_items[i].suffix_inlines
+    local cite_prefix = ir.cite_prefix
+    local cite_suffix = ir.cite_suffix
     if not ir.collapse_suppressed then
       local cite_inlines = ir:flatten(output_format)
       if #cite_inlines > 0 then
@@ -346,11 +345,11 @@ function Citation:build_cluster(citation_items, engine, properties)
   local author_only_mode = (properties.mode == "author-only" or
     (#citation_items >= 1 and citation_items[1]["author-only"]))
   if has_printed_form and context.area.layout.affixes and not author_only_mode then
-    if irs[1].cite_prefix then
-      table.insert(citation_stream, 1, PlainText:new(irs[1].cite_prefix))
+    if irs[1].layout_prefix then
+      table.insert(citation_stream, 1, PlainText:new(irs[1].layout_prefix))
     end
-    if irs[#irs].cite_suffix then
-      table.insert(citation_stream, PlainText:new(irs[#irs].cite_suffix))
+    if irs[#irs].layout_suffix then
+      table.insert(citation_stream, PlainText:new(irs[#irs].layout_suffix))
     end
   end
 
@@ -430,8 +429,10 @@ end
 ---@field disam_level integer
 ---@field disam_str string?
 ---@field cite_delimiter string?
----@field cite_prefix string?
----@field cite_suffix string?
+---@field layout_prefix string?
+---@field layout_suffix string?
+---@field cite_prefix InlineElement[]?
+---@field cite_suffix InlineElement[]?
 
 ---@param cite_item CitationItem
 ---@param output_format OutputFormat
@@ -499,8 +500,17 @@ function Citation:build_ambiguous_ir(cite_item, output_format, engine)
 
   ir.cite_delimiter = active_layout.delimiter
   if active_layout.affixes then
-    ir.cite_prefix = active_layout.affixes.prefix
-    ir.cite_suffix = active_layout.affixes.suffix
+    ir.layout_prefix = active_layout.affixes.prefix
+    ir.layout_suffix = active_layout.affixes.suffix
+  end
+
+  if cite_item.prefix and cite_item.prefix ~= "" then
+    local cite_prefix = util.check_prefix_space_append(cite_item.prefix)
+    ir.cite_prefix = InlineElement:parse(cite_prefix, context, true)
+  end
+  if cite_item.suffix and cite_item.suffix ~= "" then
+    local cite_suffix = util.check_suffix_prepend(cite_item.suffix)
+    ir.cite_suffix = InlineElement:parse(cite_suffix, context, true)
   end
 
   -- Formattings like font-style are ignored for disambiguation.
