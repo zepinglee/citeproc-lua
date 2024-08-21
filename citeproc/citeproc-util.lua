@@ -433,6 +433,46 @@ function util.endswith(str, suffix)
   return string.sub(str, -#suffix) == suffix
 end
 
+---@param str string
+---@return string
+function util.check_prefix_space_append(str)
+  if str == "" then
+    return str
+  end
+  local last_char = uni_utf8.match(str, ".$")
+  if not last_char then
+    return str
+  end
+  if util.is_romanesque(utf8.codepoint(last_char, 1, #last_char)) then
+    return str .. " "
+  elseif string.match(last_char, "[:.;!?]") then
+    return str .. " "
+  elseif string.match(last_char, "[)%],0-9]") then
+    return str .. " "
+  else
+    return str
+  end
+end
+
+---@param str string
+---@return string
+function util.check_suffix_prepend(str)
+  if str == "" then
+    return str
+  end
+  local first_char = uni_utf8.match(str, "^.")
+  if not first_char then
+    return str
+  end
+  if util.is_romanesque(utf8.codepoint(first_char, 1, #first_char)) then
+    return " " .. str
+  elseif string.match(first_char, "[)%[]") then
+    return " " .. str
+  else
+    return str
+  end
+end
+
 ---@param str string | number
 ---@return boolean
 function util.is_numeric(str)

@@ -190,7 +190,7 @@ end
 ---comment
 ---@param citation_items CitationItem[]
 ---@param engine CiteProc
----@param properties table
+---@param properties CitationProperties
 ---@return string
 function Citation:build_cluster(citation_items, engine, properties)
   properties = properties or {}
@@ -327,6 +327,20 @@ function Citation:build_cluster(citation_items, engine, properties)
   elseif #citation_stream == 1 and citation_stream[1]._type == "CiteInline" and
       #citation_stream[1].inlines == 1 and citation_stream[1].inlines[1].value == "[NO_PRINTED_FORM]" then
     has_printed_form = false
+  end
+
+  -- Ouput citation affixes
+  if has_printed_form then
+    if properties.prefix and properties.prefix ~= "" then
+      local citation_prefix = util.check_prefix_space_append(properties.prefix)
+      local inlines = InlineElement:parse(citation_prefix, context)
+      table.insert(citation_stream, 1, Micro:new(inlines))
+    end
+    if properties.suffix and properties.suffix ~= "" then
+      local citation_suffix = util.check_suffix_prepend(properties.suffix)
+      local inlines = InlineElement:parse(citation_suffix, context)
+      table.insert(citation_stream, Micro:new(inlines))
+    end
   end
 
   local author_only_mode = (properties.mode == "author-only" or

@@ -53,9 +53,20 @@ local Position = util.Position
 ---@alias ItemId string | number
 ---@alias NoteIndex integer
 ---@alias ChapterIndex number
----@alias CitationData {citationID: CitationId, citationItems: CitationItem[], properties: CitationProperties, citation_index: integer}
 
----@alias CitationProperties { noteIndex: NoteIndex, chapterIndex: ChapterIndex, mode: string? }
+---@class CitationData
+---@field citationID CitationId
+---@field citationItems CitationItem[]
+---@field properties CitationProperties
+---@field citation_index integer
+
+---@class CitationProperties
+---@field noteIndex NoteIndex,
+---@field chapterIndex ChapterIndex,
+---@field mode string?
+---@field prefix string?
+---@field suffix string?
+
 
 ---@class NameVariable
 ---@field family string?
@@ -445,14 +456,16 @@ function CiteProc:normalize_cite_item(cite_item)
     if cite_item.prefix == "" then
       cite_item.prefix = nil
     else
-      cite_item.prefix_inlines = InlineElement:parse(cite_item.prefix, the_context, true)
+      local cite_prefix = util.check_prefix_space_append(cite_item.prefix)
+      cite_item.prefix_inlines = InlineElement:parse(cite_prefix, the_context, true)
     end
   end
   if cite_item.suffix then
     if cite_item.suffix == "" then
       cite_item.suffix = nil
     else
-      cite_item.suffix_inlines = InlineElement:parse(cite_item.suffix, the_context, true)
+      local cite_suffix = util.check_suffix_prepend(cite_item.suffix)
+      cite_item.suffix_inlines = InlineElement:parse(cite_suffix, the_context, true)
     end
   end
 

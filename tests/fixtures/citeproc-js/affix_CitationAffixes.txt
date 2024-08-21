@@ -1,0 +1,126 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+
+>>===== RESULT =====>>
+..[0] (BEFORE: Comment. [Inside parens (Smith), 2000; and (Jones), 2001, ending parens]. AFTER)
+>>[1] (BEFORE: Comment. [Inside parens (Smith), 2000; and (Jones), 2001, ending parens]. AFTER)
+<<===== RESULT =====<<
+
+
+>>===== CITATIONS =====>>
+[
+    [
+        {
+            "citationID": "CITATION-1", 
+            "citationItems": [
+                {
+                    "id": "ITEM-1", 
+                    "prefix": "Comment. (Inside parens "
+                }, 
+                {
+                    "id": "ITEM-2", 
+                    "prefix": "and", 
+                    "suffix": ", ending parens)."
+                }
+            ], 
+            "properties": {
+                "noteIndex": 1, 
+                "prefix": "BEFORE:", 
+                "suffix": "AFTER"
+            }
+        }, 
+        [], 
+        []
+    ], 
+    [
+        {
+            "citationID": "CITATION-2", 
+            "citationItems": [
+                {
+                    "id": "ITEM-1", 
+                    "prefix": "Comment. (Inside parens "
+                }, 
+                {
+                    "id": "ITEM-2", 
+                    "prefix": "and", 
+                    "suffix": ", ending parens)."
+                }
+            ], 
+            "properties": {
+                "noteIndex": 2, 
+                "prefix": "BEFORE:", 
+                "suffix": "AFTER"
+            }
+        }, 
+        [
+            [
+                "CITATION-1", 
+                1
+            ]
+        ], 
+        []
+    ]
+]
+<<===== CITATIONS =====<<
+
+
+>>===== CSL =====>>
+<style 
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="note"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2009-08-10T04:49:00+09:00</updated>
+  </info>
+  <macro name="author">
+    <names variable="author">
+      <name form="short" />
+    </names>
+  </macro>
+  <citation>
+    <layout delimiter="; " prefix="(" suffix=")">
+      <group delimiter=" ">
+        <group delimiter=", ">
+          <text macro="author" prefix="(" suffix=")"/>
+          <date variable="issued" date-parts="year" form="text"/>
+        </group>
+      </group>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "author": [
+            {
+                "family": "Smith", 
+                "given": "Stephen"
+            }
+        ], 
+        "id": "ITEM-1", 
+        "title": "Stephen's Book",
+        "issued": { "date-parts": [[2000]]},
+        "type": "book"
+    }, 
+    {
+        "author": [
+            {
+                "family": "Jones", 
+                "given": "John" 
+            }
+        ], 
+        "id": "ITEM-2", 
+        "title": "John's Book",
+        "issued": { "date-parts": [[2001]]},
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<
