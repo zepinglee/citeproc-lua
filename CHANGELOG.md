@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fix note position in multiple chapters ([#72](https://github.com/zepinglee/citeproc-lua/discussions/72)).
+- Fix incorrect locale map of UKenglish.
 
 ## [0.6.1] - 2024-08-15
 
