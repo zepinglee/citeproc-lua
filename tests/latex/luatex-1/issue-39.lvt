@@ -7,19 +7,19 @@
 
 \begin{filecontents}[noheader, overwrite]{\jobname.bib}
 @article{zankl_kunstliche_2019,
-	title = {Künstliche {Intelligenz} und {Immaterialgüterrecht} bei {Computerkunst}},
-	volume = {2019},
-	journal = {ecolex},
-	author = {Zankl, Wolfgang},
-	year = {2019},
-	pages = {244--246},
+    title = {Künstliche {Intelligenz} und {Immaterialgüterrecht} bei {Computerkunst}},
+    volume = {2019},
+    journal = {ecolex},
+    author = {Zankl, Wolfgang},
+    year = {2019},
+    pages = {244--246},
 }
 
 @book{schweighofer_rechtsinformatik_1999,
-	title = {Rechtsinformatik und {Wissensrepräsentation}: automatische {Textanalyse} im {Völkerrecht} und {Europarecht}},
-	shorttitle = {Rechtsinformatik und {Wissensrepräsentation}},
-	author = {Schweighofer, Erich},
-	year = {1999},
+    title = {Rechtsinformatik und {Wissensrepräsentation}: automatische {Textanalyse} im {Völkerrecht} und {Europarecht}},
+    shorttitle = {Rechtsinformatik und {Wissensrepräsentation}},
+    author = {Schweighofer, Erich},
+    year = {1999},
 }
 \end{filecontents}
 

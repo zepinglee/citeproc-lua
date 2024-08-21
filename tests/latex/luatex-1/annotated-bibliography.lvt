@@ -1810,80 +1810,80 @@
 
 \begin{filecontents}[noheader, overwrite]{\jobname.json}
 [
-	{
-		"id": "barber2016work-life",
-		"type": "chapter",
-		"abstract": "Today’s organizations are struggling with how to manage employees’ growing demands for work–life balance while also improving productivity and the financial bottom line. Researchers have been steadily building a stronger business case for work–life initiatives over the past few decades. Contemporary research has gone beyond employee and organizational well-being indicators (e.g., strain, work–life conflict and facilitation, organizational climate) to also demonstrate effects of such initiatives on employee and organizational performance (Arthur & Cook, 2003; Clifton & Shepard, 2004; Konrad & Mangel, 2000; Stavrou, 2005; van Steenbergen & Ellemers, 2009). In addition, there is increasing interest regarding how organizations can provide social support systems via supervisors and organizational culture for employees to decrease conflict between work and nonwork domains (e.g., Greenhaus, Ziegert, & Allen, 2012; Hammer, Kossek, Anger, Bodner, & Zimmerman, 2011; Kossek, Pichler, Bodner, & Hammer, 2011). The focus on work–life balance initiatives is also prevalent in nonscholarly outlets. For example, the majority of 2012 winners featured in Fortune’s “100 Best Companies to Work For” offer practices such as telecommuting (79 companies) and child care (33 companies). Thus, it appears that promoting work–life balance is a vital component of any effort to create a healthy and productive workplace. Unfortunately, there is confusion surrounding conceptualizations of work–life balance (Eby, Casper, Lockwood, Bordeaux, & Brinley, 2005; Jain & Nair, 2013; Kalliath & Brough, 2008). Here we outline a working definition of work–life balance, along with an overview of recent criticisms regarding terminology and underlying assumptions. Then, we provide a brief overview of theory and research in work–life balance, including its application to workplace initiatives. Third, we explore a few key barriers that may prevent optimal work–life benefits for employees and the organization. Last, we discuss the role that work–life balance initiatives play in relation to other psychologically healthy workplace areas. (PsycInfo Database Record (c) 2022 APA, all rights reserved)",
-		"container-title": "The psychologically healthy workplace: Building a win-win environment for organizations and employees",
-		"event-place": "Washington, DC, US",
-		"ISBN": "978-1-4338-2052-6",
-		"language": "en",
-		"note": "DOI: 10.1037/14731-006\nThis book chapter provides an overview of the psychosociological concept of work-life balance. The authors discuss findings from studies showing harmful effects of work-life conflict on psychological and behavioral health as well as beneficial effects of work-life facilitation, wherein one role makes a positive contribution to the other. The chapter concludes with a description of work-life balance initiatives that organizations have adopted to help employees manage their dual work and nonwork obligations and some of the key factors influencing their effectiveness.",
-		"page": "111-133",
-		"publisher": "American Psychological Association",
-		"publisher-place": "Washington, DC, US",
-		"source": "APA PsycNet",
-		"title": "Work-life balance: Contemporary perspectives",
-		"title-short": "Work-life balance",
-		"author": [
-			{
-				"family": "Barber",
-				"given": "Larissa K."
-			},
-			{
-				"family": "Grawitch",
-				"given": "Matthew J."
-			},
-			{
-				"family": "Maloney",
-				"given": "Patrick W."
-			}
-		],
-		"issued": {
-			"date-parts": [
-				[
-					"2016"
-				]
-			]
-		}
-	},
-	{
-		"id": "carlson2019double",
-		"type": "article-journal",
-		"abstract": "This study expands our understanding of the negative impact of work demands on work outcomes by examining this impact in light of the family domain. We explore how the family domain plays a role in this process by considering mechanisms that capture both spillover and crossover effects. We investigate the spillover of work demands (i.e., role conflict and role overload) through work-to-family conflict on work attitudes (i.e., job satisfaction and affective commitment) and self-reported work behaviors (i.e., citizenship behavior and absenteeism). We also consider the double crossover of work demands through work-to-family conflict to stress transmission, and back to the incumbent’s family-to-work conflict on both attitudinal and behavioral work outcomes to examine the impact of work demands. Using a time-lagged matched sample of 389 dual career couples, we found spillover effects for the work attitudes and crossover effects for the work behaviors, suggesting work demands uniquely shape outcomes depending on the path they take. We close by offering implications for research and practice. (PsycInfo Database Record (c) 2020 APA, all rights reserved)",
-		"container-title": "Journal of Applied Psychology",
-		"DOI": "10.1037/apl0000348",
-		"ISSN": "1939-1854",
-		"issue": "2",
-		"language": "en",
-		"note": "publisher-place: US\npublisher: American Psychological Association\nCarlson et al. (2019) conducted an empirical study to examine the multiple paths through which work and family variables can affect work outcomes. Whereas Barber et al. (2016) explored how work obligations can increase stress or enhance fulfillment at home, Carlson et al. viewed work demands as raising family stress, with potential negative consequences on work performance. Results supported a model in which direct effects of work demands and spillover effects of work demands to work-to-family conflict led to lower job satisfaction and affective commitment, as well as crossover effects of work-to-family conflict, spousal stress transmission, and later family- to-work conflict on organizational citizenship and absenteeism. Overall, the study demonstrated a link from work demands to work outcomes when considering the family, but those paths differed depending on whether altitudinal or behavioral work outcomes were examined.",
-		"page": "214-228",
-		"source": "APA PsycNet",
-		"title": "Double crossed: The spillover and crossover effects of work demands on work outcomes through the family",
-		"title-short": "Double crossed",
-		"volume": "104",
-		"author": [
-			{
-				"family": "Carlson",
-				"given": "Dawn S."
-			},
-			{
-				"family": "Thompson",
-				"given": "Merideth J."
-			},
-			{
-				"family": "Kacmar",
-				"given": "K. Michele"
-			}
-		],
-		"issued": {
-			"date-parts": [
-				[
-					"2019"
-				]
-			]
-		}
-	}
+    {
+        "id": "barber2016work-life",
+        "type": "chapter",
+        "abstract": "Today’s organizations are struggling with how to manage employees’ growing demands for work–life balance while also improving productivity and the financial bottom line. Researchers have been steadily building a stronger business case for work–life initiatives over the past few decades. Contemporary research has gone beyond employee and organizational well-being indicators (e.g., strain, work–life conflict and facilitation, organizational climate) to also demonstrate effects of such initiatives on employee and organizational performance (Arthur & Cook, 2003; Clifton & Shepard, 2004; Konrad & Mangel, 2000; Stavrou, 2005; van Steenbergen & Ellemers, 2009). In addition, there is increasing interest regarding how organizations can provide social support systems via supervisors and organizational culture for employees to decrease conflict between work and nonwork domains (e.g., Greenhaus, Ziegert, & Allen, 2012; Hammer, Kossek, Anger, Bodner, & Zimmerman, 2011; Kossek, Pichler, Bodner, & Hammer, 2011). The focus on work–life balance initiatives is also prevalent in nonscholarly outlets. For example, the majority of 2012 winners featured in Fortune’s “100 Best Companies to Work For” offer practices such as telecommuting (79 companies) and child care (33 companies). Thus, it appears that promoting work–life balance is a vital component of any effort to create a healthy and productive workplace. Unfortunately, there is confusion surrounding conceptualizations of work–life balance (Eby, Casper, Lockwood, Bordeaux, & Brinley, 2005; Jain & Nair, 2013; Kalliath & Brough, 2008). Here we outline a working definition of work–life balance, along with an overview of recent criticisms regarding terminology and underlying assumptions. Then, we provide a brief overview of theory and research in work–life balance, including its application to workplace initiatives. Third, we explore a few key barriers that may prevent optimal work–life benefits for employees and the organization. Last, we discuss the role that work–life balance initiatives play in relation to other psychologically healthy workplace areas. (PsycInfo Database Record (c) 2022 APA, all rights reserved)",
+        "container-title": "The psychologically healthy workplace: Building a win-win environment for organizations and employees",
+        "event-place": "Washington, DC, US",
+        "ISBN": "978-1-4338-2052-6",
+        "language": "en",
+        "note": "DOI: 10.1037/14731-006\nThis book chapter provides an overview of the psychosociological concept of work-life balance. The authors discuss findings from studies showing harmful effects of work-life conflict on psychological and behavioral health as well as beneficial effects of work-life facilitation, wherein one role makes a positive contribution to the other. The chapter concludes with a description of work-life balance initiatives that organizations have adopted to help employees manage their dual work and nonwork obligations and some of the key factors influencing their effectiveness.",
+        "page": "111-133",
+        "publisher": "American Psychological Association",
+        "publisher-place": "Washington, DC, US",
+        "source": "APA PsycNet",
+        "title": "Work-life balance: Contemporary perspectives",
+        "title-short": "Work-life balance",
+        "author": [
+            {
+                "family": "Barber",
+                "given": "Larissa K."
+            },
+            {
+                "family": "Grawitch",
+                "given": "Matthew J."
+            },
+            {
+                "family": "Maloney",
+                "given": "Patrick W."
+            }
+        ],
+        "issued": {
+            "date-parts": [
+                [
+                    "2016"
+                ]
+            ]
+        }
+    },
+    {
+        "id": "carlson2019double",
+        "type": "article-journal",
+        "abstract": "This study expands our understanding of the negative impact of work demands on work outcomes by examining this impact in light of the family domain. We explore how the family domain plays a role in this process by considering mechanisms that capture both spillover and crossover effects. We investigate the spillover of work demands (i.e., role conflict and role overload) through work-to-family conflict on work attitudes (i.e., job satisfaction and affective commitment) and self-reported work behaviors (i.e., citizenship behavior and absenteeism). We also consider the double crossover of work demands through work-to-family conflict to stress transmission, and back to the incumbent’s family-to-work conflict on both attitudinal and behavioral work outcomes to examine the impact of work demands. Using a time-lagged matched sample of 389 dual career couples, we found spillover effects for the work attitudes and crossover effects for the work behaviors, suggesting work demands uniquely shape outcomes depending on the path they take. We close by offering implications for research and practice. (PsycInfo Database Record (c) 2020 APA, all rights reserved)",
+        "container-title": "Journal of Applied Psychology",
+        "DOI": "10.1037/apl0000348",
+        "ISSN": "1939-1854",
+        "issue": "2",
+        "language": "en",
+        "note": "publisher-place: US\npublisher: American Psychological Association\nCarlson et al. (2019) conducted an empirical study to examine the multiple paths through which work and family variables can affect work outcomes. Whereas Barber et al. (2016) explored how work obligations can increase stress or enhance fulfillment at home, Carlson et al. viewed work demands as raising family stress, with potential negative consequences on work performance. Results supported a model in which direct effects of work demands and spillover effects of work demands to work-to-family conflict led to lower job satisfaction and affective commitment, as well as crossover effects of work-to-family conflict, spousal stress transmission, and later family- to-work conflict on organizational citizenship and absenteeism. Overall, the study demonstrated a link from work demands to work outcomes when considering the family, but those paths differed depending on whether altitudinal or behavioral work outcomes were examined.",
+        "page": "214-228",
+        "source": "APA PsycNet",
+        "title": "Double crossed: The spillover and crossover effects of work demands on work outcomes through the family",
+        "title-short": "Double crossed",
+        "volume": "104",
+        "author": [
+            {
+                "family": "Carlson",
+                "given": "Dawn S."
+            },
+            {
+                "family": "Thompson",
+                "given": "Merideth J."
+            },
+            {
+                "family": "Kacmar",
+                "given": "K. Michele"
+            }
+        ],
+        "issued": {
+            "date-parts": [
+                [
+                    "2019"
+                ]
+            ]
+        }
+    }
 ]
 \end{filecontents}
 

@@ -1,3 +1,5 @@
+% <https://github.com/zepinglee/citeproc-lua/issues/21>
+
 \input{regression-test}
 \documentclass{article}
 \input{csl-test}
@@ -12,8 +14,6 @@
 \begin{document}
 \START
 \showoutput
-
-% <https://github.com/zepinglee/citeproc-lua/issues/21>
 
 \enquote{Lorem ipsum.\cite{ITEM-1}}
 

@@ -1,3 +1,5 @@
+% <https://github.com/zepinglee/citeproc-lua/issues/21>
+
 \input{regression-test}
 \documentclass{article}
 \input{csl-test}
@@ -9,8 +11,6 @@
 
 \begin{document}
 \START
-
-% <https://github.com/zepinglee/citeproc-lua/issues/21>
 
 \TEST{Note citation in list}{
   \begin{itemize}
