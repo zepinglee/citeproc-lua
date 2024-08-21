@@ -2,15 +2,55 @@
 \documentclass{article}
 \input{csl-test}
 
-\usepackage[style=hyperref-test]{citation-style-language}
-\usepackage{hyperref}
+\begin{filecontents}[noheader, overwrite]{\jobname.csl}
+<style
+    xmlns="http://purl.org/net/xbiblio/csl"
+    class="in-text"
+    version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2021-12-16T00:00:00+08:00</updated>
+  </info>
+  <citation>
+    <layout>
+      <text value="citation"/>
+    </layout>
+  </citation>
+  <bibliography>
+    <layout delimiter=", ">
+      <text variable="URL" prefix="URL: "/>
+      <text variable="DOI" prefix="DOI: "/>
+      <group delimiter=": ">
+        <text value="URL of DOI"/>
+        <text variable="DOI" prefix="https://doi.org/"/>
+      </group>
+      <text variable="PMID" prefix="PMID: "/>
+      <text variable="PMCID" prefix="PMCID: "/>
+    </layout>
+  </bibliography>
+</style>
+\end{filecontents}
 
+\begin{filecontents}[noheader, overwrite]{\jobname.bib}
+@book{ITEM-1,
+  url    = {https://arxiv.org/abs/1702.01006},
+  doi    = {10.1101/088278},
+  pubmed = {19204236},
+  pmcid  = {PMC2653214},
+}
+\end{filecontents}
+
+\usepackage[style=\jobname]{citation-style-language}
 \cslsetup{regression-test = true}
-\addbibresource{hyperref-test.bib}
+\addbibresource{\jobname.bib}
+
+\usepackage{hyperref}
 
 
 \begin{document}
 \START
+\showoutput
 
 \cite{ITEM-1}
 
