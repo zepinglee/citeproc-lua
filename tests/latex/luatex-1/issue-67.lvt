@@ -1,10 +1,10 @@
-\input{regression-test}
-
-\documentclass{article}
-
 % <https://github.com/zepinglee/citeproc-lua/issues/67>
 
-\begin{filecontents}[overwrite, noheader]{\jobname.json}
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\begin{filecontents}[noheader, overwrite]{\jobname.json}
 [
     {
         "id": "Hardy2019-Gemsfr",
@@ -31,7 +31,7 @@
 ]
 \end{filecontents}
 
-\usepackage[style = chicago-fullnote-bibliography]{citation-style-language}
+\usepackage[style=chicago-fullnote-bibliography]{citation-style-language}
 \cslsetup{regression-test = true}
 \addbibresource{\jobname.json}
 

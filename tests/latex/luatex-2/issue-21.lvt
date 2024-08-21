@@ -1,23 +1,16 @@
 \input{regression-test}
-
 \documentclass{article}
-
 \input{csl-test}
 
-\usepackage{citation-style-language}
-
-\cslsetup{
-  regression-test = true,
-  style = chicago-fullnote-bibliography,
-}
+\usepackage[style=chicago-fullnote-bibliography]{citation-style-language}
+\cslsetup{regression-test = true}
 \addbibresource{test.json}
 
 
 \begin{document}
-
 \START
 
-% https://github.com/zepinglee/citeproc-lua/issues/21
+% <https://github.com/zepinglee/citeproc-lua/issues/21>
 
 \TEST{Note citation in list}{
   \begin{itemize}
@@ -25,4 +18,5 @@
   \end{itemize}
 }
 
+\OMIT
 \end{document}

@@ -1,25 +1,19 @@
 \input{regression-test}
-
 \documentclass{article}
-
 \input{csl-test}
 
-\usepackage{citation-style-language}
+\usepackage[style=chicago-fullnote-bibliography]{citation-style-language}
 \usepackage{csquotes}
 
-\cslsetup{
-  regression-test = true,
-  style = chicago-fullnote-bibliography,
-}
+\cslsetup{regression-test = true}
 \addbibresource{test.json}
 
 
 \begin{document}
-
 \START
 \showoutput
 
-% https://github.com/zepinglee/citeproc-lua/issues/21
+% <https://github.com/zepinglee/citeproc-lua/issues/21>
 
 \enquote{Lorem ipsum.\cite{ITEM-1}}
 
@@ -35,4 +29,5 @@
 
 \clearpage
 
+\OMIT
 \end{document}

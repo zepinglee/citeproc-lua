@@ -1,16 +1,10 @@
 \input{regression-test}
-
 \documentclass{article}
-
 \input{csl-test}
 \pagestyle{headings}
 
-\usepackage{citation-style-language}
-
-\cslsetup{
-  regression-test = true,
-  style = apa,
-}
+\usepackage[style=apa]{citation-style-language}
+\cslsetup{regression-test = true}
 \addbibresource{test.json}
 
 \defbibheading{subsection}[Works Cited]{%
@@ -19,7 +13,6 @@
 
 
 \begin{document}
-
 \START
 \showoutput
 

@@ -1,21 +1,15 @@
 \input{regression-test}
-
 \documentclass{article}
-
 \input{csl-test}
 
 \usepackage[french]{babel}
-\usepackage{citation-style-language}
 
-\cslsetup{
-  regression-test = true,
-  style = locale-test,
-}
+\usepackage[style=locale-test]{citation-style-language}
+\cslsetup{regression-test = true}
 \addbibresource{test.json}
 
 
 \begin{document}
-
 \START
 
 \TEST{Babel locale}{
@@ -26,4 +20,5 @@
   \printbibliography
 }
 
+\OMIT
 \end{document}

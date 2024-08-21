@@ -1,7 +1,5 @@
 \input{regression-test}
-
 \documentclass{article}
-
 \input{csl-test}
 
 \usepackage{citation-style-language}
@@ -20,4 +18,5 @@
   \bibliography{test}
 }
 
+\OMIT
 \end{document}

@@ -859,8 +859,3 @@ Completed box being shipped out [3]
 ...\hbox(0.0+0.0)x345.0, direction TLT
 ....\hbox(0.0+0.0)x345.0, direction TLT
 ============================================================
-(package-backref.aux)
-Package rerunfilecheck Info: File `package-backref.out' has not changed.
-(rerunfilecheck)             Checksum: 1DA13579EB0DB74E37BF4C750CE97FB8;232.
-Package rerunfilecheck Info: File `package-backref.brf' has not changed.
-(rerunfilecheck)             Checksum: 055383152C1CE5C2E08803F43F25528D;266.

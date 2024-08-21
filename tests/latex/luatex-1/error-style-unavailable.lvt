@@ -1,16 +1,12 @@
 \input{regression-test}
-
 \documentclass{article}
-
 \input{csl-test}
 
 \usepackage[style=style-unavailable]{citation-style-language}
-
-\START
-
 \cslsetup{regression-test = true}
 
 
+\START
 \begin{document}
 
 \TEST{Citation}{
@@ -21,4 +17,5 @@
   \printbibliography
 }
 
+\OMIT
 \end{document}

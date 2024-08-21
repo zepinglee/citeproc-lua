@@ -1,8 +1,8 @@
 \input{regression-test}
-
 \documentclass{article}
+\input{csl-test}
 
-\begin{filecontents}[overwrite,noheader]{\jobname.json}
+\begin{filecontents}[noheader, overwrite]{\jobname.json}
 [
     {
         "id": "ITEM-3",
@@ -29,16 +29,11 @@
 ]
 \end{filecontents}
 
-\input{csl-test}
-
-\usepackage{citation-style-language}
+\usepackage[style=apa]{citation-style-language}
+\cslsetup{regression-test = true}
 
 \START
 
-\cslsetup{
-  regression-test = true,
-  style = apa,
-}
 \addbibresource{\jobname.json}
 
 
@@ -52,4 +47,5 @@
   \printbibliography
 }
 
+\OMIT
 \end{document}

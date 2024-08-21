@@ -1,10 +1,10 @@
-\input{regression-test}
-
-\documentclass{article}
-
 % <https://github.com/zepinglee/citeproc-lua/issues/49>
 
-\begin{filecontents}[force, noheader]{\jobname.json}
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\begin{filecontents}[noheader, overwrite]{\jobname.json}
 [
     {
         "id": "ITEM-1",
@@ -34,7 +34,6 @@
 
 
 \begin{document}
-
 \START
 
 \TEST{Citation}{
@@ -45,4 +44,5 @@
   \printbibliography
 }
 
+\OMIT
 \end{document}

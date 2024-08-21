@@ -1,21 +1,15 @@
 \input{regression-test}
-
 \documentclass{article}
-
 \input{csl-test}
 
-\usepackage{citation-style-language}
+\usepackage[style=hyperref-test]{citation-style-language}
 \usepackage{hyperref}
 
-\cslsetup{
-  regression-test = true,
-  style = hyperref-test,
-}
+\cslsetup{regression-test = true}
 \addbibresource{hyperref-test.bib}
 
 
 \begin{document}
-
 \START
 
 \cite{ITEM-1}
@@ -24,4 +18,5 @@
   \printbibliography
 }
 
+\OMIT
 \end{document}

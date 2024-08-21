@@ -1,23 +1,19 @@
-% https://github.com/zepinglee/citeproc-lua/discussions/60
+% <https://github.com/zepinglee/citeproc-lua/discussions/60>
 
 \input{regression-test}
-
 \documentclass{article}
+\input{csl-test}
 
-\usepackage{citation-style-language}
-
-\START
-
+\usepackage[style=harvard-cite-them-right]{citation-style-language}
 \cslsetup{
   regression-test = true,
-  style = harvard-cite-them-right,
   bib-par-indent = 2em,
 }
 \addbibresource{test.json}
 
 
 \begin{document}
-
+\START
 \showoutput
 
 Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim
@@ -38,4 +34,5 @@ labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet.
   \clearpage
 }
 
+\OMIT
 \end{document}

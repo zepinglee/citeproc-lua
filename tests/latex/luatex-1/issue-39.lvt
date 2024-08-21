@@ -1,10 +1,9 @@
-\input{regression-test}
-
-\documentclass{article}
-
-% https://github.com/zepinglee/citeproc-lua/issues/39
-
+% <https://github.com/zepinglee/citeproc-lua/issues/39>
 % The underscores in `[\textbf {zankl_kunstliche_2019}]` cause "missing $" error.
+
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
 
 \begin{filecontents}[noheader, overwrite]{\jobname.bib}
 @article{zankl_kunstliche_2019,
@@ -24,16 +23,12 @@
 }
 \end{filecontents}
 
-\usepackage[style = chicago-note-bibliography]{citation-style-language}
-\cslsetup{
-  regression-test = true,
-  style = chicago-note-bibliography,
-}
+\usepackage[style=chicago-note-bibliography]{citation-style-language}
+\cslsetup{regression-test = true}
 \addbibresource{\jobname.bib}
 
 
 \begin{document}
-
 \START
 
 \footcite{zankl_kunstliche_2019}
@@ -44,4 +39,5 @@
 
 \printbibliography
 
+\OMIT
 \end{document}

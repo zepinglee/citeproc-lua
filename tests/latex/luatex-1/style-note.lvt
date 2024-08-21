@@ -1,20 +1,13 @@
 \input{regression-test}
-
 \documentclass{article}
-
 \input{csl-test}
 
-\usepackage{citation-style-language}
-
-\cslsetup{
-  regression-test = true,
-  style = chicago-fullnote-bibliography,
-}
+\usepackage[style=chicago-fullnote-bibliography]{citation-style-language}
+\cslsetup{regression-test = true}
 \addbibresource{test.json}
 
 
 \begin{document}
-
 \START
 \showoutput
 
@@ -32,4 +25,5 @@
   \clearpage
 }
 
+\OMIT
 \end{document}

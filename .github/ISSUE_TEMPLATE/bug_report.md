@@ -19,7 +19,7 @@ A clear and concise description of what the bug is.
 ```tex
 \documentclass{article}
 
-\begin{filecontents}[overwrite, noheader]{\jobname.json}
+\begin{filecontents}[noheader, overwrite]{\jobname.json}
 [
     {
         "id": "ITEM-1",
@@ -43,7 +43,7 @@ A clear and concise description of what the bug is.
 ]
 \end{filecontents}
 
-\usepackage[style = apa]{citation-style-language}
+\usepackage[style=apa]{citation-style-language}
 \addbibresource{\jobname.json}
 \usepackage{hyperref}
 

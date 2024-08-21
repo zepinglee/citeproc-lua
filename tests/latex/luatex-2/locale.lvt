@@ -1,21 +1,16 @@
 \input{regression-test}
-
 \documentclass{article}
-
 \input{csl-test}
 
-\usepackage{citation-style-language}
-
+\usepackage[style=locale-test]{citation-style-language}
 \cslsetup{
   regression-test = true,
-  style  = locale-test,
   locale = zh-CN,
 }
 \addbibresource{test.json}
 
 
 \begin{document}
-
 \START
 
 \TEST{Force locale}{
@@ -26,4 +21,5 @@
   \printbibliography
 }
 
+\OMIT
 \end{document}

@@ -1,7 +1,5 @@
 \input{regression-test}
-
 \documentclass{article}
-
 \input{csl-test}
 
 \usepackage{xparse}
@@ -14,17 +12,12 @@
 
 \START
 
-\usepackage{citation-style-language}
-
-\cslsetup{
-  regression-test = true,
-  style = ieee,
-}
+\usepackage[style=ieee]{citation-style-language}
+\cslsetup{regression-test = true}
 \addbibresource{test.json}
 
 
 \begin{document}
-
 \OMIT
 
 \input{csl-citation-tests}
@@ -41,4 +34,5 @@
   \clearpage
 }
 
+\OMIT
 \end{document}

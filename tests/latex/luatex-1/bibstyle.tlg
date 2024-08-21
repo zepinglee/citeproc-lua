@@ -220,6 +220,3 @@ The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 l. ...}
 Package CSL Warning: The bibliography is empty.
 ============================================================
-[1
-] (bibstyle.aux)
-LaTeX Warning: There were undefined references.

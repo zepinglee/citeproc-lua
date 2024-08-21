@@ -1,10 +1,10 @@
-\input{regression-test}
-
-\documentclass{article}
-
 % <https://github.com/zepinglee/citeproc-lua/issues/50>
 
-\begin{filecontents}[overwrite, noheader]{custom-style.csl}
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\begin{filecontents}[noheader, overwrite]{custom-style.csl}
 <style class="note" version="1.0" et-al-min="3" et-al-use-first="1" et-al-subsequent-min="3"
         et-al-subsequent-use-first="1" name-as-sort-order="first" page-range-format="expanded" default-locale="fr-FR"
         xmlns="http://purl.org/net/xbiblio/csl">
@@ -332,7 +332,7 @@
 </style>
 \end{filecontents}
 
-\begin{filecontents}[overwrite, noheader]{\jobname.json}
+\begin{filecontents}[noheader, overwrite]{\jobname.json}
 [
     {
         "id": "ITEM-1",
@@ -362,7 +362,6 @@
 
 
 \begin{document}
-
 \START
 
 \TEST{Citation}{
@@ -373,4 +372,5 @@
   \printbibliography
 }
 
+\OMIT
 \end{document}

@@ -136,11 +136,3 @@ TEST 3: Bibliography with URL
 ============================================================
 Package CSL Warning: The bibliography is empty.
 ============================================================
-(issue-30.aux)
-LaTeX Warning: There were undefined references.
-Package rerunfilecheck Warning: File `issue-30.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-Package rerunfilecheck Info: Checksums for `issue-30.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.

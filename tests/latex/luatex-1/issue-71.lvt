@@ -4,7 +4,7 @@
 \documentclass{article}
 \input{csl-test}
 
-\begin{filecontents}[overwrite, noheader]{apa-annotated-bibliography.csl}
+\begin{filecontents}[noheader, overwrite]{apa-annotated-bibliography.csl}
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="never" page-range-format="expanded">
   <info>
@@ -25,7 +25,7 @@
 \end{filecontents}
 
 
-\begin{filecontents}[overwrite, noheader]{\jobname.json}
+\begin{filecontents}[noheader, overwrite]{\jobname.json}
 [
     {
         "id": "Sari2007-Pragma",

@@ -2,8 +2,9 @@
 
 \input{regression-test}
 \documentclass{book}
+\input{csl-test}
 
-\begin{filecontents}[overwrite, noheader]{chicago-fullnote-bibliography-with-ibid.csl}
+\begin{filecontents}[noheader, overwrite]{chicago-fullnote-bibliography-with-ibid.csl}
 <style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.0" demote-non-dropping-particle="display-and-sort" page-range-format="chicago">
   <info>
     <title>Chicago Manual of Style 17th edition (full note, with Ibid.)</title>
@@ -1487,7 +1488,7 @@
 </style>
 \end{filecontents}
 
-\begin{filecontents}[overwrite, noheader]{\jobname.json}
+\begin{filecontents}[noheader, overwrite]{\jobname.json}
 [
     {
         "id": "King2008-Gramma",

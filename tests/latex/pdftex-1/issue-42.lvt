@@ -1,10 +1,8 @@
-\input{regression-test}
-
-\documentclass{article}
-
 % <https://github.com/zepinglee/citeproc-lua/issues/42>
 % <https://tex.stackexchange.com/q/618254/82731>
 
+\input{regression-test}
+\documentclass{article}
 \input{csl-test}
 
 \usepackage[ngerman]{babel}
@@ -13,8 +11,8 @@
 \cslsetup{regression-test = true}
 \addbibresource{test.bib}
 
-\begin{document}
 
+\begin{document}
 \START
 \showoutput
 
@@ -26,4 +24,5 @@
   \clearpage
 }
 
+\OMIT
 \end{document}

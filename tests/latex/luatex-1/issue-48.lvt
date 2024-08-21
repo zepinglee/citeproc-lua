@@ -1,10 +1,10 @@
-\input{regression-test}
-
-\documentclass{article}
-
 % <https://github.com/zepinglee/citeproc-lua/issues/42>
 
-\begin{filecontents}[force, noheader]{\jobname.bib}
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\begin{filecontents}[noheader, overwrite]{\jobname.bib}
 @article{afGeijersstam1998Stability,
   title = {Stability over Time of Serum Antibody Levels to Human Papillomavirus Type 16},
   author = {family=Geijersstam, given=V., prefix=af, useprefix=true and Kibur, M. and Wang, Z. and Koskela, P. and Pukkala, E. and Schiller, J. and Lehtinen, M. and Dillner, J.},
@@ -29,7 +29,6 @@
 
 
 \begin{document}
-
 \START
 
 \TEST{Citation}{
@@ -40,4 +39,5 @@
   \printbibliography
 }
 
+\OMIT
 \end{document}

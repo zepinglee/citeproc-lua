@@ -1,10 +1,10 @@
+% <https://github.com/zepinglee/citeproc-lua/issues/36>
+
 \input{regression-test}
-
 \documentclass{article}
+\input{csl-test}
 
-% https://github.com/zepinglee/citeproc-lua/issues/36
-
-\begin{filecontents}[overwrite,noheader]{\jobname.json}
+\begin{filecontents}[noheader, overwrite]{\jobname.json}
 [
     {
         "id": "Wallace1996-GreekG",
@@ -31,19 +31,14 @@
 ]
 \end{filecontents}
 
-\input{csl-test}
-
-\usepackage{citation-style-language}
-\cslsetup{
-  regression-test = true,
-  style = chicago-note-bibliography,
-}
+\usepackage[style=chicago-note-bibliography]{citation-style-language}
+\cslsetup{regression-test = true}
 \addbibresource{\jobname.json}
 
 \newcommand{\myCommandToday}{new command}
 
-\begin{document}
 
+\begin{document}
 \START
 
 \TEST{LaTeX command in prefix}{
@@ -51,4 +46,5 @@
   }, page = {419}]{Wallace1996-GreekG}
 }
 
+\OMIT
 \end{document}

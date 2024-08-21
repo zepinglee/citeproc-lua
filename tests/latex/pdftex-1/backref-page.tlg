@@ -9,11 +9,3 @@ Package CSL Warning: The bibliography is empty.
 TEST 2: Bibliography format
 ============================================================
 ============================================================
-(backref-page.aux)
-LaTeX Warning: There were undefined references.
-Package rerunfilecheck Warning: File `backref-page.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-Package rerunfilecheck Info: Checksums for `backref-page.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  1DA13579EB0DB74E37BF4C750CE97FB8;232.

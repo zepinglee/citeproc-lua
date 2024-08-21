@@ -1,8 +1,8 @@
 \input{regression-test}
-
 \documentclass{article}
+\input{csl-test}
 
-\begin{filecontents}[overwrite, noheader]{\jobname.json}
+\begin{filecontents}[noheader, overwrite]{\jobname.json}
 [
     {
         "id": "Williams1992-Heaven20",
@@ -40,21 +40,14 @@
 ]
 \end{filecontents}
 
-\input{csl-test}
-
-\usepackage{citation-style-language}
-
-\cslsetup{
-  regression-test = true,
-  style = chicago-fullnote-bibliography,
-}
+\usepackage[style=chicago-fullnote-bibliography]{citation-style-language}
+\cslsetup{regression-test = true}
 \addbibresource{\jobname.json}
 
 % \usepackage{hyperref}
 
 
 \begin{document}
-
 \START
 
 \TEST{LaTeX markup in prefix}{
@@ -62,4 +55,5 @@
   page = 1]{Williams1992-Heaven20}
 }
 
+\OMIT
 \end{document}

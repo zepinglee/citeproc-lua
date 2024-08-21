@@ -1,10 +1,10 @@
-\input{regression-test}
-
-\documentclass{article}
-
 % <https://github.com/zepinglee/citeproc-lua/issues/58>
 
-\begin{filecontents}[overwrite, noheader]{oscola.csl}
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\begin{filecontents}[noheader, overwrite]{oscola.csl}
 <style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.0" demote-non-dropping-particle="never" default-locale="en-GB">
   <info>
     <title>OSCOLA (Oxford University Standard for Citation of Legal Authorities)</title>
@@ -694,7 +694,7 @@
 </style>
 \end{filecontents}
 
-\begin{filecontents}[overwrite, noheader]{\jobname.yml}
+\begin{filecontents}[noheader, overwrite]{\jobname.yml}
 ---
 references:
 - id: ansariHowMetaBroke2023
@@ -725,7 +725,6 @@ references:
 
 
 \begin{document}
-
 \START
 
 \TEST{Citation}{
@@ -737,5 +736,4 @@ references:
 }
 
 \OMIT
-
 \end{document}

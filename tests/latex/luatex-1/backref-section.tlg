@@ -792,10 +792,3 @@ Completed box being shipped out [3]
 ...\hbox(0.0+0.0)x345.0, direction TLT
 ....\hbox(0.0+0.0)x345.0, direction TLT
 ============================================================
-(backref-section.aux)
-Package rerunfilecheck Warning: File `backref-section.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-Package rerunfilecheck Info: Checksums for `backref-section.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  1DA13579EB0DB74E37BF4C750CE97FB8;232.

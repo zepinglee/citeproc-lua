@@ -1,17 +1,12 @@
 \input{regression-test}
-
 \documentclass{article}
-
 \input{csl-test}
 
-\usepackage{citation-style-language}
+\usepackage[style=apa]{citation-style-language}
+\cslsetup{regression-test = true}
 
 \START
 
-\cslsetup{
-  regression-test = true,
-  style = apa,
-}
 \addbibresource{test.json}
 
 
@@ -30,7 +25,7 @@
 }
 
 \TEST{Empty citation}{
-  % https://github.com/latex3/latex2e/issues/790
+  % <https://github.com/latex3/latex2e/issues/790>
   \cite{}
 }
 
@@ -38,4 +33,5 @@
   \printbibliography
 }
 
+\OMIT
 \end{document}

@@ -1,22 +1,15 @@
 \input{regression-test}
-
 \documentclass{article}
-
 \input{csl-test}
 
-\usepackage{citation-style-language}
-
-\cslsetup{
-  regression-test = true,
-  style = apa,
-}
+\usepackage[style=apa]{citation-style-language}
+\cslsetup{regression-test = true}
 \addbibresource{test.json}
 
 \usepackage{hyperref}
 
 
 \begin{document}
-
 \START
 \showoutput
 
@@ -36,4 +29,5 @@
   \clearpage
 }
 
+\OMIT
 \end{document}

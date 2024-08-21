@@ -1,21 +1,16 @@
 \input{regression-test}
-
 \documentclass{article}
-
 \input{csl-test}
 
-\usepackage{citation-style-language}
-
+\usepackage[style=sort]{citation-style-language}
 \cslsetup{
   regression-test = true,
-  style  = sort,
   locale = cs-CZ,
 }
 \addbibresource{sort.json}
 
 
 \begin{document}
-
 \START
 
 \TEST{Locale sorting}{
@@ -26,4 +21,5 @@
   \printbibliography
 }
 
+\OMIT
 \end{document}

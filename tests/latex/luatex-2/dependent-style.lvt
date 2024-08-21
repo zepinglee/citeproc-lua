@@ -1,8 +1,8 @@
 \input{regression-test}
-
 \documentclass{article}
+\input{csl-test}
 
-\begin{filecontents}[overwrite, noheader]{nature-biotechnology.csl}
+\begin{filecontents}[noheader, overwrite]{nature-biotechnology.csl}
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" default-locale="en-GB">
   <!-- Generated with https://github.com/citation-style-language/utilities/tree/master/generate_dependent_styles/data/npg -->
@@ -22,20 +22,12 @@
 </style>
 \end{filecontents}
 
-
-\input{csl-test}
-
-\usepackage{citation-style-language}
-
-\cslsetup{
-  regression-test = true,
-  style = nature-biotechnology,
-}
+\usepackage[style=nature-biotechnology]{citation-style-language}
+\cslsetup{regression-test = true}
 \addbibresource{test.json}
 
 
 \START
-
 \begin{document}
 \showoutput
 
@@ -53,4 +45,5 @@
   \clearpage
 }
 
+\OMIT
 \end{document}

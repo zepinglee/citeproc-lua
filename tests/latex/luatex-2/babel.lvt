@@ -1,21 +1,15 @@
 \input{regression-test}
-
 \documentclass{article}
-
 \input{csl-test}
 
-\usepackage{citation-style-language}
+\usepackage[style=apa]{citation-style-language}
 \usepackage[english]{babel}
 
-\cslsetup{
-  regression-test = true,
-  style = apa,
-}
+\cslsetup{regression-test = true}
 \addbibresource{test.json}
 
 
 \begin{document}
-
 \START
 
 \input{csl-citation-tests}
@@ -24,4 +18,5 @@
   \printbibliography
 }
 
+\OMIT
 \end{document}

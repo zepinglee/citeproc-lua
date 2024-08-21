@@ -1,14 +1,10 @@
 \input{regression-test}
-
 \documentclass{article}
-
 \input{csl-test}
 
-\usepackage{citation-style-language}
-
+\usepackage[style=apa]{citation-style-language}
 \cslsetup{
   regression-test = true,
-  style = apa,
   backref = page,
 }
 \addbibresource{test.json}
@@ -17,7 +13,6 @@
 
 
 \begin{document}
-
 \START
 \showoutput
 \OMIT
@@ -46,4 +41,5 @@
   \clearpage
 }
 
+\OMIT
 \end{document}

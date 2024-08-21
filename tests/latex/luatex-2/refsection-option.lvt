@@ -1,14 +1,10 @@
 \input{regression-test}
-
 \documentclass{book}
-
 \input{csl-test}
 
-\usepackage{citation-style-language}
-
+\usepackage[style=ieee]{citation-style-language}
 \cslsetup{
   regression-test = true,
-  style = ieee,
   ref-section = chapter,
 }
 \addbibresource{test.json}
@@ -17,7 +13,6 @@
 
 
 \begin{document}
-
 \START
 \showoutput
 

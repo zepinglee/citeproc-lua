@@ -1,8 +1,8 @@
 \input{regression-test}
-
 \documentclass{article}
+\input{csl-test}
 
-\begin{filecontents}[overwrite, noheader]{\jobname.json}
+\begin{filecontents}[noheader, overwrite]{\jobname.json}
 [
     {
         "id": "ITEM-1",
@@ -26,21 +26,14 @@
 ]
 \end{filecontents}
 
-\input{csl-test}
-
-\usepackage{citation-style-language}
-
-\cslsetup{
-  regression-test = true,
-  style = chicago-fullnote-bibliography,
-}
+\usepackage[style=chicago-fullnote-bibliography]{citation-style-language}
+\cslsetup{regression-test = true}
 \addbibresource{\jobname.json}
 
 \usepackage{hyperref}
 
 
 \begin{document}
-
 \START
 \showoutput
 
@@ -58,4 +51,5 @@ Foo \#30  % bar
   \printbibliography
 }
 
+\OMIT
 \end{document}

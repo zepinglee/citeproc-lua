@@ -1,10 +1,10 @@
-\input{regression-test}
-
-\documentclass{article}
-
 % <https://github.com/zepinglee/citeproc-lua/issues/64>
 
-\begin{filecontents}[overwrite, noheader]{apa-annotated-bibliography.csl}
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\begin{filecontents}[noheader, overwrite]{apa-annotated-bibliography.csl}
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="never" page-range-format="expanded">
   <info>
@@ -1808,7 +1808,7 @@
 </style>
 \end{filecontents}
 
-\begin{filecontents}[overwrite, noheader]{\jobname.json}
+\begin{filecontents}[noheader, overwrite]{\jobname.json}
 [
 	{
 		"id": "barber2016work-life",
@@ -1893,7 +1893,6 @@
 
 
 \begin{document}
-
 \START
 
 \TEST{Citation}{
@@ -1905,5 +1904,4 @@
 }
 
 \OMIT
-
 \end{document}
