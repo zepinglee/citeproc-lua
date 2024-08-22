@@ -76,9 +76,7 @@
     \tl_if_blank:nTF {#3}
       { \__csl_print_undefined_citation:n {#3} }
       {
-        \seq_clear:N \l__csl_cite_keys_seq
-        \seq_clear:N \l__csl_citation_items_seq
-        \prop_clear:N \l__csl_citation_properties_prop
+        \__csl_cite_init:
         \__csl_collect_citation_items:nnn {#1} {#2} {#3}
         \__csl_process_citation_info:
         \prop_put:Nnn \l__csl_citation_properties_prop { noteIndex } { 0 }
@@ -101,9 +99,7 @@
         \tl_if_blank:nTF {#3}
           { \__csl_print_undefined_citation:n {#3} }
           {
-            \seq_clear:N \l__csl_cite_keys_seq
-            \seq_clear:N \l__csl_citation_items_seq
-            \prop_clear:N \l__csl_citation_properties_prop
+            \__csl_cite_init:
             \__csl_collect_citation_items:nnn {#1} {#2} {#3}
             \__csl_process_citation_info:
             \tl_if_empty:nF {#4}
@@ -119,9 +115,7 @@
             \tl_if_blank:nTF {#3}
               { \__csl_print_undefined_citation:n {#3} }
               {
-                \seq_clear:N \l__csl_cite_keys_seq
-                \seq_clear:N \l__csl_citation_items_seq
-                \prop_clear:N \l__csl_citation_properties_prop
+                \__csl_cite_init:
                 \__csl_collect_citation_items:nnn {#1} {#2} {#3}
                 \__csl_process_citation_info:
                 \tl_if_empty:nF {#4}
@@ -162,9 +156,7 @@
 
 \cs_new:Npn \__csl_cites:
   {
-    \seq_clear:N \l__csl_cite_keys_seq
-    \seq_clear:N \l__csl_citation_items_seq
-    \prop_clear:N \l__csl_citation_properties_prop
+    \__csl_cite_init:
     \bool_set_true:N \l__csl_multi_cite_bool
     \__csl_next_cites:nnn
   }
@@ -190,6 +182,18 @@
         \__csl_collect_citation_items:nnn {#1} {#2} {#3}
         \__csl_next_cites:nnn
       }
+  }
+
+
+\cs_new:Npn \__csl_cite_init:
+  {
+    \bool_set_false:N \l__csl_multi_cite_bool
+    \prop_clear:N \l__csl_citation_info_prop
+    \seq_clear:N \l__csl_cite_keys_seq
+    \seq_clear:N \l__csl_citation_items_seq
+    \prop_clear:N \l__csl_citation_properties_prop
+    \tl_clear:N \l__csl_cite_prefix_tl
+    \tl_clear:N \l__csl_cite_suffix_tl
   }
 
 
@@ -607,8 +611,7 @@
 
 \cs_new:Npn \__csl_no_cite:n #1
   {
-    \seq_clear:N \l__csl_cite_keys_seq
-    \seq_clear:N \l__csl_citation_items_seq
+    \__csl_cite_init:
     \__csl_collect_citation_items:nnn { } { } {#1}
     \tl_set:Nx \l__csl_cite_items_tl
       { \seq_use:Nn \l__csl_citation_items_seq { , } }
