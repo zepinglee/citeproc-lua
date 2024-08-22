@@ -332,12 +332,12 @@ function Citation:build_cluster(citation_items, engine, properties)
   if has_printed_form then
     if properties.prefix and properties.prefix ~= "" then
       local citation_prefix = util.check_prefix_space_append(properties.prefix)
-      local inlines = InlineElement:parse(citation_prefix, context)
+      local inlines = InlineElement:parse(citation_prefix, context, true)
       table.insert(citation_stream, 1, Micro:new(inlines))
     end
     if properties.suffix and properties.suffix ~= "" then
       local citation_suffix = util.check_suffix_prepend(properties.suffix)
-      local inlines = InlineElement:parse(citation_suffix, context)
+      local inlines = InlineElement:parse(citation_suffix, context, true)
       table.insert(citation_stream, Micro:new(inlines))
     end
   end

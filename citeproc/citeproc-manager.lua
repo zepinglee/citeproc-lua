@@ -582,6 +582,13 @@ function CslCitationManager:_make_citation(citation_info)
     util.error(string.format("Invalid chapter index '%s'.", chapter_index))
   end
 
+  if citation.properties.prefix then
+    citation.properties.prefix = latex_parser.latex_to_pseudo_html(citation.properties.prefix, true, false)
+  end
+  if citation.properties.suffix then
+    citation.properties.suffix = latex_parser.latex_to_pseudo_html(citation.properties.suffix, true, false)
+  end
+
   -- util.debug(citation)
   return citation
 end

@@ -10,13 +10,16 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
 > \l__csl_citation_info_tl=citationID={King2008-Gramma@1},citationItems={{id={King2008-Gramma}}},properties={suffix={; see also Figure \ref {exampleFig}.},noteIndex={2},chapterIndex={0}}.
 <recently read> }
-l. ......Figure \ref{exampleFig}.}]{King2008-Gramma}
+l. ......gure \ref{exampleFig}.}]{King2008-Gramma}
 > \l__csl_citation_tl=John T. King, “A Grammar of Dhimal” (doctoral dissertation, Universiteit Leiden, 2008), accessed August 13, 2024, \url {https://scholarlypublications.universiteitleiden.nl/handle/1887/13072}; see also Figure \ref {exampleFig}..
 <recently read> }
-l. ......Figure \ref{exampleFig}.}]{King2008-Gramma}
+l. ......gure \ref{exampleFig}.}]{King2008-Gramma}
+LaTeX Font Info:    Trying to load font information for OMS+cmr on input line ....
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line ....
 > \l__csl_citation_info_tl=citationID={King2008-Gramma@2},citationItems={{id={King2008-Gramma}}},properties={suffix={; see also Figure \ref {example_fig}.},noteIndex={3},chapterIndex={0}}.
 <recently read> }
-l. ......igure \ref{example_fig}.}]{King2008-Gramma}
+l. ......ure \ref{example_fig}.}]{King2008-Gramma}
 > \l__csl_citation_tl=Ibid.; see also Figure \ref {example_fig}..
 <recently read> }
-l. ......igure \ref{example_fig}.}]{King2008-Gramma}
+l. ......ure \ref{example_fig}.}]{King2008-Gramma}

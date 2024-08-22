@@ -3,10 +3,10 @@ Don't change this file in any respect.
 ============================================================
 TEST 1: Citation affixes
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@1},citationItems={{id={ITEM-1},prefix={See},suffix={and other works.}},{id={ITEM-2}}},properties={noteIndex={0}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@1},citationItems={{id={ITEM-1}},{id={ITEM-2}}},properties={prefix={See},suffix={and other works.},noteIndex={0}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=(Bennett, 2009; SeeD’Arcus, 2005and other works.).
+> \l__csl_citation_tl=(See Bennett, 2009; D’Arcus, 2005 and other works.).
 <recently read> }
 l. ...}
 ============================================================

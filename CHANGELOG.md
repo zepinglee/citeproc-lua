@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add support for citation affixes.
+
 ### Fixed
 
 - Fix `\ref` with underscore in citation affixes ([#74](https://github.com/zepinglee/citeproc-lua/issues/74)).
