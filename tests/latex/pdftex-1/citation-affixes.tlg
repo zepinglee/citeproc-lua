@@ -1,0 +1,14 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Citation affixes
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@1},citationItems={{id={ITEM-1},prefix={See},suffix={and other works.}},{id={ITEM-2}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+LaTeX Warning: Citation `ITEM-2' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1, ITEM-2}].
+<recently read> }
+l. ...}
+============================================================

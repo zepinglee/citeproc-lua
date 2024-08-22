@@ -1,0 +1,19 @@
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\usepackage[style=apa]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{test.json}
+
+
+\begin{document}
+\START
+\showoutput
+
+\TEST{Citation affixes}{
+  \cite[prefix=See, suffix=and other works.]{ITEM-1, ITEM-2}
+}
+
+\OMIT
+\end{document}
