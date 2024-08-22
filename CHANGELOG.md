@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix `\ref` with underscore in citation affixes ([#74](https://github.com/zepinglee/citeproc-lua/issues/74)).
+
 ## [0.6.2] - 2024-08-21
 
 ### Added
@@ -15,14 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fix note position in multiple chapters ([#72](https://github.com/zepinglee/citeproc-lua/discussions/72)).
+- Fix note position in multiple chapters ([#72](https://github.com/zepinglee/citeproc-lua/issues/72)).
 - Fix incorrect locale map of UKenglish.
 
 ## [0.6.1] - 2024-08-15
 
 ### Fixed
 
-- Fix parsing quotation marks ([#71](https://github.com/zepinglee/citeproc-lua/discussions/71)).
+- Fix parsing quotation marks ([#71](https://github.com/zepinglee/citeproc-lua/issues/71)).
 
 ## [0.6.0] - 2024-07-31
 

@@ -8,7 +8,7 @@
 				"given": "L[eslie] A."
 			}
 		],
-		"container-title": "<code>\\mbox{</code><span class=\"nocase\">G-Animal’s</span><code>}</code> Journal",
+		"container-title": "<code>\\mbox{G-Animal's}</code> Journal",
 		"issued": {
 			"date-parts": [
 				[
@@ -27,7 +27,7 @@
 				"given": "L[eslie] A."
 			}
 		],
-		"container-title": "<code>\\mbox{</code><span class=\"nocase\">G-Animal’s</span><code>}</code> Journal",
+		"container-title": "<code>\\mbox{G-Animal's}</code> Journal",
 		"issue": "7",
 		"issued": {
 			"date-parts": [
@@ -58,7 +58,7 @@
 	{
 		"id": "whole-journal",
 		"type": "article-journal",
-		"container-title": "<code>\\mbox{</code><span class=\"nocase\">G-Animal’s</span><code>}</code> Journal",
+		"container-title": "<code>\\mbox{G-Animal's}</code> Journal",
 		"issue": "7",
 		"issued": {
 			"date-parts": [
@@ -786,6 +786,6 @@
 	{
 		"id": "random-note-crossref",
 		"type": "document",
-		"note": "Volume 2 is listed under Knuth <code>\\cite{</code><span class=\"nocase\">book-full</span><code>}</code>"
+		"note": "Volume 2 is listed under Knuth <code>\\cite{book-full}</code>"
 	}
 ]

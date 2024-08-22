@@ -133,10 +133,11 @@ function latex_parser.get_latex_grammar()
   local latex_grammar = P{
     "latex_text";
     latex_text = Ct((specials + control_sequence + math + ligatures + specials + V"group" + plain_text)^0),
-    group = P"{" * V"latex_text" * P"}" / function (group_contents)
+    group = C(P"{" * V"latex_text" * P"}") / function (raw, group_contents)
       return {
         type = "group",
         contents = group_contents,
+        raw = raw,
       }
     end,
   }
@@ -348,9 +349,18 @@ function latex_parser.convert_cs_to_inlines(tokens, i, strict, case_protection)
   else
     -- Unrecognized command
     if strict then
-      table.insert(inlines, markup.Code:new(token.raw))
+      local raw = token.raw
+      for j = i + 1, #tokens do
+        if type(tokens[j]) == "table" and tokens[j].type == "group" then
+          i = j
+          raw = raw .. latex_parser.convert_token_to_raw(tokens[j])
+        else
+          break
+        end
+      end
+      table.insert(inlines, markup.Code:new(raw))
     else
-      -- Gobble following groupsas pandoc does:
+      -- Gobble following groups as pandoc does:
       -- "Foo \unrecognized{bar}{baz} quz" -> "Foo  quz"
       for j = i + 1, #tokens do
         if type(tokens[j]) == "table" and tokens[j].type == "group" then
@@ -363,6 +373,31 @@ function latex_parser.convert_cs_to_inlines(tokens, i, strict, case_protection)
   end
 
   return inlines, i
+end
+
+---@param token any
+---@return string
+function latex_parser.convert_token_to_raw(token)
+  if type(token) == "string" then
+    return token
+  elseif type(token) == "table" then
+    if token.raw then
+      return token.raw
+    elseif token.type == "group" then
+      local raw = "{"
+      for _, token_ in ipairs(token.contents) do
+        raw = raw .. latex_parser.convert_token_to_raw(token_)
+      end
+      raw = raw .. "}"
+      return raw
+    else
+      error(token.type)
+      return ""
+    end
+  else
+    error(type(token))
+    return ""
+  end
 end
 
 -- TODO: raise a warning for unrecognized LaTeX command like `\switchargs`
