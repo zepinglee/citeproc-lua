@@ -457,6 +457,11 @@
             "source": "apa.dbx",
             "type": "literal"
         },
+        "citations": {
+            "csl": null,
+            "source": "publist.dbx",
+            "type": "literal"
+        },
         "citedate": {
             "csl": null,
             "source": "seuthesis.bst"

@@ -4205,6 +4205,11 @@ return {
       csl = nil,
       source = "adrbirthday.bst",
     },
+    citations = {
+      csl = nil,
+      source = "publist.dbx",
+      type = "literal",
+    },
   },
   macros = {
     acmcs = {
