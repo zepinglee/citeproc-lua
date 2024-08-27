@@ -864,9 +864,12 @@ function CslCitationManager:read_aux_file(aux_content)
       self:register_citation_info(tostring(ref_section_index), content)
       if ref_section.engine then
         local citation = self:_make_citation(content)
-        local citation_str = ref_section.engine:process_citation(citation)
-
-        table.insert(output_lines, string.format("\\cslcitation{%s}{%s}", citation.citationID, citation_str))
+        if citation.citationID == "@nocite" then
+          ref_section:_update_uncited_items()
+        else
+          local citation_str = ref_section.engine:process_citation(citation)
+          table.insert(output_lines, string.format("\\cslcitation{%s}{%s}", citation.citationID, citation_str))
+        end
       end
 
     elseif command == "\\csl@aux@bibliography" then

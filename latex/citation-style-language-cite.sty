@@ -615,11 +615,15 @@
     \__csl_collect_citation_items:nnn { } { } {#1}
     \tl_set:Nx \l__csl_cite_items_tl
       { \seq_use:Nn \l__csl_citation_items_seq { , } }
+    \prop_clear:N \l__csl_citation_properties_prop
+    \prop_put:Nnn \l__csl_citation_properties_prop { noteIndex } { 0 }
+    \__csl_make_chapter_property:
+    \__csl_serialize_prop:NN \l__csl_citation_properties_prop \l__csl_citation_properties_tl
     \tl_set:Nx \l__csl_citation_info_tl
       {
         citationID    = { @nocite } ,
-        citationItems = { \l__csl_cite_items_tl } ,
-        properties    = { noteIndex = { 0 } }
+        citationItems = { \tl_use:N \l__csl_cite_items_tl } ,
+        properties    = { \tl_use:N \l__csl_citation_properties_tl }
       }
     \bool_if:NT \l__csl_regression_test_bool
       { \tl_show:N \l__csl_citation_info_tl }

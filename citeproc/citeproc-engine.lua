@@ -105,15 +105,22 @@ local Registry = {}
 
 ---@class CiteProc
 ---@field style Style
----@field sys any
----@field locales Locale[]
----@field system_locales Locale[]
----@field lang string
+---@field sys CiteProcSys
+---@field locales table<LanguageCode, Locale>
+---@field system_locales table<LanguageCode, Locale>
+---@field lang LanguageCode
 ---@field output_format OutputFormat
 ---@field opt table
 ---@field registry Registry
 ---@field cite_first_note_numbers table<ItemId, NoteIndex>
----@field locale_tags_info_dict {[LanguageCode]: table}
+---@field cite_last_note_numbers table<ItemId, NoteIndex>
+---@field note_citations_map table<NoteIndex, CitationId[]>
+---@field tainted_item_ids table<ItemId, boolean>
+---@field disam_irs IrNode[]
+---@field cite_irs_by_output table<string, IrNode[]>
+---@field person_names PersonNameIr[]
+---@field person_names_by_output table<string, PersonNameIr[]>
+---@field locale_tags_info_dict table<LanguageCode, table>
 local CiteProc = {}
 
 ---@class CiteProcSys
@@ -136,63 +143,60 @@ function CiteProc.new(sys, style, lang, force_lang)
   if sys.retrieveItem == nil then
     error("\"citeprocSys.retrieveItem\" required")
   end
-  ---@type CiteProc
-  local o = {}
-
-  o.style = Style:parse(style)
-
-  o.sys = sys
-  o.locales = {}
-  o.system_locales = {}
-
-  o.lang = o.style.default_locale
-  if not o.lang or force_lang then
-    o.lang = lang or "en-US"
+  local parsed_style = Style:parse(style)
+  local engine_lang = parsed_style.default_locale
+  if not engine_lang or force_lang then
+    engine_lang = lang or "en-US"
   end
+  ---@type CiteProc
+  local o = {
+    style = parsed_style,
+    sys = sys,
+    locales = {},
+    system_locales = {},
+    lang = engine_lang,
+    output_format = LatexWriter:new(),
+    opt = {
+      -- Similar to citeproc-js's development_extensions.wrap_url_and_doi
+      wrap_url_and_doi = false,
+      citation_link = false,
+      title_link = false,
+    },
+    registry = {
+      citations_by_id = {},  -- A map
+      citation_list = {},  -- A list
+      citations_by_item_id = {},  -- A map from item id to a map of citations
+      registry = {},  -- A map of bibliographic meta data
+      reflist = {},  -- list of cited ids
+      uncited_list = {},
+      previous_citation = nil,
+      requires_sorting = false,
+      widest_label = "",
+      maxoffset = 0,
+    },
 
-  o.output_format = LatexWriter:new()
+    cite_first_note_numbers = {},
+    cite_last_note_numbers = {},
+    note_citations_map = {},
 
-  o.opt = {
-    -- Similar to citeproc-js's development_extensions.wrap_url_and_doi
-    wrap_url_and_doi = false,
-    citation_link = false,
-    title_link = false,
+    tainted_item_ids = {},
+
+    disam_irs = {},
+    -- { <ir1>, <ir2>, ...  }
+
+    cite_irs_by_output = {},
+    -- {
+    --   ["Roe, J"] = {<ir1>},
+    --   ["Doe, J"] = {<ir2>, <ir3>},
+    --   ["Doe, John"] = {<ir2>},
+    --   ["Doe, Jack"] = {<ir2>},
+    -- }
+
+    person_names = {},
+    person_names_by_output = {},
+
+    locale_tags_info_dict = {},
   }
-
-  o.registry = {
-    citations_by_id = {},  -- A map
-    citation_list = {},  -- A list
-    citations_by_item_id = {},  -- A map from item id to a map of citations
-    registry = {},  -- A map of bibliographic meta data
-    reflist = {},  -- list of cited ids
-    uncited_list = {},
-    previous_citation = nil,
-    requires_sorting = false,
-    widest_label = "",
-    maxoffset = 0,
-  }
-
-  o.cite_first_note_numbers = {}
-  o.cite_last_note_numbers = {}
-  o.note_citations_map = {}
-
-  o.tainted_item_ids = {}
-
-  o.disam_irs = {}
-  -- { <ir1>, <ir2>, ...  }
-
-  o.cite_irs_by_output = {}
-  -- {
-  --   ["Roe, J"] = {<ir1>},
-  --   ["Doe, J"] = {<ir2>, <ir3>},
-  --   ["Doe, John"] = {<ir2>},
-  --   ["Doe, Jack"] = {<ir2>},
-  -- }
-
-  o.person_names = {}
-  o.person_names_by_output = {}
-
-  o.locale_tags_info_dict = {}
 
   setmetatable(o, { __index = CiteProc })
   return o

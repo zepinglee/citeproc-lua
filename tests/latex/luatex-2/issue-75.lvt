@@ -1,0 +1,23 @@
+% <https://github.com/zepinglee/citeproc-lua/discussions/74>
+
+\input{regression-test}
+\documentclass{book}
+\input{csl-test}
+
+\usepackage[style=apa]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{test.json}
+
+
+\begin{document}
+\START
+
+\chapter{Chapter}
+\section*{Section}
+\cite{ITEM-1}
+\nocite{ITEM-3}
+
+\printbibliography
+
+\OMIT
+\end{document}
