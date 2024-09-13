@@ -1,0 +1,28 @@
+% <https://github.com/zepinglee/citeproc-lua/discussions/77>
+
+\input{regression-test}
+\documentclass{book}
+\input{csl-test}
+
+\usepackage[style=elsevier-harvard]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{test.json}
+
+
+\begin{document}
+\START
+
+\chapter{Introduction}\label{introduction}
+
+See \citet{ITEM-1} for additional discussion of literate programming.
+
+\chapter{Summary}\label{summary}
+
+In summary, this book has no content whatsoever \cite{ITEM-1}.
+
+\chapter*{References}\label{references}
+
+\printbibliography[heading=none]
+
+\OMIT
+\end{document}

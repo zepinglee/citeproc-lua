@@ -1,0 +1,33 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+Chapter 1.
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0},chapterIndex={1},mode={composite}}.
+<recently read> }
+l. ...See \citet{ITEM-1}
+                        for additional discussion of literate programming.
+> \l__csl_citation_tl=D’Arcus (2005).
+<recently read> }
+l. ...See \citet{ITEM-1}
+                        for additional discussion of literate programming.
+[1
+]
+[2
+]
+Chapter 2.
+> \l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1}}},properties={noteIndex={0},chapterIndex={2}}.
+<recently read> }
+l. ......ok has no content whatsoever \cite{ITEM-1}
+                                                  .
+> \l__csl_citation_tl=(D’Arcus, 2005).
+<recently read> }
+l. ......ok has no content whatsoever \cite{ITEM-1}
+                                                  .
+[3]
+[4
+]
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 1, entry-spacing = 0}}
+>  {\bibitem {ITEM-1} D’Arcus, B., 2005. Boundaries of dissent: Protest and state power in the media age. Routledge.}
+>  {\end {thebibliography}}.
+<recently read> }
+l. ...\printbibliography[heading=none]

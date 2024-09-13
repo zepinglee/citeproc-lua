@@ -59,6 +59,17 @@ local Position = util.Position
 ---@field citationItems CitationItem[]
 ---@field properties CitationProperties
 ---@field citation_index integer
+---@field sorted_items CitationItem[]
+
+---@class CitationItem
+---@field id CiteId
+---@field prefix string?
+---@field suffix string?
+---@field locator string?
+---@field label string?
+---@field position_level Position?
+---@field near_note boolean?
+---@field num_citations integer?
 
 ---@class CitationProperties
 ---@field noteIndex NoteIndex,
@@ -114,7 +125,6 @@ local Registry = {}
 ---@field registry Registry
 ---@field cite_first_note_numbers table<ItemId, NoteIndex>
 ---@field cite_last_note_numbers table<ItemId, NoteIndex>
----@field note_citations_map table<NoteIndex, CitationId[]>
 ---@field tainted_item_ids table<ItemId, boolean>
 ---@field disam_irs IrNode[]
 ---@field cite_irs_by_output table<string, IrNode[]>
@@ -177,7 +187,6 @@ function CiteProc.new(sys, style, lang, force_lang)
 
     cite_first_note_numbers = {},
     cite_last_note_numbers = {},
-    note_citations_map = {},
 
     tainted_item_ids = {},
 
@@ -210,16 +219,6 @@ end
 ---@return string?
 function CiteProc:get_independent_parent()
   return self.style.info.independent_parent
-end
-
-function CiteProc:check_valid_citation_element()
-  if not self.style.citation then
-    if self.style.info and self.style.info.independent_parent then
-      util.error(string.format("This is a dependent style linked to '%s'.", self.style.info.independent_parent))
-    else
-      util.error('No <citation> in style.')
-    end
-  end
 end
 
 ---@param ids CiteId[]
@@ -257,7 +256,6 @@ function CiteProc:updateItems(ids)
   self.registry.previous_citation = nil
   self.cite_first_note_numbers = {}
   self.cite_last_note_numbers = {}
-  self.note_citations_map = {}
 
   for _, item in ipairs(self.registry.registry) do
     item.year_suffix_number = nil
@@ -306,484 +304,71 @@ function CiteProc:updateUncitedItems(uncited_ids)
   self.registry.previous_citation = nil
   self.cite_first_note_numbers = {}
   self.cite_last_note_numbers = {}
-  self.note_citations_map = {}
 end
 
 
----@alias PreCitation [CitationId, NoteIndex, ChapterIndex]
----@alias PostCitation [CitationId, NoteIndex, ChapterIndex]
+---@alias PreCitation [CitationId, NoteIndex, ChapterIndex?]
+---@alias PostCitation [CitationId, NoteIndex, ChapterIndex?]
 
 ---@param citation CitationData
----@param citationsPre PreCitation[]
----@param citationsPost PostCitation[]
----@return (table | (integer | string | CitationId)[])[]
-function CiteProc:processCitationCluster(citation, citationsPre, citationsPost)
+---@param citations_pre PreCitation[]
+---@param citations_post PostCitation[]
+---@return [table, [integer, string, CitationId][]]
+function CiteProc:processCitationCluster(citation, citations_pre, citations_post)
   -- util.debug(string.format('processCitationCluster(%s)', citation.citationID))
-  self:check_valid_citation_element()
-  citation = self:normalize_citation_input(citation)
-  self:_check_input(citation, citationsPre, citationsPost)
+  self:_check_valid_citation_element()
+  citation = self:_normalize_citation_input(citation)
+  self:_check_input(citation, citations_pre, citations_post)
 
-  -- Registor citation
-  self.registry.citations_by_id[citation.citationID] = citation
-
-  local citation_note_pairs = {}
-  util.extend(citation_note_pairs, citationsPre)
-  table.insert(citation_note_pairs, {citation.citationID, citation.properties.noteIndex})
-  util.extend(citation_note_pairs, citationsPost)
-  -- util.debug(citation_note_pairs)
-
-  local citations_by_id = {}
-  local citation_list = {}
-  for _, pair in ipairs(citation_note_pairs) do
-    local citation_id, note_number = table.unpack(pair)
-    local citation_ = self.registry.citations_by_id[citation_id]
-    if not citation_ then
-      util.error("Citation not in registry.")
-    end
-    citations_by_id[citation_.citationID] = citation_
-    table.insert(citation_list, citation_)
-  end
-  self.registry.citations_by_id = citations_by_id
-  self.registry.citation_list = citation_list
-
-  -- update self.registry.citations_by_item_id
-  local item_ids = {}
-  self.registry.citations_by_item_id = {}
-  for _, citation_ in ipairs(citation_list) do
-    for _, cite_item in ipairs(citation_.citationItems) do
-      if not self.registry.citations_by_item_id[cite_item.id] then
-        self.registry.citations_by_item_id[cite_item.id] = {}
-        table.insert(item_ids, cite_item.id)
-      end
-      table.insert(self.registry.citations_by_item_id[cite_item.id], citation_)
-    end
-  end
+  local citation_list, item_ids = self:_build_reconstituted_citation_list(citation, citations_pre, citations_post)
   self:updateItems(item_ids)
+  if #citation.sorted_items > 1 and self.style.citation.sort then
+    citation.sorted_items = self.style.citation:sorted_citation_items(citation.citationItems, self)
+  end
+
+  local tainted_citation_ids = self:_set_positions(citation_list)
+
+  tainted_citation_ids[citation.citationID] = true
 
   local params = {
     bibchange = false,
     citation_errors = {},
   }
-  local output = {}
+  -- TODO: evaluate params.bibchange
 
-  local tainted_citation_ids = self:get_tainted_citation_ids(citation_note_pairs)
-  tainted_citation_ids[citation.citationID] = true
+  local result = self:_rerun_changed_cites(tainted_citation_ids)
 
-  -- Citeproc-js marks all related citations as tainted but I don't think it's
-  -- necessary.
-  if self.style.class == "note" and self.style.has_disambiguate then
-    for _, cite_item in ipairs(citation.citationItems) do
-      for _, citation_ in ipairs(self.registry.citations_by_item_id[cite_item.id]) do
-        tainted_citation_ids[citation_.citationID] = true
-      end
-    end
-  end
-
-  -- util.debug(tainted_citation_ids)
-
-  -- params.bibchange = #tainted_citation_ids > 0
-  for citation_id, _ in pairs(tainted_citation_ids) do
-    local citation_ = self.registry.citations_by_id[citation_id]
-
-    local citation_index = citation_.citation_index
-
-    local mode = citation_.properties.mode
-    if mode == "suppress-author" and self.style.class == "note" then
-      mode = nil
-    end
-    local citation_element = self.style.citation
-    if mode == "author-only" and self.style.intext then
-      citation_element = self.style.intext
-    elseif mode == "full-cite" then
-      citation_element = self.style.full_citation
-    end
-
-    local citation_str = citation_element:build_citation_str(citation_, self)
-    table.insert(output, {citation_index, citation_str, citation_id})
-  end
-
-  return {params, output}
-end
-
-function CiteProc:normalize_citation_input(citation)
-  citation = util.deep_copy(citation)
-
-  if not citation.citationID then
-    citation.citationID = "CITATION-" .. tostring(#self.registry.citation_list)
-  end
-
-  if not citation.citationItems then
-    citation.citationItems = {}
-  end
-  for i, cite_item in ipairs(citation.citationItems) do
-    citation.citationItems[i] = self:normalize_cite_item(cite_item)
-  end
-
-  -- Fix missing noteIndex: sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
-  if not citation.properties then
-    citation.properties = {}
-  end
-  if not citation.properties.noteIndex then
-    citation.properties.noteIndex = 0
-  end
-  if not citation.properties.chapterIndex then
-    citation.properties.chapterIndex = 0
-  end
-
-  return citation
-end
-
----@param cite_item CitationItem
----@return CitationItem
-function CiteProc:normalize_cite_item(cite_item)
-  -- Shallow copy
-  cite_item = util.clone(cite_item)
-  cite_item.id = tostring(cite_item.id)
-
-  -- Use "page" as locator label if missing
-  -- label_PluralWithAmpersand.txt
-  if cite_item.locator and not cite_item.label then
-    cite_item.label = "page"
-  end
-
-  local the_context = Context:new()
-  the_context.engine = self
-  the_context.style = self.style
-  the_context.area = self
-  the_context.in_bibliography = false
-  the_context.lang = self.lang
-  the_context.locale = self:get_locale(self.lang)
-  the_context.format = self.output_format
-
-  if cite_item.prefix then
-    -- Assert CSL rich-text or HTML-like tagged string
-    if cite_item.prefix == "" then
-      cite_item.prefix = nil
-    end
-  end
-  if cite_item.suffix then
-    if cite_item.suffix == "" then
-      cite_item.suffix = nil
-    end
-  end
-
-  return cite_item
-end
-
----@param citation CitationData
----@param citationsPre PreCitation[]
----@param citationsPost PostCitation[]
-function CiteProc:_check_input(citation, citationsPre, citationsPost)
-  ---@type {[CitationId]: boolean}
-  local citation_dict = {}
-  local last_note_number = 0
-  local last_chapter_number = 0
-
-  for i, pre_citation in ipairs(citationsPre) do
-    local citation_id = pre_citation[1]
-    local note_number = pre_citation[2]
-    local chapter_number = pre_citation[3]
-    if citation_dict[citation_id] then
-      error(string.format("Previously referenced citationID '%s' encountered in citationsPre", citation_id))
-    end
-    if chapter_number and chapter_number > 0 then
-      if chapter_number < last_chapter_number then
-        util.warning(string.format("Chapter index sequence is not sane at citationsPre[%d]", i))
-      end
-      if chapter_number ~= last_chapter_number then
-        last_note_number = 0
-      end
-      last_chapter_number = chapter_number
-    end
-    if note_number and note_number > 0 then
-      if note_number < last_note_number then
-        util.warning(string.format("Note index sequence is not sane at citationsPre[%d]", i))
-      end
-      last_note_number = note_number
-    end
-    citation_dict[citation_id] = true
-  end
-
-  do
-    local citation_id = citation.citationID
-    local note_number = citation.properties.noteIndex
-    local chapter_number = citation.properties.chapterIndex
-    if (citation_dict[citation_id]) then
-      error("Citation with previously referenced citationID " .. citation_id)
-    end
-    if note_number and note_number > 0 then
-      if note_number < last_note_number then
-        util.warning("Note index sequence is not sane for citation " .. citation_id)
-      end
-      last_note_number = note_number
-    end
-    if chapter_number and chapter_number > 0 then
-      if chapter_number < last_chapter_number then
-        util.warning("Chapter index sequence is not sane for citation " .. citation_id)
-      end
-      last_chapter_number = chapter_number
-    end
-    citation_dict[citation_id] = true
-  end
-
-  for i, post_citation in ipairs(citationsPost) do
-    local citation_id = post_citation[1]
-    local note_number = post_citation[2]
-    local chapter_number = post_citation[3]
-    if citation_dict[citation_id] then
-      error(string.format("Previously referenced citationID '%s' encountered in citationsPost", citation_id))
-    end
-    if note_number and note_number > 0 then
-      if note_number < last_note_number then
-        util.warning(string.format("Note index sequence is not sane at citationsPost[%d]", i))
-      end
-      last_note_number = note_number
-    end
-    if chapter_number and chapter_number > 0 then
-      if chapter_number < last_chapter_number then
-        util.warning(string.format("Chapter index sequence is not sane at citationsPost[%d]", i))
-      end
-      last_chapter_number = chapter_number
-    end
-    citation_dict[citation_id] = true
-  end
-
+  return {params, result}
 end
 
 -- A variant of processCitationCluster() for easy use with LaTeX.
 -- It should be run after refreshing the registry (updateItems()) with all items
+---@param citation CitationData
+---@return string
 function CiteProc:process_citation(citation)
-  -- util.debug(citation)
-  -- util.debug(citationsPre)
-  -- Fix missing noteIndex: sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
+  -- util.debug(string.format('process_citation(%s)', citation.citationID))
+  self:_check_valid_citation_element()
+  citation = self:_normalize_citation_input(citation)
 
-  citation = self:normalize_citation_input(citation)
-
-  -- Registor citation
-  self.registry.citations_by_id[citation.citationID] = citation
-
-  table.insert(self.registry.citation_list, citation)
-
-  local citation_note_pairs = {}
+  local citations_pre = {}
   for _, citation_ in ipairs(self.registry.citation_list) do
-    table.insert(citation_note_pairs, {citation_.citationID, citation_.properties.noteIndex})
+    table.insert(citations_pre, {citation_.citationID, citation_.properties.noteIndex})
   end
+  self:_check_input(citation, citations_pre, {})
 
-  -- update self.registry.citations_by_item_id
-  for _, cite_item in ipairs(citation.citationItems) do
-    if not self.registry.citations_by_item_id[cite_item.id] then
-      self.registry.citations_by_item_id[cite_item.id] = {}
-    end
-    table.insert(self.registry.citations_by_item_id[cite_item.id], citation)
-  end
-
+  local citation_list, item_ids = self:_build_reconstituted_citation_list(citation, citations_pre, {})
   -- self:updateItems(item_ids)
   for i, cite_item in ipairs(citation.citationItems) do
     self:get_item(cite_item.id)
   end
-
-  local tainted_citation_ids = self:get_tainted_citation_ids(citation_note_pairs)
-
-  local mode = citation.properties.mode
-  if mode == "suppress-author" and self.style.class == "note" then
-    mode = nil
-  end
-  local citation_element = self.style.citation
-  if mode == "author-only" and self.style.intext then
-    citation_element = self.style.intext
-  elseif mode == "full-cite" then
-    citation_element = self.style.full_citation
+  if #citation.sorted_items > 1 and self.style.citation.sort then
+    citation.sorted_items = self.style.citation:sorted_citation_items(citation.citationItems, self)
   end
 
-  local citation_str = citation_element:build_citation_str(citation, self)
-
-  return citation_str
-end
-
-
-function CiteProc:get_tainted_citation_ids(citation_note_pairs)
-  local tainted_citation_ids = {}
-
-  self.cite_first_note_numbers = {}
-  self.cite_last_note_numbers = {}
-  self.note_citations_map = {}
-  -- {
-  --   1 = {"citation-1", "citation-2"},
-  --   2 = {"citation-2"},
-  -- }
-
-  -- Citations with noteIndex == 0 are in-text citations and they may also
-  -- have position properties.
-  local in_text_citations = {}
-
-  local last_chapter_number = 0
-
-  local previous_citation
-  for citation_index, pair in ipairs(citation_note_pairs) do
-    local citation_id, note_number = table.unpack(pair)
-    -- util.debug(citation_id)
-    local citation = self.registry.citations_by_id[citation_id]
-    citation.properties.noteIndex = note_number
-    citation.citation_index = citation_index
-
-    local chapter_number = citation.properties.chapterIndex
-    if chapter_number and chapter_number ~= last_chapter_number then
-      self.cite_first_note_numbers = {}
-      self.cite_last_note_numbers = {}
-      self.note_citations_map = {}
-      previous_citation = nil
-    end
-
-
-    local tainted = false
-
-    local prev_citation = previous_citation
-    if note_number == 0 then
-      -- Find the previous in-text citation.
-      prev_citation = in_text_citations[#in_text_citations]
-    end
-    local previous_cite
-    for _, cite_item in ipairs(citation.citationItems) do
-      tainted = self:set_cite_item_position(cite_item, note_number, previous_cite, prev_citation, citation)
-
-      -- https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html#citations
-      -- Citations within the main text of the document have a noteIndex of zero.
-      if (self.style.class == "note" and note_number > 0) or citation.properties.mode ~= "author-only" then
-        self.cite_last_note_numbers[cite_item.id] = note_number
-        previous_cite = cite_item
-      end
-    end
-
-    if tainted then
-      tainted_citation_ids[citation.citationID] = true
-    end
-
-    if not self.note_citations_map[note_number] then
-      self.note_citations_map[note_number] = {}
-    end
-    table.insert(self.note_citations_map[note_number], citation.citationID)
-    if citation.properties.mode ~= "author-only" then
-      if note_number == 0 then
-        table.insert(in_text_citations, citation)
-      else
-        previous_citation = citation
-      end
-    end
-
-    last_chapter_number = chapter_number
-  end
-
-  -- Update tainted citation ids because of citation-number's change
-  -- The self.tainted_item_ids were added in the sort_bibliography() procedure.
-  for item_id, _ in pairs(self.tainted_item_ids) do
-    if self.registry.citations_by_item_id[item_id] then
-      for _, citation in ipairs(self.registry.citations_by_item_id[item_id]) do
-        tainted_citation_ids[citation.citationID] = true
-      end
-    end
-  end
-
-  return tainted_citation_ids
-end
-
-function CiteProc:set_cite_item_position(cite_item, note_number, previous_cite, previous_citation, citation)
-  local position = Position.First
-
-  -- https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html#citations
-  -- Citations within the main text of the document have a noteIndex of zero.
-  if citation.properties.mode == "author-only" then
-    -- discretionary_IbidInAuthorDateStyleWithoutIntext.txt
-    cite_item.position_level = position
-    return false
-  end
-
-  local first_reference_note_number = self.cite_first_note_numbers[cite_item.id]
-  if first_reference_note_number then
-    position = Position.Subsequent
-  elseif note_number > 0 then
-    -- note_number == 0 implied an in-text citation
-    self.cite_first_note_numbers[cite_item.id] = note_number
-  end
-
-  local preceding_cite_item = self:get_preceding_cite_item(cite_item, previous_cite, previous_citation, note_number)
-
-  if preceding_cite_item then
-    position = self:_get_cite_position(cite_item, preceding_cite_item)
-  end
-
-  local near_note = false
-  local last_note_number = self.cite_last_note_numbers[cite_item.id]
-  if last_note_number then
-    local note_distance = note_number - last_note_number
-    if note_distance <= self.style.citation.near_note_distance then
-      near_note = true
-    end
-  end
-
-  local tainted = false
-  if cite_item.position_level ~= position then
-    tainted = true
-    cite_item.position_level = position
-  end
-  if cite_item["first-reference-note-number"] ~= first_reference_note_number then
-    tainted = true
-    cite_item["first-reference-note-number"] = first_reference_note_number
-  end
-  if cite_item.near_note ~= near_note then
-    tainted = true
-    cite_item.near_note = near_note
-  end
-  return tainted
-end
-
--- Find the preceding cite referencing the same item
-function CiteProc:get_preceding_cite_item(cite_item, previous_cite, previous_citation, note_number)
-  if previous_cite then
-    -- a. the current cite immediately follows on another cite, within the same
-    --    citation, that references the same item
-    if cite_item.id == previous_cite.id then
-      return previous_cite
-    end
-  elseif previous_citation then
-    -- (hidden) The previous citation is the only one in the previous note.
-    --    See also
-    --    https://github.com/citation-style-language/documentation/issues/121
-    --    position_IbidWithMultipleSoloCitesInBackref.txt
-    -- b. the current cite is the first cite in the citation, and the previous
-    --    citation consists of a single cite referencing the same item
-    local previous_note_number = previous_citation.properties.noteIndex
-    local num_previous_note_citations = #self.note_citations_map[previous_note_number]
-    if (previous_note_number == note_number - 1 and num_previous_note_citations == 1)
-        or previous_note_number == note_number then
-      if #previous_citation.citationItems == 1 then
-        previous_cite = previous_citation.citationItems[1]
-        if previous_cite.id == cite_item.id then
-          return previous_cite
-        end
-      end
-    end
-  end
-  return nil
-end
-
-function CiteProc:_get_cite_position(item, preceding_cite)
-  if preceding_cite.locator then
-    if item.locator then
-      if item.locator == preceding_cite.locator and item.label == preceding_cite.label then
-        return Position.Ibid
-      else
-        return Position.IbidWithLocator
-      end
-    else
-      return Position.Subsequent
-    end
-  else
-    if item.locator then
-      return Position.IbidWithLocator
-    else
-      return Position.Ibid
-    end
-  end
+  self:_set_positions(citation_list)
+  local tainted_citation_ids = {[citation.citationID] = true}
+  local result = self:_rerun_changed_cites(tainted_citation_ids)
+  return result[1][2]
 end
 
 function CiteProc:makeCitationCluster(citation_items)
@@ -791,7 +376,7 @@ function CiteProc:makeCitationCluster(citation_items)
   local items = {}
 
   for i, cite_item in ipairs(citation_items) do
-    cite_item = self:normalize_cite_item(cite_item)
+    cite_item = self:_normalize_cite_item(cite_item)
     local item_data = self:get_item(cite_item.id)
 
     -- Create a wrapper of the orignal item from registry so that
@@ -810,7 +395,7 @@ function CiteProc:makeCitationCluster(citation_items)
     -- processCitationCluster() > updateItems()
     local citations = self.registry.citations_by_item_id[cite_item.id]
     if citations and #citations > 0 then
-      item_data["first-reference-note-number"] = citations[1].properties.noteIndex
+      cite_item["first-reference-note-number"] = citations[1].properties.noteIndex
     end
 
     cite_item.position_level = Position.First
@@ -833,7 +418,7 @@ function CiteProc:makeCitationCluster(citation_items)
     end
 
     if preceding_cite then
-      cite_item.position_level = self:_get_cite_position(cite_item, preceding_cite)
+      cite_item.position_level = self:_get_ibid_position(cite_item, preceding_cite)
     end
 
     table.insert(items, cite_item)
@@ -843,7 +428,7 @@ function CiteProc:makeCitationCluster(citation_items)
     self:sort_bibliography()
   end
 
-  self:check_valid_citation_element()
+  self:_check_valid_citation_element()
   local citation_element = self.style.citation
   if special_form == "author-only" and self.style.intext then
     citation_element = self.style.intext
@@ -881,9 +466,9 @@ function CiteProc:makeBibliography(bibsection)
   self.registry.widest_label = ""
   self.registry.maxoffset = 0
 
-  local ids = self:get_sorted_refs()
+  local ids = self:_get_sorted_refs()
   if bibsection then
-    ids = self:filter_with_bibsection(ids, bibsection)
+    ids = self:_filter_with_bibsection(ids, bibsection)
   end
   for _, id in ipairs(ids) do
     local str = self.style.bibliography:build_bibliography_str(id, self)
@@ -914,14 +499,452 @@ function CiteProc:makeBibliography(bibsection)
   return {params, res}
 end
 
-function CiteProc:get_sorted_refs()
+function CiteProc:_check_valid_citation_element()
+  if not self.style.citation then
+    if self.style.info and self.style.info.independent_parent then
+      util.error(string.format("This is a dependent style linked to '%s'.", self.style.info.independent_parent))
+    else
+      util.error('No <citation> in style.')
+    end
+  end
+end
+
+---@param citation CitationData
+---@return CitationData
+function CiteProc:_normalize_citation_input(citation)
+  citation = util.deep_copy(citation)
+
+  if not citation.citationID then
+    citation.citationID = "CITATION-" .. tostring(#self.registry.citation_list)
+  end
+
+  if not citation.citationItems then
+    citation.citationItems = {}
+  end
+  for i, cite_item in ipairs(citation.citationItems) do
+    citation.citationItems[i] = self:_normalize_cite_item(cite_item)
+  end
+
+  -- Fix missing noteIndex: sort_CitationNumberPrimaryAscendingViaMacroCitation.txt
+  if not citation.properties then
+    citation.properties = {}
+  end
+  if not citation.properties.noteIndex then
+    citation.properties.noteIndex = 0
+  end
+  if not citation.properties.chapterIndex then
+    citation.properties.chapterIndex = 0
+  end
+
+  citation.sorted_items = util.clone(citation.citationItems)
+
+  return citation
+end
+
+---@param cite_item CitationItem
+---@return CitationItem
+function CiteProc:_normalize_cite_item(cite_item)
+  -- Shallow copy
+  cite_item = util.clone(cite_item)
+  cite_item.id = tostring(cite_item.id)
+
+  -- Use "page" as locator label if missing
+  -- label_PluralWithAmpersand.txt
+  if cite_item.locator and not cite_item.label then
+    cite_item.label = "page"
+  end
+
+  local the_context = Context:new()
+  the_context.engine = self
+  the_context.style = self.style
+  the_context.area = self
+  the_context.in_bibliography = false
+  the_context.lang = self.lang
+  the_context.locale = self:get_locale(self.lang)
+  the_context.format = self.output_format
+
+  if cite_item.prefix then
+    -- Assert CSL rich-text or HTML-like tagged string
+    if cite_item.prefix == "" then
+      cite_item.prefix = nil
+    end
+  end
+  if cite_item.suffix then
+    if cite_item.suffix == "" then
+      cite_item.suffix = nil
+    end
+  end
+
+  return cite_item
+end
+
+---@param citation CitationData
+---@param citations_pre PreCitation[]
+---@param citations_post PostCitation[]
+function CiteProc:_check_input(citation, citations_pre, citations_post)
+  local citation_info_list = {}
+  do
+    for i, pre_citation in ipairs(citations_pre) do
+      local citation_id = pre_citation[1]
+      local note_index = pre_citation[2]
+      local chapter_number = pre_citation[3] or self.registry.citations_by_id[citation_id].properties.chapterIndex or 0
+      local name = string.format("citationsPre[%d]", i)
+      table.insert(citation_info_list, {citation_id, note_index, chapter_number, name})
+    end
+    table.insert(citation_info_list, {citation.citationID, citation.properties.noteIndex, citation.properties.chapterIndex or 0, "citation"})
+    for i, post_citation in ipairs(citations_post) do
+      local citation_id = post_citation[1]
+      local note_index = post_citation[2]
+      local chapter_number = post_citation[3] or self.registry.citations_by_id[citation_id].properties.chapterIndex or 0
+      local name = string.format("citationsPost[%d]", i)
+      table.insert(citation_info_list, {citation_id, note_index, chapter_number, name})
+    end
+  end
+
+  ---@type table<CitationId, boolean>
+  local citation_dict = {}
+  local last_note_number = 0
+  local last_chapter_number = 0
+
+  for _, citation_info in ipairs(citation_info_list) do
+    local citation_id, note_index, chapter_number, name = table.unpack(citation_info)
+    if citation_dict[citation_id] then
+      error(string.format("Previously referenced citationID '%s' encountered at %s", name))
+    end
+    citation_dict[citation_id] = true
+    if chapter_number and chapter_number > 0 then
+      if chapter_number < last_chapter_number then
+        util.warning(string.format("Chapter index sequence is not sane at %s", name))
+      end
+      if chapter_number ~= last_chapter_number then
+        last_note_number = 0
+      end
+      last_chapter_number = chapter_number
+    end
+    if note_index > 0 then
+      if note_index < last_note_number then
+        util.warning(string.format("Note index sequence is not sane at %s", name))
+      end
+      last_note_number = note_index
+    end
+  end
+
+end
+
+---@param citation CitationData
+---@param citations_pre PreCitation[]
+---@param citations_post PostCitation[]
+---@return CitationData[]
+---@return CiteId[]
+function CiteProc:_build_reconstituted_citation_list(citation, citations_pre, citations_post)
+  self.registry.citations_by_id[citation.citationID] = citation
+
+  ---@type [CitationId, NoteIndex][]
+  local citation_note_pairs = {}
+  util.extend(citation_note_pairs, citations_pre)
+  table.insert(citation_note_pairs, {citation.citationID, citation.properties.noteIndex})
+  util.extend(citation_note_pairs, citations_post)
+
+  ---@type CiteId[]
+  local item_ids = {}
+  ---@type table<ItemId, boolean>
+  local item_id_dict = {}
+  ---@type CitationData[]
+  local citation_list = {}
+  ---@type table<CitationId, CitationData>
+  local citations_by_id = {}
+  -- TODO: Remove citations_by_item_id
+  ---@type table<ItemId, CitationData[]>
+  local citations_by_item_id = {}
+
+  for citation_index, pair in ipairs(citation_note_pairs) do
+    local citation_id, note_index = table.unpack(pair)
+    local citation_ = self.registry.citations_by_id[citation_id]
+    if not citation_ then
+      util.error("Citation not in registry.")
+    end
+    citation_.citation_index = citation_index
+    citation_.properties.noteIndex = note_index
+
+    table.insert(citation_list, citation_)
+    citations_by_id[citation_.citationID] = citation_
+    for _, cite_item in ipairs(citation_.citationItems) do
+      if not item_id_dict[cite_item.id] then
+        item_id_dict[cite_item.id] = true
+        table.insert(item_ids, cite_item.id)
+        citations_by_item_id[cite_item.id] = {}
+      end
+      table.insert(citations_by_item_id[cite_item.id], citation_)
+    end
+  end
+  self.registry.citation_list = citation_list
+  self.registry.citations_by_id = citations_by_id
+  self.registry.citations_by_item_id = citations_by_item_id
+  return citation_list, item_ids
+end
+
+---@param citation_list CitationData[]
+---@return table<CitationId, boolean>
+function CiteProc:_set_positions(citation_list)
+  ---@type table<CitationId, boolean>
+  local tainted_citation_ids = {}
+
+  ---@type {[integer]: CitationData[]}
+  local chapter_citations = {}
+  for _, citation in ipairs(citation_list) do
+    local chapter_number = citation.properties.chapterIndex
+    if not chapter_citations[chapter_number] then
+      chapter_citations[chapter_number] = {}
+    end
+    table.insert(chapter_citations[chapter_number], citation)
+  end
+
+  for _, citations in pairs(chapter_citations) do
+    self:_update_chapter_positions(citations, tainted_citation_ids)
+  end
+
+  -- Update tainted citation ids because of citation-number's change
+  -- The self.tainted_item_ids were added in the sort_bibliography() procedure.
+  for item_id, _ in pairs(self.tainted_item_ids) do
+    if self.registry.citations_by_item_id[item_id] then
+      for _, citation in ipairs(self.registry.citations_by_item_id[item_id]) do
+        tainted_citation_ids[citation.citationID] = true
+      end
+    end
+  end
+
+  return tainted_citation_ids
+end
+
+---@param citation_list CitationData[]
+---@param tainted_citation_ids table<CitationId, boolean>
+---@return table<string, boolean>
+function CiteProc:_update_chapter_positions(citation_list, tainted_citation_ids)
+  ---@type CitationData[]
+  local in_text_citations = {}
+  ---@type CitationData[]
+  local note_citations = {}
+  for _, citation in ipairs(citation_list) do
+    if citation.properties.noteIndex == 0 then
+      table.insert(in_text_citations, citation)
+    else
+      table.insert(note_citations, citation)
+    end
+  end
+
+  for _, citations in ipairs({in_text_citations, note_citations}) do
+    ---@type table<CiteId, NoteIndex>
+    local first_ref = {}
+    ---@type table<CiteId, NoteIndex>
+    local last_ref = {}
+    ---@type table<NoteIndex, CitationId[]>
+    local num_citations_in_note = {}
+
+    for _, citation in ipairs(citations) do
+      local note_index = citation.properties.noteIndex
+      if not num_citations_in_note[note_index] then
+        num_citations_in_note[note_index] = {}
+      end
+      table.insert(num_citations_in_note[note_index], citation.citationID)
+    end
+
+    local previous_citation
+    for _, citation in ipairs(citations) do
+      local mode = citation.properties.mode
+      local note_index = citation.properties.noteIndex
+      local previous_cite
+      for _, cite_item in ipairs(citation.sorted_items) do
+        local position_properties = {
+          position_level = cite_item.position_level,
+          ["first-reference-note-number"] = cite_item["first-reference-note-number"],
+          near_note = cite_item.near_note,
+        }
+
+        self:_set_cite_item_position(cite_item, note_index, previous_cite, previous_citation, citation, first_ref, last_ref, num_citations_in_note)
+
+        if self:_check_tainted_position_change(cite_item, position_properties) then
+          tainted_citation_ids[citation.citationID] = true
+        end
+
+        -- https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html#citations
+        -- Citations within the main text of the document have a noteIndex of zero.
+        if mode ~= "author-only" and mode ~= "full-cite" then
+          if not first_ref[cite_item.id] and note_index > 0 then
+            -- note_index == 0 implied an in-text citation
+            first_ref[cite_item.id] = note_index
+          end
+          last_ref[cite_item.id] = note_index
+          previous_cite = cite_item
+        end
+      end
+
+      if mode ~= "author-only" and mode ~= "full-cite" then
+        previous_citation = citation
+      end
+    end
+
+    if self.style.class == "note" and self.style.has_disambiguate then
+      ---@type table<CiteId, CitationData[]>
+      local citations_by_item_id = {}
+      for _, citation in ipairs(citations) do
+        if citation.properties.mode ~= "author-only" and citation.properties.mode ~= "full-cite" then
+          for _, cite_item in ipairs(citation.sorted_items) do
+            if not citations_by_item_id[cite_item.id] then
+              citations_by_item_id[cite_item.id] = {}
+            end
+            table.insert(citations_by_item_id[cite_item.id], citation)
+          end
+        end
+      end
+      for _, citation in ipairs(citations) do
+        if citation.properties.mode ~= "author-only" and citation.properties.mode ~= "full-cite" then
+          for _, cite_item in ipairs(citation.sorted_items) do
+            assert(citations_by_item_id[cite_item.id])
+            local num_citations = #citations_by_item_id[cite_item.id]
+            if not cite_item.num_citations or (num_citations < 2) ~= (cite_item.num_citations < 2) then
+              -- self.tainted_item_ids[cite_item.id] = true
+              for _, citation_ in ipairs(citations_by_item_id[cite_item.id]) do
+                tainted_citation_ids[citation_.citationID] = true
+              end
+            end
+            cite_item.num_citations = num_citations
+          end
+        end
+      end
+    end
+  end
+
+  return tainted_citation_ids
+end
+
+function CiteProc:_set_cite_item_position(cite_item, note_index, previous_cite, previous_citation, citation, first_ref, last_ref, num_citations_in_note)
+  -- https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html#citations
+  -- Citations within the main text of the document have a noteIndex of zero.
+  if citation.properties.mode == "author-only" or citation.properties.mode == "full-cite" then
+    -- discretionary_IbidInAuthorDateStyleWithoutIntext.txt
+    cite_item.position_level = Position.First
+    cite_item.near_note = false
+    return
+  end
+
+  local first_reference_note_number = first_ref[cite_item.id]
+  if first_reference_note_number then
+    cite_item.position_level = Position.Subsequent
+    cite_item["first-reference-note-number"] = first_reference_note_number
+  else
+    cite_item.position_level = Position.First
+  end
+
+  local preceding_cite_item = self:_find_preceding_ibid_item(cite_item, previous_cite, previous_citation, note_index, num_citations_in_note)
+
+  if preceding_cite_item then
+    cite_item.position_level = self:_get_ibid_position(cite_item, preceding_cite_item)
+  end
+
+  cite_item.near_note = false
+  local last_note_number = last_ref[cite_item.id]
+  if last_note_number then
+    local note_distance = note_index - last_note_number
+    cite_item.near_note = (note_distance <= self.style.citation.near_note_distance)
+  end
+
+end
+
+-- Find the preceding cite referencing the same item
+function CiteProc:_find_preceding_ibid_item(cite_item, previous_cite, previous_citation, note_index, num_citations_in_note)
+  if previous_cite then
+    -- a. the current cite immediately follows on another cite, within the same
+    --    citation, that references the same item
+    if cite_item.id == previous_cite.id then
+      return previous_cite
+    end
+  elseif previous_citation then
+    -- (hidden) The previous citation is the only one in the previous note.
+    --    See also
+    --    https://github.com/citation-style-language/documentation/issues/121
+    --    position_IbidWithMultipleSoloCitesInBackref.txt
+    -- b. the current cite is the first cite in the citation, and the previous
+    --    citation consists of a single cite referencing the same item
+    local previous_note_number = previous_citation.properties.noteIndex
+    local num_previous_note_citations = #num_citations_in_note[previous_note_number]
+    if (previous_note_number == note_index - 1 and num_previous_note_citations == 1)
+        or previous_note_number == note_index then
+      if #previous_citation.sorted_items == 1 then
+        previous_cite = previous_citation.sorted_items[1]
+        if previous_cite.id == cite_item.id then
+          return previous_cite
+        end
+      end
+    end
+  end
+  return nil
+end
+
+function CiteProc:_get_ibid_position(item, preceding_cite)
+  if preceding_cite.locator then
+    if item.locator then
+      if item.locator == preceding_cite.locator and item.label == preceding_cite.label then
+        return Position.Ibid
+      else
+        return Position.IbidWithLocator
+      end
+    else
+      return Position.Subsequent
+    end
+  else
+    if item.locator then
+      return Position.IbidWithLocator
+    else
+      return Position.Ibid
+    end
+  end
+end
+
+function CiteProc:_check_tainted_position_change(cite_item, position_properties)
+  for key, value in pairs(position_properties) do
+    if cite_item[key] ~= value then
+      return true
+    end
+  end
+  return false
+end
+
+---@param tainted_citation_ids table<CitationId, boolean>
+---@return [integer, string, CitationId][]
+function CiteProc:_rerun_changed_cites(tainted_citation_ids)
+  local result = {}
+  for citation_id, _ in pairs(tainted_citation_ids) do
+    local citation = self.registry.citations_by_id[citation_id]
+    local citation_index = citation.citation_index
+    local mode = citation.properties.mode
+    if mode == "suppress-author" and self.style.class == "note" then
+      mode = nil
+    end
+    local citation_element = self.style.citation
+    if mode == "author-only" and self.style.intext then
+      citation_element = self.style.intext
+    elseif mode == "full-cite" then
+      if self.style.class == "note" then
+        citation_element = self.style.citation
+      else
+        citation_element = self.style.full_citation
+      end
+    end
+
+    local citation_str = citation_element:build_citation_str(citation, self)
+    table.insert(result, {citation_index, citation_str, citation_id})
+  end
+  return result
+end
+
+function CiteProc:_get_sorted_refs()
   if self.registry.requires_sorting then
     self:sort_bibliography()
   end
   return self.registry.reflist
 end
 
-function CiteProc:filter_with_bibsection(ids, bibsection)
+function CiteProc:_filter_with_bibsection(ids, bibsection)
   if bibsection.quash then
     return self:filter_quash(ids, bibsection)
   elseif bibsection.select then

@@ -83,6 +83,10 @@
 
 \cs_new:Npn \__csl_initialize_lua_module:
   {
+    \bool_if:NT \l__csl_regression_test_bool
+      {
+        \lua_now:n { csl_citation_manager.regression_test = true }
+      }
     \tl_set:Nx \l_tmpa_tl { \clist_use:Nn \l__csl_bib_resources_clist { , } }
     \lua_now:e
       {

@@ -8,6 +8,12 @@
     "[lua]": {
         "editor.tabSize": 2
     },
+    "busted-test-explorer.args": [
+        "-lua=texlua",
+        "-lpath=./citeproc/?.lua"
+    ],
+    "busted-test-explorer.cwd": "${workspaceFolder}",
+    "busted-test-explorer.testfilepattern": "tests/*test.lua",
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true,

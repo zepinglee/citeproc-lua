@@ -87,8 +87,8 @@ local function test_citation_items(engine, fixture)
   return table.concat(output, "\n")
 end
 
-local function test_citations(engine, fixture)
 
+local function test_citations_process_citation_cluster(engine, fixture)
   local output = {}
   local citation_order = {}
   for i, citation_cluster in ipairs(fixture.citations) do
@@ -149,6 +149,69 @@ local function test_citations(engine, fixture)
   return table.concat(ret, "\n")
 end
 
+
+local function test_citations_process_citation(engine, fixture)
+  local citations = {}
+  local citation_dict = {}
+  for i, citation_cluster in ipairs(fixture.citations) do
+    local citation = citation_cluster[1]
+    local citations_pre = citation_cluster[2]
+    local citations_post = citation_cluster[3]
+
+    -- bugreports_NumericStyleFirstRefMultipleCiteFailure.txt
+    -- Empty citationID
+    if not citation.citationID then
+      citation.citationID = "CITATION-" .. tostring(i)
+    end
+
+    citation_dict[citation.citationID] = citation
+    if i == #fixture.citations then
+      for _, citation_id_note in ipairs(citations_pre) do
+        local citation_id = citation_id_note[1]
+        local citation_ = citation_dict[citation_id]
+        citation_.properties.noteIndex = citation_id_note[2]
+        table.insert(citations, citation_)
+      end
+      table.insert(citations, citation)
+      for _, citation_id_note in ipairs(citations_post) do
+        local citation_id = citation_id_note[1]
+        local citation_ = citation_dict[citation_id]
+        citation_.properties.noteIndex = citation_id_note[2]
+        table.insert(citations, citation_)
+      end
+    end
+  end
+
+  local item_ids = {}
+  local item_id_dict = {}
+  for _, citation_ in ipairs(citations) do
+    for _, cite_item in ipairs(citation_.citationItems) do
+      if not item_id_dict[cite_item.id] then
+        item_id_dict[cite_item.id] = true
+        table.insert(item_ids, cite_item.id)
+      end
+    end
+  end
+  engine:updateItems(item_ids)
+
+  local output = {}
+  for i, citation in ipairs(citations) do
+    local citation_str = engine:process_citation(citation)
+    table.insert(output, string.format("[%d] %s", i - 1, citation_str))
+  end
+
+  local lines = {}
+  for _, line in ipairs(util.split(fixture.result, "\n")) do
+    line = string.gsub(line, "^%.%.", "")
+    line = string.gsub(line, "^>>", "")
+    table.insert(lines, line)
+  end
+  fixture.trimmed_result = table.concat(lines, "\n")
+
+  return table.concat(output, "\n")
+end
+
+
 local function test_bibliography(engine, fixture)
   if fixture.bibentries then
     -- TODO
@@ -156,7 +219,7 @@ local function test_bibliography(engine, fixture)
   end
 
   if fixture.citations then
-    test_citations(engine, fixture)
+    test_citations_process_citation_cluster(engine, fixture)
   else
     test_citation_items(engine, fixture)
   end
@@ -294,21 +357,25 @@ local function run_test(path)
 
   if fixture.mode == "citation" then
     if fixture.citations then
-      result = test_citations(engine, fixture)
+      -- result = test_citations_process_citation_cluster(engine, fixture)
+      -- assert.equal(fixture.result, result)
+      -- engine:updateItems({})
+      result = test_citations_process_citation(engine, fixture)
+      assert.equal(fixture.trimmed_result, result)
     else
       result = test_citation_items(engine, fixture)
+      assert.equal(fixture.result, result)
     end
 
   elseif fixture.mode == "bibliography" then
     result = test_bibliography(engine, fixture)
+    if fixture.result and util.startswith(fixture.result, "<div") then
+      result = normalize_new_line(result)
+      fixture.result = normalize_new_line(fixture.result)
+    end
+    assert.equal(fixture.result, result)
   end
 
-  if fixture.result and util.startswith(fixture.result, "<div") then
-    result = normalize_new_line(result)
-    fixture.result = normalize_new_line(fixture.result)
-  end
-
-  assert.equal(fixture.result, result)
 
   -- local compare_result = fixture.result == result
   -- if not compare_result then

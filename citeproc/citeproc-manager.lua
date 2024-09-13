@@ -7,6 +7,7 @@
 local citeproc_manager = {}
 
 require("lualibs")
+local json_encode = utilities.json.tojson
 local json_decode = utilities.json.tolua
 
 local citeproc = require("citeproc")
@@ -14,7 +15,7 @@ local bibtex_data = require("citeproc-bibtex-data")
 local bibtex_parser = require("citeproc-bibtex-parser")
 local latex_parser = require("citeproc-latex-parser")
 local util = citeproc.util
-local unicode =  require("citeproc-unicode")
+local unicode = require("citeproc-unicode")
 
 
 ---@param file_name string
@@ -221,6 +222,7 @@ end
 ---@alias LanguageCode string
 
 ---@class RefSection
+---@field index integer
 ---@field initialized boolean
 ---@field style_id string?
 ---@field bib_resources FilePath[]
@@ -233,12 +235,14 @@ end
 ---@field citations CitationData[]
 ---@field citations_pre table[]
 ---@field bibliography_configs string[]
+---@field style string
 local RefSection = {}
 
 ---@return RefSection
 function RefSection:new()
   ---@type RefSection
   local ref_section = {
+    index = 0,
     initialized = false,
     style_id = nil,
     bib_resources = {},
@@ -251,6 +255,7 @@ function RefSection:new()
     citations = {},
     citations_pre = {},
     bibliography_configs = {},
+    style = "",
   }
   setmetatable(ref_section, self)
   self.__index = self
@@ -275,6 +280,9 @@ function RefSection:make_citeproc_engine()
   else
     self.lang = nil
   end
+
+  self.style = style
+  -- self.items
 
   self.engine = citeproc.new(citeproc_sys, style, self.lang, force_lang)
   self:_check_dependent_style(citeproc_sys)
@@ -334,6 +342,86 @@ function RefSection:_update_uncited_items()
   self.uncited_ids = uncited_ids
 end
 
+function RefSection:record_fixture()
+  if not self.fixture then
+    self.fixture = {
+      mode = "citation",
+      description = tex.jobname,
+      result = "",
+      bibliography_result = "",
+      citations = "",
+      ["citation-items"] = "",
+      csl = self.style,
+      input = "",
+      version = "1.0",
+      citation_results = {},
+    }
+  end
+  local fixture = self.fixture
+
+  local cited_id_dict = {}
+  for _, citation in ipairs(self.citations) do
+    for _, cite_item in ipairs(citation.citationItems) do
+      cited_id_dict[cite_item.id] = true
+    end
+  end
+  local input_items = {}
+  for _, item in ipairs(self.items) do
+    if cited_id_dict[item.id] then
+      table.insert(input_items, item)
+    end
+  end
+  fixture.input = json_encode(input_items)
+
+  local citation_items = {}
+  for _, citation in ipairs(self.citations) do
+    table.insert(citation_items, util.clone(citation.citationItems))
+  end
+  fixture["citation-items"] = json_encode(citation_items)
+
+  local citations = {}
+  local citations_pre = {}
+  for _, citation in ipairs(self.citations) do
+    table.insert(citations, {citation, util.clone(citations_pre), {}})
+    table.insert(citations_pre, {citation.citationID, citation.properties.noteIndex})
+  end
+  fixture.citations = string.gsub(json_encode(citations), "{%s*}", "[]")
+
+  local result = {}
+  for i, citation_result in ipairs(fixture.citation_results) do
+    if i == #fixture.citation_results then
+      table.insert(result, string.format(">>[%d] %s", i - 1, citation_result))
+    else
+      table.insert(result, string.format("..[%d] %s", i - 1, citation_result))
+    end
+  end
+  fixture.result = table.concat(result, "\n")
+
+  local fixture_output = {}
+  local function make_block(section, str)
+    return string.format(">>===== %s =====>>\n%s\n<<===== %s =====<<\n", string.upper(section), str, string.upper(section))
+  end
+  for _, section in ipairs({"mode", "description", "result", "bibliography_result", "citations", "citation-items", "csl", "input", "version"}) do
+    if not (section == "bibliography_result" and fixture[section] == "") then
+      table.insert(fixture_output, make_block(section, fixture[section]))
+    end
+  end
+  local fixture_str = table.concat(fixture_output, "\n\n")
+
+  local file_name = string.format("%s.txt", tex.jobname)
+  if self.index > 0 then
+    file_name = string.format("%s-%d.txt", tex.jobname, self.index)
+  end
+
+  local fixture_file = io.open(file_name, "w")
+  if fixture_file then
+    fixture_file:write(fixture_str)
+    fixture_file:close()
+  else
+    error(string.format("Failed to write fixture file '%s'", file_name))
+  end
+end
+
 
 ---@class CslCitationManager
 ---@field global_ref_section RefSection
@@ -342,6 +430,7 @@ end
 ---@field ref_sections table<integer, RefSection>
 ---@field ref_section RefSection
 ---@field hyperref_loaded boolean
+---@field regression_test boolean
 local CslCitationManager = {}
 
 ---@return CslCitationManager
@@ -361,6 +450,7 @@ function CslCitationManager:new()
     ref_section = ref_section,
 
     hyperref_loaded = false,
+    regression_test = false,
   }
 
   setmetatable(o, self)
@@ -388,6 +478,10 @@ function CslCitationManager:init(style_id, bib_resources_str, lang)
   if self.hyperref_loaded then
     global_ref_section.engine:enable_linking()
   end
+  if self.regression_test then
+    self.global_ref_section:record_fixture()
+  end
+
   self.ref_section_index = 0
 end
 
@@ -414,6 +508,7 @@ function CslCitationManager:begin_ref_section(style_id, bib_resources_str, lang)
   self.ref_section = self.ref_sections[self.ref_section_index]
   if not self.ref_section then
     self.ref_section = RefSection:new()
+    self.ref_section.index = self.ref_section_index
     self.ref_sections[self.ref_section_index] = self.ref_section
   end
 
@@ -432,6 +527,10 @@ function CslCitationManager:begin_ref_section(style_id, bib_resources_str, lang)
 
   if self.hyperref_loaded then
     self.ref_section.engine:enable_linking()
+  end
+
+  if self.regression_test then
+    self.ref_section:record_fixture()
   end
 
 end
@@ -456,6 +555,7 @@ function CslCitationManager:register_citation_info(ref_section_index_str, citati
   if not ref_section then
     ref_section = RefSection:new()
     self.ref_sections[ref_section_index] = ref_section
+    ref_section.index = ref_section_index
   end
 
   local citation = self:_make_citation(citation_info)
@@ -493,6 +593,8 @@ function CslCitationManager:cite(citation_info)
   local citation = self:_make_citation(citation_info)
   -- util.debug(citation)
 
+  table.insert(self.ref_section.citations, citation)
+
   local citation_str
   -- if preview_mode then
   --   -- TODO: preview mode in first pass of \blockquote of csquotes
@@ -511,6 +613,11 @@ function CslCitationManager:cite(citation_info)
   -- See <https://github.com/zepinglee/citeproc-lua/issues/42>
   -- and <https://tex.stackexchange.com/questions/519954/backslashes-in-macros-defined-in-lua-code>.
   tex.sprint(string.format("\\expandafter\\def\\csname l__csl_citation_tl\\endcsname{%s}", citation_str))
+
+  if self.regression_test then
+    table.insert(self.ref_section.fixture.citation_results, citation_str)
+    self.ref_section:record_fixture()
+  end
 
   table.insert(self.ref_section.citations_pre, {citation.citationID, citation.properties.noteIndex})
 end
@@ -627,6 +734,11 @@ function CslCitationManager:bibliography(filter_str)
   end
   local bib_lines = self:make_bibliography(filter_str)
   tex.print(util.split(table.concat(bib_lines, "\n"), "\n"))
+
+  if self.regression_test then
+    self.ref_section.fixture.bibliography_result = table.concat(bib_lines, "\n")
+    self.ref_section:record_fixture()
+  end
 end
 
 ---@param filter_str string
@@ -799,6 +911,7 @@ function CslCitationManager:read_aux_file(aux_content)
     if not ref_section then
       ref_section = RefSection:new()
       self.ref_sections[ref_section_index] = ref_section
+      ref_section.index = ref_section_index
       self.ref_section = ref_section
     end
     if command == "\\csl@aux@style" then

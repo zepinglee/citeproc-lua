@@ -178,13 +178,6 @@ end
 
 ---@alias CiteId string | number
 
----@class CitationItem
----@field id CiteId
----@field prefix string?
----@field suffix string?
----@field locator string?
----@field label string?
-
 ---comment
 ---@param citation_items CitationItem[]
 ---@param engine CiteProc
@@ -195,6 +188,8 @@ function Citation:build_cluster(citation_items, engine, properties)
   local output_format = engine.output_format
   ---@type CiteIr[]
   local irs = {}
+  -- The citation_items are already sorted when evaluate the positions
+  -- To be removed
   citation_items = self:sorted_citation_items(citation_items, engine)
   for _, cite_item in ipairs(citation_items) do
     local ir = self:build_fully_disambiguated_ir(cite_item, output_format, engine, properties)
@@ -437,7 +432,7 @@ end
 ---@param cite_item CitationItem
 ---@param output_format OutputFormat
 ---@param engine CiteProc
----@param properties table
+---@param properties CitationProperties
 ---@return CiteIr
 function Citation:build_fully_disambiguated_ir(cite_item, output_format, engine, properties)
   -- util.debug(cite_item.id)
@@ -451,12 +446,14 @@ function Citation:build_fully_disambiguated_ir(cite_item, output_format, engine,
     -- Disambiguation should be based on the subsequent form
     -- disambiguate_BasedOnEtAlSubsequent.txt
     cite_item.position_level = Position.Subsequent
+    cite_item["first-reference-note-number"] = properties.noteIndex
     local disam_ir = self:build_ambiguous_ir(cite_item, output_format, engine)
     disam_ir = self:apply_disambiguate_add_givenname(disam_ir, engine)
     disam_ir = self:apply_disambiguate_add_names(disam_ir, engine)
     disam_ir = self:apply_disambiguate_conditionals(disam_ir, engine)
     disam_ir = self:apply_disambiguate_add_year_suffix(disam_ir, engine)
     cite_item.position_level = Position.First
+    cite_item["first-reference-note-number"] = nil
   end
 
   return cite_ir
@@ -1034,7 +1031,6 @@ function Citation:apply_disambiguate_conditionals(cite_ir, engine)
         -- Update ir output
         local inlines = ir_:flatten(disam_format)
         local disam_str = disam_format:output(inlines, nil)
-        -- util.debug("update: " .. ir_.cite_item.id .. ": " .. disam_str)
         ir_.disam_str = disam_str
         if not engine.cite_irs_by_output[disam_str] then
           engine.cite_irs_by_output[disam_str] = {}

@@ -1063,7 +1063,7 @@ util.roman_numerals = {
 
 -- Choose
 
----@enum Postion
+---@enum Position
 local Position = {
   First = 0,
   Subsequent = 1,

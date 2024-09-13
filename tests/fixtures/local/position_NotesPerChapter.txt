@@ -12,8 +12,8 @@ In this test, I've added the `chapterIndex` as an extension to CSL and
 
 
 >>===== RESULT =====>>
->>[0] [first] John T. King, “A Grammar of Dhimal” (doctoral dissertation, Universiteit Leiden, 2008), https://scholarlypublications.universiteitleiden.nl/handle/1887/13072.
->>[1] [ibid 1] ibid.
+..[0] [first] John T. King, “A Grammar of Dhimal” (doctoral dissertation, Universiteit Leiden, 2008), https://scholarlypublications.universiteitleiden.nl/handle/1887/13072.
+..[1] [ibid 1] ibid.
 >>[2] [first] John T. King, “A Grammar of Dhimal” (doctoral dissertation, Universiteit Leiden, 2008), https://scholarlypublications.universiteitleiden.nl/handle/1887/13072.
 >>[3] [ibid 1] ibid.
 <<===== RESULT =====<<
@@ -135,7 +135,7 @@ In this test, I've added the `chapterIndex` as an extension to CSL and
     <category citation-format="note"/>
     <category field="generic-base"/>
     <summary>Chicago format with full notes and bibliography</summary>
-    <updated>2024-08-19T17:39:06+08:00</updated>
+    <updated>2024-09-13T14:40:06+08:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
