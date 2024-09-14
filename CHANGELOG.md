@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.4] - 2024-09-15
+
 ### Fixed
 
 - Refactor `processCitationCluster()` to fix unexpected nil ([#77](https://github.com/zepinglee/citeproc-lua/issues/77)).
@@ -245,7 +247,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial CTAN release.
 
-[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.3...HEAD
+[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.4...HEAD
+[0.6.4]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.3...v0.6.4
 [0.6.3]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.2...v0.6.3
 [0.6.2]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.0...v0.6.1

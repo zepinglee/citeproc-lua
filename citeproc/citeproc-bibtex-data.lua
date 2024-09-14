@@ -1272,6 +1272,11 @@ return {
       source = "apa.dbx",
       type = "literal",
     },
+    citations = {
+      csl = nil,
+      source = "publist.dbx",
+      type = "literal",
+    },
     citedate = {
       csl = nil,
       source = "seuthesis.bst",
@@ -4204,11 +4209,6 @@ return {
     zip = {
       csl = nil,
       source = "adrbirthday.bst",
-    },
-    citations = {
-      csl = nil,
-      source = "publist.dbx",
-      type = "literal",
     },
   },
   macros = {
