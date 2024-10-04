@@ -659,6 +659,11 @@ function CslCitationManager:_make_citation(citation_info)
 
   for i, item in ipairs(citation.citationItems) do
     local citation_item = parse_latex_prop(item)
+
+    if citation_item.locator and type(citation_item.locator) == "string" then
+      citation_item.locator = latex_parser.latex_to_pseudo_html(citation_item.locator, true, false)
+    end
+
     if citation_item.prefix then
       -- util.debug(citation_item.prefix)
       citation_item.prefix = latex_parser.latex_to_pseudo_html(citation_item.prefix, true, false)

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- The locator in citation is converted to HTML-like tagged string ([#78](https://github.com/zepinglee/citeproc-lua/issues/78)).
+
 ## [0.6.4] - 2024-09-15
 
 ### Fixed

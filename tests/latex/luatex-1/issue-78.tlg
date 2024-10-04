@@ -1,0 +1,131 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line ....
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@1},citationItems={{id={King2008-Gramma},label={page},locator={PDF \hlm \ 20}}},properties={noteIndex={1}}.
+<recently read> }
+l. ......cite[page = {PDF \hlm\ 20}]{King2008-Gramma}
+> \l__csl_citation_tl=John T. King, “A Grammar of Dhimal” (doctoral dissertation, Universiteit Leiden, 2008), PDF \hlm \ 20, \url {https://scholarlypublications.universiteitleiden.nl/handle/1887/13072}..
+<recently read> }
+l. ......cite[page = {PDF \hlm\ 20}]{King2008-Gramma}
+Underfull \hbox (badness 1221) in paragraph at lines 55--55
+[][]\TU/lmr/m/n/8 John T. King, “A Gram-mar of Dhi-mal” (doc-toral dis-ser-ta-tion, Uni-ver-siteit Lei-
+\hbox(6.81334+2.0)x345.0, glue set 2.30638, direction TLT
+.\localpar
+..\localinterlinepenalty=0
+..\localbrokenpenalty=0
+..\localleftbox=null
+..\localrightbox=null
+.\hbox(6.81334+0.0)x14.40002, glue set 10.23402fil, direction TLT
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\hbox(6.81334+0.0)x4.166, direction TLT
+...\mathon
+...\hbox(0.0+0.0)x0.0, direction TLT
+...\hbox(3.99+0.0)x4.166, shifted -2.82333, direction TLT
+....\TU/lmr/m/n/6 1
+...\mathoff
+.\hbox(6.65+0.0)x0.0, direction TLT
+..\rule(6.65+0.0)x0.0
+.\TU/lmr/m/n/8 J
+.\TU/lmr/m/n/8 o
+.\TU/lmr/m/n/8 h
+.\TU/lmr/m/n/8 n
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/n/8 T
+.\TU/lmr/m/n/8 .
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/n/8 K
+.\TU/lmr/m/n/8 i
+.\TU/lmr/m/n/8 n
+.\TU/lmr/m/n/8 g
+.\TU/lmr/m/n/8 ,
+.\glue(\spaceskip) 2.832 plus 1.76999 minus 0.75519
+.\TU/lmr/m/n/8 “
+.\TU/lmr/m/n/8 A
+.\glue(\spaceskip) 2.832 plus 1.41458 minus 0.94493
+.\TU/lmr/m/n/8 G
+.\TU/lmr/m/n/8 r
+.\TU/lmr/m/n/8 a
+.\TU/lmr/m/n/8 m
+.\discretionary (penalty 50)
+..< \TU/lmr/m/n/8 -
+.\TU/lmr/m/n/8 m
+.\TU/lmr/m/n/8 a
+.\TU/lmr/m/n/8 r
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/n/8 o
+.\TU/lmr/m/n/8 f
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/n/8 D
+.\TU/lmr/m/n/8 h
+.\TU/lmr/m/n/8 i
+.\discretionary (penalty 50)
+..< \TU/lmr/m/n/8 -
+.\TU/lmr/m/n/8 m
+.\TU/lmr/m/n/8 a
+.\TU/lmr/m/n/8 l
+.\TU/lmr/m/n/8 ”
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/n/8 (
+.\TU/lmr/m/n/8 d
+.\TU/lmr/m/n/8 o
+.\kern0.24 (font)
+.\TU/lmr/m/n/8 c
+.\discretionary (penalty 50)
+..< \TU/lmr/m/n/8 -
+.\TU/lmr/m/n/8 t
+.\TU/lmr/m/n/8 o
+.\TU/lmr/m/n/8 r
+.\TU/lmr/m/n/8 a
+.\TU/lmr/m/n/8 l
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/n/8 d
+.\TU/lmr/m/n/8 i
+.\TU/lmr/m/n/8 s
+.\discretionary (penalty 50)
+..< \TU/lmr/m/n/8 -
+.\TU/lmr/m/n/8 s
+.\TU/lmr/m/n/8 e
+.\TU/lmr/m/n/8 r
+.\discretionary (penalty 50)
+..< \TU/lmr/m/n/8 -
+.\TU/lmr/m/n/8 t
+.\TU/lmr/m/n/8 a
+.\discretionary (penalty 50)
+..< \TU/lmr/m/n/8 -
+.\TU/lmr/m/n/8 t
+.\TU/lmr/m/n/8 i
+.\TU/lmr/m/n/8 o
+.\TU/lmr/m/n/8 n
+.\TU/lmr/m/n/8 ,
+.\glue(\spaceskip) 2.832 plus 1.76999 minus 0.75519
+.\TU/lmr/m/n/8 U
+.\TU/lmr/m/n/8 n
+.\TU/lmr/m/n/8 i
+.\discretionary (penalty 50)
+..< \TU/lmr/m/n/8 -
+.\TU/lmr/m/n/8 v
+.\kern-0.24 (font)
+.\TU/lmr/m/n/8 e
+.\TU/lmr/m/n/8 r
+.\discretionary (penalty 50)
+..< \TU/lmr/m/n/8 -
+.\TU/lmr/m/n/8 s
+.\TU/lmr/m/n/8 i
+.\TU/lmr/m/n/8 t
+.\TU/lmr/m/n/8 e
+.\TU/lmr/m/n/8 i
+.\TU/lmr/m/n/8 t
+.\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.\TU/lmr/m/n/8 L
+.\TU/lmr/m/n/8 e
+.\TU/lmr/m/n/8 i
+.\TU/lmr/m/n/8 -
+.\discretionary (penalty 50)
+.\glue(\rightskip) 0.0

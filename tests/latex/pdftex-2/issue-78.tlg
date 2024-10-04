@@ -1,0 +1,125 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line ....
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@1},citationItems={{id={King2008-Gramma},label={page},locator={PDF \hlm \ 20}}},properties={noteIndex={1}}.
+<recently read> }
+l. ......te[page = {PDF \hlm\ 20}]{King2008-Gramma}
+> \l__csl_citation_tl=John T. King, “A Grammar of Dhimal” (doctoral dissertation, Universiteit Leiden, 2008), PDF \hlm \ 20, \url {https://scholarlypublications.universiteitleiden.nl/handle/1887/13072}..
+<recently read> }
+l. ......te[page = {PDF \hlm\ 20}]{King2008-Gramma}
+Underfull \hbox (badness 1072) in paragraph at lines 55--55
+[][]\OT1/cmr/m/n/8 John T. King, \A Gram-mar of Dhi-mal" (doc-toral dis-ser-ta-tion, Uni-ver-siteit Lei-
+\hbox(6.68999+2.0)x345.0, glue set 2.20697
+.\hbox(6.68999+0.0)x15.30023, glue set 11.13362fil
+..\glue 0.0 plus 1.0fil minus 1.0fil
+..\hbox(6.68999+0.0)x4.16661
+...\mathon
+...\hbox(3.86665+0.0)x4.16661, shifted -2.82333
+....\OT1/cmr/m/n/6 1
+...\mathoff
+.\hbox(6.65+0.0)x0.0
+..\rule(6.65+0.0)x0.0
+.\OT1/cmr/m/n/8 J
+.\OT1/cmr/m/n/8 o
+.\OT1/cmr/m/n/8 h
+.\OT1/cmr/m/n/8 n
+.\glue 2.83337 plus 1.41669 minus 0.94446
+.\OT1/cmr/m/n/8 T
+.\OT1/cmr/m/n/8 .
+.\glue 2.83337 plus 1.41669 minus 0.94446
+.\OT1/cmr/m/n/8 K
+.\OT1/cmr/m/n/8 i
+.\OT1/cmr/m/n/8 n
+.\OT1/cmr/m/n/8 g
+.\OT1/cmr/m/n/8 ,
+.\glue 2.83337 plus 1.77086 minus 0.75555
+.\OT1/cmr/m/n/8 \
+.\OT1/cmr/m/n/8 A
+.\glue 2.83337 plus 1.41527 minus 0.94539
+.\OT1/cmr/m/n/8 G
+.\OT1/cmr/m/n/8 r
+.\OT1/cmr/m/n/8 a
+.\OT1/cmr/m/n/8 m
+.\discretionary
+..\OT1/cmr/m/n/8 -
+.\OT1/cmr/m/n/8 m
+.\OT1/cmr/m/n/8 a
+.\OT1/cmr/m/n/8 r
+.\glue 2.83337 plus 1.41669 minus 0.94446
+.\OT1/cmr/m/n/8 o
+.\OT1/cmr/m/n/8 f
+.\glue 2.83337 plus 1.41669 minus 0.94446
+.\OT1/cmr/m/n/8 D
+.\OT1/cmr/m/n/8 h
+.\OT1/cmr/m/n/8 i
+.\discretionary
+..\OT1/cmr/m/n/8 -
+.\OT1/cmr/m/n/8 m
+.\OT1/cmr/m/n/8 a
+.\OT1/cmr/m/n/8 l
+.\OT1/cmr/m/n/8 "
+.\glue 2.83337 plus 1.41669 minus 0.94446
+.\OT1/cmr/m/n/8 (
+.\OT1/cmr/m/n/8 d
+.\OT1/cmr/m/n/8 o
+.\kern0.23611
+.\OT1/cmr/m/n/8 c
+.\discretionary
+..\OT1/cmr/m/n/8 -
+.\OT1/cmr/m/n/8 t
+.\OT1/cmr/m/n/8 o
+.\OT1/cmr/m/n/8 r
+.\OT1/cmr/m/n/8 a
+.\OT1/cmr/m/n/8 l
+.\glue 2.83337 plus 1.41669 minus 0.94446
+.\OT1/cmr/m/n/8 d
+.\OT1/cmr/m/n/8 i
+.\OT1/cmr/m/n/8 s
+.\discretionary
+..\OT1/cmr/m/n/8 -
+.\OT1/cmr/m/n/8 s
+.\OT1/cmr/m/n/8 e
+.\OT1/cmr/m/n/8 r
+.\discretionary
+..\OT1/cmr/m/n/8 -
+.\OT1/cmr/m/n/8 t
+.\OT1/cmr/m/n/8 a
+.\discretionary
+..\OT1/cmr/m/n/8 -
+.\OT1/cmr/m/n/8 t
+.\OT1/cmr/m/n/8 i
+.\OT1/cmr/m/n/8 o
+.\OT1/cmr/m/n/8 n
+.\OT1/cmr/m/n/8 ,
+.\glue 2.83337 plus 1.77086 minus 0.75555
+.\OT1/cmr/m/n/8 U
+.\OT1/cmr/m/n/8 n
+.\OT1/cmr/m/n/8 i
+.\discretionary
+..\OT1/cmr/m/n/8 -
+.\OT1/cmr/m/n/8 v
+.\kern-0.23611
+.\OT1/cmr/m/n/8 e
+.\OT1/cmr/m/n/8 r
+.\discretionary
+..\OT1/cmr/m/n/8 -
+.\OT1/cmr/m/n/8 s
+.\OT1/cmr/m/n/8 i
+.\OT1/cmr/m/n/8 t
+.\OT1/cmr/m/n/8 e
+.\OT1/cmr/m/n/8 i
+.\OT1/cmr/m/n/8 t
+.\glue 2.83337 plus 1.41669 minus 0.94446
+.\OT1/cmr/m/n/8 L
+.\OT1/cmr/m/n/8 e
+.\OT1/cmr/m/n/8 i
+.\discretionary
+.\OT1/cmr/m/n/8 -
+.\glue(\rightskip) 0.0

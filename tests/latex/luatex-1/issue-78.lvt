@@ -1,0 +1,58 @@
+% <https://github.com/zepinglee/citeproc-lua/discussions/78>
+
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\begin{filecontents}[overwrite, noheader]{\jobname.json}
+[
+    {
+        "id": "King2008-Gramma",
+        "type": "thesis",
+        "author": [
+            {
+                "family": "King",
+                "given": "John T."
+            }
+        ],
+        "title": "A Grammar of Dhimal",
+        "publisher-place": "Netherlands",
+        "publisher": "Universiteit Leiden",
+        "URL": "https://scholarlypublications.universiteitleiden.nl/handle/1887/13072",
+        "genre": "doctoral dissertation",
+        "issued": {
+            "date-parts": [
+                [
+                    "2008",
+                    "9",
+                    "3"
+                ]
+            ]
+        },
+        "accessed": {
+            "date-parts": [
+                [
+                    "2024",
+                    "08",
+                    "13"
+                ]
+            ]
+        }
+    }
+]
+\end{filecontents}
+
+\usepackage[style=chicago-fullnote-bibliography]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{\jobname.json}
+
+\newcommand{\hlm}{hlm.}
+
+
+\begin{document}
+\START
+
+Commands don't work in the content of the page option.\cite[page = {PDF \hlm\ 20}]{King2008-Gramma}
+
+\OMIT
+\end{document}
