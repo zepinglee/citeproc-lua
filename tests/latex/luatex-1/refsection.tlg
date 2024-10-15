@@ -54,7 +54,7 @@ Completed box being shipped out [1]
 ....\pdfdest name{Doc-Start} xyz
 ....\write-{}
 ....\pdfdest name{chapter.1} xyz
-....\write4{\protect \BOOKMARK [0][-]{chapter.1}{\376\377\000I\000E\000E\000E\000\040\000s\000t\000y\000l\000e}{}% 1}
+....\write3{\protect \BOOKMARK [0][-]{chapter.1}{\376\377\000I\000E\000E\000E\000\040\000s\000t\000y\000l\000e}{}% 1}
 ....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {1}IEEE style}{\thepage }{chapter.1}\protected@file@percent }}
 ....\marks1{\__mark_id:n {1}\MakeUppercase    []{Chapter\ 1. \ IEEE style}}
 ....\marks2{\__mark_id:n {2}}
@@ -670,7 +670,7 @@ Completed box being shipped out [3]
 ...\glue(\lineskip) 0.0
 ...\vbox(550.0+0.0)x345.0, glue set 260.526fil, direction TLT
 ....\pdfdest name{chapter.2} xyz
-....\write4{\protect \BOOKMARK [0][-]{chapter.2}{\376\377\000A\000P\000A\000\040\000s\000t\000y\000l\000e}{}% 2}
+....\write3{\protect \BOOKMARK [0][-]{chapter.2}{\376\377\000A\000P\000A\000\040\000s\000t\000y\000l\000e}{}% 2}
 ....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {2}APA style}{\thepage }{chapter.2}\protected@file@percent }}
 ....\marks1{\__mark_id:n {5}\MakeUppercase    []{Chapter\ 2. \ APA style}}
 ....\marks2{\__mark_id:n {6}}
@@ -1070,7 +1070,7 @@ Completed box being shipped out [5]
 ...\glue(\lineskip) 0.0
 ...\vbox(550.0+0.0)x345.0, glue set 210.24751fil, direction TLT
 ....\pdfdest name{chapter.3} xyz
-....\write4{\protect \BOOKMARK [0][-]{chapter.3}{\376\377\000C\000h\000i\000c\000a\000g\000o\000\040\000n\000o\000t\000e\000s\000\040\000s\000t\000y\000l\000e}{}% 3}
+....\write3{\protect \BOOKMARK [0][-]{chapter.3}{\376\377\000C\000h\000i\000c\000a\000g\000o\000\040\000n\000o\000t\000e\000s\000\040\000s\000t\000y\000l\000e}{}% 3}
 ....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {3}Chicago notes style}{\thepage }{chapter.3}\protected@file@percent }}
 ....\marks1{\__mark_id:n {9}\MakeUppercase    []{Chapter\ 3. \ Chicago notes style}}
 ....\marks2{\__mark_id:n {10}}

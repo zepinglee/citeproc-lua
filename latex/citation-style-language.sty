@@ -167,10 +167,12 @@
 
 
 % Write to an empty `.ccf` file for use with latexmk
-\iow_new:N \l__csl_ccf_iow
-\iow_open:Nn \l__csl_ccf_iow { \c_sys_jobname_str .ccf }
-\iow_now:Nx \l__csl_ccf_iow { }
-\iow_close:N \l__csl_ccf_iow
+\sys_if_engine_luatex:F
+  {
+    \iow_new:N \l__csl_ccf_iow
+    \iow_open:Nn \l__csl_ccf_iow { \c_sys_jobname_str .ccf }
+    \iow_close:N \l__csl_ccf_iow
+  }
 
 
 % Load other modules
