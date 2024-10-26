@@ -171,6 +171,13 @@
   {
     \iow_new:N \l__csl_ccf_iow
     \iow_open:Nn \l__csl_ccf_iow { \c_sys_jobname_str .ccf }
+    \iow_now:Ne \l__csl_ccf_iow
+      {
+        \c_percent_str \c_space_tl This~ file~ is~ generated~ by~
+        citation-style-language~ package.\iow_newline:
+        \c_percent_str \c_space_tl Its~ main~ purpose~ is~ to~ be~ recognized~
+        by~ latexmk.
+      }
     \iow_close:N \l__csl_ccf_iow
   }
 
