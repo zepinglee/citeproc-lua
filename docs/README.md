@@ -3,7 +3,7 @@
 - Homepage: https://github.com/zepinglee/citeproc-lua
 - Author: Zeping Lee
 - Email: zepinglee AT gmail DOT com
-- License: MIT
+- License: MIT, CC BY-SA 3.0
 
 The [Citation Style Language](https://citationstyles.org/) (CSL) is an
 XML-based language that defines the formats of citations and bibliography.
