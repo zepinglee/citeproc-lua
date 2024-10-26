@@ -162,9 +162,19 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 15: \citeyearpar 
+TEST 15: \citeyear 
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1@15},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={suppress-author}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@15},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={cite-year}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=D’Arcus.
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 16: \citeyearpar 
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@16},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={suppress-author}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=D’Arcus..
@@ -172,9 +182,9 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 16: Full cite
+TEST 17: Full cite
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1@16},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={full-cite}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@17},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={full-cite}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=Bruce D’Arcus, \textit {Boundaries of Dissent: Protest and State Power in the Media Age} (Routledge, 2005)..
@@ -182,7 +192,7 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 17: Uncited entry
+TEST 18: Uncited entry
 ============================================================
 > \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
 <recently read> }
@@ -193,7 +203,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 18: Citation format
+TEST 19: Citation format
 ============================================================
 Completed box being shipped out [1]
 \vbox(633.0+0.0)x407.0
@@ -205,7 +215,7 @@ Completed box being shipped out [1]
 ....\hbox(0.0+0.0)x345.0
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 186.84996fil
+..\vbox(550.0+0.0)x345.0, glue set 174.85124fil
 ...\write-{}
 ...\glue(\topskip) 1.85997
 ...\hbox(8.14003+0.0)x345.0, glue set 337.18054fil
@@ -552,6 +562,22 @@ Completed box being shipped out [1]
 ...\glue(\parskip) 0.0 plus 1.0
 ...\glue(\parskip) 0.0
 ...\glue(\baselineskip) 2.55556
+...\hbox(6.94444+0.0)x345.0, glue set 305.88884fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 D
+....\OT1/cmr/m/n/10 '
+....\OT1/cmr/m/n/10 A
+....\OT1/cmr/m/n/10 r
+....\OT1/cmr/m/n/10 c
+....\OT1/cmr/m/n/10 u
+....\OT1/cmr/m/n/10 s
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 5.05556
 ...\hbox(6.94444+0.0)x345.0, glue set 301.99994fil
 ....\hbox(0.0+0.0)x0.0
 ....\OT1/cmr/m/n/10 D
@@ -1517,7 +1543,7 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x345.0
 ============================================================
 ============================================================
-TEST 19: Bibliography contents
+TEST 20: Bibliography contents
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 1, entry-spacing = 0}}
@@ -1529,7 +1555,7 @@ The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 l. ...}
 ============================================================
 ============================================================
-TEST 20: Bibliography format
+TEST 21: Bibliography format
 ============================================================
 Completed box being shipped out [2]
 \vbox(633.0+0.0)x407.0

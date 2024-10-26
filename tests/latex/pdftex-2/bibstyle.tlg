@@ -157,9 +157,19 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 15: \citeyearpar 
+TEST 15: \citeyear 
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1@13},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={suppress-author}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@13},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={cite-year}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=2005.
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 16: \citeyearpar 
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@14},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={suppress-author}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=(2005).
@@ -167,9 +177,9 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 16: Full cite
+TEST 17: Full cite
 ============================================================
-> \l__csl_citation_info_tl=citationID={ITEM-1@14},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={full-cite}}.
+> \l__csl_citation_info_tl=citationID={ITEM-1@15},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={full-cite}}.
 <recently read> }
 l. ...}
 > \l__csl_citation_tl=D’Arcus, B. (2005). \textit {Boundaries of dissent: Protest and state power in the media age}. Routledge..
@@ -177,7 +187,7 @@ l. ...}
 l. ...}
 ============================================================
 ============================================================
-TEST 17: Uncited entry
+TEST 18: Uncited entry
 ============================================================
 > \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
 <recently read> }
@@ -188,7 +198,7 @@ l. ...}
 ============================================================
 )
 ============================================================
-TEST 18: Bibliography
+TEST 19: Bibliography
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 2, entry-spacing = 0}}

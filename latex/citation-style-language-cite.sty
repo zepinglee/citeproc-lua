@@ -52,7 +52,8 @@
 \NewDocumentCommand \citeauthor { o o m }
   { \__csl_cite_in_text:nnnn {#1} {#2} {#3} { author-only } }
 
-% TODO: \citeyear
+\NewDocumentCommand \citeyear{ o o m }
+  { \__csl_cite_in_text:nnnn {#1} {#2} {#3} { cite-year } }
 
 % Suppresses the author (from `natbib`).
 \NewDocumentCommand \citeyearpar { o o m }

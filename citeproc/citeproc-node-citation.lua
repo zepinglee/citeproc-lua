@@ -337,9 +337,10 @@ function Citation:build_cluster(citation_items, engine, properties)
     end
   end
 
-  local author_only_mode = (properties.mode == "author-only" or
-    (#citation_items >= 1 and citation_items[1]["author-only"]))
-  if has_printed_form and context.area.layout.affixes and not author_only_mode then
+  local suppress_layout_affixes = (properties.mode == "author-only"
+    or (#citation_items >= 1 and citation_items[1]["author-only"])
+    or properties.mode == "cite-year")
+  if has_printed_form and context.area.layout.affixes and not suppress_layout_affixes then
     if irs[1].layout_prefix then
       table.insert(citation_stream, 1, PlainText:new(irs[1].layout_prefix))
     end
@@ -1236,6 +1237,20 @@ function Citation:_apply_special_citation_form(irs, properties, output_format, e
       if engine.style.class ~= "note" then
         for _, ir in ipairs(irs) do
           self:_apply_suppress_author(ir)
+        end
+      end
+
+    elseif properties.mode == "cite-year" then
+      if engine.style.class ~= "note" then
+        for i, ir in ipairs(irs) do
+          self:_apply_suppress_author(ir)
+          local cite_str = output_format:output(ir:flatten(output_format), nil)
+          if ir.reference and ir.reference.issued and ir.reference.issued["date-parts"] then
+            local year = tostring(ir.reference.issued["date-parts"][1][1])
+            if not string.match(cite_str, year) then
+              irs[i] = Rendered:new({PlainText:new(year)}, self)
+            end
+          end
         end
       end
 
