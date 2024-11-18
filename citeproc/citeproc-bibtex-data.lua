@@ -4210,6 +4210,15 @@ return {
       csl = nil,
       source = "adrbirthday.bst",
     },
+    nojournalcomma = {
+      csl = nil,
+      source = "tugboat.bst",
+    },
+    texdoc = {
+      csl = nil,
+      source = "my_biblatex_data_model.dbx",
+      type = "literal",
+    },
   },
   macros = {
     acmcs = {

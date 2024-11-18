@@ -1853,6 +1853,10 @@
             "csl": null,
             "source": "jox.bst"
         },
+        "nojournalcomma": {
+            "csl": null,
+            "source": "tugboat.bst"
+        },
         "nolink": {
             "csl": null,
             "source": "quantum.bst"
@@ -2928,6 +2932,11 @@
         "systemreq": {
             "csl": null,
             "source": "biblatex-gost.dbx",
+            "type": "literal"
+        },
+        "texdoc": {
+            "csl": null,
+            "source": "my_biblatex_data_model.dbx",
             "type": "literal"
         },
         "text": {
