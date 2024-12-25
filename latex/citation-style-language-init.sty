@@ -41,7 +41,7 @@
     \clist_if_empty:NTF \l__csl_bib_resources_clist
       { \msg_warning:nn { citation-style-language } { empty-bib-resources } }
       {
-        \exp_args:Nx \__csl_write_aux_bibdata:n
+        \exp_args:Ne \__csl_write_aux_bibdata:n
           { \clist_use:Nn \l__csl_bib_resources_clist { , } }
       }
     \__csl_write_aux_csl_options:
@@ -50,7 +50,7 @@
 \cs_new:Npn \__csl_write_aux_bibstyle:n #1
   {
     \if@filesw
-      \iow_now:Nx \@auxout
+      \iow_now:Ne \@auxout
         {
           \token_to_str:N \csl@aux@style
             { \int_use:N \g__csl_ref_section_index_int } {#1}
@@ -62,7 +62,7 @@
   {
     \if@filesw
       % Full expansion for files like \jobname.bib
-      \iow_now:Nx \@auxout
+      \iow_now:Ne \@auxout
         {
           \token_to_str:N \csl@aux@data
             { \int_use:N \g__csl_ref_section_index_int } {#1}
@@ -87,7 +87,7 @@
       {
         \lua_now:n { csl_citation_manager.regression_test = true }
       }
-    \tl_set:Nx \l_tmpa_tl { \clist_use:Nn \l__csl_bib_resources_clist { , } }
+    \tl_set:Ne \l_tmpa_tl { \clist_use:Nn \l__csl_bib_resources_clist { , } }
     \lua_now:e
       {
         csl_citation_manager:init(
@@ -129,7 +129,7 @@
   \bool_set_false:N \l__csl_note_bool
   \bool_if:NT \l__csl_engine_initialized_bool
     {
-      \tl_set:Nx \l__csl_class_tl { \lua_now:n { tex.print(csl_citation_manager:get_style_class()) } }
+      \tl_set:Ne \l__csl_class_tl { \lua_now:n { tex.print(csl_citation_manager:get_style_class()) } }
       \tl_if_eq:NnT \l__csl_class_tl { note }
         { \bool_set_true:N \l__csl_note_bool }
     }
@@ -275,7 +275,7 @@
       }
     \tl_if_empty:NF \l__csl_locale_tl
       {
-        \clist_put_right:Nx \l__csl_options_clist
+        \clist_put_right:Ne \l__csl_options_clist
           { locale = \l__csl_locale_tl }
       }
     % linking
@@ -285,7 +285,7 @@
     % write to aux file
     \prop_if_empty:NF \l__csl_options_clist
       {
-        \exp_args:Nx \__csl_write_aux_options:n
+        \exp_args:Ne \__csl_write_aux_options:n
           { \clist_use:Nn \l__csl_options_clist { , } }
       }
   }
@@ -293,7 +293,7 @@
 \cs_new:Npn \__csl_write_aux_options:n #1
   {
     \if@filesw
-      \iow_now:Nx \@auxout
+      \iow_now:Ne \@auxout
         {
           \token_to_str:N \csl@aux@options
           { \int_use:N \g__csl_ref_section_index_int } {#1}
@@ -393,7 +393,7 @@
   {
     \tl_if_blank:VF \l__csl_style_tl
       {
-        \exp_args:NNx \ior_open:Nn \l__csl_style_ior { \l__csl_style_tl .csl }
+        \exp_args:NNe \ior_open:Nn \l__csl_style_ior { \l__csl_style_tl .csl }
         \ior_map_inline:Nn \l__csl_style_ior
           {
             % \tl_show:n {##1}

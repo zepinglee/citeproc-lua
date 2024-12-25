@@ -365,7 +365,7 @@
   {
     \int_if_exist:NT \c@chapter
       {
-        \prop_put:Nnx \l__csl_citation_properties_prop { chapterIndex }
+        \prop_put:Nne \l__csl_citation_properties_prop { chapterIndex }
           { \int_use:N \c@chapter }
       }
   }
@@ -389,11 +389,11 @@
     % \@currentHref: the current anchor name
     \tl_if_empty:NTF \@currentlabel
       {
-        \tl_set:Nx \l__csl_back_ref_tl
+        \tl_set:Ne \l__csl_back_ref_tl
           { { \thepage } { (document) } { Doc-Start } }
       }
       {
-        \tl_set:Nx \l__csl_back_ref_tl
+        \tl_set:Ne \l__csl_back_ref_tl
           { { \thepage } { \@currentlabel } { \@currentHref } }
       }
     \seq_map_inline:Nn \l__csl_cite_keys_seq
@@ -454,7 +454,7 @@
             \group_end:
           }
           {
-            \exp_args:Nx \__csl_print_undefined_citation:n
+            \exp_args:Ne \__csl_print_undefined_citation:n
               { \seq_use:Nn \l__csl_cite_keys_seq { ,~ } }
           }
       }
@@ -498,7 +498,7 @@
 % Set \l__csl_citation_id_tl = "ITEM-1,ITEM-2@4".
 \cs_new:Npn \__csl_process_citation_id:
   {
-    \tl_set:Nx \l__csl_cite_keys_tl
+    \tl_set:Ne \l__csl_cite_keys_tl
       { \seq_use:Nn \l__csl_cite_keys_seq { , } }
     % \prop_show:N \g__csl_citations_count_prop
     % \tl_show:N \l__csl_cite_keys_tl
@@ -511,7 +511,7 @@
       { \int_set_eq:NN \l__csl_citation_count_int \c_one_int }
     \prop_gput:NVV \g__csl_citations_count_prop \l__csl_cite_keys_tl
       \l__csl_citation_count_int
-    \tl_set:Nx \l__csl_citation_id_tl
+    \tl_set:Ne \l__csl_citation_id_tl
       { \l__csl_cite_keys_tl @ \int_use:N \l__csl_citation_count_int }
   }
 
@@ -525,7 +525,7 @@
   % #1: \l__csl_note_index_tl
   {
     \bool_if:NTF \l__csl_note_bool
-      { \tl_set:Nx \l__csl_note_index_tl { \int_use:c { c@ \@mpfn } } }
+      { \tl_set:Ne \l__csl_note_index_tl { \int_use:c { c@ \@mpfn } } }
       {
         \tl_if_empty:NTF \l__csl_class_tl
           {
@@ -533,7 +533,7 @@
             \int_set_eq:Nc \l_tmpa_int { c@ \@mpfn }
             \int_gincr:N \g__csl_pseudo_note_index_int
             \int_add:Nn \l_tmpa_int { \g__csl_pseudo_note_index_int }
-            \tl_set:Nx \l__csl_note_index_tl { \int_use:N \l_tmpa_int }
+            \tl_set:Ne \l__csl_note_index_tl { \int_use:N \l_tmpa_int }
           }
           { \tl_set:Nn \l__csl_note_index_tl { 0 } }
       }
@@ -580,7 +580,7 @@
         \clist_map_inline:nn {#1} { \__csl_warn_citation_undefined:n {##1} }
         % Underscores in citation keys like `zankl_kunstliche_2019` may cause a missing $ error.
         % Thus We convert them to str.
-        \tl_set:Nx \l_tmpa_str { \tl_to_str:n {#1} }
+        \tl_set:Ne \l_tmpa_str { \tl_to_str:n {#1} }
         \exp_args:NV \__csl_set_undefined_cite:n \l_tmpa_str
       }
     \bool_if:NT \l__csl_regression_test_bool
@@ -614,13 +614,13 @@
   {
     \__csl_cite_init:
     \__csl_collect_citation_items:nnn { } { } {#1}
-    \tl_set:Nx \l__csl_cite_items_tl
+    \tl_set:Ne \l__csl_cite_items_tl
       { \seq_use:Nn \l__csl_citation_items_seq { , } }
     \prop_clear:N \l__csl_citation_properties_prop
     \prop_put:Nnn \l__csl_citation_properties_prop { noteIndex } { 0 }
     \__csl_make_chapter_property:
     \__csl_serialize_prop:NN \l__csl_citation_properties_prop \l__csl_citation_properties_tl
-    \tl_set:Nx \l__csl_citation_info_tl
+    \tl_set:Ne \l__csl_citation_info_tl
       {
         citationID    = { @nocite } ,
         citationItems = { \tl_use:N \l__csl_cite_items_tl } ,

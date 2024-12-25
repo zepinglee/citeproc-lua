@@ -17,12 +17,12 @@
 \NewDocumentCommand \printbibliography { O { } }
   {
     \int_gincr:N \g__csl_bib_list_index_int
-    \tl_gset:Nx \g__csl_bib_list_index_tl { \int_use:N \g__csl_bib_list_index_int }
+    \tl_gset:Ne \g__csl_bib_list_index_tl { \int_use:N \g__csl_bib_list_index_int }
     \__csl_set_categories:
     % Bibliography filter
     \group_begin:
       \seq_clear:N \l__csl_bib_filter_seq
-      \seq_put_right:Nx \l__csl_bib_filter_seq
+      \seq_put_right:Ne \l__csl_bib_filter_seq
         { index = \g__csl_bib_list_index_tl }
       \keys_set:nn { csl / bibliography } {#1}
       \__csl_serialize_seq:NN \l__csl_bib_filter_seq \l__csl_bib_filter_tl
@@ -108,7 +108,7 @@
 \cs_new:Npn \__csl_write_aux_bibliography:n #1
   {
     \if@filesw
-      \iow_now:Nx \@auxout
+      \iow_now:Ne \@auxout
         {
           \token_to_str:N \csl@aux@bibliography
           { \int_use:N \g__csl_ref_section_index_int }
@@ -400,13 +400,13 @@
     \clist_if_empty:NF \l__csl_bib_resources_clist
       % { \clist_set_eq:NN \l__csl_bib_resources_clist \g__csl_global_bib_resources_clist }
       {
-        \exp_args:Nx \__csl_write_aux_bibdata:n
+        \exp_args:Ne \__csl_write_aux_bibdata:n
           { \clist_use:Nn \l__csl_bib_resources_clist { , } }
       }
     \tl_if_empty:NTF \l__csl_locale_tl
       { \tl_set_eq:NN \l__csl_locale_tl \g__csl_global_locale_tl }
       {
-        \exp_args:Nx \__csl_write_aux_options:n
+        \exp_args:Ne \__csl_write_aux_options:n
           { locale = \l__csl_locale_tl }
       }
     \sys_if_engine_luatex:TF
@@ -694,7 +694,7 @@
         \sys_if_engine_luatex:T
           { \lua_now:e { csl_citation_manager:set_categories("\l_tmpa_tl") } }
           {
-            \tl_put_left:Nx \l_tmpa_tl { categories = \c_left_brace_str }
+            \tl_put_left:Ne \l_tmpa_tl { categories = \c_left_brace_str }
             \tl_put_right:NV \l_tmpa_tl \c_right_brace_str
             \exp_args:NV \__csl_write_aux_options:n \l_tmpa_tl
           }
