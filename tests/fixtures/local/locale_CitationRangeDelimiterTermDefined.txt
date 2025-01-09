@@ -1,0 +1,62 @@
+>>===== MODE =====>>
+citation
+<<===== MODE =====<<
+
+
+>>===== DESCRIPTION =====>>
+The citeproc-js engine has a `citation-range-delimiter` extension.
+
+<https://github.com/Juris-M/citeproc-js/commit/35eb66bd133a6c5ab7d25a134065979babb45d56>
+<<===== DESCRIPTION =====<<
+
+
+>>===== RESULT =====>>
+1=3
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style
+      xmlns="http://purl.org/net/xbiblio/csl"
+      class="in-text"
+      version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2025-01-09T15:10:31+08:00</updated>
+  </info>
+  <locale>
+    <terms>
+      <term name="citation-range-delimiter">=</term>
+    </terms>
+  </locale>
+  <citation collapse="citation-number">
+    <layout>
+      <text variable="citation-number"/>
+    </layout>
+  </citation>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "id": "ITEM-1",
+        "type": "book"
+    },
+    {
+        "id": "ITEM-2",
+        "type": "book"
+    },
+    {
+        "id": "ITEM-3",
+        "type": "book"
+    }
+]
+<<===== INPUT =====<<
+
+
+>>===== VERSION =====>>
+1.0
+<<===== VERSION =====<<

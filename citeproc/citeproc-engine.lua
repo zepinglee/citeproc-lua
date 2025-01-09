@@ -1233,6 +1233,8 @@ function CiteProc:sort_bibliography()
   self.registry.requires_sorting = false
 end
 
+---@param lang string
+---@return Locale
 function CiteProc:get_locale(lang)
   lang = util.primary_dialects[lang] or lang
   local locale = self.locales[lang] or self:get_merged_locales(lang)

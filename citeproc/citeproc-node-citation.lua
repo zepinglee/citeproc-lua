@@ -211,7 +211,7 @@ function Citation:build_cluster(citation_items, engine, properties)
   end
 
   if self.collapse then
-    self:collapse_cites(irs)
+    self:collapse_cites(irs, engine)
   end
 
   -- Capitalize first
@@ -1386,9 +1386,9 @@ function Citation:group_cites(irs)
   return grouped
 end
 
-function Citation:collapse_cites(irs)
+function Citation:collapse_cites(irs, engine)
   if self.collapse == "citation-number" then
-    self:collapse_cites_by_citation_number(irs)
+    self:collapse_cites_by_citation_number(irs, engine)
   elseif self.collapse == "year" then
     self:collapse_cites_by_year(irs)
   elseif self.collapse == "year-suffix" then
@@ -1398,7 +1398,9 @@ function Citation:collapse_cites(irs)
   end
 end
 
-function Citation:collapse_cites_by_citation_number(irs)
+---@param irs CiteIr
+---@param engine CiteProc
+function Citation:collapse_cites_by_citation_number(irs, engine)
   local cite_groups = {}
   local current_group = {}
   local previous_citation_number
@@ -1423,9 +1425,15 @@ function Citation:collapse_cites_by_citation_number(irs)
   end
   table.insert(cite_groups, current_group)
 
+  local locale = engine:get_locale(engine.lang)
+  local citation_range_delimiter = locale:get_simple_term("citation-range-delimiter")
+  if not citation_range_delimiter then
+    citation_range_delimiter = util.unicode["en dash"]
+  end
+
   for _, cite_group in ipairs(cite_groups) do
     if #cite_group >= 3 then
-      cite_group[1].own_delimiter = util.unicode["en dash"]
+      cite_group[1].own_delimiter = citation_range_delimiter
       for i = 2, #cite_group - 1 do
         cite_group[i].collapse_suppressed = true
       end
