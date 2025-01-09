@@ -9,7 +9,8 @@ local locale = {}
 local element
 local util
 
-if kpse then
+local using_luatex, kpse = pcall(require, "kpse")
+if using_luatex then
   element = require("citeproc-element")
   util = require("citeproc-util")
 else

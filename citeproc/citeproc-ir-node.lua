@@ -8,7 +8,8 @@ local irnode = {}
 
 local util
 
-if kpse then
+local using_luatex, kpse = pcall(require, "kpse")
+if using_luatex then
   util = require("citeproc-util")
 else
   util = require("citeproc.util")

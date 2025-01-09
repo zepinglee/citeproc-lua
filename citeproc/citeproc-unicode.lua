@@ -11,7 +11,8 @@ local uni_algos_words
 local uni_algos_case
 local util
 
-if kpse then
+local using_luatex, kpse = pcall(require, "kpse")
+if using_luatex then
   -- Load `slnunicode` if in LuaTeX
   uni_utf8 = require("unicode").utf8
   if kpse.find_file("lua-uni-words", "lua") then

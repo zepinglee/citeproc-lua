@@ -10,7 +10,8 @@ local bibtex_parser
 local latex_data
 local markup
 local util
-if kpse then
+local using_luatex, kpse = pcall(require, "kpse")
+if using_luatex then
   latex_data = require("citeproc-latex-data")
   markup = require("citeproc-output")
   util = require("citeproc-util")

@@ -18,7 +18,8 @@ local group
 local choose
 local sort
 
-if kpse then
+local using_luatex, kpse = pcall(require, "kpse")
+if using_luatex then
   style  = require("citeproc-node-style")
   citation  = require("citeproc-node-citation")
   bibliography  = require("citeproc-node-bibliography")

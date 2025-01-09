@@ -11,7 +11,8 @@ local ir_node
 local output
 local util
 
-if kpse then
+local using_luatex, kpse = pcall(require, "kpse")
+if using_luatex then
   ir_node = require("citeproc-ir-node")
   output = require("citeproc-output")
   util = require("citeproc-util")

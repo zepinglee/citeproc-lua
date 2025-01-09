@@ -30,5 +30,14 @@
         "citeproc-test-skip.txt": "shellscript"
     },
     "latex-workshop.intellisense.update.aggressive.enabled": true,
+    "Lua.diagnostics.disableScheme": [
+        "citeproc-journal-data"
+    ],
+    "Lua.format.defaultConfig": {
+        "indent_size": "2",
+        "indent_style": "space",
+        "space_around_table_field_list": "false",
+        "space_before_closure_open_parenthesis": "true"
+    },
     "Lua.runtime.version": "Lua 5.3"
 }

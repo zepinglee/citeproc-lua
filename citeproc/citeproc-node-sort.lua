@@ -15,7 +15,8 @@ local output
 local util
 local node_date
 
-if kpse then
+local using_luatex, kpse = pcall(require, "kpse")
+if using_luatex then
   uca_languages = require("lua-uca-languages")
   uca_ducet = require("lua-uca-ducet")
   uca_collator = require("lua-uca-collator")

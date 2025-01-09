@@ -16,7 +16,8 @@ local bibtex_parser = {}
 local unicode
 local bibtex_data
 local util
-if kpse then
+local using_luatex, kpse = pcall(require, "kpse")
+if using_luatex then
   unicode = require("citeproc-unicode")
   bibtex_data = require("citeproc-bibtex-data")
   util = require("citeproc-util")
@@ -244,7 +245,7 @@ function BibtexParser:_make_entry(object, strings)
     value = concat_strings(value, strings)
 
     if self.options.convert_to_unicode then
-      if kpse then
+      if using_luatex then
         latex_parser = latex_parser or require("citeproc-latex-parser")
       else
         latex_parser = latex_parser or require("citeproc.latex-parser")

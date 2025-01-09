@@ -10,7 +10,8 @@ local element
 local ir_node
 local util
 
-if kpse then
+local using_luatex, kpse = pcall(require, "kpse")
+if using_luatex then
   element = require("citeproc-element")
   ir_node = require("citeproc-ir-node")
   util = require("citeproc-util")

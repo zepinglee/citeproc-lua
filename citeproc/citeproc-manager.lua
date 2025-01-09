@@ -6,6 +6,11 @@
 
 local citeproc_manager = {}
 
+local using_luatex, kpse = pcall(require, "kpse")
+if not using_luatex then
+  error("This module must be run under LuaTeX.")
+end
+
 require("lualibs")
 local json_encode = utilities.json.tojson
 local json_decode = utilities.json.tolua

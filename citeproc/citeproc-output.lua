@@ -13,7 +13,8 @@ local dom
 local ir_node
 local util
 
-if kpse then
+local using_luatex, kpse = pcall(require, "kpse")
+if using_luatex then
   uni_utf8 = require("unicode").utf8
   unicode = require("citeproc-unicode")
   dom = require("luaxml-domobject")

@@ -8,7 +8,8 @@ local citeproc = {}
 
 local engine
 local util
-if kpse then
+local using_luatex, kpse = pcall(require, "kpse")
+if using_luatex then
   engine = require("citeproc-engine")
   util = require("citeproc-util")
 else

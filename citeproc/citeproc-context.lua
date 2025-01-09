@@ -10,7 +10,8 @@ local unicode
 local LocalizedQuotes
 local util
 
-if kpse then
+local using_luatex, kpse = pcall(require, "kpse")
+if using_luatex then
   unicode = require("citeproc-unicode")
   LocalizedQuotes = require("citeproc-output").LocalizedQuotes
   util = require("citeproc-util")

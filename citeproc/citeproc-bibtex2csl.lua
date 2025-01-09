@@ -12,7 +12,8 @@ local bibtex_data
 local latex_parser
 local unicode
 local util
-if kpse then
+local using_luatex, kpse = pcall(require, "kpse")
+if using_luatex then
   uni_utf8 = require("unicode").utf8
   bibtex_parser = require("citeproc-bibtex-parser")
   bibtex_data = require("citeproc-bibtex-data")
@@ -223,7 +224,7 @@ function bibtex2csl.convert_field(bib_field, value, keep_unknown_commands, case_
     return nil, nil
   end
 
-  if kpse then
+  if using_luatex then
     latex_parser = latex_parser or require("citeproc-latex-parser")
   else
     latex_parser = latex_parser or require("citeproc.latex-parser")

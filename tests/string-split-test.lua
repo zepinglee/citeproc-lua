@@ -1,5 +1,6 @@
-local util 
-if kpse then
+local util
+local using_luatex, kpse = pcall(require, "kpse")
+if using_luatex then
   kpse.set_program_name("luatex")
   local kpse_searcher = package.searchers[2]
   ---@diagnostic disable-next-line: duplicate-set-field

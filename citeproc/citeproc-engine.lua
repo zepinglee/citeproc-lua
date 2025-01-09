@@ -15,7 +15,8 @@ local node_style
 local output
 local util
 
-if kpse then
+local using_luatex, kpse = pcall(require, "kpse")
+if using_luatex then
   dom = require("luaxml-domobject")
   context = require("citeproc-context")
   element = require("citeproc-element")

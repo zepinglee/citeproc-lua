@@ -13,7 +13,8 @@ local output
 local node_names
 local util
 
-if kpse then
+local using_luatex, kpse = pcall(require, "kpse")
+if using_luatex then
   dom = require("luaxml-domobject")
   element = require("citeproc-element")
   ir_node = require("citeproc-ir-node")

@@ -7,7 +7,8 @@
 local util = {}
 
 local uni_utf8
-if kpse then
+local using_luatex, kpse = pcall(require, "kpse")
+if using_luatex then
   uni_utf8 = require("unicode").grapheme
 else
   uni_utf8 = require("lua-utf8")
@@ -1298,7 +1299,7 @@ end
 function util.check_journal_abbreviations(item)
   if item["container-title"] and not item["container-title-short"] then
     if not journal_data then
-      if kpse then
+      if using_luatex then
         journal_data = require("citeproc-journal-data")
       else
         journal_data = require("citeproc.journal-data")
