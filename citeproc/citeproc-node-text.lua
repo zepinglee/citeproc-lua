@@ -1,5 +1,5 @@
 --
--- Copyright (c) 2021-2024 Zeping Lee
+-- Copyright (c) 2021-2025 Zeping Lee
 -- Released under the MIT license.
 -- Repository: https://github.com/zepinglee/citeproc-lua
 --

@@ -1,5 +1,5 @@
 --
--- Copyright (c) 2021-2024 Zeping Lee
+-- Copyright (c) 2021-2025 Zeping Lee
 -- Released under the MIT license.
 -- Repository: https://github.com/zepinglee/citeproc-lua
 --
@@ -17,7 +17,7 @@ else
   util = require("citeproc.util")
 end
 
-citeproc.__VERSION__ = "0.6.6"
+citeproc.__VERSION__ = "0.6.7"
 
 citeproc.new = engine.CiteProc.new
 citeproc.util = util

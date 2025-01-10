@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.7] - 2025-01-10
+
 ### Added
 
 - Add `citation-range-delimiter` term as an extension to CSL.
@@ -263,7 +265,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial CTAN release.
 
-[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.6...HEAD
+[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.7...HEAD
+[0.6.7]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.6...v0.6.7
 [0.6.6]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.5...v0.6.6
 [0.6.5]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.4...v0.6.5
 [0.6.4]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.3...v0.6.4

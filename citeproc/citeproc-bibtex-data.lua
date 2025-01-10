@@ -2668,6 +2668,10 @@ return {
       csl = nil,
       source = "jox.bst",
     },
+    nojournalcomma = {
+      csl = nil,
+      source = "tugboat.bst",
+    },
     nolink = {
       csl = nil,
       source = "quantum.bst",
@@ -3745,6 +3749,11 @@ return {
       source = "biblatex-gost.dbx",
       type = "literal",
     },
+    texdoc = {
+      csl = nil,
+      source = "my_biblatex_data_model.dbx",
+      type = "literal",
+    },
     text = {
       csl = nil,
       source = "apacite.bst",
@@ -4209,15 +4218,6 @@ return {
     zip = {
       csl = nil,
       source = "adrbirthday.bst",
-    },
-    nojournalcomma = {
-      csl = nil,
-      source = "tugboat.bst",
-    },
-    texdoc = {
-      csl = nil,
-      source = "my_biblatex_data_model.dbx",
-      type = "literal",
     },
   },
   macros = {

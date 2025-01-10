@@ -229,7 +229,6 @@
 		],
 		"collection-title": "newseries",
 		"container-title": "Publications of the English Goethe Society",
-		"container-title-short": "Publ. Engl. Goethe Soc.",
 		"issued": {
 			"date-parts": [
 				[
@@ -421,7 +420,6 @@
 		],
 		"collection-title": "3",
 		"container-title": "William and Mary Quarterly",
-		"container-title-short": "William Mary Quart.",
 		"issued": {
 			"date-parts": [
 				[
@@ -1436,7 +1434,7 @@
 			}
 		],
 		"container-title": "Electronics",
-		"container-title-short": "Electronics",
+		"container-title-short": "Electronics (Basel)",
 		"issue": "8",
 		"issued": {
 			"date-parts": [

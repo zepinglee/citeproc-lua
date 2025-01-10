@@ -10,7 +10,7 @@ done
 cd submodules/locales
 git fetch upstream
 git checkout ctan
-git merge upstream/v1.0.2
+git merge upstream/master
 git push
 cd ../..
 

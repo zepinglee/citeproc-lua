@@ -30,9 +30,6 @@
         "citeproc-test-skip.txt": "shellscript"
     },
     "latex-workshop.intellisense.update.aggressive.enabled": true,
-    "Lua.diagnostics.disableScheme": [
-        "citeproc-journal-data"
-    ],
     "Lua.format.defaultConfig": {
         "indent_size": "2",
         "indent_style": "space",
