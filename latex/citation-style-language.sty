@@ -100,7 +100,7 @@
     locale .code:n =
       {
         \tl_set:Nn \l__csl_locale_tl {#1}
-        \tl_gset:Nn \g__csl_global_locale {#1}
+        \tl_gset:Nn \g__csl_global_locale_tl {#1}
       } ,
     backref .choices:nn =
       { true, page, section, false }
@@ -123,13 +123,13 @@
 
 \cs_new:Npn \__csl_set_back_ref:n #1
   {
-    \str_if_eq:nnTF {#1} {false}
+    \str_if_eq:nnTF {#1} { false }
       {
         \bool_set_false:N \l__csl_back_ref_bool
       }
       {
         \bool_set_true:N \l__csl_back_ref_bool
-        \str_if_eq:nnTF {#1} {true}
+        \str_if_eq:nnTF {#1} { true }
           { \str_set:Nn \l__csl_back_ref_type_str { page } }
           { \str_set:Nn \l__csl_back_ref_type_str {#1} }
       }
@@ -174,7 +174,7 @@
     \iow_now:Ne \l__csl_ccf_iow
       {
         \c_percent_str \c_space_tl This~ file~ is~ generated~ by~
-        citation-style-language~ package.\iow_newline:
+        citation-style-language~ package. \iow_newline:
         \c_percent_str \c_space_tl Its~ main~ purpose~ is~ to~ be~ recognized~
         by~ latexmk.
       }
@@ -183,11 +183,11 @@
 
 
 % Load other modules
-\input{citation-style-language-init.sty}
-\input{citation-style-language-data.sty}
-\input{citation-style-language-cite.sty}
-\input{citation-style-language-bib.sty}
-\input{citation-style-language-compatible.sty}
+\input { citation-style-language-init.sty }
+\input { citation-style-language-data.sty }
+\input { citation-style-language-cite.sty }
+\input { citation-style-language-bib.sty }
+\input { citation-style-language-compatible.sty }
 
 
 \endinput

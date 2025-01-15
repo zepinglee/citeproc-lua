@@ -373,12 +373,11 @@
 
 \tl_new:N \l__csl_back_ref_tl
 \prop_new:N \g__csl_back_ref_info_prop
-\prop_new:N \l__csl_back_ref_section_pop
 
 % Provide empty \@currentHref when hyperref is not loaded.
 % LaTeX2e 2023-06-01 defines `\@currentHref` in the kernel.
 \cs_if_exist:NF \@currentHref
-  { \cs_new:Npn \@currentHref {} }
+  { \cs_new:Npn \@currentHref { } }
 
 % TODO: write backref info to .brf file or .aux file
 \cs_new:Npn \__csl_add_back_ref_info:
@@ -602,7 +601,7 @@
   {
     \G@refundefinedtrue
     % The warning message is read by latexmk.
-    \@latex@warning {Citation~ `#1'~ on~ page~ \thepage \space undefined}
+    \@latex@warning { Citation~ `#1'~ on~ page~ \thepage \space undefined }
   }
 
 
