@@ -138,8 +138,6 @@
 }
 
 
-\clist_new:N \l__csl_options_clist
-
 \bool_new:N \l__csl_engine_initialized_bool
 
 \prop_new:N \l__csl_language_code_map_prop
@@ -263,7 +261,7 @@
 
 \cs_new:Npn \__csl_write_aux_csl_options:
   {
-    \clist_clear:N \l__csl_options_clist
+    \clist_clear:N \l_tmpa_clist  % list of options to write to aux file
     % locale
     \tl_if_empty:NT \l__csl_locale_tl
       {
@@ -275,18 +273,18 @@
       }
     \tl_if_empty:NF \l__csl_locale_tl
       {
-        \clist_put_right:Ne \l__csl_options_clist
+        \clist_put_right:Ne \l_tmpa_clist
           { locale = \l__csl_locale_tl }
       }
     % linking
     \@ifpackageloaded { hyperref }
-      { \clist_put_right:Nn \l__csl_options_clist { linking = true } }
+      { \clist_put_right:Nn \l_tmpa_clist { linking = true } }
       { }
     % write to aux file
-    \prop_if_empty:NF \l__csl_options_clist
+    \prop_if_empty:NF \l_tmpa_clist
       {
         \exp_args:Ne \__csl_write_aux_options:n
-          { \clist_use:Nn \l__csl_options_clist { , } }
+          { \clist_use:Nn \l_tmpa_clist { , } }
       }
   }
 
