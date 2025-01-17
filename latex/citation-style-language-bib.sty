@@ -101,10 +101,6 @@
   }
 
 
-% Used for debugging and testing
-\clist_new:N \g__csl_bib_items_clist
-
-
 \cs_new:Npn \__csl_write_aux_bibliography:n #1
   {
     \if@filesw
@@ -183,7 +179,6 @@
       \__csl_set_bib_page_break:
       \frenchspacing
       \__csl_bib_url_setup:
-      \clist_gclear:N \g__csl_bib_items_clist
   }
   {
       \tl_set:Nn \@noitemerr
@@ -268,7 +263,6 @@
 
 \cs_new:Npn \__csl_lbibitem_plain:nn [#1]#2
   {
-    \clist_gput_right:Nn \g__csl_bib_items_clist {#2}
     \item [ \@biblabel {#1} \hfill ]
     \ignorespaces
   }
@@ -341,7 +335,6 @@
 
 \cs_new:Npn \__csl_bibitem_plain:n #1
   {
-    \clist_gput_right:Nn \g__csl_bib_items_clist {#1}
     \item
     \ignorespaces
   }

@@ -105,7 +105,6 @@
 
 \cs_new:Npn \__csl_hyperref_lbibitem:nn [#1]#2
   {
-    \clist_gput_right:Nn \g__csl_bib_items_clist {#2}
     \@skiphyperreftrue
     \H@item
       [
@@ -131,7 +130,6 @@
 
 \cs_new:Npn \__csl_hyperref_bibitem:n #1
   {
-    \clist_gput_right:Nn \g__csl_bib_items_clist {#1}
     \@skiphyperreftrue \H@item \@skiphyperreffalse
     \Hy@raisedlink
       {
