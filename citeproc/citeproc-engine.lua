@@ -468,8 +468,9 @@ function CiteProc:makeBibliography(bibsection)
   self.registry.maxoffset = 0
 
   local ids = self:_get_sorted_refs()
+  local excluded_ids
   if bibsection then
-    ids = self:_filter_with_bibsection(ids, bibsection)
+    ids, excluded_ids = self:_filter_with_bibsection(ids, bibsection)
   end
   for _, id in ipairs(ids) do
     local str = self.style.bibliography:build_bibliography_str(id, self)
@@ -494,7 +495,8 @@ function CiteProc:makeBibliography(bibsection)
     widest_label = self.registry.widest_label,
     bibstart = bib_start,
     bibend = bib_end,
-    entry_ids = util.clone(self.registry.reflist),
+    entry_ids = ids,
+    excluded_ids = excluded_ids,
   }
 
   return {params, res}
@@ -945,6 +947,10 @@ function CiteProc:_get_sorted_refs()
   return self.registry.reflist
 end
 
+---@param ids CiteId[]
+---@param bibsection any
+---@return CiteId[]
+---@return CiteId[]
 function CiteProc:_filter_with_bibsection(ids, bibsection)
   if bibsection.quash then
     return self:filter_quash(ids, bibsection)
@@ -955,7 +961,7 @@ function CiteProc:_filter_with_bibsection(ids, bibsection)
   elseif bibsection.exclude then
     return self:filter_exclude(ids, bibsection)
   else
-    return ids
+    return ids, {}
   end
 end
 
@@ -994,6 +1000,7 @@ end
 function CiteProc:filter_select(ids, bibsection)
   -- Include the item if, and only if, all of the objects match.
   local res = {}
+  local excluded_ids = {}
   for _, id in ipairs(ids) do
     local item = self.registry.registry[id]
     local match = true
@@ -1005,14 +1012,17 @@ function CiteProc:filter_select(ids, bibsection)
     end
     if match then
       table.insert(res, id)
+    else
+      table.insert(excluded_ids, id)
     end
   end
-  return res
+  return res, excluded_ids
 end
 
 function CiteProc:filter_include(ids, bibsection)
   -- Include the item if any of the objects match.
   local res = {}
+  local excluded_ids = {}
   for _, id in ipairs(ids) do
     local item = self.registry.registry[id]
     local match = false
@@ -1024,14 +1034,17 @@ function CiteProc:filter_include(ids, bibsection)
     end
     if match then
       table.insert(res, id)
+    else
+      table.insert(excluded_ids, id)
     end
   end
-  return res
+  return res, excluded_ids
 end
 
 function CiteProc:filter_exclude(ids, bibsection)
   -- Include the item if none of the objects match.
   local res = {}
+  local excluded_ids = {}
   for _, id in ipairs(ids) do
     local item = self.registry.registry[id]
     local match = false
@@ -1043,14 +1056,17 @@ function CiteProc:filter_exclude(ids, bibsection)
     end
     if not match then
       table.insert(res, id)
+    else
+      table.insert(excluded_ids, id)
     end
   end
-  return res
+  return res, excluded_ids
 end
 
 function CiteProc:filter_quash(ids, bibsection)
   -- Skip the item if all of the objects match.
   local res = {}
+  local excluded_ids = {}
   for _, id in ipairs(ids) do
     local item = self.registry.registry[id]
     local match = true
@@ -1062,9 +1078,11 @@ function CiteProc:filter_quash(ids, bibsection)
     end
     if not match then
       table.insert(res, id)
+    else
+      table.insert(excluded_ids, id)
     end
   end
-  return res
+  return res, excluded_ids
 end
 
 function CiteProc:set_output_format(format)

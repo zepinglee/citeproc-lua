@@ -18,6 +18,7 @@
         \__csl_load_bbl:
         \__csl_get_style_class:
       }
+    \__csl_read_entry_ids:
     \__csl_set_ref_section_level:
   }
 
@@ -299,7 +300,13 @@
     \fi
   }
 
-\cs_new:Npn \csl@aux@options #1#2 { }
+\tl_new:N \l__csl_ref_section_index_tl
+
+\cs_new:Npn \csl@aux@options #1#2
+  {
+    \tl_set:Nn \l__csl_ref_section_index_tl {#1}
+    \keys_set:nn { csl / options } {#2}
+  }
 
 
 % Load .bbl at the beginning of document to save one pass of latex.
@@ -347,14 +354,24 @@
 % #1: refsection index
 % #2: refsection options
 \NewDocumentCommand \csloptions { m m }
-  { \keys_set:nn { csl / options } { #2 } }
+  {
+    \tl_set:Nn \l__csl_ref_section_index_tl {#1}
+    \keys_set:nn { csl / options } {#2}
+  }
 
 % The class option is in the `<style>=<class>` form
 % (e.g. `\csloptions{class={apa=in-text}}`).
 \keys_define:nn { csl / options }
   {
     class .code:n = { \prop_gput_from_keyval:Nn \g__csl_style_class_prop {#1} },
+    entry-ids .code:n = { \__csl_process_entry_ids:n {#1} } ,
+    excluded-ids .code:n = { \__csl_process_excluded_ids:n {#1} } ,
+    unknown .code:n = { } ,
   }
+
+\cs_new:Npn \__csl_process_entry_ids:n #1 { }
+
+\cs_new:Npn \__csl_process_excluded_ids:n #1 { }
 
 \prop_new:N \g__csl_style_class_prop
 
@@ -421,6 +438,9 @@
 
 % \msg_new:nnn { citation-style-language } { file-non-exist }
 %   { No~ file~ #1. }
+
+% This is a hook for `hyperref`.
+\cs_new:Npn \__csl_read_entry_ids: {}
 
 \cs_new:Npn \__csl_set_ref_section_level:
   {

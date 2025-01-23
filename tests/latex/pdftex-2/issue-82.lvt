@@ -1,0 +1,95 @@
+% <https://github.com/zepinglee/citeproc-lua/discussions/82>
+
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\begin{filecontents}[overwrite, noheader]{\jobname.json}
+[
+    {
+        "id": "DukeCollabor2024-p.mich",
+        "type": "webpage",
+        "title": "p.mich.3.217",
+        "collection-title": "Papyri.info",
+        "publisher": "Duke Collaboratory for Classics Computing",
+        "URL": "https://papyri.info/ddbdp/p.mich;3;217",
+        "keyword": "noBibEntry",
+        "accessed": {
+            "date-parts": [
+                [
+                    "2024",
+                    "09",
+                    "24"
+                ]
+            ]
+        }
+    },
+    {
+        "id": "Kridalaksana2013-KamusL",
+        "type": "dictionary",
+        "author": [
+            {
+                "family": "Kridalaksana",
+                "given": "Harimurti"
+            }
+        ],
+        "title": "Kamus Linguistik",
+        "edition": "4",
+        "publisher-place": "Jakarta",
+        "publisher": "Gramedia",
+        "original-date": "2009",
+        "issued": {
+            "date-parts": [
+                [
+                    "2013"
+                ]
+            ]
+        }
+    }
+]
+\end{filecontents}
+
+\usepackage[style=chicago-fullnote-bibliography, ref-section=section]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{\jobname.json}
+
+\usepackage{hyperref}
+
+
+\begin{document}
+\START
+\showoutput
+
+\section{Foo}
+
+\TEST{Test link to bibliography}{
+  \noindent
+  test link to bibliography\cite{Kridalaksana2013-KamusL}
+  \\
+  test no link to bibliography\cite{DukeCollabor2024-p.mich}
+  \clearpage
+}
+
+\TEST{Test bibliography}{
+  \printbibliography[notkeyword=noBibEntry, heading=subbibliography]
+}
+\clearpage
+
+
+\section{Bar}
+
+\TEST{Test link to bibliography}{
+  \noindent
+  test no link to bibliography\cite{Kridalaksana2013-KamusL}
+  \\
+  test link to bibliography\cite{DukeCollabor2024-p.mich}
+  \clearpage
+}
+
+\TEST{Test bibliography}{
+  \printbibliography[keyword=noBibEntry, heading=subbibliography]
+}
+\clearpage
+
+\OMIT
+\end{document}

@@ -97,10 +97,49 @@
 
 % ### `hyperref`
 
-\cs_set:Npn \__csl_hyperref_cite_item:nn #1#2
+% The hyperref package also patches \bibcite but it cannot provide hyperlinks
+% when used with csl.
+\bool_new:N \l__csl_hyperref_loaded_bool
+\hook_gput_code:nnn { package / hyperref / after } { . }
   {
-    \hyper@@link [ cite ] { }
-      { cite \int_use:N \g__csl_ref_section_index_int . #1 \@extra@b@citeb } { #2 }
+    \bool_set_true:N \l__csl_hyperref_loaded_bool
+    % Pakcage "hyperref" redefines \@lbibitem and \bibitem and we need to
+    % recover them.
+    % In non-implicit mode (e.g., loaded by `beamer`), hyperref stops early
+    % (`\MaybeStopEarly`) and it doesn't redefine the cite internal commands.
+    \cs_if_exist:NT \@extra@b@citeb
+      {
+        \cs_gset_eq:NN \cslcite \__csl_hyperref_cite_item:nn
+        \cs_gset_eq:NN \@lbibitem \__csl_lbibitem:
+        \cs_gset_eq:NN \@bibitem \__csl_bibitem:
+        \cs_gset_eq:NN \__csl_lbibitem_plain:nn \__csl_hyperref_lbibitem:nn
+        \cs_gset_eq:NN \__csl_bibitem_plain:n \__csl_hyperref_bibitem:n
+        \cs_gset_eq:NN \__csl_process_entry_ids:n \__csl_hyperref_process_entry_ids:n
+        \cs_gset_eq:NN \__csl_process_excluded_ids:n \__csl_hyperref_process_excluded_ids:n
+        \cs_gset_eq:NN \__csl_read_entry_ids: \__csl_hyperref_read_entry_ids:
+      }
+  }
+
+\clist_new:N \l__csl_ref_section_entry_ids_clist
+\clist_new:N \l__csl_ref_section_excluded_ids_clist
+
+\cs_new:Npn \__csl_hyperref_cite_item:nn #1#2
+  {
+    % \clist_show:N \l__csl_ref_section_excluded_ids_clist
+    % \clist_show:N \l__csl_ref_section_entry_ids_clist
+    \clist_if_in:NnTF \l__csl_ref_section_excluded_ids_clist {#1}
+      {
+        \clist_if_in:NnTF \l__csl_ref_section_entry_ids_clist {#1}
+          {
+            \hyper@@link [ cite ] { }
+              { cite \int_use:N \g__csl_ref_section_index_int . #1 \@extra@b@citeb } {#2}
+          }
+          {#2}
+      }
+      {
+        \hyper@@link [ cite ] { }
+          { cite \int_use:N \g__csl_ref_section_index_int . #1 \@extra@b@citeb } {#2}
+      }
   }
 
 \cs_new:Npn \__csl_hyperref_lbibitem:nn [#1]#2
@@ -141,24 +180,75 @@
     \ignorespaces
   }
 
-% The hyperref package also patches \bibcite but it cannot provide hyperlinks
-% when used with csl.
-\bool_new:N \l__csl_hyperref_loaded_bool
-\hook_gput_code:nnn { package / hyperref / after } { . }
+\prop_new:N \g__csl_entry_ids_prop
+\prop_new:N \g__csl_excluded_ids_prop
+
+\cs_new:Npn \__csl_hyperref_process_entry_ids:n #1
   {
-    \bool_set_true:N \l__csl_hyperref_loaded_bool
-    % Pakcage "hyperref" redefines \@lbibitem and \bibitem and we need to
-    % recover them.
-    % In non-implicit mode (e.g., loaded by `beamer`), hyperref stops early
-    % (`\MaybeStopEarly`) and it doesn't redefine the cite internal commands.
-    \cs_if_exist:NT \@extra@b@citeb
+    \sys_if_engine_luatex:TF
       {
-        \cs_gset_eq:NN \@lbibitem \__csl_lbibitem:
-        \cs_gset_eq:NN \@bibitem \__csl_bibitem:
-        \cs_gset_eq:NN \__csl_lbibitem_plain:nn \__csl_hyperref_lbibitem:nn
-        \cs_gset_eq:NN \__csl_bibitem_plain:n \__csl_hyperref_bibitem:n
-        \cs_gset_eq:NN \cslcite \__csl_hyperref_cite_item:nn
+        \__csl_if_preamble:TF
+          {
+            % From `\csl@aux@options` commands in the `.aux` file
+            \exp_args:NNV \__csl_append_entry_ids:Nnn \g__csl_entry_ids_prop
+              \l__csl_ref_section_index_tl {#1}
+          }
+          {
+            % From `\csloptions` commands via `\printbibliography`
+            \__csl_write_aux_options:n { entry-ids = {#1} }
+          }
       }
+      {
+        % Read by `\csloptions` commands from the `.bbl` file
+        \exp_args:NNV \__csl_append_entry_ids:Nnn \g__csl_entry_ids_prop
+          \l__csl_ref_section_index_tl {#1}
+      }
+  }
+
+\cs_new:Npn \__csl_hyperref_process_excluded_ids:n #1
+  {
+    \sys_if_engine_luatex:TF
+      {
+        \__csl_if_preamble:TF
+          {
+            % From `\csl@aux@options` commands in the `.aux` file
+            \exp_args:NNV \__csl_append_entry_ids:Nnn \g__csl_excluded_ids_prop
+              \l__csl_ref_section_index_tl {#1}
+          }
+          {
+            % From `\csloptions` commands via `\printbibliography`
+            \__csl_write_aux_options:n { excluded-ids = {#1} }
+          }
+      }
+      {
+        % Read by `\csloptions` commands from the `.bbl` file
+        \exp_args:NNV \__csl_append_entry_ids:Nnn \g__csl_excluded_ids_prop
+          \l__csl_ref_section_index_tl {#1}
+      }
+  }
+
+\cs_new:Npn \__csl_append_entry_ids:Nnn #1#2#3
+  {
+    \clist_clear:N \l_tmpa_clist
+    \prop_get:NnNT #1 {#2} \l_tmpa_tl
+      { \clist_set:NV \l_tmpa_clist \l_tmpa_tl }
+    \clist_map_inline:nn {#3}
+      {
+        \clist_if_in:NnF \l_tmpa_clist {##1}
+          { \clist_put_right:Nn \l_tmpa_clist {##1} }
+      }
+    \prop_gput:Nne #1 {#2}
+      { \clist_use:Nn \l_tmpa_clist { , } }
+  }
+
+\cs_new:Npn \__csl_hyperref_read_entry_ids:
+  {
+    \prop_get:NeNT \g__csl_entry_ids_prop
+      { \int_use:N \g__csl_ref_section_index_int } \l_tmpa_tl
+      { \clist_set:NV \l__csl_ref_section_entry_ids_clist \l_tmpa_tl }
+    \prop_get:NeNT \g__csl_excluded_ids_prop
+      { \int_use:N \g__csl_ref_section_index_int } \l_tmpa_tl
+      { \clist_set:NV \l__csl_ref_section_excluded_ids_clist \l_tmpa_tl }
   }
 
 

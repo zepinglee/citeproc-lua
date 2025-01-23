@@ -429,6 +429,7 @@
       {
         \__csl_get_style_class:
       }
+    \__csl_read_entry_ids:
   }
 
 \cs_set_eq:NN \newrefsection \refsection
@@ -439,6 +440,7 @@
       \int_gzero:N \g__csl_ref_section_index_int
       \sys_if_engine_luatex:T
         { \lua_now:n { csl_citation_manager:end_ref_section() } }
+      \__csl_read_entry_ids:
     }
 }
 

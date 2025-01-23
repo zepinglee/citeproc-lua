@@ -782,6 +782,8 @@ function CslCitationManager:make_bibliography(filter_str)
     ["entry-spacing"] = "entryspacing",
     ["line-spacing"] = "linespacing",
     ["widest-label"] = "widest_label",
+    ["entry-ids"] = "entry_ids",
+    ["excluded-ids"] = "excluded_ids",
   }
   local bib_option_order = {
     "index",
@@ -790,7 +792,20 @@ function CslCitationManager:make_bibliography(filter_str)
     "line-spacing",
     "entry-spacing",
     "widest-label",
+    -- "entry-ids",
+    -- "excluded-ids",
   }
+
+  local bib_lines = {}
+
+  if #params.entry_ids > 0 then
+    local entry_ids_line = string.format("\\csloptions{%d}{entry-ids = {%s}}", self.ref_section.index, table.concat(params.entry_ids, ", "))
+    table.insert(bib_lines, entry_ids_line)
+  end
+  if #params.excluded_ids > 0 then
+    local excluded_ids_line = string.format("\\csloptions{%d}{excluded-ids = {%s}}", self.ref_section.index, table.concat(params.excluded_ids, ", "))
+    table.insert(bib_lines, excluded_ids_line)
+  end
 
   for option, param in pairs(bib_option_map) do
     if params[param] then
@@ -801,14 +816,20 @@ function CslCitationManager:make_bibliography(filter_str)
   local bib_option_list = {}
   for _, option in ipairs(bib_option_order) do
     local value = bib_options[option]
-    if value and value ~= "" then
-      table.insert(bib_option_list, string.format("%s = %s", option, tostring(value)))
+    if value then
+      if type(value) == "table" then
+        value = "{" .. table.concat(value, ", ") .. "}"
+      else
+        value = tostring(value)
+      end
+      if value ~= "" then
+        table.insert(bib_option_list, string.format("%s = %s", option, value))
+      end
     end
   end
   local bib_options_str = table.concat(bib_option_list, ", ")
 
   local bibstart = string.format("\\begin{thebibliography}{%s}\n", bib_options_str)
-  local bib_lines = {}
   table.insert(bib_lines, bibstart)
 
   for _, bib_item in ipairs(bib_items) do

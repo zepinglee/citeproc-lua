@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix links to excluded entries in bibliography ([#82](https://github.com/zepinglee/citeproc-lua/issues/82)).
+
 ## [0.6.7] - 2025-01-10
 
 ### Added
