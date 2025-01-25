@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.8] - 2025-01-25
+
 ### Fixed
 
 - Fix links to excluded entries in bibliography ([#82](https://github.com/zepinglee/citeproc-lua/issues/82)).
@@ -269,7 +271,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial CTAN release.
 
-[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.7...HEAD
+[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.8...HEAD
+[0.6.8]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.7...v0.6.8
 [0.6.7]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.6...v0.6.7
 [0.6.6]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.5...v0.6.6
 [0.6.5]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.4...v0.6.5
