@@ -17,6 +17,7 @@
 [submodule "submodules/luaxml"]
 	path = submodules/luaxml
 	url = https://github.com/zepinglee/LuaXML.git
+	branch = citeproc-lua
 [submodule "submodules/lua-uca"]
 	path = submodules/lua-uca
 	url = https://github.com/zepinglee/lua-uca.git
