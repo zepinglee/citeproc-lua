@@ -159,7 +159,7 @@
   }
 
 \tl_new:N \g__csl_aux_bibstyle_tl
-\cs_set:Npn \csl@aux@style #1#2
+\cs_new:Npn \csl@aux@style #1#2
   {
     \str_if_eq:nnT {#1} { 0 }
       { \tl_gset:Nn \g__csl_aux_bibstyle_tl {#2} }
