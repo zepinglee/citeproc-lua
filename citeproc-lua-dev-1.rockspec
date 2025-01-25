@@ -49,6 +49,7 @@ build = {
       ["citeproc.luaxml.domobject"] = "submodules/luaxml/luaxml-domobject.lua",
       ["citeproc.luaxml.entities"] = "submodules/luaxml/luaxml-entities.lua",
       ["citeproc.luaxml.mod-handler"] = "submodules/luaxml/luaxml-mod-handler.lua",
+      ["citeproc.luaxml.mod-html"] = "submodules/luaxml/luaxml-mod-html.lua",
       ["citeproc.luaxml.mod-xml"] = "submodules/luaxml/luaxml-mod-xml.lua",
       ["citeproc.luaxml.namedentities"] = "submodules/luaxml/luaxml-namedentities.lua",
       ["citeproc.luaxml.parse-query"] = "submodules/luaxml/luaxml-parse-query.lua",
