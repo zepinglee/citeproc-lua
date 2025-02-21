@@ -392,8 +392,7 @@
 				"given": "Royce W."
 			}
 		],
-		"container-title": "Langmuir : the ACS journal of surfaces and colloids",
-		"container-title-short": "Langmuir",
+		"container-title": "Langmuir",
 		"issue": "1",
 		"issued": {
 			"date-parts": [
@@ -612,7 +611,6 @@
 			}
 		],
 		"container-title": "Organometallics",
-		"container-title-short": "Organometallics",
 		"issue": "10",
 		"issued": {
 			"date-parts": [
@@ -1434,7 +1432,6 @@
 			}
 		],
 		"container-title": "Electronics",
-		"container-title-short": "Electronics (Basel)",
 		"issue": "8",
 		"issued": {
 			"date-parts": [

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Match journal title with multiple words when converting `.bib` to CSL-JSON ([#85](https://github.com/zepinglee/citeproc-lua/issues/85)).
+
 ## [0.6.8] - 2025-01-25
 
 ### Fixed

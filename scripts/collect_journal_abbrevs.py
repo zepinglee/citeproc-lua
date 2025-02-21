@@ -27,6 +27,9 @@ def accept(full, abbr):
     if full.startswith("ISSN:"):
         return False
 
+    if full.split() == 1:
+        return False
+
     if abbr.startswith("#") and abbr.endswith("#"):
         return False
 
@@ -40,6 +43,7 @@ def accept(full, abbr):
     #     return False
 
     return True
+
 
 def clean(str):
     str = str.strip()
@@ -55,10 +59,10 @@ def clean(str):
     # 15th International Conference On Pattern Recognition, Vol 1, Proceedings;Int C Patt Recog;;
     # str = re.sub(r'^\d+(st|nd|rd|th)\s+', '', str)
     # Acta Stereologica, Vol 10, No 1;Acta Stereol.;;
-    str = re.sub(r",?\s+no\.?\s+\d+$", "", str, flags=re.I)
+    str = re.sub(r",?\s+no\.?\s+\d+$", "", str, flags=re.IGNORECASE)
     # str = re.sub(r',?\s+proceedings$', '', str, flags=re.I)
-    str = re.sub(r",?\s+vol\.?\s+(\d+|[ivxl]+)$", "", str, flags=re.I)
-    str = re.sub(r",?\s+vols\.?\s+\d+(-|\s+and\s+)\d+$", "", str, flags=re.I)
+    str = re.sub(r",?\s+vol\.?\s+(\d+|[ivxl]+)$", "", str, flags=re.IGNORECASE)
+    str = re.sub(r",?\s+vols\.?\s+\d+(-|\s+and\s+)\d+$", "", str, flags=re.IGNORECASE)
     # Ieee International Conf On Consumer Electronics;Ieee Icce;;
     str = re.sub(r"\bIeee\b", "IEEE", str)
     # Acm Computing Surveys;Acm Comput. Surv.;;
@@ -72,22 +76,24 @@ def update_journal_abbrev_pair(abbrevs, unabbrevs, full, abbr, file):
         return
 
     full_key = full.upper()
-    if full_key not in abbrevs:
-        abbrevs[full_key] = {
-            "values": [],
-            "files": [],
-        }
-    abbrevs[full_key]["values"].append(abbr)
-    abbrevs[full_key]["files"].append(file)
+    if len(full_key.split()) > 1:
+        if full_key not in abbrevs:
+            abbrevs[full_key] = {
+                "values": [],
+                "files": [],
+            }
+        abbrevs[full_key]["values"].append(abbr)
+        abbrevs[full_key]["files"].append(file)
 
     abbr_key = abbr.upper().replace(".", "")
-    if abbr_key not in unabbrevs:
-        unabbrevs[abbr_key] = {
-            "values": [],
-            "files": [],
-        }
-    unabbrevs[abbr_key]["values"].append(full)
-    unabbrevs[abbr_key]["files"].append(file)
+    if len(abbr_key.split()) > 1:
+        if abbr_key not in unabbrevs:
+            unabbrevs[abbr_key] = {
+                "values": [],
+                "files": [],
+            }
+        unabbrevs[abbr_key]["values"].append(full)
+        unabbrevs[abbr_key]["files"].append(file)
 
 
 def update_from_retorquere_fixups(abbrevs, unabbrevs):
@@ -104,8 +110,9 @@ def update_from_csl_abbrevs(abbrevs, unabbrevs):
     csl_abbrev_dir = "submodules/abbreviations"
     paths = sorted(
         glob.glob(
-            os.path.join(csl_abbrev_dir, "**", "*-abbreviations.json"), recursive=True
-        )
+            os.path.join(csl_abbrev_dir, "**", "*-abbreviations.json"),
+            recursive=True,
+        ),
     )
     for path in paths:
         file = os.path.split(path)[1]
@@ -130,7 +137,11 @@ def update_from_jabref_abbrv(abbrevs, unabbrevs):
     jabref_abbrv_exclude = ["journal_abbreviations_webofscience-dotless.csv"]
 
     files = [file for file in os.listdir(jabref_abbrv_dir) if file.endswith(".csv")]
-    files = [file for file in files if file not in jabref_abbrv_exclude and file not in jabref_abbrv_low_priority]
+    files = [
+        file
+        for file in files
+        if file not in jabref_abbrv_exclude and file not in jabref_abbrv_low_priority
+    ]
     # files = sorted(files)
     files = list(files) + jabref_abbrv_low_priority
 
@@ -189,7 +200,11 @@ def main():
             conflict_file_counter.update(full_dict["files"])
         unabbrevs[abbr] = value_counter.most_common(1)[0][0]
 
-    for file, count in sorted(dict(conflict_file_counter).items(), key=lambda x: x[1], reverse=True):
+    for file, count in sorted(
+        dict(conflict_file_counter).items(),
+        key=lambda x: x[1],
+        reverse=True,
+    ):
         print(f"{file:56}{count}")
     conflicts = sorted(conflicts)
     print(f"Conflicts: {len(conflicts)}")
@@ -208,7 +223,6 @@ def main():
         f.write("\n\nunabbrevs = ")
         luadata.dump(unabbrevs, f)
         f.write("\n\nreturn {\n  abbrevs = abbrevs,\n  unabbrevs = unabbrevs,\n}\n")
-
 
 
 if __name__ == "__main__":
