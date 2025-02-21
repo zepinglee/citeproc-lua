@@ -16,7 +16,6 @@ end
 
 
 local inspect  -- only load it when debugging
-local journal_data = nil  -- load as needed
 
 
 -- Deep copy
@@ -1293,30 +1292,6 @@ function util.parse_extra_name(str)
     name = {literal = str}
   end
   return name
-end
-
-
-function util.check_journal_abbreviations(item)
-  if item["container-title"] and not item["container-title-short"] then
-    if not journal_data then
-      if using_luatex then
-        journal_data = require("citeproc-journal-data")
-      else
-        journal_data = require("citeproc.journal-data")
-      end
-    end
-    local key = uni_utf8.upper(string.gsub(item["container-title"], "%.", ""))
-    local full = journal_data.unabbrevs[key]
-    if full then
-      item["container-title-short"] = item["container-title"]
-      item["container-title"] = full
-    else
-      local abbr = journal_data.abbrevs[key]
-      if abbr then
-        item["container-title-short"] = abbr
-      end
-    end
-  end
 end
 
 

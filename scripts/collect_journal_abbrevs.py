@@ -75,7 +75,7 @@ def update_journal_abbrev_pair(abbrevs, unabbrevs, full, abbr, file):
     if not accept(full, abbr):
         return
 
-    full_key = full.upper()
+    full_key = full.casefold()
     if len(full_key.split()) > 1:
         if full_key not in abbrevs:
             abbrevs[full_key] = {
@@ -85,7 +85,7 @@ def update_journal_abbrev_pair(abbrevs, unabbrevs, full, abbr, file):
         abbrevs[full_key]["values"].append(abbr)
         abbrevs[full_key]["files"].append(file)
 
-    abbr_key = abbr.upper().replace(".", "")
+    abbr_key = abbr.casefold().replace(".", "")
     if len(abbr_key.split()) > 1:
         if abbr_key not in unabbrevs:
             unabbrevs[abbr_key] = {

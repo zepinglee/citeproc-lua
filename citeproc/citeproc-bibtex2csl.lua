@@ -9,6 +9,7 @@ local bibtex2csl = {}
 local uni_utf8
 local bibtex_parser
 local bibtex_data
+local journal_data
 local latex_parser
 local unicode
 local util
@@ -309,7 +310,7 @@ function bibtex2csl.post_process_special_fields(item, entry)
   -- Jounal abbreviations
   if item.type == "article-journal" or item.type == "article-magazine"
       or item.type == "article-newspaper" then
-    util.check_journal_abbreviations(item)
+    bibtex2csl.check_journal_abbreviations(item)
   end
 
   -- month
@@ -370,6 +371,30 @@ function bibtex2csl.post_process_special_fields(item, entry)
     item.PMID = bib_fields.eprint
   end
 
+end
+
+
+function bibtex2csl.check_journal_abbreviations(item)
+  if item["container-title"] and not item["container-title-short"] then
+    if not journal_data then
+      if using_luatex then
+        journal_data = require("citeproc-journal-data")
+      else
+        journal_data = require("citeproc.journal-data")
+      end
+    end
+    local key = unicode.casefold(string.gsub(item["container-title"], "%.", ""))
+    local abbr = journal_data.abbrevs[key]
+    if abbr then
+      item["container-title-short"] = abbr
+    else
+      local full = journal_data.unabbrevs[key]
+      if full then
+        item["container-title-short"] = item["container-title"]
+        item["container-title"] = full
+      end
+    end
+  end
 end
 
 
