@@ -365,6 +365,12 @@ function bibtex2csl.post_process_special_fields(item, entry)
     end
   end
 
+  -- DOI
+  if type(item.DOI) == "string" then
+    item.DOI = util.remove_prefix(item.DOI, "https://doi.org/")
+    item.DOI = util.remove_prefix(item.DOI, "doi.org/")
+  end
+
   -- PMID
   if bib_fields.eprint and type(bib_fields.eprinttype) == "string" and
       string.lower(bib_fields.eprinttype) == "pubmed" and not item.PMID then
