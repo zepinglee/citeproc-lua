@@ -269,7 +269,7 @@ By default, it is the \cs{parindent} at when printed out.
 \end{function}
 
 The \cs{addbibresource} command loads bibliographic data from \meta{resource}
-file. CSL-JSON is the preferred format especially when the data is exported
+file. CSL-JSON is the preferred format especially when the data are exported
 from a reference manager like Zotero.  Other formats like CSL-YAML and
 Bib(La)TeX (for compatibility) are also supported but they need to be converted
 to CSL-JSON for internal processing. Note that the files must be specified with
@@ -690,6 +690,19 @@ An error will be triggered if any of them is loaded together with \pkg{citation-
   \item \pkg{multibib}
   \item \pkg{natbib}
   \item \pkg{splitbib}
+\end{itemize}
+
+
+\section{License}
+
+\begin{itemize}
+  \item The LaTeX package and Lua library are released under MIT license.
+  \item The CSL styles and locale files are redistributed under the
+    \href{https://creativecommons.org/licenses/by-sa/3.0/}{Creative Commons Attribution-ShareAlike 3.0 Unported} license.
+  \item The journal abbreviation data are generated from
+    \url{https://github.com/JabRef/abbrv.jabref.org} and are redistributed under
+    the \href{https://github.com/JabRef/abbrv.jabref.org/blob/main/LICENSE.md}{CC0 1.0}
+    license.
 \end{itemize}
 
 \end{documentation}

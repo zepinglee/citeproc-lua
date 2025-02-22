@@ -3,7 +3,7 @@
 - Homepage: https://github.com/zepinglee/citeproc-lua
 - Author: Zeping Lee
 - Email: zepinglee AT gmail DOT com
-- License: MIT, CC BY-SA 3.0
+- License: MIT, CC BY-SA 3.0, CC0 1.0
 
 The [Citation Style Language](https://citationstyles.org/) (CSL) is an
 XML-based language that defines the formats of citations and bibliography.
@@ -61,4 +61,5 @@ pdflatex example.tex
 ## License
 
 The LaTeX package and Lua library are released under MIT license.
-The CSL locale files and styles are redistributed under the [Creative Commons Attribution-ShareAlike 3.0 Unported license](https://creativecommons.org/licenses/by-sa/3.0/).
+The CSL styles and locale files are redistributed under the [Creative Commons Attribution-ShareAlike 3.0 Unported](https://creativecommons.org/licenses/by-sa/3.0/) license.
+The journal abbreviation data are generated from <https://github.com/JabRef/abbrv.jabref.org> and are redistributed under the [CC0 1.0](https://github.com/JabRef/abbrv.jabref.org/blob/main/LICENSE.md) license.

@@ -218,6 +218,10 @@ def main():
 
     with open("citeproc/citeproc-journal-data.lua", "w") as f:
         f.write("---@diagnostic disable\n")
+        f.write(
+            "-- This file is generated from the data in <https://github.com/JabRef/abbrv.jabref.org>\n",
+        )
+        f.write("-- under the CC0-1.0 license.\n\n")
         f.write("abbrevs = ")
         luadata.dump(abbrevs, f)
         f.write("\n\nunabbrevs = ")
