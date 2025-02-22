@@ -162,8 +162,9 @@ function BibtexParser:new()
   return obj
 end
 
+---@alias EntryKey string
 
----@alias BibtexEntry { key: string, type: string, fields: table<string, string> }
+---@alias BibtexEntry { key: EntryKey, type: string, fields: table<string, string> }
 ---@class BibtexData
 ---@field entries BibtexEntry[]
 ---@field entries_by_id table<string, BibtexEntry>

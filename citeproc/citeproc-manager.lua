@@ -21,6 +21,8 @@ local bibtex_parser = require("citeproc-bibtex-parser")
 local latex_parser = require("citeproc-latex-parser")
 local util = citeproc.util
 local unicode = require("citeproc-unicode")
+local bibtex2csl = require("citeproc-bibtex2csl")
+local yaml = require("citeproc-yaml")
 
 
 ---@param file_name string
@@ -106,101 +108,6 @@ local function read_data_file(filename)
 end
 
 
----@param data_files FilePath[]
----@return ItemData[]
----@return table<ItemId, ItemData>
-local function read_data_files(data_files)
-  local item_list = {}
-  local item_dict = {}
-
-  --- Store BibTeX entries for later resolving crossref
-  ---@type table<string, BibtexEntry>
-  local bibtex_entries = {}
-  ---@type table<string, string>
-  local bibtex_strings = {}
-  for name, macro in pairs(bibtex_data.macros) do
-    bibtex_strings[name] = macro.value
-  end
-  ---@type BibtexEntry[]
-  local entries_with_crossref = {}
-
-  for _, data_file in ipairs(data_files) do
-    -- local file_name, csl_items = read_data_file(data_file)
-
-    local csl_items = {}
-
-    local file, format, contents = read_data_file(data_file)
-
-    if contents then
-
-      if format == "json" then
-        local ok, res = pcall(json_decode, contents)
-        if ok and res then
-          ---@cast res CslData
-          csl_items = res
-        else
-          util.error(string.format("JSON decode error in file '%s'.", file))
-        end
-
-      elseif format == "yaml" then
-        yaml = yaml or require("citeproc-yaml")
-        local ok, res = pcall(yaml.parse, contents)
-        if ok and res then
-          ---@cast res CslData
-          csl_items = res
-        else
-          util.error(string.format("YAML decode error in file '%s'.", file))
-        end
-
-      elseif format == "bibtex" then
-        local bib_data, exceptions = bibtex_parser.parse(contents, bibtex_strings)
-        if bib_data then
-          bibtex2csl = bibtex2csl or require("citeproc-bibtex2csl")
-          csl_items = bibtex2csl.convert_to_csl_data(bib_data, true, true, true, true)
-          for _, entry in ipairs(bib_data.entries) do
-            if not bibtex_entries[entry.key] then
-              bibtex_entries[entry.key] = entry
-              if entry.fields.crossref then
-                table.insert(entries_with_crossref, entry)
-              end
-            end
-          end
-          for string_name, value in pairs(bib_data.strings) do
-            bibtex_strings[string_name] = value
-          end
-        end
-      end
-
-      for _, item in ipairs(csl_items) do
-        local id = item.id
-        if item_dict[id] then
-          util.warning(string.format("Duplicate entry key '%s' in '%s'.", id, file))
-        else
-          item_dict[id] = item
-          table.insert(item_list, item)
-        end
-      end
-
-    end
-  end
-
-  bibtex_parser.resolve_crossrefs(entries_with_crossref, bibtex_entries)
-
-  for _, entry in ipairs(entries_with_crossref) do
-    local new_item = bibtex2csl.convert_to_csl_item(entry, true, true, true, true)
-    item_dict[new_item.id] = new_item
-    for i, item in ipairs(item_list) do
-      if item.id == new_item.id then
-        item_list[i] = new_item
-        break
-      end
-    end
-  end
-
-  return item_list, item_dict
-end
-
-
 ---@param item_dict table<ItemId, ItemData>
 ---@return CiteProcSys
 local function make_citeproc_sys(item_dict)
@@ -241,11 +148,14 @@ end
 ---@field citations_pre table[]
 ---@field bibliography_configs string[]
 ---@field style string
+---@field bibtex_entries table<string, BibtexEntry>
+---@field entries_with_crossref BibtexEntry[]
+---@field bibtex_strings table<string, string>
+---@field item_index table<ItemId, integer>
 local RefSection = {}
 
 ---@return RefSection
 function RefSection:new()
-  ---@type RefSection
   local ref_section = {
     index = 0,
     initialized = false,
@@ -261,10 +171,80 @@ function RefSection:new()
     citations_pre = {},
     bibliography_configs = {},
     style = "",
+    bibtex_entries = {},
+    entries_with_crossref = {},
+    bibtex_strings = {},
+    item_index = {},
   }
   setmetatable(ref_section, self)
   self.__index = self
   return ref_section
+end
+
+---@param data_file string
+---@param option_str string?
+function RefSection:add_bib_resource(data_file, option_str)
+  local item_dict = self.item_dict
+  local items = self.items
+
+  local file, format, contents = read_data_file(data_file)
+  table.insert(self.bib_resources, file)
+
+  local options = {}
+  if option_str then
+    for option, value in string.gmatch(option_str, "([%w%-]+)%s*=%s*([%w%-]+)") do
+      options[option] = value
+    end
+  end
+
+  if contents then
+    if format == "bibtex" then
+      local bib_data, exceptions = bibtex_parser.parse(contents, self.bibtex_strings)
+      if bib_data then
+        for _, entry in ipairs(bib_data.entries) do
+          if item_dict[entry.key] then
+            util.warning(string.format("Duplicate entry key '%s' in '%s'.", entry.key, file))
+          else
+            self.bibtex_entries[entry.key] = entry
+            if entry.fields.crossref then
+              table.insert(self.entries_with_crossref, entry)
+              self.item_index[entry.key] = #items + 1
+            end
+            local disable_journal_abbreviation = options["journal-abbreviation"] == "false"
+            local csl_item = bibtex2csl.convert_to_csl_item(entry, true, true, true, true, disable_journal_abbreviation)
+            item_dict[csl_item.id] = csl_item
+            table.insert(items, csl_item)
+          end
+        end
+        for string_name, value in pairs(bib_data.strings) do
+          self.bibtex_strings[string_name] = value
+        end
+      end
+    else
+
+      local ok, csl_items
+      if format == "json" then
+        ok, csl_items = pcall(json_decode, contents)
+      elseif format == "yaml" then
+        ok, csl_items = pcall(yaml.parse, contents)
+      end
+
+      if not ok or not csl_items then
+        util.error(string.format("%s decode error in file '%s'.", format:upper(), file))
+      else
+        -- TODO: validate csl_items
+        ---@cast csl_items ItemData[]
+        for _, item in ipairs(csl_items) do
+          if item_dict[item.id] then
+            util.warning(string.format("Duplicate entry key '%s' in '%s'.", item.id, file))
+          else
+            item_dict[item.id] = item
+            table.insert(items, item)
+          end
+        end
+      end
+    end
+  end
 end
 
 function RefSection:make_citeproc_engine()
@@ -276,7 +256,16 @@ function RefSection:make_citeproc_engine()
     return
   end
 
-  self.items, self.item_dict = read_data_files(self.bib_resources)
+  -- Resolve BibTeX with crossref
+  if #self.entries_with_crossref > 0 then
+    bibtex_parser.resolve_crossrefs(self.entries_with_crossref, self.bibtex_entries)
+    for _, entry in ipairs(self.entries_with_crossref) do
+      local item = bibtex2csl.convert_to_csl_item(entry, true, true, true, true)
+      self.item_dict[item.id] = item
+      self.items[self.item_index[entry.key]] = item
+    end
+  end
+
   local citeproc_sys = make_citeproc_sys(self.item_dict)
 
   local force_lang = false
@@ -463,18 +452,24 @@ function CslCitationManager:new()
   return o
 end
 
+---@param data_file string
+---@param option_str string?
+function CslCitationManager:add_bib_resource(data_file, option_str)
+  self.ref_section:add_bib_resource(data_file, option_str)
+end
+
 --- The init method is called via \AtBeginDocument after loading .aux file.
 --- The ref_section.cited_ids are already registered.
 ---@param style_id StyleId
 ---@param bib_resources_str FilePathsString
 ---@param lang LanguageCode?
-function CslCitationManager:init(style_id, bib_resources_str, lang)
+function CslCitationManager:init(style_id, lang)
+  -- TODO: remove bib_resources_str
   local global_ref_section = self.global_ref_section
   global_ref_section.style_id = "apa"
   if style_id and style_id ~= "" then
     global_ref_section.style_id = style_id
   end
-  global_ref_section.bib_resources = util.split(util.strip(bib_resources_str), "%s*,%s*")
   if lang and lang ~= "" then
     global_ref_section.lang = lang
   end
@@ -520,7 +515,14 @@ function CslCitationManager:begin_ref_section(style_id, bib_resources_str, lang)
   self.ref_section.style_id = style_id or self.global_ref_section.style_id
   self.ref_section.bib_resources = self.global_ref_section.bib_resources
   if bib_resources_str and bib_resources_str ~= "" then
-    self.ref_section.bib_resources = util.split(util.strip(bib_resources_str), "%s*,%s*")
+    for _, bib_resource in ipairs(util.split(util.strip(bib_resources_str), "%s*,%s*")) do
+      -- TODO: options (\addsectionbib)
+      self:add_bib_resource(bib_resource)
+    end
+  else
+    self.ref_section.bib_resources = self.global_ref_section.bib_resources
+    self.ref_section.items = self.global_ref_section.items
+    self.ref_section.item_dict = self.global_ref_section.item_dict
   end
   self.ref_section.lang = self.global_ref_section.lang
   if lang and lang ~= "" then
@@ -868,9 +870,10 @@ function CslCitationManager:set_categories(categories_str)
   end
 end
 
+---@type [string, integer][]
 local command_info = {
   {"\\csl@aux@style", 2},
-  {"\\csl@aux@data", 2},
+  {"\\csl@aux@data", 3},
   {"\\csl@aux@cite", 2},
   {"\\csl@aux@options", 2},
   {"\\csl@aux@bibliography", 2},
@@ -948,7 +951,10 @@ function CslCitationManager:read_aux_file(aux_content)
     if command == "\\csl@aux@style" then
       ref_section.style_id = content
     elseif command == "\\csl@aux@data" then
-      util.extend(ref_section.bib_resources, util.split(content, "%s*,%s*"))
+      local option_str = command_argument[4]
+      for _, data_file in ipairs(util.split(content, "%s*,%s*")) do
+        ref_section:add_bib_resource(data_file, option_str)
+      end
     elseif command == "\\csl@aux@cite" then
       self:register_citation_info(tostring(ref_section_index), content)
       -- TODO: refsection bib resources
@@ -992,7 +998,9 @@ function CslCitationManager:read_aux_file(aux_content)
           ref_section.style_id = self.global_ref_section.style_id
         end
         if #ref_section.bib_resources == 0 then
-          ref_section.bib_resources = self.global_ref_section.bib_resources
+          self.ref_section.bib_resources = self.global_ref_section.bib_resources
+          self.ref_section.items = self.global_ref_section.items
+          self.ref_section.item_dict = self.global_ref_section.item_dict
         end
         if not ref_section.lang or ref_section.lang == "" then
           ref_section.lang = self.global_ref_section.lang
@@ -1064,7 +1072,7 @@ function CslCitationManager:_get_csl_commands(aux_content)
             return {}
           end
           local content = util.strip(arguments[2])
-          table.insert(command_arguments, {command, ref_section_index, content})
+          table.insert(command_arguments, {command, ref_section_index, content, arguments[3]})
         end
         break
 

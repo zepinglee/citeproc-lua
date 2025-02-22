@@ -87,7 +87,7 @@ end
 ---@param sentence_case_title boolean?
 ---@param check_sentence_case boolean?
 ---@return CslItem
-function bibtex2csl.convert_to_csl_item(entry, keep_unknown_commands, case_protection, sentence_case_title, check_sentence_case)
+function bibtex2csl.convert_to_csl_item(entry, keep_unknown_commands, case_protection, sentence_case_title, check_sentence_case, disable_journal_abbreviation)
   ---@type CslItem
   local item = {
     id = entry.key,
@@ -124,7 +124,7 @@ function bibtex2csl.convert_to_csl_item(entry, keep_unknown_commands, case_prote
     end
   end
 
-  bibtex2csl.post_process_special_fields(item, entry)
+  bibtex2csl.post_process_special_fields(item, entry, disable_journal_abbreviation)
   return item
 end
 
@@ -299,7 +299,7 @@ end
 
 ---@param item CslItem
 ---@param entry BibtexEntry
-function bibtex2csl.post_process_special_fields(item, entry)
+function bibtex2csl.post_process_special_fields(item, entry, disable_journal_abbreviation)
   local bib_type = entry.type
   local bib_fields = entry.fields
   -- event-title: for compatibility with CSL v1.0.1 and earlier versions
@@ -308,9 +308,11 @@ function bibtex2csl.post_process_special_fields(item, entry)
   end
 
   -- Jounal abbreviations
-  if item.type == "article-journal" or item.type == "article-magazine"
-      or item.type == "article-newspaper" then
-    bibtex2csl.check_journal_abbreviations(item)
+  if not disable_journal_abbreviation then
+    if item.type == "article-journal" or item.type == "article-magazine"
+        or item.type == "article-newspaper" then
+      bibtex2csl.check_journal_abbreviations(item)
+    end
   end
 
   -- month

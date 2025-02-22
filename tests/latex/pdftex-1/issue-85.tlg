@@ -1,0 +1,10 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+> \l__csl_citation_info_tl=citationID={10123038@1},citationItems={{id={10123038}}},properties={noteIndex={0},mode={composite}}.
+<recently read> }
+l. ...\textcite{10123038}
+LaTeX Warning: Citation `10123038' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {10123038}].
+<recently read> }
+l. ...\textcite{10123038}
+Package CSL Warning: The bibliography is empty.

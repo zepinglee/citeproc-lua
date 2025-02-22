@@ -1,0 +1,33 @@
+% <https://github.com/zepinglee/citeproc-lua/discussions/85>
+
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\begin{filecontents}[overwrite, noheader]{\jobname.bib}
+@ARTICLE{10123038,
+  author={Xu, Peng and Zhu, Xiatian and Clifton, David A.},
+  journal={IEEE Trans. Pattern Anal. Mach. Intell.},
+  title={Multimodal Learning With Transformers: A Survey},
+  year={2023},
+  volume={45},
+  number={10},
+  pages={12113-12132},
+  keywords={Transformers;Task analysis;Surveys;Visualization;Taxonomy;Mathematical models;Data models;Multimodal learning;transformer;introductory;taxonomy;deep learning;machine learning},
+  doi={10.1109/TPAMI.2023.3275156}}
+\end{filecontents}
+
+\usepackage[style=chicago-author-date]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource[journal-abbreviation = false]{\jobname.bib}
+% \addbibresource{\jobname.bib}
+
+
+\begin{document}
+\START
+
+\textcite{10123038}
+\printbibliography
+
+\OMIT
+\end{document}

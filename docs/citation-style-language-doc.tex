@@ -276,9 +276,17 @@ to CSL-JSON for internal processing. Note that the files must be specified with
 their extension names and the content should be encoded in UTF-8.
 \begin{LaTeXdemo}
   \addbibresource{file1.json}
-  \addbibresource{file2.yaml, file3.bib}
+  \addbibresource[journal-abbreviation = false]{file2.bib}
 \end{LaTeXdemo}
 
+\DescribeOption{journal-abbreviation}
+The \opt{journal-abbreviation}  option is used to control whether to search for abbreviations of journal titles when a \file{.bib} file is converted to CSL-JSON.
+It is because \texttt{journal} fields in traditional BibTeX database can be either full titles or abbreviations
+but a CSL style assumes that both forms are given.
+For example, \texttt{journal = ''Aquacult. Eng.''} is an abbreviation but a CSL style like \file{apa.csl} may use a full title.
+With \opt{journal-abbreviation} enabled (by default), the CSL engine tries to find the full title ``Aquacultural Engineering'' from the data of \url{https://github.com/JabRef/abbrv.jabref.org}.
+This can be disabled by setting it to \opt{false}.
+Note that this option is only valid for \file{.bib} files.
 
 \section{Citation commands}
 

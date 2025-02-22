@@ -6,5 +6,36 @@
 
 % ## Bibliography commands
 
-\NewDocumentCommand \addbibresource { o m }
-  { \clist_put_right:Nn \l__csl_bib_resources_clist {#2} }
+\bool_new:N \l__csl_journal_abbreviation_bool
+
+\prop_new:N \g__csl_bib_resource_options_prop
+
+\keys_define:nn { csl / data }
+  {
+    journal-abbreviation .bool_set:N = \l__csl_journal_abbreviation_bool ,
+  }
+
+\tl_new:N \l__csl_bib_resource_options_clist
+
+\NewDocumentCommand \addbibresource { O { } m }
+  {
+    \keys_set:nn { csl / data }
+      {
+        journal-abbreviation = true ,
+      }
+    \keys_set:nn { csl / data } {#1}
+    \clist_clear:N \l__csl_bib_resource_options_clist
+    \bool_if:NF \l__csl_journal_abbreviation_bool
+      { \clist_put_right:Nn \l__csl_bib_resource_options_clist { journal-abbreviation=false } }
+    \tl_set:Ne \l_tmpa_tl { \clist_use:Nn \l__csl_bib_resource_options_clist { , } }
+    \clist_map_inline:nn {#2}
+      {
+        \clist_put_right:Nn \l__csl_bib_resources_clist {##1}  % TODO: make it global
+        \prop_gput:NnV \g__csl_bib_resource_options_prop {##1} \l_tmpa_tl
+        \sys_if_engine_luatex:T
+          {
+            \lua_now:e
+              { csl_citation_manager:add_bib_resource("##1", "\tl_use:N \l_tmpa_tl") }
+          }
+      }
+  }

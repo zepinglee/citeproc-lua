@@ -62,8 +62,11 @@
 
 \DeclareDocumentCommand \bibliography { m }
   {
-    \__csl_write_aux_bibdata:n {#1}
-    \printbibliography
+    \clist_map_inline:nn {#1}
+      {
+        \exp_args:Ne \__csl_write_aux_bibdata:nn {##1} {}
+      }
+    \printbibliography \relax
   }
 
 
@@ -368,7 +371,12 @@
         \tl_set:Nn \l__csl_style_tl {#1}
         \renewcommand \csl@style {#1}
       } ,
-    bib-resource .clist_set:N = \l__csl_bib_resources_clist ,
+    bib-resource .code:n =
+      {
+        \clist_clear:N \l__csl_bib_resources_clist
+        \clist_map_inline:nn {#1}
+          { \clist_put_right:Ne \l__csl_bib_resources_clist {##1} }
+      } ,
     locale .tl_set:N = \l__csl_locale_tl ,
   }
 
@@ -391,10 +399,9 @@
         \exp_args:NV \__csl_write_aux_bibstyle:n \l__csl_style_tl
       }
     \clist_if_empty:NF \l__csl_bib_resources_clist
-      % { \clist_set_eq:NN \l__csl_bib_resources_clist \g__csl_global_bib_resources_clist }
       {
-        \exp_args:Ne \__csl_write_aux_bibdata:n
-          { \clist_use:Nn \l__csl_bib_resources_clist { , } }
+        \clist_map_inline:Nn \l__csl_bib_resources_clist
+          { \exp_args:Ne \__csl_write_aux_bibdata:nn {##1} { } }
       }
     \tl_if_empty:NTF \l__csl_locale_tl
       { \tl_set_eq:NN \l__csl_locale_tl \g__csl_global_locale_tl }
@@ -432,7 +439,7 @@
     \__csl_read_entry_ids:
   }
 
-\cs_set_eq:NN \newrefsection \refsection
+\NewCommandCopy \newrefsection \refsection
 
 \cs_new:Npn \endrefsection {
   \int_compare:nNnT { \g__csl_ref_section_index_int } > { 0 }
