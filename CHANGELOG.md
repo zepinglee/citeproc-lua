@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2025-02-23
+
 ### Added
 
 - Add `journal-abbreviation` option to `\addbibresource` command to disable searching abbreviations of journal titles ([#85](https://github.com/zepinglee/citeproc-lua/issues/85)).
@@ -279,7 +281,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial CTAN release.
 
-[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.8...HEAD
+[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.8...v0.7.0
 [0.6.8]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.7...v0.6.8
 [0.6.7]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.6...v0.6.7
 [0.6.6]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.5...v0.6.6
