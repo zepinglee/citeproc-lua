@@ -20,7 +20,7 @@ l. ...}
 > \l__csl_citation_info_tl=citationID={DukeCollabor2024-p.mich@1},citationItems={{id={DukeCollabor2024-p.mich}}},properties={noteIndex={2}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=\cslcite {DukeCollabor2024-p.mich}{“P.Mich.3.217,” Papyri.Info (Duke Collaboratory for Classics Computing), accessed September 24, 2024, \url {https://papyri.info/ddbdp/p.mich;3;217}}..
+> \l__csl_citation_tl=\cslcite {DukeCollabor2024-p.mich}{“P.mich.3.217,” Papyri.info (Duke Collaboratory for Classics Computing), accessed September 24, 2024, \url {https://papyri.info/ddbdp/p.mich;3;217}}..
 <recently read> }
 l. ...}
 Completed box being shipped out [1]
@@ -309,7 +309,7 @@ Completed box being shipped out [1]
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0
-....\hbox(6.81334+2.0)x345.0, glue set 1.91487, direction TLT
+....\hbox(6.81334+2.0)x345.0, glue set 2.04745, direction TLT
 .....\localpar
 ......\localinterlinepenalty=0
 ......\localbrokenpenalty=0
@@ -334,7 +334,7 @@ Completed box being shipped out [1]
 .....\TU/lmr/m/n/8 P
 .....\kern-0.712 (font)
 .....\TU/lmr/m/n/8 .
-.....\TU/lmr/m/n/8 M
+.....\TU/lmr/m/n/8 m
 .....\TU/lmr/m/n/8 i
 .....\TU/lmr/m/n/8 c
 .....\kern-0.24 (font)
@@ -359,7 +359,7 @@ Completed box being shipped out [1]
 .....\TU/lmr/m/n/8 r
 .....\TU/lmr/m/n/8 i
 .....\TU/lmr/m/n/8 .
-.....\TU/lmr/m/n/8 I
+.....\TU/lmr/m/n/8 i
 .....\TU/lmr/m/n/8 n
 .....\TU/lmr/m/n/8 f
 .....\TU/lmr/m/n/8 o
@@ -758,7 +758,7 @@ l. ...}
 > \l__csl_citation_info_tl=citationID={DukeCollabor2024-p.mich@2},citationItems={{id={DukeCollabor2024-p.mich}}},properties={noteIndex={4}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=\cslcite {DukeCollabor2024-p.mich}{“P.Mich.3.217,” Papyri.Info (Duke Collaboratory for Classics Computing), accessed September 24, 2024, \url {https://papyri.info/ddbdp/p.mich;3;217}}..
+> \l__csl_citation_tl=\cslcite {DukeCollabor2024-p.mich}{“P.mich.3.217,” Papyri.info (Duke Collaboratory for Classics Computing), accessed September 24, 2024, \url {https://papyri.info/ddbdp/p.mich;3;217}}..
 <recently read> }
 l. ...}
 Completed box being shipped out [3]
@@ -1041,7 +1041,7 @@ Completed box being shipped out [3]
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0
-....\hbox(6.87334+2.0)x345.0, glue set 1.91487, direction TLT
+....\hbox(6.87334+2.0)x345.0, glue set 2.04745, direction TLT
 .....\localpar
 ......\localinterlinepenalty=0
 ......\localbrokenpenalty=0
@@ -1067,7 +1067,7 @@ Completed box being shipped out [3]
 .....\TU/lmr/m/n/8 P
 .....\kern-0.712 (font)
 .....\TU/lmr/m/n/8 .
-.....\TU/lmr/m/n/8 M
+.....\TU/lmr/m/n/8 m
 .....\TU/lmr/m/n/8 i
 .....\TU/lmr/m/n/8 c
 .....\kern-0.24 (font)
@@ -1092,7 +1092,7 @@ Completed box being shipped out [3]
 .....\TU/lmr/m/n/8 r
 .....\TU/lmr/m/n/8 i
 .....\TU/lmr/m/n/8 .
-.....\TU/lmr/m/n/8 I
+.....\TU/lmr/m/n/8 i
 .....\TU/lmr/m/n/8 n
 .....\TU/lmr/m/n/8 f
 .....\TU/lmr/m/n/8 o
@@ -1280,7 +1280,7 @@ TEST 4: Test bibliography
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 2, hanging-indent = true, line-spacing = 1, entry-spacing = 0}}
->  {\bibitem {DukeCollabor2024-p.mich} “P.Mich.3.217.” Papyri.Info. Duke Collaboratory for Classics Computing. Accessed September 24, 2024. \url {https://papyri.info/ddbdp/p.mich;3;217}.}
+>  {\bibitem {DukeCollabor2024-p.mich} “P.mich.3.217.” Papyri.info. Duke Collaboratory for Classics Computing. Accessed September 24, 2024. \url {https://papyri.info/ddbdp/p.mich;3;217}.}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}
@@ -1354,7 +1354,7 @@ Completed box being shipped out [4]
 ....\glue(\parskip) 0.0
 ....\glue(\parskip) 0.0
 ....\glue(\baselineskip) 4.696
-....\hbox(7.16+2.06)x335.0, glue set 0.62892, shifted 10.0, direction TLT
+....\hbox(7.16+2.06)x335.0, glue set 0.7722, shifted 10.0, direction TLT
 .....\localpar
 ......\localinterlinepenalty=0
 ......\localbrokenpenalty=0
@@ -1372,7 +1372,7 @@ Completed box being shipped out [4]
 .....\TU/lmr/m/n/10 P
 .....\kern-0.83 (font)
 .....\TU/lmr/m/n/10 .
-.....\TU/lmr/m/n/10 M
+.....\TU/lmr/m/n/10 m
 .....\TU/lmr/m/n/10 i
 .....\TU/lmr/m/n/10 c
 .....\kern-0.28 (font)
@@ -1398,7 +1398,7 @@ Completed box being shipped out [4]
 .....\TU/lmr/m/n/10 r
 .....\TU/lmr/m/n/10 i
 .....\TU/lmr/m/n/10 .
-.....\TU/lmr/m/n/10 I
+.....\TU/lmr/m/n/10 i
 .....\TU/lmr/m/n/10 n
 .....\TU/lmr/m/n/10 f
 .....\TU/lmr/m/n/10 o

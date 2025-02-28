@@ -15,8 +15,10 @@ local using_luatex, kpse = pcall(require, "kpse")
 if using_luatex then
   -- Load `slnunicode` if in LuaTeX
   uni_utf8 = require("unicode").utf8
-  if kpse.find_file("lua-uni-words", "lua") then
-    uni_algos_words = require("lua-uni-words")
+  local ok
+  ok, uni_algos_words = pcall(require, "lua-uni-words")
+  if not ok then
+    ok, uni_algos_words = pcall(require, "citeproc-lua-uni-words")
   end
   uni_algos_case = require("lua-uni-case")
   util = require("citeproc-util")

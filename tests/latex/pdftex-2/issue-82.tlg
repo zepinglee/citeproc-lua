@@ -20,7 +20,7 @@ l. ...}
 > \l__csl_citation_info_tl=citationID={DukeCollabor2024-p.mich@1},citationItems={{id={DukeCollabor2024-p.mich}}},properties={noteIndex={2}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=\cslcite {DukeCollabor2024-p.mich}{“P.Mich.3.217,” Papyri.Info (Duke Collaboratory for Classics Computing), accessed September 24, 2024, \url {https://papyri.info/ddbdp/p.mich;3;217}}..
+> \l__csl_citation_tl=\cslcite {DukeCollabor2024-p.mich}{“P.mich.3.217,” Papyri.info (Duke Collaboratory for Classics Computing), accessed September 24, 2024, \url {https://papyri.info/ddbdp/p.mich;3;217}}..
 <recently read> }
 l. ...}
 Completed box being shipped out [1]
@@ -262,7 +262,7 @@ Completed box being shipped out [1]
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0
-....\hbox(6.68999+2.0)x345.0, glue set 1.83589
+....\hbox(6.68999+2.0)x345.0, glue set 1.9722
 .....\hbox(6.68999+0.0)x15.30023, glue set 11.13362fil
 ......\glue 0.0 plus 1.0fil minus 1.0fil
 ......\hbox(6.68999+0.0)x4.16661
@@ -281,7 +281,7 @@ Completed box being shipped out [1]
 .....\OT1/cmr/m/n/8 P
 .....\kern-0.70834
 .....\OT1/cmr/m/n/8 .
-.....\OT1/cmr/m/n/8 M
+.....\OT1/cmr/m/n/8 m
 .....\OT1/cmr/m/n/8 i
 .....\OT1/cmr/m/n/8 c
 .....\kern-0.23611
@@ -306,7 +306,7 @@ Completed box being shipped out [1]
 .....\OT1/cmr/m/n/8 r
 .....\OT1/cmr/m/n/8 i
 .....\OT1/cmr/m/n/8 .
-.....\OT1/cmr/m/n/8 I
+.....\OT1/cmr/m/n/8 i
 .....\OT1/cmr/m/n/8 n
 .....\OT1/cmr/m/n/8 f
 .....\OT1/cmr/m/n/8 o
@@ -688,7 +688,7 @@ l. ...}
 > \l__csl_citation_info_tl=citationID={DukeCollabor2024-p.mich@2},citationItems={{id={DukeCollabor2024-p.mich}}},properties={noteIndex={4}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=\cslcite {DukeCollabor2024-p.mich}{“P.Mich.3.217,” Papyri.Info (Duke Collaboratory for Classics Computing), accessed September 24, 2024, \url {https://papyri.info/ddbdp/p.mich;3;217}}..
+> \l__csl_citation_tl=\cslcite {DukeCollabor2024-p.mich}{“P.mich.3.217,” Papyri.info (Duke Collaboratory for Classics Computing), accessed September 24, 2024, \url {https://papyri.info/ddbdp/p.mich;3;217}}..
 <recently read> }
 l. ...}
 Completed box being shipped out [3]
@@ -924,7 +924,7 @@ Completed box being shipped out [3]
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0
-....\hbox(6.68999+2.0)x345.0, glue set 1.83589
+....\hbox(6.68999+2.0)x345.0, glue set 1.9722
 .....\hbox(6.68999+0.0)x15.30023, glue set 11.13362fil
 ......\glue 0.0 plus 1.0fil minus 1.0fil
 ......\hbox(6.68999+0.0)x4.16661
@@ -944,7 +944,7 @@ Completed box being shipped out [3]
 .....\OT1/cmr/m/n/8 P
 .....\kern-0.70834
 .....\OT1/cmr/m/n/8 .
-.....\OT1/cmr/m/n/8 M
+.....\OT1/cmr/m/n/8 m
 .....\OT1/cmr/m/n/8 i
 .....\OT1/cmr/m/n/8 c
 .....\kern-0.23611
@@ -969,7 +969,7 @@ Completed box being shipped out [3]
 .....\OT1/cmr/m/n/8 r
 .....\OT1/cmr/m/n/8 i
 .....\OT1/cmr/m/n/8 .
-.....\OT1/cmr/m/n/8 I
+.....\OT1/cmr/m/n/8 i
 .....\OT1/cmr/m/n/8 n
 .....\OT1/cmr/m/n/8 f
 .....\OT1/cmr/m/n/8 o
@@ -1159,7 +1159,7 @@ TEST 4: Test bibliography
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 2, hanging-indent = true, line-spacing = 1, entry-spacing = 0}}
->  {\bibitem {DukeCollabor2024-p.mich} “P.Mich.3.217.” Papyri.Info. Duke Collaboratory for Classics Computing. Accessed September 24, 2024. \url {https://papyri.info/ddbdp/p.mich;3;217}.}
+>  {\bibitem {DukeCollabor2024-p.mich} “P.mich.3.217.” Papyri.info. Duke Collaboratory for Classics Computing. Accessed September 24, 2024. \url {https://papyri.info/ddbdp/p.mich;3;217}.}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}
@@ -1224,7 +1224,7 @@ Completed box being shipped out [4]
 ....\glue(\parskip) 0.0
 ....\glue(\parskip) 0.0
 ....\glue(\baselineskip) 5.05556
-....\hbox(6.94444+1.94444)x334.99998, glue set 0.44041, shifted 10.00002
+....\hbox(6.94444+1.94444)x334.99998, glue set 0.58328, shifted 10.00002
 .....\hbox(0.0+0.0)x-10.00002
 ......\glue -10.00002
 ......\glue -20.00003
@@ -1237,7 +1237,7 @@ Completed box being shipped out [4]
 .....\OT1/cmr/m/n/10 P
 .....\kern-0.83334
 .....\OT1/cmr/m/n/10 .
-.....\OT1/cmr/m/n/10 M
+.....\OT1/cmr/m/n/10 m
 .....\OT1/cmr/m/n/10 i
 .....\OT1/cmr/m/n/10 c
 .....\kern-0.27779
@@ -1262,7 +1262,7 @@ Completed box being shipped out [4]
 .....\OT1/cmr/m/n/10 r
 .....\OT1/cmr/m/n/10 i
 .....\OT1/cmr/m/n/10 .
-.....\OT1/cmr/m/n/10 I
+.....\OT1/cmr/m/n/10 i
 .....\OT1/cmr/m/n/10 n
 .....\OT1/cmr/m/n/10 f
 .....\OT1/cmr/m/n/10 o

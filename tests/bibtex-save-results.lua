@@ -19,6 +19,7 @@ if kpse then
   util = require("citeproc.citeproc-util")
 else
   bibtex2csl = require("citeproc.bibtex2csl")
+  json_encode = require("dkjson").encode
   util = require("citeproc.util")
 end
 

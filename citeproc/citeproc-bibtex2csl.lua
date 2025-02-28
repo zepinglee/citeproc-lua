@@ -166,24 +166,23 @@ end
 function bibtex2csl.process_titles(entry)
   local fields = entry.fields
   if fields.subtitle then
-    if not fields.shorttitle then
-      fields.shorttitle = fields.title
-    end
     if fields.title then
       fields.title = util.join_title(fields.title, fields.subtitle)
+      if not fields.shorttitle then
+        fields.shorttitle = fields.title
+      end
     else
       fields.title = fields.subtitle
     end
+    fields.subtitle = nil
   end
   if fields.booksubtitle then
-    if not fields.shorttitle then
-      fields["container-title-short"] = fields.booktitle
-    end
     if fields.booktitle then
       fields.booktitle = util.join_title(fields.booktitle, fields.booksubtitle)
     else
       fields.booktitle = fields.booksubtitle
     end
+    fields.booksubtitle = nil
   end
   if fields.journalsubtitle then
     if fields.journaltitle then
@@ -191,16 +190,15 @@ function bibtex2csl.process_titles(entry)
     elseif fields.journal then
       fields.journal = util.join_title(fields.journal, fields.journal)
     end
+    fields.journalsubtitle = nil
   end
   if fields.issuesubtitle then
-    if not fields.shorttitle then
-      fields["volume-title-short"] = fields.issuetitle
-    end
     if fields.issuetitle then
       fields.issuetitle = util.join_title(fields.issuetitle, fields.issuesubtitle)
     else
       fields.issuetitle = fields.issuesubtitle
     end
+    fields.issuesubtitle = nil
   end
 end
 

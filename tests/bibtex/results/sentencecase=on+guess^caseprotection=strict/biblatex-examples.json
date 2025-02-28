@@ -28,7 +28,7 @@
 		"publisher": "Greenwood",
 		"publisher-place": "Westport, Conn. and London",
 		"title": "The true frontier: Confronting and avoiding the realities of space in <span class=\"nocase\">American</span> science fiction films",
-		"title-short": "The true frontier"
+		"title-short": "The true frontier: Confronting and avoiding the realities of space in <span class=\"nocase\">American</span> science fiction films"
 	},
 	{
 		"id": "set",
@@ -328,7 +328,7 @@
 		"note": "An <code>\\texttt{article}</code> entry with an <code>\\texttt{eid}</code> and a <code>\\texttt{doi}</code> field. Note that the <span style=\"font-variant:small-caps;\"><span class=\"nocase\">doi</span></span> is transformed into a clickable link if <code>\\texttt{hyperref}</code> support has been enabled",
 		"number": "124106",
 		"title": "Computation of methodology<code>\\hyphen </code>independent ionic solvation free energies from molecular simulations: <span class=\"nocase\">I</span>. <span class=\"nocase\">The</span> electrostatic potential in molecular liquids",
-		"title-short": "Computation of methodology<code>\\hyphen </code>independent ionic solvation free energies from molecular simulations",
+		"title-short": "Computation of methodology<code>\\hyphen </code>independent ionic solvation free energies from molecular simulations: <span class=\"nocase\">I</span>. <span class=\"nocase\">The</span> electrostatic potential in molecular liquids",
 		"volume": "124"
 	},
 	{
@@ -484,7 +484,7 @@
 		"note": "An <code>\\texttt{article}</code> entry with <code>\\texttt{series}</code>, <code>\\texttt{volume}</code>, and <code>\\texttt{number}</code> fields. Note the format of the <code>\\texttt{series}</code> which is a localization key",
 		"page": "9-27",
 		"title": "Twice-born, once conceived: Meaning construction and cultural cognition",
-		"title-short": "Twice-born, once conceived",
+		"title-short": "Twice-born, once conceived: Meaning construction and cultural cognition",
 		"volume": "93"
 	},
 	{
@@ -1502,7 +1502,7 @@
 		"publisher": "Deutscher Taschenbuch-Verlag and Walter de Gruyter",
 		"publisher-place": "München and Berlin and New York",
 		"title": "Sämtliche Werke: Kritische Studienausgabe",
-		"title-short": "Sämtliche Werke"
+		"title-short": "Sämtliche Werke: Kritische Studienausgabe"
 	},
 	{
 		"id": "nietzsche:ksa1",
@@ -1900,7 +1900,7 @@
 		"publisher": "Greenwood",
 		"publisher-place": "Westport, Conn. and London",
 		"title": "Space and beyond: The frontier theme in science fiction",
-		"title-short": "Space and beyond"
+		"title-short": "Space and beyond: The frontier theme in science fiction"
 	},
 	{
 		"id": "kant:kpv",
@@ -2161,7 +2161,6 @@
 			}
 		],
 		"container-title": "Elementary particle theory: Relativistic groups and analyticity",
-		"container-title-short": "Elementary particle theory",
 		"editor": [
 			{
 				"family": "Svartholm",
@@ -2264,7 +2263,7 @@
 		"language": "en-US",
 		"note": "This is an <code>\\texttt{online}</code> entry. The <span style=\"font-variant:small-caps;\"><span class=\"nocase\">url</span></span>, which is given in the <code>\\texttt{url}</code> field, is transformed into a clickable link if <code>\\texttt{hyperref}</code> support has been enabled. Note the format of the <code>\\texttt{urldate}</code> field (<code>\\texttt{yyyy-mm-dd}</code>) in the database file. Also note the <code>\\texttt{label}</code> field which may be used as a fallback by citation styles which need an <code>\\texttt{author}</code> and<code>\\slash </code>or a <code>\\texttt{year}</code>",
 		"title": "CTAN: The <span class=\"nocase\">Comprehensive TeX Archive Network</span>",
-		"title-short": "CTAN",
+		"title-short": "CTAN: The <span class=\"nocase\">Comprehensive TeX Archive Network</span>",
 		"URL": "http://www.ctan.org"
 	},
 	{
@@ -2322,7 +2321,7 @@
 		"language": "en-US",
 		"note": "An <code>\\texttt{online}</code> entry for a tutorial. Note the format of the <code>\\texttt{date}</code> field (<code>\\texttt{yyyy-mm-dd}</code>) in the database file.",
 		"title": "Tame the <span class=\"nocase\">BeaST</span>: The <span class=\"nocase\">B</span> to <span class=\"nocase\">X</span> of <span class=\"nocase\">BibTeX</span>",
-		"title-short": "Tame the <span class=\"nocase\">BeaST</span>",
+		"title-short": "Tame the <span class=\"nocase\">BeaST</span>: The <span class=\"nocase\">B</span> to <span class=\"nocase\">X</span> of <span class=\"nocase\">BibTeX</span>",
 		"URL": "http://mirror.ctan.org/info/bibtex/tamethebeast/ttb_en.pdf",
 		"version": "1.3"
 	},
@@ -2618,7 +2617,7 @@
 		"publisher": "Uppsala Universitet",
 		"publisher-place": "Uppsala",
 		"title": "Earl, saint, bishop, skald – and music: The <span class=\"nocase\">Orkney Earldom</span> of the twelfth century. <span class=\"nocase\">A</span> musicological study",
-		"title-short": "Earl, saint, bishop, skald – and music"
+		"title-short": "Earl, saint, bishop, skald – and music: The <span class=\"nocase\">Orkney Earldom</span> of the twelfth century. <span class=\"nocase\">A</span> musicological study"
 	},
 	{
 		"id": "loh",

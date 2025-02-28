@@ -59,6 +59,13 @@ describe("BibTeX data to CSL converter", function ()
       assert.same(expected, csl_title)
     end)
 
+    it("word breaking", function ()
+      local title = "Strengthening the Federal Student Loan Program for Borrowers: Hearing before the U.S. Senate Committee on Health, Education, Labor \\& Pensions"
+      local _, csl_title = bibtex2csl.convert_field("title", title, true, true, true, "en-US")
+      local expected = 'Strengthening the federal student loan program for borrowers: Hearing before the U.S. senate committee on health, education, labor & pensions'
+      assert.same(expected, csl_title)
+    end)
+
   end)
 
   it("entry", function ()
