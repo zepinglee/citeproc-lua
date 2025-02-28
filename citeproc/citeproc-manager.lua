@@ -205,7 +205,8 @@ function RefSection:add_bib_resource(data_file, option_str)
           if item_dict[entry.key] then
             util.warning(string.format("Duplicate entry key '%s' in '%s'.", entry.key, file))
           else
-            self.bibtex_entries[entry.key] = entry
+            local normalized_key = bibtex_parser.normalize_key(entry.key)
+            self.bibtex_entries[normalized_key] = entry
             if entry.fields.crossref then
               table.insert(self.entries_with_crossref, entry)
               self.item_index[entry.key] = #items + 1

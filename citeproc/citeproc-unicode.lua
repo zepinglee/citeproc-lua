@@ -7,6 +7,7 @@
 local unicode = {}
 
 local uni_utf8
+local uni_algos_normalize
 local uni_algos_words
 local uni_algos_case
 local util
@@ -15,6 +16,7 @@ local using_luatex, kpse = pcall(require, "kpse")
 if using_luatex then
   -- Load `slnunicode` if in LuaTeX
   uni_utf8 = require("unicode").utf8
+  uni_algos_normalize = require("lua-uni-normalize")
   local ok
   ok, uni_algos_words = pcall(require, "lua-uni-words")
   if not ok then
@@ -53,6 +55,13 @@ function unicode.capitalize(str, locale)
   str = unicode.lower(str, locale)
   str = uni_utf8.gsub(str, ".", uni_utf8.upper, 1)
   return str
+end
+
+
+if using_luatex then
+  unicode.NFC = uni_algos_normalize.NFC
+else
+  unicode.NFC = uni_utf8.normalize_nfc
 end
 
 

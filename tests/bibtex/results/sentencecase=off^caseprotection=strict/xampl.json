@@ -51,9 +51,20 @@
 				"given": "L[eslie] A."
 			}
 		],
+		"container-title": "<code>\\mbox{G-Animal's}</code> Journal",
+		"issue": "7",
+		"issued": {
+			"date-parts": [
+				[
+					1986,
+					7
+				]
+			]
+		},
 		"note": "This is a cross-referencing ARTICLE entry",
 		"page": "73+",
-		"title": "The Gnats and Gnus Document Preparation System"
+		"title": "The Gnats and Gnus Document Preparation System",
+		"volume": "41"
 	},
 	{
 		"id": "whole-journal",

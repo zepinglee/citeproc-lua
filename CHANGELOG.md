@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Convert BibTeX entry keys to NFC and fold the case.
+
 ### Fixed
 
 - Fix an infinite loop bug of unrecognized `babel` language name ([#65](https://github.com/zepinglee/citeproc-lua/issues/65)).

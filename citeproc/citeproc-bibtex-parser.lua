@@ -116,7 +116,7 @@ local function concat_strings(pieces, strings)
     if type(piece) == "string" then
       value = value .. piece
     elseif type(piece) == "table" and piece.category == "string" then
-      local piece_str = strings[piece.name]
+      local piece_str = strings[bibtex_parser.normalize_key(piece.name)]
       if piece_str then
         value = value .. piece_str
       else
@@ -217,8 +217,9 @@ function BibtexParser:parse(bib_str, strings)
 
     elseif object.category == "string" then
       local string_value = concat_strings(object.contents, strings)
-      strings[object.name] = string_value
-      res.strings[object.name] = string_value
+      local normalized_name = bibtex_parser.normalize_key(object.name)
+      strings[normalized_name] = string_value
+      res.strings[normalized_name] = string_value
 
     elseif object.category == "preamble" then
       local value = concat_strings(object.contents, strings)
@@ -550,6 +551,13 @@ function bibtex_parser._split_last_jr_first_parts(parts)
 end
 
 
+function bibtex_parser.normalize_key(entry_key)
+  local normalized_key = unicode.NFC(entry_key)
+  normalized_key = unicode.casefold(normalized_key)
+  return normalized_key
+end
+
+
 --- Note that BibTeX find crossref in a case-insensitive manner (see
 --- `article-crossref` in `xampl.bib`) which is unlike biber/biblatex.
 --- This function is case-sensitive.
@@ -559,7 +567,7 @@ function bibtex_parser.resolve_crossrefs(entry_list, entry_dict)
   if not entry_dict then
     entry_dict = {}
     for _, entry in ipairs(entry_list) do
-      entry_dict[entry.key] = entry
+      entry_dict[bibtex_parser.normalize_key(entry.key)] = entry
     end
   end
   for _, entry in ipairs(entry_list) do
@@ -567,7 +575,7 @@ function bibtex_parser.resolve_crossrefs(entry_list, entry_dict)
     ---@type string?
     local ref_key = entry.fields.crossref
     while ref_key do
-      local crossref_entry = entry_dict[ref_key]
+      local crossref_entry = entry_dict[bibtex_parser.normalize_key(ref_key)]
       if crossref_entry then
         ref_entry = crossref_entry
         for field, value in pairs(ref_entry.fields) do
