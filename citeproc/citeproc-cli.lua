@@ -1,4 +1,3 @@
-
 --
 -- Copyright (c) 2021-2025 Zeping Lee
 -- Released under the MIT license.
@@ -8,40 +7,39 @@
 local cli = {}
 
 
-local lpeg = require("lpeg")
-
 require("lualibs")
 local citeproc_manager = require("citeproc-manager")
 local citeproc = require("citeproc")
-local bibtex2csl  -- = require("citeproc-bibtex-parser")  -- load on demand
+local bibtex2csl  -- = require("citeproc-bibtex2csl")  -- load on demand
 local util = require("citeproc-util")
-local latex_parser = require("citeproc-latex-parser")
 
 
 -- http://lua-users.org/wiki/AlternativeGetOpt
-local function getopt( arg, options )
+local function getopt(arg, options)
   local tab = {}
   for k, v in ipairs(arg) do
-    if string.sub( v, 1, 2) == "--" then
-      local x = string.find( v, "=", 1, true )
-      if x then tab[ string.sub( v, 3, x-1 ) ] = string.sub( v, x+1 )
-      else      tab[ string.sub( v, 3 ) ] = true
+    if string.sub(v, 1, 2) == "--" then
+      local x = string.find(v, "=", 1, true)
+      if x then
+        tab[string.sub(v, 3, x - 1)] = string.sub(v, x + 1)
+      else
+        tab[string.sub(v, 3)] = true
       end
-    elseif string.sub( v, 1, 1 ) == "-" then
+    elseif string.sub(v, 1, 1) == "-" then
       local y = 2
       local l = string.len(v)
       local jopt
-      while ( y <= l ) do
-        jopt = string.sub( v, y, y )
-        if string.find( options, jopt, 1, true ) then
+      while (y <= l) do
+        jopt = string.sub(v, y, y)
+        if string.find(options, jopt, 1, true) then
           if y < l then
-            tab[ jopt ] = string.sub( v, y+1 )
+            tab[jopt] = string.sub(v, y + 1)
             y = l
           else
-            tab[ jopt ] = arg[ k + 1 ]
+            tab[jopt] = arg[k + 1]
           end
         else
-          tab[ jopt ] = true
+          tab[jopt] = true
         end
         y = y + 1
       end

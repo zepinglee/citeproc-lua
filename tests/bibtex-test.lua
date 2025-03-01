@@ -63,7 +63,8 @@ describe("BibTeX data", function ()
             local json_path = string.format("%s/%s", result_dir, file:gsub("%.bib$", ".json"))
 
             describe(json_path, function ()
-              local csl_items, exceptions = bibtex2csl.parse_bibtex_to_csl(bib_contents, true, protect_case, sentence_case_title, check_sentence_case)
+              local csl_items, exceptions = bibtex2csl.parse_bibtex_to_csl(bib_contents, true, protect_case,
+                sentence_case_title, check_sentence_case)
 
               if not csl_items then
                 error("Cannot parse bib to CSL-JSON.")
@@ -72,7 +73,7 @@ describe("BibTeX data", function ()
               local json_contents = util.read_file(json_path)
               local expected = json_decode(json_contents)
               if not expected then
-                error('Cannot load json baseline.')
+                error("Cannot load json baseline.")
               end
 
               for i, expected_item in ipairs(expected) do

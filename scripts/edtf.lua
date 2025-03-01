@@ -9,10 +9,9 @@
 local edtf = {}
 
 local lpeg = require("lpeg")
-local unicode = require("unicode")
-local util = require("citeproc-util")
 
 function edtf.parse(str)
+  ---@diagnostic disable: codestyle-check
   local digit = lpeg.R("09") + lpeg.P"X"
   local hyphen = lpeg.P("-")
   local colon = lpeg.P(":")
@@ -46,8 +45,8 @@ function edtf.parse(str)
     end
     return d
   end
+  ---@diagnostic enable: codestyle-check
   local res = lpeg.match(edtf_date, str)
-  -- util.debug(res)
   return res
 end
 

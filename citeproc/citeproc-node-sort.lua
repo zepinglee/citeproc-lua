@@ -106,12 +106,9 @@ function Sort:sort(items, state, context)
     table.insert(key_map[item.id], i)
   end
 
-  -- util.debug(key_map)
-
   local function compare_entry(item1, item2)
     return self.compare_entry(key_map, sort_directions, item1, item2)
   end
-  -- util.debug(items)
   table.sort(items, compare_entry)
 
   return items
@@ -215,7 +212,6 @@ function Key:eval(engine, state, context)
     end
     local output_format = context.format
     local inlines = ir:flatten(output_format)
-    -- util.debug(inlines)
     local str = output_format:output(inlines)
     return str
   end

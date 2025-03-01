@@ -145,7 +145,7 @@ local function test_citations_process_citation_cluster(engine, fixture)
   for i, citation_id in ipairs(citation_order) do
     local prefix = output[citation_id].prefix
     local citation_str = output[citation_id].string
-    table.insert(ret, prefix .. "[" .. tostring(i-1) .. "] " .. citation_str)
+    table.insert(ret, prefix .. "[" .. tostring(i - 1) .. "] " .. citation_str)
   end
   return table.concat(ret, "\n")
 end
@@ -340,13 +340,13 @@ local function run_test(path)
         util.warning(string.format("Didn't find a database entry for '%s'", id))
       end
       return res
-    end
+    end,
   }
 
   local style = fixture.csl
 
   local engine = citeproc.new(citeproc_sys, style)
-  engine:set_output_format('html')
+  engine:set_output_format("html")
   citeproc.util.warning_enabled = false
   if fixture.options then
     for key, value in pairs(fixture.options) do

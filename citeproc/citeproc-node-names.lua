@@ -27,7 +27,6 @@ else
   util = require("citeproc.util")
 end
 
-local IrNode = ir_node.IrNode
 local NameIr = ir_node.NameIr
 local PersonNameIr = ir_node.PersonNameIr
 local SeqIr = ir_node.SeqIr
@@ -201,7 +200,6 @@ function Names:build_ir(engine, state, context)
 
   local irs = {}
   local num_names = 0
-  -- util.debug(self.name)
 
   local index_by_variable = {}
 
@@ -209,7 +207,8 @@ function Names:build_ir(engine, state, context)
   -- substitute_SubstituteOnlyOnceString.txt
   if names_inheritance.variable then
     for _, variable in ipairs(util.split(names_inheritance.variable)) do
-      local name_ir = names_inheritance.name:build_ir(variable, names_inheritance.et_al, names_inheritance.label, engine, state, context)
+      local name_ir = names_inheritance.name:build_ir(variable, names_inheritance.et_al, names_inheritance.label,
+        engine, state, context)
       if name_ir and names_inheritance.name.form == "count" then
         num_names = num_names + name_ir.name_count
       end
@@ -245,7 +244,8 @@ function Names:build_ir(engine, state, context)
 
     if editor_name_ir.full_name_str == translator_name_ir.full_name_str then
       local names = context:get_variable("editor")
-      local editor_translator_label_ir = names_inheritance.name:build_name_label(names_inheritance.label, "editortranslator", names, context)
+      local editor_translator_label_ir = names_inheritance.name:build_name_label(names_inheritance.label,
+        "editortranslator", names, context)
       if editor_translator_label_ir then
         local first_index = index_by_variable.editor
         local second_index = index_by_variable.translator
@@ -273,7 +273,6 @@ function Names:build_ir(engine, state, context)
       ir = NameIr:new({ir}, self)
       ir.name_count = num_names
       ir.group_var = GroupVar.Important
-      -- util.debug(ir)
       return ir
     end
   else
@@ -326,7 +325,7 @@ end
 
 function Names:substitute_names(result, context)
   if not context.build.first_rendered_names then
-     return result
+    return result
   end
   local name_strings = {}
   local match_all
@@ -477,7 +476,8 @@ function Name:build_ir(variable, et_al, label, engine, state, context)
     label = nil
   end
 
-  local et_al_abbreviation = self.et_al_min and self.et_al_use_first and #names >= self.et_al_min and #names > self.et_al_use_first
+  local et_al_abbreviation = self.et_al_min and self.et_al_use_first and #names >= self.et_al_min and
+      #names > self.et_al_use_first
   local use_last = et_al_abbreviation and self.et_al_use_last and self.et_al_use_first <= self.et_al_min - 2
 
   if self.form == "count" then
@@ -656,8 +656,6 @@ function Name:render_person_name(name, is_first, is_latin, is_inverted, context)
     (is_sort and context.style.demote_non_dropping_particle == "sort-only"))
 
   local name_part_tokens = self:get_display_order(name, self.form, is_latin, is_sort, is_inverted, demote_ndp)
-  -- util.debug(name)
-  -- util.debug(name_part_tokens)
 
   local inlines = {}
   for i, token in ipairs(name_part_tokens) do
@@ -678,7 +676,7 @@ function Name:render_person_name(name, is_first, is_latin, is_inverted, context)
       util.extend(inlines, InlineElement:parse(text, context))
 
     elseif token == "literal" then
-    local literal_inlines = self.family:format_text_case(name.literal, context)
+      local literal_inlines = self.family:format_text_case(name.literal, context)
       util.extend(inlines, literal_inlines)
 
     elseif token == "space" then
@@ -691,7 +689,6 @@ function Name:render_person_name(name, is_first, is_latin, is_inverted, context)
       table.insert(inlines, PlainText:new(self.sort_separator))
     end
   end
-  -- util.debug(inlines)
   return inlines
 end
 
@@ -991,7 +988,7 @@ function Name:initialize_name(given, with, initialize_with_hyphen)
 
     local first_letter = utf8.char(utf8.codepoint(name))
     if unicode.islower(first_letter) then
-        is_particle = true
+      is_particle = true
     elseif #name == 1 then
       is_abbreviation = true
     else
@@ -1004,8 +1001,8 @@ function Name:initialize_name(given, with, initialize_with_hyphen)
 
     if is_particle then
       name_list[i] = name .. " "
-      if i > 1 and not string.match(name_list[i-1], "%s$") then
-        name_list[i-1] = name_list[i-1] .. " "
+      if i > 1 and not string.match(name_list[i - 1], "%s$") then
+        name_list[i - 1] = name_list[i - 1] .. " "
       end
     elseif is_abbreviation then
       name_list[i] = name .. with
@@ -1037,11 +1034,11 @@ function Name:initialize_name(given, with, initialize_with_hyphen)
     end
 
     -- Handle the compound names
-    if i > 1 and punct_list[i-1] == "-" then
+    if i > 1 and punct_list[i - 1] == "-" then
       if is_particle then  -- special case "Guo-ping"
         name_list[i] = ""
       else
-        name_list[i-1] = util.rstrip(name_list[i-1])
+        name_list[i - 1] = util.rstrip(name_list[i - 1])
         name_list[i] = "-" .. name_list[i]
       end
     end
@@ -1124,7 +1121,7 @@ function Name:expand_one_name(name_ir)
   table.remove(hidden_name_irs, 1)
   if #hidden_name_irs == 0 then
     if name_ir.et_al_abbreviation then
-      name_ir.et_al_abbreviation  = false
+      name_ir.et_al_abbreviation = false
     end
     if name_ir.use_last then
       name_ir.use_last = false

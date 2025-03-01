@@ -33,7 +33,6 @@ end
 local Context = context.Context
 local IrState = context.IrState
 local Element = element.Element
-local IrNode = ir_node.IrNode
 local Rendered = ir_node.Rendered
 local SeqIr = ir_node.SeqIr
 local GroupVar = ir_node.GroupVar
@@ -56,7 +55,7 @@ local Bibliography = Element:derive("bibliography", {
   hanging_indent = false,
   line_spacing = 1,
   entry_spacing = 1,
-  subsequent_author_substitute_rule = "complete-all"
+  subsequent_author_substitute_rule = "complete-all",
 })
 
 function Bibliography:from_node(node, style)
@@ -106,47 +105,43 @@ function Bibliography:from_node(node, style)
   return o
 end
 
----comment
 ---@param id string
 ---@param engine CiteProc
 ---@return string?
 function Bibliography:build_bibliography_str(id, engine)
-    local output_format = engine.output_format
+  local output_format = engine.output_format
 
-    local state = IrState:new()
-    local context = Context:new()
-    context.engine = engine
-    context.style = engine.style
-    context.area = self
-    context.in_bibliography = true
-    context.name_inheritance = self.name_inheritance
-    context.format = output_format
-    context.id = id
-    context.cite = nil
-    context.reference = engine:get_item(id)
+  local state = IrState:new()
+  local context = Context:new()
+  context.engine = engine
+  context.style = engine.style
+  context.area = self
+  context.in_bibliography = true
+  context.name_inheritance = self.name_inheritance
+  context.format = output_format
+  context.id = id
+  context.cite = nil
+  context.reference = engine:get_item(id)
 
-    -- CSL-M: `layout` extension
-    local active_layout, context_lang = util.get_layout_by_language(self, engine, context.reference)
-    context.lang = context_lang
-    context.locale = engine:get_locale(context_lang)
+  -- CSL-M: `layout` extension
+  local active_layout, context_lang = util.get_layout_by_language(self, engine, context.reference)
+  context.lang = context_lang
+  context.locale = engine:get_locale(context_lang)
 
-    local ir = self:build_ir(engine, state, context, active_layout)
-    -- util.debug(ir)
-    ir.reference = context.reference
+  local ir = self:build_ir(engine, state, context, active_layout)
+  ir.reference = context.reference
 
-    -- Add year-suffix
-    self:add_bibliography_year_suffix(ir, engine)
+  -- Add year-suffix
+  self:add_bibliography_year_suffix(ir, engine)
 
-    -- The layout output may be empty: sort_OmittedBibRefNonNumericStyle.txt
-    if not ir then
-      return nil
-    end
+  -- The layout output may be empty: sort_OmittedBibRefNonNumericStyle.txt
+  if not ir then
+    return nil
+  end
 
-    -- util.debug(ir)
-    local flat = ir:flatten(output_format)
-    -- util.debug(flat)
-    local str = output_format:output_bibliography_entry(flat, context)
-    return str
+  local flat = ir:flatten(output_format)
+  local str = output_format:output_bibliography_entry(flat, context)
+  return str
 end
 
 function Bibliography:build_ir(engine, state, context, active_layout)
@@ -154,7 +149,6 @@ function Bibliography:build_ir(engine, state, context, active_layout)
     util.error("Missing bibliography layout.")
   end
   local ir = active_layout:build_ir(engine, state, context)
-  -- util.debug(ir)
   if self.second_field_align == "flush" and #ir.children >= 2 then
     ir.children[1].display = "left-margin"
     local right_inline_ir = SeqIr:new(util.slice(ir.children, 2), self)
@@ -238,7 +232,6 @@ function Bibliography:substitute_subsequent_authors_complete_all(engine, ir)
       ir.first_name_ir.group_var = GroupVar.Missing
     else
       -- the output of label is not substituted
-      -- util.debug(ir.first_name_ir)
       ir.first_name_ir.children = {Rendered:new({PlainText:new(text)}, self)}
     end
   end
@@ -333,13 +326,10 @@ function Bibliography:add_bibliography_year_suffix(ir, engine)
     return
   end
 
-  local year_suffix_number = ir.reference.year_suffix_number
-
   if not ir.year_suffix_irs then
     ir.year_suffix_irs = ir:collect_year_suffix_irs()
     if #ir.year_suffix_irs == 0 then
       local year_ir = ir:find_first_year_ir()
-      -- util.debug(year_ir)
       if year_ir then
         local year_suffix_ir = YearSuffix:new({}, engine.style.citation)
         table.insert(year_ir.children, year_suffix_ir)

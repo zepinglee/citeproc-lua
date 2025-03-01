@@ -58,7 +58,6 @@ describe("LaTeX parser", function ()
 
   end)
 
-
   describe("convert LaTeX markup to HTML-like tags", function ()
 
     it("italic", function ()
@@ -105,7 +104,6 @@ describe("LaTeX parser", function ()
 
   end)
 
-
   describe("check sentence case", function ()
 
     it("check sentence case", function ()
@@ -121,7 +119,8 @@ describe("LaTeX parser", function ()
     end)
 
     it("protected command", function ()
-      assert.equal('The story of <span class="nocase">HMS</span> <i><span class="nocase">Erebus</span></i> in <i>really</i> strong wind',
+      assert.equal(
+        'The story of <span class="nocase">HMS</span> <i><span class="nocase">Erebus</span></i> in <i>really</i> strong wind',
         latex_parser.latex_to_sentence_case_pseudo_html(
           "The Story of {HMS} \\emph{Erebus} in {\\emph{Really}} Strong Wind",
           true, true, true
@@ -130,7 +129,6 @@ describe("LaTeX parser", function ()
     end)
 
   end)
-
 
   describe("convert to sentence case", function ()
 
@@ -153,7 +151,8 @@ describe("LaTeX parser", function ()
     end)
 
     it("protected command", function ()
-      assert.equal('The story of <span class="nocase">HMS</span> <i><span class="nocase">Erebus</span></i> in <i>really</i> strong wind',
+      assert.equal(
+        'The story of <span class="nocase">HMS</span> <i><span class="nocase">Erebus</span></i> in <i>really</i> strong wind',
         latex_parser.latex_to_sentence_case_pseudo_html(
           "The Story of {HMS} \\emph{Erebus} in {\\emph{Really}} Strong Wind",
           true, true, false
@@ -192,9 +191,11 @@ describe("LaTeX parser", function ()
 
     it("after colon", function ()
       -- From <https://apastyle.apa.org/style-grammar-guidelines/capitalization/sentence-case>
-      local s = "The Need for Cultural Adaptations to Health Interventions for {African} {American} Women: A Qualitative Analysis"
+      local s =
+      "The Need for Cultural Adaptations to Health Interventions for {African} {American} Women: A Qualitative Analysis"
       local res = latex_parser.latex_to_sentence_case_pseudo_html(s, true, true, false)
-      local expected = 'The need for cultural adaptations to health interventions for <span class="nocase">African</span> <span class="nocase">American</span> women: A qualitative analysis'
+      local expected =
+      'The need for cultural adaptations to health interventions for <span class="nocase">African</span> <span class="nocase">American</span> women: A qualitative analysis'
       assert.equal(expected, res)
     end)
 
@@ -208,7 +209,6 @@ describe("LaTeX parser", function ()
 
   end)
 
-
   describe("LaTeX keys", function ()
 
     it("seq", function ()
@@ -216,7 +216,7 @@ describe("LaTeX parser", function ()
       local res = latex_parser.parse_seq(str)
       local expected = {
         "field=type,value=book",
-        "field=type,value=article-journal,negative=true"
+        "field=type,value=article-journal,negative=true",
       }
       assert.same(expected, res)
     end)

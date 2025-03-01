@@ -8,8 +8,6 @@ local style_module = {}
 
 local dom
 local element
-local ir_node
-local output
 local node_names
 local util
 
@@ -17,25 +15,16 @@ local using_luatex, kpse = pcall(require, "kpse")
 if using_luatex then
   dom = require("luaxml-domobject")
   element = require("citeproc-element")
-  ir_node = require("citeproc-ir-node")
-  output = require("citeproc-output")
   node_names = require("citeproc-node-names")
   util = require("citeproc-util")
 else
   dom = require("citeproc.luaxml.domobject")
   element = require("citeproc.element")
-  ir_node = require("citeproc.ir-node")
-  output = require("citeproc.output")
   node_names = require("citeproc.node-names")
   util = require("citeproc.util")
 end
 
 local Element = element.Element
-local IrNode = ir_node.IrNode
-local Rendered = ir_node.Rendered
-local SeqIr = ir_node.SeqIr
-local PlainText = output.PlainText
-local DisamStringFormat = output.DisamStringFormat
 
 
 ---@class Style: Element
@@ -283,7 +272,6 @@ function Info:from_node(node)
 
   return o
 end
-
 
 
 style_module.Style = Style

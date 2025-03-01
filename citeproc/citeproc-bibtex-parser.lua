@@ -38,12 +38,11 @@ local C = lpeg.C
 local Cc = lpeg.Cc
 local Cf = lpeg.Cf
 local Cg = lpeg.Cg
-local Cmt = lpeg.Cmt
-local Cp = lpeg.Cp
 local Ct = lpeg.Ct
 local V = lpeg.V
 
 
+---@diagnostic disable codestyle-check
 -- Learned from <http://boston.conman.org/2020/06/05.1>.
 local function case_insensitive_pattern(str)
   local char = R("AZ", "az") / function (c) return P(c:lower()) + P(c:upper()) end
@@ -108,6 +107,7 @@ local function get_bibtex_grammar()
 
   return bibtex_grammar
 end
+---@diagnostic enable codestyle-check
 
 
 local function concat_strings(pieces, strings)
@@ -174,7 +174,6 @@ end
 
 ---@alias Exception table
 
----comment
 ---@param bib_str string
 ---@param strings table<string, string>?
 ---@return BibtexData?
@@ -229,8 +228,8 @@ function BibtexParser:parse(bib_str, strings)
         res.preamble = value
       end
 
-    -- elseif object.category == "comment" then
-    -- Is this really needed?
+      -- elseif object.category == "comment" then
+      -- Is this really needed?
 
     elseif object.category == "exception" then
       -- TODO
@@ -273,7 +272,7 @@ function BibtexParser:_make_entry(object, strings)
   return object
 end
 
-
+---@diagnostic disable codestyle-check
 -- continuation byte
 local utf8_cont = lpeg.R("\128\191")
 
@@ -294,6 +293,7 @@ local function ignore_case(str)
                + P(1) / function (c) return P(c) end
   return Cf(char^1, function (a, b) return a * b end):match(str)
 end
+---@diagnostic enable codestyle-check
 
 
 ---@alias NameDict table<string, string>
@@ -303,9 +303,11 @@ end
 ---@param str NameStr name field value
 ---@return NameStr[]
 function bibtex_parser.split_names(str)
+  ---@diagnostic disable codestyle-check
   local delimiter_and = ignore_case("and") * (space + -1)
   local name = (balanced - space * delimiter_and)^1
   local names = Ct(((white_space * delimiter_and) + C(name))^0)
+  ---@diagnostic enable codestyle-check
   return names:match(str)
 end
 
@@ -316,17 +318,19 @@ function bibtex_parser.split_name_parts(str)
   str = util.strip(str)
   if string.match(str, ",$") then
     util.warning(string.format("Name '%s' has has a comma at the end.", str))
-    str = string.gsub(str, ",$", '')
+    str = string.gsub(str, ",$", "")
   end
 
+  ---@diagnostic disable codestyle-check
   local comma = P","
   local comma_part = (balanced - comma)^0
   local comma_parts = Ct(C(comma_part) * (comma * white_space * C(comma_part))^0)
+  ---@diagnostic enable codestyle-check
   local parts = comma_parts:match(str)
 
   local is_biblatex_extended_format = false
   if #parts > 0 and (string.match(parts[1], "^[a-zA-Z]+%-?i?%s*=")
-      or string.match(parts[1], '^"[a-zA-Z]+%-?i?%s*=.*"$')) then
+        or string.match(parts[1], '^"[a-zA-Z]+%-?i?%s*=.*"$')) then
     is_biblatex_extended_format = true
   end
 
@@ -432,8 +436,10 @@ function bibtex_parser._split_extended_name_format(parts)
       key = "jr-i"
     end
 
+    ---@diagnostic disable codestyle-check
     local braced_pattern = P"{" * C(balanced^0) * P"}" * P(-1)
     local stripped = braced_pattern:match(value)
+    ---@diagnostic enable codestyle-check
     if stripped then
       value = stripped
     end
@@ -444,13 +450,15 @@ function bibtex_parser._split_extended_name_format(parts)
 end
 
 function bibtex_parser._split_first_von_last_parts(str)
+  ---@diagnostic disable codestyle-check
   local word_sep = P" " + P"~" + P(util.unicode['no-break space'])
   local word_tokens = Ct(C(utf8_balanced - space_char - word_sep)^0)
   local words_and_seps = Ct(word_tokens * (C(space + word_sep) * word_tokens)^0)
   local pieces = words_and_seps:match(str)
+  ---@diagnostic enable codestyle-check
 
   local words = {}
-  local seps = { "" }
+  local seps = {""}
 
   for _, piece in ipairs(pieces) do
     if type(piece) == "table" then
@@ -477,9 +485,6 @@ function bibtex_parser._split_first_von_last_parts(str)
     end
   end
 
-  -- util.debug(von_start)
-  -- util.debug(von_stop)
-
   local name = {}
 
   if von_stop > 0 then
@@ -498,9 +503,11 @@ function bibtex_parser._split_first_von_last_parts(str)
 end
 
 function bibtex_parser._split_von_last_parts(str)
+  ---@diagnostic disable codestyle-check
   local word_sep = P"-" + P"~" + P(util.unicode['no-break space'])
   local word_tokens = Ct(C(utf8_balanced - space_char - word_sep)^0)
   local words_and_seps = Ct(word_tokens * (C(space + word_sep) * word_tokens)^0)
+  ---@diagnostic enable codestyle-check
   local pieces = words_and_seps:match(str)
 
   local words = {}
@@ -540,14 +547,14 @@ end
 ---@param parts string[]
 ---@return NameDict
 function bibtex_parser._split_last_jr_first_parts(parts)
-    local name = bibtex_parser._split_von_last_parts(parts[1])
-    if parts[2] ~= "" then
-      name.jr = parts[2]
-    end
-    if parts[3] ~= "" then
-      name.first = parts[3]
-    end
-    return name
+  local name = bibtex_parser._split_von_last_parts(parts[1])
+  if parts[2] ~= "" then
+    name.jr = parts[2]
+  end
+  if parts[3] ~= "" then
+    name.first = parts[3]
+  end
+  return name
 end
 
 
@@ -585,7 +592,8 @@ function bibtex_parser.resolve_crossrefs(entry_list, entry_dict)
         end
         ref_key = ref_entry.fields.crossref
       else
-        util.warning(string.format("Didn't find a database entry for crossref '%s' in entry '%s'.", ref_key, ref_entry.key))
+        util.warning(string.format("Didn't find a database entry for crossref '%s' in entry '%s'.", ref_key,
+          ref_entry.key))
         ref_entry.fields.crossref = nil
         ref_key = nil
       end
@@ -597,7 +605,6 @@ end
 bibtex_parser._default_parser = BibtexParser:new()
 
 
----comment
 ---@param bib_str string input string
 ---@param strings table<string, string>? strings
 ---@return BibtexData?, Exception[]

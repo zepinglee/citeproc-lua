@@ -15,7 +15,7 @@ local node_style
 local output
 local util
 
-local using_luatex, kpse = pcall(require, "kpse")
+local using_luatex, _ = pcall(require, "kpse")
 if using_luatex then
   dom = require("luaxml-domobject")
   context = require("citeproc-context")
@@ -41,8 +41,6 @@ local Style = node_style.Style
 local Locale = node_locale.Locale
 local Context = context.Context
 local IrState = context.IrState
-local InlineElement = output.InlineElement
--- local OutputFormat = output.OutputFormat
 local LatexWriter = output.LatexWriter
 local HtmlWriter = output.HtmlWriter
 local SortStringFormat = output.SortStringFormat
@@ -139,7 +137,6 @@ local CiteProc = {}
 ---@field retrieveLocale fun(LanguageCode): string?
 ---@field retrieveItem fun(ItemId): ItemData?
 
----comment
 ---@param sys table
 ---@param style string
 ---@param lang string?
@@ -209,7 +206,7 @@ function CiteProc.new(sys, style, lang, force_lang)
     locale_tags_info_dict = {},
   }
 
-  setmetatable(o, { __index = CiteProc })
+  setmetatable(o, {__index = CiteProc})
   return o
 end
 
@@ -225,7 +222,6 @@ end
 
 ---@param ids CiteId[]
 function CiteProc:updateItems(ids)
-  -- util.debug(string.format('updateItems(%s)', table.concat(ids, ", ")))
   self.registry.reflist = {}
   self.registry.registry = {}
   self.person_names = {}
@@ -317,7 +313,6 @@ end
 ---@param citations_post PostCitation[]
 ---@return [table, [integer, string, CitationId][]]
 function CiteProc:processCitationCluster(citation, citations_pre, citations_post)
-  -- util.debug(string.format('processCitationCluster(%s)', citation.citationID))
   self:_check_valid_citation_element()
   citation = self:_normalize_citation_input(citation)
   self:_check_input(citation, citations_pre, citations_post)
@@ -348,7 +343,6 @@ end
 ---@param citation CitationData
 ---@return string
 function CiteProc:process_citation(citation)
-  -- util.debug(string.format('process_citation(%s)', citation.citationID))
   self:_check_valid_citation_element()
   citation = self:_normalize_citation_input(citation)
 
@@ -360,7 +354,7 @@ function CiteProc:process_citation(citation)
 
   local citation_list, item_ids = self:_build_reconstituted_citation_list(citation, citations_pre, {})
   -- self:updateItems(item_ids)
-  for i, cite_item in ipairs(citation.citationItems) do
+  for _, cite_item in ipairs(citation.citationItems) do
     self:get_item(cite_item.id)
   end
   if #citation.sorted_items > 1 and self.style.citation.sort and not citation.properties.unsorted then
@@ -452,7 +446,7 @@ function CiteProc:makeCitationCluster(citation_items)
     citationItems = items,
     properties = {
       noteIndex = 0,
-    }
+    },
   }
   return res
 end
@@ -511,7 +505,7 @@ function CiteProc:_check_valid_citation_element()
     if self.style.info and self.style.info.independent_parent then
       util.error(string.format("This is a dependent style linked to '%s'.", self.style.info.independent_parent))
     else
-      util.error('No <citation> in style.')
+      util.error("No <citation> in style.")
     end
   end
 end
@@ -598,11 +592,13 @@ function CiteProc:_check_input(citation, citations_pre, citations_post)
       local name = string.format("citationsPre[%d]", i)
       table.insert(citation_info_list, {citation_id, note_index, chapter_number, name})
     end
-    table.insert(citation_info_list, {citation.citationID, citation.properties.noteIndex, citation.properties.chapterIndex or 0, "citation"})
+    table.insert(citation_info_list,
+      {citation.citationID, citation.properties.noteIndex, citation.properties.chapterIndex or 0, "citation"})
     for i, post_citation in ipairs(citations_post) do
       local citation_id = post_citation[1]
       local note_index = post_citation[2]
-      local chapter_number = post_citation[3] or self.registry.citations_by_id[citation_id].properties.chapterIndex or 0
+      local chapter_number = post_citation[3] or self.registry.citations_by_id[citation_id].properties.chapterIndex or
+          0
       local name = string.format("citationsPost[%d]", i)
       table.insert(citation_info_list, {citation_id, note_index, chapter_number, name})
     end
@@ -767,7 +763,8 @@ function CiteProc:_update_chapter_positions(citation_list, tainted_citation_ids)
           near_note = cite_item.near_note,
         }
 
-        self:_set_cite_item_position(cite_item, note_index, previous_cite, previous_citation, citation, first_ref, last_ref, num_citations_in_note)
+        self:_set_cite_item_position(cite_item, note_index, previous_cite, previous_citation, citation, first_ref,
+          last_ref, num_citations_in_note)
 
         if self:_check_tainted_position_change(cite_item, position_properties) then
           tainted_citation_ids[citation.citationID] = true
@@ -824,7 +821,8 @@ function CiteProc:_update_chapter_positions(citation_list, tainted_citation_ids)
   return tainted_citation_ids
 end
 
-function CiteProc:_set_cite_item_position(cite_item, note_index, previous_cite, previous_citation, citation, first_ref, last_ref, num_citations_in_note)
+function CiteProc:_set_cite_item_position(cite_item, note_index, previous_cite, previous_citation, citation, first_ref,
+    last_ref, num_citations_in_note)
   -- https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html#citations
   -- Citations within the main text of the document have a noteIndex of zero.
   if citation.properties.mode == "author-only" or citation.properties.mode == "full-cite" then
@@ -842,7 +840,8 @@ function CiteProc:_set_cite_item_position(cite_item, note_index, previous_cite, 
     cite_item.position_level = Position.First
   end
 
-  local preceding_cite_item = self:_find_preceding_ibid_item(cite_item, previous_cite, previous_citation, note_index, num_citations_in_note)
+  local preceding_cite_item = self:_find_preceding_ibid_item(cite_item, previous_cite, previous_citation, note_index,
+    num_citations_in_note)
 
   if preceding_cite_item then
     cite_item.position_level = self:_get_ibid_position(cite_item, preceding_cite_item)
@@ -858,7 +857,8 @@ function CiteProc:_set_cite_item_position(cite_item, note_index, previous_cite, 
 end
 
 -- Find the preceding cite referencing the same item
-function CiteProc:_find_preceding_ibid_item(cite_item, previous_cite, previous_citation, note_index, num_citations_in_note)
+function CiteProc:_find_preceding_ibid_item(cite_item, previous_cite, previous_citation, note_index,
+    num_citations_in_note)
   if previous_cite then
     -- a. the current cite immediately follows on another cite, within the same
     --    citation, that references the same item
@@ -972,10 +972,6 @@ end
 function CiteProc:match_bibsection_object(item, bibsection_object)
   local field = bibsection_object.field
   local value = bibsection_object.value
-  -- util.debug(item.id)
-  -- util.debug(field)
-  -- util.debug(value)
-  -- util.debug(item[field])
   local match = false
   if value == "" then
     if not item[field] or item[field] == "" then
@@ -997,7 +993,6 @@ function CiteProc:match_bibsection_object(item, bibsection_object)
   if bibsection_object.negative then
     match = not match
   end
-  -- util.debug(match)
   return match
 end
 
@@ -1115,7 +1110,7 @@ function CiteProc.create_element_tree(node)
     el = element_class:from_node(node)
   end
   if el then
-    for i, child in ipairs(node:get_children()) do
+    for _, child in ipairs(node:get_children()) do
       if child:is_element() then
         local child_element = CiteProc.create_element_tree(child)
         if child_element then
@@ -1184,7 +1179,6 @@ function CiteProc:process_extra_note(item)
     local note_fields = {}
     local note_lines = {}
     for _, line in ipairs(util.split(item.note, "%s*\r?\n%s*")) do
-      -- util.debug(line)
       local field, value = string.match(line, "^([%w-_ ]+):%s*(.*)$")
       if field then
         local variable_type = util.variable_types[field]
@@ -1209,7 +1203,7 @@ function CiteProc:process_extra_note(item)
     for field, value in pairs(note_fields) do
       item[field] = value
     end
-    item.note = table.concat(note_lines, '\n')
+    item.note = table.concat(note_lines, "\n")
   end
   return item
 end

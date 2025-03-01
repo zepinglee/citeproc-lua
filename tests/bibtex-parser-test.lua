@@ -40,10 +40,10 @@ describe("BibTeX parser", function ()
           type = "book",
           key = "lamport86",
           fields = {
-            author    = "Leslie Lamport",
-            title     = "{\\LaTeX{}} A Document Preparation system",
+            author = "Leslie Lamport",
+            title = "{\\LaTeX{}} A Document Preparation system",
             publisher = "Addison-Wesley",
-            year      = "1986"
+            year = "1986",
           },
         },
       }
@@ -65,7 +65,7 @@ describe("BibTeX parser", function ()
           fields = {
             title = "1966 World Gnus Almanac",
           },
-        }
+        },
       }
       assert.same(expected, res.entries)
     end)
@@ -120,7 +120,7 @@ describe("BibTeX parser", function ()
       assert.same(
         {
           "Foo",
-          "{Bar and Baz}"
+          "{Bar and Baz}",
         },
         bibtex_parser.split_names("Foo and {Bar and Baz}")
       )
@@ -535,7 +535,6 @@ describe("BibTeX parser", function ()
 
       end)
 
-
       describe("for the second,third specification form von Last First", function ()
 
         it("Simple case. Case do not matter for First.", function ()
@@ -748,26 +747,26 @@ describe("BibTeX parser", function ()
               last = "Rousse",
               first = "Jean",
               von = "de la",
-              ["von-i"] = "d"
-            }
-          }
+              ["von-i"] = "d",
+            },
+          },
         },
         {
           "given={Jean Pierre Simon}, given-i=JPS",
           {
             {
               first = "Jean Pierre Simon",
-              ["first-i"] = "JPS"
-            }
-          }
+              ["first-i"] = "JPS",
+            },
+          },
         },
         {
           '"family={Robert and Sons, Inc.}"',
           {
             {
               last = "Robert and Sons, Inc.",
-            }
-          }
+            },
+          },
         },
         {
           "Hans Harman and given=Simon, prefix=de, family=Beumont",
@@ -781,7 +780,7 @@ describe("BibTeX parser", function ()
               first = "Simon",
               von = "de",
             },
-          }
+          },
         },
       }
       for _, name_str_pair in ipairs(names) do

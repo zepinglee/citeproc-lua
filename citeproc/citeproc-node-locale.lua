@@ -100,10 +100,10 @@ end
 
 Locale.form_fallbacks = {
   ["verb-short"] = {"verb-short", "verb", "long"},
-  ["verb"]       = {"verb", "long"},
-  ["symbol"]     = {"symbol", "short", "long"},
-  ["short"]      = {"short", "long"},
-  ["long"]       = {"long"},
+  ["verb"] = {"verb", "long"},
+  ["symbol"] = {"symbol", "short", "long"},
+  ["short"] = {"short", "long"},
+  ["long"] = {"long"},
 }
 
 
@@ -205,7 +205,6 @@ function Terms:from_node(node)
   o:process_children_nodes(node)
   for _, term in ipairs(o.children) do
     local form = term.form
-    local gender = term.gender
     local gender_form = term.gender_form
     local match
     if util.startswith(term.name, "ordinal-0") then
@@ -216,16 +215,16 @@ function Terms:from_node(node)
 
     local key = term.name
     if form and form ~= "long" then
-      key = key .. '/form-' .. form
+      key = key .. "/form-" .. form
     end
     -- if gender then
     --   key = key .. '/gender-' .. gender
     -- end
     if gender_form then
-      key = key .. '/gender-form-' .. gender_form
+      key = key .. "/gender-form-" .. gender_form
     end
     if match then
-      key = key .. '/match-' .. match
+      key = key .. "/match-" .. match
     end
 
     if term.name == "ordinal" or util.startswith(term.name, "ordinal-") then

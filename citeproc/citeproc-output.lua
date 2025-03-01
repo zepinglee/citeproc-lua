@@ -9,21 +9,18 @@ local output_module = {}
 local lpeg = require("lpeg")
 local uni_utf8
 local unicode
-local dom
 local ir_node
 local util
 
-local using_luatex, kpse = pcall(require, "kpse")
+local using_luatex, _ = pcall(require, "kpse")
 if using_luatex then
   uni_utf8 = require("unicode").utf8
   unicode = require("citeproc-unicode")
-  dom = require("luaxml-domobject")
   ir_node = require("citeproc-ir-node")
   util = require("citeproc-util")
 else
   uni_utf8 = require("lua-utf8")
   unicode = require("citeproc.unicode")
-  dom = require("citeproc.luaxml.domobject")
   ir_node = require("citeproc.ir-node")
   util = require("citeproc.util")
 end
@@ -33,19 +30,19 @@ local GroupVar = ir_node.GroupVar
 
 ---@class LocalizedQuotes
 local LocalizedQuotes = {
-  outer_open = util.unicode['left double quotation mark'],
-  outer_close = util.unicode['right double quotation mark'],
-  inner_open = util.unicode['left single quotation mark'],
-  inner_close = util.unicode['right single quotation mark'],
+  outer_open = util.unicode["left double quotation mark"],
+  outer_close = util.unicode["right double quotation mark"],
+  inner_open = util.unicode["left single quotation mark"],
+  inner_close = util.unicode["right single quotation mark"],
   punctuation_in_quote = false,
 }
 
 function LocalizedQuotes:new(outer_open, outer_close, inner_open, inner_close, punctuation_in_quote)
   local o = {
-    outer_open = outer_open or util.unicode['left double quotation mark'],
-    outer_close = outer_close or util.unicode['right double quotation mark'],
-    inner_open = inner_open or util.unicode['left single quotation mark'],
-    inner_close = inner_close or util.unicode['right single quotation mark'],
+    outer_open = outer_open or util.unicode["left double quotation mark"],
+    outer_close = outer_close or util.unicode["right double quotation mark"],
+    inner_open = inner_open or util.unicode["left single quotation mark"],
+    inner_close = inner_close or util.unicode["right single quotation mark"],
     punctuation_in_quote = punctuation_in_quote,
   }
   setmetatable(o, self)
@@ -69,13 +66,11 @@ local InlineElement = {
 }
 
 
-
----comment
 ---@param class_name string
 ---@return table
 function InlineElement:derive(class_name)
   local o = {
-    _type  = class_name,
+    _type = class_name,
   }
   -- self[class_name] = o
   setmetatable(o, self)
@@ -87,7 +82,7 @@ end
 function InlineElement:new(inlines)
   local o = {
     inlines = inlines,
-    _type  = self._type,
+    _type = self._type,
   }
   setmetatable(o, self)
   return o
@@ -322,7 +317,6 @@ function UndefinedCite:new(inlines, cite_item)
 end
 
 
-
 ---@param text string
 ---@param context Context?
 ---@param is_external boolean?
@@ -335,9 +329,7 @@ function InlineElement:parse(text, context, is_external)
     inlines = self:parse_csl_rich_text(text)
   elseif text_type == "string" then
     -- String with HTML-like formatting tags
-    -- util.debug(text)
     inlines = self:parse_html_tags(text, context, is_external)
-    -- util.debug(inlines)
   elseif text_type == "number" then
     inlines = {PlainText:new(tostring(text))}
   else
@@ -434,23 +426,23 @@ local code_pattern =
 local basic_tag_pattern = P '<span class="nocase">'
     + P '<span class="nodecor">'
     + P '<span style="font-variant:small-caps;">'
-    + P '<sc>'
-    + P '<i>'
-    + P '<b>'
-    + P '<sup>'
-    + P '<sub>'
+    + P "<sc>"
+    + P "<i>"
+    + P "<b>"
+    + P "<sup>"
+    + P "<sub>"
     + P ' "'
     + P " '"
     + P '("'
     + P "('"
     + P "“"
     + P "‘"
-    + P '</span>'
-    + P '</sc>'
-    + P '</i>'
-    + P '</b>'
-    + P '</sup>'
-    + P '</sub>'
+    + P "</span>"
+    + P "</sc>"
+    + P "</i>"
+    + P "</b>"
+    + P "</sup>"
+    + P "</sub>"
     + P '"'
     + P "'"
     + P "”"
@@ -471,23 +463,23 @@ local default_openers_info = {
     closer = "</span>",
     quotes = false,
   },
-  ['<sc>'] = {
+  ["<sc>"] = {
     closer = "</sc>",
     quotes = false,
   },
-  ['<i>'] = {
+  ["<i>"] = {
     closer = "</i>",
     quotes = false,
   },
-  ['<b>'] = {
+  ["<b>"] = {
     closer = "</b>",
     quotes = false,
   },
-  ['<sup>'] = {
+  ["<sup>"] = {
     closer = "</sup>",
     quotes = false,
   },
-  ['<sub>'] = {
+  ["<sub>"] = {
     closer = "</sub>",
     quotes = false,
   },
@@ -507,23 +499,23 @@ local default_openers_info = {
     closer = "’",
     quotes = true,
   },
-  ['<code>'] = {
+  ["<code>"] = {
     closer = "</code>",
     quotes = false,
   },
-  ['<script>'] = {
+  ["<script>"] = {
     closer = "</script>",
     quotes = false,
   },
-  ['<pre>'] = {
+  ["<pre>"] = {
     closer = "</pre>",
     quotes = false,
   },
-  ['<math>'] = {
+  ["<math>"] = {
     closer = "</math>",
     quotes = false,
   },
-  ['<math-tex>'] = {
+  ["<math-tex>"] = {
     closer = "</math-tex>",
     quotes = false,
   },
@@ -552,7 +544,7 @@ local function make_locale_tag_info(locale, context)
     openers_info[localed_quotes.outer_open] = {
       closer = localed_quotes.outer_close,
       quotes = true,
-      inner = false
+      inner = false,
     }
   end
 
@@ -563,7 +555,7 @@ local function make_locale_tag_info(locale, context)
     openers_info[localed_quotes.inner_open] = {
       closer = localed_quotes.inner_close,
       quotes = true,
-      inner = true
+      inner = true,
     }
   end
 
@@ -600,7 +592,7 @@ local function split_tags_and_strings(str, context)
 
   local tag_positions_list = lpeg.match(tag_pattern, str)
   if not tag_positions_list then
-    error('Pattern not match')
+    error("Pattern not match")
   end
   local start = 1
   local stop = 1
@@ -664,15 +656,15 @@ local function make_inline_from_tag(tag, inlines, openers_info, context)
     return NoDecor:new(inlines)
   elseif tag == '<span style="font-variant:small-caps;">' then
     return Formatted:new(inlines, {["font-variant"] = "small-caps"})
-  elseif tag == '<sc>' then
+  elseif tag == "<sc>" then
     return Formatted:new(inlines, {["font-variant"] = "small-caps"})
-  elseif tag == '<i>' then
+  elseif tag == "<i>" then
     return Formatted:new(inlines, {["font-style"] = "italic"})
-  elseif tag == '<b>' then
+  elseif tag == "<b>" then
     return Formatted:new(inlines, {["font-weight"] = "bold"})
-  elseif tag == '<sup>' then
+  elseif tag == "<sup>" then
     return Formatted:new(inlines, {["vertical-align"] = "sup"})
-  elseif tag == '<sub>' then
+  elseif tag == "<sub>" then
     return Formatted:new(inlines, {["vertical-align"] = "sub"})
   elseif openers_info[tag] and openers_info[tag].quotes then
     local localized_quotes = context:get_localized_quotes()
@@ -714,9 +706,6 @@ function InlineElement:parse_html_tags(str, context, is_external)
 
   local tags, strings = split_tags_and_strings(str, context)
 
-  -- util.debug(tags)
-  -- util.debug(strings)
-
   -- if #tags == 0 then
   --   return {PlainText:new(str)}
   -- end
@@ -725,10 +714,6 @@ function InlineElement:parse_html_tags(str, context, is_external)
   local opener_stack = {}
 
   for i, tag in ipairs(tags) do
-    -- util.debug(i)
-    -- util.debug(strings[i])
-    -- util.debug(tag)
-    -- util.debug(opener_stack)
     local apostrophe = _apostrophe_force(tag, strings[i + 1])
     if apostrophe then
       strings[i + 1] = apostrophe .. strings[i + 1]
@@ -785,8 +770,6 @@ function InlineElement:parse_html_tags(str, context, is_external)
     end
   end
 
-  -- util.debug(opener_stack)
-
   -- Process remainders in the stack
   if #opener_stack > 0 then
     for _, opener_info in ipairs(opener_stack) do
@@ -810,16 +793,11 @@ function InlineElement:parse_html_tags(str, context, is_external)
 
   -- The first appearance of straight quote is treated as outer quote.
   for _, tag in ipairs(tags) do
-    -- util.debug(i)
-    -- util.debug(tag)
     if straight_quotes_flip[tag] then
       set_outer_quote_form(tag, openers_info)
       break
     end
   end
-
-  -- util.debug(tags)
-  -- util.debug(strings)
 
   ---@type InlineElement[]
   local output = {}
@@ -837,7 +815,7 @@ function InlineElement:parse_html_tags(str, context, is_external)
         tag = tag,
         closer = openers_info[tag].closer,
         pos = i,
-        output_pos = #output + 1
+        output_pos = #output + 1,
       })
     else
       assert(#opener_stack > 0)
@@ -864,17 +842,16 @@ function InlineElement:parse_html_tags(str, context, is_external)
 
   end
 
-  -- util.debug(output)
   return output
 end
 
 local function merge_fragments_at(fragments, i)
-  if type(fragments[i+1]) == "string" then
-    fragments[i] = fragments[i] .. fragments[i+1]
-    table.remove(fragments, i+1)
+  if type(fragments[i + 1]) == "string" then
+    fragments[i] = fragments[i] .. fragments[i + 1]
+    table.remove(fragments, i + 1)
   end
-  if type(fragments[i-1]) == "string" then
-    fragments[i-1] = fragments[i-1] .. fragments[i]
+  if type(fragments[i - 1]) == "string" then
+    fragments[i - 1] = fragments[i - 1] .. fragments[i]
     table.remove(fragments, i)
   end
 end
@@ -905,7 +882,7 @@ function InlineElement:get_quote_fragments(inlines)
       local start_idx = 1
       for _, quote_tuple in ipairs(quote_tuples) do
         local idx, qt, next_idx = table.unpack(quote_tuple)
-        local fragment = string.sub(inline.value, start_idx, idx-1)
+        local fragment = string.sub(inline.value, start_idx, idx - 1)
         if fragment ~= "" then
           table.insert(fragments, fragment)
         end
@@ -942,13 +919,13 @@ function InlineElement:get_quote_fragments(inlines)
           if string.match(left, "%s$") and string.match(right, "^%s") then
             -- Orphan quote: bugreports_SingleQuote.txt
             if fragment == "'" then
-              fragments[i] = util.unicode['apostrophe']
+              fragments[i] = util.unicode["apostrophe"]
             end
             merge_fragments_at(fragments, i)
           end
           if not string.match(left, "[%s%p]$") and not string.match(right, "^[%s%p]") then
             if fragment == "'" then
-              fragments[i] = util.unicode['apostrophe']
+              fragments[i] = util.unicode["apostrophe"]
             end
             merge_fragments_at(fragments, i)
           end
@@ -976,12 +953,11 @@ function InlineElement:get_right_most_string()
 end
 
 function InlineElement:capitalize_first_term()
-  -- util.debug(self)
   if self._type == "PlainText" then
     self.value = unicode.capitalize(self.value)
   elseif self._type ~= "Code" and self._type ~= "MathML" and self._type ~= "MathTeX" then
     if self.inlines[1] then
-    self.inlines[1]:capitalize_first_term()
+      self.inlines[1]:capitalize_first_term()
     end
   end
 end
@@ -1109,7 +1085,6 @@ local function is_str_sentence_case(str)
   local words = unicode.words(str)
   for _, word in ipairs(words) do
     if unicode.islower(word) and not util.stop_words[word] then
-      -- util.debug(word)
       return true
     end
   end
@@ -1123,7 +1098,6 @@ function OutputFormat:is_sentence_case(inlines)
   for _, inline in ipairs(inlines) do
     if util.is_instance(inline, PlainText) then
       if is_str_sentence_case(inline.value) then
-        -- util.debug(inline.value)
         return true
       end
 
@@ -1133,9 +1107,9 @@ function OutputFormat:is_sentence_case(inlines)
         or util.is_instance(inline, CiteInline)
         or util.is_instance(inline, UndefinedCite)
         or (util.is_instance(inline, Formatted)
-            and inline.formatting["font-variant"] ~= "small-caps"
-            and inline.formatting["vertical-align"] ~= "sup"
-            and inline.formatting["vertical-align"] ~= "sub") then
+          and inline.formatting["font-variant"] ~= "small-caps"
+          and inline.formatting["vertical-align"] ~= "sup"
+          and inline.formatting["vertical-align"] ~= "sub") then
       if self:is_sentence_case(inline.inlines) then
         return true
       end
@@ -1152,12 +1126,10 @@ end
 ---@param inlines table[]
 ---@param check_sentence_case boolean
 function OutputFormat:convert_sentence_case(inlines, check_sentence_case)
-  if not inlines or #inlines == 0  then
+  if not inlines or #inlines == 0 then
     return
   end
   local is_uppercase = false  -- TODO
-  -- util.debug(check_sentence_case)
-  -- util.debug(self:is_sentence_case(inlines))
   if check_sentence_case then
     if self:is_sentence_case(inlines) then
       self:apply_text_case_inner(inlines, "capitalize-first", false, is_uppercase)
@@ -1205,24 +1177,21 @@ function OutputFormat:apply_text_case_inner(inlines, text_case, seen_one, is_upp
     end
     local is_last = (i == #inlines)
     if inline._type == "PlainText" then
-      -- util.debug(inline.value)
-      -- util.debug(text_case)
       inline.value = self:transform_case(inline.value, text_case, seen_one, is_last, is_uppercase);
-      -- util.debug(inline.value)
       seen_one = seen_one or string_contains_word(inline.value)
 
     elseif inline._type == "NoCase" or
-           inline._type == "NoDecor" or
-           inline._type == "Code" or
-           inline._type == "MathML" or
-           inline._type == "MathTeX" or
-           (inline._type == "Formatted" and inline.formatting["font-variant"] == "small-caps") or
-           (inline._type == "Formatted" and inline.formatting["vertical-align"] == "sup") or
-           (inline._type == "Formatted" and inline.formatting["vertical-align"] == "sub") then
+        inline._type == "NoDecor" or
+        inline._type == "Code" or
+        inline._type == "MathML" or
+        inline._type == "MathTeX" or
+        (inline._type == "Formatted" and inline.formatting["font-variant"] == "small-caps") or
+        (inline._type == "Formatted" and inline.formatting["vertical-align"] == "sup") or
+        (inline._type == "Formatted" and inline.formatting["vertical-align"] == "sub") then
       seen_one = seen_one or inline_contains_word(inline)
 
     elseif inline._type == "Formatted" or inline._type == "Quoted"
-      or inline._type == "CiteInline" or inline._type == "UndefinedCite" then
+        or inline._type == "CiteInline" or inline._type == "UndefinedCite" then
       seen_one = self:apply_text_case_inner(inline.inlines, text_case, seen_one, is_uppercase) or seen_one
 
     end
@@ -1239,7 +1208,6 @@ local function transform_uppercase(str)
   return unicode.upper(str)
 end
 
----comment
 ---@param str string
 ---@param is_first boolean
 ---@param transform function
@@ -1250,7 +1218,6 @@ local function transform_first_word(str, is_first, transform)
     for i, segment in ipairs(segments) do
       -- bugreports_ThesisUniversityAppearsTwice.txt: "Ph.D"
       if uni_utf8.match(segment, "%a") then
-        -- util.debug(segment)
         segments[i] = transform(segment)
         break
       end
@@ -1269,7 +1236,6 @@ local SegmentType = {
   Other = 0,
 }
 
----comment
 ---@param str string
 ---@param seen_one boolean
 ---@param is_last_inline boolean
@@ -1277,7 +1243,6 @@ local SegmentType = {
 ---@return string
 local function transform_each_word(str, seen_one, is_last_inline, transform)
   local segments = unicode.split_word_bounds(str)
-  -- util.debug(segments)
 
   local segment_type_list = {}
   local last_word_idx
@@ -1294,7 +1259,7 @@ local function transform_each_word(str, seen_one, is_last_inline, transform)
       -- In the case of `Form ({MMPI-2-RF}): Technical Manual`, use `endswith()`.
       if util.endswith(segment, "!") or util.endswith(segment, "?") then
         segment_type_list[i] = SegmentType.EndingPunctuation
-      -- elseif segment == ":" or segment == "—" then
+        -- elseif segment == ":" or segment == "—" then
       elseif util.endswith(segment, ":") then
         -- Em dash is not taken into consideration, see "Stability—with Job" in `textcase_TitleWithEmDash.txt`
         segment_type_list[i] = SegmentType.Colon
@@ -1308,20 +1273,17 @@ local function transform_each_word(str, seen_one, is_last_inline, transform)
   for i, segment in ipairs(segments) do
     if segment_type_list[i] == SegmentType.Word then
       local is_first_word = sentence_begin
-      local is_last_word = segment_type_list[i+1] == SegmentType.EndingPunctuation
-        or (is_last_inline and i == last_word_idx)
+      local is_last_word = segment_type_list[i + 1] == SegmentType.EndingPunctuation
+          or (is_last_inline and i == last_word_idx)
       -- See "Pro-Environmental" in `textcase_StopWordBeforeHyphen.txt`
       -- but not "Out-of-Fashion" in `textcase_TitleCaseWithHyphens.txt`.
-      local ignore_stop_word = segments[i+1] == "-" and segments[i-1] ~= "-"
+      local ignore_stop_word = segments[i + 1] == "-" and segments[i - 1] ~= "-"
 
-      -- util.debug(segment)
-      -- util.debug(after_colon)
       -- See "07-x" in `textcase_LastChar.txt`
-      if not (segments[i-1] == "-" and unicode.len(segment) == 1) then
+      if not (segments[i - 1] == "-" and unicode.len(segment) == 1) then
         segments[i] = transform(segment, is_first_word, after_colon, is_last_word, ignore_stop_word)
 
       end
-      -- util.debug(segments[i])
 
       sentence_begin = false
       after_colon = false
@@ -1337,7 +1299,6 @@ local function transform_each_word(str, seen_one, is_last_inline, transform)
   return table.concat(segments)
 end
 
----comment
 ---@param word string
 ---@return string
 local function transform_capitalize_word_if_lower(word)
@@ -1353,8 +1314,6 @@ local function title_case_word(word, is_first, after_end_punct, is_last, ignore_
   -- Entirely non-English
   -- e.g. "β" in "β-Carotine"
   -- TODO: two-word cases like "due to"
-  -- util.debug(word)
-  -- util.debug(ignore_stop_word)
   local res
   if (is_first or is_last or after_end_punct or ignore_stop_word or not util.stop_words[word])
       and string.match(word, "%a") and unicode.islower(word) then
@@ -1362,12 +1321,10 @@ local function title_case_word(word, is_first, after_end_punct, is_last, ignore_
   else
     res = word
   end
-  -- util.debug(res)
   return res
 end
 
 local function transform_lowercase_if_capitalize(word, is_first, after_end_punct, is_last, is_stop_word)
-  -- util.debug(word)
   if not (is_first or after_end_punct) then
     local is_capitalize_word = false
     local lower_first = string.gsub(word, utf8.charpattern, unicode.lower, 1)
@@ -1449,8 +1406,6 @@ function OutputFormat:output(inlines, context)
 
   self:move_punctuation(inlines)
 
-  -- util.debug(inlines)
-
   return self:write_inlines(inlines, context)
 end
 
@@ -1459,7 +1414,6 @@ end
 ---@return string?
 function OutputFormat:output_bibliography_entry(inlines, context)
   self:flip_flop_inlines(inlines)
-  -- util.debug(inlines)
   self:move_punctuation(inlines)
   -- TODO:
   -- if self.format == "html" then
@@ -1507,9 +1461,9 @@ function OutputFormat:flip_flop(inlines, state)
           if value == state[attribute] then
             if value == "normal" then
               formatting[attribute] = nil
-            -- Formatting outside Micro is not reset to "normal".
-            -- else
-            --   formatting[attribute] = "normal"
+              -- Formatting outside Micro is not reset to "normal".
+              -- else
+              --   formatting[attribute] = "normal"
             end
           end
           new_state[attribute] = value
@@ -1626,9 +1580,9 @@ end
 local function find_left(inline)
   if inline._type == "PlainText" then
     return inline
-  -- elseif inline._type == "Micro" then
-  --   return nil
-  elseif inline.inlines and #inline.inlines > 0 and inline._type~="Quoted" then
+    -- elseif inline._type == "Micro" then
+    --   return nil
+  elseif inline.inlines and #inline.inlines > 0 and inline._type ~= "Quoted" then
     return find_left(inline.inlines[1])
   else
     return nil
@@ -1638,8 +1592,8 @@ end
 local function find_right(inline)
   if inline._type == "PlainText" then
     return inline
-  -- elseif inline._type == "Micro" then
-  --   return nil
+    -- elseif inline._type == "Micro" then
+    --   return nil
   elseif inline.inlines and #inline.inlines > 0 and inline._type ~= "Quoted" then
     return find_right(inline.inlines[#inline.inlines])
   else
@@ -1650,8 +1604,8 @@ end
 local function find_right_in_quoted(inline)
   if inline._type == "PlainText" then
     return inline
-  -- elseif inline._type == "Micro" then
-  --   return nil
+    -- elseif inline._type == "Micro" then
+    --   return nil
   elseif inline.inlines and #inline.inlines > 0 then
     return find_right_in_quoted(inline.inlines[#inline.inlines])
   else
@@ -1666,8 +1620,8 @@ local function find_right_quoted(inline)
   if inline._type == "Quoted" and #inline.inlines > 0 then
     ---@cast inline Quoted
     return find_right_in_quoted(inline.inlines[#inline.inlines]), inline.quotes.punctuation_in_quote
-  -- elseif inline._type == "Micro" then
-  --   return nil
+    -- elseif inline._type == "Micro" then
+    --   return nil
   elseif inline.inlines and #inline.inlines > 0 then
     return find_right_quoted(inline.inlines[#inline.inlines])
   else
@@ -1678,12 +1632,10 @@ end
 local function smash_string_push(first, second)
   local first_char = string.sub(first.value, -1)
   local second_char = string.sub(second.value, 1, 1)
-  -- util.debug(first_char)
-  -- util.debug(second_char)
 
   local punct_map = output_module.quote_punctuation_map
   if second_char == " " and (first_char == " " or
-      util.endswith(first.value, util.unicode["no-break space"])) then
+        util.endswith(first.value, util.unicode["no-break space"])) then
     second.value = string.sub(second.value, 2)
   elseif punct_map[first_char] then
     if first_char == second_char then
@@ -1704,12 +1656,10 @@ local function smash_just_punc(first, second)
   if first and second then
     local first_char = string.sub(first.value, -1)
     local second_char = string.sub(second.value, 1, 1)
-    -- util.debug(first_char)
-    -- util.debug(second_char)
 
     local punct_map = output_module.quote_punctuation_map
     if second_char == " " and (first_char == " " or
-        util.endswith(first.value, util.unicode["no-break space"])) then
+          util.endswith(first.value, util.unicode["no-break space"])) then
       second.value = string.sub(second.value, 2)
       return true
     elseif punct_map[first_char] then
@@ -1736,7 +1686,7 @@ local function normalise_text_elements(inlines)
   local idx = 1
   while idx < #inlines do
     local first = inlines[idx]
-    local second = inlines[idx+1]
+    local second = inlines[idx + 1]
 
     if first._type == "PlainText" and second._type == "PlainText" then
       smash_string_push(first, second)
@@ -1754,7 +1704,7 @@ local function normalise_text_elements(inlines)
       end
 
     elseif (first._type == "Formatted" or first._type == "CiteInline"
-        or first._type == "UndefinedCite") and second._type == "PlainText" then
+          or first._type == "UndefinedCite") and second._type == "PlainText" then
       local success = smash_just_punc(first, second)
       if success then
         if second.value == "" then
@@ -1823,7 +1773,7 @@ local function move_around_quote(inlines)
     -- Move punctuation into quotes as needed
     local first, punctuation_in_quote = find_right_quoted(inlines[idx])
 
-    local second = find_left(inlines[idx+1])
+    local second = find_left(inlines[idx + 1])
     local success = false
     if first and second then
       if punctuation_in_quote then
@@ -1892,7 +1842,6 @@ function Markup:write_inline(inline, context)
     return self:write_escaped(inline, context)
 
   elseif type(inline) == "table" then
-    -- util.debug(inline._type)
     if inline._type == "PlainText" then
       return self:write_escaped(inline.value, context)
 
@@ -2017,9 +1966,9 @@ LatexWriter.markups = {
   ["@cite/entry"] = false,
   ["@bibliography/entry"] = function (str, context)
     if string.match(str, "\\bibitem") then
-      str =  str .. "\n"
+      str = str .. "\n"
     else
-      str =  "\\bibitem{".. context.id .. "}\n" .. str .. "\n"
+      str = "\\bibitem{" .. context.id .. "}\n" .. str .. "\n"
     end
     return str
   end,
@@ -2341,7 +2290,7 @@ end
 
 local PseudoHtml = HtmlWriter:new()
 
-function PseudoHtml :write_escaped(str, context)
+function PseudoHtml:write_escaped(str, context)
   -- str = string.gsub(str, "%&", "&#38;")
   -- str = string.gsub(str, "<", "&#60;")
   -- str = string.gsub(str, ">", "&#62;")
@@ -2352,7 +2301,7 @@ function PseudoHtml :write_escaped(str, context)
 end
 
 function PseudoHtml:write_math_ml(inline, context)
-  return string.format('<math>%s</math>', inline.value)
+  return string.format("<math>%s</math>", inline.value)
 end
 
 function PseudoHtml:write_math_tex(inline, context)
@@ -2434,7 +2383,7 @@ output_module.quote_punctuation_map = {
     [":"] = ";",
     [","] = ";,",
     ["."] = ";",
-  }
+  },
 }
 
 

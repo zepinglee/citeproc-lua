@@ -8,17 +8,14 @@ local number_module = {}
 
 local element
 local ir_node
-local util
 
 local using_luatex, kpse = pcall(require, "kpse")
 if using_luatex then
   element = require("citeproc-element")
   ir_node = require("citeproc-ir-node")
-  util = require("citeproc-util")
 else
   element = require("citeproc.element")
   ir_node = require("citeproc.ir-node")
-  util = require("citeproc.util")
 end
 
 local Element = element.Element
@@ -35,7 +32,7 @@ local GroupVar = ir_node.GroupVar
 ---@field text_case string?
 local Number = Element:derive("number")
 
-function Number:new(node)
+function Number:new()
   local o = {
     element_name = "number",
     form = "numeric",

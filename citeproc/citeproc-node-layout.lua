@@ -77,7 +77,6 @@ function Layout:build_ir(engine, state, context)
       ir.formatting = util.clone(self.formatting)
     end
   end
-  -- util.debug(ir)
   return ir
 end
 

@@ -109,15 +109,15 @@ function util.join_title(main_title, substitle)
 end
 
 
-function util.to_ordinal (n)
+function util.to_ordinal(n)
   -- assert(type(n) == "number")
   local last_digit = n % 10
-  if last_digit == 1 and n ~= 11
-    then return tostring(n) .. "st"
-  elseif last_digit == 2 and n ~= 12
-    then return tostring(n) .. "nd"
-  elseif last_digit == 3 and n ~= 13
-    then return tostring(n) .. "rd"
+  if last_digit == 1 and n ~= 11 then
+    return tostring(n) .. "st"
+  elseif last_digit == 2 and n ~= 12 then
+    return tostring(n) .. "nd"
+  elseif last_digit == 3 and n ~= 13 then
+    return tostring(n) .. "rd"
   else
     return tostring(n) .. "th"
   end
@@ -135,7 +135,7 @@ function util.set_logging_file(path)
   if not util.logging_file then
     util.error(string.format("Cannot write to '%s'.", path))
   end
-  util.logging_file = io.open(path, 'a')
+  util.logging_file = io.open(path, "a")
 end
 
 
@@ -239,7 +239,6 @@ function util.debug(obj)
 end
 
 -- Similar to re.split() in Python
----comment
 ---@param str string
 ---@param sep string?
 ---@param maxsplit integer?
@@ -256,11 +255,11 @@ function util.split(str, sep, maxsplit)
     return {}
   end
   if string.find(str, sep) == nil then
-    return { str }
+    return {str}
   end
 
   if maxsplit == nil or maxsplit < 0 then
-    maxsplit = -1    -- No limit
+    maxsplit = -1  -- No limit
   end
   local result = {}
   local pattern = "(.-)" .. sep .. "()"
@@ -320,7 +319,7 @@ function util.split_multiple(str, seps, include_sep)
   return res
 end
 
-function util.slice (t, start, stop)
+function util.slice(t, start, stop)
   start = start or 1
   stop = stop or #t
   if start < 0 then
@@ -338,13 +337,13 @@ function util.slice (t, start, stop)
   return new
 end
 
-function util.concat (list, sep)
+function util.concat(list, sep)
   -- This helper function omits empty strings in list, which is different from table.concat
   -- This function always returns a string, even empty.
   local res = ""
   for i = 1, #list do
     local s = list[i]
-    if s and s~= "" then
+    if s and s ~= "" then
       if res == "" then
         res = s
       else
@@ -382,7 +381,7 @@ end
 
 ---@param str string
 ---@return string
-function util.lstrip (str)
+function util.lstrip(str)
   if not str then
     error("Invalid input")
   end
@@ -405,7 +404,7 @@ end
 
 ---@param str string
 ---@return string
-function util.rstrip (str)
+function util.rstrip(str)
   if not str then
     error("Invalid input")
   end
@@ -415,7 +414,7 @@ end
 
 ---@param str string
 ---@return string
-function util.strip (str)
+function util.strip(str)
   return util.lstrip(util.rstrip(str))
 end
 
@@ -433,7 +432,7 @@ function util.endswith(str, suffix)
   -- if not str or type(str) ~= "string" then
   --   print(debug.traceback())
   -- end
-  return string.sub(str, -#suffix) == suffix
+  return string.sub(str, - #suffix) == suffix
 end
 
 ---@param str string
@@ -632,54 +631,53 @@ for type, variables in pairs(util.variables) do
 end
 
 util.primary_dialects = {
-  af= "af-ZA",
-  ar= "ar",
-  bg= "bg-BG",
-  ca= "ca-AD",
-  cs= "cs-CZ",
-  cy= "cy-GB",
-  da= "da-DK",
-  de= "de-DE",
-  el= "el-GR",
-  en= "en-US",
-  es= "es-ES",
-  et= "et-EE",
-  eu= "eu",
-  fa= "fa-IR",
-  fi= "fi-FI",
-  fr= "fr-FR",
-  he= "he-IL",
-  hi= "hi-IN",
-  hr= "hr-HR",
-  hu= "hu-HU",
-  id= "id-ID",
-  is= "is-IS",
-  it= "it-IT",
-  ja= "ja-JP",
-  km= "km-KH",
-  ko= "ko-KR",
-  la= "la",
-  lt= "lt-LT",
-  lv= "lv-LV",
-  mn= "mn-MN",
-  nb= "nb-NO",
-  nl= "nl-NL",
-  nn= "nn-NO",
-  pl= "pl-PL",
-  pt= "pt-PT",
-  ro= "ro-RO",
-  ru= "ru-RU",
-  sk= "sk-SK",
-  sl= "sl-SI",
-  sr= "sr-RS",
-  sv= "sv-SE",
-  th= "th-TH",
-  tr= "tr-TR",
-  uk= "uk-UA",
-  vi= "vi-VN",
-  zh= "zh-CN"
+  af = "af-ZA",
+  ar = "ar",
+  bg = "bg-BG",
+  ca = "ca-AD",
+  cs = "cs-CZ",
+  cy = "cy-GB",
+  da = "da-DK",
+  de = "de-DE",
+  el = "el-GR",
+  en = "en-US",
+  es = "es-ES",
+  et = "et-EE",
+  eu = "eu",
+  fa = "fa-IR",
+  fi = "fi-FI",
+  fr = "fr-FR",
+  he = "he-IL",
+  hi = "hi-IN",
+  hr = "hr-HR",
+  hu = "hu-HU",
+  id = "id-ID",
+  is = "is-IS",
+  it = "it-IT",
+  ja = "ja-JP",
+  km = "km-KH",
+  ko = "ko-KR",
+  la = "la",
+  lt = "lt-LT",
+  lv = "lv-LV",
+  mn = "mn-MN",
+  nb = "nb-NO",
+  nl = "nl-NL",
+  nn = "nn-NO",
+  pl = "pl-PL",
+  pt = "pt-PT",
+  ro = "ro-RO",
+  ru = "ru-RU",
+  sk = "sk-SK",
+  sl = "sl-SI",
+  sr = "sr-RS",
+  sv = "sv-SE",
+  th = "th-TH",
+  tr = "tr-TR",
+  uk = "uk-UA",
+  vi = "vi-VN",
+  zh = "zh-CN",
 }
-
 
 
 -- Range delimiter
@@ -857,7 +855,7 @@ for word, _ in pairs(citeproc_js_addition_stop_words) do
   util.stop_words[word] = true
 end
 
-function util.all (t)
+function util.all(t)
   for _, item in ipairs(t) do
     if not item then
       return false
@@ -866,7 +864,7 @@ function util.all (t)
   return true
 end
 
-function util.any (t)
+function util.any(t)
   for _, item in ipairs(t) do
     if item then
       return true
@@ -918,7 +916,7 @@ util.CJK_ranges = {
   {0x2F800, 0x2FA1F},  -- CJK Compatibility Ideographs Supplement
 }
 
-function util.in_list (value, list)
+function util.in_list(value, list)
   for _, v in ipairs(list) do
     if value == v then
       return true
@@ -927,7 +925,7 @@ function util.in_list (value, list)
   return false
 end
 
-function util.in_ranges (value, ranges)
+function util.in_ranges(value, ranges)
   for _, range in ipairs(ranges) do
     if value >= range[1] and value <= range[2] then
       return true
@@ -1003,40 +1001,40 @@ function util.convert_ordinal_to_arabic(ordinal)
 end
 
 util.ordinal_to_arabic_map = {
-  first              = "1",
-  second             = "2",
-  third              = "3",
-  fourth             = "4",
-  fifth              = "5",
-  sixth              = "6",
-  seventh            = "7",
-  eighth             = "8",
-  ninth              = "9",
-  tenth              = "10",
-  eleventh           = "11",
-  twelfth            = "12",
-  thirteenth         = "13",
-  fourteenth         = "14",
-  fifteenth          = "15",
-  sixteenth          = "16",
-  seventeenth        = "17",
-  eighteenth         = "18",
-  nineteenth         = "19",
-  twentieth          = "20",
-  ["twenty-first"]   = "21",
-  ["twenty-second"]  = "22",
-  ["twenty-third"]   = "23",
-  ["twenty-fourth"]  = "24",
-  ["twenty-fifth"]   = "25",
-  ["twenty-sixth"]   = "26",
+  first = "1",
+  second = "2",
+  third = "3",
+  fourth = "4",
+  fifth = "5",
+  sixth = "6",
+  seventh = "7",
+  eighth = "8",
+  ninth = "9",
+  tenth = "10",
+  eleventh = "11",
+  twelfth = "12",
+  thirteenth = "13",
+  fourteenth = "14",
+  fifteenth = "15",
+  sixteenth = "16",
+  seventeenth = "17",
+  eighteenth = "18",
+  nineteenth = "19",
+  twentieth = "20",
+  ["twenty-first"] = "21",
+  ["twenty-second"] = "22",
+  ["twenty-third"] = "23",
+  ["twenty-fourth"] = "24",
+  ["twenty-fifth"] = "25",
+  ["twenty-sixth"] = "26",
   ["twenty-seventh"] = "27",
-  ["twenty-eighth"]  = "28",
-  ["twenty-ninth"]   = "29",
-  thirtieth          = "30",
+  ["twenty-eighth"] = "28",
+  ["twenty-ninth"] = "29",
+  thirtieth = "30",
 }
 
 
-function util.convert_roman (number)
+function util.convert_roman(number)
   -- assert(type(number) == "number")
   local output = {}
   for _, tuple in ipairs(util.roman_numerals) do
@@ -1048,19 +1046,19 @@ function util.convert_roman (number)
 end
 
 util.roman_numerals = {
-  {"m",  1000},
+  {"m", 1000},
   {"cm", 900},
-  {"d",  500},
+  {"d", 500},
   {"cd", 400},
-  {"c",  100},
+  {"c", 100},
   {"xc", 90},
-  {"l",  50},
+  {"l", 50},
   {"xl", 40},
-  {"x",  10},
+  {"x", 10},
   {"ix", 9},
-  {"v",  5},
+  {"v", 5},
   {"iv", 4},
-  {"i",  1},
+  {"i", 1},
 };
 
 
@@ -1280,11 +1278,11 @@ function util.parse_edtf(str)
         end
       elseif date_part ~= "" then
         -- util.error(string.format('Invalid EDTF date "%s".', str))
-        return { literal = str }
+        return {literal = str}
       end
     end
     if negative_year then
-      date["date-parts"][i][1] = - 1 - date["date-parts"][i][1]
+      date["date-parts"][i][1] = -1 - date["date-parts"][i][1]
     end
   end
 
@@ -1352,7 +1350,6 @@ end
 util.trigraph = "Aaaa00:AaAa00:AaAA00:AAAA00"
 
 
----comment
 ---@param trigraph string
 ---@return { authors: integer[], year: integer }
 function util.get_trigraph_param(trigraph)
@@ -1370,7 +1367,7 @@ function util.get_trigraph_param(trigraph)
       table.insert(param.authors, 1)
     elseif char == "a" then
       local len = #param.authors
-      param.authors[len] =  param.authors[len] + 1
+      param.authors[len] = param.authors[len] + 1
     elseif char == "0" then
       param.year = param.year + 1
     else
@@ -1381,7 +1378,6 @@ function util.get_trigraph_param(trigraph)
 end
 
 
----comment
 ---@param item ItemData
 ---@return string
 function util.get_citation_label(item)

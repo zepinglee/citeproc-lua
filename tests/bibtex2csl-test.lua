@@ -55,14 +55,17 @@ describe("BibTeX data to CSL converter", function ()
     it("math", function ()
       local title = "A study of the excited {1$\\Sigma$g+} states in {Na2}"
       local _, csl_title = bibtex2csl.convert_field("title", title, true, true, true, "en-US", true)
-      local expected = 'A study of the excited <span class="nocase">1<math-tex>\\Sigma</math-tex>g+</span> states in <span class="nocase">Na2</span>'
+      local expected =
+      'A study of the excited <span class="nocase">1<math-tex>\\Sigma</math-tex>g+</span> states in <span class="nocase">Na2</span>'
       assert.same(expected, csl_title)
     end)
 
     it("word breaking", function ()
-      local title = "Strengthening the Federal Student Loan Program for Borrowers: Hearing before the U.S. Senate Committee on Health, Education, Labor \\& Pensions"
+      local title =
+      "Strengthening the Federal Student Loan Program for Borrowers: Hearing before the U.S. Senate Committee on Health, Education, Labor \\& Pensions"
       local _, csl_title = bibtex2csl.convert_field("title", title, true, true, true, "en-US")
-      local expected = 'Strengthening the federal student loan program for borrowers: Hearing before the U.S. senate committee on health, education, labor & pensions'
+      local expected =
+      "Strengthening the federal student loan program for borrowers: Hearing before the U.S. senate committee on health, education, labor & pensions"
       assert.same(expected, csl_title)
     end)
 
@@ -86,12 +89,12 @@ describe("BibTeX data to CSL converter", function ()
         author = {
           {
             family = "Lamport",
-            given  = "Leslie",
+            given = "Leslie",
           },
         },
         issued = {
           ["date-parts"] = {
-            { 1986 },
+            {1986},
           },
         },
         publisher = "Addison-Wesley",

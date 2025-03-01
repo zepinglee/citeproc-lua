@@ -16,7 +16,6 @@ local json_encode = utilities.json.tojson
 local json_decode = utilities.json.tolua
 
 local citeproc = require("citeproc")
-local bibtex_data = require("citeproc-bibtex-data")
 local bibtex_parser = require("citeproc-bibtex-parser")
 local latex_parser = require("citeproc-latex-parser")
 local util = citeproc.util
@@ -123,7 +122,7 @@ local function make_citeproc_sys(item_dict)
         util.warning(string.format("Didn't find a database entry for '%s'", id))
       end
       return res
-    end
+    end,
   }
   return citeproc_sys
 end
@@ -394,7 +393,8 @@ function RefSection:record_fixture()
 
   local fixture_output = {}
   local function make_block(section, str)
-    return string.format(">>===== %s =====>>\n%s\n<<===== %s =====<<\n", string.upper(section), str, string.upper(section))
+    return string.format(">>===== %s =====>>\n%s\n<<===== %s =====<<\n", string.upper(section), str,
+      string.upper(section))
   end
   for _, section in ipairs({"mode", "description", "result", "bibliography_result", "citations", "citation-items", "csl", "input", "version"}) do
     if not (section == "bibliography_result" and fixture[section] == "") then
@@ -597,9 +597,7 @@ function CslCitationManager:cite(citation_info)
     return
   end
 
-  -- util.debug(citation_info)
   local citation = self:_make_citation(citation_info)
-  -- util.debug(citation)
 
   table.insert(self.ref_section.citations, citation)
 
@@ -611,7 +609,6 @@ function CslCitationManager:cite(citation_info)
   -- else
   citation_str = engine:process_citation(citation)
   -- end
-  -- util.debug(citation_str)
 
   -- tex.sprint(citation_str)
   -- tex.setcatcode(35, 12)  -- #
@@ -657,7 +654,6 @@ end
 ---@return CitationData
 function CslCitationManager:_make_citation(citation_info)
   -- `citation_info`: "citationID={ITEM-1@2},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={3}}"
-  -- util.debug(citation_info)
   local citation = parse_latex_prop(citation_info)
   -- assert(citation.citationID)
   -- assert(citation.citationItems)
@@ -673,9 +669,7 @@ function CslCitationManager:_make_citation(citation_info)
     end
 
     if citation_item.prefix then
-      -- util.debug(citation_item.prefix)
       citation_item.prefix = latex_parser.latex_to_pseudo_html(citation_item.prefix, true, false)
-      -- util.debug(citation_item.prefix)
     end
     if citation_item.suffix then
       citation_item.suffix = latex_parser.latex_to_pseudo_html(citation_item.suffix, true, false)
@@ -709,7 +703,6 @@ function CslCitationManager:_make_citation(citation_info)
     citation.properties.suffix = latex_parser.latex_to_pseudo_html(citation.properties.suffix, true, false)
   end
 
-  -- util.debug(citation)
   return citation
 end
 
@@ -767,7 +760,6 @@ function CslCitationManager:make_bibliography(filter_str)
   if filter_str and filter_str ~= "" then
     options = latex_parser.parse_prop(filter_str)
     filter = self:_parser_filter(filter_str)
-    -- util.debug(filter)
   end
   local result = engine:makeBibliography(filter)
 
@@ -776,7 +768,7 @@ function CslCitationManager:make_bibliography(filter_str)
 
   ---@type table<string, any>
   local bib_options = {
-    index = options.index or "1"
+    index = options.index or "1",
   }
 
   local bib_option_map = {
@@ -802,11 +794,13 @@ function CslCitationManager:make_bibliography(filter_str)
   local bib_lines = {}
 
   if #params.entry_ids > 0 then
-    local entry_ids_line = string.format("\\csloptions{%d}{entry-ids = {%s}}", self.ref_section.index, table.concat(params.entry_ids, ", "))
+    local entry_ids_line = string.format("\\csloptions{%d}{entry-ids = {%s}}", self.ref_section.index,
+      table.concat(params.entry_ids, ", "))
     table.insert(bib_lines, entry_ids_line)
   end
   if #params.excluded_ids > 0 then
-    local excluded_ids_line = string.format("\\csloptions{%d}{excluded-ids = {%s}}", self.ref_section.index, table.concat(params.excluded_ids, ", "))
+    local excluded_ids_line = string.format("\\csloptions{%d}{excluded-ids = {%s}}", self.ref_section.index,
+      table.concat(params.excluded_ids, ", "))
     table.insert(bib_lines, excluded_ids_line)
   end
 
@@ -881,14 +875,14 @@ local command_info = {
   {"\\@input", 1},
 }
 
-local balanced = lpeg.P{ "{" * ((1 - lpeg.S"{}") + lpeg.V(1))^0 * "}" }
+local balanced = lpeg.P {"{" * ((1 - lpeg.S "{}") + lpeg.V(1)) ^ 0 * "}"}
 
 ---@param text string
 ---@param num_args integer?
 ---@return string[]
 local function get_command_arguments(text, command, num_args)
   num_args = num_args or 1
-  local grammar = lpeg.P(command) * lpeg.Ct((lpeg.S(" \t\r\n")^0 * lpeg.C(balanced))^num_args)
+  local grammar = lpeg.P(command) * lpeg.Ct((lpeg.S(" \t\r\n") ^ 0 * lpeg.C(balanced)) ^ num_args)
   local arguments = grammar:match(text)
   if not arguments then
     return {}
@@ -906,7 +900,7 @@ end
 ---@return table
 function CslCitationManager:_parser_filter(filter_str)
   local conditions = {}
-  for i, condition in ipairs(latex_parser.parse_seq(filter_str)) do
+  for _, condition in ipairs(latex_parser.parse_seq(filter_str)) do
     local negative
     local field, value = string.match(condition, "(%w+)%s*=%s*{([^}]+)}")
     if field then
@@ -926,10 +920,8 @@ function CslCitationManager:_parser_filter(filter_str)
       end
     end
   end
-  -- util.debug(conditions)
   return {select = conditions}
 end
-
 
 
 ---@param aux_content string
@@ -959,8 +951,8 @@ function CslCitationManager:read_aux_file(aux_content)
     elseif command == "\\csl@aux@cite" then
       self:register_citation_info(tostring(ref_section_index), content)
       -- TODO: refsection bib resources
-    -- elseif command == "\\csl@aux@bibliography" then
-    --   -- table.insert(ref_section.bibliography_configs, content)
+      -- elseif command == "\\csl@aux@bibliography" then
+      --   -- table.insert(ref_section.bibliography_configs, content)
     end
   end
 
@@ -1011,7 +1003,8 @@ function CslCitationManager:read_aux_file(aux_content)
           ref_section.engine:enable_linking()
         end
         local style_class = ref_section.engine:get_style_class()
-        local style_class_setup = string.format("\\csloptions{%d}{class = {%s = %s}}", ref_section_index, ref_section.style_id, style_class)
+        local style_class_setup = string.format("\\csloptions{%d}{class = {%s = %s}}", ref_section_index,
+          ref_section.style_id, style_class)
         table.insert(output_lines, style_class_setup)
       end
       self:register_citation_info(tostring(ref_section_index), content)

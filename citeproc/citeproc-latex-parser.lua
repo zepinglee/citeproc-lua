@@ -6,7 +6,6 @@
 
 local latex_parser = {}
 
-local bibtex_parser
 local latex_data
 local markup
 local util
@@ -27,9 +26,7 @@ local lpeg = require("lpeg")
 -- Convert LaTeX string to Unicode string
 function latex_parser.latex_to_unicode(str)
   local ast = latex_parser.latex_grammar:match(str)
-  -- util.debug(ast)
   latex_parser.convert_ast_to_unicode(ast)
-  -- util.debug(ast)
   local res = latex_parser.to_string(ast)
   return res
 end
@@ -47,10 +44,8 @@ end
 -- Convert LaTeX string to string with HTML-like tags
 function latex_parser.latex_to_pseudo_html(str, strict, case_protection)
   local ast = latex_parser.latex_grammar:match(str)
-  -- util.debug(ast)
   latex_parser.convert_ast_to_unicode(ast)
   local inlines = latex_parser.convert_tokens_to_inlines(ast, strict, case_protection)
-  -- util.debug(inlines)
   local pseudo_html_format = markup.PseudoHtml:new()
   local res = pseudo_html_format:write_inlines(inlines, {})
   return res
@@ -61,19 +56,18 @@ end
 -- case_protection: BibTEX case protection with curly braces
 
 
----comment
 ---@param str string
 ---@param keep_unknown_commands boolean?
 ---@param case_protection boolean?
 ---@param check_sentence_case boolean?
 ---@return string
-function latex_parser.latex_to_sentence_case_pseudo_html(str, keep_unknown_commands, case_protection, check_sentence_case)
+function latex_parser.latex_to_sentence_case_pseudo_html(str, keep_unknown_commands, case_protection,
+    check_sentence_case)
   local ast = latex_parser.latex_grammar:match(str)
   latex_parser.convert_ast_to_unicode(ast)
   local inlines = latex_parser.convert_tokens_to_inlines(ast, keep_unknown_commands, case_protection)
   local pseudo_html_format = markup.PseudoHtml:new()
   pseudo_html_format:convert_sentence_case(inlines, check_sentence_case)
-  -- util.debug(inlines)
   local res = pseudo_html_format:write_inlines(inlines, {})
   return res
 end
@@ -93,14 +87,10 @@ function latex_parser.get_latex_grammar()
   local R = lpeg.R
   local S = lpeg.S
   local C = lpeg.C
-  local Cc = lpeg.Cc
-  local Cf = lpeg.Cf
-  local Cg = lpeg.Cg
-  local Cmt = lpeg.Cmt
-  local Cp = lpeg.Cp
   local Ct = lpeg.Ct
   local V = lpeg.V
 
+  ---@diagnostic disable: codestyle-check
   local space = S(" \t\r\n")^0
   local specials = P"~" / util.unicode["no-break space"]
                   --  + P"\\$" / "$"
@@ -142,6 +132,7 @@ function latex_parser.get_latex_grammar()
       }
     end,
   }
+  ---@diagnostic enable: codestyle-check
   return latex_grammar
 end
 
@@ -157,7 +148,7 @@ local format_commands_with_argment = {
   ["\\enquote"] = "quote",
   ["\\textsc"] = "sc",
   ["\\sout"] = "strike",  -- from ulem package
-  ["\\st"] = "strike", -- from soul package
+  ["\\st"] = "strike",  -- from soul package
   ["\\textsuperscript"] = "sup",
   ["\\textsubscript"] = "sub",
 }
@@ -175,10 +166,9 @@ local format_commands_without_argment = {
 }
 
 
-
 function latex_parser.to_string(ast)
   local res = ""
-  for i, token in ipairs(ast) do
+  for _, token in ipairs(ast) do
     if type(token) == "string" then
       res = res .. token
     elseif type(token) == "table" then
@@ -210,7 +200,6 @@ local function _remove_braces_of_diacritic(tokens, i, orig_first_token)
   end
 end
 
----comment
 ---@param tokens any
 ---@param i any
 ---@param command_info string | table
@@ -304,7 +293,7 @@ function latex_parser.convert_cs_to_inlines(tokens, i, strict, case_protection)
     if inline_type then
       local arg_inlines
       if command_info.num_args == 1 then
-        local next_token = tokens[i+1]
+        local next_token = tokens[i + 1]
         if type(next_token) == "table" and next_token.type == "group" then
           arg_inlines = latex_parser.convert_tokens_to_inlines(next_token.contents, strict, false)
           if case_protection then
@@ -316,7 +305,7 @@ function latex_parser.convert_cs_to_inlines(tokens, i, strict, case_protection)
         i = i + 1
       else  -- command_info.num_args == 0
         if command_info.inline_type then
-          local arg_tokens = util.slice(tokens, i+1, #tokens)
+          local arg_tokens = util.slice(tokens, i + 1, #tokens)
           i = #tokens
           arg_inlines = latex_parser.convert_tokens_to_inlines(arg_tokens, strict, case_protection)
         end
@@ -484,7 +473,7 @@ function latex_parser.convert_tokens_to_inlines(tokens, strict, case_protection)
   for i = #inlines, 1, -1 do
     if i > 1 then
       local inline = inlines[i]
-      local prev = inlines[i-1]
+      local prev = inlines[i - 1]
       if type(inline) == "table" and inline._type == "Code" and
           type(prev) == "table" and prev._type == "Code" then
         prev.value = prev.value .. inline.value
@@ -495,7 +484,6 @@ function latex_parser.convert_tokens_to_inlines(tokens, strict, case_protection)
 
   return inlines
 end
-
 
 
 function latex_parser.convert_ast_to_rich_text(tokens)
@@ -600,20 +588,16 @@ end
 
 function latex_parser.parse_seq(str)
   local P = lpeg.P
-  local R = lpeg.R
   local S = lpeg.S
   local C = lpeg.C
-  local Cc = lpeg.Cc
-  local Cf = lpeg.Cf
-  local Cg = lpeg.Cg
-  local Cmt = lpeg.Cmt
-  local Cp = lpeg.Cp
   local Ct = lpeg.Ct
   local V = lpeg.V
 
+  ---@diagnostic disable: codestyle-check
   local balanced = P{"{" * V(1) ^ 0 * "}" + (P"\\{" + P"\\}" + 1 - S"{}")}
   local item = P"{" * C(balanced^0) * P"}" + C((balanced - P",")^1)
   local seq = Ct((item * P(",")^-1)^0)
+  ---@diagnostic enable: codestyle-check
 
   return seq:match(str)
 end
@@ -628,6 +612,7 @@ function latex_parser.parse_prop(str)
   local Ct = lpeg.Ct
   local V = lpeg.V
 
+  ---@diagnostic disable: codestyle-check
   local balanced = P{"{" * V(1)^0 * "}" + (P"\\{" + P"\\}" + 1 - S"{}")}
   local key = (R"09" + R"AZ" + R"az" + S"-_./")^1
   local value = (P"{" * C(balanced^0) * P"}" + C((balanced - S",=")^0)) / function (s)
@@ -642,6 +627,7 @@ function latex_parser.parse_prop(str)
   local space = S(" \t\r\n")^0
   local pair = C(key) * space * P"=" * space * value * (P(",") * space)^-1
   local prop = Cf(Ct"" * space * Cg(pair)^0, rawset)
+  ---@diagnostic enable: codestyle-check
 
   -- if not str then
   --   print(debug.traceback())

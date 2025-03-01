@@ -192,21 +192,22 @@ describe("EDTF", function ()
     end)
 
     describe("Unspecified digit(s) from the right", function ()
-      it("A year with one or two (rightmost) unspecified digits in a year-only expression (year precision)", function ()
-        assert.same({
-          ["date-parts"] = {
-            {2010},
-          },
-          circa = true,
-        }, util.parse_edtf("201X"))
+      it("A year with one or two (rightmost) unspecified digits in a year-only expression (year precision)",
+        function ()
+          assert.same({
+            ["date-parts"] = {
+              {2010},
+            },
+            circa = true,
+          }, util.parse_edtf("201X"))
 
-        assert.same({
-          ["date-parts"] = {
-            {2000},
-          },
-          circa = true,
-        }, util.parse_edtf("20XX"))
-      end)
+          assert.same({
+            ["date-parts"] = {
+              {2000},
+            },
+            circa = true,
+          }, util.parse_edtf("20XX"))
+        end)
 
       it("Year specified, month unspecified in a year-month expression (month precision)", function ()
         assert.same({

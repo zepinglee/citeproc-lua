@@ -70,8 +70,6 @@ function Choose:build_ir(engine, state, context)
     end
   end
 
-  -- util.debug(ir)
-
   if not context.disambiguate then
     context.disambiguate = true
 
@@ -104,7 +102,7 @@ function Condition:new(condition, value, match_type)
   local o = {
     condition = condition,
     value = value,
-    match_type = match_type or "all"
+    match_type = match_type or "all",
   }
   setmetatable(o, self)
   self.__index = self
@@ -117,7 +115,7 @@ end
 ---@field conditions Condition[]
 local If = Element:derive("if", {
   conditions = nil,
-  match = "all"
+  match = "all",
 })
 
 ---@return If
@@ -235,7 +233,6 @@ end
 
 function If:evaluate_conditions(engine, state, context)
   local res = false
-  -- util.debug(self.conditions)
   for _, condition in ipairs(self.conditions) do
     if self:evaluate_condition(condition, state, context) then
       if self.match == "any" then
@@ -257,8 +254,6 @@ function If:evaluate_conditions(engine, state, context)
 end
 
 function If:evaluate_condition(condition, state, context)
-  -- util.debug(context.cite)
-  -- util.debug(condition)
   if condition.condition == "disambiguate" then
     return context.disambiguate or (context.in_bibliography and context.reference.disambiguate)
 
@@ -267,7 +262,8 @@ function If:evaluate_condition(condition, state, context)
     local variable_type = util.variable_types[variable] or "standard"
 
     if variable_type ~= "standard" and variable_type ~= "number" then
-      util.warning(string.format("Expecting number variable for condition 'is-numeric', got %s '%s'", variable_type, variable))
+      util.warning(string.format("Expecting number variable for condition 'is-numeric', got %s '%s'", variable_type,
+        variable))
       return false
     end
 
@@ -286,7 +282,8 @@ function If:evaluate_condition(condition, state, context)
     local variable_type = util.variable_types[variable] or "standard"
 
     if variable_type ~= "date" then
-      util.warning(string.format("Expecting date variable for condition 'is-uncertain-date', got '%s'", variable_type, variable))
+      util.warning(string.format("Expecting date variable for condition 'is-uncertain-date', got '%s'", variable_type,
+        variable))
       return false
     end
     local value = context:get_variable(variable)
@@ -337,7 +334,6 @@ function If:is_uncertain_date(variable)
 end
 
 function If:check_position(position, context)
-  -- util.debug(context.cite)
   if context.in_bibliography then
     return false
   end

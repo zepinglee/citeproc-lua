@@ -13,7 +13,7 @@ local journal_data
 local latex_parser
 local unicode
 local util
-local using_luatex, kpse = pcall(require, "kpse")
+local using_luatex, _ = pcall(require, "kpse")
 if using_luatex then
   uni_utf8 = require("unicode").utf8
   bibtex_parser = require("citeproc-bibtex-parser")
@@ -33,9 +33,6 @@ end
 ---@alias CslData CslItem[]
 
 
-local parser = bibtex_parser.BibtexParser:new()
-
-
 ---Parse BibTeX content and convert to CSL-JSON
 ---@param str string
 ---@param keep_unknown_commands boolean? Keep unknown latex markups in <code>.
@@ -43,7 +40,8 @@ local parser = bibtex_parser.BibtexParser:new()
 ---@param sentence_case_title boolean? Convert `title` and `booktitle` to sentence case.
 ---@param check_sentence_case boolean? Check titles that are already sentence cased and do not conver them.
 ---@return CslData?, Exception[]
-function bibtex2csl.parse_bibtex_to_csl(str, keep_unknown_commands, case_protection, sentence_case_title, check_sentence_case)
+function bibtex2csl.parse_bibtex_to_csl(str, keep_unknown_commands, case_protection, sentence_case_title,
+    check_sentence_case)
   local strings = {}
   for name, macro in pairs(bibtex_data.macros) do
     strings[name] = macro.value
@@ -53,7 +51,8 @@ function bibtex2csl.parse_bibtex_to_csl(str, keep_unknown_commands, case_protect
   if bib_data then
     -- TODO: Ideally we should load all .bib files and then resolve crossrefs and related
     bibtex_parser.resolve_crossrefs(bib_data.entries, bibtex_data.entries_by_id)
-    csl_json_items = bibtex2csl.convert_to_csl_data(bib_data, keep_unknown_commands, case_protection, sentence_case_title, check_sentence_case)
+    csl_json_items = bibtex2csl.convert_to_csl_data(bib_data, keep_unknown_commands, case_protection,
+      sentence_case_title, check_sentence_case)
   end
   return csl_json_items, exceptions
 end
@@ -65,7 +64,8 @@ end
 ---@param sentence_case_title boolean?
 ---@param check_sentence_case boolean?
 ---@return CslData
-function bibtex2csl.convert_to_csl_data(bib, keep_unknown_commands, case_protection, sentence_case_title, check_sentence_case)
+function bibtex2csl.convert_to_csl_data(bib, keep_unknown_commands, case_protection, sentence_case_title,
+    check_sentence_case)
   local csl_data = {}
 
   -- BibTeX looks for crossref in a case-insensitive manner.
@@ -74,7 +74,8 @@ function bibtex2csl.convert_to_csl_data(bib, keep_unknown_commands, case_protect
 
   for _, entry in ipairs(bib.entries) do
     bib_entry_dict[unicode.casefold(entry.key)] = entry
-    local item = bibtex2csl.convert_to_csl_item(entry, keep_unknown_commands, case_protection, sentence_case_title, check_sentence_case)
+    local item = bibtex2csl.convert_to_csl_item(entry, keep_unknown_commands, case_protection, sentence_case_title,
+      check_sentence_case)
 
     table.insert(csl_data, item)
     csl_item_dict[item.id] = item
@@ -92,7 +93,8 @@ end
 ---@param sentence_case_title boolean?
 ---@param check_sentence_case boolean?
 ---@return CslItem
-function bibtex2csl.convert_to_csl_item(entry, keep_unknown_commands, case_protection, sentence_case_title, check_sentence_case, disable_journal_abbreviation)
+function bibtex2csl.convert_to_csl_item(entry, keep_unknown_commands, case_protection, sentence_case_title,
+    check_sentence_case, disable_journal_abbreviation)
   ---@type CslItem
   local item = {
     id = entry.key,
@@ -281,7 +283,8 @@ end
 ---@param check_sentence_case boolean?
 ---@return string? csl_field
 ---@return string | table | number?  csl_value
-function bibtex2csl.convert_field(bib_field, value, keep_unknown_commands, case_protection, sentence_case_title, language, check_sentence_case)
+function bibtex2csl.convert_field(bib_field, value, keep_unknown_commands, case_protection, sentence_case_title,
+    language, check_sentence_case)
   local field_data = bibtex_data.fields[bib_field]
   if not field_data then
     return nil, nil
@@ -300,7 +303,7 @@ function bibtex2csl.convert_field(bib_field, value, keep_unknown_commands, case_
   local field_type = field_data.type
   local csl_value
   if field_type == "name" then
-  -- 1. unicode 2. prify (remove LaTeX markups) 3. plain text 4. split name parts
+    -- 1. unicode 2. prify (remove LaTeX markups) 3. plain text 4. split name parts
     value = latex_parser.latex_to_unicode(value)
     local names = bibtex_parser.split_names(value)
     csl_value = {}
@@ -319,12 +322,10 @@ function bibtex2csl.convert_field(bib_field, value, keep_unknown_commands, case_
 
   elseif bib_field == "title" or bib_field == "shorttitle"
       or bib_field == "booktitle" or bib_field == "container-title-short" then
-    -- util.debug(value)
     -- 1. unicode 2. sentence case 3. html tag
     if sentence_case_title and (not language or util.startswith(language, "en")) then
-      -- util.debug(value)
-      csl_value = latex_parser.latex_to_sentence_case_pseudo_html(value, keep_unknown_commands, case_protection, check_sentence_case)
-      -- util.debug(csl_value)
+      csl_value = latex_parser.latex_to_sentence_case_pseudo_html(value, keep_unknown_commands, case_protection,
+        check_sentence_case)
     else
       csl_value = latex_parser.latex_to_pseudo_html(value, keep_unknown_commands, case_protection)
     end
@@ -351,10 +352,9 @@ end
 
 function bibtex2csl.convert_to_csl_name(bibtex_name)
   if bibtex_name.last and not (bibtex_name.first or bibtex_name.von or bibtex_name.jr)
-    and string.match(bibtex_name.last, "^%b{}$") then
-    -- util.debug(bibtex_name)
+      and string.match(bibtex_name.last, "^%b{}$") then
     return {
-      literal = string.sub(bibtex_name.last, 2, -2)
+      literal = string.sub(bibtex_name.last, 2, -2),
     }
   end
   local csl_name = {
@@ -553,7 +553,7 @@ function bibtex2csl.post_process_special_fields(item, entry, disable_journal_abb
     if item.publisher or bib_type == "inproceedings" or bib_type == "proceedings" then
       if not item.organizer then
         item.organizer = {
-          literal = bib_fields.organization
+          literal = bib_fields.organization,
         }
       end
     elseif not item.publisher then
@@ -658,7 +658,7 @@ local reviewed_field_dict = {
 ---@param csl_item_dict table<string, CslItem>
 ---@param bib_entry_dict table<string, BibtexEntry>
 function bibtex2csl.resolve_related(csl_item_dict, bib_entry_dict)
-  for key, entry in pairs(bib_entry_dict) do
+  for _, entry in pairs(bib_entry_dict) do
     local related_key = entry.fields.related
     local related_type = entry.fields.relatedtype
     if related_key then

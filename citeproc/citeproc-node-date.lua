@@ -25,7 +25,6 @@ else
 end
 
 local Element = element.Element
-local IrNode = ir_node.IrNode
 local Rendered = ir_node.Rendered
 local SeqIr = ir_node.SeqIr
 local GroupVar = ir_node.GroupVar
@@ -243,7 +242,7 @@ function Date:build_date_range(date_parts, variable, delimiter, engine, state, c
       else
         if #range_part_queue > 0 then
           table.insert(irs, self:build_date_range_parts(range_part_queue, variable,
-              delimiter, engine, state, context, range_delimiter))
+            delimiter, engine, state, context, range_delimiter))
           range_part_queue = {}
         end
         table.insert(irs, date_part:build_ir(first, engine, state, context))
@@ -252,7 +251,7 @@ function Date:build_date_range(date_parts, variable, delimiter, engine, state, c
   end
   if #range_part_queue > 0 then
     table.insert(irs, self:build_date_range_parts(range_part_queue, variable,
-    delimiter, engine, state, context, range_delimiter))
+      delimiter, engine, state, context, range_delimiter))
   end
 
   local ir = SeqIr:new(irs, self)

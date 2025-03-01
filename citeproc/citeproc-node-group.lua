@@ -21,7 +21,6 @@ else
   util = require("citeproc.util")
 end
 
-local SeqIr = ir_node.SeqIr
 local Element = element.Element
 
 

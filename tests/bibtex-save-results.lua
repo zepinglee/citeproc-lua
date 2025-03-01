@@ -43,7 +43,8 @@ end
 ---@param check_sentence_case boolean
 local function save_csl_json(bib_contents, json_path, protect_case, sentence_case_title, check_sentence_case)
   -- print(json_path)
-  local csl_items, exceptions = bibtex2csl.parse_bibtex_to_csl(bib_contents, true, protect_case, sentence_case_title, check_sentence_case)
+  local csl_items, exceptions = bibtex2csl.parse_bibtex_to_csl(bib_contents, true, protect_case, sentence_case_title,
+    check_sentence_case)
   if not csl_items then
     for _, exception in ipairs(exceptions) do
       util.debug(exception)

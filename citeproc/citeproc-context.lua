@@ -10,7 +10,7 @@ local unicode
 local LocalizedQuotes
 local util
 
-local using_luatex, kpse = pcall(require, "kpse")
+local using_luatex, _ = pcall(require, "kpse")
 if using_luatex then
   unicode = require("citeproc-unicode")
   LocalizedQuotes = require("citeproc-output").LocalizedQuotes
@@ -64,7 +64,7 @@ local Context = {
 function Context:new()
   local o = {
     lang = "en-US",
-    in_bibliography = false
+    in_bibliography = false,
   }
   setmetatable(o, self)
   self.__index = self
@@ -75,8 +75,8 @@ function Context:get_variable(name, form)
   local variable_type = util.variable_types[name]
   if variable_type == "number" then
     return self:get_number(name)
-  -- elseif variable_type == "date" then
-  --   return self:get_date(name)
+    -- elseif variable_type == "date" then
+    --   return self:get_date(name)
   elseif variable_type == "name" then
     return self:get_name(name)
   else
@@ -260,9 +260,9 @@ function Context:split_given_dp(name)
       end
       break
     end
-  -- name_ParsedDroppingParticleWithApostrophe.txt
-  -- given: "François Hédelin d'" =>
-  -- given: "François Hédelin", dropping-particle: "d'"
+    -- name_ParsedDroppingParticleWithApostrophe.txt
+    -- given: "François Hédelin d'" =>
+    -- given: "François Hédelin", dropping-particle: "d'"
     if string.match(part, "^%l+'?$") or string.match(part, "^%l+’$") then
       table.insert(dp_parts, 1, part)
     end
@@ -291,7 +291,6 @@ end
 --     name["non-dropping-particle"] = last_word
 --     name.given = table.concat(util.slice(words, 1, -2), " ")
 --   end
---   util.debug(name)
 -- end
 
 function Context:get_localized_date(form)

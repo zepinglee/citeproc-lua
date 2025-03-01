@@ -36,7 +36,7 @@ function csl_yaml.parse(str)
   end
 
   -- The items exported from Better BibTeX has a {references = []} structure.
-  if type(items) == 'table' and items.references then
+  if type(items) == "table" and items.references then
     items = items.references
   end
 
@@ -57,7 +57,7 @@ function csl_yaml.parse(str)
 
         elseif type(value) == "table" and not value["date-parts"] then
           local new_date = {
-            ["date-parts"] = {}
+            ["date-parts"] = {},
           }
 
           if value.year then

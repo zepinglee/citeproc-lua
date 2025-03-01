@@ -10,7 +10,6 @@ local uni_utf8
 local uni_algos_normalize
 local uni_algos_words
 local uni_algos_case
-local util
 
 local using_luatex, kpse = pcall(require, "kpse")
 if using_luatex then
@@ -23,7 +22,6 @@ if using_luatex then
     ok, uni_algos_words = pcall(require, "citeproc-lua-uni-words")
   end
   uni_algos_case = require("lua-uni-case")
-  util = require("citeproc-util")
 else
   uni_utf8 = require("lua-utf8")
   if not utf8 then
@@ -32,7 +30,6 @@ else
   end
   uni_algos_words = require("citeproc.lua-uni-algos.words")
   uni_algos_case = require("citeproc.lua-uni-algos.case")
-  util = require("citeproc.util")
 end
 
 
@@ -275,10 +272,8 @@ end
 ---@param str string
 ---@return string[]
 function unicode.split_word_bounds(str)
-  -- util.debug(str)
   local segments = {}
   if uni_algos_words then
-    -- util.debug("uni_algos_words")
     for _, _, segment in uni_algos_words.word_boundaries(str) do
       table.insert(segments, segment)
     end
@@ -286,19 +281,18 @@ function unicode.split_word_bounds(str)
     for i = #segments, 1, -1 do
       local segment = segments[i]
       if segment == "`" then
-        if i < #segments and not uni_utf8.match(segments[i+1], "^%s") then
-          segments[i] = segment .. segments[i+1]
-          table.remove(segments, i+1)
+        if i < #segments and not uni_utf8.match(segments[i + 1], "^%s") then
+          segments[i] = segment .. segments[i + 1]
+          table.remove(segments, i + 1)
         end
-        if i > 1 and not uni_utf8.match(segments[i-1], "%s") then
-          segments[i-1] = segments[i-1] .. segments[i]
+        if i > 1 and not uni_utf8.match(segments[i - 1], "%s") then
+          segments[i - 1] = segments[i - 1] .. segments[i]
           table.remove(segments, i)
         end
       end
     end
 
   else
-    -- util.debug("no uni_algos_words")
     -- A naive implementation
     local state = CharState.Other
     local segment = ""
@@ -327,7 +321,6 @@ function unicode.split_word_bounds(str)
     table.insert(segments, segment)
   end
 
-  -- util.debug(segments)
   return segments
 end
 

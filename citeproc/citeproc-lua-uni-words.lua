@@ -1,3 +1,4 @@
+---@diagnostic disable
 -- lua-uni-words.lua
 -- Copyright 2020--2023 Marcel Krüger
 --
@@ -10,7 +11,7 @@
 -- version 2005/12/01 or later.
 --
 -- This work has the LPPL maintenance status `maintained'.
--- 
+--
 -- The Current Maintainer of this work is Marcel Krüger
 
 local extended_pictographic, property do

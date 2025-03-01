@@ -41,7 +41,7 @@ describe("Inline elements", function ()
       local expected = {
         markup.PlainText:new("One TwoA "),
         markup.Formatted:new({
-          markup.PlainText:new("Three Four")
+          markup.PlainText:new("Three Four"),
         }, {["font-style"] = "italic"}),
         markup.PlainText:new(" Five!"),
       }
@@ -54,7 +54,7 @@ describe("Inline elements", function ()
       local expected = {
         markup.PlainText:new("His "),
         markup.Formatted:new({
-          markup.PlainText:new("Anonymous")
+          markup.PlainText:new("Anonymous"),
         }, {["font-variant"] = "small-caps"}),
         markup.PlainText:new(" Life"),
       }
@@ -67,7 +67,7 @@ describe("Inline elements", function ()
       local expected = {
         markup.PlainText:new("My "),
         markup.Formatted:new({
-          markup.PlainText:new("small caps phrase")
+          markup.PlainText:new("small caps phrase"),
         }, {["font-variant"] = "small-caps"}),
         markup.PlainText:new(" in a title"),
       }
@@ -76,7 +76,7 @@ describe("Inline elements", function ()
 
     it("no case", function ()
       -- textcase_CapitalizeAll.txt
-      local text =  'This IS a Pen that is a <span class="nocase">SMITH</span> Pencil'
+      local text = 'This IS a Pen that is a <span class="nocase">SMITH</span> Pencil'
       local expected = {
         markup.PlainText:new("This IS a Pen that is a "),
         markup.NoCase:new({markup.PlainText:new("SMITH")}),
@@ -94,7 +94,8 @@ describe("Inline elements", function ()
       -- From <https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case>
 
       it("1", function ()
-        local inlines = InlineElement:parse("Train your mind for peak performance: A science-based approach for achieving your goals", nil)
+        local inlines = InlineElement:parse(
+          "Train your mind for peak performance: A science-based approach for achieving your goals", nil)
         plain_text_format:apply_text_case(inlines, "title", true)
         local res = plain_text_format:write_inlines(inlines, nil)
         -- assert.equal("Mnemonics That Work Are Better Than Rules That Do Not", res)

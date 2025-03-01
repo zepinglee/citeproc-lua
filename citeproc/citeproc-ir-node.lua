@@ -126,7 +126,7 @@ function IrNode:_debug(level)
     table.insert(ir_info, "person_name_irs: " .. tostring(#self.person_name_irs))
   end
   if #ir_info > 0 then
-    ir_info_str = string.format("{%s}", table.concat(ir_info, ' '))
+    ir_info_str = string.format("{%s}", table.concat(ir_info, " "))
   end
   local element_info = self._element.element_name
   for _, attr in ipairs({"name", "variable"}) do
@@ -134,7 +134,8 @@ function IrNode:_debug(level)
       element_info = element_info .. string.format(' %s="%s"', attr, self._element[attr])
     end
   end
-  local text = string.format("\n%s [%s] %s <%s> %s", string.rep("    ", level), self.group_var, self._type, element_info, ir_info_str)
+  local text = string.format("\n%s [%s] %s <%s> %s", string.rep("    ", level), self.group_var, self._type,
+    element_info, ir_info_str)
   if self.children and #self.children > 0 then
     for _, child_ir in ipairs(self.children) do
       text = text .. child_ir:_debug(level + 1)
@@ -153,7 +154,6 @@ function IrNode:flatten(format)
 end
 
 function IrNode:capitalize_first_term()
-  -- util.debug(self)
   if self._type == "Rendered" and self._element then
     local element = self._element
     ---@cast element Text
@@ -271,7 +271,6 @@ local SeqIr = IrNode:derive("SeqIr")
 --   self.__index = self
 --   return o
 -- end
-
 
 
 irnode.IrNode = IrNode

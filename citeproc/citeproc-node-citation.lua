@@ -50,9 +50,6 @@ local SortStringFormat = output.SortStringFormat
 local Position = util.Position
 
 
--- local DEBUG_DISAMBIGUATE = true
-
-
 ---@class Citation: Element
 ---@field disambiguate_add_givenname boolean?
 ---@field givenname_disambiguation_rule string
@@ -179,7 +176,6 @@ end
 
 ---@alias CiteId string | number
 
----comment
 ---@param citation_items CitationItem[]
 ---@param engine CiteProc
 ---@param properties CitationProperties
@@ -214,20 +210,20 @@ function Citation:build_cluster(citation_items, engine, properties)
 
   -- Capitalize first
   for i, ir in ipairs(irs) do
-      -- local layout_prefix
-      -- local layout_affixes = self.layout.affixes
-      -- if layout_affixes then
-      --   layout_prefix = layout_affixes.prefix
-      -- end
+    -- local layout_prefix
+    -- local layout_affixes = self.layout.affixes
+    -- if layout_affixes then
+    --   layout_prefix = layout_affixes.prefix
+    -- end
     local prefix_inlines = ir.cite_prefix
     if prefix_inlines then
       -- Prefix is inlines
       local prefix_str = output.SortStringFormat:new():output(prefix_inlines, context)
       if (string.match(prefix_str, "[.!?]%s*$")
-          -- position_IbidWithPrefixFullStop.txt
-          -- `Book A. He said “Please work.” Ibid.`
-          or string.match(prefix_str, "[.!?]”%s*$")
-         ) and InlineElement.has_space(prefix_inlines) then
+            -- position_IbidWithPrefixFullStop.txt
+            -- `Book A. He said “Please work.” Ibid.`
+            or string.match(prefix_str, "[.!?]”%s*$")
+          ) and InlineElement.has_space(prefix_inlines) then
         ir:capitalize_first_term()
       end
     else
@@ -237,8 +233,6 @@ function Citation:build_cluster(citation_items, engine, properties)
       end
     end
   end
-
-  -- util.debug(irs)
 
   local citation_stream = {}
 
@@ -281,10 +275,8 @@ function Citation:build_cluster(citation_items, engine, properties)
           table.insert(citation_stream, Micro:new(cite_prefix))
         end
 
-        -- util.debug(ir.cite_item.id)
-        -- util.debug(cite_inlines)
         -- if context.engine.opt.citation_link then
-          cite_inlines = {CiteInline:new(cite_inlines, ir.cite_item)}
+        cite_inlines = {CiteInline:new(cite_inlines, ir.cite_item)}
         -- end
         util.extend(citation_stream, cite_inlines)
 
@@ -295,7 +287,7 @@ function Citation:build_cluster(citation_items, engine, properties)
             -- affix_WithCommas.txt
             local right_most_str = cite_suffix[#cite_suffix]:get_right_most_string()
             if string.match(right_most_str, "[,.;?]%s*$") then
-              ir.own_delimiter = string.gsub(cite_delimiter,  "^[,.;?]", "")
+              ir.own_delimiter = string.gsub(cite_delimiter, "^[,.;?]", "")
             end
           end
         end
@@ -304,8 +296,6 @@ function Citation:build_cluster(citation_items, engine, properties)
       end
     end
   end
-
-  -- util.debug(citation_stream)
 
   local has_printed_form = true
   if #citation_items == 0 then
@@ -434,7 +424,6 @@ end
 ---@param properties CitationProperties
 ---@return CiteIr
 function Citation:build_fully_disambiguated_ir(cite_item, output_format, engine, properties)
-  -- util.debug(cite_item.id)
   local cite_ir = self:build_ambiguous_ir(cite_item, output_format, engine)
   cite_ir = self:apply_disambiguate_add_givenname(cite_ir, engine)
   cite_ir = self:apply_disambiguate_add_names(cite_ir, engine)
@@ -458,7 +447,6 @@ function Citation:build_fully_disambiguated_ir(cite_item, output_format, engine,
   return cite_ir
 end
 
----comment
 ---@param cite_item CitationItem
 ---@param output_format OutputFormat
 ---@param engine CiteProc
@@ -525,18 +513,6 @@ function Citation:build_ambiguous_ir(cite_item, output_format, engine)
       break
     end
   end
-  if DEBUG_DISAMBIGUATE then
-    if ir.is_ambiguous then
-      util.debug("[CLASH]")
-      util.debug(string.format("%s: %s", cite_item.id, disam_str))
-      for ir_index, ir_ in pairs(engine.cite_irs_by_output[disam_str]) do
-        util.debug(string.format("%s: %s", ir_.cite_item.id, ir_.disam_str))
-      end
-    else
-      util.debug("[clear]")
-      util.debug(string.format("%s: %s", cite_item.id, disam_str))
-    end
-  end
   engine.cite_irs_by_output[disam_str][ir.ir_index] = ir
 
   return ir
@@ -556,10 +532,6 @@ end
 
 function Citation:apply_disambiguate_add_givenname(cite_ir, engine)
   if self.disambiguate_add_givenname then
-    if DEBUG_DISAMBIGUATE then
-      util.debug("[Method (1)] disambiguate-add-givenname: " .. cite_ir.cite_item.id)
-    end
-
     local gn_disam_rule = self.givenname_disambiguation_rule
     if gn_disam_rule == "all-names" or gn_disam_rule == "all-names-with-initials" then
       cite_ir = self:apply_disambiguate_add_givenname_all_names(cite_ir, engine)
@@ -574,16 +546,12 @@ end
 
 -- TODO: reorganize this code
 function Citation:apply_disambiguate_add_givenname_all_names(cite_ir, engine)
-  -- util.debug("disambiguate_add_givenname_all_names: " .. cite_ir.cite_item.id)
   if not cite_ir.person_name_irs or #cite_ir.person_name_irs == 0 then
     return cite_ir
   end
 
-  -- util.debug(cite_ir.disam_str)
-
   for _, person_name_ir in ipairs(cite_ir.person_name_irs) do
     local name_output = person_name_ir.name_output
-    -- util.debug(name_output)
 
     if not person_name_ir.person_name_index then
       person_name_ir.person_name_index = #engine.person_names + 1
@@ -607,12 +575,6 @@ function Citation:apply_disambiguate_add_givenname_all_names(cite_ir, engine)
       end
     end
 
-    -- util.debug(person_name_ir.name_output)
-    -- util.debug(person_name_ir.full_name)
-    -- util.debug(#ambiguous_name_irs)
-    -- util.debug(person_name_ir.disam_variants_index)
-    -- util.debug(person_name_ir.disam_variants)
-
     while person_name_ir.disam_variants_index < #person_name_ir.disam_variants do
       if #ambiguous_name_irs == 0 then
         break
@@ -632,14 +594,11 @@ function Citation:apply_disambiguate_add_givenname_all_names(cite_ir, engine)
         end
       end
 
-      -- util.debug(person_name_ir.name_output)
-
       -- update ambiguous_name_irs and ambiguous_same_output_irs
       ambiguous_name_irs = {}
       ambiguous_same_output_irs = {}
       for _, pn_ir in pairs(engine.person_names_by_output[person_name_ir.name_output]) do
         if pn_ir.full_name ~= person_name_ir.full_name then
-          -- util.debug(pn_ir.full_name .. ": " .. pn_ir.name_output)
           table.insert(ambiguous_name_irs, pn_ir)
         end
         if pn_ir.name_output == person_name_ir.name_output then
@@ -663,7 +622,6 @@ function Citation:apply_disambiguate_add_givenname_all_names(cite_ir, engine)
   -- update ambiguous_cite_irs and ambiguous_same_output_irs
   local ambiguous_cite_irs = {}
   for ir_index, ir_ in pairs(engine.cite_irs_by_output[cite_ir.disam_str]) do
-    -- util.debug(ir_.cite_item.id)
     if ir_.cite_item.id ~= cite_ir.cite_item.id then
       table.insert(ambiguous_cite_irs, ir_)
     end
@@ -681,7 +639,6 @@ function Citation:apply_disambiguate_add_givenname_primary_name(cite_ir, engine)
   end
   local person_name_ir = cite_ir.person_name_irs[1]
   local name_output = person_name_ir.name_output
-  -- util.debug(name_output)
 
   if not person_name_ir.person_name_index then
     person_name_ir.person_name_index = #engine.person_names + 1
@@ -740,19 +697,12 @@ function Citation:apply_disambiguate_add_givenname_primary_name(cite_ir, engine)
 end
 
 function Citation:apply_disambiguate_add_givenname_by_cite(cite_ir, engine)
-  -- util.debug(cite_ir.is_ambiguous)
   if not cite_ir.is_ambiguous then
     return cite_ir
   end
-  -- util.debug(cite_ir)
   if not cite_ir.person_name_irs or #cite_ir.person_name_irs == 0 then
     return cite_ir
   end
-
-  -- for _, ir_ in ipairs(engine.disam_irs) do
-  --   util.debug(ir_.cite_item.id)
-  --   util.debug(ir_.disam_str)
-  -- end
 
   local disam_format = DisamStringFormat:new()
 
@@ -769,41 +719,33 @@ function Citation:apply_disambiguate_add_givenname_by_cite(cite_ir, engine)
   end
 
   for i, person_name_ir in ipairs(cite_ir.person_name_irs) do
-    -- util.debug(person_name_ir.name_output)
-    -- util.debug(person_name_ir.disam_variants)
     if #ambiguous_cite_irs == 0 then
       cite_ir.is_ambiguous = false
       break
     end
 
-    -- util.debug(person_name_ir.disam_variants)
     while person_name_ir.disam_variants_index < #person_name_ir.disam_variants do
-      -- util.debug(person_name_ir.name_output)
 
       local is_different_name = false
       for _, ir_ in ipairs(ambiguous_cite_irs) do
         if ir_.person_name_irs[i] then
           if ir_.person_name_irs[i].full_name ~= person_name_ir.full_name then
-            -- util.debug(ir_.cite_item.id)
             is_different_name = true
             break
           end
         end
       end
-      -- util.debug(is_different_name)
       if not is_different_name then
         break
       end
 
       for _, ir_ in ipairs(ambiguous_same_output_irs) do
-        -- util.debug(ir_.cite_item.id)
         local person_name_ir_ = ir_.person_name_irs[i]
         if person_name_ir_ then
           if person_name_ir_.disam_variants_index < #person_name_ir_.disam_variants then
             person_name_ir_.disam_variants_index = person_name_ir_.disam_variants_index + 1
             local disam_variant = person_name_ir_.disam_variants[person_name_ir_.disam_variants_index]
             person_name_ir_.name_output = disam_variant
-            -- util.debug(disam_variant)
             person_name_ir_.inlines = person_name_ir_.disam_inlines[disam_variant]
             -- Update cite ir output
             local inlines = ir_:flatten(disam_format)
@@ -821,7 +763,6 @@ function Citation:apply_disambiguate_add_givenname_by_cite(cite_ir, engine)
       ambiguous_cite_irs = {}
       ambiguous_same_output_irs = {}
       for ir_index, ir_ in pairs(engine.cite_irs_by_output[cite_ir.disam_str]) do
-        -- util.debug(ir_.cite_item.id)
         if ir_.cite_item.id ~= cite_ir.cite_item.id then
           table.insert(ambiguous_cite_irs, ir_)
         end
@@ -829,8 +770,6 @@ function Citation:apply_disambiguate_add_givenname_by_cite(cite_ir, engine)
           table.insert(ambiguous_same_output_irs, ir_)
         end
       end
-
-      -- util.debug(#ambiguous_cite_irs)
 
       if #ambiguous_cite_irs == 0 then
         cite_ir.is_ambiguous = false
@@ -866,7 +805,7 @@ function Citation:apply_disambiguate_add_names(cite_ir, engine)
   if not cite_ir.name_ir then
     cite_ir.name_ir = find_first_name_ir(cite_ir)
   end
-  local name_ir =  cite_ir.name_ir
+  local name_ir = cite_ir.name_ir
 
   if not cite_ir.is_ambiguous then
     return cite_ir
@@ -875,16 +814,6 @@ function Citation:apply_disambiguate_add_names(cite_ir, engine)
   if not name_ir or not name_ir.et_al_abbreviation then
     return cite_ir
   end
-
-  if DEBUG_DISAMBIGUATE then
-    util.debug("[Method (3)] disambiguate-add-names: " .. cite_ir.cite_item.id)
-  end
-
-  -- if name_ir then
-  --   util.debug(cite_ir.disam_str)
-  --   util.debug(cite_ir.name_ir.full_name_str)
-  --   util.debug(cite_ir.is_ambiguous)
-  -- end
 
   local disam_format = DisamStringFormat:new()
 
@@ -904,7 +833,6 @@ function Citation:apply_disambiguate_add_names(cite_ir, engine)
       end
     end
 
-    -- util.debug(#ambiguous_same_output_irs)
     if #ambiguous_cite_irs == 0 then
       cite_ir.is_ambiguous = false
       break
@@ -918,7 +846,6 @@ function Citation:apply_disambiguate_add_names(cite_ir, engine)
         break
       end
     end
-    -- util.debug(can_be_disambuguated)
     if not can_be_disambuguated then
       break
     end
@@ -926,7 +853,6 @@ function Citation:apply_disambiguate_add_names(cite_ir, engine)
     for _, ir_ in ipairs(ambiguous_same_output_irs) do
       local added_person_name_ir = ir_.name_ir.name_inheritance:expand_one_name(ir_.name_ir)
       if added_person_name_ir then
-        -- util.debug("Updated: " .. ir_.cite_item.id)
         table.insert(ir_.person_name_irs, added_person_name_ir)
 
         if not added_person_name_ir.person_name_index then
@@ -942,7 +868,6 @@ function Citation:apply_disambiguate_add_names(cite_ir, engine)
         -- Update ir output
         local inlines = ir_:flatten(disam_format)
         local disam_str = disam_format:output(inlines, nil)
-        -- util.debug(disam_str)
         ir_.disam_str = disam_str
         if not engine.cite_irs_by_output[disam_str] then
           engine.cite_irs_by_output[disam_str] = {}
@@ -951,7 +876,6 @@ function Citation:apply_disambiguate_add_names(cite_ir, engine)
       end
     end
 
-    -- util.debug("disambiguate_add_givenname")
 
     if self.disambiguate_add_givenname then
       local gn_disam_rule = self.givenname_disambiguation_rule
@@ -964,12 +888,7 @@ function Citation:apply_disambiguate_add_names(cite_ir, engine)
 
     cite_ir.is_ambiguous = self:check_ambiguity(cite_ir, engine)
 
-    -- for _, ir_ in ipairs(engine.disam_irs) do
-    --   util.debug(ir_.cite_item.id .. ": " .. ir_.disam_str)
-    -- end
-
   end
-
 
   return cite_ir
 end
@@ -990,10 +909,6 @@ function Citation:collect_irs_with_disambiguate_branch(ir)
 end
 
 function Citation:apply_disambiguate_conditionals(cite_ir, engine)
-  if DEBUG_DISAMBIGUATE then
-    util.debug("[Method (3)] disambiguate with condition testing “true”: " .. cite_ir.cite_item.id)
-  end
-
   cite_ir.irs_with_disambiguate_branch = self:collect_irs_with_disambiguate_branch(cite_ir)
 
   local disam_format = DisamStringFormat:new()
@@ -1002,9 +917,6 @@ function Citation:apply_disambiguate_conditionals(cite_ir, engine)
     if #cite_ir.irs_with_disambiguate_branch == 0 then
       break
     end
-
-    -- util.debug(cite_ir.cite_item.id)
-    -- util.debug(cite_ir.disam_str)
 
     -- update ambiguous_same_output_irs
     local ambiguous_same_output_irs = {}
@@ -1039,11 +951,6 @@ function Citation:apply_disambiguate_conditionals(cite_ir, engine)
     end
 
     cite_ir.is_ambiguous = self:check_ambiguity(cite_ir, engine)
-    -- util.debug(cite_ir.is_ambiguous)
-    -- for _, ir_ in ipairs(engine.disam_irs) do
-    --   util.debug(ir_.cite_item.id .. ": " .. ir_.disam_str)
-    -- end
-
   end
   return cite_ir
 end
@@ -1053,20 +960,6 @@ function Citation:check_ambiguity(cite_ir, engine)
   for _, ir_ in pairs(engine.cite_irs_by_output[cite_ir.disam_str]) do
     if ir_.cite_item.id ~= cite_ir.cite_item.id then
       is_ambiguous = true
-    end
-  end
-  if DEBUG_DISAMBIGUATE then
-    if is_ambiguous then
-      util.debug("[CLASH]")
-      util.debug(string.format("%s, %s", cite_ir.cite_item.id, cite_ir.disam_str))
-      for _, ir_ in pairs(engine.cite_irs_by_output[cite_ir.disam_str]) do
-        if ir_.cite_item.id ~= cite_ir.cite_item.id then
-          util.debug(string.format("%s: %s", ir_.cite_item.id, ir_.disam_str))
-        end
-      end
-    else
-      util.debug("[clear]")
-      util.debug(string.format("%s, %s", cite_ir.cite_item.id, cite_ir.disam_str))
     end
   end
   return is_ambiguous
@@ -1098,10 +991,6 @@ function Citation:apply_disambiguate_add_year_suffix(cite_ir, engine)
     return cite_ir
   end
 
-  if DEBUG_DISAMBIGUATE then
-    util.debug("[Method (4)] disambiguate-add-year-suffix”: " .. cite_ir.cite_item.id)
-  end
-
   local ambiguous_same_output_irs = self:get_ambiguous_same_output_cite_irs(cite_ir, engine)
 
   table.sort(ambiguous_same_output_irs, function (a, b)
@@ -1123,7 +1012,6 @@ function Citation:apply_disambiguate_add_year_suffix(cite_ir, engine)
       ir_.reference.year_suffix_number = year_suffix_number
       ir_.reference["year-suffix"] = self:render_year_suffix(year_suffix_number)
     end
-    -- util.debug(string.format('%s: %s "%s"', ir_.cite_item.id, tostring(ir_.reference.year_suffix_number), ir_.reference["year-suffix"]))
 
     if not ir_.year_suffix_irs then
       ir_.year_suffix_irs = ir_:collect_year_suffix_irs()
@@ -1131,7 +1019,6 @@ function Citation:apply_disambiguate_add_year_suffix(cite_ir, engine)
         -- The style does not have a "year-suffix" variable.
         -- Then the year-suffix is appended the first year rendered through cs:date or citation-label
         local year_ir = ir_:find_first_year_ir()
-        -- util.debug(year_ir)
         if year_ir then
           local year_suffix_ir = YearSuffix:new({}, self)
           table.insert(year_ir.children, year_suffix_ir)
@@ -1144,8 +1031,7 @@ function Citation:apply_disambiguate_add_year_suffix(cite_ir, engine)
 
     -- Render all the year-suffix irs.
     for _, year_suffix_ir in ipairs(ir_.year_suffix_irs) do
-      -- util.debug(ir_.reference["year-suffix"])
-      year_suffix_ir.inlines = { PlainText:new(ir_.reference["year-suffix"]) }
+      year_suffix_ir.inlines = {PlainText:new(ir_.reference["year-suffix"])}
       year_suffix_ir.year_suffix_number = ir_.reference.year_suffix_number
       year_suffix_ir.group_var = GroupVar.Important
     end
@@ -1153,7 +1039,6 @@ function Citation:apply_disambiguate_add_year_suffix(cite_ir, engine)
     -- DisamStringFormat doesn't render YearSuffix and this can be skipped.
     -- local inlines = ir_:flatten(disam_format)
     -- local disam_str = disam_format:output(inlines, nil)
-    -- util.debug(string.format('update %s: "%s" to "%s"', ir_.cite_item.id, ir_.disam_str, disam_str))
     -- ir_.disam_str = disam_str
     -- if not engine.cite_irs_by_output[disam_str] then
     --   engine.cite_irs_by_output[disam_str] = {}
@@ -1176,7 +1061,6 @@ function Citation:render_year_suffix(year_suffix_number)
     year_suffix = string.char(i + 97) .. year_suffix
     year_suffix_number = (year_suffix_number - 1) // 26
   end
-  -- util.debug(year_suffix)
   return year_suffix
 end
 
@@ -1203,11 +1087,11 @@ local function find_first_names_ir(ir)
 
   local first_rendering_ir = find_first(ir, function (ir_)
     return (ir_._element_name == "text"
-      or ir_._element_name == "date"
-      or ir_._element_name == "number"
-      or ir_._element_name == "names"
-      or ir_._element_name == "label")
-      and ir_.group_var ~= GroupVar.Missing
+          or ir_._element_name == "date"
+          or ir_._element_name == "number"
+          or ir_._element_name == "names"
+          or ir_._element_name == "label")
+        and ir_.group_var ~= GroupVar.Missing
   end)
   local first_names_ir
   if first_rendering_ir and first_rendering_ir._element_name == "names" then
@@ -1288,11 +1172,11 @@ end
 function Citation:_apply_cite_author_only(ir)
   local author_ir = find_first(ir, function (ir_)
     return (ir_._element_name == "text"
-      or ir_._element_name == "date"
-      or ir_._element_name == "number"
-      or ir_._element_name == "names"
-      or ir_._element_name == "label")
-      and ir_.group_var ~= GroupVar.Missing
+          or ir_._element_name == "date"
+          or ir_._element_name == "number"
+          or ir_._element_name == "names"
+          or ir_._element_name == "label")
+        and ir_.group_var ~= GroupVar.Missing
   end)
 
   if author_ir then
@@ -1307,7 +1191,6 @@ end
 function Citation:_apply_suppress_author(ir)
   local author_ir = find_first_names_ir(ir)
   if author_ir then
-    -- util.debug(author_ir)
     author_ir.collapse_suppressed = true
   end
   return ir
@@ -1318,7 +1201,6 @@ function Citation:_apply_composite(ir, output_format, engine)
 
   local first_names_ir = find_first_names_ir(ir)
   if first_names_ir and engine.style.class ~= "note" then
-    -- util.debug(first_names_ir)
     first_names_ir.collapse_suppressed = true
   end
 
@@ -1413,7 +1295,7 @@ function Citation:collapse_cites_by_citation_number(irs, engine)
     if i == 1 then
       table.insert(current_group, ir)
     elseif citation_number and previous_citation_number and
-      previous_citation_number + 1 == citation_number then
+        previous_citation_number + 1 == citation_number then
       table.insert(current_group, ir)
     else
       table.insert(cite_groups, current_group)

@@ -29,7 +29,7 @@ sourcefiles = {
   "citeproc/*.lua",
   "latex/*.sty",
   "submodules/locales/csl-locales-*.xml",
-  "submodules/styles/*.csl"
+  "submodules/styles/*.csl",
 }
 tagfiles = {
   "CHANGELOG.md",
@@ -73,21 +73,21 @@ local ctan_uploader = mydata.name or "Zeping Lee"
 local ctan_email = mydata.email
 
 uploadconfig = {
-  pkg         = "citation-style-language",
-  version     = package_version,
-  author      = "Zeping Lee",
-  license     = {"mit", "cc-by-sa-3", "cc0"},
-  uploader    = ctan_uploader,
-  email       = ctan_email,
-  summary     = "Bibliography formatting with Citation Style Language",
+  pkg = "citation-style-language",
+  version = package_version,
+  author = "Zeping Lee",
+  license = {"mit", "cc-by-sa-3", "cc0"},
+  uploader = ctan_uploader,
+  email = ctan_email,
+  summary = "Bibliography formatting with Citation Style Language",
   description =
   [[The Citation Style Language (CSL) is an XML-based language that defines the formats of citations and bibliography. There are currently thousands of styles in CSL including the most widely used APA, Chicago, Vancouver, etc. The citation-style-language package is aimed to provide another reference formatting method for LaTeX that utilizes the CSL styles. It contains a citation processor implemented in pure Lua (citeproc-lua) which reads bibliographic metadata and performs sorting and formatting on both citations and bibliography according to the selected CSL style. A LaTeX package (citation-style-language.sty) is provided to communicate with the processor.]],
-  ctanPath    = "/biblio/citation-style-language",
-  repository  = package_repository,
-  bugtracker  = "https://github.com/zepinglee/citeproc-lua/issues",
-  topic       = {"biblio", "use-lua"},
+  ctanPath = "/biblio/citation-style-language",
+  repository = package_repository,
+  bugtracker = "https://github.com/zepinglee/citeproc-lua/issues",
+  topic = {"biblio", "use-lua"},
   -- announcement = announcement,
-  update      = true,
+  update = true,
 }
 
 function update_tag(file, content, tagname, tagdate)

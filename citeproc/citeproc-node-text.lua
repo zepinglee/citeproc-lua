@@ -87,7 +87,6 @@ function Text:build_ir(engine, state, context)
   if self.variable then
     ir = self:build_variable_ir(engine, state, context)
   elseif self.macro then
-    -- util.debug(self.macro)
     ir = self:build_macro_ir(engine, state, context)
   elseif self.term then
     ir = self:build_term_ir(engine, state, context)
@@ -236,7 +235,6 @@ function Text:build_macro_ir(engine, state, context)
     util.error(string.format("Macro '%s' not found", self.macro))
     return nil
   end
-  -- util.debug(string.format('<macro name="%s">', self.macro))
   state:push_macro(self.macro)
   local ir = macro:build_ir(engine, state, context)
   state:pop_macro(self.macro)
@@ -248,7 +246,6 @@ function Text:build_macro_ir(engine, state, context)
       ir.quotes = context:get_localized_quotes()
     end
   end
-  -- util.debug(ir)
   return ir
 end
 

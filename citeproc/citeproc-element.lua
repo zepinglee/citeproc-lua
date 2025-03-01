@@ -82,7 +82,7 @@ end
 function Element:set_attribute(node, attribute)
   local value = node:get_attribute(attribute)
   if value then
-    local key = string.gsub(attribute, "%-" , "_")
+    local key = string.gsub(attribute, "%-", "_")
     self[key] = value
   end
 end
@@ -90,10 +90,10 @@ end
 function Element:set_bool_attribute(node, attribute)
   local value = node:get_attribute(attribute)
   if value == "true" then
-    local key = string.gsub(attribute, "%-" , "_")
+    local key = string.gsub(attribute, "%-", "_")
     self[key] = true
   elseif value == "false" then
-    local key = string.gsub(attribute, "%-" , "_")
+    local key = string.gsub(attribute, "%-", "_")
     self[key] = false
   end
 end
@@ -101,7 +101,7 @@ end
 function Element:set_number_attribute(node, attribute)
   local value = node:get_attribute(attribute)
   if value then
-    local key = string.gsub(attribute, "%-" , "_")
+    local key = string.gsub(attribute, "%-", "_")
     self[key] = tonumber(value)
   end
 end
@@ -193,10 +193,7 @@ function Element:build_group_ir(engine, state, context)
   local group_var = GroupVar.UnresolvedPlain
 
   for _, child_element in ipairs(self.children) do
-    -- util.debug(child_element.element_name)
     local child_ir = child_element:build_ir(engine, state, context)
-    -- util.debug(child_ir)
-    -- util.debug(child_ir.group_var)
 
     if child_ir then
       -- cs:group and its child elements are suppressed if
@@ -240,8 +237,6 @@ function Element:build_group_ir(engine, state, context)
   ir.name_count = name_count
   ir.sort_key = ir_sort_key
   ir.group_var = group_var
-
-  -- util.debug(ir)
 
   return ir
 end
@@ -409,7 +404,6 @@ function Element:format_number(number, variable, form, context)
   --   {"1", "",  " & "}
   --   {"5", "8", ", "}
   -- }
-  -- util.debug(number_part_list)
 
   for _, number_parts in ipairs(number_part_list) do
     if form == "roman" then
@@ -457,18 +451,18 @@ function Element:parse_number_tokens(number, context)
     and_text = context.locale:get_simple_term("and") or "and"
     and_symbol = context.locale:get_simple_term("and", "symbol") or "&"
   end
-  -- util.debug(and_symbol)
 
+  ---@diagnostic disable codestyle-check
   local space = l.S(" \t\r\n")
   local delimiter_patt = space^0 * l.P(",") * space^0 * l.P(and_text) * space^1
-    + space^0 * l.P(",") * space^0 * l.P(and_symbol) * space^0
-    + space^0 * l.P(",") * space^0 * l.P("&") * space^0
-    + space^1 * l.P(and_text) * space^1
-    + space^0 * l.P(and_symbol) * space^0
-    + space^0 * l.P("&") * space^0
-    + space^0 * l.P(",") * space^0
-    + space^0 * l.P("-") * space^0
-    + space^0 * l.P(util.unicode["en dash"]) * space^0
+      + space^0 * l.P(",") * space^0 * l.P(and_symbol) * space^0
+      + space^0 * l.P(",") * space^0 * l.P("&") * space^0
+      + space^1 * l.P(and_text) * space^1
+      + space^0 * l.P(and_symbol) * space^0
+      + space^0 * l.P("&") * space^0
+      + space^0 * l.P(",") * space^0
+      + space^0 * l.P("-") * space^0
+      + space^0 * l.P(util.unicode["en dash"]) * space^0
   local delimiter = l.C(delimiter_patt^1) / function (delimiter)
     return {
       type = "delimiter",
@@ -482,8 +476,8 @@ function Element:parse_number_tokens(number, context)
     }
   end
   local grammer = l.Ct((token_patt * (delimiter * token_patt)^0)^-1)
+  ---@diagnostic enable codestyle-check
   local tokens = grammer:match(number)
-  -- util.debug(tokens)
 
   if not tokens then
     return {}
@@ -509,7 +503,7 @@ function Element:parse_number_tokens(number, context)
         token.type = "number"
       else
         stop_index = i
-        if i > 1 and tokens[i-1].type == "delimiter" then
+        if i > 1 and tokens[i - 1].type == "delimiter" then
           stop_index = i - 1
         end
         break
@@ -519,7 +513,7 @@ function Element:parse_number_tokens(number, context)
       if string.match(token.value, "^%s*-%s*$")
           or string.match(token.value, "^%s*–%s*$") then
         token.delimiter_type = "range"
-        if i > 2 and tokens[i-2].delimiter_type == "range" then
+        if i > 2 and tokens[i - 2].delimiter_type == "range" then
           stop_index = i
           break
         end
@@ -551,7 +545,7 @@ function Element:split_number_parts_lpeg(number, context)
   local number_parts = {}
   for i, token in ipairs(tokens) do
     if token.type == "number" then
-      if i == 1 or tokens[i-1].delimiter_type == "and" then
+      if i == 1 or tokens[i - 1].delimiter_type == "and" then
         table.insert(number_parts, {token.value, "", ""})
       else
         number_parts[#number_parts][2] = token.value
@@ -568,7 +562,6 @@ function Element:split_number_parts_lpeg(number, context)
       end
     end
   end
-  -- util.debug(number_parts)
   return number_parts
 end
 
@@ -605,9 +598,9 @@ function Element:split_number_parts(number, context)
       end
       -- if string.match(start, "^%a*%d+%a*$") and string.match(stop, "^%a*%d+%a*$") then
       --   if s
-        table.insert(number_part_list, {start, stop, delim})
+      table.insert(number_part_list, {start, stop, delim})
       -- else
-        -- table.insert(number_part_list, {start .. "-" .. stop, "", delim})
+      -- table.insert(number_part_list, {start .. "-" .. stop, "", delim})
       -- end
     else
       table.insert(number_part_list, {start, stop, delim})
@@ -664,7 +657,7 @@ function Element:format_page_range(number_parts, page_range_format)
     return stop
   end
 
-  local start_prefix, start_num  = string.match(start, "^(.-)(%d+)$")
+  local start_prefix, start_num = string.match(start, "^(.-)(%d+)$")
   local stop_prefix, stop_num = string.match(stop, "^(.-)(%d+)$")
   if start_prefix ~= stop_prefix then
     -- Not valid range: "n11564-1568" -> "n11564-1568"
@@ -692,7 +685,6 @@ function Element:format_page_range(number_parts, page_range_format)
   number_parts[2] = stop
 end
 
----comment
 ---@param start string
 ---@param stop string
 ---@return string
@@ -736,15 +728,11 @@ function Element:_format_range_expanded(start, stop)
   return string.sub(start, 1, #start - #stop) .. stop
 end
 
----comment
 ---@param start string
 ---@param stop string
 ---@param threshold integer? Number of minimal digits
 ---@return string
 function Element:_format_range_minimal(start, stop, threshold)
-  -- util.debug(start)
-  -- util.debug(stop)
-  -- util.debug(threshold)
   threshold = threshold or 1
   if #start < #stop then
     return stop
@@ -757,7 +745,6 @@ function Element:_format_range_minimal(start, stop, threshold)
     end
   end
   local res = string.sub(stop, -threshold)
-  -- util.debug(res)
   return res
 end
 

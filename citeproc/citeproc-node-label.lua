@@ -8,26 +8,21 @@ local label = {}
 
 local element
 local ir_node
-local output
 local util
 
 local using_luatex, kpse = pcall(require, "kpse")
 if using_luatex then
   element = require("citeproc-element")
   ir_node = require("citeproc-ir-node")
-  output = require("citeproc-output")
   util = require("citeproc-util")
 else
   element = require("citeproc.element")
   ir_node = require("citeproc.ir-node")
-  output = require("citeproc.output")
   util = require("citeproc.util")
 end
 
 local Element = element.Element
-local IrNode = ir_node.IrNode
 local Rendered = ir_node.Rendered
-local PlainText = output.PlainText
 
 
 -- [Label](https://docs.citationstyles.org/en/stable/specification.html#label)
