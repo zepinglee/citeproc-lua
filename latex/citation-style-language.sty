@@ -12,7 +12,6 @@
 \ProvidesExplPackage {citation-style-language} {2025-02-23} {0.7.0}
   {Citation Style Language for LaTeX}
 
-\RequirePackage { l3keys2e }
 \RequirePackage { url }
 
 
@@ -148,7 +147,7 @@
   }
 
 
-\ProcessKeysPackageOptions { csl }
+\ProcessKeyOptions [ csl ]
 
 
 \DeclareDocumentCommand \bibliographystyle { m }

@@ -3,7 +3,6 @@
 \input{csl-test}
 
 \usepackage{xparse}
-\usepackage{l3keys2e}
 \usepackage{url}
 
 \ExplSyntaxOn
