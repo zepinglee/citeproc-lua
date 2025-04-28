@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BibTeX parser: Fix hyphen in family name.
 - Fix a bug in EDTF parsing.
 - Bib2csl: Fix a sentence case conversion bug that words after colons are not capitalized.
+- Fix an error when `hyperref` is loaded before CSL ([#91](https://github.com/zepinglee/citeproc-lua/issues/91)).
 
 ## [0.7.0] - 2025-02-23
 

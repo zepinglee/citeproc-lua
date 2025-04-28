@@ -1,0 +1,35 @@
+% <https://github.com/zepinglee/citeproc-lua/issues/91>
+
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\usepackage{hyperref}
+
+\usepackage[style=apa]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{test.json}
+
+
+\begin{document}
+\START
+\showoutput
+
+\TEST{Citation with hyperlink}{
+  \cite{ITEM-1, ITEM-2, ITEM-3, ITEM-4}
+}
+
+\TEST{Citation output}{
+  \clearpage
+}
+
+\TEST{Bibliography}{
+  \printbibliography
+}
+
+\TEST{Bibliography output}{
+  \clearpage
+}
+
+\OMIT
+\end{document}

@@ -1,0 +1,110 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Citation with hyperlink
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2,ITEM-3,ITEM-4@1},citationItems={{id={ITEM-1}},{id={ITEM-2}},{id={ITEM-3}},{id={ITEM-4}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+LaTeX Warning: Citation `ITEM-2' on page 1 undefined on input line ....
+LaTeX Warning: Citation `ITEM-3' on page 1 undefined on input line ....
+LaTeX Warning: Citation `ITEM-4' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1, ITEM-2, ITEM-3, ITEM-4}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 2: Citation output
+============================================================
+Completed box being shipped out [1]
+\vbox(633.0+0.0)x407.0
+.\hbox(0.0+0.0)x0.0
+.\vbox(0.0+0.0)x0.0, glue set - 14.99626fil
+..\kern 0.0
+..\kern 16.0
+..\kern -1.00374
+..\hbox(0.0+0.0)x0.0, glue set - 60.99626fil
+...\kern 0.0
+...\kern 62.0
+...\kern -1.00374
+...\pdfdest name{page.1} xyz
+...\penalty 10000
+...\glue 0.0 plus 1.0fil minus 1.0fil
+..\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue(\lineskip) 0.0
+.\vbox(633.0+0.0)x407.0
+..\glue 16.0
+..\vbox(617.0+0.0)x345.0, shifted 62.0
+...\vbox(12.0+0.0)x345.0, glue set 12.0fil
+....\glue 0.0 plus 1.0fil
+....\hbox(0.0+0.0)x345.0
+.....\hbox(0.0+0.0)x345.0
+...\glue 25.0
+...\glue(\lineskip) 0.0
+...\vbox(550.0+0.0)x345.0, glue set 539.94232fil
+....\write-{}
+....\pdfdest name{Doc-Start} xyz
+....\glue(\topskip) 2.5
+....\hbox(7.5+2.5)x345.0, glue set 153.3621fil
+.....\hbox(0.0+0.0)x0.0
+.....\OT1/cmr/m/n/10 [
+.....\kern 0.0
+.....\OT1/cmr/bx/n/10 I
+.....\OT1/cmr/bx/n/10 T
+.....\OT1/cmr/bx/n/10 E
+.....\OT1/cmr/bx/n/10 M
+.....\OT1/cmr/bx/n/10 -
+.....\discretionary
+.....\OT1/cmr/bx/n/10 1
+.....\OT1/cmr/bx/n/10 ,
+.....\glue 3.83331 plus 2.39581 minus 1.02222
+.....\OT1/cmr/bx/n/10 I
+.....\OT1/cmr/bx/n/10 T
+.....\OT1/cmr/bx/n/10 E
+.....\OT1/cmr/bx/n/10 M
+.....\OT1/cmr/bx/n/10 -
+.....\discretionary
+.....\OT1/cmr/bx/n/10 2
+.....\OT1/cmr/bx/n/10 ,
+.....\glue 3.83331 plus 2.39581 minus 1.02222
+.....\OT1/cmr/bx/n/10 I
+.....\OT1/cmr/bx/n/10 T
+.....\OT1/cmr/bx/n/10 E
+.....\OT1/cmr/bx/n/10 M
+.....\OT1/cmr/bx/n/10 -
+.....\discretionary
+.....\OT1/cmr/bx/n/10 3
+.....\OT1/cmr/bx/n/10 ,
+.....\glue 3.83331 plus 2.39581 minus 1.02222
+.....\OT1/cmr/bx/n/10 I
+.....\OT1/cmr/bx/n/10 T
+.....\OT1/cmr/bx/n/10 E
+.....\OT1/cmr/bx/n/10 M
+.....\OT1/cmr/bx/n/10 -
+.....\discretionary
+.....\OT1/cmr/bx/n/10 4
+.....\kern 0.0
+.....\OT1/cmr/m/n/10 ]
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue -2.5
+....\glue 0.0 plus 1.0fil
+....\glue 0.0
+....\glue 0.0 plus 0.0001fil
+...\glue(\baselineskip) 30.0
+...\hbox(0.0+0.0)x345.0
+....\hbox(0.0+0.0)x345.0
+.\kern 0.0
+============================================================
+============================================================
+TEST 3: Bibliography
+============================================================
+Package CSL Warning: The bibliography is empty.
+============================================================
+============================================================
+TEST 4: Bibliography output
+============================================================
+============================================================
