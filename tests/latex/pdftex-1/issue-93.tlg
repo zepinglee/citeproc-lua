@@ -1,0 +1,153 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+> \l__csl_citation_info_tl=citationID={ref1@1},citationItems={{id={ref1}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\cite{ref1}
+                 % on the PDF, I click this one
+LaTeX Warning: Citation `ref1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ref1}].
+<recently read> }
+l. ...\cite{ref1}
+                 % on the PDF, I click this one
+Package CSL Warning: The bibliography is empty.
+Completed box being shipped out [1]
+\vbox(633.0+0.0)x407.0
+.\hbox(0.0+0.0)x0.0
+.\vbox(0.0+0.0)x0.0, glue set - 14.99626fil
+..\kern 0.0
+..\kern 16.0
+..\kern -1.00374
+..\hbox(0.0+0.0)x0.0, glue set - 60.99626fil
+...\kern 0.0
+...\kern 62.0
+...\kern -1.00374
+...\pdfdest name{page.1} xyz
+...\penalty 10000
+...\glue 0.0 plus 1.0fil minus 1.0fil
+..\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue(\lineskip) 0.0
+.\vbox(633.0+0.0)x407.0
+..\glue 16.0
+..\vbox(617.0+0.0)x345.0, shifted 62.0
+...\vbox(12.0+0.0)x345.0, glue set 12.0fil
+....\glue 0.0 plus 1.0fil
+....\hbox(0.0+0.0)x345.0
+.....\hbox(0.0+0.0)x345.0
+...\glue 25.0
+...\glue(\lineskip) 0.0
+...\vbox(550.0+0.0)x345.0, glue set 518.04192fil
+....\write-{}
+....\pdfdest name{Doc-Start} xyz
+....\pdfdest name{section.1} xyz
+....\glue(\topskip) 0.12001
+....\hbox(9.87999+0.0)x345.0, glue set 292.14174fil
+.....\hbox(9.27998+0.0)x24.29997
+......\glue 0.0
+......\OT1/cmr/bx/n/14.4 1
+......\glue 16.19998
+.....\OT1/cmr/bx/n/14.4 O
+.....\OT1/cmr/bx/n/14.4 n
+.....\OT1/cmr/bx/n/14.4 e
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\write4{\protect \BOOKMARK [1][-]{section.1}{\376\377\000O\000n\000e}{}% 1}
+....\write1{\@writefile{toc}{\protect \contentsline {section}{\protect \numberline {1}One}{\thepage }{section.1}\protected@file@percent }}
+....\penalty 10000
+....\glue 9.90276 plus 0.86108
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 4.5
+....\hbox(7.5+2.5)x345.0, glue set 320.17368fil
+.....\OT1/cmr/m/n/10 [
+.....\kern 0.0
+.....\OT1/cmr/bx/n/10 r
+.....\OT1/cmr/bx/n/10 e
+.....\OT1/cmr/bx/n/10 f
+.....\OT1/cmr/bx/n/10 1
+.....\kern 0.0
+.....\OT1/cmr/m/n/10 ]
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue -2.5
+....\glue 0.0 plus 1.0fil
+....\glue 0.0
+....\glue 0.0 plus 0.0001fil
+...\glue(\baselineskip) 30.0
+...\hbox(0.0+0.0)x345.0
+....\hbox(0.0+0.0)x345.0
+.\kern 0.0
+> \l__csl_citation_info_tl=citationID={ref2@1},citationItems={{id={ref2}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\cite{ref2}
+LaTeX Warning: Citation `ref2' on page 2 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ref2}].
+<recently read> }
+l. ...\cite{ref2}
+Package CSL Warning: The bibliography is empty.
+Completed box being shipped out [2]
+\vbox(633.0+0.0)x407.0
+.\vbox(0.0+0.0)x0.0, glue set - 14.99626fil
+..\kern 0.0
+..\kern 16.0
+..\kern -1.00374
+..\hbox(0.0+0.0)x0.0, glue set - 60.99626fil
+...\kern 0.0
+...\kern 62.0
+...\kern -1.00374
+...\pdfdest name{page.2} xyz
+...\penalty 10000
+...\glue 0.0 plus 1.0fil minus 1.0fil
+..\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue(\lineskip) 0.0
+.\vbox(633.0+0.0)x407.0
+..\glue 16.0
+..\vbox(617.0+0.0)x345.0, shifted 62.0
+...\vbox(12.0+0.0)x345.0, glue set 12.0fil
+....\glue 0.0 plus 1.0fil
+....\hbox(0.0+0.0)x345.0
+.....\hbox(0.0+0.0)x345.0
+...\glue 25.0
+...\glue(\lineskip) 0.0
+...\vbox(550.0+0.0)x345.0, glue set 518.04192fil
+....\pdfdest name{section.2} xyz
+....\glue(\topskip) 0.12001
+....\hbox(9.87999+0.0)x345.0, glue set 290.08342fil
+.....\hbox(9.27998+0.0)x24.29997
+......\glue 0.0
+......\OT1/cmr/bx/n/14.4 2
+......\glue 16.19998
+.....\OT1/cmr/bx/n/14.4 T
+.....\OT1/cmr/bx/n/14.4 w
+.....\kern-0.45001
+.....\OT1/cmr/bx/n/14.4 o
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\write4{\protect \BOOKMARK [1][-]{section.2}{\376\377\000T\000w\000o}{}% 2}
+....\write1{\@writefile{toc}{\protect \contentsline {section}{\protect \numberline {2}Two}{\thepage }{section.2}\protected@file@percent }}
+....\penalty 10000
+....\glue 9.90276 plus 0.86108
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 4.5
+....\hbox(7.5+2.5)x345.0, glue set 320.17368fil
+.....\OT1/cmr/m/n/10 [
+.....\kern 0.0
+.....\OT1/cmr/bx/n/10 r
+.....\OT1/cmr/bx/n/10 e
+.....\OT1/cmr/bx/n/10 f
+.....\OT1/cmr/bx/n/10 2
+.....\kern 0.0
+.....\OT1/cmr/m/n/10 ]
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue -2.5
+....\glue 0.0 plus 1.0fil
+....\glue 0.0
+....\glue 0.0 plus 0.0001fil
+...\glue(\baselineskip) 30.0
+...\hbox(0.0+0.0)x345.0
+....\hbox(0.0+0.0)x345.0

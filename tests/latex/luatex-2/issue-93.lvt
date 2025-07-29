@@ -1,0 +1,51 @@
+% <https://github.com/zepinglee/citeproc-lua/discussions/93>
+
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\begin{filecontents}[noheader, overwrite]{\jobname.bib}
+@Article{ref1,
+    Title         = {Super cool title},
+    Volume        = 11,
+    DOI           = {10.1001/1111111111},
+    Number        = 1,
+    Journal       = {Super Cool Journal},
+    Author        = {Super Cool Author},
+    Year          = 1900,
+    Month         = {September},
+}
+@Article{ref2,
+    Title         = {Less cool title},
+    Volume        = 22,
+    DOI           = {20.2002/2222222222},
+    Number        = 2,
+    Journal       = {Less Cool Journal},
+    Author        = {Less Cool Author},
+    Year          = 2900,
+    Month         = {September},
+}
+\end{filecontents}
+
+\usepackage[ref-section=section]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{\jobname.bib}
+\usepackage{hyperref}
+
+
+\begin{document}
+\START
+\showoutput
+
+\section{One}
+\cite{ref1} % on the PDF, I click this one
+\printbibliography
+\newpage
+
+\section{Two}
+\cite{ref2}
+\printbibliography
+\newpage
+
+\OMIT
+\end{document}

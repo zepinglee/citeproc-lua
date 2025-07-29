@@ -474,6 +474,7 @@
 % #2: bib heading title
 \cs_new:Npn \__csl_make_bib_heading:nn #1#2
   {
+    \DeclareCommandCopy \newrefsection \relax
     \tl_if_empty:NTF \bibsection
       {
         \cs_if_exist:cF { __csl_head_ #1 :n }
@@ -488,6 +489,7 @@
       { \bibsection }
     \tl_if_empty:NF \l__csl_bib_head_label_tl
       { \exp_args:NV \label \l__csl_bib_head_label_tl }
+    \DeclareCommandCopy \newrefsection \refsection
   }
 
 \msg_new:nnn { citation-style-language } { undefined-bib-heading }
