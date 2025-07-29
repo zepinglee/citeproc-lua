@@ -4,19 +4,19 @@ Chapter 1.
 > \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0},chapterIndex={1}}.
 <recently read> }
 l. ...This is just filler text \cite{ITEM-1}
-                                         .\par
+                                           .\par
 > \l__csl_citation_tl=\cslcite {ITEM-1}{[1]}.
 <recently read> }
 l. ...This is just filler text \cite{ITEM-1}
-                                         .\par
+                                           .\par
 > \l__csl_citation_info_tl=citationID={ITEM-2@1},citationItems={{id={ITEM-2}}},properties={noteIndex={0},chapterIndex={1}}.
 <recently read> }
 l. ...This is just filler text \cite{ITEM-2}
-                                         .\par
+                                           .\par
 > \l__csl_citation_tl=\cslcite {ITEM-2}{[2]}.
 <recently read> }
 l. ...This is just filler text \cite{ITEM-2}
-                                         .\par
+                                           .\par
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 1, second-field-align = flush, line-spacing = 1, entry-spacing = 0, widest-label = [1]}}
 >  {\bibitem [{[1]}]{ITEM-1} B. D’Arcus, \textit {Boundaries of dissent: Protest and state power in the media age}. Routledge, 2005.}
@@ -49,16 +49,15 @@ Completed box being shipped out [1]
 .....\hbox(0.0+0.0)x345.0, direction TLT
 ...\glue 18.06749
 ...\glue(\lineskip) 0.0
-...\vbox(550.0+0.0)x345.0, glue set 248.6753fil, direction TLT
+...\vbox(550.0+0.0)x345.0, glue set 246.6153fil, direction TLT
 ....\write-{}
 ....\pdfdest name{Doc-Start} xyz
 ....\write-{}
 ....\pdfdest name{chapter.1} xyz
 ....\write3{\protect \BOOKMARK [0][-]{chapter.1}{\376\377\000T\000i\000t\000l\000e\000\040\000o\000f\000\040\000f\000i\000r\000s\000t\000\040\000c\000h\000a\000p\000t\000e\000r}{}% 1}
 ....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {1}Title of first chapter}{\thepage }{chapter.1}\protected@file@percent }}
-....\marks1{\__mark_id:n {1}\MakeUppercase    []{Chapter\ 1. \ Title of first chapter}}
-....\marks2{\__mark_id:n {2}}
-....\mark{{\MakeUppercase    []{Chapter\ 1. \ Title of first chapter}}{}}
+....\marks1{\__mark_value:nn {1}{\MakeUppercase    []{Chapter\ 1. \ Title of first chapter}}}
+....\marks2{\__mark_value:nn {2}{}}
 ....\write1{\@writefile{lof}{\protect \addvspace {10\p@ }}}
 ....\write1{\@writefile{lot}{\protect \addvspace {10\p@ }}}
 ....\glue(\topskip) 10.0
@@ -258,9 +257,9 @@ Completed box being shipped out [1]
 .....\glue(\rightskip) 0.0
 ....\penalty 10000
 ....\glue 9.913 plus 0.86198
-....\marks2{\__mark_id:n {3}\MakeUppercase    []{References}}
-....\marks3{\__mark_id:n {4}\MakeUppercase    []{References}}
-....\mark{{\MakeUppercase    []{Chapter\ 1. \ Title of first chapter}}{\MakeUppercase    []{References}}}
+....\marks2{\__mark_value:nn {3}{\MakeUppercase    []{References}}}
+....\penalty 10000
+....\marks3{\__mark_value:nn {4}{\MakeUppercase    []{References}}}
 ....\penalty 10000
 ....\glue 0.0 plus 1.0
 ....\glue(\parskip) 0.0
@@ -601,7 +600,6 @@ Completed box being shipped out [1]
 .....\glue(\rightskip) 0.0
 ....\penalty -51
 ....\glue 10.0 plus 3.0 minus 5.0
-....\glue -2.06
 ....\glue 0.0 plus 1.0fil
 ....\glue 0.0
 ...\glue(\baselineskip) 18.63493
@@ -648,11 +646,11 @@ Chapter 2.
 > \l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1}}},properties={noteIndex={0},chapterIndex={2}}.
 <recently read> }
 l. ...This is just filler text \cite{ITEM-1}
-                                         .\par
+                                           .\par
 > \l__csl_citation_tl=\cslcite {ITEM-1}{[1]}.
 <recently read> }
 l. ...This is just filler text \cite{ITEM-1}
-                                         .\par
+                                           .\par
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 2, second-field-align = flush, line-spacing = 1, entry-spacing = 0, widest-label = [1]}}
 >  {\bibitem [{[1]}]{ITEM-1} B. D’Arcus, \textit {Boundaries of dissent: Protest and state power in the media age}. Routledge, 2005.}
@@ -683,13 +681,12 @@ Completed box being shipped out [3]
 .....\hbox(0.0+0.0)x345.0, direction TLT
 ...\glue 18.06749
 ...\glue(\lineskip) 0.0
-...\vbox(550.0+0.0)x345.0, glue set 284.6753fil, direction TLT
+...\vbox(550.0+0.0)x345.0, glue set 282.6153fil, direction TLT
 ....\pdfdest name{chapter.2} xyz
 ....\write3{\protect \BOOKMARK [0][-]{chapter.2}{\376\377\000T\000i\000t\000l\000e\000\040\000o\000f\000\040\000s\000e\000c\000o\000n\000d\000\040\000c\000h\000a\000p\000t\000e\000r}{}% 2}
 ....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {2}Title of second chapter}{\thepage }{chapter.2}\protected@file@percent }}
-....\marks1{\__mark_id:n {5}\MakeUppercase    []{Chapter\ 2. \ Title of second chapter}}
-....\marks2{\__mark_id:n {6}}
-....\mark{{\MakeUppercase    []{Chapter\ 2. \ Title of second chapter}}{}}
+....\marks1{\__mark_value:nn {5}{\MakeUppercase    []{Chapter\ 2. \ Title of second chapter}}}
+....\marks2{\__mark_value:nn {6}{}}
 ....\write1{\@writefile{lof}{\protect \addvspace {10\p@ }}}
 ....\write1{\@writefile{lot}{\protect \addvspace {10\p@ }}}
 ....\glue(\topskip) 10.0
@@ -850,9 +847,9 @@ Completed box being shipped out [3]
 .....\glue(\rightskip) 0.0
 ....\penalty 10000
 ....\glue 9.913 plus 0.86198
-....\marks2{\__mark_id:n {7}\MakeUppercase    []{References}}
-....\marks3{\__mark_id:n {8}\MakeUppercase    []{References}}
-....\mark{{\MakeUppercase    []{Chapter\ 2. \ Title of second chapter}}{\MakeUppercase    []{References}}}
+....\marks2{\__mark_value:nn {7}{\MakeUppercase    []{References}}}
+....\penalty 10000
+....\marks3{\__mark_value:nn {8}{\MakeUppercase    []{References}}}
 ....\penalty 10000
 ....\glue 0.0 plus 1.0
 ....\glue(\parskip) 0.0
@@ -995,7 +992,6 @@ Completed box being shipped out [3]
 .....\glue(\rightskip) 0.0
 ....\penalty -51
 ....\glue 10.0 plus 3.0 minus 5.0
-....\glue -2.06
 ....\glue 0.0 plus 1.0fil
 ....\glue 0.0
 ...\glue(\baselineskip) 18.63493
@@ -1041,19 +1037,19 @@ Chapter 3.
 > \l__csl_citation_info_tl=citationID={ITEM-3@1},citationItems={{id={ITEM-3}}},properties={noteIndex={0},chapterIndex={3}}.
 <recently read> }
 l. ...This is just filler text \cite{ITEM-3}
-                                         .\par
+                                           .\par
 > \l__csl_citation_tl=\cslcite {ITEM-3}{[1]}.
 <recently read> }
 l. ...This is just filler text \cite{ITEM-3}
-                                         .\par
+                                           .\par
 > \l__csl_citation_info_tl=citationID={ITEM-4@1},citationItems={{id={ITEM-4}}},properties={noteIndex={0},chapterIndex={3}}.
 <recently read> }
 l. ...This is just filler text \cite{ITEM-4}
-                                         .\par
+                                           .\par
 > \l__csl_citation_tl=\cslcite {ITEM-4}{[2]}.
 <recently read> }
 l. ...This is just filler text \cite{ITEM-4}
-                                         .\par
+                                           .\par
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 3, second-field-align = flush, line-spacing = 1, entry-spacing = 0, widest-label = [1]}}
 >  {\bibitem [{[1]}]{ITEM-3} L. Lamport, \textit {LaTeX: A document preparation system: User’s guide and reference manual}, 2nd ed. Reading, MA, USA: Addison-Wesley, 1994.}
@@ -1085,13 +1081,12 @@ Completed box being shipped out [5]
 .....\hbox(0.0+0.0)x345.0, direction TLT
 ...\glue 18.06749
 ...\glue(\lineskip) 0.0
-...\vbox(550.0+0.0)x345.0, glue set 248.6753fil, direction TLT
+...\vbox(550.0+0.0)x345.0, glue set 246.6153fil, direction TLT
 ....\pdfdest name{chapter.3} xyz
 ....\write3{\protect \BOOKMARK [0][-]{chapter.3}{\376\377\000T\000i\000t\000l\000e\000\040\000o\000f\000\040\000t\000h\000i\000r\000d\000\040\000c\000h\000a\000p\000t\000e\000r}{}% 3}
 ....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {3}Title of third chapter}{\thepage }{chapter.3}\protected@file@percent }}
-....\marks1{\__mark_id:n {9}\MakeUppercase    []{Chapter\ 3. \ Title of third chapter}}
-....\marks2{\__mark_id:n {10}}
-....\mark{{\MakeUppercase    []{Chapter\ 3. \ Title of third chapter}}{}}
+....\marks1{\__mark_value:nn {9}{\MakeUppercase    []{Chapter\ 3. \ Title of third chapter}}}
+....\marks2{\__mark_value:nn {10}{}}
 ....\write1{\@writefile{lof}{\protect \addvspace {10\p@ }}}
 ....\write1{\@writefile{lot}{\protect \addvspace {10\p@ }}}
 ....\glue(\topskip) 10.0
@@ -1292,9 +1287,9 @@ Completed box being shipped out [5]
 .....\glue(\rightskip) 0.0
 ....\penalty 10000
 ....\glue 9.913 plus 0.86198
-....\marks2{\__mark_id:n {11}\MakeUppercase    []{References}}
-....\marks3{\__mark_id:n {12}\MakeUppercase    []{References}}
-....\mark{{\MakeUppercase    []{Chapter\ 3. \ Title of third chapter}}{\MakeUppercase    []{References}}}
+....\marks2{\__mark_value:nn {11}{\MakeUppercase    []{References}}}
+....\penalty 10000
+....\marks3{\__mark_value:nn {12}{\MakeUppercase    []{References}}}
 ....\penalty 10000
 ....\glue 0.0 plus 1.0
 ....\glue(\parskip) 0.0
@@ -1698,7 +1693,6 @@ Completed box being shipped out [5]
 .....\glue(\rightskip) 0.0
 ....\penalty -51
 ....\glue 10.0 plus 3.0 minus 5.0
-....\glue -2.06
 ....\glue 0.0 plus 1.0fil
 ....\glue 0.0
 ...\glue(\baselineskip) 18.63493

@@ -151,10 +151,11 @@ Completed box being shipped out [2]
 ....\glue(\rightskip) 0.0
 ...\penalty 10000
 ...\glue 9.90276 plus 0.86108
-...\marks1{\__mark_id:n {1}\MakeUppercase    []{Reference List}}
-...\marks2{\__mark_id:n {2}\MakeUppercase    []{Reference List}}
-...\marks3{\__mark_id:n {3}\MakeUppercase    []{Reference List}}
-...\mark{{\MakeUppercase    []{Reference List}}{\MakeUppercase    []{Reference List}}}
+...\marks1{\__mark_value:nn {1}{\MakeUppercase    []{Reference List}}}
+...\penalty 10000
+...\marks2{\__mark_value:nn {2}{\MakeUppercase    []{Reference List}}}
+...\penalty 10000
+...\marks3{\__mark_value:nn {3}{\MakeUppercase    []{Reference List}}}
 ...\penalty 10000
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0

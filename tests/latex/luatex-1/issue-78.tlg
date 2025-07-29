@@ -10,10 +10,10 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
 > \l__csl_citation_info_tl=citationID={King2008-Gramma@1},citationItems={{id={King2008-Gramma},label={page},locator={PDF \hlm \ 20}}},properties={noteIndex={1}}.
 <recently read> }
-l. ......cite[page = {PDF \hlm\ 20}]{King2008-Gramma}
+l. ......te[page = {PDF \hlm\ 20}]{King2008-Gramma}
 > \l__csl_citation_tl=John T. King, “A Grammar of Dhimal” (doctoral dissertation, Universiteit Leiden, 2008), PDF \hlm \ 20, \url {https://scholarlypublications.universiteitleiden.nl/handle/1887/13072}..
 <recently read> }
-l. ......cite[page = {PDF \hlm\ 20}]{King2008-Gramma}
+l. ......te[page = {PDF \hlm\ 20}]{King2008-Gramma}
 Underfull \hbox (badness 1221) in paragraph at lines ...
 [][]\TU/lmr/m/n/8 John T. King, “A Gram-mar of Dhi-mal” (doc-toral dis-ser-ta-tion, Uni-ver-siteit Lei-
 \hbox(6.81334+2.0)x345.0, glue set 2.30638, direction TLT

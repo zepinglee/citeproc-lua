@@ -3,19 +3,19 @@ Don't change this file in any respect.
 > \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={Sari2007-Pragma}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...\nocite{Sari2007-Pragma}
-                            % note has problem with quotation marks
+                              % note has problem with quotation marks
 > \l__csl_citation_tl=.
 <recently read> }
 l. ...\nocite{Sari2007-Pragma}
-                            % note has problem with quotation marks
+                              % note has problem with quotation marks
 > \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={Sari2007-Pragma-shorterNote}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...\nocite{Sari2007-Pragma-shorterNote}
-                                        % note has no problem with quotation...
+                                          % note has no problem with quotati...
 > \l__csl_citation_tl=.
 <recently read> }
 l. ...\nocite{Sari2007-Pragma-shorterNote}
-                                        % note has no problem with quotation...
+                                          % note has no problem with quotati...
 > \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={Sari2007-Pragma-curly-quotes}}},properties={noteIndex={0}}.
 <recently read> }
 l. ...\nocite{Sari2007-Pragma-curly-quotes}

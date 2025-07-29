@@ -31,7 +31,7 @@ Completed box being shipped out [1]
 .....\OT1/cmr/m/n/10 1
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 438.98096fil
+..\vbox(550.0+0.0)x345.0, glue set 437.03673fil
 ...\write-{}
 ...\glue(\topskip) 2.5
 ...\hbox(7.5+2.5)x345.0, glue set 275.33319fil
@@ -77,10 +77,11 @@ Completed box being shipped out [1]
 ....\glue(\rightskip) 0.0
 ...\penalty 10000
 ...\glue 9.90276 plus 0.86108
-...\marks1{\__mark_id:n {1}\MakeUppercase    []{References}}
-...\marks2{\__mark_id:n {2}\MakeUppercase    []{References}}
-...\marks3{\__mark_id:n {3}\MakeUppercase    []{References}}
-...\mark{{\MakeUppercase    []{References}}{\MakeUppercase    []{References}}}
+...\marks1{\__mark_value:nn {1}{\MakeUppercase    []{References}}}
+...\penalty 10000
+...\marks2{\__mark_value:nn {2}{\MakeUppercase    []{References}}}
+...\penalty 10000
+...\marks3{\__mark_value:nn {3}{\MakeUppercase    []{References}}}
 ...\penalty 10000
 ...\glue 0.0 plus 1.0
 ...\glue(\parskip) 0.0
@@ -201,7 +202,6 @@ Completed box being shipped out [1]
 ....\glue(\rightskip) 0.0
 ...\penalty -51
 ...\glue 10.0 plus 3.0 minus 5.0
-...\glue -1.94444
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
 ...\glue 0.0 plus 0.0001fil
@@ -250,7 +250,7 @@ Completed box being shipped out [2]
 .....\OT1/cmr/m/n/10 2
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 472.04683fil
+..\vbox(550.0+0.0)x345.0, glue set 470.10258fil
 ...\write-{}
 ...\glue(\topskip) 0.00002
 ...\hbox(9.99998+2.79999)x345.0, glue set 192.77524fil
@@ -282,10 +282,11 @@ Completed box being shipped out [2]
 ....\glue(\rightskip) 0.0
 ...\penalty 10000
 ...\glue 9.90276 plus 0.86108
-...\marks1{\__mark_id:n {4}\MakeUppercase    []{Heading bibliography}}
-...\marks2{\__mark_id:n {5}\MakeUppercase    []{Heading bibliography}}
-...\marks3{\__mark_id:n {6}\MakeUppercase    []{Heading bibliography}}
-...\mark{{\MakeUppercase    []{Heading bibliography}}{\MakeUppercase    []{Heading bibliography}}}
+...\marks1{\__mark_value:nn {4}{\MakeUppercase    []{Heading bibliography}}}
+...\penalty 10000
+...\marks2{\__mark_value:nn {5}{\MakeUppercase    []{Heading bibliography}}}
+...\penalty 10000
+...\marks3{\__mark_value:nn {6}{\MakeUppercase    []{Heading bibliography}}}
 ...\penalty 10000
 ...\glue 0.0 plus 1.0
 ...\glue(\parskip) 0.0
@@ -406,7 +407,6 @@ Completed box being shipped out [2]
 ....\glue(\rightskip) 0.0
 ...\penalty -51
 ...\glue 10.0 plus 3.0 minus 5.0
-...\glue -1.94444
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
 ...\glue 0.0 plus 0.0001fil
@@ -450,7 +450,7 @@ Completed box being shipped out [3]
 .....\OT1/cmr/m/n/10 3
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 472.04683fil
+..\vbox(550.0+0.0)x345.0, glue set 470.10258fil
 ...\write-{}
 ...\glue(\topskip) 0.00002
 ...\hbox(9.99998+2.79999)x345.0, glue set 236.87682fil
@@ -476,10 +476,11 @@ Completed box being shipped out [3]
 ....\glue(\rightskip) 0.0
 ...\penalty 10000
 ...\glue 9.90276 plus 0.86108
-...\marks1{\__mark_id:n {7}\MakeUppercase    []{Heading biblist}}
-...\marks2{\__mark_id:n {8}\MakeUppercase    []{Heading biblist}}
-...\marks3{\__mark_id:n {9}\MakeUppercase    []{Heading biblist}}
-...\mark{{\MakeUppercase    []{Heading biblist}}{\MakeUppercase    []{Heading biblist}}}
+...\marks1{\__mark_value:nn {7}{\MakeUppercase    []{Heading biblist}}}
+...\penalty 10000
+...\marks2{\__mark_value:nn {8}{\MakeUppercase    []{Heading biblist}}}
+...\penalty 10000
+...\marks3{\__mark_value:nn {9}{\MakeUppercase    []{Heading biblist}}}
 ...\penalty 10000
 ...\glue 0.0 plus 1.0
 ...\glue(\parskip) 0.0
@@ -600,7 +601,6 @@ Completed box being shipped out [3]
 ....\glue(\rightskip) 0.0
 ...\penalty -51
 ...\glue 10.0 plus 3.0 minus 5.0
-...\glue -1.94444
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
 ...\glue 0.0 plus 0.0001fil
@@ -645,7 +645,7 @@ Completed box being shipped out [4]
 .....\OT1/cmr/m/n/10 4
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 472.04683fil
+..\vbox(550.0+0.0)x345.0, glue set 470.10258fil
 ...\write-{}
 ...\glue(\topskip) 0.00002
 ...\hbox(9.99998+2.79999)x345.0, glue set 223.46686fil
@@ -676,10 +676,11 @@ Completed box being shipped out [4]
 ...\glue 9.90276 plus 0.86108
 ...\write1{\@writefile{toc}{\protect \contentsline {section}{Heading bibintoc}{\thepage }{}\protected@file@percent }}
 ...\penalty 10000
-...\marks1{\__mark_id:n {10}\MakeUppercase    []{Heading bibintoc}}
-...\marks2{\__mark_id:n {11}\MakeUppercase    []{Heading bibintoc}}
-...\marks3{\__mark_id:n {12}\MakeUppercase    []{Heading bibintoc}}
-...\mark{{\MakeUppercase    []{Heading bibintoc}}{\MakeUppercase    []{Heading bibintoc}}}
+...\marks1{\__mark_value:nn {10}{\MakeUppercase    []{Heading bibintoc}}}
+...\penalty 10000
+...\marks2{\__mark_value:nn {11}{\MakeUppercase    []{Heading bibintoc}}}
+...\penalty 10000
+...\marks3{\__mark_value:nn {12}{\MakeUppercase    []{Heading bibintoc}}}
 ...\penalty 10000
 ...\glue 0.0 plus 1.0
 ...\glue(\parskip) 0.0
@@ -800,7 +801,6 @@ Completed box being shipped out [4]
 ....\glue(\rightskip) 0.0
 ...\penalty -51
 ...\glue 10.0 plus 3.0 minus 5.0
-...\glue -1.94444
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
 ...\glue 0.0 plus 0.0001fil
@@ -849,7 +849,7 @@ Completed box being shipped out [5]
 .....\OT1/cmr/m/n/10 5
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 472.04683fil
+..\vbox(550.0+0.0)x345.0, glue set 470.10258fil
 ...\write-{}
 ...\glue(\topskip) 0.00002
 ...\hbox(9.99998+2.79999)x345.0, glue set 201.77689fil
@@ -884,10 +884,11 @@ Completed box being shipped out [5]
 ...\glue 9.90276 plus 0.86108
 ...\write1{\@writefile{toc}{\protect \contentsline {section}{Heading biblistintoc}{\thepage }{}\protected@file@percent }}
 ...\penalty 10000
-...\marks1{\__mark_id:n {13}\MakeUppercase    []{Heading biblistintoc}}
-...\marks2{\__mark_id:n {14}\MakeUppercase    []{Heading biblistintoc}}
-...\marks3{\__mark_id:n {15}\MakeUppercase    []{Heading biblistintoc}}
-...\mark{{\MakeUppercase    []{Heading biblistintoc}}{\MakeUppercase    []{Heading biblistintoc}}}
+...\marks1{\__mark_value:nn {13}{\MakeUppercase    []{Heading biblistintoc}}}
+...\penalty 10000
+...\marks2{\__mark_value:nn {14}{\MakeUppercase    []{Heading biblistintoc}}}
+...\penalty 10000
+...\marks3{\__mark_value:nn {15}{\MakeUppercase    []{Heading biblistintoc}}}
 ...\penalty 10000
 ...\glue 0.0 plus 1.0
 ...\glue(\parskip) 0.0
@@ -1008,7 +1009,6 @@ Completed box being shipped out [5]
 ....\glue(\rightskip) 0.0
 ...\penalty -51
 ...\glue 10.0 plus 3.0 minus 5.0
-...\glue -1.94444
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
 ...\glue 0.0 plus 0.0001fil
@@ -1058,7 +1058,7 @@ Completed box being shipped out [6]
 .....\OT1/cmr/m/n/10 6
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 472.04683fil
+..\vbox(550.0+0.0)x345.0, glue set 470.10258fil
 ...\write-{}
 ...\glue(\topskip) 0.00002
 ...\hbox(9.99998+2.79999)x345.0, glue set 163.81693fil
@@ -1091,9 +1091,8 @@ Completed box being shipped out [6]
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
-...\marks2{\__mark_id:n {16}\MakeUppercase    []{1\hskip 1em\relax Heading bibnumbered}}
-...\marks3{\__mark_id:n {17}\MakeUppercase    []{1\hskip 1em\relax Heading bibnumbered}}
-...\mark{{\MakeUppercase    []{Heading biblistintoc}}{\MakeUppercase    []{1\hskip 1em\relax Heading bibnumbered}}}
+...\marks2{\__mark_value:nn {16}{\MakeUppercase    []{1\hskip 1em\relax Heading bibnumbered}}}
+...\marks3{\__mark_value:nn {17}{\MakeUppercase    []{1\hskip 1em\relax Heading bibnumbered}}}
 ...\write1{\@writefile{toc}{\protect \contentsline {section}{\protect \numberline {1}Heading bibnumbered}{\thepage }{}\protected@file@percent }}
 ...\penalty 10000
 ...\glue 9.90276 plus 0.86108
@@ -1215,7 +1214,6 @@ Completed box being shipped out [6]
 ....\glue(\rightskip) 0.0
 ...\penalty -51
 ...\glue 10.0 plus 3.0 minus 5.0
-...\glue -1.94444
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
 ...\glue 0.0 plus 0.0001fil
@@ -1269,7 +1267,7 @@ Completed box being shipped out [7]
 .....\OT1/cmr/m/n/10 7
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 472.04683fil
+..\vbox(550.0+0.0)x345.0, glue set 470.10258fil
 ...\write-{}
 ...\glue(\topskip) 0.00002
 ...\hbox(9.99998+2.79999)x345.0, glue set 142.12695fil
@@ -1306,9 +1304,8 @@ Completed box being shipped out [7]
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
-...\marks2{\__mark_id:n {18}\MakeUppercase    []{2\hskip 1em\relax Heading biblistnumbered}}
-...\marks3{\__mark_id:n {19}\MakeUppercase    []{2\hskip 1em\relax Heading biblistnumbered}}
-...\mark{{\MakeUppercase    []{Heading biblistintoc}}{\MakeUppercase    []{2\hskip 1em\relax Heading biblistnumbered}}}
+...\marks2{\__mark_value:nn {18}{\MakeUppercase    []{2\hskip 1em\relax Heading biblistnumbered}}}
+...\marks3{\__mark_value:nn {19}{\MakeUppercase    []{2\hskip 1em\relax Heading biblistnumbered}}}
 ...\write1{\@writefile{toc}{\protect \contentsline {section}{\protect \numberline {2}Heading biblistnumbered}{\thepage }{}\protected@file@percent }}
 ...\penalty 10000
 ...\glue 9.90276 plus 0.86108
@@ -1430,7 +1427,6 @@ Completed box being shipped out [7]
 ....\glue(\rightskip) 0.0
 ...\penalty -51
 ...\glue 10.0 plus 3.0 minus 5.0
-...\glue -1.94444
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
 ...\glue 0.0 plus 0.0001fil
@@ -1484,7 +1480,7 @@ Completed box being shipped out [8]
 .....\OT1/cmr/m/n/10 8
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 475.4909fil
+..\vbox(550.0+0.0)x345.0, glue set 473.54666fil
 ...\write-{}
 ...\glue(\topskip) 1.66669
 ...\hbox(8.33331+2.33331)x345.0, glue set 197.8208fil
@@ -1637,7 +1633,6 @@ Completed box being shipped out [8]
 ....\glue(\rightskip) 0.0
 ...\penalty -51
 ...\glue 10.0 plus 3.0 minus 5.0
-...\glue -1.94444
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
 ...\glue 0.0 plus 0.0001fil
@@ -1691,7 +1686,7 @@ Completed box being shipped out [9]
 .....\OT1/cmr/m/n/10 9
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 475.4909fil
+..\vbox(550.0+0.0)x345.0, glue set 473.54666fil
 ...\write-{}
 ...\glue(\topskip) 1.66669
 ...\hbox(8.33331+2.33331)x345.0, glue set 223.3972fil
@@ -1844,7 +1839,6 @@ Completed box being shipped out [9]
 ....\glue(\rightskip) 0.0
 ...\penalty -51
 ...\glue 10.0 plus 3.0 minus 5.0
-...\glue -1.94444
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
 ...\glue 0.0 plus 0.0001fil
@@ -1899,7 +1893,7 @@ Completed box being shipped out [10]
 .....\OT1/cmr/m/n/10 0
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(550.0+0.0)x345.0, glue set 475.4909fil
+..\vbox(550.0+0.0)x345.0, glue set 473.54666fil
 ...\write-{}
 ...\glue(\topskip) 1.66669
 ...\hbox(8.33331+2.33331)x345.0, glue set 163.18887fil
@@ -2058,7 +2052,6 @@ Completed box being shipped out [10]
 ....\glue(\rightskip) 0.0
 ...\penalty -51
 ...\glue 10.0 plus 3.0 minus 5.0
-...\glue -1.94444
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
 ...\glue 0.0 plus 0.0001fil
@@ -2121,10 +2114,11 @@ Completed box being shipped out [11]
 ....\glue(\rightskip) 0.0
 ...\penalty 10000
 ...\glue 9.90276 plus 0.86108
-...\marks1{\__mark_id:n {20}\MakeUppercase    []{Reference List}}
-...\marks2{\__mark_id:n {21}\MakeUppercase    []{Reference List}}
-...\marks3{\__mark_id:n {22}\MakeUppercase    []{Reference List}}
-...\mark{{\MakeUppercase    []{Reference List}}{\MakeUppercase    []{Reference List}}}
+...\marks1{\__mark_value:nn {20}{\MakeUppercase    []{Reference List}}}
+...\penalty 10000
+...\marks2{\__mark_value:nn {21}{\MakeUppercase    []{Reference List}}}
+...\penalty 10000
+...\marks3{\__mark_value:nn {22}{\MakeUppercase    []{Reference List}}}
 ...\penalty 10000
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0

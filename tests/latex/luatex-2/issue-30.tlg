@@ -46,7 +46,7 @@ Completed box being shipped out [1]
 .....\hbox(0.0+0.0)x345.0, direction TLT
 ...\glue 25.0
 ...\glue(\lineskip) 0.0
-...\vbox(550.0+0.0)x345.0, glue set 512.13196fil, direction TLT
+...\vbox(550.0+0.0)x345.0, glue set 510.19217fil, direction TLT
 ....\write-{}
 ....\pdfdest name{Doc-Start} xyz
 ....\glue(\topskip) 1.72308
@@ -97,7 +97,6 @@ Completed box being shipped out [1]
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0
-....\glue -1.94
 ....\glue 0.0 plus 1.0fil
 ....\glue 9.0 plus 4.0 minus 2.0
 ....\kern-3.0

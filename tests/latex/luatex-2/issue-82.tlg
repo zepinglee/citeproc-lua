@@ -48,7 +48,7 @@ Completed box being shipped out [1]
 .....\hbox(0.0+0.0)x345.0, direction TLT
 ...\glue 25.0
 ...\glue(\lineskip) 0.0
-...\vbox(550.0+0.0)x345.0, glue set 471.06fil, direction TLT
+...\vbox(550.0+0.0)x345.0, glue set 469.00021fil, direction TLT
 ....\write-{}
 ....\pdfdest name{Doc-Start} xyz
 ....\pdfdest name{section.1} xyz
@@ -183,7 +183,6 @@ Completed box being shipped out [1]
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0
-....\glue -2.06
 ....\glue 0.0 plus 1.0fil
 ....\glue 9.0 plus 4.0 minus 2.0
 ....\kern-3.0
@@ -576,7 +575,7 @@ Completed box being shipped out [2]
 .....\hbox(0.0+0.0)x345.0, direction TLT
 ...\glue 25.0
 ...\glue(\lineskip) 0.0
-...\vbox(550.0+0.0)x345.0, glue set 499.48166fil, direction TLT
+...\vbox(550.0+0.0)x345.0, glue set 499.26169fil, direction TLT
 ....\write-{}
 ....\glue(\topskip) 1.6
 ....\hbox(8.4+0.144)x345.0, glue set 281.83197fil, direction TLT
@@ -739,7 +738,6 @@ Completed box being shipped out [2]
 .....\glue(\rightskip) 0.0
 ....\penalty -51
 ....\glue 10.0 plus 3.0 minus 5.0
-....\glue -0.22
 ....\glue 0.0 plus 1.0fil
 ....\glue 0.0
 ....\glue 0.0 plus 0.0001fil
@@ -785,7 +783,7 @@ Completed box being shipped out [3]
 .....\hbox(0.0+0.0)x345.0, direction TLT
 ...\glue 25.0
 ...\glue(\lineskip) 0.0
-...\vbox(550.0+0.0)x345.0, glue set 471.0fil, direction TLT
+...\vbox(550.0+0.0)x345.0, glue set 468.94022fil, direction TLT
 ....\write-{}
 ....\pdfdest name{section.2} xyz
 ....\glue(\topskip) 0.1216
@@ -917,7 +915,6 @@ Completed box being shipped out [3]
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0
-....\glue -2.06
 ....\glue 0.0 plus 1.0fil
 ....\glue 9.0 plus 4.0 minus 2.0
 ....\kern-3.0
@@ -1309,7 +1306,7 @@ Completed box being shipped out [4]
 .....\hbox(0.0+0.0)x345.0, direction TLT
 ...\glue 25.0
 ...\glue(\lineskip) 0.0
-...\vbox(550.0+0.0)x345.0, glue set 499.48166fil, direction TLT
+...\vbox(550.0+0.0)x345.0, glue set 496.98193fil, direction TLT
 ....\write-{}
 ....\glue(\topskip) 1.6
 ....\hbox(8.4+0.144)x345.0, glue set 281.83197fil, direction TLT
@@ -1633,7 +1630,6 @@ Completed box being shipped out [4]
 .....\glue(\rightskip) 0.0
 ....\penalty -51
 ....\glue 10.0 plus 3.0 minus 5.0
-....\glue -2.5
 ....\glue 0.0 plus 1.0fil
 ....\glue 0.0
 ....\glue 0.0 plus 0.0001fil
