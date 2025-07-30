@@ -1965,17 +1965,16 @@ LatexWriter.markups = {
   ["@vertical-align/baseline"] = false,
   ["@cite/entry"] = false,
   ["@bibliography/entry"] = function (str, context)
-    if string.match(str, "\\bibitem") then
-      str = str .. "\n"
-    else
-      str = "\\bibitem{" .. context.id .. "}\n" .. str .. "\n"
+    if not string.match(str, "\\bibitem") then
+      str = "\\bibitem{" .. context.id .. "}\n" .. str
     end
+    str = str .. "\n"
     return str
   end,
-  -- ["@display/block"] = false,
+  ["@display/block"] = "\\cslblock{%s}\n\n",
   -- ["@display/left-margin"] = '\n    <div class="csl-left-margin">%s</div>',
-  -- ["@display/right-inline"] = '<div class="csl-right-inline">%s</div>',
-  -- ["@display/indent"] = '<div class="csl-indent">%s</div>\n  ',
+  ["@display/right-inline"] = "%s",
+  ["@display/indent"] = "\n\n%s",
 }
 
 local latex_escape_table = {
@@ -2038,12 +2037,19 @@ function LatexWriter:write_display(inline, context)
     end
     res = string.format("\\bibitem[%s]{%s}\n", res, context.id)
 
-  elseif inline.div == "right-inline" then
-    return res
-
-  elseif inline.div == "block" then
-    res = "\n\n" .. res
-    return res
+  else
+    local key = string.format("@display/%s", inline.div)
+    if inline.div == "right-inline" then
+      -- Strip trailing spaces
+      -- variables_ContainerTitleShort.txt
+      res = string.gsub(res, "%s+$", "")
+    end
+    local format_str = self.markups[key]
+    if format_str then
+      res = string.format(format_str, res)
+    else
+      util.error("Unknown display type: " .. inline.div)
+    end
   end
   return res
 end

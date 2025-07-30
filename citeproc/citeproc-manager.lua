@@ -822,6 +822,10 @@ function CslCitationManager:make_bibliography(filter_str)
         value = "{" .. table.concat(value, ", ") .. "}"
       else
         value = tostring(value)
+        if string.match(value, ",") or string.match(value, "^%s")
+            or string.match(value, "%s$") then
+          value = "{" .. value .. "}"
+        end
       end
       if value ~= "" then
         table.insert(bib_option_list, string.format("%s = %s", option, value))

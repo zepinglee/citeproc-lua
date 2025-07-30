@@ -76,6 +76,8 @@
 \tl_new:N \l__csl_bib_font_tl
 \bool_new:N \l__csl_bib_entry_page_break_bool
 \tl_new:N \l__csl_bib_item_sep_tl
+\tl_new:N \l__csl_bib_name_sep_tl
+\tl_new:N \l__csl_bib_block_sep_tl
 \tl_new:N \l__csl_bib_par_indent_tl
 \tl_new:N \l__csl_bib_hang_tl
 \str_new:N \l__csl_bib_ref_section_str
@@ -112,6 +114,8 @@
     bib-font .tl_set:N = \l__csl_bib_font_tl ,
     bib-entry-page-break .bool_set:N = \l__csl_bib_entry_page_break_bool ,
     bib-item-sep .tl_set:N = \l__csl_bib_item_sep_tl ,
+    bib-name-sep .tl_set:N = \l__csl_bib_name_sep_tl ,
+    bib-after-name-sep .tl_set:N = \l__csl_bib_after_name_sep_tl ,
     bib-par-indent .tl_set:N = \l__csl_bib_par_indent_tl ,
     bib-hang .tl_set:N = \l__csl_bib_hang_tl ,
     % ref section
@@ -141,6 +145,8 @@
     prefix-separator = { ~ } ,
     suffix-separator = { , ~ } ,
     bib-entry-page-break = true ,
+    bib-name-sep = { 0 pt } ,
+    bib-after-name-sep = { 0 pt } ,
     bib-par-indent = { \parindent } ,
     bib-hang = { 1 em } ,
     ref-section = none ,

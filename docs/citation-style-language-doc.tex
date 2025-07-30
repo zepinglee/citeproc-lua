@@ -251,6 +251,20 @@ a fixed length to help reducing page breaks in the middle of an entry.
   \cslsetup{bib-item-sep = 8 pt plus 4 pt minus 2 pt}
 \end{LaTeXdemo}
 
+\DescribeOption{bib-name-sep}
+Vertical space to be inserted between two name groups in a per-author reference
+list.
+The default value is zero.
+Note that this option only takes effect when its value is larger than
+\opt{bib-item-sep} because it's used with \cs{addvspace}.
+
+\DescribeOption{bib-after-name-sep}
+Vertical space to be inserted between the author block and the following
+entries in a per-author reference list.
+The default value is zero.
+Note that this option only takes effect when its value is larger than
+\opt{bib-item-sep} because it's used with \cs{addvspace}.
+
 \DescribeOption{bib-hang}
 The \opt{bib-hang} option sets the hanging indentation length which is
 usually used for author-date style references.

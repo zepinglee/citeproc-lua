@@ -242,6 +242,7 @@
           }
       }
       { \skip_set:Nn \itemsep { \l__csl_bib_item_sep_tl } }
+    \bool_set_true:N \l_csl_bib_first_block_bool
   }
 
 
@@ -281,6 +282,26 @@
         \exp_args:NV \__csl_print_back_refs:n \l_tmpa_tl
       }
     \par
+  }
+
+% Used for per-author publication listing
+\bool_new:N \l_csl_bib_first_block_bool
+
+\cs_new:Npn \cslblock #1
+  {
+    \bool_if:NF \l_csl_bib_first_block_bool
+      {
+        \skip_set:NV \l_tmpa_skip { \l__csl_bib_name_sep_tl }
+        \addvspace { \l_tmpa_skip }
+      }
+    \bool_set_false:N \l_csl_bib_first_block_bool
+    \item [ ]
+    \skip_horizontal:n { - \leftmargin }
+    % \hskip - \leftmargin \relax
+    #1
+    \par
+    \skip_set:NV \l_tmpa_skip { \l__csl_bib_after_name_sep_tl }
+    \addvspace { \l_tmpa_skip }
   }
 
 \cs_new:Npn \__csl_print_back_refs:n #1

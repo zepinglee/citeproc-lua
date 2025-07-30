@@ -6,7 +6,8 @@
         "editor.tabSize": 2
     },
     "[lua]": {
-        "editor.tabSize": 2
+        "editor.tabSize": 2,
+        "editor.formatOnSaveMode": "file"
     },
     "busted-test-explorer.args": [
         "-lua=texlua",

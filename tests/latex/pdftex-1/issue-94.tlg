@@ -1,0 +1,13 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+> \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={*}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\nocite{*}
+> \l__csl_citation_tl=.
+<recently read> }
+l. ...\nocite{*}
+============================================================
+TEST 1: Bibliography
+============================================================
+Package CSL Warning: The bibliography is empty.
+============================================================

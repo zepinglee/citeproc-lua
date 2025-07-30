@@ -79,6 +79,11 @@ function Text:from_node(node)
   o:set_quotes_attribute(node)
   o:set_strip_periods_attribute(node)
   o:set_text_case_attribute(node)
+  -- `apa-annotated-bibliography.csl` uses `display="block"` for annotation.
+  -- Use display="indent" instead
+  if o.display == "block" and (o.variable == "note" or o.variable == "abstract") then
+    o.display = "indent"
+  end
   return o
 end
 
@@ -196,6 +201,9 @@ function Text:build_year_suffix_ir(engine, state, context)
   ir.group_var = group_var
   ir.affixes = util.clone(self.affixes)
   ir.display = self.display
+  if self.display == "left-margin" then
+    engine.registry.second_field_align = "flush"
+  end
   ir.formatting = util.clone(self.formatting)
   if self.quotes then
     ir.quotes = context:get_localized_quotes()

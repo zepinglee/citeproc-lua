@@ -21,8 +21,8 @@ else
   util = require("citeproc.util")
 end
 
-local Element = element.Element
 
+local Element = element.Element
 
 ---@class Group: Element
 ---@field delimiter string?
@@ -50,6 +50,9 @@ function Group:build_ir(engine, state, context)
     ir.formatting = util.clone(self.formatting)
     ir.affixes = util.clone(self.affixes)
     ir.display = self.display
+    if self.display == "left-margin" then
+      engine.registry.second_field_align = "flush"
+    end
   end
   return ir
 end

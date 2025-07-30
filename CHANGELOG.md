@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add support for grouping bibliography by authors ([#94](https://github.com/zepinglee/citeproc-lua/issues/94)).
+- Add `bib-name-sep` and `bib-after-name-sep` options to control the vertical space of author groups ([#94](https://github.com/zepinglee/citeproc-lua/issues/94)).
+
 ### Fixed
 
 - Fix missing `keyword` field when converted from BibTeX ([#97](https://github.com/zepinglee/citeproc-lua/issues/97)).

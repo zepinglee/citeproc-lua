@@ -111,6 +111,7 @@ local Position = util.Position
 ---@field requires_sorting boolean
 ---@field widest_label string
 ---@field maxoffset integer
+---@field second_field_align string | boolean
 local Registry = {}
 
 
@@ -182,6 +183,7 @@ function CiteProc.new(sys, style, lang, force_lang)
       requires_sorting = false,
       widest_label = "",
       maxoffset = 0,
+      second_field_align = false,
     },
 
     cite_first_note_numbers = {},
@@ -486,7 +488,7 @@ function CiteProc:makeBibliography(bibsection)
 
   local params = {
     hangingindent = self.style.bibliography.hanging_indent,
-    ["second-field-align"] = self.style.bibliography.second_field_align or false,
+    ["second-field-align"] = self.style.bibliography.second_field_align or self.registry.second_field_align or false,
     linespacing = self.style.bibliography.line_spacing,
     entryspacing = self.style.bibliography.entry_spacing,
     maxoffset = self.registry.maxoffset,

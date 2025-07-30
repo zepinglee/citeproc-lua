@@ -1,0 +1,896 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+> \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={*}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\nocite{*}
+> \l__csl_citation_tl=.
+<recently read> }
+l. ...\nocite{*}
+============================================================
+TEST 1: Bibliography
+============================================================
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, second-field-align = flush, line-spacing = 1, entry-spacing = 0, widest-label = {1984a }}}
+>  {\cslblock {\textsc {Knuth, Donald E.}}}
+>  {\bibitem [1979 ]{Knuth:1979:TMN} \textit {TeX and MetaFont: New directions in typesetting}. Digital Press. 12 Crosby Drive, Bedford, MA 01730, USA.}
+>  {\bibitem [1984a ]{Knuth:1984:LP} Literate programming. \textit {The Computer Journal}, 27 (2): 97–111.}
+>  {\bibitem [1984b ]{Knuth:1984:TB} \textit {The {\TeX }book}, vol. A. Addison-Wesley (Computers and Typesetting). Reading, MA, USA.}
+>  {\cslblock {\textsc {Lamport, Leslie}}}
+>  {\bibitem [1986 ]{Lamport:1986:LDP} \textit {{\LaTeX }: A document preparation system: User’s guide and reference manual}. Addison-Wesley. Reading, MA, USA.}
+>  {\bibitem [1994 ]{Lamport:1994:LDP} \textit {{\LaTeX }: A document preparation system: User’s guide and reference manual}. 2a ed. Addison-Wesley. Reading, MA, USA.}
+>  {\end {thebibliography}}.
+<recently read> }
+l. ...}
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+Completed box being shipped out [1]
+\vbox(633.0+0.0)x407.0
+.\hbox(0.0+0.0)x0.0
+.\vbox(0.0+0.0)x0.0, glue set - 14.99626fil
+..\kern 0.0
+..\kern 16.0
+..\kern -1.00374
+..\hbox(0.0+0.0)x0.0, glue set - 60.99626fil
+...\kern 0.0
+...\kern 62.0
+...\kern -1.00374
+...\pdfdest name{page.1} xyz
+...\penalty 10000
+...\glue 0.0 plus 1.0fil minus 1.0fil
+..\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue(\lineskip) 0.0
+.\vbox(633.0+0.0)x407.0
+..\glue 16.0
+..\vbox(617.0+0.0)x345.0, shifted 62.0
+...\vbox(12.0+0.0)x345.0, glue set 12.0fil
+....\glue 0.0 plus 1.0fil
+....\hbox(0.0+0.0)x345.0
+.....\hbox(0.0+0.0)x345.0
+...\glue 25.0
+...\glue(\lineskip) 0.0
+...\vbox(550.0+0.0)x345.0, glue set 346.11577fil
+....\write-{}
+....\pdfdest name{Doc-Start} xyz
+....\glue(\topskip) 0.00002
+....\hbox(9.99998+0.0)x345.0, glue set 269.19334fil
+.....\hbox(0.0+0.0)x0.0
+......\glue 0.0
+.....\hbox(0.0+0.0)x0.0
+......\kern 0.0
+......\penalty 10000
+......\hbox(0.0+0.0)x0.0
+.......\hbox(0.0+0.0)x0.0, shifted -18.0
+........\pdfdest name{section*.1} xyz
+........\penalty 10000
+......\glue 0.0 plus 1.0fil minus 1.0fil
+.....\OT1/cmr/bx/n/14.4 R
+.....\OT1/cmr/bx/n/14.4 e
+.....\OT1/cmr/bx/n/14.4 f
+.....\OT1/cmr/bx/n/14.4 e
+.....\OT1/cmr/bx/n/14.4 r
+.....\OT1/cmr/bx/n/14.4 e
+.....\OT1/cmr/bx/n/14.4 n
+.....\OT1/cmr/bx/n/14.4 c
+.....\OT1/cmr/bx/n/14.4 e
+.....\OT1/cmr/bx/n/14.4 s
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\penalty 10000
+....\glue 9.90276 plus 0.86108
+....\glue(\parskip) 0.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 5.16669
+....\hbox(6.83331+1.94444)x311.6666, glue set 252.60616fil, shifted 33.3334
+.....\hbox(0.0+0.0)x0.0
+......\glue 0.0
+......\glue -28.3334
+......\glue -5.0
+......\hbox(0.0+0.0)x28.3334, glue set 28.3334fil
+.......\glue 0.0 plus 1.0fil
+......\glue 5.0
+.....\penalty 0
+.....\glue -33.3334
+.....\OT1/cmr/m/sc/10 K
+.....\OT1/cmr/m/sc/10 n
+.....\OT1/cmr/m/sc/10 u
+.....\OT1/cmr/m/sc/10 t
+.....\OT1/cmr/m/sc/10 h
+.....\OT1/cmr/m/sc/10 ,
+.....\glue 3.77774 plus 1.74997 minus 1.16666
+.....\OT1/cmr/m/sc/10 D
+.....\OT1/cmr/m/sc/10 o
+.....\OT1/cmr/m/sc/10 n
+.....\OT1/cmr/m/sc/10 a
+.....\OT1/cmr/m/sc/10 l
+.....\OT1/cmr/m/sc/10 d
+.....\glue 3.77774 plus 1.74997 minus 1.16666
+.....\OT1/cmr/m/sc/10 E
+.....\OT1/cmr/m/sc/10 .
+.....\kern 0.0
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue 10.00002
+....\glue -11.94446
+....\penalty -51
+....\glue 1.94444
+....\glue 10.00002
+....\glue(\parskip) 0.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 3.11111
+....\hbox(6.94444+1.94444)x311.6666, glue set 1.22754, shifted 33.3334
+.....\hbox(6.44444+0.0)x0.0
+......\glue 0.0
+......\glue -28.3334
+......\glue -5.0
+......\hbox(6.44444+0.0)x28.3334, glue set 5.00002fill
+.......\glue 0.0 plus 1.0fil
+.......\penalty 10000
+.......\hbox(0.0+0.0)x0.0
+........\hbox(0.0+0.0)x0.0, shifted -12.0
+.........\pdfdest name{cite0.Knuth:1979:TMN} xyz
+.........\penalty 10000
+.......\OT1/cmr/m/n/10 1
+.......\OT1/cmr/m/n/10 9
+.......\OT1/cmr/m/n/10 7
+.......\OT1/cmr/m/n/10 9
+.......\glue 3.33333 plus 1.66666 minus 1.11111
+.......\glue 0.0 plus 1.0fill
+......\glue 5.0
+.....\penalty 0
+.....\OT1/cmr/m/it/10 T
+.....\kern-0.76666
+.....\OT1/cmr/m/it/10 e
+.....\OT1/cmr/m/it/10 X
+.....\glue 3.57774 plus 1.53178 minus 1.02322
+.....\OT1/cmr/m/it/10 a
+.....\OT1/cmr/m/it/10 n
+.....\OT1/cmr/m/it/10 d
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 M
+.....\OT1/cmr/m/it/10 e
+.....\OT1/cmr/m/it/10 t
+.....\OT1/cmr/m/it/10 a
+.....\discretionary
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 F
+.....\kern-0.76666
+.....\OT1/cmr/m/it/10 o
+.....\OT1/cmr/m/it/10 n
+.....\OT1/cmr/m/it/10 t
+.....\OT1/cmr/m/it/10 :
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 N
+.....\OT1/cmr/m/it/10 e
+.....\OT1/cmr/m/it/10 w
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 d
+.....\OT1/cmr/m/it/10 i
+.....\discretionary
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 r
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 e
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 c
+.....\discretionary
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 t
+.....\OT1/cmr/m/it/10 i
+.....\OT1/cmr/m/it/10 o
+.....\OT1/cmr/m/it/10 n
+.....\OT1/cmr/m/it/10 s
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 i
+.....\OT1/cmr/m/it/10 n
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 t
+.....\OT1/cmr/m/it/10 y
+.....\OT1/cmr/m/it/10 p
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 e
+.....\discretionary
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 s
+.....\OT1/cmr/m/it/10 e
+.....\OT1/cmr/m/it/10 t
+.....\discretionary
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 t
+.....\OT1/cmr/m/it/10 i
+.....\OT1/cmr/m/it/10 n
+.....\OT1/cmr/m/it/10 g
+.....\OT1/cmr/m/n/10 .
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 D
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 g
+.....\discretionary
+......\OT1/cmr/m/n/10 -
+.....\OT1/cmr/m/n/10 i
+.....\discretionary
+......\OT1/cmr/m/n/10 -
+.....\OT1/cmr/m/n/10 t
+.....\OT1/cmr/m/n/10 a
+.....\OT1/cmr/m/n/10 l
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 P
+.....\OT1/cmr/m/n/10 r
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 s
+.....\OT1/cmr/m/n/10 s
+.....\OT1/cmr/m/n/10 .
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 1
+.....\OT1/cmr/m/n/10 2
+.....\glue(\rightskip) 0.0
+....\penalty 8000
+....\glue(\baselineskip) 3.11111
+....\hbox(6.94444+1.94444)x311.6666, glue set 132.63846fil, shifted 33.3334
+.....\OT1/cmr/m/n/10 C
+.....\OT1/cmr/m/n/10 r
+.....\OT1/cmr/m/n/10 o
+.....\OT1/cmr/m/n/10 s
+.....\OT1/cmr/m/n/10 b
+.....\kern-0.27779
+.....\OT1/cmr/m/n/10 y
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 D
+.....\OT1/cmr/m/n/10 r
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 v
+.....\kern-0.27779
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 ,
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 B
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 d
+.....\discretionary
+......\OT1/cmr/m/n/10 -
+.....\OT1/cmr/m/n/10 f
+.....\OT1/cmr/m/n/10 o
+.....\OT1/cmr/m/n/10 r
+.....\OT1/cmr/m/n/10 d
+.....\OT1/cmr/m/n/10 ,
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 M
+.....\OT1/cmr/m/n/10 A
+.....\glue 3.33333 plus 1.66498 minus 1.11221
+.....\OT1/cmr/m/n/10 0
+.....\OT1/cmr/m/n/10 1
+.....\OT1/cmr/m/n/10 7
+.....\OT1/cmr/m/n/10 3
+.....\OT1/cmr/m/n/10 0
+.....\OT1/cmr/m/n/10 ,
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 U
+.....\OT1/cmr/m/n/10 S
+.....\OT1/cmr/m/n/10 A
+.....\OT1/cmr/m/n/10 .
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\penalty -51
+....\glue 0.0
+....\glue(\parskip) 0.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 2.55556
+....\hbox(7.5+2.5)x311.6666, glue set 37.79466fil, shifted 33.3334
+.....\hbox(6.44444+0.0)x0.0
+......\glue 0.0
+......\glue -28.3334
+......\glue -5.0
+......\hbox(6.44444+0.0)x28.3334
+.......\glue 0.0 plus 1.0fil
+.......\penalty 10000
+.......\hbox(0.0+0.0)x0.0
+........\hbox(0.0+0.0)x0.0, shifted -12.0
+.........\pdfdest name{cite0.Knuth:1984:LP} xyz
+.........\penalty 10000
+.......\OT1/cmr/m/n/10 1
+.......\OT1/cmr/m/n/10 9
+.......\OT1/cmr/m/n/10 8
+.......\OT1/cmr/m/n/10 4
+.......\OT1/cmr/m/n/10 a
+.......\glue 3.33333 plus 1.66666 minus 1.11111
+.......\glue 0.0 plus 1.0fill
+......\glue 5.0
+.....\penalty 0
+.....\OT1/cmr/m/n/10 L
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 t
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 r
+.....\OT1/cmr/m/n/10 a
+.....\OT1/cmr/m/n/10 t
+.....\OT1/cmr/m/n/10 e
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 p
+.....\OT1/cmr/m/n/10 r
+.....\OT1/cmr/m/n/10 o
+.....\OT1/cmr/m/n/10 g
+.....\OT1/cmr/m/n/10 r
+.....\OT1/cmr/m/n/10 a
+.....\OT1/cmr/m/n/10 m
+.....\OT1/cmr/m/n/10 m
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 n
+.....\OT1/cmr/m/n/10 g
+.....\OT1/cmr/m/n/10 .
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/it/10 T
+.....\OT1/cmr/m/it/10 h
+.....\OT1/cmr/m/it/10 e
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 C
+.....\OT1/cmr/m/it/10 o
+.....\OT1/cmr/m/it/10 m
+.....\OT1/cmr/m/it/10 p
+.....\OT1/cmr/m/it/10 u
+.....\OT1/cmr/m/it/10 t
+.....\OT1/cmr/m/it/10 e
+.....\OT1/cmr/m/it/10 r
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 J
+.....\OT1/cmr/m/it/10 o
+.....\OT1/cmr/m/it/10 u
+.....\OT1/cmr/m/it/10 r
+.....\OT1/cmr/m/it/10 n
+.....\OT1/cmr/m/it/10 a
+.....\OT1/cmr/m/it/10 l
+.....\OT1/cmr/m/n/10 ,
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 2
+.....\OT1/cmr/m/n/10 7
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 (
+.....\OT1/cmr/m/n/10 2
+.....\OT1/cmr/m/n/10 )
+.....\OT1/cmr/m/n/10 :
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 9
+.....\OT1/cmr/m/n/10 7
+.....\OT1/cmr/m/n/10 {
+.....\OT1/cmr/m/n/10 1
+.....\OT1/cmr/m/n/10 1
+.....\OT1/cmr/m/n/10 1
+.....\OT1/cmr/m/n/10 .
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\penalty -51
+....\glue 0.0
+....\glue(\parskip) 0.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 2.0
+....\hbox(7.5+2.5)x311.6666, glue set 0.79611, shifted 33.3334
+.....\hbox(6.94444+0.0)x0.55556
+......\glue 0.0
+......\glue -28.3334
+......\glue -5.0
+......\hbox(6.94444+0.0)x28.88896
+.......\glue 0.0 plus 1.0fil
+.......\penalty 10000
+.......\hbox(0.0+0.0)x0.0
+........\hbox(0.0+0.0)x0.0, shifted -12.0
+.........\pdfdest name{cite0.Knuth:1984:TB} xyz
+.........\penalty 10000
+.......\OT1/cmr/m/n/10 1
+.......\OT1/cmr/m/n/10 9
+.......\OT1/cmr/m/n/10 8
+.......\OT1/cmr/m/n/10 4
+.......\OT1/cmr/m/n/10 b
+.......\glue 3.33333 plus 1.66666 minus 1.11111
+.......\glue 0.0 plus 1.0fill
+......\glue 5.0
+.....\penalty 0
+.....\OT1/cmr/m/it/10 T
+.....\OT1/cmr/m/it/10 h
+.....\OT1/cmr/m/it/10 e
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 T
+.....\kern -1.70406
+.....\hbox(6.83331+0.0)x6.7833, shifted 2.15277
+......\OT1/cmr/m/it/10 E
+.....\kern -1.27777
+.....\OT1/cmr/m/it/10 X
+.....\OT1/cmr/m/it/10 b
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 o
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 o
+.....\OT1/cmr/m/it/10 k
+.....\OT1/cmr/m/n/10 ,
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 v
+.....\kern-0.27779
+.....\OT1/cmr/m/n/10 o
+.....\OT1/cmr/m/n/10 l
+.....\OT1/cmr/m/n/10 .
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 A
+.....\OT1/cmr/m/n/10 .
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 A
+.....\OT1/cmr/m/n/10 d
+.....\OT1/cmr/m/n/10 d
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 s
+.....\OT1/cmr/m/n/10 o
+.....\OT1/cmr/m/n/10 n
+.....\OT1/cmr/m/n/10 -
+.....\discretionary
+.....\OT1/cmr/m/n/10 W
+.....\kern-0.83334
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 s
+.....\OT1/cmr/m/n/10 l
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 y
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 (
+.....\OT1/cmr/m/n/10 C
+.....\OT1/cmr/m/n/10 o
+.....\OT1/cmr/m/n/10 m
+.....\OT1/cmr/m/n/10 p
+.....\OT1/cmr/m/n/10 u
+.....\OT1/cmr/m/n/10 t
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 r
+.....\OT1/cmr/m/n/10 s
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 a
+.....\OT1/cmr/m/n/10 n
+.....\OT1/cmr/m/n/10 d
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 T
+.....\kern-0.27779
+.....\OT1/cmr/m/n/10 y
+.....\OT1/cmr/m/n/10 p
+.....\kern0.27779
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 s
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 t
+.....\OT1/cmr/m/n/10 t
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 n
+.....\OT1/cmr/m/n/10 g
+.....\OT1/cmr/m/n/10 )
+.....\OT1/cmr/m/n/10 .
+.....\glue(\rightskip) 0.0
+....\penalty 8000
+....\glue(\baselineskip) 2.55556
+....\hbox(6.94444+1.94444)x311.6666, glue set 223.74976fil, shifted 33.3334
+.....\OT1/cmr/m/n/10 R
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 a
+.....\OT1/cmr/m/n/10 d
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 n
+.....\OT1/cmr/m/n/10 g
+.....\OT1/cmr/m/n/10 ,
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 M
+.....\OT1/cmr/m/n/10 A
+.....\OT1/cmr/m/n/10 ,
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 U
+.....\OT1/cmr/m/n/10 S
+.....\OT1/cmr/m/n/10 A
+.....\OT1/cmr/m/n/10 .
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue 20.00003
+....\glue -21.94447
+....\penalty -51
+....\glue 1.94444
+....\glue 20.00003
+....\glue(\parskip) 0.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 3.22224
+....\hbox(6.83331+1.94444)x311.6666, glue set 263.67278fil, shifted 33.3334
+.....\hbox(0.0+0.0)x0.0
+......\glue 0.0
+......\glue -28.3334
+......\glue -5.0
+......\hbox(0.0+0.0)x28.3334, glue set 28.3334fil
+.......\glue 0.0 plus 1.0fil
+......\glue 5.0
+.....\penalty 0
+.....\glue -33.3334
+.....\OT1/cmr/m/sc/10 L
+.....\OT1/cmr/m/sc/10 a
+.....\OT1/cmr/m/sc/10 m
+.....\OT1/cmr/m/sc/10 p
+.....\OT1/cmr/m/sc/10 o
+.....\OT1/cmr/m/sc/10 r
+.....\kern-0.66669
+.....\OT1/cmr/m/sc/10 t
+.....\OT1/cmr/m/sc/10 ,
+.....\glue 3.77774 plus 1.74997 minus 1.16666
+.....\OT1/cmr/m/sc/10 L
+.....\OT1/cmr/m/sc/10 e
+.....\OT1/cmr/m/sc/10 s
+.....\OT1/cmr/m/sc/10 l
+.....\OT1/cmr/m/sc/10 i
+.....\OT1/cmr/m/sc/10 e
+.....\kern 0.0
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue 10.00002
+....\glue -11.94446
+....\penalty -51
+....\glue 1.94444
+....\glue 10.00002
+....\glue(\parskip) 0.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 3.11111
+....\hbox(6.94444+2.15277)x311.6666, glue set - 0.69226, shifted 33.3334
+.....\hbox(6.44444+0.0)x0.0
+......\glue 0.0
+......\glue -28.3334
+......\glue -5.0
+......\hbox(6.44444+0.0)x28.3334, glue set 5.00002fill
+.......\glue 0.0 plus 1.0fil
+.......\penalty 10000
+.......\hbox(0.0+0.0)x0.0
+........\hbox(0.0+0.0)x0.0, shifted -12.0
+.........\pdfdest name{cite0.Lamport:1986:LDP} xyz
+.........\penalty 10000
+.......\OT1/cmr/m/n/10 1
+.......\OT1/cmr/m/n/10 9
+.......\OT1/cmr/m/n/10 8
+.......\OT1/cmr/m/n/10 6
+.......\glue 3.33333 plus 1.66666 minus 1.11111
+.......\glue 0.0 plus 1.0fill
+......\glue 5.0
+.....\penalty 0
+.....\OT1/cmr/m/it/10 L
+.....\kern -3.67998
+.....\vbox(6.83331+0.0)x6.06119, glue set 2.08748fil
+......\hbox(4.74583+0.0)x6.06119
+.......\OT1/cmr/m/it/7 A
+......\glue 0.0 plus 1.0fil minus 1.0fil
+.....\kern -1.53325
+.....\OT1/cmr/m/it/10 T
+.....\kern -1.70406
+.....\hbox(6.83331+0.0)x6.7833, shifted 2.15277
+......\OT1/cmr/m/it/10 E
+.....\kern -1.27777
+.....\OT1/cmr/m/it/10 X
+.....\OT1/cmr/m/it/10 :
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 A
+.....\glue 3.57774 plus 1.53178 minus 1.02322
+.....\OT1/cmr/m/it/10 d
+.....\OT1/cmr/m/it/10 o
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 c
+.....\discretionary
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 u
+.....\discretionary
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 m
+.....\OT1/cmr/m/it/10 e
+.....\OT1/cmr/m/it/10 n
+.....\OT1/cmr/m/it/10 t
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 p
+.....\OT1/cmr/m/it/10 r
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 e
+.....\OT1/cmr/m/it/10 p
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 a
+.....\discretionary
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 r
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 a
+.....\discretionary
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 t
+.....\OT1/cmr/m/it/10 i
+.....\OT1/cmr/m/it/10 o
+.....\OT1/cmr/m/it/10 n
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 s
+.....\OT1/cmr/m/it/10 y
+.....\OT1/cmr/m/it/10 s
+.....\discretionary
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 t
+.....\OT1/cmr/m/it/10 e
+.....\OT1/cmr/m/it/10 m
+.....\OT1/cmr/m/it/10 :
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 U
+.....\OT1/cmr/m/it/10 s
+.....\OT1/cmr/m/it/10 e
+.....\OT1/cmr/m/it/10 r
+.....\OT1/cmr/m/it/10 '
+.....\OT1/cmr/m/it/10 s
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 g
+.....\OT1/cmr/m/it/10 u
+.....\OT1/cmr/m/it/10 i
+.....\OT1/cmr/m/it/10 d
+.....\OT1/cmr/m/it/10 e
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 a
+.....\OT1/cmr/m/it/10 n
+.....\OT1/cmr/m/it/10 d
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 r
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 e
+.....\OT1/cmr/m/it/10 f
+.....\discretionary
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 e
+.....\discretionary replacing 2
+......\OT1/cmr/m/it/10 r
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 r
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 e
+.....\OT1/cmr/m/it/10 n
+.....\OT1/cmr/m/it/10 c
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 e
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 m
+.....\OT1/cmr/m/it/10 a
+.....\OT1/cmr/m/it/10 n
+.....\discretionary
+.....\OT1/cmr/m/it/10 -
+.....\glue(\rightskip) 0.0
+....\penalty 8100
+....\glue(\baselineskip) 2.90279
+....\hbox(6.94444+1.94444)x311.6666, glue set 129.77193fil, shifted 33.3334
+.....\OT1/cmr/m/it/10 u
+.....\OT1/cmr/m/it/10 a
+.....\OT1/cmr/m/it/10 l
+.....\OT1/cmr/m/n/10 .
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 A
+.....\OT1/cmr/m/n/10 d
+.....\OT1/cmr/m/n/10 d
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 s
+.....\OT1/cmr/m/n/10 o
+.....\OT1/cmr/m/n/10 n
+.....\OT1/cmr/m/n/10 -
+.....\discretionary
+.....\OT1/cmr/m/n/10 W
+.....\kern-0.83334
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 s
+.....\OT1/cmr/m/n/10 l
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 y
+.....\kern-0.83334
+.....\OT1/cmr/m/n/10 .
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 R
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 a
+.....\OT1/cmr/m/n/10 d
+.....\discretionary
+......\OT1/cmr/m/n/10 -
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 n
+.....\OT1/cmr/m/n/10 g
+.....\OT1/cmr/m/n/10 ,
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 M
+.....\OT1/cmr/m/n/10 A
+.....\OT1/cmr/m/n/10 ,
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 U
+.....\OT1/cmr/m/n/10 S
+.....\OT1/cmr/m/n/10 A
+.....\OT1/cmr/m/n/10 .
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\penalty -51
+....\glue 0.0
+....\glue(\parskip) 0.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 3.11111
+....\hbox(6.94444+2.15277)x311.6666, glue set - 0.69226, shifted 33.3334
+.....\hbox(6.44444+0.0)x0.0
+......\glue 0.0
+......\glue -28.3334
+......\glue -5.0
+......\hbox(6.44444+0.0)x28.3334, glue set 5.00002fill
+.......\glue 0.0 plus 1.0fil
+.......\penalty 10000
+.......\hbox(0.0+0.0)x0.0
+........\hbox(0.0+0.0)x0.0, shifted -12.0
+.........\pdfdest name{cite0.Lamport:1994:LDP} xyz
+.........\penalty 10000
+.......\OT1/cmr/m/n/10 1
+.......\OT1/cmr/m/n/10 9
+.......\OT1/cmr/m/n/10 9
+.......\OT1/cmr/m/n/10 4
+.......\glue 3.33333 plus 1.66666 minus 1.11111
+.......\glue 0.0 plus 1.0fill
+......\glue 5.0
+.....\penalty 0
+.....\OT1/cmr/m/it/10 L
+.....\kern -3.67998
+.....\vbox(6.83331+0.0)x6.06119, glue set 2.08748fil
+......\hbox(4.74583+0.0)x6.06119
+.......\OT1/cmr/m/it/7 A
+......\glue 0.0 plus 1.0fil minus 1.0fil
+.....\kern -1.53325
+.....\OT1/cmr/m/it/10 T
+.....\kern -1.70406
+.....\hbox(6.83331+0.0)x6.7833, shifted 2.15277
+......\OT1/cmr/m/it/10 E
+.....\kern -1.27777
+.....\OT1/cmr/m/it/10 X
+.....\OT1/cmr/m/it/10 :
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 A
+.....\glue 3.57774 plus 1.53178 minus 1.02322
+.....\OT1/cmr/m/it/10 d
+.....\OT1/cmr/m/it/10 o
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 c
+.....\discretionary
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 u
+.....\discretionary
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 m
+.....\OT1/cmr/m/it/10 e
+.....\OT1/cmr/m/it/10 n
+.....\OT1/cmr/m/it/10 t
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 p
+.....\OT1/cmr/m/it/10 r
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 e
+.....\OT1/cmr/m/it/10 p
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 a
+.....\discretionary
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 r
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 a
+.....\discretionary
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 t
+.....\OT1/cmr/m/it/10 i
+.....\OT1/cmr/m/it/10 o
+.....\OT1/cmr/m/it/10 n
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 s
+.....\OT1/cmr/m/it/10 y
+.....\OT1/cmr/m/it/10 s
+.....\discretionary
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 t
+.....\OT1/cmr/m/it/10 e
+.....\OT1/cmr/m/it/10 m
+.....\OT1/cmr/m/it/10 :
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 U
+.....\OT1/cmr/m/it/10 s
+.....\OT1/cmr/m/it/10 e
+.....\OT1/cmr/m/it/10 r
+.....\OT1/cmr/m/it/10 '
+.....\OT1/cmr/m/it/10 s
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 g
+.....\OT1/cmr/m/it/10 u
+.....\OT1/cmr/m/it/10 i
+.....\OT1/cmr/m/it/10 d
+.....\OT1/cmr/m/it/10 e
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 a
+.....\OT1/cmr/m/it/10 n
+.....\OT1/cmr/m/it/10 d
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 r
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 e
+.....\OT1/cmr/m/it/10 f
+.....\discretionary
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 e
+.....\discretionary replacing 2
+......\OT1/cmr/m/it/10 r
+......\OT1/cmr/m/it/10 -
+.....\OT1/cmr/m/it/10 r
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 e
+.....\OT1/cmr/m/it/10 n
+.....\OT1/cmr/m/it/10 c
+.....\kern-0.51112
+.....\OT1/cmr/m/it/10 e
+.....\glue 3.57774 plus 1.53333 minus 1.0222
+.....\OT1/cmr/m/it/10 m
+.....\OT1/cmr/m/it/10 a
+.....\OT1/cmr/m/it/10 n
+.....\discretionary
+.....\OT1/cmr/m/it/10 -
+.....\glue(\rightskip) 0.0
+....\penalty 8100
+....\glue(\baselineskip) 2.90279
+....\hbox(6.94444+1.94444)x311.6666, glue set 100.32744fil, shifted 33.3334
+.....\OT1/cmr/m/it/10 u
+.....\OT1/cmr/m/it/10 a
+.....\OT1/cmr/m/it/10 l
+.....\OT1/cmr/m/n/10 .
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 2
+.....\OT1/cmr/m/n/10 a
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 d
+.....\OT1/cmr/m/n/10 .
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 A
+.....\OT1/cmr/m/n/10 d
+.....\OT1/cmr/m/n/10 d
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 s
+.....\OT1/cmr/m/n/10 o
+.....\OT1/cmr/m/n/10 n
+.....\OT1/cmr/m/n/10 -
+.....\discretionary
+.....\OT1/cmr/m/n/10 W
+.....\kern-0.83334
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 s
+.....\OT1/cmr/m/n/10 l
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 y
+.....\kern-0.83334
+.....\OT1/cmr/m/n/10 .
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 R
+.....\OT1/cmr/m/n/10 e
+.....\OT1/cmr/m/n/10 a
+.....\OT1/cmr/m/n/10 d
+.....\discretionary
+......\OT1/cmr/m/n/10 -
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 n
+.....\OT1/cmr/m/n/10 g
+.....\OT1/cmr/m/n/10 ,
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 M
+.....\OT1/cmr/m/n/10 A
+.....\OT1/cmr/m/n/10 ,
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 U
+.....\OT1/cmr/m/n/10 S
+.....\OT1/cmr/m/n/10 A
+.....\OT1/cmr/m/n/10 .
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\penalty -51
+....\glue 10.0 plus 3.0 minus 5.0
+....\glue 0.0 plus 1.0fil
+....\glue 0.0
+....\glue 0.0 plus 0.0001fil
+...\glue(\baselineskip) 30.0
+...\hbox(0.0+0.0)x345.0
+....\hbox(0.0+0.0)x345.0
+.\kern 0.0
+============================================================
