@@ -6,23 +6,19 @@
 
 local style_module = {}
 
-local dom
-local element
-local node_names
-local util
-
-local using_luatex, kpse = pcall(require, "kpse")
-if using_luatex then
-  dom = require("luaxml-domobject")
-  element = require("citeproc-element")
-  node_names = require("citeproc-node-names")
-  util = require("citeproc-util")
-else
-  dom = require("citeproc.luaxml.domobject")
-  element = require("citeproc.element")
-  node_names = require("citeproc.node-names")
-  util = require("citeproc.util")
+local function requires(modname)
+    for _, modname in ipairs{modname, modname:gsub("%.", "-"), "citeproc." .. modname} do
+      local is_ok, mod = pcall(require, modname)
+      if is_ok then
+        return mod
+      end
+    end
 end
+
+local dom = requires("luaxml.domobject")
+local element = requires("citeproc.element")
+local node_names = requires("citeproc.node-names")
+local util = requires("citeproc.util")
 
 local Element = element.Element
 

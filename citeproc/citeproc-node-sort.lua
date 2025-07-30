@@ -6,33 +6,22 @@
 
 local sort = {}
 
-local uca_languages
-local uca_ducet
-local uca_collator
-
-local element
-local output
-local util
-local node_date
-
-local using_luatex, kpse = pcall(require, "kpse")
-if using_luatex then
-  uca_languages = require("lua-uca-languages")
-  uca_ducet = require("lua-uca-ducet")
-  uca_collator = require("lua-uca-collator")
-  element = require("citeproc-element")
-  output = require("citeproc-output")
-  util = require("citeproc-util")
-  node_date = require("citeproc-node-date")
-else
-  uca_languages = require("citeproc.lua-uca.languages")
-  uca_ducet = require("citeproc.lua-uca.ducet")
-  uca_collator = require("citeproc.lua-uca.collator")
-  element = require("citeproc.element")
-  output = require("citeproc.output")
-  util = require("citeproc.util")
-  node_date = require("citeproc.node-date")
+local function requires(modname)
+    for _, modname in ipairs{modname, modname:gsub("%.", "-"), "citeproc." .. modname} do
+      local is_ok, mod = pcall(require, modname)
+      if is_ok then
+        return mod
+      end
+    end
 end
+
+local uca_languages = requires("lua-uca.languages")
+local uca_ducet = requires("lua-uca.ducet")
+local uca_collator = requires("lua-uca.collator")
+local element = requires("citeproc.element")
+local output = requires("citeproc.output")
+local util = requires("citeproc.util")
+local node_date = requires("citeproc.node-date")
 
 local Element = element.Element
 local Date = node_date.Date

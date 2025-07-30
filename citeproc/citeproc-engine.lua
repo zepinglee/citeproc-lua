@@ -6,35 +6,23 @@
 
 local engine = {}
 
-local dom
-local context
-local element
-local nodes
-local node_locale
-local node_style
-local output
-local util
-
-local using_luatex, _ = pcall(require, "kpse")
-if using_luatex then
-  dom = require("luaxml-domobject")
-  context = require("citeproc-context")
-  element = require("citeproc-element")
-  nodes = require("citeproc-nodes")
-  node_locale = require("citeproc-node-locale")
-  node_style = require("citeproc-node-style")
-  output = require("citeproc-output")
-  util = require("citeproc-util")
-else
-  dom = require("citeproc.luaxml.domobject")
-  context = require("citeproc.context")
-  element = require("citeproc.element")
-  nodes = require("citeproc.nodes")
-  node_locale = require("citeproc.node-locale")
-  node_style = require("citeproc.node-style")
-  output = require("citeproc.output")
-  util = require("citeproc.util")
+local function requires(modname)
+    for _, modname in ipairs{modname, modname:gsub("%.", "-"), "citeproc." .. modname} do
+      local is_ok, mod = pcall(require, modname)
+      if is_ok then
+        return mod
+      end
+    end
 end
+
+local dom = requires("luaxml.domobject")
+local context = requires("citeproc.context")
+local element = requires("citeproc.element")
+local nodes = requires("citeproc.nodes")
+local node_locale = requires("citeproc.node-locale")
+local node_style = requires("citeproc.node-style")
+local output = requires("citeproc.output")
+local util = requires("citeproc.util")
 
 local Element = element.Element
 local Style = node_style.Style
