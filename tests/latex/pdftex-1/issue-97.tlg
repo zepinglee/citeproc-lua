@@ -1,0 +1,18 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Citation
+============================================================
+> \l__csl_citation_info_tl=citationID={parlamentsdirektion_protokolle_2025@1},citationItems={{id={parlamentsdirektion_protokolle_2025}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `parlamentsdirektion_protokolle_2025' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {parlamentsdirektion_protokolle_2025}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 2: Bibliography
+============================================================
+Package CSL Warning: The bibliography is empty.
+============================================================

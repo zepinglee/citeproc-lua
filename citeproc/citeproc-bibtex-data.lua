@@ -815,6 +815,10 @@ return {
       notes = 'special item type: "`@xdata` entries hold data which may be inherited by other entries using the xdata field. Entries of this type only serve as data containers; they may not be cited or added to the bibliography."',
       source = "biblatex",
     },
+    underreview = {
+      csl = nil,
+      source = "ACM-Reference-Format.bst",
+    },
   },
   fields = {
     abstract = {
@@ -2334,9 +2338,9 @@ return {
       source = "csl",
     },
     keywords = {
-      csl = nil,
+      csl = "keyword",
       source = "biblatex",
-      type = "keyword",
+      type = "literal",
     },
     label = {
       csl = nil,
@@ -4523,5 +4527,6 @@ return {
     version = "version",
     ["volume-title"] = "volume-title",
     volumes = "number-of-volumes",
+    keywords = "keyword",
   },
 }

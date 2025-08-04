@@ -1,0 +1,39 @@
+% <https://github.com/zepinglee/citeproc-lua/discussions/97>
+
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\begin{filecontents}[noheader, overwrite]{\jobname.bib}
+@misc{parlamentsdirektion_protokolle_2025,
+  title = {Protokolle},
+  url = {https://www.parlament.gv.at/recherchieren/protokolle/?STENO_211NBVS=NRSITZ},
+  urldate = {2025-02-08},
+  journal = {Parlament: Recherchieren},
+  author = {{Parlamentsdirektion}},
+  month = nov,
+  year = {2025},
+  keywords = {Daten},
+}
+\end{filecontents}
+
+\usepackage[ref-section=section]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{\jobname.bib}
+\usepackage{hyperref}
+
+
+\begin{document}
+\START
+\showoutput
+
+\TEST{Citation}{
+  \cite{parlamentsdirektion_protokolle_2025}
+}
+
+\TEST{Bibliography}{
+  \printbibliography[heading=none, keyword=Daten]
+}
+
+\OMIT
+\end{document}

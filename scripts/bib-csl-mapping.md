@@ -124,7 +124,7 @@ Bib(La)TeX | CSL | Notes
 `journaltitle` | `container-title` |
 `journaltitleaddon` | - |
 `key` | - | Alias for `sortkey`. Not supported.
-`keywords` | - |
+`keywords` | `keyword` |
 `label` | - |
 `langid` | `language` | The language id of the bibliography entry. The identifier must be a language name known to the babel/polyglossia packages. It should be converted to ISO 639-1 language code in CSL.
 `langidopts` | - |

@@ -646,6 +646,7 @@
 				]
 			]
 		},
+		"keyword": "primary",
 		"language": "en-US",
 		"note": "A <code>\\texttt{book}</code> entry with an <code>\\texttt{author}</code> and an <code>\\texttt{editor}</code>",
 		"publisher": "Cambridge University Press",
@@ -667,6 +668,7 @@
 				]
 			]
 		},
+		"keyword": "primary",
 		"language": "en-US",
 		"note": "A <code>\\texttt{book}</code> entry with a <code>\\texttt{translator}</code> field",
 		"publisher": "G. P. Putnam",
@@ -706,6 +708,7 @@
 				]
 			]
 		},
+		"keyword": "primary",
 		"language": "en-US",
 		"note": "A <code>\\texttt{book}</code> entry with an <code>\\texttt{author}</code> and an <code>\\texttt{editor}</code> as well as a <code>\\texttt{series}</code> field",
 		"publisher": "Clarendon Press",
@@ -734,6 +737,7 @@
 				]
 			]
 		},
+		"keyword": "primary",
 		"language": "en-US",
 		"note": "A commented edition. Note the concatenation of the <code>\\texttt{editor}</code> and <code>\\texttt{commentator}</code> fields as well as the <code>\\texttt{volumes}</code>, <code>\\texttt{sorttitle}</code>, and <code>\\texttt{indextitle}</code> fields",
 		"number-of-volumes": "3",
@@ -787,6 +791,7 @@
 				]
 			]
 		},
+		"keyword": "primary",
 		"language": "en-US",
 		"note": "A <code>\\texttt{book}</code> entry with a <code>\\texttt{series}</code> and a <code>\\texttt{number}</code>. Note the concatenation of the <code>\\texttt{editor}</code> and <code>\\texttt{translator}</code> fields as well as the <code>\\texttt{indextitle}</code> field",
 		"publisher": "Jewish Theological Seminary of America",
@@ -821,6 +826,7 @@
 				]
 			]
 		},
+		"keyword": "primary",
 		"language": "de-DE",
 		"note": "An annotated edition. Note the concatenation of the <code>\\texttt{editor}</code>, <code>\\texttt{translator}</code>, and <code>\\texttt{annotator}</code> fields. Also note the <code>\\texttt{shorttitle}</code>, <code>\\texttt{indextitle}</code>, <code>\\texttt{sorttitle}</code>, and <code>\\texttt{indexsorttitle}</code> fields",
 		"publisher": "C. A. Kaemmerer",
@@ -855,6 +861,7 @@
 				]
 			]
 		},
+		"keyword": "primary",
 		"language": "de-DE",
 		"note": "A <code>\\texttt{book}</code> entry. Note the concatenation of the <code>\\texttt{editor}</code> and <code>\\texttt{translator}</code> fields as well as the <code>\\texttt{indextitle}</code> and <code>\\texttt{indexsorttitle}</code> fields",
 		"publisher": "S. Hermann",
@@ -1584,6 +1591,7 @@
 				]
 			]
 		},
+		"keyword": "secondary",
 		"language": "en-US",
 		"note": "A <code>\\texttt{book}</code> entry. Note the <code>\\texttt{sorttitle}</code> and <code>\\texttt{indexsorttitle}</code> fields and the markup of the quotes in the database file",
 		"publisher": "Princeton University Press",
@@ -2116,6 +2124,7 @@
 				]
 			]
 		},
+		"keyword": "secondary",
 		"language": "en-US",
 		"note": "An <code>\\texttt{incollection}</code> entry with a <code>\\texttt{series}</code> and <code>\\texttt{number}</code> field",
 		"page": "161-191",
@@ -2147,6 +2156,7 @@
 				]
 			]
 		},
+		"keyword": "secondary",
 		"language": "en-US",
 		"note": "A typical <code>\\texttt{incollection}</code> entry. Note the <code>\\texttt{indextitle}</code> field",
 		"page": "82-109",
@@ -2189,6 +2199,7 @@
 				]
 			]
 		},
+		"keyword": "secondary",
 		"language": "fr-FR",
 		"note": "This is a typical <code>\\texttt{inproceedings}</code> entry. Note the <code>\\texttt{booksubtitle}</code>, <code>\\texttt{shorttitle}</code>, <code>\\texttt{indextitle}</code>, and <code>\\texttt{indexsorttitle}</code> fields. Also note the <code>\\texttt{eventdate}</code> field.",
 		"page": "281-324",
