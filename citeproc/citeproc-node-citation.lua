@@ -208,28 +208,33 @@ function Citation:build_cluster(citation_items, engine, properties)
     self:collapse_cites(irs, engine)
   end
 
-  -- Capitalize first
-  for i, ir in ipairs(irs) do
-    -- local layout_prefix
-    -- local layout_affixes = self.layout.affixes
-    -- if layout_affixes then
-    --   layout_prefix = layout_affixes.prefix
-    -- end
-    local prefix_inlines = ir.cite_prefix
-    if prefix_inlines then
-      -- Prefix is inlines
-      local prefix_str = output.SortStringFormat:new():output(prefix_inlines, context)
-      if (string.match(prefix_str, "[.!?]%s*$")
-            -- position_IbidWithPrefixFullStop.txt
-            -- `Book A. He said “Please work.” Ibid.`
-            or string.match(prefix_str, "[.!?]”%s*$")
-          ) and InlineElement.has_space(prefix_inlines) then
-        ir:capitalize_first_term()
-      end
-    else
-      local delimiter = self.layout.delimiter
-      if i == 1 or not delimiter or string.match(delimiter, "[.!?]%s*$") then
-        ir:capitalize_first_term()
+  -- Capitalizing the first term does not happen in the citation of in-text style.
+  -- See <https://github.com/Juris-M/citeproc-js/blob/f88a47e6d143ace8a79569388534ff8ad9205da0/src/node_text.js#L190-L199>.
+  -- TODO: in-text bibliography
+  if engine.style.class == "note" then
+    -- Capitalize first
+    for i, ir in ipairs(irs) do
+      -- local layout_prefix
+      -- local layout_affixes = self.layout.affixes
+      -- if layout_affixes then
+      --   layout_prefix = layout_affixes.prefix
+      -- end
+      local prefix_inlines = ir.cite_prefix
+      if prefix_inlines then
+        -- Prefix is inlines
+        local prefix_str = output.SortStringFormat:new():output(prefix_inlines, context)
+        if (string.match(prefix_str, "[.!?]%s*$")
+              -- position_IbidWithPrefixFullStop.txt
+              -- `Book A. He said “Please work.” Ibid.`
+              or string.match(prefix_str, "[.!?]”%s*$")
+            ) and InlineElement.has_space(prefix_inlines) then
+          ir:capitalize_first_term()
+        end
+      else
+        local delimiter = self.layout.delimiter
+        if i == 1 or not delimiter or string.match(delimiter, "[.!?]%s*$") then
+          ir:capitalize_first_term()
+        end
       end
     end
   end

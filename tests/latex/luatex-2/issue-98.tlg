@@ -1,0 +1,18 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...\cite{ITEM-1}
+> \l__csl_citation_tl=(\cslcite {ITEM-1}{D’Arcus 2005}).
+<recently read> }
+l. ...\cite{ITEM-1}
+============================================================
+TEST 1: Don't capital first letter
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=(\cslcite {ITEM-1}{ebd.}).
+<recently read> }
+l. ...}
+============================================================

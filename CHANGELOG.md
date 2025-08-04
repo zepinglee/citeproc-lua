@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
 - Fix missing `keyword` field when converted from BibTeX ([#97](https://github.com/zepinglee/citeproc-lua/issues/97)).
+- Fix capitalization of the first term in an in-text citation ([#98](https://github.com/zepinglee/citeproc-lua/issues/98)).
 
 ## [0.8.0] - 2025-04-29
 
