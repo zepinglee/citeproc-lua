@@ -15,7 +15,7 @@ TEST 2: Bibliography
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 2, entry-spacing = 0}}
->  {\bibitem {parlamentsdirektion_protokolle_2025} Parlamentsdirektion. (2025). Protokolle. In \textit {Parlament: Recherchieren}. \url {https://www.parlament.gv.at/recherchieren/protokolle/?STENO_211NBVS=NRSITZ}}
+>  {\bibitem {parlamentsdirektion_protokolle_2025} Parlamentsdirektion. (2025, November). Protokolle. In \textit {Parlament: Recherchieren}. \url {https://www.parlament.gv.at/recherchieren/protokolle/?STENO_211NBVS=NRSITZ}}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}

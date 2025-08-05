@@ -21,6 +21,7 @@ local latex_parser = require("citeproc-latex-parser")
 local util = citeproc.util
 local unicode = require("citeproc-unicode")
 local bibtex2csl = require("citeproc-bibtex2csl")
+local bibtex_data = require("citeproc-bibtex-data")
 local yaml = require("citeproc-yaml")
 
 
@@ -177,6 +178,9 @@ function RefSection:new()
   }
   setmetatable(ref_section, self)
   self.__index = self
+  for name, macro in pairs(bibtex_data.macros) do
+    ref_section.bibtex_strings[name] = macro.value
+  end
   return ref_section
 end
 
