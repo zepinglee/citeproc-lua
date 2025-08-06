@@ -1,0 +1,33 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: Citations
+============================================================
+> \l__csl_citation_info_tl=citationID={parlamentsdirektion_stenographisches_1966@1},citationItems={{id={parlamentsdirektion_stenographisches_1966}}},properties={noteIndex={0},mode={composite}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=Parlamentsdirektion (\cslcite {parlamentsdirektion_stenographisches_1966}{1966}).
+<recently read> }
+l. ...}
+> \l__csl_citation_info_tl=citationID={stepan_2024_2024@1},citationItems={{id={stepan_2024_2024}}},properties={noteIndex={0},mode={composite}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=Stepan (\cslcite {stepan_2024_2024}{2024}).
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 2: Bibliography
+============================================================
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 1, entry-spacing = 0}}
+>  {\bibitem {parlamentsdirektion_stenographisches_1966} Parlamentsdirektion (1966): \textit {Stenographisches Protokoll der 20. Sitzung des Nationalrats vom 8. Juli 1966 (20/NRSITZ XI. GP)}. In: \textit {Parlament: Protokolle}. Link: \url {https://www.parlament.gv.at/gegenstand/XI/NRSITZ/20} (letzter Zugriff: 5.8.2025).}
+>  {\bibitem {stepan_2024_2024} Stepan, Max (2024): \textit {2024 Bringt neuerlich eine Flut an Volksbegehren}. In: \textit {derStandard.at}. Link: \url {https://www.derstandard.at/story/3000000202567/2024-bringt-neuerlich-eine-flut-an-volksbegehren} (letzter Zugriff: 5.8.2025).}
+>  {\end {thebibliography}}.
+<recently read> }
+l. ...}
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+============================================================
