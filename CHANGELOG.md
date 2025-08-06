@@ -7,10 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.1] - 2025-08-06
+
 ### Added
 
 - Add support for grouping bibliography by authors ([#94](https://github.com/zepinglee/citeproc-lua/issues/94)).
 - Add `bib-name-sep` and `bib-after-name-sep` options to control the vertical space of author groups ([#94](https://github.com/zepinglee/citeproc-lua/issues/94)).
+
+### Changed
+
+- Suppress \newrefsection in bib heading ([#93](https://github.com/zepinglee/citeproc-lua/issues/93)).
 
 ### Fixed
 
@@ -311,7 +317,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial CTAN release.
 
-[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.8.1...HEAD
+[0.8.1]: https://github.com/zepinglee/citeproc-lua/compare/v0.8.0...v0.8.1
 [0.8.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.8...v0.7.0
 [0.6.8]: https://github.com/zepinglee/citeproc-lua/compare/v0.6.7...v0.6.8
