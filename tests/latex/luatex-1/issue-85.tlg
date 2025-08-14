@@ -3,11 +3,11 @@ Don't change this file in any respect.
 > \l__csl_citation_info_tl=citationID={10123038@1},citationItems={{id={10123038}}},properties={noteIndex={0},mode={composite}}.
 <recently read> }
 l. ...\textcite{10123038}
-> \l__csl_citation_tl=Xu, Zhu, and Clifton (2023).
+> \l__csl_citation_tl=Xu et al. (2023).
 <recently read> }
 l. ...\textcite{10123038}
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
->  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 1, entry-spacing = 0}}
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 1, entry-spacing = 1}}
 >  {\bibitem {10123038} Xu, Peng, Xiatian Zhu, and David A. Clifton. 2023. “Multimodal Learning with Transformers: A Survey.” \textit {IEEE Trans. Pattern Anal. Mach. Intell.} 45 (10): 12113–32. \url {https://doi.org/10.1109/TPAMI.2023.3275156}.}
 >  {\end {thebibliography}}.
 <recently read> }

@@ -788,6 +788,10 @@ return {
       csl = "legislation",
       source = "bath.bst",
     },
+    underreview = {
+      csl = nil,
+      source = "ACM-Reference-Format.bst",
+    },
     unpublished = {
       csl = "manuscript",
       notes = "For unpublished works not made widely available or only hosted on personal websites, use manuscript",
@@ -814,10 +818,6 @@ return {
       csl = nil,
       notes = 'special item type: "`@xdata` entries hold data which may be inherited by other entries using the xdata field. Entries of this type only serve as data containers; they may not be cited or added to the bibliography."',
       source = "biblatex",
-    },
-    underreview = {
-      csl = nil,
-      source = "ACM-Reference-Format.bst",
     },
   },
   fields = {
@@ -4502,6 +4502,7 @@ return {
     ["executive-producer"] = "executive-producer",
     journaltitle = "container-title",
     jurisdiction = "jurisdiction",
+    keywords = "keyword",
     langid = "language",
     location = "publisher-place",
     medium = "medium",
@@ -4527,6 +4528,5 @@ return {
     version = "version",
     ["volume-title"] = "volume-title",
     volumes = "number-of-volumes",
-    keywords = "keyword",
   },
 }
