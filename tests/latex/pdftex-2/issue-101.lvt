@@ -1,0 +1,60 @@
+% <https://github.com/zepinglee/citeproc-lua/discussions/101>
+
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\begin{filecontents}[noheader, overwrite]{\jobname.bib}
+@Book{Adhikari2005a,
+  author           = {Adhikari, Mohamed},
+  date             = {2005},
+  title            = {{Not White Enough, Not Black Enough: Racial Identity in the South African Coloured Community}},
+  location         = {Cape Town, South Africa},
+  publisher        = {Double Storey Books and Athens},
+  creationdate     = {2025-08-12T21:24:06},
+  modificationdate = {2025-08-12T21:24:06},
+  qualityassured   = {qualityAssured},
+}
+
+@Software{AhlmannEltze2020a,
+  author           = {Ahlmann-Eltze, Constantin},
+  date             = {2020},
+  title            = {{ggupset}: Combination Matrix Axis for ‘ggplot2’to Create {‘UpSet’Plots}},
+  url              = {https://CRAN.R-project.org/package=ggupset},
+  version          = {0.3.0},
+  creationdate     = {2025-08-12T21:24:06},
+  modificationdate = {2025-08-12T21:24:06},
+  qualityassured   = {qualityAssured},
+}
+\end{filecontents}
+
+\begin{filecontents}[noheader, overwrite]{emptydoc.tex}
+No citations here. This is an empty doc added with the input command.
+\end{filecontents}
+
+\begin{filecontents}[noheader, overwrite]{input_doc.tex}
+Using the 'input' command \cite{AhlmannEltze2020a} does not have this issue.
+\end{filecontents}
+
+\begin{filecontents}[noheader, overwrite]{include_doc.tex}
+This is a document with a citation added with the 'include' command: \cite{AhlmannEltze2020a}. As you can see the citation is not 'found' in the db.
+\end{filecontents}
+
+\usepackage[style=apa]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{\jobname.bib}
+\usepackage{hyperref}
+
+
+\begin{document}
+\START
+% \showoutput
+
+Citations in the main/parent file seem to work even after adding an 'include' command \cite{Adhikari2005a}.
+
+\include{include_doc}
+
+\printbibliography
+
+\OMIT
+\end{document}

@@ -1055,10 +1055,11 @@ function CslCitationManager:read_aux_file(aux_content)
 end
 
 ---@param aux_content string
+---@param command_arguments [string, integer, string][]?
 ---@return [string, integer, string][]
-function CslCitationManager:_get_csl_commands(aux_content)
+function CslCitationManager:_get_csl_commands(aux_content, command_arguments)
   ---@type [string, integer, string][]
-  local command_arguments = {}
+  command_arguments = command_arguments or {}
   for _, line in ipairs(util.split(aux_content, "%s*\n")) do
     for _, command_argment in ipairs(command_info) do
       local command, num_args = table.unpack(command_argment)
@@ -1066,7 +1067,10 @@ function CslCitationManager:_get_csl_commands(aux_content)
         local arguments = get_command_arguments(line, command, num_args)
         if command == "\\@input" then
           local sub_aux_file = arguments[1]
-          self:read_aux_file(sub_aux_file)
+          local sub_aux_content = util.read_file(sub_aux_file)
+          if sub_aux_content then
+            self:_get_csl_commands(sub_aux_content, command_arguments)
+          end
         else
           local ref_section_index = tonumber(arguments[1])
           if not ref_section_index then

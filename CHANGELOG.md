@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix missing citations in `\include`d documents ([#101](https://github.com/zepinglee/citeproc-lua/issues/101)).
+
 ## [0.8.1] - 2025-08-06
 
 ### Added

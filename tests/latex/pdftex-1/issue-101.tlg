@@ -1,0 +1,137 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+> \l__csl_citation_info_tl=citationID={Adhikari2005a@1},citationItems={{id={Adhikari2005a}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...... an 'include' command \cite{Adhikari2005a}
+                                                  .
+LaTeX Warning: Citation `Adhikari2005a' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {Adhikari2005a}].
+<recently read> }
+l. ...... an 'include' command \cite{Adhikari2005a}
+                                                  .
+[1
+]
+(include_doc.tex
+> \l__csl_citation_info_tl=citationID={AhlmannEltze2020a@1},citationItems={{id={AhlmannEltze2020a}}},properties={noteIndex={0}}.
+<recently read> }
+l. ......'include' command: \cite{AhlmannEltze2020a}
+                                                  . As you can see the citat...
+LaTeX Warning: Citation `AhlmannEltze2020a' on page 2 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {AhlmannEltze2020a}].
+<recently read> }
+l. ......'include' command: \cite{AhlmannEltze2020a}
+                                                  . As you can see the citat...
+)
+Overfull \hbox (64.97916pt too wide) in paragraph at lines ...
+[]\OT1/cmr/m/n/10 This is a doc-u-ment with a ci-ta-tion added with the 'in-clude' com-mand: [\OT1/cmr/bx/n/10 AhlmannEltze2020a\OT1/cmr/m/n/10 ].
+\hbox(7.5+2.5)x345.0, glue set - 1.0
+.\hbox(0.0+0.0)x0.0
+.\OT1/cmr/m/n/10 T
+.\OT1/cmr/m/n/10 h
+.\OT1/cmr/m/n/10 i
+.\OT1/cmr/m/n/10 s
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 i
+.\OT1/cmr/m/n/10 s
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 a
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 d
+.\OT1/cmr/m/n/10 o
+.\kern0.27779
+.\OT1/cmr/m/n/10 c
+.\discretionary
+..\OT1/cmr/m/n/10 -
+.\OT1/cmr/m/n/10 u
+.\discretionary
+..\OT1/cmr/m/n/10 -
+.\OT1/cmr/m/n/10 m
+.\OT1/cmr/m/n/10 e
+.\OT1/cmr/m/n/10 n
+.\kern-0.27779
+.\OT1/cmr/m/n/10 t
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 w
+.\OT1/cmr/m/n/10 i
+.\OT1/cmr/m/n/10 t
+.\OT1/cmr/m/n/10 h
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 a
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 c
+.\OT1/cmr/m/n/10 i
+.\discretionary
+..\OT1/cmr/m/n/10 -
+.\OT1/cmr/m/n/10 t
+.\OT1/cmr/m/n/10 a
+.\discretionary
+..\OT1/cmr/m/n/10 -
+.\OT1/cmr/m/n/10 t
+.\OT1/cmr/m/n/10 i
+.\OT1/cmr/m/n/10 o
+.\OT1/cmr/m/n/10 n
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 a
+.\OT1/cmr/m/n/10 d
+.\OT1/cmr/m/n/10 d
+.\OT1/cmr/m/n/10 e
+.\OT1/cmr/m/n/10 d
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 w
+.\OT1/cmr/m/n/10 i
+.\OT1/cmr/m/n/10 t
+.\OT1/cmr/m/n/10 h
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 t
+.\OT1/cmr/m/n/10 h
+.\OT1/cmr/m/n/10 e
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 '
+.\OT1/cmr/m/n/10 i
+.\OT1/cmr/m/n/10 n
+.\discretionary
+..\OT1/cmr/m/n/10 -
+.\OT1/cmr/m/n/10 c
+.\OT1/cmr/m/n/10 l
+.\OT1/cmr/m/n/10 u
+.\OT1/cmr/m/n/10 d
+.\OT1/cmr/m/n/10 e
+.\OT1/cmr/m/n/10 '
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 c
+.\OT1/cmr/m/n/10 o
+.\OT1/cmr/m/n/10 m
+.\discretionary
+..\OT1/cmr/m/n/10 -
+.\OT1/cmr/m/n/10 m
+.\OT1/cmr/m/n/10 a
+.\OT1/cmr/m/n/10 n
+.\OT1/cmr/m/n/10 d
+.\OT1/cmr/m/n/10 :
+.\glue 4.44444 plus 3.33331 minus 0.55556
+.\OT1/cmr/m/n/10 [
+.\kern 0.0
+.\OT1/cmr/bx/n/10 A
+.\OT1/cmr/bx/n/10 h
+.\OT1/cmr/bx/n/10 l
+.\OT1/cmr/bx/n/10 m
+.\OT1/cmr/bx/n/10 a
+.\OT1/cmr/bx/n/10 n
+.\OT1/cmr/bx/n/10 n
+.\OT1/cmr/bx/n/10 E
+.\OT1/cmr/bx/n/10 l
+.\OT1/cmr/bx/n/10 t
+.\OT1/cmr/bx/n/10 z
+.\OT1/cmr/bx/n/10 e
+.\OT1/cmr/bx/n/10 2
+.\OT1/cmr/bx/n/10 0
+.\OT1/cmr/bx/n/10 2
+.\OT1/cmr/bx/n/10 0
+.\OT1/cmr/bx/n/10 a
+.\kern 0.0
+.\OT1/cmr/m/n/10 ]
+.\OT1/cmr/m/n/10 .
+.\glue(\rightskip) 0.0
+[2
+]
+Package CSL Warning: The bibliography is empty.

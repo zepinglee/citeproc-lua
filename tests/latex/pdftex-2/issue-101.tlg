@@ -1,0 +1,134 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+> \l__csl_citation_info_tl=citationID={Adhikari2005a@1},citationItems={{id={Adhikari2005a}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...... an 'include' command \cite{Adhikari2005a}
+                                                  .
+> \l__csl_citation_tl=(\cslcite {Adhikari2005a}{Adhikari, 2005}).
+<recently read> }
+l. ...... an 'include' command \cite{Adhikari2005a}
+                                                  .
+[1
+]
+(include_doc.tex
+> \l__csl_citation_info_tl=citationID={AhlmannEltze2020a@1},citationItems={{id={AhlmannEltze2020a}}},properties={noteIndex={0}}.
+<recently read> }
+l. ......'include' command: \cite{AhlmannEltze2020a}
+                                                  . As you can see the citat...
+> \l__csl_citation_tl=(\cslcite {AhlmannEltze2020a}{Ahlmann-Eltze, 2020}).
+<recently read> }
+l. ......'include' command: \cite{AhlmannEltze2020a}
+                                                  . As you can see the citat...
+)
+Overfull \hbox (3.72289pt too wide) in paragraph at lines ...
+[]\OT1/cmr/m/n/10 This is a doc-u-ment with a ci-ta-tion added with the 'in-clude' com-mand: ([]Ahlmann-
+\hbox(7.5+2.5)x345.0, glue set - 1.0
+.\hbox(0.0+0.0)x0.0
+.\OT1/cmr/m/n/10 T
+.\OT1/cmr/m/n/10 h
+.\OT1/cmr/m/n/10 i
+.\OT1/cmr/m/n/10 s
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 i
+.\OT1/cmr/m/n/10 s
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 a
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 d
+.\OT1/cmr/m/n/10 o
+.\kern0.27779
+.\OT1/cmr/m/n/10 c
+.\discretionary
+..\OT1/cmr/m/n/10 -
+.\OT1/cmr/m/n/10 u
+.\discretionary
+..\OT1/cmr/m/n/10 -
+.\OT1/cmr/m/n/10 m
+.\OT1/cmr/m/n/10 e
+.\OT1/cmr/m/n/10 n
+.\kern-0.27779
+.\OT1/cmr/m/n/10 t
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 w
+.\OT1/cmr/m/n/10 i
+.\OT1/cmr/m/n/10 t
+.\OT1/cmr/m/n/10 h
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 a
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 c
+.\OT1/cmr/m/n/10 i
+.\discretionary
+..\OT1/cmr/m/n/10 -
+.\OT1/cmr/m/n/10 t
+.\OT1/cmr/m/n/10 a
+.\discretionary
+..\OT1/cmr/m/n/10 -
+.\OT1/cmr/m/n/10 t
+.\OT1/cmr/m/n/10 i
+.\OT1/cmr/m/n/10 o
+.\OT1/cmr/m/n/10 n
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 a
+.\OT1/cmr/m/n/10 d
+.\OT1/cmr/m/n/10 d
+.\OT1/cmr/m/n/10 e
+.\OT1/cmr/m/n/10 d
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 w
+.\OT1/cmr/m/n/10 i
+.\OT1/cmr/m/n/10 t
+.\OT1/cmr/m/n/10 h
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 t
+.\OT1/cmr/m/n/10 h
+.\OT1/cmr/m/n/10 e
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 '
+.\OT1/cmr/m/n/10 i
+.\OT1/cmr/m/n/10 n
+.\discretionary
+..\OT1/cmr/m/n/10 -
+.\OT1/cmr/m/n/10 c
+.\OT1/cmr/m/n/10 l
+.\OT1/cmr/m/n/10 u
+.\OT1/cmr/m/n/10 d
+.\OT1/cmr/m/n/10 e
+.\OT1/cmr/m/n/10 '
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\OT1/cmr/m/n/10 c
+.\OT1/cmr/m/n/10 o
+.\OT1/cmr/m/n/10 m
+.\discretionary
+..\OT1/cmr/m/n/10 -
+.\OT1/cmr/m/n/10 m
+.\OT1/cmr/m/n/10 a
+.\OT1/cmr/m/n/10 n
+.\OT1/cmr/m/n/10 d
+.\OT1/cmr/m/n/10 :
+.\glue 4.44444 plus 3.33331 minus 0.55556
+.\OT1/cmr/m/n/10 (
+.\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite0.AhlmannEltze2020a}
+.\OT1/cmr/m/n/10 A
+.\OT1/cmr/m/n/10 h
+.\OT1/cmr/m/n/10 l
+.\OT1/cmr/m/n/10 m
+.\OT1/cmr/m/n/10 a
+.\OT1/cmr/m/n/10 n
+.\OT1/cmr/m/n/10 n
+.\OT1/cmr/m/n/10 -
+.\discretionary
+.\glue(\rightskip) 0.0
+[2
+]
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 2, entry-spacing = 0}}
+>  {\bibitem {Adhikari2005a} Adhikari, M. (2005). \textit {Not White Enough, Not Black Enough: Racial Identity in the South African Coloured Community}. Double Storey Books and Athens.}
+>  {\bibitem {AhlmannEltze2020a} Ahlmann-Eltze, C. (2020). \textit {ggupset: Combination Matrix Axis for ‘ggplot2’to Create ‘UpSet’Plots} (Version 0.3.0) [Computer software]. \url {https://CRAN.R-project.org/package=ggupset}}
+>  {\end {thebibliography}}.
+<recently read> }
+l. ...
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
