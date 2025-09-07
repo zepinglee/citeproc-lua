@@ -5,10 +5,10 @@ TEST 1: Bibliography contents
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 1, line-spacing = 1, entry-spacing = 1}}
->  {\bibitem {ITEM-2} Bennett, F.G., Jr. (2009) ‘Getting property right: “Informal” mortgages in the Japanese courts’, \textit {Pac. Rim L. \& Pol’y J.}, 18, pp. 463–509.}
+>  {\bibitem {ITEM-2} Bennett, F.G., Jr. (2009) “Getting property right: ‘Informal’ mortgages in the Japanese courts,” \textit {Pac. Rim L. \& Pol’y J.}, 18, pp. 463–509.}
 >  {\bibitem {ITEM-1} D’Arcus, B. (2005) \textit {Boundaries of dissent: Protest and state power in the media age}. Routledge.}
->  {\bibitem {ITEM-3} Lamport, L. (1994) \textit {LaTeX: A document preparation system: User’s guide and reference manual}. 2nd edn. Reading, MA, USA: Addison-Wesley.}
->  {\bibitem {ITEM-4} Mittelbach, F. \textit {et al.} (2004) \textit {The LaTeX companion}. 2nd edn. Reading, MA, USA: Addison-Wesley.}
+>  {\bibitem {ITEM-3} Lamport, L. (1994) \textit {LaTeX: A document preparation system: User’s guide and reference manual}. 2nd ed. Reading, MA, USA: Addison-Wesley.}
+>  {\bibitem {ITEM-4} Mittelbach, F. \textit {et al.} (2004) \textit {The LaTeX companion}. 2nd ed. Reading, MA, USA: Addison-Wesley.}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}
@@ -457,7 +457,7 @@ Completed box being shipped out [1]
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\baselineskip) 4.3272
-...\hbox(7.5+2.5)x345.0, glue set - 0.19218, direction TLT
+...\hbox(7.5+2.5)x345.0, glue set 0.00133, direction TLT
 ....\localpar
 .....\localinterlinepenalty=0
 .....\localbrokenpenalty=0
@@ -499,7 +499,7 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/10 9
 ....\TU/lmr/m/n/10 )
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
-....\TU/lmr/m/n/10 ‘
+....\TU/lmr/m/n/10 “
 ....\TU/lmr/m/n/10 G
 ....\TU/lmr/m/n/10 e
 ....\TU/lmr/m/n/10 t
@@ -531,7 +531,7 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/10 t
 ....\TU/lmr/m/n/10 :
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
-....\TU/lmr/m/n/10 “
+....\TU/lmr/m/n/10 ‘
 ....\TU/lmr/m/n/10 I
 ....\TU/lmr/m/n/10 n
 ....\discretionary (penalty 50)
@@ -544,7 +544,7 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/10 m
 ....\TU/lmr/m/n/10 a
 ....\TU/lmr/m/n/10 l
-....\TU/lmr/m/n/10 ”
+....\TU/lmr/m/n/10 ’
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\TU/lmr/m/n/10 m
 ....\TU/lmr/m/n/10 o
@@ -563,7 +563,7 @@ Completed box being shipped out [1]
 ....\glue(\rightskip) 0.0
 ...\penalty 14000
 ...\glue(\baselineskip) 2.34
-...\hbox(7.16+2.05)x345.0, glue set 69.04996fil, direction TLT
+...\hbox(7.16+2.05)x345.0, glue set 67.10995fil, direction TLT
 ....\TU/lmr/m/n/10 t
 ....\TU/lmr/m/n/10 h
 ....\TU/lmr/m/n/10 e
@@ -583,8 +583,8 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/10 r
 ....\TU/lmr/m/n/10 t
 ....\TU/lmr/m/n/10 s
-....\TU/lmr/m/n/10 ’
 ....\TU/lmr/m/n/10 ,
+....\TU/lmr/m/n/10 ”
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\TU/lmr/m/it/10 P
 ....\TU/lmr/m/it/10 a
@@ -875,7 +875,7 @@ Completed box being shipped out [1]
 ....\glue(\rightskip) 0.0
 ...\penalty 8000
 ...\glue(\baselineskip) 2.34
-...\hbox(7.16+2.06)x345.0, glue set 41.72998fil, direction TLT
+...\hbox(7.16+2.06)x345.0, glue set 47.28998fil, direction TLT
 ....\TU/lmr/m/it/10 a
 ....\TU/lmr/m/it/10 n
 ....\TU/lmr/m/it/10 d
@@ -913,7 +913,6 @@ Completed box being shipped out [1]
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\TU/lmr/m/n/10 e
 ....\TU/lmr/m/n/10 d
-....\TU/lmr/m/n/10 n
 ....\TU/lmr/m/n/10 .
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\TU/lmr/m/n/10 R
@@ -964,7 +963,7 @@ Completed box being shipped out [1]
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\baselineskip) 2.44
-...\hbox(7.5+2.5)x345.0, glue set - 0.47989, direction TLT
+...\hbox(7.5+2.5)x345.0, glue set - 0.0337, direction TLT
 ....\localpar
 .....\localinterlinepenalty=0
 .....\localbrokenpenalty=0
@@ -1050,7 +1049,6 @@ Completed box being shipped out [1]
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\TU/lmr/m/n/10 e
 ....\TU/lmr/m/n/10 d
-....\TU/lmr/m/n/10 n
 ....\TU/lmr/m/n/10 .
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\TU/lmr/m/n/10 R

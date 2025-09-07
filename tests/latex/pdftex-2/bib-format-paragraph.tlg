@@ -5,10 +5,10 @@ TEST 1: Bibliography contents
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 1, line-spacing = 1, entry-spacing = 1}}
->  {\bibitem {ITEM-2} Bennett, F.G., Jr. (2009) ‘Getting property right: “Informal” mortgages in the Japanese courts’, \textit {Pac. Rim L. \& Pol’y J.}, 18, pp. 463–509.}
+>  {\bibitem {ITEM-2} Bennett, F.G., Jr. (2009) “Getting property right: ‘Informal’ mortgages in the Japanese courts,” \textit {Pac. Rim L. \& Pol’y J.}, 18, pp. 463–509.}
 >  {\bibitem {ITEM-1} D’Arcus, B. (2005) \textit {Boundaries of dissent: Protest and state power in the media age}. Routledge.}
->  {\bibitem {ITEM-3} Lamport, L. (1994) \textit {LaTeX: A document preparation system: User’s guide and reference manual}. 2nd edn. Reading, MA, USA: Addison-Wesley.}
->  {\bibitem {ITEM-4} Mittelbach, F. \textit {et al.} (2004) \textit {The LaTeX companion}. 2nd edn. Reading, MA, USA: Addison-Wesley.}
+>  {\bibitem {ITEM-3} Lamport, L. (1994) \textit {LaTeX: A document preparation system: User’s guide and reference manual}. 2nd ed. Reading, MA, USA: Addison-Wesley.}
+>  {\bibitem {ITEM-4} Mittelbach, F. \textit {et al.} (2004) \textit {The LaTeX companion}. 2nd ed. Reading, MA, USA: Addison-Wesley.}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}
@@ -438,7 +438,7 @@ Completed box being shipped out [1]
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\baselineskip) 4.5
-...\hbox(7.5+2.5)x345.0, glue set - 0.24452
+...\hbox(7.5+2.5)x345.0, glue set - 0.0223
 ....\hbox(0.0+0.0)x20.00003
 .....\glue 20.00003
 .....\glue -20.00003
@@ -473,7 +473,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 9
 ....\OT1/cmr/m/n/10 )
 ....\glue 3.33333 plus 1.66666 minus 1.11111
-....\OT1/cmr/m/n/10 `
+....\OT1/cmr/m/n/10 \
 ....\OT1/cmr/m/n/10 G
 ....\OT1/cmr/m/n/10 e
 ....\OT1/cmr/m/n/10 t
@@ -501,7 +501,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 t
 ....\OT1/cmr/m/n/10 :
 ....\glue 3.33333 plus 1.66666 minus 1.11111
-....\OT1/cmr/m/n/10 \
+....\OT1/cmr/m/n/10 `
 ....\OT1/cmr/m/n/10 I
 ....\OT1/cmr/m/n/10 n
 ....\OT1/cmr/m/n/10 f
@@ -510,7 +510,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 m
 ....\OT1/cmr/m/n/10 a
 ....\OT1/cmr/m/n/10 l
-....\OT1/cmr/m/n/10 "
+....\OT1/cmr/m/n/10 '
 ....\glue 3.33333 plus 1.66666 minus 1.11111
 ....\OT1/cmr/m/n/10 m
 ....\OT1/cmr/m/n/10 o
@@ -527,7 +527,7 @@ Completed box being shipped out [1]
 ....\glue(\rightskip) 0.0
 ...\penalty 14000
 ...\glue(\baselineskip) 2.55556
-...\hbox(6.94444+1.94444)x345.0, glue set 69.0726fil
+...\hbox(6.94444+1.94444)x345.0, glue set 66.85037fil
 ....\OT1/cmr/m/n/10 t
 ....\OT1/cmr/m/n/10 h
 ....\OT1/cmr/m/n/10 e
@@ -547,8 +547,8 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 r
 ....\OT1/cmr/m/n/10 t
 ....\OT1/cmr/m/n/10 s
-....\OT1/cmr/m/n/10 '
 ....\OT1/cmr/m/n/10 ,
+....\OT1/cmr/m/n/10 "
 ....\glue 3.33333 plus 1.66666 minus 1.11111
 ....\OT1/cmr/m/it/10 P
 ....\OT1/cmr/m/it/10 a
@@ -804,7 +804,7 @@ Completed box being shipped out [1]
 ....\glue(\rightskip) 0.0
 ...\penalty 8000
 ...\glue(\baselineskip) 2.55556
-...\hbox(6.94444+1.94444)x345.0, glue set 41.49475fil
+...\hbox(6.94444+1.94444)x345.0, glue set 47.05032fil
 ....\OT1/cmr/m/it/10 a
 ....\OT1/cmr/m/it/10 n
 ....\OT1/cmr/m/it/10 d
@@ -836,7 +836,6 @@ Completed box being shipped out [1]
 ....\glue 3.33333 plus 1.66666 minus 1.11111
 ....\OT1/cmr/m/n/10 e
 ....\OT1/cmr/m/n/10 d
-....\OT1/cmr/m/n/10 n
 ....\OT1/cmr/m/n/10 .
 ....\glue 3.33333 plus 1.66666 minus 1.11111
 ....\OT1/cmr/m/n/10 R
@@ -883,7 +882,7 @@ Completed box being shipped out [1]
 ...\glue(\parskip) 0.0
 ...\glue(\parskip) 0.0
 ...\glue(\baselineskip) 2.55556
-...\hbox(7.5+2.5)x345.0, glue set - 0.4976
+...\hbox(7.5+2.5)x345.0, glue set - 0.03296
 ....\hbox(0.0+0.0)x20.00003
 .....\glue 20.00003
 .....\glue -20.00003
@@ -954,7 +953,6 @@ Completed box being shipped out [1]
 ....\glue 3.33333 plus 1.66666 minus 1.11111
 ....\OT1/cmr/m/n/10 e
 ....\OT1/cmr/m/n/10 d
-....\OT1/cmr/m/n/10 n
 ....\OT1/cmr/m/n/10 .
 ....\glue 3.33333 plus 1.66666 minus 1.11111
 ....\OT1/cmr/m/n/10 R
