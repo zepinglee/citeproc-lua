@@ -1,0 +1,330 @@
+% <https://github.com/zepinglee/citeproc-lua/discussions/104>
+
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\begin{filecontents}[noheader, overwrite]{mw-bachelorarbeit.csl}
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only" default-locale="de-AT">
+  <!-- This style was edited with the Visual CSL Editor (https://editor.citationstyles.org/visualEditor/) -->
+  <info>
+    <title>MW-Bachelorarbeit</title>
+    <title-short>MW</title-short>
+    <id>http://www.zotero.org/styles/mw-bachelorarbeit</id>
+    <link rel="self" href="http://www.zotero.org/styles/mw-bachelorarbeit"/>
+    <author>
+      <name>kishbishmw</name>
+    </author>
+    <category citation-format="author-date"/>
+    <category field="social_science"/>
+    <summary>MW-Bachelorarbeit</summary>
+    <updated>2025-08-04T15:27:18+00:00</updated>
+  </info>
+  <locale xml:lang="de">
+    <terms>
+      <term name="et-al">et al.</term>
+      <term name="ibid">ebd.</term>
+    </terms>
+  </locale>
+  <macro name="editor">
+    <names variable="editor" delimiter=", ">
+      <name name-as-sort-order="all" sort-separator=", " delimiter-precedes-last="always" delimiter="/">
+        <name-part name="family" font-style="normal"/>
+      </name>
+      <label form="short" text-case="capitalize-first" strip-periods="true" prefix=" (" suffix=".):"/>
+    </names>
+  </macro>
+  <macro name="anon">
+    <text term="anonymous" form="short" text-case="capitalize-first" strip-periods="true"/>
+  </macro>
+  <macro name="author">
+    <names variable="author" font-style="normal">
+      <name font-style="normal" delimiter="/" delimiter-precedes-last="always" name-as-sort-order="all">
+        <name-part name="family" font-style="normal"/>
+      </name>
+      <label form="short" prefix=" (" suffix=")" text-case="capitalize-first"/>
+      <substitute>
+        <names variable="editor"/>
+        <text macro="anon"/>
+      </substitute>
+    </names>
+  </macro>
+  <macro name="author-short">
+    <names variable="author">
+      <name form="short" delimiter="/" delimiter-precedes-last="always" initialize-with=". "/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <text macro="anon"/>
+      </substitute>
+    </names>
+  </macro>
+  <macro name="access">
+    <choose>
+      <if variable="DOI" match="any">
+        <group>
+          <text value="DOI: " suffix=" "/>
+          <text variable="DOI"/>
+          <group prefix=" (" suffix=")">
+            <text value="letzter Zugriff:" suffix=" "/>
+            <date variable="accessed">
+              <date-part name="day" suffix="."/>
+              <date-part name="month" suffix="." form="numeric"/>
+              <date-part name="year"/>
+            </date>
+          </group>
+        </group>
+      </if>
+      <else-if match="any" variable="URL">
+        <group>
+          <text value="Link: "/>
+          <text variable="URL"/>
+          <group prefix=" (" suffix=")">
+            <text value="letzter Zugriff:"/>
+            <date variable="accessed" prefix=" ">
+              <date-part name="day" suffix="."/>
+              <date-part name="month" form="numeric" suffix="."/>
+              <date-part name="year"/>
+            </date>
+          </group>
+        </group>
+      </else-if>
+    </choose>
+  </macro>
+  <macro name="title">
+    <text variable="title" font-style="italic"/>
+  </macro>
+  <macro name="publisher">
+    <group delimiter=": ">
+      <text variable="publisher-place"/>
+      <text variable="publisher"/>
+    </group>
+  </macro>
+  <macro name="year-date">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text term="no date" form="short"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="edition">
+    <choose>
+      <if is-numeric="edition">
+        <group delimiter=" ">
+          <number prefix="(" variable="edition" form="ordinal"/>
+          <text term="edition" suffix=")."/>
+        </group>
+      </if>
+      <else>
+        <text variable="edition" suffix="."/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="pages">
+    <text variable="page" prefix="S. "/>
+  </macro>
+  <macro name="editor (book)">
+    <names variable="editor" delimiter=", ">
+      <name delimiter="/" delimiter-precedes-last="always" name-as-sort-order="all">
+        <name-part name="family"/>
+      </name>
+      <label form="short" text-case="capitalize-first" strip-periods="true" prefix=" (" suffix=".)."/>
+    </names>
+  </macro>
+  <citation et-al-min="4" et-al-use-first="1" disambiguate-add-names="true" disambiguate-add-givenname="true" disambiguate-add-year-suffix="true">
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <choose>
+        <if position="ibid-with-locator">
+          <group delimiter=", ">
+            <text term="ibid" text-case="lowercase"/>
+            <text variable="locator" prefix="S. "/>
+          </group>
+        </if>
+        <else-if position="ibid">
+          <text term="ibid" text-case="lowercase"/>
+        </else-if>
+        <else>
+          <group delimiter=", ">
+            <group delimiter=" ">
+              <text macro="author-short"/>
+              <text macro="year-date"/>
+            </group>
+            <group>
+              <text variable="locator" prefix="S. "/>
+            </group>
+          </group>
+        </else>
+      </choose>
+    </layout>
+  </citation>
+  <bibliography et-al-min="5" et-al-use-first="4" entry-spacing="0" hanging-indent="true">
+    <sort>
+      <key macro="author"/>
+      <key macro="year-date"/>
+      <key variable="title"/>
+    </sort>
+    <layout suffix=".">
+      <text macro="author"/>
+      <date date-parts="year" variable="issued" prefix=" (" suffix="):">
+        <date-part name="year"/>
+      </date>
+      <choose>
+        <if type="bill book graphic legal_case legislation motion_picture report song" match="any">
+          <group delimiter=" " prefix=" " suffix=".">
+            <group delimiter=" ">
+              <text macro="title"/>
+              <text variable="genre" prefix="(" suffix=")"/>
+            </group>
+            <text macro="edition"/>
+            <text macro="editor (book)"/>
+          </group>
+          <text prefix=" " macro="publisher"/>
+        </if>
+        <else-if type="chapter paper-conference" match="any">
+          <text macro="title" prefix=" " suffix="."/>
+          <group prefix=" " delimiter=" ">
+            <text term="in" text-case="capitalize-first" suffix=":"/>
+            <text macro="editor"/>
+            <text variable="container-title" font-style="italic"/>
+            <text macro="pages" prefix="(" suffix=")."/>
+            <choose>
+              <if match="all" variable="collection-number">
+                <group>
+                  <text variable="collection-title" font-style="italic" prefix="Reihe: "/>
+                  <text variable="collection-number" prefix=" (Nr. " suffix=")."/>
+                </group>
+              </if>
+            </choose>
+            <choose>
+              <if match="none" variable="collection-number">
+                <group suffix=".">
+                  <text variable="collection-title" font-style="italic" prefix="Reihe: "/>
+                  <text variable="collection-number"/>
+                </group>
+              </if>
+            </choose>
+            <text variable="event" suffix="."/>
+            <group delimiter=". ">
+              <text macro="publisher"/>
+            </group>
+          </group>
+        </else-if>
+        <else-if type="thesis">
+          <group prefix=" " suffix=".">
+            <text macro="title"/>
+            <text variable="genre" prefix=" (" suffix="). "/>
+            <text macro="publisher"/>
+          </group>
+        </else-if>
+        <else>
+          <group suffix=".">
+            <text macro="title" prefix=" "/>
+            <text macro="editor" prefix=" "/>
+          </group>
+          <group prefix=" ">
+            <choose>
+              <if type="webpage post-weblog" match="any">
+                <text term="available at" plural="true" text-case="capitalize-first" suffix=": "/>
+                <text variable="container-title" font-style="italic"/>
+              </if>
+              <else>
+                <text term="in" text-case="capitalize-first" suffix=": "/>
+                <text variable="container-title" font-style="italic"/>
+              </else>
+            </choose>
+            <group>
+              <choose>
+                <if match="all" variable="issue volume page">
+                  <text variable="volume" prefix=" (Bd. "/>
+                  <text variable="issue" prefix="/Nr. "/>
+                  <text variable="page" prefix=", S. " suffix=")"/>
+                </if>
+                <else-if match="all" variable="issue page">
+                  <text variable="issue" prefix=" (Nr. "/>
+                  <text variable="page" prefix=", S. " suffix=")"/>
+                </else-if>
+                <else-if match="all" variable="volume page">
+                  <text variable="volume" prefix=" (Bd. "/>
+                  <text variable="page" prefix=", S. " suffix=")"/>
+                </else-if>
+                <else-if match="any" variable="issue">
+                  <text variable="issue" prefix=" (Nr. " suffix=")"/>
+                </else-if>
+                <else-if match="any" variable="volume">
+                  <text variable="volume" prefix=" (Bd. " suffix=")"/>
+                </else-if>
+              </choose>
+            </group>
+          </group>
+        </else>
+      </choose>
+      <text macro="access" prefix=". "/>
+    </layout>
+  </bibliography>
+</style>
+\end{filecontents}
+
+\begin{filecontents}[noheader, overwrite]{\jobname.bib}
+@misc{parlamentsdirektion_selbstandiger_2019,
+	title = {Selbständiger {Antrag} der {Abgeordneten} {Dr}. {Pamela} {Rendi}-{Wagner}, {MSc}, {Mag}. {Gerald} {Loacker}, {Daniela} {Holzinger}-{Vogtenhuber}, {BA}, {Kolleginnen} und {Kollegen} betreffend ein {Bundesgesetz}, mit dem das {Bundesgesetz} über das {Herstellen} und {Inverkehrbringen} von {Tabakerzeugnissen} und verwandten {Erzeugnissen} sowie die {Werbung} für {Tabakerzeugnisse} und verwandte {Erzeugnisse} und den {Nichtraucherinnen}- bzw. {Nichtraucherschutz} ({Tabak}- und {Nichtraucherinnen}- bzw. {Nichtraucherschutzgesetz} – {TNRSG}) geändert wird},
+	url = {https://www.parlament.gv.at/gegenstand/XXVI/A/859},
+	language = {de},
+	urldate = {2025-08-14},
+	journal = {Parlament: Gesetzesinitiativen, Nationalrat},
+	author = {{Parlamentsdirektion}},
+	month = dec,
+	year = {2019},
+	keywords = {Daten},
+}
+
+@misc{parlamentsdirektion_volksbegehren_2018,
+	title = {Volksbegehren „{Don}'t smoke“ (434. d.{B}. {XXVII} {GP}.)},
+	url = {https://www.parlament.gv.at/gegenstand/XXVI/I/434},
+	abstract = {1178/UEA},
+	language = {de},
+	urldate = {2025-05-14},
+	journal = {Parlament: Gegenstände, Nationalrat},
+	author = {{Parlamentsdirektion}},
+	month = nov,
+	year = {2018},
+	keywords = {Daten},
+}
+
+@misc{parlamentsdirektion_stenographisches_2019,
+	title = {Stenographisches {Protokoll} der 84. {Sitzung} des {Nationalrats} vom 2. {Juli} 2019 (84/{NRSITZ} {XXVI}. {GP})},
+	url = {https://www.parlament.gv.at/gegenstand/XXVI/NRSITZ/84},
+	urldate = {2025-08-14},
+	journal = {Parlament: Plenarsitzungen, Nationalrat},
+	author = {{Parlamentsdirektion}},
+	month = feb,
+	year = {2019},
+	keywords = {Daten},
+}
+\end{filecontents}
+
+\usepackage[style=mw-bachelorarbeit]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{\jobname.bib}
+\usepackage{hyperref}
+
+
+\begin{document}
+\START
+% \showoutput
+
+\cite[vgl.][69-89]{parlamentsdirektion_stenographisches_2019}
+
+\cite[vgl.][]{parlamentsdirektion_volksbegehren_2018}
+
+\cite[[vgl.]][3]{parlamentsdirektion_selbstandiger_2019}
+
+\printbibliography
+
+\OMIT
+\end{document}

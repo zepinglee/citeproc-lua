@@ -1,0 +1,147 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+> \l__csl_citation_info_tl=citationID={parlamentsdirektion_stenographisches_2019@1},citationItems={{id={parlamentsdirektion_stenographisches_2019},label={page},locator={69-89}}},properties={prefix={vgl. },noteIndex={0}}.
+<recently read> }
+l. ......arlamentsdirektion_stenographisches_2019}
+> \l__csl_citation_tl=(vgl. \cslcite {parlamentsdirektion_stenographisches_2019}{Parlamentsdirektion 2019, S. 69–89}).
+<recently read> }
+l. ......arlamentsdirektion_stenographisches_2019}
+> \l__csl_citation_info_tl=citationID={parlamentsdirektion_volksbegehren_2018@1},citationItems={{id={parlamentsdirektion_volksbegehren_2018}}},properties={prefix={vgl. },noteIndex={0}}.
+<recently read> }
+l. ......]{parlamentsdirektion_volksbegehren_2018}
+> \l__csl_citation_tl=(vgl. \cslcite {parlamentsdirektion_volksbegehren_2018}{Parlamentsdirektion 2018}).
+<recently read> }
+l. ......]{parlamentsdirektion_volksbegehren_2018}
+> \l__csl_citation_info_tl=citationID={parlamentsdirektion_selbstandiger_2019@1},citationItems={{id={parlamentsdirektion_selbstandiger_2019},label={page},locator={3}}},properties={prefix={[vgl.] },noteIndex={0}}.
+<recently read> }
+l. ......]{parlamentsdirektion_selbstandiger_2019}
+> \l__csl_citation_tl=([vgl.] \cslcite {parlamentsdirektion_selbstandiger_2019}{Parlamentsdirektion 2019, S. 3}).
+<recently read> }
+l. ......]{parlamentsdirektion_selbstandiger_2019}
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 1, entry-spacing = 0}}
+>  {\bibitem {parlamentsdirektion_volksbegehren_2018} Parlamentsdirektion (2018): \textit {Volksbegehren „Don’t smoke“ (434. d.B. XXVII GP.)}. In: \textit {Parlament: Gegenstände, Nationalrat}. Link: \url {https://www.parlament.gv.at/gegenstand/XXVI/I/434} (letzter Zugriff: 14.5.2025).}
+>  {\bibitem {parlamentsdirektion_selbstandiger_2019} Parlamentsdirektion (2019a): \textit {Selbständiger Antrag der Abgeordneten Dr. Pamela Rendi-Wagner, MSc, Mag. Gerald Loacker, Daniela Holzinger-Vogtenhuber, BA, Kolleginnen und Kollegen betreffend ein Bundesgesetz, mit dem das Bundesgesetz über das Herstellen und Inverkehrbringen von Tabakerzeugnissen und verwandten Erzeugnissen sowie die Werbung für Tabakerzeugnisse und verwandte Erzeugnisse und den Nichtraucherinnen- bzw. Nichtraucherschutz (Tabak- und Nichtraucherinnen- bzw. Nichtraucherschutzgesetz – TNRSG) geändert wird}. In: \textit {Parlament: Gesetzesinitiativen, Nationalrat}. Link: \url {https://www.parlament.gv.at/gegenstand/XXVI/A/859} (letzter Zugriff: 14.8.2025).}
+>  {\bibitem {parlamentsdirektion_stenographisches_2019} Parlamentsdirektion (2019b): \textit {Stenographisches Protokoll der 84. Sitzung des Nationalrats vom 2. Juli 2019 (84/NRSITZ XXVI. GP)}. In: \textit {Parlament: Plenarsitzungen, Nationalrat}. Link: \url {https://www.parlament.gv.at/gegenstand/XXVI/NRSITZ/84} (letzter Zugriff: 14.8.2025).}
+>  {\end {thebibliography}}.
+<recently read> }
+l. ...
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+Underfull \hbox (badness 1810) in paragraph at lines ...
+[]\TU/lmr/m/n/10 Par-la-ments-di-rek-tion (2019a): \TU/lmr/m/it/10 Selb-ständi-ger Antrag der Ab-ge-ord-neten Dr.
+\hbox(7.5+2.5)x335.0, glue set 2.62917, direction TLT
+.\localpar
+..\localinterlinepenalty=0
+..\localbrokenpenalty=0
+..\localleftbox=null
+..\localrightbox=null
+.\hbox(0.0+0.0)x-10.0, direction TLT
+..\glue -10.0
+..\glue -20.0
+..\glue -5.0
+..\hbox(0.0+0.0)x20.0, glue set 20.0fil, direction TLT
+...\glue 0.0 plus 1.0fil
+..\glue 5.0
+.\penalty 0
+.\TU/lmr/m/n/10 P
+.\kern-0.28 (font)
+.\TU/lmr/m/n/10 a
+.\TU/lmr/m/n/10 r
+.\discretionary (penalty 50)
+..< \TU/lmr/m/n/10 -
+.\TU/lmr/m/n/10 l
+.\TU/lmr/m/n/10 a
+.\discretionary (penalty 50)
+..< \TU/lmr/m/n/10 -
+.\TU/lmr/m/n/10 m
+.\TU/lmr/m/n/10 e
+.\TU/lmr/m/n/10 n
+.\kern-0.28 (font)
+.\TU/lmr/m/n/10 t
+.\TU/lmr/m/n/10 s
+.\discretionary (penalty 50)
+..< \TU/lmr/m/n/10 -
+.\TU/lmr/m/n/10 d
+.\TU/lmr/m/n/10 i
+.\discretionary (penalty 50)
+..< \TU/lmr/m/n/10 -
+.\TU/lmr/m/n/10 r
+.\TU/lmr/m/n/10 e
+.\TU/lmr/m/n/10 k
+.\discretionary (penalty 50)
+..< \TU/lmr/m/n/10 -
+.\TU/lmr/m/n/10 t
+.\TU/lmr/m/n/10 i
+.\TU/lmr/m/n/10 o
+.\TU/lmr/m/n/10 n
+.\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.\TU/lmr/m/n/10 (
+.\TU/lmr/m/n/10 2
+.\TU/lmr/m/n/10 0
+.\TU/lmr/m/n/10 1
+.\TU/lmr/m/n/10 9
+.\TU/lmr/m/n/10 a
+.\TU/lmr/m/n/10 )
+.\TU/lmr/m/n/10 :
+.\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.\TU/lmr/m/it/10 S
+.\TU/lmr/m/it/10 e
+.\TU/lmr/m/it/10 l
+.\TU/lmr/m/it/10 b
+.\discretionary (penalty 50)
+..< \TU/lmr/m/it/10 -
+.\TU/lmr/m/it/10 s
+.\TU/lmr/m/it/10 t
+.\TU/lmr/m/it/10 ä
+.\TU/lmr/m/it/10 n
+.\TU/lmr/m/it/10 d
+.\TU/lmr/m/it/10 i
+.\discretionary (penalty 50)
+..< \TU/lmr/m/it/10 -
+.\TU/lmr/m/it/10 g
+.\TU/lmr/m/it/10 e
+.\TU/lmr/m/it/10 r
+.\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.\TU/lmr/m/it/10 A
+.\kern-0.51 (font)
+.\TU/lmr/m/it/10 n
+.\TU/lmr/m/it/10 t
+.\TU/lmr/m/it/10 r
+.\kern-0.51 (font)
+.\TU/lmr/m/it/10 a
+.\TU/lmr/m/it/10 g
+.\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.\TU/lmr/m/it/10 d
+.\TU/lmr/m/it/10 e
+.\TU/lmr/m/it/10 r
+.\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.\TU/lmr/m/it/10 A
+.\kern-0.51 (font)
+.\TU/lmr/m/it/10 b
+.\discretionary (penalty 50)
+..< \TU/lmr/m/it/10 -
+..= \kern-0.51 (font)
+.\TU/lmr/m/it/10 g
+.\TU/lmr/m/it/10 e
+.\discretionary (penalty 50)
+..< \TU/lmr/m/it/10 -
+..= \kern-0.51 (font)
+.\TU/lmr/m/it/10 o
+.\TU/lmr/m/it/10 r
+.\kern-0.51 (font)
+.\TU/lmr/m/it/10 d
+.\discretionary (penalty 50)
+..< \TU/lmr/m/it/10 -
+.\TU/lmr/m/it/10 n
+.\TU/lmr/m/it/10 e
+.\TU/lmr/m/it/10 t
+.\TU/lmr/m/it/10 e
+.\TU/lmr/m/it/10 n
+.\glue(\spaceskip) 3.58 plus 1.79 minus 1.19333
+.\TU/lmr/m/it/10 D
+.\TU/lmr/m/it/10 r
+.\TU/lmr/m/it/10 .
+.\glue(\rightskip) 0.0
