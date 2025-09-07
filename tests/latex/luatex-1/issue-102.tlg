@@ -1,0 +1,291 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+> \l__csl_citation_info_tl=citationID={bundeskanzleramt_volksbegehrengesetz_nodate@1},citationItems={{id={bundeskanzleramt_volksbegehrengesetz_nodate}}},properties={prefix={vgl. },noteIndex={0}}.
+<recently read> }
+l. ......deskanzleramt_volksbegehrengesetz_nodate}
+                                                   asdf
+> \l__csl_citation_tl=(vgl. \cslcite {bundeskanzleramt_volksbegehrengesetz_nodate}{Bundeskanzleramt 2018–2023}).
+<recently read> }
+l. ......deskanzleramt_volksbegehrengesetz_nodate}
+                                                   asdf
+> \l__csl_citation_info_tl=citationID={bundeskanzleramt_volksbegehrengesetz_nodate@2},citationItems={{id={bundeskanzleramt_volksbegehrengesetz_nodate}}},properties={prefix={vgl. },noteIndex={0}}.
+<recently read> }
+l. ......deskanzleramt_volksbegehrengesetz_nodate}
+                                                   asdf
+> \l__csl_citation_tl=(vgl. \cslcite {bundeskanzleramt_volksbegehrengesetz_nodate}{ebd.}).
+<recently read> }
+l. ......deskanzleramt_volksbegehrengesetz_nodate}
+                                                   asdf
+> \l__csl_citation_info_tl=citationID={bundeskanzleramt_geschaftsordnungsgesetz_nodate@1},citationItems={{id={bundeskanzleramt_geschaftsordnungsgesetz_nodate}}},properties={prefix={vgl. },noteIndex={0}}.
+<recently read> }
+l. ......anzleramt_geschaftsordnungsgesetz_nodate}
+                                                   asdf
+> \l__csl_citation_tl=(vgl. \cslcite {bundeskanzleramt_geschaftsordnungsgesetz_nodate}{Bundeskanzleramt 1975–2025}).
+<recently read> }
+l. ......anzleramt_geschaftsordnungsgesetz_nodate}
+                                                   asdf
+> \l__csl_citation_info_tl=citationID={bundeskanzleramt_geschaftsordnungsgesetz_nodate@2},citationItems={{id={bundeskanzleramt_geschaftsordnungsgesetz_nodate}}},properties={prefix={vgl. },noteIndex={0}}.
+<recently read> }
+l. ......anzleramt_geschaftsordnungsgesetz_nodate}
+                                                   asdf
+Module citeproc Warning: No date variable for year-suffix
+Module citeproc Warning: No date variable for year-suffix
+> \l__csl_citation_tl=(vgl. \cslcite {bundeskanzleramt_geschaftsordnungsgesetz_nodate}{ebd.}).
+<recently read> }
+l. ......anzleramt_geschaftsordnungsgesetz_nodate}
+                                                   asdf
+Completed box being shipped out [1]
+\vbox(633.0+0.0)x407.0, direction TLT
+.\hbox(0.0+0.0)x0.0, direction TLT
+.\vbox(0.0+0.0)x0.0, glue set - 14.99626fil, direction TLT
+..\kern0.0
+..\kern16.0
+..\kern-1.00374
+..\hbox(0.0+0.0)x0.0, glue set - 60.99626fil, direction TLT
+...\kern0.0
+...\kern62.0
+...\kern-1.00374
+...\pdfdest name{page.1} xyz
+...\penalty 10000
+...\glue 0.0 plus 1.0fil minus 1.0fil
+..\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue(\lineskip) 0.0
+.\vbox(633.0+0.0)x407.0, direction TLT
+..\glue 16.0
+..\vbox(617.0+0.0)x345.0, shifted 62.0, direction TLT
+...\vbox(12.0+0.0)x345.0, glue set 12.0fil, direction TLT
+....\glue 0.0 plus 1.0fil
+....\hbox(0.0+0.0)x345.0, direction TLT
+.....\hbox(0.0+0.0)x345.0, direction TLT
+...\glue 25.0
+...\glue(\lineskip) 0.0
+...\vbox(550.0+0.0)x345.0, glue set 491.94745fil, direction TLT
+....\write-{}
+....\pdfdest name{Doc-Start} xyz
+....\glue(\topskip) 2.5
+....\hbox(7.5+2.5)x345.0, glue set 146.33fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 f
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 (
+.....\TU/lmr/m/n/10 v
+.....\TU/lmr/m/n/10 g
+.....\TU/lmr/m/n/10 l
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite0.bundeskanzleramt_volksbegehrengesetz_nodate}
+.....\TU/lmr/m/n/10 B
+.....\TU/lmr/m/n/10 u
+.....\TU/lmr/m/n/10 n
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 k
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 n
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 z
+.....\TU/lmr/m/n/10 l
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 r
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 m
+.....\kern-0.28 (font)
+.....\TU/lmr/m/n/10 t
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 2
+.....\TU/lmr/m/n/10 0
+.....\TU/lmr/m/n/10 1
+.....\TU/lmr/m/n/10 8
+.....\TU/lmr/m/n/10 –
+.....\TU/lmr/m/n/10 2
+.....\TU/lmr/m/n/10 0
+.....\TU/lmr/m/n/10 2
+.....\TU/lmr/m/n/10 3
+.....\pdfendlink
+.....\TU/lmr/m/n/10 )
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 f
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 2.0
+....\hbox(7.5+2.5)x345.0, glue set 255.43001fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 f
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 (
+.....\TU/lmr/m/n/10 v
+.....\TU/lmr/m/n/10 g
+.....\TU/lmr/m/n/10 l
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite0.bundeskanzleramt_volksbegehrengesetz_nodate}
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 b
+.....\kern0.28 (font)
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 .
+.....\pdfendlink
+.....\TU/lmr/m/n/10 )
+.....\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 f
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 2.0
+....\hbox(7.5+2.5)x345.0, glue set 146.33fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 f
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 (
+.....\TU/lmr/m/n/10 v
+.....\TU/lmr/m/n/10 g
+.....\TU/lmr/m/n/10 l
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite0.bundeskanzleramt_geschaftsordnungsgesetz_nodate}
+.....\TU/lmr/m/n/10 B
+.....\TU/lmr/m/n/10 u
+.....\TU/lmr/m/n/10 n
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 k
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 n
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 z
+.....\TU/lmr/m/n/10 l
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 r
+.....\discretionary (penalty 50)
+......< \TU/lmr/m/n/10 -
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 m
+.....\kern-0.28 (font)
+.....\TU/lmr/m/n/10 t
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 1
+.....\TU/lmr/m/n/10 9
+.....\TU/lmr/m/n/10 7
+.....\TU/lmr/m/n/10 5
+.....\TU/lmr/m/n/10 –
+.....\TU/lmr/m/n/10 2
+.....\TU/lmr/m/n/10 0
+.....\TU/lmr/m/n/10 2
+.....\TU/lmr/m/n/10 5
+.....\pdfendlink
+.....\TU/lmr/m/n/10 )
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 f
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 2.0
+....\hbox(7.5+2.5)x345.0, glue set 255.43001fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 f
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 (
+.....\TU/lmr/m/n/10 v
+.....\TU/lmr/m/n/10 g
+.....\TU/lmr/m/n/10 l
+.....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+.....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 0]} action goto name{cite0.bundeskanzleramt_geschaftsordnungsgesetz_nodate}
+.....\TU/lmr/m/n/10 e
+.....\TU/lmr/m/n/10 b
+.....\kern0.28 (font)
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 .
+.....\pdfendlink
+.....\TU/lmr/m/n/10 )
+.....\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 f
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue(\parskip) 0.0 plus 1.0
+....\glue(\parskip) 0.0
+....\glue(\baselineskip) 2.45
+....\hbox(7.05+0.11)x345.0, glue set 327.44fil, direction TLT
+.....\localpar
+......\localinterlinepenalty=0
+......\localbrokenpenalty=0
+......\localleftbox=null
+......\localrightbox=null
+.....\hbox(0.0+0.0)x0.0, direction TLT
+.....\TU/lmr/m/n/10 a
+.....\TU/lmr/m/n/10 s
+.....\TU/lmr/m/n/10 d
+.....\TU/lmr/m/n/10 f
+.....\penalty 10000
+.....\glue(\parfillskip) 0.0 plus 1.0fil
+.....\glue(\rightskip) 0.0
+....\glue -0.11
+....\glue 0.0 plus 1.0fil
+....\glue 0.0
+....\glue 0.0 plus 0.0001fil
+...\glue(\baselineskip) 30.0
+...\hbox(0.0+0.0)x345.0, direction TLT
+....\hbox(0.0+0.0)x345.0, direction TLT
+.\kern0.0

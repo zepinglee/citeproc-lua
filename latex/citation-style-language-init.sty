@@ -115,7 +115,7 @@
       {
         \lua_now:n
           {
-            tex.print(tostring(
+            tex.sprint(tostring(
               csl_citation_manager.ref_section.initialized
             ))
           }
@@ -144,7 +144,7 @@
   \bool_set_false:N \l__csl_note_bool
   \bool_if:NT \l__csl_engine_initialized_bool
     {
-      \tl_set:Ne \l__csl_class_tl { \lua_now:n { tex.print(csl_citation_manager:get_style_class()) } }
+      \tl_set:Ne \l__csl_class_tl { \lua_now:n { tex.sprint(csl_citation_manager:get_style_class()) } }
       \tl_if_eq:NnT \l__csl_class_tl { note }
         { \bool_set_true:N \l__csl_note_bool }
     }

@@ -155,13 +155,13 @@ function util.error(message)
   util.num_errors = util.num_errors + 1
   if luatexbase then
     -- Run in LuaLaTeX
-    tex.print(string.format("\\csname msg_error:nnn\\endcsname{citeproc}{citeproc-error}{%s}", message))
+    tex.sprint(string.format("\\csname msg_error:nnn\\endcsname{citeproc}{citeproc-error}{%s}", message))
     -- Don't use the following methods.
     -- `error()` prints long traceback when run in LuaLaTeX.
     -- texio.write_nl("term", "\n")
     -- `tex.error()` prints annoying `\lua_now:e #1->` when called from LaTeX3 interface.
     -- `luatexbase.module_error()` prints traceback.
-    -- tex.print(string.format("\\PackageError{CSL}{%s}{}", message))
+    -- tex.sprint(string.format("\\PackageError{CSL}{%s}{}", message))
   else
     -- Run in citeproc-lua script
     -- This format is used by latexmk. DO NOT change.
@@ -180,7 +180,7 @@ util.warning_enabled = true
 function util.warning(message)
   util.num_warnings = util.num_warnings + 1
   if luatexbase then
-    tex.print(string.format("\\csname msg_warning:nnn\\endcsname{citeproc}{citeproc-warning}{%s}", message))
+    tex.sprint(string.format("\\csname msg_warning:nnn\\endcsname{citeproc}{citeproc-warning}{%s}", message))
 
   else
     -- This format is used by latexmk. DO NOT change.

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix extra spaces caused by `tex.print` ([#102](https://github.com/zepinglee/citeproc-lua/issues/102)).
+
 ## [0.8.2] - 2025-08-14
 
 ### Fixed
