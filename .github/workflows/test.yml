@@ -95,7 +95,7 @@ jobs:
           luaVersion: "5.3"
 
       - name: Set up LuaRocks
-        uses: leafo/gh-actions-luarocks@v5
+        uses: leafo/gh-actions-luarocks@v6
 
       - name: Install busted
         run: luarocks install busted
@@ -128,7 +128,7 @@ jobs:
           luaVersion: ${{ matrix.luaVersion }}
 
       - name: Set up LuaRocks
-        uses: leafo/gh-actions-luarocks@v5
+        uses: leafo/gh-actions-luarocks@v6
 
       - name: Install package
         run: luarocks build

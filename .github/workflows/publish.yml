@@ -43,7 +43,7 @@ jobs:
           luaVersion: "5.3"
 
       - name: Set up LuaRocks
-        uses: leafo/gh-actions-luarocks@v5
+        uses: leafo/gh-actions-luarocks@v6
 
       - name: Set up dependencies
         run: luarocks install dkjson
