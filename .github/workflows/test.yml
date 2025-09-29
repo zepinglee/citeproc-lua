@@ -90,7 +90,7 @@ jobs:
       #     update-all-packages: true
 
       - name: Set up Lua
-        uses: leafo/gh-actions-lua@v11
+        uses: leafo/gh-actions-lua@v12
         with:
           luaVersion: "5.3"
 
@@ -123,7 +123,7 @@ jobs:
           submodules: recursive
 
       - name: Set up Lua ${{ matrix.luaVersion }}
-        uses: leafo/gh-actions-lua@v11
+        uses: leafo/gh-actions-lua@v12
         with:
           luaVersion: ${{ matrix.luaVersion }}
 
