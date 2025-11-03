@@ -19,6 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        format: ['latex', 'latex-dev']
         config: ['luatex-1', 'luatex-2', 'pdftex-1', 'pdftex-2', 'doc']
     steps:
 
@@ -39,7 +40,7 @@ jobs:
       #     update-all-packages: true
 
       - name: Run example
-        if: ${{ matrix.config == 'doc' }}
+        if: ${{ matrix.config == 'doc' && matrix.format == 'latex' }}
         run: |
           l3build install
           cd examples
@@ -51,12 +52,32 @@ jobs:
           lualatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
 
       - name: Test LaTeX doc
-        if: ${{ matrix.config == 'doc' }}
+        if: ${{ matrix.config == 'doc' && matrix.format == 'latex' }}
         run: l3build doc
 
       - name: Test LaTeX package
-        if: ${{ matrix.config != 'doc' }}
+        if: ${{ matrix.config != 'doc' && matrix.format == 'latex' }}
         run: l3build check --config tests/latex/config-${{ matrix.config }}
+
+      - name: Run example with latex-dev
+        if: ${{ matrix.config == 'doc' && matrix.format == 'latex-dev' }}
+        run: |
+          l3build install
+          cd examples
+          pdflatex-dev -file-line-error -halt-on-error -interaction=nonstopmode example.tex
+          "$(kpsewhich -var-value=TEXMFHOME)"/scripts/citation-style-language/citeproc-lua.lua example.aux
+          pdflatex-dev -file-line-error -halt-on-error -interaction=nonstopmode example.tex
+          rm example.aux example.bbl
+          lualatex-dev -file-line-error -halt-on-error -interaction=nonstopmode example.tex
+          lualatex-dev -file-line-error -halt-on-error -interaction=nonstopmode example.tex
+
+      - name: Test LaTeX (dev) doc
+        if: ${{ matrix.config == 'doc' && matrix.format == 'latex-dev' }}
+        run: l3build doc --dev
+
+      - name: Test LaTeX (dev) package
+        if: ${{ matrix.config != 'doc' && matrix.format == 'latex-dev' }}
+        run: l3build check --dev --config tests/latex/config-${{ matrix.config }}
 
       - name: Upload diffs of failed tests
         if: ${{ matrix.config != 'doc' && failure() }}

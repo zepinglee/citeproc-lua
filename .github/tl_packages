@@ -2,7 +2,9 @@
 l3build
 #
 # Required to build formats
+latex-base-dev
 latex-bin
+latex-bin-dev
 tex
 #
 # Assuming a 'basic' font set up, metafont is required to avoid
