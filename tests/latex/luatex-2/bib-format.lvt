@@ -2,9 +2,10 @@
 \documentclass{article}
 \input{csl-test}
 
-\usepackage[style=apa]{citation-style-language}
+\usepackage[style=ieee]{citation-style-language}
 \cslsetup{
   regression-test = true,
+  bib-label-sep = 10pt,
   bib-item-sep = 7pt,
 }
 \addbibresource{test.json}

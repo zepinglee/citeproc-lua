@@ -75,6 +75,7 @@
 \tl_new:N \bibsection
 \tl_new:N \l__csl_bib_font_tl
 \bool_new:N \l__csl_bib_entry_page_break_bool
+\dim_new:N \l__csl_bib_label_sep_dim
 \tl_new:N \l__csl_bib_item_sep_tl
 \tl_new:N \l__csl_bib_name_sep_tl
 \tl_new:N \l__csl_bib_block_sep_tl
@@ -113,6 +114,7 @@
     bib-section .tl_set:N = \bibsection ,
     bib-font .tl_set:N = \l__csl_bib_font_tl ,
     bib-entry-page-break .bool_set:N = \l__csl_bib_entry_page_break_bool ,
+    bib-label-sep .dim_set:N = \l__csl_bib_label_sep_dim ,
     bib-item-sep .tl_set:N = \l__csl_bib_item_sep_tl ,
     bib-name-sep .tl_set:N = \l__csl_bib_name_sep_tl ,
     bib-after-name-sep .tl_set:N = \l__csl_bib_after_name_sep_tl ,
@@ -145,6 +147,7 @@
     prefix-separator = { ~ } ,
     suffix-separator = { , ~ } ,
     bib-entry-page-break = true ,
+    bib-label-sep = { \labelsep } ,
     bib-name-sep = { 0 pt } ,
     bib-after-name-sep = { 0 pt } ,
     bib-par-indent = { \parindent } ,
