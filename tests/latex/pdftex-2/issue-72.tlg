@@ -1,24 +1,18 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
 Chapter 1.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line ....
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line ....
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line ....
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line ....
-> \l__csl_citation_info_tl=citationID={King2008-Gramma@1},citationItems={{id={King2008-Gramma}}},properties={noteIndex={1},chapterIndex={1}}.
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@1},citationItems={{id={King2008-Gramma}}},properties={noteIndex={0},chapterIndex={1}}.
 <recently read> }
 l. ...test cite1\cite{King2008-Gramma}
-> \l__csl_citation_tl=John T. King, “A Grammar of Dhimal” (doctoral dissertation, Universiteit Leiden, 2008), \url {https://scholarlypublications.universiteitleiden.nl/handle/1887/13072}..
+LaTeX Warning: Citation `King2008-Gramma' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {King2008-Gramma}].
 <recently read> }
 l. ...test cite1\cite{King2008-Gramma}
-> \l__csl_citation_info_tl=citationID={King2008-Gramma@2},citationItems={{id={King2008-Gramma}}},properties={noteIndex={2},chapterIndex={1}}.
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@2},citationItems={{id={King2008-Gramma}}},properties={noteIndex={0},chapterIndex={1}}.
 <recently read> }
 l. ...test cite2\cite{King2008-Gramma}
-> \l__csl_citation_tl=Ibid..
+LaTeX Warning: Citation `King2008-Gramma' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {King2008-Gramma}].
 <recently read> }
 l. ...test cite2\cite{King2008-Gramma}
 [1
@@ -28,16 +22,18 @@ Chapter 2.
 ============================================================
 TEST 1: Citation in chapter 2
 ============================================================
-> \l__csl_citation_info_tl=citationID={King2008-Gramma@3},citationItems={{id={King2008-Gramma}}},properties={noteIndex={1},chapterIndex={2}}.
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@3},citationItems={{id={King2008-Gramma}}},properties={noteIndex={0},chapterIndex={2}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=John T. King, “A Grammar of Dhimal” (doctoral dissertation, Universiteit Leiden, 2008), \url {https://scholarlypublications.universiteitleiden.nl/handle/1887/13072}..
+LaTeX Warning: Citation `King2008-Gramma' on page 3 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {King2008-Gramma}].
 <recently read> }
 l. ...}
 ============================================================
-> \l__csl_citation_info_tl=citationID={King2008-Gramma@4},citationItems={{id={King2008-Gramma}}},properties={noteIndex={2},chapterIndex={2}}.
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@4},citationItems={{id={King2008-Gramma}}},properties={noteIndex={0},chapterIndex={2}}.
 <recently read> }
 l. ...test cite4\cite{King2008-Gramma}
-> \l__csl_citation_tl=Ibid..
+LaTeX Warning: Citation `King2008-Gramma' on page 3 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {King2008-Gramma}].
 <recently read> }
 l. ...test cite4\cite{King2008-Gramma}

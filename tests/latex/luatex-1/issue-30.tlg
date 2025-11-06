@@ -14,7 +14,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 > \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={1}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=\cslcite {ITEM-1}{John Doe, \textit {Foo \#1 \& 20\% of Bar}, 2007, \url {https://abc.zyx/foo%20bar#baz}}..
+> \l__csl_citation_tl=\cslcite {ITEM-1}{John Doe, \textit {Foo \#1 \& 20\% of Bar} (2007), \url {https://abc.zyx/foo%20bar#baz}}..
 <recently read> }
 l. ...}
 ============================================================
@@ -102,7 +102,7 @@ Completed box being shipped out [1]
 ....\kern-3.0
 ....\rule(0.4+0.0)x137.9979
 ....\kern2.6
-....\hbox(6.81334+2.85002)x345.0, glue set 53.30391fil, direction TLT
+....\hbox(6.81334+2.85002)x345.0, glue set 48.3999fil, direction TLT
 .....\localpar
 ......\localinterlinepenalty=0
 ......\localbrokenpenalty=0
@@ -156,12 +156,14 @@ Completed box being shipped out [1]
 .....\TU/lmr/m/it/8 B
 .....\TU/lmr/m/it/8 a
 .....\TU/lmr/m/it/8 r
-.....\TU/lmr/m/n/8 ,
-.....\glue(\spaceskip) 2.832 plus 1.76999 minus 0.75519
+.....\kern0.656 (italic)
+.....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+.....\TU/lmr/m/n/8 (
 .....\TU/lmr/m/n/8 2
 .....\TU/lmr/m/n/8 0
 .....\TU/lmr/m/n/8 0
 .....\TU/lmr/m/n/8 7
+.....\TU/lmr/m/n/8 )
 .....\TU/lmr/m/n/8 ,
 .....\glue(\spaceskip) 2.832 plus 1.76999 minus 0.75519
 .....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[0 1 1]} action user{/Subtype/Link/A<</Type/Action/S/URI/URI(https://abc.zyx/foo%20bar#baz)>>}
@@ -233,8 +235,8 @@ Completed box being shipped out [1]
 TEST 3: Bibliography with URL
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
->  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 1, entry-spacing = 0}}
->  {\bibitem {ITEM-1} Doe, John. \textit {Foo \#1 \& 20\% of Bar}, 2007. \url {https://abc.zyx/foo%20bar#baz}.}
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 1, entry-spacing = 1}}
+>  {\bibitem {ITEM-1} Doe, John. \textit {Foo \#1 \& 20\% of Bar}. 2007. \url {https://abc.zyx/foo%20bar#baz}.}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}

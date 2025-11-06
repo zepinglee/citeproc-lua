@@ -49,7 +49,7 @@
 ]
 \end{filecontents}
 
-\usepackage[style=chicago-fullnote-bibliography, ref-section=section]{citation-style-language}
+\usepackage[style=chicago-notes-bibliography, ref-section=section]{citation-style-language}
 \cslsetup{regression-test = true}
 \addbibresource{\jobname.json}
 

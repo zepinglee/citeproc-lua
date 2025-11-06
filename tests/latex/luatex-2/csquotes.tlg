@@ -23,7 +23,7 @@ l. ...\blockquote{Lorem ipsum.\cite{ITEM-2}}
 > \l__csl_citation_info_tl=citationID={ITEM-2@2},citationItems={{id={ITEM-2}}},properties={noteIndex={3}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=Bennett..
+> \l__csl_citation_tl=Bennett, “Getting Property Right: ‘Informal’ Mortgages in the Japanese Courts.”.
 <recently read> }
 l. ...}
 Completed box being shipped out [1]
@@ -790,7 +790,7 @@ Completed box being shipped out [1]
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
-...\hbox(6.81334+2.85002)x345.0, glue set 298.62396fil, direction TLT
+...\hbox(6.81334+2.85002)x345.0, glue set 26.61592fil, direction TLT
 ....\localpar
 .....\localinterlinepenalty=0
 .....\localbrokenpenalty=0
@@ -815,7 +815,92 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/8 e
 ....\TU/lmr/m/n/8 t
 ....\TU/lmr/m/n/8 t
+....\TU/lmr/m/n/8 ,
+....\glue(\spaceskip) 2.832 plus 1.76999 minus 0.75519
+....\TU/lmr/m/n/8 “
+....\TU/lmr/m/n/8 G
+....\TU/lmr/m/n/8 e
+....\TU/lmr/m/n/8 t
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/n/8 -
+....\TU/lmr/m/n/8 t
+....\TU/lmr/m/n/8 i
+....\TU/lmr/m/n/8 n
+....\TU/lmr/m/n/8 g
+....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 P
+....\TU/lmr/m/n/8 r
+....\TU/lmr/m/n/8 o
+....\TU/lmr/m/n/8 p
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/n/8 -
+.....= \kern0.24 (font)
+....\TU/lmr/m/n/8 e
+....\TU/lmr/m/n/8 r
+....\TU/lmr/m/n/8 t
+....\kern-0.24 (font)
+....\TU/lmr/m/n/8 y
+....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 R
+....\TU/lmr/m/n/8 i
+....\TU/lmr/m/n/8 g
+....\TU/lmr/m/n/8 h
+....\kern-0.24 (font)
+....\TU/lmr/m/n/8 t
+....\TU/lmr/m/n/8 :
+....\glue(\spaceskip) 3.776 plus 2.832 minus 0.472
+....\TU/lmr/m/n/8 ‘
+....\TU/lmr/m/n/8 I
+....\TU/lmr/m/n/8 n
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/n/8 -
+....\TU/lmr/m/n/8 f
+....\TU/lmr/m/n/8 o
+....\TU/lmr/m/n/8 r
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/n/8 -
+....\TU/lmr/m/n/8 m
+....\TU/lmr/m/n/8 a
+....\TU/lmr/m/n/8 l
+....\TU/lmr/m/n/8 ’
+....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 M
+....\TU/lmr/m/n/8 o
+....\TU/lmr/m/n/8 r
+....\TU/lmr/m/n/8 t
+....\discretionary (penalty 50)
+.....< \TU/lmr/m/n/8 -
+....\TU/lmr/m/n/8 g
+....\TU/lmr/m/n/8 a
+....\TU/lmr/m/n/8 g
+....\TU/lmr/m/n/8 e
+....\TU/lmr/m/n/8 s
+....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 i
+....\TU/lmr/m/n/8 n
+....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 t
+....\TU/lmr/m/n/8 h
+....\TU/lmr/m/n/8 e
+....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 J
+....\TU/lmr/m/n/8 a
+....\TU/lmr/m/n/8 p
+....\TU/lmr/m/n/8 a
+....\TU/lmr/m/n/8 n
+....\TU/lmr/m/n/8 e
+....\TU/lmr/m/n/8 s
+....\TU/lmr/m/n/8 e
+....\glue(\spaceskip) 2.832 plus 1.416 minus 0.944
+....\TU/lmr/m/n/8 C
+....\TU/lmr/m/n/8 o
+....\TU/lmr/m/n/8 u
+....\TU/lmr/m/n/8 r
+....\TU/lmr/m/n/8 t
+....\TU/lmr/m/n/8 s
 ....\TU/lmr/m/n/8 .
+....\kern-1.184 (font)
+....\TU/lmr/m/n/8 ”
 ....\penalty 10000
 ....\rule(0.0+2.85002)x0.0
 ....\penalty 10000

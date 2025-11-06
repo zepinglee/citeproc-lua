@@ -25,6 +25,15 @@ local bibtex_data = require("citeproc-bibtex-data")
 local yaml = require("citeproc-yaml")
 
 
+RENAMED_STYLE_IDS = {
+  -- https://github.com/citation-style-language/styles/commit/0a535d9
+  ["chicago-fullnote-bibliography"] = "chicago-notes-bibliography",
+  ["chicago-note-bibliography"] = "chicago-shortened-notes-bibliography",
+  -- https://github.com/citation-style-language/styles/commit/8411bce
+  ["modern-humanities-research-association"] = "modern-humanities-research-association-notes",
+}
+
+
 ---@param file_name string
 ---@param ftype "bib" | nil
 ---@param file_info string
@@ -255,6 +264,20 @@ function RefSection:make_citeproc_engine()
   if not self.style_id or self.style_id == "" then
     self.style_id = "apa"
   end
+
+  local style_path = kpse.find_file(self.style_id .. ".csl")
+
+  if not style_path then
+    renamed_style_id = RENAMED_STYLE_IDS[self.style_id]
+    if renamed_style_id then
+      style_path = kpse.find_file(renamed_style_id .. ".csl")
+      if style_path then
+        util.warning(string.format("Style '%s' has been renamed to '%s'.", self.style_id, renamed_style_id))
+        self.style_id = renamed_style_id
+      end
+    end
+  end
+
   local style = read_file(self.style_id .. ".csl", nil, "style")
   if not style then
     return

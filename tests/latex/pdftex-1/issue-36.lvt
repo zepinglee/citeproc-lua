@@ -31,7 +31,7 @@
 ]
 \end{filecontents}
 
-\usepackage[style=chicago-note-bibliography]{citation-style-language}
+\usepackage[style=chicago-shortened-notes-bibliography]{citation-style-language}
 \cslsetup{regression-test = true}
 \addbibresource{\jobname.json}
 

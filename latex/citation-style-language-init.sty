@@ -23,6 +23,15 @@
   }
 
 
+\prop_const_from_keyval:Nn \c__csl_renamed_style_ids_prop
+  {
+    % https://github.com/citation-style-language/styles/commit/0a535d9
+    chicago-fullnote-bibliography = chicago-notes-bibliography,
+    chicago-note-bibliography = chicago-shortened-notes-bibliography,
+    % https://github.com/citation-style-language/styles/commit/8411bce
+    modern-humanities-research-association = modern-humanities-research-association-notes,
+  }
+
 \clist_new:N \g__csl_aux_bib_files_clist
 
 \cs_new:Npn \__csl_write_aux_info:
@@ -35,6 +44,24 @@
       {
         \msg_warning:nn { citation-style-language } { missing-style-name }
         \tl_set:Nn \l__csl_style_tl { apa }
+      }
+    \file_if_exist:nF { \l__csl_style_tl .csl }
+      {
+        \prop_get:NVNT \c__csl_renamed_style_ids_prop \l__csl_style_tl \l_tmpa_tl
+          {
+            \file_if_exist:nT { \l_tmpa_tl .csl }
+              {
+                \msg_warning:nnVV { citation-style-language } { style-renamed }
+                  \l__csl_style_tl \l_tmpa_tl
+                \tl_set_eq:NN \l__csl_style_tl \l_tmpa_tl
+              }
+
+          }
+      }
+    \file_if_exist:nF { \l__csl_style_tl .csl }
+      {
+        \msg_error:nnV { citation-style-language } { style-not-found }
+          \l__csl_style_tl
       }
     \tl_set_eq:NN \csl@style \l__csl_style_tl
     \clist_if_empty:NTF \l__csl_bib_resources_clist
@@ -131,6 +158,12 @@
 
 \msg_new:nnn { citation-style-language } { missing-style-name }
   { Missing~ style~ name.~ Will~ use~ default~ APA~ style. }
+
+\msg_new:nnn { citation-style-language } { style-renamed }
+  { Style~ '#1'~ has~ been~ renamed~ to~ '#2'. }
+
+\msg_new:nnn { citation-style-language } { style-not-found }
+  { Style~ '#1'~ not~ found. }
 
 \msg_new:nnn { citation-style-language } { empty-bib-resources }
   { Empty~ bibliographic~ resources.~ Use~ \token_to_str:N \addbibresource. }

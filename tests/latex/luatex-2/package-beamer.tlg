@@ -28,7 +28,7 @@ l. ...\end{frame}
 TEST 2: Bibliography contents
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
->  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 1, entry-spacing = 0}}
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 1, entry-spacing = 1}}
 >  {\bibitem {ITEM-1} D’Arcus, Bruce. \textit {Boundaries of Dissent: Protest and State Power in the Media Age}. Routledge, 2005.}
 >  {\end {thebibliography}}.
 <recently read> }

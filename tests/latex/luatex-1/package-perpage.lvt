@@ -1528,7 +1528,7 @@
 ]
 \end{filecontents}
 
-\usepackage[style=chicago-fullnote-bibliography-with-ibid]{citation-style-language}
+\usepackage[style=chicago-notes-bibliography-with-ibid]{citation-style-language}
 \cslsetup{regression-test = true}
 \addbibresource{\jobname.json}
 

@@ -27,7 +27,7 @@
 \end{refsection}
 
 \chapter{Chicago notes style}
-\begin{refsection}[style=chicago-note-bibliography]
+\begin{refsection}[style=chicago-shortened-notes-bibliography]
   This is just filler text\cite{ITEM-3}.\par
   This is just filler text\cite{ITEM-4}.\par
   \printbibliography[heading=subbibliography]

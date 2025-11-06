@@ -12,70 +12,407 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line ....
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line ....
-> \l__csl_citation_info_tl=citationID={King2008-Gramma@1},citationItems={{id={King2008-Gramma}}},properties={noteIndex={2},chapterIndex={1}}.
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@1},citationItems={{id={King2008-Gramma}}},properties={noteIndex={0},chapterIndex={1}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=John T. King, “A Grammar of Dhimal” (doctoral dissertation, Universiteit Leiden, 2008), \url {https://scholarlypublications.universiteitleiden.nl/handle/1887/13072}..
+LaTeX Warning: Citation `King2008-Gramma' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {King2008-Gramma}].
 <recently read> }
 l. ...}
-> \l__csl_citation_info_tl=citationID={King2008-Gramma@2},citationItems={{id={King2008-Gramma}}},properties={noteIndex={3},chapterIndex={1}}.
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@2},citationItems={{id={King2008-Gramma}}},properties={noteIndex={0},chapterIndex={1}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=Ibid..
+LaTeX Warning: Citation `King2008-Gramma' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {King2008-Gramma}].
 <recently read> }
 l. ...}
-> \l__csl_citation_info_tl=citationID={King2008-Gramma@3},citationItems={{id={King2008-Gramma}}},properties={noteIndex={5},chapterIndex={1}}.
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@3},citationItems={{id={King2008-Gramma}}},properties={noteIndex={0},chapterIndex={1}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=King, “Grammar of Dhimal,” see 2..
+LaTeX Warning: Citation `King2008-Gramma' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {King2008-Gramma}].
 <recently read> }
 l. ...}
+Overfull \hbox (47.016pt too wide) in paragraph at lines ...
+\TU/lmr/m/n/10 Text[][]. Text[\TU/lmr/bx/n/10 King2008-Gramma\TU/lmr/m/n/10 ]. Text[\TU/lmr/bx/n/10 King2008-Gramma\TU/lmr/m/n/10 ]. Text[][]. Text[\TU/lmr/bx/n/10 King2008-
+\hbox(8.27692+2.5)x345.0, glue set - 1.0, direction TLT
+.\localpar
+..\localinterlinepenalty=0
+..\localbrokenpenalty=0
+..\localleftbox=null
+..\localrightbox=null
+.\TU/lmr/m/n/10 T
+.\kern-0.83 (font)
+.\TU/lmr/m/n/10 e
+.\TU/lmr/m/n/10 x
+.\TU/lmr/m/n/10 t
+.\write1{\pp@pagectr{footnote}{2}{\theabspage }{\thepage }}
+.\penalty 10000
+.\penalty 10000
+.\hbox(8.27692+0.0)x4.483, direction TLT
+..\mathon
+..\hbox(0.0+0.0)x0.0, direction TLT
+..\hbox(4.648+0.0)x4.483, shifted -3.62892, direction TLT
+...\TU/lmr/m/n/7 1
+..\mathoff
+.\TU/lmr/m/n/10 .
+.\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+.\TU/lmr/m/n/10 T
+.\kern-0.83 (font)
+.\TU/lmr/m/n/10 e
+.\TU/lmr/m/n/10 x
+.\TU/lmr/m/n/10 t
+.\TU/lmr/m/n/10 [
+.\kern0.0 (italic)
+.\TU/lmr/bx/n/10 K
+.\TU/lmr/bx/n/10 i
+.\TU/lmr/bx/n/10 n
+.\TU/lmr/bx/n/10 g
+.\TU/lmr/bx/n/10 2
+.\TU/lmr/bx/n/10 0
+.\TU/lmr/bx/n/10 0
+.\TU/lmr/bx/n/10 8
+.\discretionary (penalty 50)
+..< \TU/lmr/bx/n/10 -
+..= \TU/lmr/bx/n/10 -
+.\TU/lmr/bx/n/10 G
+.\TU/lmr/bx/n/10 r
+.\TU/lmr/bx/n/10 a
+.\TU/lmr/bx/n/10 m
+.\TU/lmr/bx/n/10 m
+.\TU/lmr/bx/n/10 a
+.\kern0.0 (italic)
+.\TU/lmr/m/n/10 ]
+.\TU/lmr/m/n/10 .
+.\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+.\TU/lmr/m/n/10 T
+.\kern-0.83 (font)
+.\TU/lmr/m/n/10 e
+.\TU/lmr/m/n/10 x
+.\TU/lmr/m/n/10 t
+.\TU/lmr/m/n/10 [
+.\kern0.0 (italic)
+.\TU/lmr/bx/n/10 K
+.\TU/lmr/bx/n/10 i
+.\TU/lmr/bx/n/10 n
+.\TU/lmr/bx/n/10 g
+.\TU/lmr/bx/n/10 2
+.\TU/lmr/bx/n/10 0
+.\TU/lmr/bx/n/10 0
+.\TU/lmr/bx/n/10 8
+.\discretionary (penalty 50)
+..< \TU/lmr/bx/n/10 -
+..= \TU/lmr/bx/n/10 -
+.\TU/lmr/bx/n/10 G
+.\TU/lmr/bx/n/10 r
+.\TU/lmr/bx/n/10 a
+.\TU/lmr/bx/n/10 m
+.\TU/lmr/bx/n/10 m
+.\TU/lmr/bx/n/10 a
+.\kern0.0 (italic)
+.\TU/lmr/m/n/10 ]
+.\TU/lmr/m/n/10 .
+.\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+.\TU/lmr/m/n/10 T
+.\kern-0.83 (font)
+.\TU/lmr/m/n/10 e
+.\TU/lmr/m/n/10 x
+.\TU/lmr/m/n/10 t
+.\write1{\pp@pagectr{footnote}{3}{\theabspage }{\thepage }}
+.\penalty 10000
+.\penalty 10000
+.\hbox(8.27692+0.0)x4.483, direction TLT
+..\mathon
+..\hbox(0.0+0.0)x0.0, direction TLT
+..\hbox(4.648+0.0)x4.483, shifted -3.62892, direction TLT
+...\TU/lmr/m/n/7 2
+..\mathoff
+.\TU/lmr/m/n/10 .
+.\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+.\TU/lmr/m/n/10 T
+.\kern-0.83 (font)
+.\TU/lmr/m/n/10 e
+.\TU/lmr/m/n/10 x
+.\TU/lmr/m/n/10 t
+.\TU/lmr/m/n/10 [
+.\kern0.0 (italic)
+.\TU/lmr/bx/n/10 K
+.\TU/lmr/bx/n/10 i
+.\TU/lmr/bx/n/10 n
+.\TU/lmr/bx/n/10 g
+.\TU/lmr/bx/n/10 2
+.\TU/lmr/bx/n/10 0
+.\TU/lmr/bx/n/10 0
+.\TU/lmr/bx/n/10 8
+.\TU/lmr/bx/n/10 -
+.\discretionary (penalty 50)
+.\glue(\rightskip) 0.0
 [1
 ]
 ============================================================
 ============================================================
 TEST 2: Page 2
 ============================================================
-> \l__csl_citation_info_tl=citationID={King2008-Gramma@4},citationItems={{id={King2008-Gramma}}},properties={noteIndex={6},chapterIndex={2}}.
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@4},citationItems={{id={King2008-Gramma}}},properties={noteIndex={0},chapterIndex={2}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=John T. King, “A Grammar of Dhimal” (doctoral dissertation, Universiteit Leiden, 2008), \url {https://scholarlypublications.universiteitleiden.nl/handle/1887/13072}..
+LaTeX Warning: Citation `King2008-Gramma' on page 2 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {King2008-Gramma}].
 <recently read> }
 l. ...}
-> \l__csl_citation_info_tl=citationID={King2008-Gramma@5},citationItems={{id={King2008-Gramma}}},properties={noteIndex={7},chapterIndex={2}}.
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@5},citationItems={{id={King2008-Gramma}}},properties={noteIndex={0},chapterIndex={2}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=Ibid..
+LaTeX Warning: Citation `King2008-Gramma' on page 2 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {King2008-Gramma}].
 <recently read> }
 l. ...}
-> \l__csl_citation_info_tl=citationID={King2008-Gramma@6},citationItems={{id={King2008-Gramma}}},properties={noteIndex={9},chapterIndex={2}}.
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@6},citationItems={{id={King2008-Gramma}}},properties={noteIndex={0},chapterIndex={2}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=King, “Grammar of Dhimal,” see 6..
+LaTeX Warning: Citation `King2008-Gramma' on page 2 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {King2008-Gramma}].
 <recently read> }
 l. ...}
+Overfull \hbox (15.683pt too wide) in paragraph at lines ...
+[]\TU/lmr/m/n/10 Text[\TU/lmr/bx/n/10 King2008-Gramma\TU/lmr/m/n/10 ]. Text[\TU/lmr/bx/n/10 King2008-Gramma\TU/lmr/m/n/10 ]. Text[][]. Text[\TU/lmr/bx/n/10 King2008-
+\hbox(8.27692+2.5)x345.0, glue set - 1.0, direction TLT
+.\localpar
+..\localinterlinepenalty=0
+..\localbrokenpenalty=0
+..\localleftbox=null
+..\localrightbox=null
+.\hbox(0.0+0.0)x0.0, direction TLT
+.\TU/lmr/m/n/10 T
+.\kern-0.83 (font)
+.\TU/lmr/m/n/10 e
+.\TU/lmr/m/n/10 x
+.\TU/lmr/m/n/10 t
+.\TU/lmr/m/n/10 [
+.\kern0.0 (italic)
+.\TU/lmr/bx/n/10 K
+.\TU/lmr/bx/n/10 i
+.\TU/lmr/bx/n/10 n
+.\TU/lmr/bx/n/10 g
+.\TU/lmr/bx/n/10 2
+.\TU/lmr/bx/n/10 0
+.\TU/lmr/bx/n/10 0
+.\TU/lmr/bx/n/10 8
+.\discretionary (penalty 50)
+..< \TU/lmr/bx/n/10 -
+..= \TU/lmr/bx/n/10 -
+.\TU/lmr/bx/n/10 G
+.\TU/lmr/bx/n/10 r
+.\TU/lmr/bx/n/10 a
+.\TU/lmr/bx/n/10 m
+.\TU/lmr/bx/n/10 m
+.\TU/lmr/bx/n/10 a
+.\kern0.0 (italic)
+.\TU/lmr/m/n/10 ]
+.\TU/lmr/m/n/10 .
+.\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+.\TU/lmr/m/n/10 T
+.\kern-0.83 (font)
+.\TU/lmr/m/n/10 e
+.\TU/lmr/m/n/10 x
+.\TU/lmr/m/n/10 t
+.\TU/lmr/m/n/10 [
+.\kern0.0 (italic)
+.\TU/lmr/bx/n/10 K
+.\TU/lmr/bx/n/10 i
+.\TU/lmr/bx/n/10 n
+.\TU/lmr/bx/n/10 g
+.\TU/lmr/bx/n/10 2
+.\TU/lmr/bx/n/10 0
+.\TU/lmr/bx/n/10 0
+.\TU/lmr/bx/n/10 8
+.\discretionary (penalty 50)
+..< \TU/lmr/bx/n/10 -
+..= \TU/lmr/bx/n/10 -
+.\TU/lmr/bx/n/10 G
+.\TU/lmr/bx/n/10 r
+.\TU/lmr/bx/n/10 a
+.\TU/lmr/bx/n/10 m
+.\TU/lmr/bx/n/10 m
+.\TU/lmr/bx/n/10 a
+.\kern0.0 (italic)
+.\TU/lmr/m/n/10 ]
+.\TU/lmr/m/n/10 .
+.\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+.\TU/lmr/m/n/10 T
+.\kern-0.83 (font)
+.\TU/lmr/m/n/10 e
+.\TU/lmr/m/n/10 x
+.\TU/lmr/m/n/10 t
+.\write1{\pp@pagectr{footnote}{4}{\theabspage }{\thepage }}
+.\penalty 10000
+.\penalty 10000
+.\hbox(8.27692+0.0)x4.483, direction TLT
+..\mathon
+..\hbox(0.0+0.0)x0.0, direction TLT
+..\hbox(4.648+0.14)x4.483, shifted -3.62892, direction TLT
+...\TU/lmr/m/n/7 3
+..\mathoff
+.\TU/lmr/m/n/10 .
+.\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+.\TU/lmr/m/n/10 T
+.\kern-0.83 (font)
+.\TU/lmr/m/n/10 e
+.\TU/lmr/m/n/10 x
+.\TU/lmr/m/n/10 t
+.\TU/lmr/m/n/10 [
+.\kern0.0 (italic)
+.\TU/lmr/bx/n/10 K
+.\TU/lmr/bx/n/10 i
+.\TU/lmr/bx/n/10 n
+.\TU/lmr/bx/n/10 g
+.\TU/lmr/bx/n/10 2
+.\TU/lmr/bx/n/10 0
+.\TU/lmr/bx/n/10 0
+.\TU/lmr/bx/n/10 8
+.\TU/lmr/bx/n/10 -
+.\discretionary (penalty 50)
+.\glue(\rightskip) 0.0
 [2
 ]
 ============================================================
 ============================================================
 TEST 3: Page 3
 ============================================================
-> \l__csl_citation_info_tl=citationID={King2008-Gramma@7},citationItems={{id={King2008-Gramma}}},properties={noteIndex={11},chapterIndex={3}}.
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@7},citationItems={{id={King2008-Gramma}}},properties={noteIndex={0},chapterIndex={3}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=John T. King, “A Grammar of Dhimal” (doctoral dissertation, Universiteit Leiden, 2008), \url {https://scholarlypublications.universiteitleiden.nl/handle/1887/13072}..
+LaTeX Warning: Citation `King2008-Gramma' on page 3 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {King2008-Gramma}].
 <recently read> }
 l. ...}
-> \l__csl_citation_info_tl=citationID={King2008-Gramma@8},citationItems={{id={King2008-Gramma}}},properties={noteIndex={12},chapterIndex={3}}.
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@8},citationItems={{id={King2008-Gramma}}},properties={noteIndex={0},chapterIndex={3}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=Ibid..
+LaTeX Warning: Citation `King2008-Gramma' on page 3 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {King2008-Gramma}].
 <recently read> }
 l. ...}
-> \l__csl_citation_info_tl=citationID={King2008-Gramma@9},citationItems={{id={King2008-Gramma}}},properties={noteIndex={14},chapterIndex={3}}.
+> \l__csl_citation_info_tl=citationID={King2008-Gramma@9},citationItems={{id={King2008-Gramma}}},properties={noteIndex={0},chapterIndex={3}}.
 <recently read> }
 l. ...}
-> \l__csl_citation_tl=King, “Grammar of Dhimal,” see 11..
+LaTeX Warning: Citation `King2008-Gramma' on page 3 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {King2008-Gramma}].
 <recently read> }
 l. ...}
 ============================================================
+Overfull \hbox (47.016pt too wide) in paragraph at lines ...
+[]\TU/lmr/m/n/10 Text[][]. Text[\TU/lmr/bx/n/10 King2008-Gramma\TU/lmr/m/n/10 ]. Text[\TU/lmr/bx/n/10 King2008-Gramma\TU/lmr/m/n/10 ]. Text[][]. Text[\TU/lmr/bx/n/10 King2008-
+\hbox(8.34692+2.5)x345.0, glue set - 1.0, direction TLT
+.\localpar
+..\localinterlinepenalty=0
+..\localbrokenpenalty=0
+..\localleftbox=null
+..\localrightbox=null
+.\hbox(0.0+0.0)x0.0, direction TLT
+.\TU/lmr/m/n/10 T
+.\kern-0.83 (font)
+.\TU/lmr/m/n/10 e
+.\TU/lmr/m/n/10 x
+.\TU/lmr/m/n/10 t
+.\write1{\pp@pagectr{footnote}{5}{\theabspage }{\thepage }}
+.\penalty 10000
+.\penalty 10000
+.\hbox(8.34692+0.0)x4.483, direction TLT
+..\mathon
+..\hbox(0.0+0.0)x0.0, direction TLT
+..\hbox(4.718+0.0)x4.483, shifted -3.62892, direction TLT
+...\TU/lmr/m/n/7 4
+..\mathoff
+.\TU/lmr/m/n/10 .
+.\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+.\TU/lmr/m/n/10 T
+.\kern-0.83 (font)
+.\TU/lmr/m/n/10 e
+.\TU/lmr/m/n/10 x
+.\TU/lmr/m/n/10 t
+.\TU/lmr/m/n/10 [
+.\kern0.0 (italic)
+.\TU/lmr/bx/n/10 K
+.\TU/lmr/bx/n/10 i
+.\TU/lmr/bx/n/10 n
+.\TU/lmr/bx/n/10 g
+.\TU/lmr/bx/n/10 2
+.\TU/lmr/bx/n/10 0
+.\TU/lmr/bx/n/10 0
+.\TU/lmr/bx/n/10 8
+.\discretionary (penalty 50)
+..< \TU/lmr/bx/n/10 -
+..= \TU/lmr/bx/n/10 -
+.\TU/lmr/bx/n/10 G
+.\TU/lmr/bx/n/10 r
+.\TU/lmr/bx/n/10 a
+.\TU/lmr/bx/n/10 m
+.\TU/lmr/bx/n/10 m
+.\TU/lmr/bx/n/10 a
+.\kern0.0 (italic)
+.\TU/lmr/m/n/10 ]
+.\TU/lmr/m/n/10 .
+.\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+.\TU/lmr/m/n/10 T
+.\kern-0.83 (font)
+.\TU/lmr/m/n/10 e
+.\TU/lmr/m/n/10 x
+.\TU/lmr/m/n/10 t
+.\TU/lmr/m/n/10 [
+.\kern0.0 (italic)
+.\TU/lmr/bx/n/10 K
+.\TU/lmr/bx/n/10 i
+.\TU/lmr/bx/n/10 n
+.\TU/lmr/bx/n/10 g
+.\TU/lmr/bx/n/10 2
+.\TU/lmr/bx/n/10 0
+.\TU/lmr/bx/n/10 0
+.\TU/lmr/bx/n/10 8
+.\discretionary (penalty 50)
+..< \TU/lmr/bx/n/10 -
+..= \TU/lmr/bx/n/10 -
+.\TU/lmr/bx/n/10 G
+.\TU/lmr/bx/n/10 r
+.\TU/lmr/bx/n/10 a
+.\TU/lmr/bx/n/10 m
+.\TU/lmr/bx/n/10 m
+.\TU/lmr/bx/n/10 a
+.\kern0.0 (italic)
+.\TU/lmr/m/n/10 ]
+.\TU/lmr/m/n/10 .
+.\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+.\TU/lmr/m/n/10 T
+.\kern-0.83 (font)
+.\TU/lmr/m/n/10 e
+.\TU/lmr/m/n/10 x
+.\TU/lmr/m/n/10 t
+.\write1{\pp@pagectr{footnote}{6}{\theabspage }{\thepage }}
+.\penalty 10000
+.\penalty 10000
+.\hbox(8.27692+0.0)x4.483, direction TLT
+..\mathon
+..\hbox(0.0+0.0)x0.0, direction TLT
+..\hbox(4.648+0.14)x4.483, shifted -3.62892, direction TLT
+...\TU/lmr/m/n/7 5
+..\mathoff
+.\TU/lmr/m/n/10 .
+.\glue(\spaceskip) 4.44 plus 4.99498 minus 0.37
+.\TU/lmr/m/n/10 T
+.\kern-0.83 (font)
+.\TU/lmr/m/n/10 e
+.\TU/lmr/m/n/10 x
+.\TU/lmr/m/n/10 t
+.\TU/lmr/m/n/10 [
+.\kern0.0 (italic)
+.\TU/lmr/bx/n/10 K
+.\TU/lmr/bx/n/10 i
+.\TU/lmr/bx/n/10 n
+.\TU/lmr/bx/n/10 g
+.\TU/lmr/bx/n/10 2
+.\TU/lmr/bx/n/10 0
+.\TU/lmr/bx/n/10 0
+.\TU/lmr/bx/n/10 8
+.\TU/lmr/bx/n/10 -
+.\discretionary (penalty 50)
+.\glue(\rightskip) 0.0

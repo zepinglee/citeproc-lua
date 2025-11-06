@@ -1034,9 +1034,9 @@ l. ...  This is just filler text\cite{ITEM-4}
 l. ...  This is just filler text\cite{ITEM-4}
                                             .\par
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
->  {\begin {thebibliography}{index = 3, hanging-indent = true, line-spacing = 1, entry-spacing = 0}}
->  {\bibitem {ITEM-3} Lamport, Leslie. \textit {LaTeX: A Document Preparation System: User’s Guide and Reference Manual}. 2nd ed. Reading, MA, USA: Addison-Wesley, 1994.}
->  {\bibitem {ITEM-4} Mittelbach, Frank, Michel Goossens, Johannes Braams, David Carlisle, and Chris Rowley. \textit {The LaTeX Companion}. 2nd ed. Reading, MA, USA: Addison-Wesley, 2004.}
+>  {\begin {thebibliography}{index = 3, hanging-indent = true, line-spacing = 1, entry-spacing = 1}}
+>  {\bibitem {ITEM-3} Lamport, Leslie. \textit {LaTeX: A Document Preparation System: User’s Guide and Reference Manual}. 2nd ed. Addison-Wesley, 1994.}
+>  {\bibitem {ITEM-4} Mittelbach, Frank, Michel Goossens, Johannes Braams, David Carlisle, and Chris Rowley. \textit {The LaTeX Companion}. 2nd ed. Addison-Wesley, 2004.}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...  \printbibliography[heading=subbibliography]
@@ -1064,7 +1064,7 @@ Completed box being shipped out [5]
 .....\hbox(0.0+0.0)x345.0, direction TLT
 ...\glue 18.06749
 ...\glue(\lineskip) 0.0
-...\vbox(550.0+0.0)x345.0, glue set 208.19751fil, direction TLT
+...\vbox(550.0+0.0)x345.0, glue set 210.19751fil, direction TLT
 ....\pdfdest name{chapter.3} xyz
 ....\write3{\protect \BOOKMARK [0][-]{chapter.3}{\376\377\000C\000h\000i\000c\000a\000g\000o\000\040\000n\000o\000t\000e\000s\000\040\000s\000t\000y\000l\000e}{}% 3}
 ....\write1{\@writefile{toc}{\protect \contentsline {chapter}{\protect \numberline {3}Chicago notes style}{\thepage }{chapter.3}\protected@file@percent }}
@@ -1389,7 +1389,7 @@ Completed box being shipped out [5]
 .....\glue(\rightskip) 0.0
 ....\penalty 14000
 ....\glue(\baselineskip) 2.79
-....\hbox(7.16+2.06)x335.0, glue set 26.73997fil, shifted 10.0, direction TLT
+....\hbox(7.16+2.05)x335.0, glue set 117.99997fil, shifted 10.0, direction TLT
 .....\TU/lmr/m/it/10 R
 .....\kern-0.51 (font)
 .....\TU/lmr/m/it/10 e
@@ -1425,26 +1425,6 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/n/10 d
 .....\TU/lmr/m/n/10 .
 .....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
-.....\TU/lmr/m/n/10 R
-.....\TU/lmr/m/n/10 e
-.....\TU/lmr/m/n/10 a
-.....\TU/lmr/m/n/10 d
-.....\discretionary (penalty 50)
-......< \TU/lmr/m/n/10 -
-.....\TU/lmr/m/n/10 i
-.....\TU/lmr/m/n/10 n
-.....\TU/lmr/m/n/10 g
-.....\TU/lmr/m/n/10 ,
-.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
-.....\TU/lmr/m/n/10 M
-.....\TU/lmr/m/n/10 A
-.....\TU/lmr/m/n/10 ,
-.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
-.....\TU/lmr/m/n/10 U
-.....\TU/lmr/m/n/10 S
-.....\TU/lmr/m/n/10 A
-.....\TU/lmr/m/n/10 :
-.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/n/10 A
 .....\kern-0.28 (font)
 .....\TU/lmr/m/n/10 d
@@ -1475,12 +1455,14 @@ Completed box being shipped out [5]
 .....\glue(\parfillskip) 0.0 plus 1.0fil
 .....\glue(\rightskip) 0.0
 ....\penalty -51
-....\glue 0.0
+....\glue 10.0 plus 5.0 minus 2.5
 ....\pdfdest name{cite3.ITEM-4} xyz
 ....\penalty 10000
+....\glue -10.0 plus -5.0 minus -2.5
+....\glue 10.0 plus 5.0 minus 2.5
 ....\glue(\parskip) 0.0
 ....\glue(\parskip) 0.0
-....\glue(\baselineskip) 2.89
+....\glue(\baselineskip) 2.9
 ....\hbox(7.05+1.93)x335.0, glue set 1.0886, shifted 10.0, direction TLT
 .....\localpar
 ......\localinterlinepenalty=0
@@ -1579,9 +1561,9 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/n/10 n
 .....\TU/lmr/m/n/10 d
 .....\glue(\rightskip) 0.0
-....\penalty 4000
+....\penalty 8000
 ....\glue(\baselineskip) 2.91
-....\hbox(7.16+2.06)x335.0, glue set - 0.32039, shifted 10.0, direction TLT
+....\hbox(7.16+2.05)x335.0, glue set 29.25998fil, shifted 10.0, direction TLT
 .....\TU/lmr/m/n/10 C
 .....\TU/lmr/m/n/10 h
 .....\TU/lmr/m/n/10 r
@@ -1638,26 +1620,6 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/n/10 d
 .....\TU/lmr/m/n/10 .
 .....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
-.....\TU/lmr/m/n/10 R
-.....\TU/lmr/m/n/10 e
-.....\TU/lmr/m/n/10 a
-.....\TU/lmr/m/n/10 d
-.....\discretionary (penalty 50)
-......< \TU/lmr/m/n/10 -
-.....\TU/lmr/m/n/10 i
-.....\TU/lmr/m/n/10 n
-.....\TU/lmr/m/n/10 g
-.....\TU/lmr/m/n/10 ,
-.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
-.....\TU/lmr/m/n/10 M
-.....\TU/lmr/m/n/10 A
-.....\TU/lmr/m/n/10 ,
-.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
-.....\TU/lmr/m/n/10 U
-.....\TU/lmr/m/n/10 S
-.....\TU/lmr/m/n/10 A
-.....\TU/lmr/m/n/10 :
-.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/n/10 A
 .....\kern-0.28 (font)
 .....\TU/lmr/m/n/10 d
@@ -1666,12 +1628,9 @@ Completed box being shipped out [5]
 .....\TU/lmr/m/n/10 s
 .....\TU/lmr/m/n/10 o
 .....\TU/lmr/m/n/10 n
-.....\TU/lmr/m/n/10 -
 .....\discretionary (penalty 50)
-.....\glue(\rightskip) 0.0
-....\penalty 4100
-....\glue(\baselineskip) 3.0
-....\hbox(6.94+2.05)x335.0, glue set 276.60999fil, shifted 10.0, direction TLT
+......< \TU/lmr/m/n/10 -
+......= \TU/lmr/m/n/10 -
 .....\TU/lmr/m/n/10 W
 .....\kern-0.83 (font)
 .....\TU/lmr/m/n/10 e
