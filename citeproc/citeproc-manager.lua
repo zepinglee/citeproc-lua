@@ -161,6 +161,7 @@ end
 ---@field entries_with_crossref BibtexEntry[]
 ---@field bibtex_strings table<string, string>
 ---@field item_index table<ItemId, integer>
+---@field failed boolean
 local RefSection = {}
 
 ---@return RefSection
@@ -184,6 +185,7 @@ function RefSection:new()
     entries_with_crossref = {},
     bibtex_strings = {},
     item_index = {},
+    failed = false,
   }
   setmetatable(ref_section, self)
   self.__index = self
@@ -268,7 +270,7 @@ function RefSection:make_citeproc_engine()
   local style_path = kpse.find_file(self.style_id .. ".csl")
 
   if not style_path then
-    renamed_style_id = RENAMED_STYLE_IDS[self.style_id]
+    local renamed_style_id = RENAMED_STYLE_IDS[self.style_id]
     if renamed_style_id then
       style_path = kpse.find_file(renamed_style_id .. ".csl")
       if style_path then
@@ -280,6 +282,7 @@ function RefSection:make_citeproc_engine()
 
   local style = read_file(self.style_id .. ".csl", nil, "style")
   if not style then
+    self.failed = true
     return
   end
 
@@ -1017,7 +1020,7 @@ function CslCitationManager:read_aux_file(aux_content)
     self.ref_section = ref_section
 
     if command == "\\csl@aux@cite" then
-      if not ref_section.engine then
+      if not ref_section.engine and not ref_section.failed then
         if not ref_section.style_id or ref_section.style_id == "" then
           ref_section.style_id = self.global_ref_section.style_id
         end
@@ -1029,15 +1032,19 @@ function CslCitationManager:read_aux_file(aux_content)
         if not ref_section.lang or ref_section.lang == "" then
           ref_section.lang = self.global_ref_section.lang
         end
+
         ref_section:make_citeproc_engine()
-        if self.hyperref_loaded then
-          ref_section.engine:enable_linking()
+        if ref_section.engine then
+          if self.hyperref_loaded then
+            ref_section.engine:enable_linking()
+          end
+          local style_class = ref_section.engine:get_style_class()
+          local style_class_setup = string.format("\\csloptions{%d}{class = {%s = %s}}", ref_section_index,
+            ref_section.style_id, style_class)
+          table.insert(output_lines, style_class_setup)
         end
-        local style_class = ref_section.engine:get_style_class()
-        local style_class_setup = string.format("\\csloptions{%d}{class = {%s = %s}}", ref_section_index,
-          ref_section.style_id, style_class)
-        table.insert(output_lines, style_class_setup)
       end
+
       self:register_citation_info(tostring(ref_section_index), content)
       if ref_section.engine then
         local citation = self:_make_citation(content)
