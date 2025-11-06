@@ -3,14 +3,12 @@ cd ../styles
 git checkout v1.0.2
 git pull
 cd ../citeproc-lua
-for style in submodules/styles/*.csl; do
-    cp -f "../styles/$(basename $style)" submodules/styles;
-done
+for style in submodules/styles/*.csl; do echo "y" | cp -f "../styles/$(basename $style)" submodules/styles; done
 
 cd submodules/locales
 git fetch upstream
 git checkout ctan
-git merge upstream/master
+git merge upstream/v1.0.2
 git push
 cd ../..
 

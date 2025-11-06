@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.0] - 2025-11-06
+
 ### Added
 
 - Add option `bib-label-sep` to set the space between label and entry content ([#109](https://github.com/zepinglee/citeproc-lua/issues/109)).
