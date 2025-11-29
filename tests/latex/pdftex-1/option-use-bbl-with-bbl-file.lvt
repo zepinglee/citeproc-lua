@@ -1,0 +1,64 @@
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\begin{filecontents}[overwrite, noheader]{\jobname.bbl}
+\cslcitation{ITEM-1@1}{(D’Arcus, 2005)}
+\cslcitation{ITEM-1,ITEM-2@1}{(Bennett, 2009; D’Arcus, 2005)}
+\cslcitation{ITEM-1@2}{(D’Arcus, 2005, p. 6)}
+\cslcitation{ITEM-1@3}{(D’Arcus, 2005, Section 2.3)}
+\cslcitation{ITEM-1@4}{(D’Arcus, 2005, p. 6)}
+\cslcitation{ITEM-1@5}{(prefix D’Arcus, 2005 suffix)}
+\cslcitation{ITEM-1@6}{(prefix D’Arcus, 2005, suffix)}
+\cslcitation{ITEM-1@7}{(D’Arcus, 2005, suffix)}
+\cslcitation{ITEM-1@8}{(prefix D’Arcus, 2005)}
+\cslcitation{ITEM-1@9}{D’Arcus (2005)}
+\cslcitation{ITEM-1@10}{D’Arcus’s early work (2005)}
+\cslcitation{ITEM-1,ITEM-2@2}{(Bennett, 2009, Figure 2; See D’Arcus, 2005, p. 6)}
+\cslcitation{ITEM-1@11}{D’Arcus}
+\cslcitation{ITEM-1@12}{(2005)}
+\cslcitation{ITEM-1@13}{2005}
+\cslcitation{ITEM-1@14}{(2005)}
+\cslcitation{ITEM-1@15}{D’Arcus, B. (2005). \textit{Boundaries of dissent: Protest and state power in the media age}. Routledge.}
+
+\csloptions{0}{entry-ids = {ITEM-2, ITEM-1, ITEM-3}}
+\begin{thebibliography}{index = 1, hanging-indent = true, line-spacing = 2, entry-spacing = 0}
+
+\bibitem{ITEM-2}
+Bennett, F. G., Jr. (2009). Edited bibliography.
+
+\bibitem{ITEM-1}
+D’Arcus, B. (2005). Edited bibliography.
+
+\bibitem{ITEM-3}
+Lamport, L. (1994). Edited bibliography.
+
+\end{thebibliography}
+\end{filecontents}
+
+
+\usepackage[style=apa, use-bbl]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{test.json}
+
+
+\begin{document}
+\START
+\showoutput
+
+\input{csl-citation-tests}
+
+\TEST{Citation format}{
+  \clearpage
+}
+
+\TEST{Bibliography contents}{
+  \printbibliography
+}
+
+\TEST{Bibliography format}{
+  \clearpage
+}
+
+\OMIT
+\end{document}

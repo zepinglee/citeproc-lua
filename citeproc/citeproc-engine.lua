@@ -97,7 +97,13 @@ local Position = util.Position
 ---@field literal string
 ---@field raw string
 
----@alias ItemData { id: ItemId, type: string, language: string?, [string]: string | number | NameVariable[] | DateVariable }
+---@class ItemData
+---@field type string
+---@field id ItemId
+---@field citation-key string?
+---@field categories string[]?
+---@field language LanguageCode?
+---@field [string] string | number | NameVariable[] | DateVariable
 
 
 ---@class Registry
@@ -453,8 +459,21 @@ function CiteProc:makeCitationCluster(citation_items)
   return res
 end
 
+
+---@class BibliographyParams
+---@field hangingindent boolean
+---@field second-field-align string | false
+---@field linespacing number
+---@field entryspacing number
+---@field maxoffset integer
+---@field widest_label string
+---@field bibstart string?
+---@field bibend string?
+---@field entry_ids ItemId[]
+---@field excluded_ids ItemId[]
+
 ---@param bibsection any
----@return [{[string]: string | number | boolean}, string[]]
+---@return [BibliographyParams, string[]]
 function CiteProc:makeBibliography(bibsection)
   -- The bibsection works as a filter described in
   -- <https://citeproc-js.readthedocs.io/en/latest/running.html#selective-output-with-makebibliography>.
@@ -486,6 +505,7 @@ function CiteProc:makeBibliography(bibsection)
     bib_end = bib_end(self)
   end
 
+  ---@type BibliographyParams
   local params = {
     hangingindent = self.style.bibliography.hanging_indent,
     ["second-field-align"] = self.style.bibliography.second_field_align or self.registry.second_field_align or false,

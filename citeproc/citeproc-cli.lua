@@ -76,7 +76,7 @@ local function convert_bib(path, output_path)
   if not output_path then
     output_path = string.gsub(path, "%.bib$", ".json")
   end
-  util.write_file(utilities.json.tojson(csl_data) .. "\n", output_path)
+  util.write_file(output_path, utilities.json.tojson(csl_data) .. "\n")
 end
 
 
@@ -102,7 +102,7 @@ local function process_aux_file(aux_file)
   local bbl_str = csl_citation_manager:read_aux_file(aux_content)
 
   local output_path = string.gsub(aux_file, "%.aux$", ".bbl")
-  util.write_file(bbl_str, output_path)
+  util.write_file(output_path, bbl_str)
 
   util.quiet_mode = false;
   if util.num_errors > 1 then

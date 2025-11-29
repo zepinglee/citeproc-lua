@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added option `use-bbl` to allow users to load modified bibliography when using LuaTeX ([#108](https://github.com/zepinglee/citeproc-lua/issues/108), [tex.sx/754349](https://tex.stackexchange.com/q/754349/82731)).
+
 ## [0.9.0] - 2025-11-06
 
 ### Added

@@ -66,6 +66,8 @@
 \clist_new:N \l__csl_bib_resources_clist
 \tl_new:N \g__csl_global_locale_tl
 \tl_new:N \l__csl_locale_tl
+\bool_new:N \g__csl_use_bbl_bool
+\bool_new:N \g__csl_use_lua_module_bool
 \bool_new:N \l__csl_back_ref_bool
 \str_new:N \l__csl_back_ref_type_str
 % Citation formatting
@@ -104,6 +106,7 @@
         \tl_set:Nn \l__csl_locale_tl {#1}
         \tl_gset:Nn \g__csl_global_locale_tl {#1}
       } ,
+    use-bbl .bool_gset:N = \g__csl_use_bbl_bool ,
     backref .choices:nn =
       { true, page, section, false }
       { \exp_args:NV \__csl_set_back_ref:n \l_keys_choice_tl } ,
@@ -143,6 +146,7 @@
 % Default settings
 \keys_set:nn { csl }
   {
+    use-bbl = false ,
     backref = false ,
     prefix-separator = { ~ } ,
     suffix-separator = { , ~ } ,
@@ -157,6 +161,19 @@
 
 
 \ProcessKeyOptions [ csl ]
+
+
+\hook_gput_code:nnn { enddocument } { . }
+  {
+    \bool_if:NT \g__csl_use_bbl_bool
+      {
+        \sys_if_engine_luatex:T
+          {
+            \file_if_exist:nF { \jobname .bbl }
+              { \lua_now:e { csl_citation_manager:write_bbl("\jobname") } }
+          }
+      }
+  }
 
 
 \DeclareDocumentCommand \bibliographystyle { m }

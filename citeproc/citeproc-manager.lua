@@ -213,7 +213,7 @@ function RefSection:add_bib_resource(data_file, option_str)
 
   if contents then
     if format == "bibtex" then
-      local bib_data, exceptions = bibtex_parser.parse(contents, self.bibtex_strings)
+      local bib_data, _ = bibtex_parser.parse(contents, self.bibtex_strings)
       if bib_data then
         for _, entry in ipairs(bib_data.entries) do
           if item_dict[entry.key] then
@@ -262,6 +262,7 @@ function RefSection:add_bib_resource(data_file, option_str)
   end
 end
 
+---@return CiteProc?
 function RefSection:make_citeproc_engine()
   if not self.style_id or self.style_id == "" then
     self.style_id = "apa"
@@ -319,6 +320,7 @@ function RefSection:make_citeproc_engine()
 
   self:_update_uncited_items()
 
+  return self.engine
 end
 
 ---@param citeproc_sys CiteProcSys
@@ -366,6 +368,131 @@ function RefSection:_update_uncited_items()
   self.uncited_ids = uncited_ids
 end
 
+---@param filter_str string
+---@return table
+function RefSection:bibliography(filter_str)
+  local engine = self.engine
+  if not engine then
+    util.error("CSL engine is not initialized.")
+    return {}
+  end
+  local filter
+  local options = {}
+  if filter_str and filter_str ~= "" then
+    options = latex_parser.parse_prop(filter_str)
+    filter = self:_parser_filter(filter_str)
+  end
+  local result = engine:makeBibliography(filter)
+
+  local params = result[1]
+  local bib_items = result[2]
+
+  ---@type table<string, any>
+  local bib_options = {
+    index = options.index or "1",
+  }
+
+  local bib_option_map = {
+    ["second-field-align"] = "second-field-align",
+    ["hanging-indent"] = "hangingindent",
+    ["entry-spacing"] = "entryspacing",
+    ["line-spacing"] = "linespacing",
+    ["widest-label"] = "widest_label",
+    ["entry-ids"] = "entry_ids",
+    ["excluded-ids"] = "excluded_ids",
+  }
+  local bib_option_order = {
+    "index",
+    "second-field-align",
+    "hanging-indent",
+    "line-spacing",
+    "entry-spacing",
+    "widest-label",
+    -- "entry-ids",
+    -- "excluded-ids",
+  }
+
+  local bib_lines = {}
+
+  if #params.entry_ids > 0 then
+    local entry_ids_line = string.format("\\csloptions{%d}{entry-ids = {%s}}", self.index,
+      table.concat(params.entry_ids, ", "))
+    table.insert(bib_lines, entry_ids_line)
+  end
+  if #params.excluded_ids > 0 then
+    local excluded_ids_line = string.format("\\csloptions{%d}{excluded-ids = {%s}}", self.index,
+      table.concat(params.excluded_ids, ", "))
+    table.insert(bib_lines, excluded_ids_line)
+  end
+
+  for option, param in pairs(bib_option_map) do
+    if params[param] then
+      bib_options[option] = params[param]
+    end
+  end
+
+  local bib_option_list = {}
+  for _, option in ipairs(bib_option_order) do
+    local value = bib_options[option]
+    if value then
+      if type(value) == "table" then
+        value = "{" .. table.concat(value, ", ") .. "}"
+      else
+        value = tostring(value)
+        if string.match(value, ",") or string.match(value, "^%s")
+            or string.match(value, "%s$") then
+          value = "{" .. value .. "}"
+        end
+      end
+      if value ~= "" then
+        table.insert(bib_option_list, string.format("%s = %s", option, value))
+      end
+    end
+  end
+  local bib_options_str = table.concat(bib_option_list, ", ")
+
+  local bibstart = string.format("\\begin{thebibliography}{%s}\n", bib_options_str)
+  table.insert(bib_lines, bibstart)
+
+  for _, bib_item in ipairs(bib_items) do
+    table.insert(bib_lines, bib_item)
+  end
+
+  if params.bibend then
+    table.insert(bib_lines, params.bibend)
+  end
+  return bib_lines
+end
+
+---Convert to a filter object described in
+--- <https://citeproc-js.readthedocs.io/en/latest/running.html#selective-output-with-makebibliography>
+---@param filter_str string e.g., "type={book},notcategory={csl},notcategory={tex}"
+---@return table
+function RefSection:_parser_filter(filter_str)
+  local conditions = {}
+  for _, condition in ipairs(latex_parser.parse_seq(filter_str)) do
+    local negative
+    local field, value = string.match(condition, "(%w+)%s*=%s*{([^}]+)}")
+    if field then
+      if string.match(field, "^not") then
+        negative = true
+        field = string.gsub(field, "^not", "")
+      end
+      if field == "category" then
+        field = "categories"
+      end
+      if field == "keyword" or field == "type" or field == "categories" then
+        table.insert(conditions, {
+          field = field,
+          value = value,
+          negative = negative,
+        })
+      end
+    end
+  end
+  return {select = conditions}
+end
+
 function RefSection:record_fixture()
   if not self.fixture then
     self.fixture = {
@@ -409,7 +536,9 @@ function RefSection:record_fixture()
     table.insert(citations, {citation, util.clone(citations_pre), {}})
     table.insert(citations_pre, {citation.citationID, citation.properties.noteIndex})
   end
-  fixture.citations = string.gsub(json_encode(citations), "{%s*}", "[]")
+  local citation_json = json_encode(citations)
+  ---@cast citation_json string
+  fixture.citations = string.gsub(citation_json, "{%s*}", "[]")
 
   local result = {}
   for i, citation_result in ipairs(fixture.citation_results) do
@@ -438,13 +567,7 @@ function RefSection:record_fixture()
     file_name = string.format("%s-%d.txt", tex.jobname, self.index)
   end
 
-  local fixture_file = io.open(file_name, "w")
-  if fixture_file then
-    fixture_file:write(fixture_str)
-    fixture_file:close()
-  else
-    error(string.format("Failed to write fixture file '%s'", file_name))
-  end
+  util.write_file(file_name, fixture_str)
 end
 
 
@@ -492,10 +615,8 @@ end
 --- The init method is called via \AtBeginDocument after loading .aux file.
 --- The ref_section.cited_ids are already registered.
 ---@param style_id StyleId
----@param bib_resources_str FilePathsString
 ---@param lang LanguageCode?
 function CslCitationManager:init(style_id, lang)
-  -- TODO: remove bib_resources_str
   local global_ref_section = self.global_ref_section
   global_ref_section.style_id = "apa"
   if style_id and style_id ~= "" then
@@ -768,109 +889,16 @@ function CslCitationManager:bibliography(filter_str)
     util.error("Refsection is not initialized.")
     return
   end
-  local bib_lines = self:make_bibliography(filter_str)
+
+  table.insert(self.ref_section.bibliography_configs, filter_str)
+
+  local bib_lines = self.ref_section:bibliography(filter_str)
   tex.print(util.split(table.concat(bib_lines, "\n"), "\n"))
 
   if self.regression_test then
     self.ref_section.fixture.bibliography_result = table.concat(bib_lines, "\n")
     self.ref_section:record_fixture()
   end
-end
-
----@param filter_str string
----@return string[]
-function CslCitationManager:make_bibliography(filter_str)
-  local engine = self.ref_section.engine
-  if not engine then
-    util.error("CSL engine is not initialized.")
-    return {}
-  end
-  local filter
-  local options = {}
-  if filter_str and filter_str ~= "" then
-    options = latex_parser.parse_prop(filter_str)
-    filter = self:_parser_filter(filter_str)
-  end
-  local result = engine:makeBibliography(filter)
-
-  local params = result[1]
-  local bib_items = result[2]
-
-  ---@type table<string, any>
-  local bib_options = {
-    index = options.index or "1",
-  }
-
-  local bib_option_map = {
-    ["second-field-align"] = "second-field-align",
-    ["hanging-indent"] = "hangingindent",
-    ["entry-spacing"] = "entryspacing",
-    ["line-spacing"] = "linespacing",
-    ["widest-label"] = "widest_label",
-    ["entry-ids"] = "entry_ids",
-    ["excluded-ids"] = "excluded_ids",
-  }
-  local bib_option_order = {
-    "index",
-    "second-field-align",
-    "hanging-indent",
-    "line-spacing",
-    "entry-spacing",
-    "widest-label",
-    -- "entry-ids",
-    -- "excluded-ids",
-  }
-
-  local bib_lines = {}
-
-  if #params.entry_ids > 0 then
-    local entry_ids_line = string.format("\\csloptions{%d}{entry-ids = {%s}}", self.ref_section.index,
-      table.concat(params.entry_ids, ", "))
-    table.insert(bib_lines, entry_ids_line)
-  end
-  if #params.excluded_ids > 0 then
-    local excluded_ids_line = string.format("\\csloptions{%d}{excluded-ids = {%s}}", self.ref_section.index,
-      table.concat(params.excluded_ids, ", "))
-    table.insert(bib_lines, excluded_ids_line)
-  end
-
-  for option, param in pairs(bib_option_map) do
-    if params[param] then
-      bib_options[option] = params[param]
-    end
-  end
-
-  local bib_option_list = {}
-  for _, option in ipairs(bib_option_order) do
-    local value = bib_options[option]
-    if value then
-      if type(value) == "table" then
-        value = "{" .. table.concat(value, ", ") .. "}"
-      else
-        value = tostring(value)
-        if string.match(value, ",") or string.match(value, "^%s")
-            or string.match(value, "%s$") then
-          value = "{" .. value .. "}"
-        end
-      end
-      if value ~= "" then
-        table.insert(bib_option_list, string.format("%s = %s", option, value))
-      end
-    end
-  end
-  local bib_options_str = table.concat(bib_option_list, ", ")
-
-  local bibstart = string.format("\\begin{thebibliography}{%s}\n", bib_options_str)
-  table.insert(bib_lines, bibstart)
-
-  for _, bib_item in ipairs(bib_items) do
-    table.insert(bib_lines, bib_item)
-  end
-
-  if params.bibend then
-    table.insert(bib_lines, params.bibend)
-  end
-  return bib_lines
 end
 
 function CslCitationManager:set_categories(categories_str)
@@ -926,35 +954,6 @@ local function get_command_arguments(text, command, num_args)
     arguments[i] = string.sub(argument, 2, -2)
   end
   return arguments
-end
-
----Convert to a filter object described in
---- <https://citeproc-js.readthedocs.io/en/latest/running.html#selective-output-with-makebibliography>
----@param filter_str string e.g., "type={book},notcategory={csl},notcategory={tex}"
----@return table
-function CslCitationManager:_parser_filter(filter_str)
-  local conditions = {}
-  for _, condition in ipairs(latex_parser.parse_seq(filter_str)) do
-    local negative
-    local field, value = string.match(condition, "(%w+)%s*=%s*{([^}]+)}")
-    if field then
-      if string.match(field, "^not") then
-        negative = true
-        field = string.gsub(field, "^not", "")
-      end
-      if field == "category" then
-        field = "categories"
-      end
-      if field == "keyword" or field == "type" or field == "categories" then
-        table.insert(conditions, {
-          field = field,
-          value = value,
-          negative = negative,
-        })
-      end
-    end
-  end
-  return {select = conditions}
 end
 
 
@@ -1061,7 +1060,7 @@ function CslCitationManager:read_aux_file(aux_content)
         ref_section:make_citeproc_engine()
       end
       if ref_section.engine then
-        local bib_lines = self:make_bibliography(content)
+        local bib_lines = self.ref_section:bibliography(content)
         table.insert(output_lines, "")
         util.extend(output_lines, bib_lines)
         table.insert(output_lines, "")
@@ -1078,6 +1077,10 @@ function CslCitationManager:read_aux_file(aux_content)
       -- TODO: == "true"?
       if options.linking then
         self.hyperref_loaded = true
+      end
+      if options["use-bbl"] then
+        util.info("The bbl file is not overwrited with use-bbl option.")
+        os.exit(0)
       end
     end
   end
@@ -1116,6 +1119,52 @@ function CslCitationManager:_get_csl_commands(aux_content, command_arguments)
     end
   end
   return command_arguments
+end
+
+-- Called with `use-bbl` option at the end of document to write `.bbl` file
+---@param job_name string
+function CslCitationManager:write_bbl(job_name)
+  ---@type string[]
+  local output_lines = {}
+  for i = 0, #self.ref_sections do
+    local ref_section = self.ref_sections[i]
+    if ref_section and ref_section.engine then
+      local engine = ref_section:make_citeproc_engine()
+      assert(engine)
+
+      if #output_lines > 0 then
+        table.insert(output_lines, "")
+      end
+
+      ---@type ItemId[]
+      local cite_ids = {}
+      ---@type { [ItemId]: boolean }
+      local cite_id_dict = {}
+      for _, citation in ipairs(ref_section.citations) do
+        for _, cite_item in ipairs(citation.citationItems) do
+          if not cite_id_dict[cite_item.id] then
+            cite_id_dict[cite_item.id] = true
+            table.insert(cite_ids, cite_item.id)
+          end
+        end
+      end
+      engine:updateItems(cite_ids)
+
+      for _, citation in ipairs(ref_section.citations) do
+        local citation_str = engine:process_citation(citation)
+        table.insert(output_lines, string.format("\\cslcitation{%s}{%s}", citation.citationID, citation_str))
+      end
+
+      for _, bib_config in ipairs(ref_section.bibliography_configs) do
+        local bib_lines = ref_section:bibliography(bib_config)
+        table.insert(output_lines, "")
+        util.extend(output_lines, bib_lines)
+        table.insert(output_lines, "")
+      end
+    end
+  end
+
+  util.write_file(job_name .. ".bbl", output_lines)
 end
 
 

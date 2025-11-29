@@ -11,8 +11,18 @@
 
 \cs_new:Npn \__csl_at_begin_document_hook:
   {
-    \__csl_write_aux_info:
     \sys_if_engine_luatex:TF
+      {
+        \bool_gset_true:N \g__csl_use_lua_module_bool
+        \bool_if:NT \g__csl_use_bbl_bool
+          {
+            \file_if_exist:nT { \jobname .bbl }
+              { \bool_gset_false:N \g__csl_use_lua_module_bool }
+          }
+      }
+      { \bool_gset_false:N \g__csl_use_lua_module_bool }
+    \__csl_write_aux_info:
+    \bool_if:NTF \g__csl_use_lua_module_bool
       { \__csl_initialize_lua_module: }
       {
         \__csl_load_bbl:
@@ -322,6 +332,12 @@
     \@ifpackageloaded { hyperref }
       { \clist_put_right:Nn \l_tmpa_clist { linking = true } }
       { }
+    % use-bbl
+    \bool_if:NT \g__csl_use_bbl_bool
+      {
+        \sys_if_engine_luatex:T
+          { \clist_put_right:Nn \l_tmpa_clist { use-bbl = true } }
+      }
     % write to aux file
     \prop_if_empty:NF \l_tmpa_clist
       {
@@ -358,9 +374,18 @@
 % of `thebibliography` is stored into \g__csl_bibliographies_prop.
 \cs_new:Npn \__csl_load_bbl:
   {
-    % The \@input@ prints "No file ....bbl" in the .log file from which
-    % the latexmk decides to run $bibtex or not.
-    \__csl_collect_bibliography:n { \@input@ { \jobname .bbl } }
+    \sys_if_engine_luatex:TF
+      {
+        \__csl_collect_bibliography:n
+          {
+            \file_if_exist_input:n { \jobname .bbl }
+          }
+      }
+      {
+        % The \@input@ prints "No file ....bbl" in the .log file from which
+        % the latexmk decides to run $bibtex or not.
+        \__csl_collect_bibliography:n { \@input@ { \jobname .bbl } }
+      }
   }
 
 

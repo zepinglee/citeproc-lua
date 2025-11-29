@@ -1,0 +1,29 @@
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\usepackage[style=apa, use-bbl]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{test.json}
+
+
+\begin{document}
+\START
+\showoutput
+
+\input{csl-citation-tests}
+
+\TEST{Citation format}{
+  \clearpage
+}
+
+\TEST{Bibliography contents}{
+  \printbibliography
+}
+
+\TEST{Bibliography format}{
+  \clearpage
+}
+
+\OMIT
+\end{document}

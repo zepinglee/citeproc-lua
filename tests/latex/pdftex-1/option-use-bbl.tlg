@@ -1,0 +1,591 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+(csl-citation-tests.tex
+============================================================
+TEST 1: Single cite item in a citation
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@1},citationItems={{id={ITEM-1}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 2: Multiple cite items in a citation
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@1},citationItems={{id={ITEM-1}},{id={ITEM-2}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+LaTeX Warning: Citation `ITEM-2' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1, ITEM-2}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 3: Citation with page locator
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@2},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 4: Citation with section locator
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@3},citationItems={{id={ITEM-1},label={section},locator={2.3}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 5: Citation with implicit page locator
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@4},citationItems={{id={ITEM-1},label={page},locator={6}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 6: Citation with prefix and suffix
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@5},citationItems={{id={ITEM-1}}},properties={prefix={prefix },suffix={ suffix},noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 7: Citation with implicit prefix and suffix
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@6},citationItems={{id={ITEM-1}}},properties={prefix={prefix },suffix={, suffix},noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 8: Citation with implicit suffix
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@7},citationItems={{id={ITEM-1}}},properties={suffix={, suffix},noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 9: Citation with implicit prefix
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@8},citationItems={{id={ITEM-1}}},properties={prefix={prefix },noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 10: Narrative citation
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@9},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={composite}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 11: Narrative citation
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@10},citationItems={{id={ITEM-1}}},properties={infix={'s early work},noteIndex={0},mode={composite}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 12: Multiple cite items with options
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1,ITEM-2@2},citationItems={{id={ITEM-1},label={page},locator={6},prefix={See }},{id={ITEM-2},label={figure},locator={2}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+LaTeX Warning: Citation `ITEM-2' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1, ITEM-2}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 13: Cite only author
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@11},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={author-only}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 14: \parencite *
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@12},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={suppress-author}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 15: \citeyear 
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@13},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={cite-year}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 16: \citeyearpar 
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@14},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={suppress-author}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 17: Full cite
+============================================================
+> \l__csl_citation_info_tl=citationID={ITEM-1@15},citationItems={{id={ITEM-1}}},properties={noteIndex={0},mode={full-cite}}.
+<recently read> }
+l. ...}
+LaTeX Warning: Citation `ITEM-1' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {ITEM-1}].
+<recently read> }
+l. ...}
+============================================================
+============================================================
+TEST 18: Uncited entry
+============================================================
+> \l__csl_citation_info_tl=citationID={@nocite},citationItems={{id={ITEM-3}}},properties={noteIndex={0}}.
+<recently read> }
+l. ...}
+> \l__csl_citation_tl=.
+<recently read> }
+l. ...}
+============================================================
+)
+============================================================
+TEST 19: Citation format
+============================================================
+Completed box being shipped out [1]
+\vbox(633.0+0.0)x407.0
+.\glue 16.0
+.\vbox(617.0+0.0)x345.0, shifted 62.0
+..\vbox(12.0+0.0)x345.0, glue set 12.0fil
+...\glue 0.0 plus 1.0fil
+...\hbox(0.0+0.0)x345.0
+....\hbox(0.0+0.0)x345.0
+..\glue 25.0
+..\glue(\lineskip) 0.0
+..\vbox(550.0+0.0)x345.0, glue set 347.96283fil
+...\write-{}
+...\glue(\topskip) 2.5
+...\hbox(7.5+2.5)x345.0, glue set 295.69466fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 [
+....\kern 0.0
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 1
+....\kern 0.0
+....\OT1/cmr/m/n/10 ]
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 248.25047fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 [
+....\kern 0.0
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 1
+....\OT1/cmr/bx/n/10 ,
+....\glue 3.83331 plus 2.39581 minus 1.02222
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 2
+....\kern 0.0
+....\OT1/cmr/m/n/10 ]
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 295.69466fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 [
+....\kern 0.0
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 1
+....\kern 0.0
+....\OT1/cmr/m/n/10 ]
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 295.69466fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 [
+....\kern 0.0
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 1
+....\kern 0.0
+....\OT1/cmr/m/n/10 ]
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 295.69466fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 [
+....\kern 0.0
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 1
+....\kern 0.0
+....\OT1/cmr/m/n/10 ]
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 295.69466fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 [
+....\kern 0.0
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 1
+....\kern 0.0
+....\OT1/cmr/m/n/10 ]
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 295.69466fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 [
+....\kern 0.0
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 1
+....\kern 0.0
+....\OT1/cmr/m/n/10 ]
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 295.69466fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 [
+....\kern 0.0
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 1
+....\kern 0.0
+....\OT1/cmr/m/n/10 ]
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 295.69466fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 [
+....\kern 0.0
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 1
+....\kern 0.0
+....\OT1/cmr/m/n/10 ]
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 295.69466fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 [
+....\kern 0.0
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 1
+....\kern 0.0
+....\OT1/cmr/m/n/10 ]
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 295.69466fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 [
+....\kern 0.0
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 1
+....\kern 0.0
+....\OT1/cmr/m/n/10 ]
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 248.25047fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 [
+....\kern 0.0
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 1
+....\OT1/cmr/bx/n/10 ,
+....\glue 3.83331 plus 2.39581 minus 1.02222
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 2
+....\kern 0.0
+....\OT1/cmr/m/n/10 ]
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 295.69466fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 [
+....\kern 0.0
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 1
+....\kern 0.0
+....\OT1/cmr/m/n/10 ]
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 295.69466fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 [
+....\kern 0.0
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 1
+....\kern 0.0
+....\OT1/cmr/m/n/10 ]
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 295.69466fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 [
+....\kern 0.0
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 1
+....\kern 0.0
+....\OT1/cmr/m/n/10 ]
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 295.69466fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 [
+....\kern 0.0
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 1
+....\kern 0.0
+....\OT1/cmr/m/n/10 ]
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
+...\glue(\baselineskip) 2.0
+...\hbox(7.5+2.5)x345.0, glue set 295.69466fil
+....\hbox(0.0+0.0)x0.0
+....\OT1/cmr/m/n/10 [
+....\kern 0.0
+....\OT1/cmr/bx/n/10 I
+....\OT1/cmr/bx/n/10 T
+....\OT1/cmr/bx/n/10 E
+....\OT1/cmr/bx/n/10 M
+....\OT1/cmr/bx/n/10 -
+....\discretionary
+....\OT1/cmr/bx/n/10 1
+....\kern 0.0
+....\OT1/cmr/m/n/10 ]
+....\glue 3.33333 plus 1.66666 minus 1.11111
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\glue -2.5
+...\glue 0.0 plus 1.0fil
+...\glue 0.0
+...\glue 0.0 plus 0.0001fil
+..\glue(\baselineskip) 30.0
+..\hbox(0.0+0.0)x345.0
+...\hbox(0.0+0.0)x345.0
+============================================================
+============================================================
+TEST 20: Bibliography contents
+============================================================
+Package CSL Warning: The bibliography is empty.
+============================================================
+============================================================
+TEST 21: Bibliography format
+============================================================
+============================================================

@@ -27,7 +27,7 @@
       \keys_set:nn { csl / bibliography } {#1}
       \__csl_serialize_seq:NN \l__csl_bib_filter_seq \l__csl_bib_filter_tl
       % Collect the bibliography to token list
-      \sys_if_engine_luatex:TF
+      \bool_if:NTF \g__csl_use_lua_module_bool
         {
           \bool_if:NT \l__csl_engine_initialized_bool
             {
@@ -432,7 +432,7 @@
         \exp_args:Ne \__csl_write_aux_options:n
           { locale = \l__csl_locale_tl }
       }
-    \sys_if_engine_luatex:TF
+    \bool_if:NTF \g__csl_use_lua_module_bool
       {
         \lua_now:e
           {
@@ -468,7 +468,7 @@
   \int_compare:nNnT { \g__csl_ref_section_index_int } > { 0 }
     {
       \int_gzero:N \g__csl_ref_section_index_int
-      \sys_if_engine_luatex:T
+      \bool_if:NT \g__csl_use_lua_module_bool
         { \lua_now:n { csl_citation_manager:end_ref_section() } }
       \__csl_read_entry_ids:
     }
@@ -718,7 +718,7 @@
               { \tl_put_right:Nn \l_tmpa_tl { , } }
             \tl_put_right:Nn \l_tmpa_tl { ##1 = {##2} }
           }
-        \sys_if_engine_luatex:T
+        \bool_if:NTF \g__csl_use_lua_module_bool
           { \lua_now:e { csl_citation_manager:set_categories("\l_tmpa_tl") } }
           {
             \tl_put_left:Ne \l_tmpa_tl { categories = \c_left_brace_str }

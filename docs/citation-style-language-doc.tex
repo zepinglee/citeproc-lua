@@ -64,26 +64,26 @@
 \section{Introduction}
 
 The Citation Style Language\footnote{\url{https://citationstyles.org/}} (CSL)
-is an XML-based language that defines the formats of citations and bibliography.
-There are currently thousands of styles in CSL including the most widely used
-APA, Chicago, Vancouver, etc.
-The \pkg{citation-style-language} package is aimed to provide another reference formatting method
-for LaTeX that utilizes the CSL styles.
+is an XML-based language that defines the formats of citations and bibliographies.
+There are currently thousands of styles in CSL, including widely used styles such as
+APA, Chicago, and Vancouver.
+The \pkg{citation-style-language} package aims to provide another reference-formatting method
+for LaTeX that utilizes CSL styles.
 It contains a citation processor implemented in pure Lua (\pkg{citeproc-lua})
 which reads bibliographic metadata and performs sorting and formatting on both
 citations and bibliography according to the selected CSL style.
 A LaTeX package (\file{citation-style-language.sty}) is provided to communicate with the processor.
 
-Note that this project is in early development stage and some features of CSL
+Note that this project is in an early stage of development and some features of CSL
 are not implemented yet.
 Comments, suggestions, and bug reports are welcome.
 
 
 \section{Installation}
 
-This package is available from TeX Live 2022 or later versions.
+This package is available in TeX Live 2022 and later.
 For most users, the easiest way is to install it via |tlmgr|.
-If you want to install the GitHub develop version of this package,
+If you want to install the GitHub development version of this package,
 you may follow the steps below.
 
 The \pkg{citation-style-language} requires the following packages:
@@ -99,11 +99,11 @@ Make sure they are already installed in the TeX distribution.
   l3build install
 \end{bash}
 
-These commands install the package files to |TEXMFHOME| which is usually
+These commands install the package files to |TEXMFHOME|, which is usually
 |~/texmf| on Linux or |~/Library/texmf| on macOS.
-Besides, the |citeproc-lua| executable needs to be copied to some directory in
-the |PATH| environmental variable so that it can be called directly in the shell.
-For example provided |~/bin| is in |PATH|:
+In addition, the |citeproc-lua| executable needs to be copied to a directory in
+the |PATH| environment variable so that it can be called directly in the shell.
+For example, provided that |~/bin| is in |PATH|:
 
 \begin{bash}
   cp citeproc/citeproc-lua.lua "~/bin/citeproc-lua"
@@ -113,7 +113,7 @@ To uninstall the package from |TEXMFHOME|, just run |l3build uninstall|.
 
 \section{Getting started}
 
-An example of using \pkg{citation-style-language} package is as follows.
+An example of using the \pkg{citation-style-language} package is as follows.
 
 \begin{LaTeXdemo}
   \documentclass{...}
@@ -126,19 +126,19 @@ An example of using \pkg{citation-style-language} package is as follows.
   \end{document}
 \end{LaTeXdemo}
 
-The procedure to compile the document is different across engines.
+The compilation procedure differs across engines.
 
 \paragraph{LuaTeX}
 
-The CSL processor is written in Lua and it can be run directly in LuaTeX
+The CSL processor is written in Lua and can be run directly in LuaTeX
 without the need of running external programs.
-For LuaTeX, the compiling procedure is simply running \file{latex} twice,
-which is the same as documents with cross references.
+For LuaTeX, the compilation procedure is simply running \file{latex} twice,
+which is the same as for documents with cross-references.
 
 \paragraph{Other engines}
 
-For engines other than LuaTeX, the \file{citeproc-lua} executable is required
-to run on the \file{.aux} file to generate the citations and bibliography.
+For engines other than LuaTeX, the \file{citeproc-lua} executable must be run
+on the \file{.aux} file to generate the citations and bibliography.
 The general procedure is similar to the traditional BibTeX workflow.
 \begin{enumerate}
   \item Run \file{latex} on \file{example.tex}.
@@ -165,9 +165,9 @@ Package options may be set when the package is loaded or at any later stage
 with the \cs{cslsetup} command.
 These two methods are equivalent.
 \begin{LaTeXdemo}
-  \usepackage[style=apa]{citation-style-langugage}
+  \usepackage[style=apa]{citation-style-language}
   % OR
-  \usepackage{citation-style-langugage}
+  \usepackage{citation-style-language}
   \cslsetup{style = apa}
 \end{LaTeXdemo}
 
@@ -212,6 +212,13 @@ The locale falls back to ``\opt{en}'' (English) if the attribute is not set.
 When \pkg{babel} package is loaded, the selected main language is implicitly set
 as the \opt{locale} for \pkg{citation-style-language}.
 
+\DescribeOption{use-bbl}
+The \opt{use-bbl} option controls whether to load the manually edited contents
+in a \file{.bbl} file when used with LuaTeX.
+If the option is set to |true| and a \file{.bbl} file is not present, the
+latter will be generated.
+This option does not affect engines other than LuaTeX.
+
 \DescribeOption{ref-section}
 This option automatically starts a new reference section at the given document
 heading such as a chapter or a section. This is equivalent to the
@@ -249,8 +256,8 @@ This default length is the value of \cs{labelsep} at load-time.
 The vertical space between entries in the bibliography is configured in the
 CSL style.
 It can be overridden by this \opt{bib-item-sep} option.
-It is recommended to set \opt{bib-item-sep} to a stretchable glue rather than
-a fixed length to help reducing page breaks in the middle of an entry.
+It is recommended to set \opt{bib-item-sep} to stretchable glue rather than
+a fixed length to help reduce page breaks in the middle of an entry.
 \begin{LaTeXdemo}
   \cslsetup{bib-item-sep = 8 pt plus 4 pt minus 2 pt}
 \end{LaTeXdemo}
@@ -277,7 +284,7 @@ By default, it is 1 em (with respect to the \opt{bib-font} size if set).
 \DescribeOption{bib-par-indent}
 The paragraph indentation of references if they are in normal paragraph style
 rather than labelled or hanging indented.
-By default, it is the \cs{parindent} at when printed out.
+By default, it is the \cs{parindent} when printed out.
 
 
 \begin{function}{\addbibresource}
@@ -298,11 +305,11 @@ their extension names and the content should be encoded in UTF-8.
 \end{LaTeXdemo}
 
 \DescribeOption{journal-abbreviation}
-The \opt{journal-abbreviation}  option is used to control whether to search for abbreviations of journal titles when a \file{.bib} file is converted to CSL-JSON.
-It is because \texttt{journal} fields in traditional BibTeX database can be either full titles or abbreviations
-but a CSL style assumes that both forms are given.
-For example, \texttt{journal = ''Aquacult. Eng.''} is an abbreviation but a CSL style like \file{apa.csl} may use a full title.
-With \opt{journal-abbreviation} enabled (by default), the CSL engine tries to find the full title ``Aquacultural Engineering'' from the data of \url{https://github.com/JabRef/abbrv.jabref.org}.
+The \opt{journal-abbreviation} option controls whether to search for abbreviations of journal titles when a \file{.bib} file is converted to CSL-JSON.
+The \texttt{journal} field in a traditional BibTeX database can be either a full title or an abbreviation,
+but a CSL style assumes that both forms are available.
+For example, \texttt{journal = ''Aquacult. Eng.''} is an abbreviation, but a CSL style like \file{apa.csl} may require the full title.
+With \opt{journal-abbreviation} enabled (the default), the CSL engine tries to find the full title ``Aquacultural Engineering'' from the data at \url{https://github.com/JabRef/abbrv.jabref.org}.
 This can be disabled by setting it to \opt{false}.
 Note that this option is only valid for \file{.bib} files.
 
@@ -320,7 +327,7 @@ The citation command is similar to the one in standard LaTeX except that the
 \DescribeOption{suffix}
 \DescribeOption{page}
 \DescribeOption{figure}
-The \meta{options} can be \opt{prefix}, \opt{suffix} or one of locators like
+The \meta{options} can be \opt{prefix}, \opt{suffix}, or one of the locators like
 \opt{page} or \opt{figure}.
 The full list of supported locators is detailed in Table~\ref{tab:locators}.
 An example is as follows.
@@ -332,7 +339,7 @@ An example is as follows.
 Some styles specify the order of items in the citations (e.g., alphabetical
 or chronological) and the \opt{unsorted} option can be used to disable this
 behavior. This is useful in cases like citing secondary sources. The following
-exapmle produces “(Rabitt, 1982, as cited in Lyon 2014)”.
+example produces “(Rabitt, 1982, as cited in Lyon 2014)”.
 
 \begin{LaTeXdemo}
   \cites{rabitt1982}[prefix={, as cited in}, unsorted = true]{lyon2014}
@@ -382,13 +389,13 @@ brackets, which is different from other packages.
   \end{syntax}
 \end{function}
 
-These commands proceduce narrative in-text citation where the author name is
+These commands produce narrative in-text citations where the author name is
 part of the running text followed by the year in parentheses.
 These commands only work with author-date styles.
 
 \DescribeOption{infix}
 An extra option \opt{infix} can be given to specify the text inserted between
-then author and year parts. For example, “Kesey’s early work (1962)” can be
+the author and year parts. For example, “Kesey’s early work (1962)” can be
 produced by |\textcite[infix={'s early work}]{ITEM-1}|.
 By default the infix is a space.
 
@@ -424,8 +431,8 @@ scanning process. The following example illustrates its usage.
 \end{function}
 
 This command prints the author name.
-If the orginal citation does not contain the author name (e.g., a numeric
-style), an optional |<intext>| element can be suppplied as a sibling to the
+If the original citation does not contain the author name (e.g., a numeric
+style), an optional |<intext>| element can be supplied as a sibling to the
 |<citation>| and |<bibliography>| elements in the CSL style (see
 \href{https://citeproc-js.readthedocs.io/en/latest/running.html#citation-flags-with-processcitationcluster}{citeproc-js's documentation} for details).
 
@@ -435,7 +442,7 @@ style), an optional |<intext>| element can be suppplied as a sibling to the
   \end{syntax}
 \end{function}
 
-This command prints the issued year of the citation.
+This command prints the publication year of the citation.
 
 \begin{function}{\citeyearpar}
   \begin{syntax}
@@ -453,7 +460,7 @@ It is equivalent to \cs{cite} with \opt{suppress-author} option enabled.
 \end{function}
 
 This command prints a full citation similar to the bibliographic entry.
-The contents are genreated from the |<bibliography>| element in the CSL style
+The contents are generated from the |<bibliography>| element in the CSL style
 rather than the |<citation>| element.
 
 \begin{function}{\nocite}
@@ -464,7 +471,7 @@ rather than the |<citation>| element.
 
 This command produces no output but makes the entries included in the
 bibliography, which is the same in standard \LaTeX.
-If the special key |*| is given (\cs{notecite\{*\}}), all the entries in the
+If the special key |*| is given (\cs{nocite\{*\}}), all the entries in the
 database are included.
 
 
@@ -530,7 +537,7 @@ than BibTeX entry type (e.g., use |article-journal| rather than |article|).
   \end{syntax}
 \end{variable}
 
-Print only the entries that are not \meta{entrycategory}.
+Print only the entries that are not \meta{entrytype}.
 This option may be used multiple times.
 
 \begin{variable}{keyword}
@@ -598,7 +605,7 @@ If \cs{printbibliography} is used within a refsection, it will automatically
 select the current section.
 Note that \env{refsection} environments may not be nested.
 Beginning a new reference section automatically ends the active reference context (see § 3.8.10).
-The optional argument is a list of key-value configurations. That following options are available.
+The optional argument is a list of key-value configurations. The following options are available.
 
 
 \DescribeOption{style}
@@ -608,10 +615,10 @@ via package options or \cs{cslsetup}.
 
 \DescribeOption{bib-resource}
 The bibliographic data files are specified with this option.
-In case of multiple data files, remember to enclose the file with curly brackets
-so that the key-values are correctly parsed
+In the case of multiple data files, remember to enclose the file list in curly braces
+so that the key-value pairs are correctly parsed
 (e.g., \texttt{bib-resource = \{foo.json, bar.bib\}}).
-By default the global bib resources are used if no \opt{bib-resource} is given.
+By default, the global bib resources are used if no \opt{bib-resource} is given.
 
 \DescribeOption{locale}
 This option sets the locale used in this reference section.
@@ -629,8 +636,8 @@ The \cs{newrefsection} command is similar to the \env{refsection} environment
 except that it is a standalone command rather than an environment.
 It automatically ends the previous reference section (if any) and immediately
 starts a new one.
-The \cs{endrefsection} can terminate the current reference section and restore
-to the global section.
+The \cs{endrefsection} command terminates the current reference section and restores
+the global section.
 
 
 \subsection{Bibliography Headings}

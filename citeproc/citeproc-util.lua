@@ -1223,15 +1223,22 @@ function util.read_file(path, allowe_missing)
 end
 
 
----@param text string
 ---@param path string
-function util.write_file(text, path)
+---@param data string | string[]
+function util.write_file(path, data)
   local file = io.open(path, "w")
   if not file then
     util.error(string.format("Cannot write to file '%s'.", path))
     return
   end
-  file:write(text)
+  if type(data) == "table" then
+    for _, line in ipairs(data) do
+      file:write(line)
+      file:write("\n")
+    end
+  else
+    file:write(data)
+  end
   file:close()
 end
 

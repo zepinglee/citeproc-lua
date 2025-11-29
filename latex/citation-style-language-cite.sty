@@ -473,7 +473,10 @@
   }
 
 \cs_new:Npn \__csl_cite_aux:n #1
-  { \lua_now:e { csl_citation_manager:cite("\lua_escape:n {#1}") } }
+  {
+    \bool_if:NT \g__csl_use_lua_module_bool
+      { \lua_now:e { csl_citation_manager:cite("\lua_escape:n {#1}") } }
+  }
 
 % #1: seq
 % #2: tl
@@ -576,7 +579,7 @@
   {
     \bool_if:NT \l__csl_regression_test_bool
       { \tl_show:N \l__csl_citation_tl }
-    \l__csl_citation_tl
+    \tl_use:N \l__csl_citation_tl
   }
 
 
