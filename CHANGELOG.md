@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.1] - 2025-11-30
+
 ### Added
 
 - Added option `use-bbl` to allow users to load modified bibliography when using LuaTeX ([#108](https://github.com/zepinglee/citeproc-lua/issues/108), [tex.sx/754349](https://tex.stackexchange.com/q/754349/82731)).
@@ -346,7 +348,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial CTAN release.
 
-[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.9.0...HEAD
+[Unreleased]: https://github.com/zepinglee/citeproc-lua/compare/v0.9.1...HEAD
+[0.9.1]: https://github.com/zepinglee/citeproc-lua/compare/v0.9.0...vv0.9.1
 [0.9.0]: https://github.com/zepinglee/citeproc-lua/compare/v0.8.3...v0.9.0
 [0.8.3]: https://github.com/zepinglee/citeproc-lua/compare/v0.8.2...v0.8.3
 [0.8.2]: https://github.com/zepinglee/citeproc-lua/compare/v0.8.1...v0.8.2
