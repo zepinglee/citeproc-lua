@@ -1,0 +1,33 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line ....
+> \l__csl_citation_info_tl=citationID={LuzEtAl_NachfolgeTRE@1},citationItems={{id={LuzEtAl_NachfolgeTRE}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...Some text\cite{LuzEtAl_NachfolgeTRE}
+                                          . Some further Text\cite{Luz_TRE23...
+LaTeX Warning: Citation `LuzEtAl_NachfolgeTRE' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {LuzEtAl_NachfolgeTRE}].
+<recently read> }
+l. ...Some text\cite{LuzEtAl_NachfolgeTRE}
+                                          . Some further Text\cite{Luz_TRE23...
+> \l__csl_citation_info_tl=citationID={Luz_TRE23Nachfolge@1},citationItems={{id={Luz_TRE23Nachfolge}}},properties={noteIndex={2}}.
+<recently read> }
+l. ......ome further Text\cite{Luz_TRE23Nachfolge}
+                                                  .
+LaTeX Warning: Citation `Luz_TRE23Nachfolge' on page 1 undefined on input line ....
+> \l__csl_citation_tl=[\textbf {Luz_TRE23Nachfolge}].
+<recently read> }
+l. ......ome further Text\cite{Luz_TRE23Nachfolge}
+                                                  .
+============================================================
+TEST 1: Bibliography
+============================================================
+Package CSL Warning: The bibliography is empty.
+============================================================

@@ -207,8 +207,8 @@ end
 function Bibliography:substitute_subsequent_authors_complete_all(engine, ir)
   local bib_names_str = ""
 
-  if #ir.first_name_ir.person_name_irs > 0 then
-    for _, person_name_ir in ipairs(ir.first_name_ir.person_name_irs) do
+  if ir.first_name_ir.full_name_irs and #ir.first_name_ir.full_name_irs > 0 then
+    for _, person_name_ir in ipairs(ir.first_name_ir.full_name_irs) do
       if bib_names_str ~= "" then
         bib_names_str = bib_names_str .. "     "
       end
@@ -240,8 +240,8 @@ end
 function Bibliography:substitute_subsequent_authors_complete_each(engine, ir)
   local bib_names_str = ""
 
-  if #ir.first_name_ir.person_name_irs > 0 then
-    for _, person_name_ir in ipairs(ir.first_name_ir.person_name_irs) do
+  if #ir.first_name_ir.full_name_irs > 0 then
+    for _, person_name_ir in ipairs(ir.first_name_ir.full_name_irs) do
       if bib_names_str ~= "" then
         bib_names_str = bib_names_str .. "     "
       end
@@ -260,8 +260,8 @@ function Bibliography:substitute_subsequent_authors_complete_each(engine, ir)
       engine.previous_bib_names_ir.bib_names_str == bib_names_str then
     ---@type string
     local text = self.subsequent_author_substitute
-    if #ir.first_name_ir.person_name_irs > 0 then
-      for _, person_name_ir in ipairs(ir.first_name_ir.person_name_irs) do
+    if #ir.first_name_ir.full_name_irs > 0 then
+      for _, person_name_ir in ipairs(ir.first_name_ir.full_name_irs) do
         person_name_ir.inlines = {PlainText:new(text)}
       end
     else

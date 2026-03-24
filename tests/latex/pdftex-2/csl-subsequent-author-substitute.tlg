@@ -1,0 +1,37 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line ....
+> \l__csl_citation_info_tl=citationID={LuzEtAl_NachfolgeTRE@1},citationItems={{id={LuzEtAl_NachfolgeTRE}}},properties={noteIndex={1}}.
+<recently read> }
+l. ...Some text\cite{LuzEtAl_NachfolgeTRE}
+                                          . Some further Text\cite{Luz_TRE23...
+> \l__csl_citation_tl=\textsc {Luz} u.~a., Art. Nachfolge Christi, TRE 23.
+<recently read> }
+l. ...Some text\cite{LuzEtAl_NachfolgeTRE}
+                                          . Some further Text\cite{Luz_TRE23...
+> \l__csl_citation_info_tl=citationID={Luz_TRE23Nachfolge@1},citationItems={{id={Luz_TRE23Nachfolge}}},properties={noteIndex={2}}.
+<recently read> }
+l. ......ome further Text\cite{Luz_TRE23Nachfolge}
+                                                  .
+> \l__csl_citation_tl=\textsc {Luz}, Art. Nachfolge Jesu I. Neues Testament, TRE 23.
+<recently read> }
+l. ......ome further Text\cite{Luz_TRE23Nachfolge}
+                                                  .
+============================================================
+TEST 1: Bibliography
+============================================================
+The sequence \l__csl_bibliography_seq contains the items (without outer braces):
+>  {\begin {thebibliography}{index = 1, hanging-indent = true, line-spacing = 1, entry-spacing = 1}}
+>  {\bibitem {Luz_TRE23Nachfolge} \textsc {Luz}, \textsc {Ulrich}, Art. Nachfolge Jesu I. Neues Testament, TRE 23 (1994), 678–686.}
+>  {\bibitem {LuzEtAl_NachfolgeTRE} \textsc {Luz}, \textsc {Ulrich} u.~a., Art. Nachfolge Christi, TRE 23 (1994), 678--713.}
+>  {\end {thebibliography}}.
+<recently read> }
+l. ...}
+============================================================

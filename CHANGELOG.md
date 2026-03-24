@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## Fixed
+
+- Fix a bug of `subsequent-author-substitute` when different names have same `et-al` forms ([tex.sx#756102](https://tex.stackexchange.com/q/756102/82731)).
+
 ## [0.9.1] - 2025-11-30
 
 ### Added

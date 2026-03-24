@@ -1,0 +1,84 @@
+>>===== MODE =====>>
+bibliography
+<<===== MODE =====<<
+
+
+>>===== DESCRIPTION =====>>
+<https://tex.stackexchange.com/q/756102/82731>
+<<===== DESCRIPTION =====<<
+
+
+>>===== RESULT =====>>
+<div class="csl-bib-body">
+  <div class="csl-entry">Ulrich Luz, Karl Suso Frank, et al.</div>
+  <div class="csl-entry">Ulrich Luz, Karl Suso Frank</div>
+</div>
+<<===== RESULT =====<<
+
+
+>>===== CSL =====>>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.0">
+  <info>
+    <id />
+    <title />
+    <updated>2026-03-23T15:05:15+00:00</updated>
+  </info>
+  <citation>
+    <layout>
+      <text value="dummy"/>
+    </layout>
+  </citation>
+  <bibliography et-al-min="3" et-al-use-first="2" subsequent-author-substitute="---" subsequent-author-substitute-rule="complete-all">
+    <layout>
+      <names variable="author"/>
+    </layout>
+  </bibliography>
+</style>
+<<===== CSL =====<<
+
+
+>>===== INPUT =====>>
+[
+    {
+        "author": [
+            {
+                "family": "Luz",
+                "given": "Ulrich"
+            },
+            {
+                "family": "Frank",
+                "given": "Karl Suso"
+            },
+            {
+                "family": "Riches",
+                "given": "John K."
+            },
+            {
+                "family": "Klimkeit",
+                "given": "Hans-Joachim"
+            }
+        ],
+        "id": "LuzEtAl_NachfolgeTRE",
+        "type": "entry-encyclopedia"
+    },
+    {
+        "author": [
+            {
+                "family": "Luz",
+                "given": "Ulrich"
+            },
+            {
+                "family": "Frank",
+                "given": "Karl Suso"
+            }
+        ],
+        "id": "Luz_TRE23Nachfolge",
+        "type": "entry-encyclopedia"
+    }
+]
+<<===== INPUT =====<<
+
+
+>>===== VERSION =====>>
+1.0
+<<===== VERSION =====<<

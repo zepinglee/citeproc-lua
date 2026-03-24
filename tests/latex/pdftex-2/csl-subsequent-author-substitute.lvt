@@ -1,0 +1,235 @@
+% <https://tex.stackexchange.com/q/756102/82731>
+
+\input{regression-test}
+\documentclass{article}
+\input{csl-test}
+
+\begin{filecontents}[noheader, overwrite]{\jobname.json}
+[
+  {"id":"Luz_TRE23Nachfolge","author":[{"family":"Luz","given":"Ulrich"}],"citation-key":"Luz_TRE23Nachfolge","collection-title":"TRE","container-title":"TRE","issued":{"date-parts":[["1994"]]},"page":"678–686","title":"Nachfolge Jesu I. Neues Testament","title-short":"Nachfolge Jesu I. Neues Testament","type":"entry-encyclopedia","volume":"23"},
+  {"id":"LuzEtAl_NachfolgeTRE","author":[{"family":"Luz","given":"Ulrich"},{"family":"Frank","given":"Karl Suso"},{"family":"Riches","given":"John K."},{"family":"Klimkeit","given":"Hans-Joachim"}],"citation-key":"LuzEtAl_NachfolgeTRE","collection-title":"TRE","container-title":"TRE","issued":{"date-parts":[["1994"]]},"page":"678--713","title":"Nachfolge Christi","title-short":"Nachfolge Christi","type":"entry-encyclopedia","volume":"23"}
+]
+\end{filecontents}
+
+\begin{filecontents}[noheader, overwrite]{\jobname.csl}
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.0"
+    page-range-format="expanded" default-locale="de-DE" demote-non-dropping-particle="sort-only">
+    <info></info>
+    <!--
+##########
+# Locale #
+##########
+-->
+    <locale xml:lang="de">
+        <terms>
+            <!--<term name="cited">op. cit.</term>-->
+            <term name="editor" form="short">
+                <single>Hg.</single>
+                <multiple>Hg.</multiple>
+            </term>
+            <term name="container-author" form="short">
+                <single>Hg.</single>
+                <multiple>Hg.</multiple>
+            </term>
+            <term name="director" form="long">
+                <single>Regie</single>
+                <multiple>Regie</multiple>
+            </term>
+        </terms>
+    </locale>
+    <!--
+##########
+# Macros #
+##########
+-->
+    <macro name="author-bib">
+        <!--Autorenangabe i.d. Bibliographie-->
+    <choose>
+    <if variable="author">
+        <names variable="author" font-variant="normal" suffix=", ">
+            <name font-style="normal" delimiter="/" delimiter-precedes-last="never" et-al-min="4" et-al-use-first="1" name-as-sort-order="all">
+                <!-- initialize-with="." #sorgt für Initalisierung von Vornamen-->
+                <name-part name="family"  font-variant="small-caps"/>
+                <name-part name="given" font-variant="small-caps"/>
+            </name>
+        </names>
+    </if>
+    </choose>
+    </macro>
+    <!-- -->
+    <macro name="author-intext">
+        <!--Autorenangabe im Fußnotentext-->
+        <choose>
+            <if variable="author">
+                <names variable="author" font-variant="normal" suffix=", ">
+                    <name form="short" font-style="normal" delimiter="/" delimiter-precedes-last="never"
+                et-al-min="4" et-al-use-first="1" name-as-sort-order="all">
+                <!-- initialize-with="." #sorgt für Initalisierung von Vornamen-->
+                        <name-part name="family" font-variant="small-caps"/>
+                    </name>
+                </names>
+            </if>
+        </choose>
+    </macro>
+    <!-- -->
+    <macro name="title-bib">
+        <!--Titelangabe i.d. Bibliographie-->
+        <choose>
+            <if type="entry-encyclopedia" match="any">
+                <text variable="title" suffix=", "/>
+            </if>
+            <else-if>
+                <text variable="title"/>
+            </else-if>
+        </choose>
+    </macro>
+    <!-- -->
+    <macro name="title-intext">
+        <!--Titelangabe im Fußnotentext-->
+        <choose>
+            <if type="entry-encyclopedia" match="any">
+                <text variable="title" form="short"/>
+            </if>
+            <else-if>
+                <text variable="title" form="short"/>
+            </else-if>
+        </choose>
+    </macro>
+    <!-- -->
+    <macro name="edition">
+        <!--Auflage-->
+        <choose>
+            <if type="entry-encyclopedia" match="any">
+                <choose>
+                    <if is-numeric="edition">
+                        <group >
+                            <number vertical-align="sup" variable="edition"/>
+                        </group>
+                    </if>
+                </choose>
+            </if>
+        </choose>
+    </macro>
+    <!-- -->
+    <macro name="date-year">
+        <!--Jahr d. Veröffentlichung-->
+        <choose>
+            <if type="entry-encyclopedia" match="any">
+                <date variable="issued">
+                    <date-part name="year" prefix="(" suffix=")"/>
+                </date>
+            </if>
+            <else>
+                <date variable="issued">
+                    <date-part name="year" />
+                </date>
+            </else>
+        </choose>
+    </macro>
+    <!-- -->
+    <macro name="volume">
+        <!--Band einer mehrbändigen Ausgabe-->
+        <choose>
+            <if type="entry-encyclopedia">
+                <group>
+                    <text variable="volume"/>
+                </group>
+            </if>
+        </choose>
+    </macro>
+    <!-- -->
+    <macro name="page-bib">
+        <!--Seitenangabe-->
+        <group>
+            <text variable="page"/>
+        </group>
+    </macro>
+    <!-- -->
+    <macro name="collection">
+        <!--Titel mehrbändiger Ausgaben, z.B. Lexika, Editionen-->
+        <choose>
+            <if type="entry-encyclopedia">
+                <text variable="container-title" />
+            </if>
+        </choose>
+    </macro>
+    <!--
+    ####################
+    # In-Text Citation #
+    ####################
+-->
+    <citation>
+        <layout suffix="" delimiter="; ">
+            <choose>
+                <if position="subsequent">
+                    <group>
+                        <text macro="author-intext"/>
+                        <text macro="title-intext"/>
+                    </group>
+                </if>
+                <else-if type="entry-encyclopedia" match="any">
+                    <group>
+                        <text macro="author-intext"/>
+                        <text macro="title-intext" prefix="Art. " suffix=", "/>
+                        <text macro="collection" />
+                        <text macro="edition"/>
+                        <text macro="volume" prefix=" "/>
+                    </group>
+                </else-if>
+                <else>
+                    <group>
+                        <text macro="author-intext"/>
+                        <text macro="title-intext"/>
+                    </group>
+                </else>
+            </choose>
+        </layout>
+    </citation>
+    <!--
+    #########################
+    # Bibliography Citation #
+    #########################
+-->
+    <bibliography hanging-indent="true" et-al-min="3" et-al-use-first="1" line-spacing="1"
+        entry-spacing="1" subsequent-author-substitute="---">
+        <sort>
+            <key macro="author-bib" names-min="5" names-use-first="5"/>
+            <key variable="date-year" sort="ascending"/>
+        </sort>
+        <layout suffix=".">
+            <choose>
+                <if type="entry-encyclopedia" match="any">
+                    <!--Lexikonartikel-->
+                    <group>
+                        <text macro="author-bib"/>
+                        <text macro="title-bib" prefix="Art. " />
+                        <text macro="collection" />
+                        <text macro="edition" suffix=" "/>
+                        <text macro="volume" prefix=" " suffix=" "/>
+                        <text macro="date-year" prefix=" " suffix=", "/>
+                        <text macro="page-bib"/>
+                    </group>
+                </if>
+            </choose>
+        </layout>
+    </bibliography>
+</style>
+\end{filecontents}
+
+\usepackage[style=\jobname]{citation-style-language}
+\cslsetup{regression-test = true}
+\addbibresource{\jobname.json}
+
+
+\begin{document}
+\START
+
+Some text\cite{LuzEtAl_NachfolgeTRE}. Some further Text\cite{Luz_TRE23Nachfolge}.
+
+\TEST{Bibliography}{
+  \printbibliography
+}
+
+\OMIT
+\end{document}
