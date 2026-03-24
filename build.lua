@@ -85,7 +85,7 @@ uploadconfig = {
   ctanPath = "/biblio/citation-style-language",
   repository = package_repository,
   bugtracker = "https://github.com/zepinglee/citeproc-lua/issues",
-  topic = {"biblio", "use-lua"},
+  topic = {"biblio", "tagged-pdf-incompatible", "use-lua"},
   -- announcement = announcement,
   update = true,
 }
