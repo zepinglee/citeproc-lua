@@ -1208,7 +1208,7 @@ TEST 4: Test bibliography
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 2, hanging-indent = true, line-spacing = 1, entry-spacing = 1}}
->  {\bibitem {DukeCollabor2024-p.mich} “P.mich.3.217.” Duke Collaboratory for Classics Computing. Accessed September 24, 2024. \url {https://papyri.info/ddbdp/p.mich;3;217}.}
+>  {\bibitem {DukeCollabor2024-p.mich} Duke Collaboratory for Classics Computing. “P.mich.3.217.” Accessed September 24, 2024. \url {https://papyri.info/ddbdp/p.mich;3;217}.}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}
@@ -1296,25 +1296,6 @@ Completed box being shipped out [4]
 .......\glue 0.0 plus 1.0fil
 ......\glue 5.0
 .....\penalty 0
-.....\TU/lmr/m/n/10 “
-.....\TU/lmr/m/n/10 P
-.....\kern-0.83 (font)
-.....\TU/lmr/m/n/10 .
-.....\TU/lmr/m/n/10 m
-.....\TU/lmr/m/n/10 i
-.....\TU/lmr/m/n/10 c
-.....\kern-0.28 (font)
-.....\TU/lmr/m/n/10 h
-.....\TU/lmr/m/n/10 .
-.....\TU/lmr/m/n/10 3
-.....\TU/lmr/m/n/10 .
-.....\TU/lmr/m/n/10 2
-.....\TU/lmr/m/n/10 1
-.....\TU/lmr/m/n/10 7
-.....\TU/lmr/m/n/10 .
-.....\kern-1.39 (font)
-.....\TU/lmr/m/n/10 ”
-.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/n/10 D
 .....\TU/lmr/m/n/10 u
 .....\TU/lmr/m/n/10 k
@@ -1373,6 +1354,25 @@ Completed box being shipped out [4]
 .....\TU/lmr/m/n/10 n
 .....\TU/lmr/m/n/10 g
 .....\TU/lmr/m/n/10 .
+.....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
+.....\TU/lmr/m/n/10 “
+.....\TU/lmr/m/n/10 P
+.....\kern-0.83 (font)
+.....\TU/lmr/m/n/10 .
+.....\TU/lmr/m/n/10 m
+.....\TU/lmr/m/n/10 i
+.....\TU/lmr/m/n/10 c
+.....\kern-0.28 (font)
+.....\TU/lmr/m/n/10 h
+.....\TU/lmr/m/n/10 .
+.....\TU/lmr/m/n/10 3
+.....\TU/lmr/m/n/10 .
+.....\TU/lmr/m/n/10 2
+.....\TU/lmr/m/n/10 1
+.....\TU/lmr/m/n/10 7
+.....\TU/lmr/m/n/10 .
+.....\kern-1.39 (font)
+.....\TU/lmr/m/n/10 ”
 .....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 .....\TU/lmr/m/n/10 A
 .....\kern-0.28 (font)

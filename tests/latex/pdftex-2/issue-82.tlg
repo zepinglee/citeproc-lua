@@ -1029,7 +1029,7 @@ TEST 4: Test bibliography
 ============================================================
 The sequence \l__csl_bibliography_seq contains the items (without outer braces):
 >  {\begin {thebibliography}{index = 2, hanging-indent = true, line-spacing = 1, entry-spacing = 1}}
->  {\bibitem {DukeCollabor2024-p.mich} “P.mich.3.217.” Duke Collaboratory for Classics Computing. Accessed September 24, 2024. \url {https://papyri.info/ddbdp/p.mich;3;217}.}
+>  {\bibitem {DukeCollabor2024-p.mich} Duke Collaboratory for Classics Computing. “P.mich.3.217.” Accessed September 24, 2024. \url {https://papyri.info/ddbdp/p.mich;3;217}.}
 >  {\end {thebibliography}}.
 <recently read> }
 l. ...}
@@ -1103,24 +1103,6 @@ Completed box being shipped out [4]
 .......\glue 0.0 plus 1.0fil
 ......\glue 5.0
 .....\penalty 0
-.....\OT1/cmr/m/n/10 \
-.....\OT1/cmr/m/n/10 P
-.....\kern-0.83334
-.....\OT1/cmr/m/n/10 .
-.....\OT1/cmr/m/n/10 m
-.....\OT1/cmr/m/n/10 i
-.....\OT1/cmr/m/n/10 c
-.....\kern-0.27779
-.....\OT1/cmr/m/n/10 h
-.....\OT1/cmr/m/n/10 .
-.....\OT1/cmr/m/n/10 3
-.....\OT1/cmr/m/n/10 .
-.....\OT1/cmr/m/n/10 2
-.....\OT1/cmr/m/n/10 1
-.....\OT1/cmr/m/n/10 7
-.....\OT1/cmr/m/n/10 .
-.....\OT1/cmr/m/n/10 "
-.....\glue 3.33333 plus 1.66666 minus 1.11111
 .....\OT1/cmr/m/n/10 D
 .....\OT1/cmr/m/n/10 u
 .....\OT1/cmr/m/n/10 k
@@ -1180,6 +1162,24 @@ Completed box being shipped out [4]
 .....\OT1/cmr/m/n/10 n
 .....\OT1/cmr/m/n/10 g
 .....\OT1/cmr/m/n/10 .
+.....\glue 3.33333 plus 1.66666 minus 1.11111
+.....\OT1/cmr/m/n/10 \
+.....\OT1/cmr/m/n/10 P
+.....\kern-0.83334
+.....\OT1/cmr/m/n/10 .
+.....\OT1/cmr/m/n/10 m
+.....\OT1/cmr/m/n/10 i
+.....\OT1/cmr/m/n/10 c
+.....\kern-0.27779
+.....\OT1/cmr/m/n/10 h
+.....\OT1/cmr/m/n/10 .
+.....\OT1/cmr/m/n/10 3
+.....\OT1/cmr/m/n/10 .
+.....\OT1/cmr/m/n/10 2
+.....\OT1/cmr/m/n/10 1
+.....\OT1/cmr/m/n/10 7
+.....\OT1/cmr/m/n/10 .
+.....\OT1/cmr/m/n/10 "
 .....\glue 3.33333 plus 1.66666 minus 1.11111
 .....\OT1/cmr/m/n/10 A
 .....\OT1/cmr/m/n/10 c

@@ -45,7 +45,7 @@ jobs:
           l3build install
           cd examples
           pdflatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
-          "$(kpsewhich -var-value=TEXMFHOME)"/scripts/citation-style-language/citeproc-lua.lua example.aux
+          texlua "$(kpsewhich -var-value=TEXMFHOME)"/scripts/citation-style-language/citeproc-lua.lua example.aux
           pdflatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
           rm example.aux example.bbl
           lualatex -file-line-error -halt-on-error -interaction=nonstopmode example.tex
@@ -65,7 +65,7 @@ jobs:
           l3build install
           cd examples
           pdflatex-dev -file-line-error -halt-on-error -interaction=nonstopmode example.tex
-          "$(kpsewhich -var-value=TEXMFHOME)"/scripts/citation-style-language/citeproc-lua.lua example.aux
+          texlua "$(kpsewhich -var-value=TEXMFHOME)"/scripts/citation-style-language/citeproc-lua.lua example.aux
           pdflatex-dev -file-line-error -halt-on-error -interaction=nonstopmode example.tex
           rm example.aux example.bbl
           lualatex-dev -file-line-error -halt-on-error -interaction=nonstopmode example.tex

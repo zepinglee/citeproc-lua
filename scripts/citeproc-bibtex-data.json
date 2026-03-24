@@ -1378,6 +1378,14 @@
             "source": "biblatex",
             "type": "literal"
         },
+        "isbnoutput": {
+            "csl": null,
+            "source": "tugboat.bst"
+        },
+        "isbnspace": {
+            "csl": null,
+            "source": "tugboat.bst"
+        },
         "ismn": {
             "csl": null,
             "source": "biblatex",

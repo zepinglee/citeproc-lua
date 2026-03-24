@@ -4224,6 +4224,14 @@ return {
       csl = nil,
       source = "adrbirthday.bst",
     },
+    isbnoutput = {
+      csl = nil,
+      source = "tugboat.bst",
+    },
+    isbnspace = {
+      csl = nil,
+      source = "tugboat.bst",
+    },
   },
   macros = {
     acmcs = {
