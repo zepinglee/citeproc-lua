@@ -38,7 +38,7 @@ jobs:
           submodules: recursive
 
       - name: Set up Lua
-        uses: leafo/gh-actions-lua@v12
+        uses: leafo/gh-actions-lua@v13
         with:
           luaVersion: "5.3"
 
