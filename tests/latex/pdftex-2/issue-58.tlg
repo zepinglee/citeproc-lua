@@ -23,10 +23,11 @@ Underfull \hbox (badness 10000) in paragraph at lines ...
 .\hbox(6.68999+0.0)x15.30023, glue set 11.13362fil
 ..\glue 0.0 plus 1.0fil minus 1.0fil
 ..\hbox(6.68999+0.0)x4.16661
-...\mathon
-...\hbox(3.86665+0.0)x4.16661, shifted -2.82333
+...\hbox(3.86665+0.0)x3.66661, shifted -2.82333
 ....\OT1/cmr/m/n/6 1
-...\mathoff
+...\penalty 10000
+...\glue 0.5
+...\kern 0.0
 .\hbox(6.65+0.0)x0.0
 ..\rule(6.65+0.0)x0.0
 .\OT1/cmr/m/n/8 T

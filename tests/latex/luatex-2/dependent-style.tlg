@@ -226,11 +226,11 @@ Completed box being shipped out [1]
 .....\localleftbox=null
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
-....\mathon
-....\hbox(0.0+0.0)x0.0, direction TLT
-....\hbox(4.648+0.0)x4.483, shifted -3.62892, direction TLT
+....\hbox(4.648+0.0)x3.983, shifted -3.62892, direction TLT
 .....\TU/lmr/m/n/7 1
-....\mathoff
+....\penalty 10000
+....\glue 0.5
+....\kern0.0
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -245,13 +245,13 @@ Completed box being shipped out [1]
 .....\localleftbox=null
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
-....\mathon
-....\hbox(0.0+0.0)x0.0, direction TLT
-....\hbox(4.648+1.358)x10.727, shifted -3.62892, direction TLT
+....\hbox(4.648+1.358)x10.227, shifted -3.62892, direction TLT
 .....\TU/lmr/m/n/7 1
 .....\TU/lmr/m/n/7 ,
 .....\TU/lmr/m/n/7 2
-....\mathoff
+....\penalty 10000
+....\glue 0.5
+....\kern0.0
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -266,11 +266,11 @@ Completed box being shipped out [1]
 .....\localleftbox=null
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
-....\mathon
-....\hbox(0.0+0.0)x0.0, direction TLT
-....\hbox(4.648+0.0)x4.483, shifted -3.62892, direction TLT
+....\hbox(4.648+0.0)x3.983, shifted -3.62892, direction TLT
 .....\TU/lmr/m/n/7 1
-....\mathoff
+....\penalty 10000
+....\glue 0.5
+....\kern0.0
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -285,11 +285,11 @@ Completed box being shipped out [1]
 .....\localleftbox=null
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
-....\mathon
-....\hbox(0.0+0.0)x0.0, direction TLT
-....\hbox(4.648+0.0)x4.483, shifted -3.62892, direction TLT
+....\hbox(4.648+0.0)x3.983, shifted -3.62892, direction TLT
 .....\TU/lmr/m/n/7 1
-....\mathoff
+....\penalty 10000
+....\glue 0.5
+....\kern0.0
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -304,11 +304,11 @@ Completed box being shipped out [1]
 .....\localleftbox=null
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
-....\mathon
-....\hbox(0.0+0.0)x0.0, direction TLT
-....\hbox(4.648+0.0)x4.483, shifted -3.62892, direction TLT
+....\hbox(4.648+0.0)x3.983, shifted -3.62892, direction TLT
 .....\TU/lmr/m/n/7 1
-....\mathoff
+....\penalty 10000
+....\glue 0.5
+....\kern0.0
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -323,9 +323,7 @@ Completed box being shipped out [1]
 .....\localleftbox=null
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
-....\mathon
-....\hbox(0.0+0.0)x0.0, direction TLT
-....\hbox(4.928+1.358)x48.27502, shifted -3.62892, direction TLT
+....\hbox(4.928+1.358)x47.77502, shifted -3.62892, direction TLT
 .....\TU/lmr/m/n/7 p
 .....\TU/lmr/m/n/7 r
 .....\TU/lmr/m/n/7 e
@@ -344,7 +342,9 @@ Completed box being shipped out [1]
 ......> \TU/lmr/m/n/7 ﬁ
 ......= \TU/lmr/m/n/7 ﬃ
 .....\TU/lmr/m/n/7 x
-....\mathoff
+....\penalty 10000
+....\glue 0.5
+....\kern0.0
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -359,9 +359,7 @@ Completed box being shipped out [1]
 .....\localleftbox=null
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
-....\mathon
-....\hbox(0.0+0.0)x0.0, direction TLT
-....\hbox(4.928+1.358)x50.53603, shifted -3.62892, direction TLT
+....\hbox(4.928+1.358)x50.03603, shifted -3.62892, direction TLT
 .....\TU/lmr/m/n/7 p
 .....\TU/lmr/m/n/7 r
 .....\TU/lmr/m/n/7 e
@@ -381,7 +379,9 @@ Completed box being shipped out [1]
 ......> \TU/lmr/m/n/7 ﬁ
 ......= \TU/lmr/m/n/7 ﬃ
 .....\TU/lmr/m/n/7 x
-....\mathoff
+....\penalty 10000
+....\glue 0.5
+....\kern0.0
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -396,9 +396,7 @@ Completed box being shipped out [1]
 .....\localleftbox=null
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
-....\mathon
-....\hbox(0.0+0.0)x0.0, direction TLT
-....\hbox(4.928+1.358)x28.01701, shifted -3.62892, direction TLT
+....\hbox(4.928+1.358)x27.51701, shifted -3.62892, direction TLT
 .....\TU/lmr/m/n/7 1
 .....\TU/lmr/m/n/7 ,
 .....\glue(\spaceskip) 2.695 plus 1.68437 minus 0.71866
@@ -410,7 +408,9 @@ Completed box being shipped out [1]
 ......> \TU/lmr/m/n/7 ﬁ
 ......= \TU/lmr/m/n/7 ﬃ
 .....\TU/lmr/m/n/7 x
-....\mathoff
+....\penalty 10000
+....\glue 0.5
+....\kern0.0
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -425,9 +425,7 @@ Completed box being shipped out [1]
 .....\localleftbox=null
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
-....\mathon
-....\hbox(0.0+0.0)x0.0, direction TLT
-....\hbox(4.928+1.358)x27.00201, shifted -3.62892, direction TLT
+....\hbox(4.928+1.358)x26.50201, shifted -3.62892, direction TLT
 .....\TU/lmr/m/n/7 p
 .....\TU/lmr/m/n/7 r
 .....\TU/lmr/m/n/7 e
@@ -437,7 +435,9 @@ Completed box being shipped out [1]
 .....\TU/lmr/m/n/7 x
 .....\glue(\spaceskip) 2.695 plus 1.3475 minus 0.89833
 .....\TU/lmr/m/n/7 1
-....\mathoff
+....\penalty 10000
+....\glue 0.5
+....\kern0.0
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -471,11 +471,11 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/10 M
 ....\TU/lmr/m/n/10 ]
 ....\glue(\spaceskip) 3.33 plus 1.66331 minus 1.1111
-....\mathon
-....\hbox(0.0+0.0)x0.0, direction TLT
-....\hbox(4.648+0.0)x4.483, shifted -3.62892, direction TLT
+....\hbox(4.648+0.0)x3.983, shifted -3.62892, direction TLT
 .....\TU/lmr/m/n/7 1
-....\mathoff
+....\penalty 10000
+....\glue 0.5
+....\kern0.0
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -523,11 +523,11 @@ Completed box being shipped out [1]
 ....\TU/lmr/m/n/10 r
 ....\TU/lmr/m/n/10 k
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
-....\mathon
-....\hbox(0.0+0.0)x0.0, direction TLT
-....\hbox(4.648+0.0)x4.483, shifted -3.62892, direction TLT
+....\hbox(4.648+0.0)x3.983, shifted -3.62892, direction TLT
 .....\TU/lmr/m/n/7 1
-....\mathoff
+....\penalty 10000
+....\glue 0.5
+....\kern0.0
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -542,9 +542,7 @@ Completed box being shipped out [1]
 .....\localleftbox=null
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
-....\mathon
-....\hbox(0.0+0.0)x0.0, direction TLT
-....\hbox(4.921+1.358)x24.95102, shifted -3.62892, direction TLT
+....\hbox(4.921+1.358)x24.45102, shifted -3.62892, direction TLT
 .....\TU/lmr/m/n/7 S
 .....\TU/lmr/m/n/7 e
 .....\TU/lmr/m/n/7 e
@@ -552,7 +550,9 @@ Completed box being shipped out [1]
 .....\TU/lmr/m/n/7 1
 .....\TU/lmr/m/n/7 ,
 .....\TU/lmr/m/n/7 2
-....\mathoff
+....\penalty 10000
+....\glue 0.5
+....\kern0.0
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -599,11 +599,11 @@ Completed box being shipped out [1]
 .....\localleftbox=null
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
-....\mathon
-....\hbox(0.0+0.0)x0.0, direction TLT
-....\hbox(4.648+0.0)x4.483, shifted -3.62892, direction TLT
+....\hbox(4.648+0.0)x3.983, shifted -3.62892, direction TLT
 .....\TU/lmr/m/n/7 1
-....\mathoff
+....\penalty 10000
+....\glue 0.5
+....\kern0.0
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -618,14 +618,14 @@ Completed box being shipped out [1]
 .....\localleftbox=null
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
-....\mathon
-....\hbox(0.0+0.0)x0.0, direction TLT
-....\hbox(4.648+0.14)x16.432, shifted -3.62892, direction TLT
+....\hbox(4.648+0.14)x15.932, shifted -3.62892, direction TLT
 .....\TU/lmr/m/n/7 2
 .....\TU/lmr/m/n/7 0
 .....\TU/lmr/m/n/7 0
 .....\TU/lmr/m/n/7 5
-....\mathoff
+....\penalty 10000
+....\glue 0.5
+....\kern0.0
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -640,11 +640,11 @@ Completed box being shipped out [1]
 .....\localleftbox=null
 .....\localrightbox=null
 ....\hbox(0.0+0.0)x0.0, direction TLT
-....\mathon
-....\hbox(0.0+0.0)x0.0, direction TLT
-....\hbox(4.648+0.0)x4.483, shifted -3.62892, direction TLT
+....\hbox(4.648+0.0)x3.983, shifted -3.62892, direction TLT
 .....\TU/lmr/m/n/7 1
-....\mathoff
+....\penalty 10000
+....\glue 0.5
+....\kern0.0
 ....\glue(\spaceskip) 3.33 plus 1.665 minus 1.11
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil

@@ -17,6 +17,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line ....
 LaTeX Font Info:    ... okay on input line ....
 Package CSL Warning: Unrecognized babel language "quack".
 (package-babel-babelprovide.bbl)
+Package babel Info: Main language set to 'quack'.
 ============================================================
 TEST 1: CSL locale
 ============================================================

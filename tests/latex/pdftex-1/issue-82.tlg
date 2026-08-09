@@ -105,10 +105,11 @@ Completed box being shipped out [1]
 .....\penalty 10000
 .....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[1 0 0]} action goto name{Hfootnote.1}
 .....\hbox(8.14003+0.0)x4.48613
-......\mathon
-......\hbox(4.51111+0.0)x4.48613, shifted -3.62892
+......\hbox(4.51111+0.0)x3.98613, shifted -3.62892
 .......\OT1/cmr/m/n/7 1
-......\mathoff
+......\penalty 10000
+......\glue 0.5
+......\kern 0.0
 .....\pdfendlink
 .....\penalty 10000
 .....\glue 0.0 plus 1.0fil
@@ -149,10 +150,11 @@ Completed box being shipped out [1]
 .....\penalty 10000
 .....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[1 0 0]} action goto name{Hfootnote.2}
 .....\hbox(8.14003+0.0)x4.48613
-......\mathon
-......\hbox(4.51111+0.0)x4.48613, shifted -3.62892
+......\hbox(4.51111+0.0)x3.98613, shifted -3.62892
 .......\OT1/cmr/m/n/7 2
-......\mathoff
+......\penalty 10000
+......\glue 0.5
+......\kern 0.0
 .....\pdfendlink
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -166,10 +168,11 @@ Completed box being shipped out [1]
 .....\hbox(6.68999+0.0)x15.30023, glue set 11.13362fil
 ......\glue 0.0 plus 1.0fil minus 1.0fil
 ......\hbox(6.68999+0.0)x4.16661
-.......\mathon
-.......\hbox(3.86665+0.0)x4.16661, shifted -2.82333
+.......\hbox(3.86665+0.0)x3.66661, shifted -2.82333
 ........\OT1/cmr/m/n/6 1
-.......\mathoff
+.......\penalty 10000
+.......\glue 0.5
+.......\kern 0.0
 .....\hbox(6.65+0.0)x0.0
 ......\rule(6.65+0.0)x0.0
 .....\penalty 10000
@@ -215,10 +218,11 @@ Completed box being shipped out [1]
 .....\hbox(6.68999+0.0)x15.30023, glue set 11.13362fil
 ......\glue 0.0 plus 1.0fil minus 1.0fil
 ......\hbox(6.68999+0.0)x4.16661
-.......\mathon
-.......\hbox(3.86665+0.0)x4.16661, shifted -2.82333
+.......\hbox(3.86665+0.0)x3.66661, shifted -2.82333
 ........\OT1/cmr/m/n/6 2
-.......\mathoff
+.......\penalty 10000
+.......\glue 0.5
+.......\kern 0.0
 .....\hbox(6.65+0.0)x0.0
 ......\rule(6.65+0.0)x0.0
 .....\penalty 10000
@@ -371,10 +375,11 @@ Completed box being shipped out [2]
 .....\penalty 10000
 .....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[1 0 0]} action goto name{Hfootnote.3}
 .....\hbox(8.14003+0.0)x4.48613
-......\mathon
-......\hbox(4.51111+0.0)x4.48613, shifted -3.62892
+......\hbox(4.51111+0.0)x3.98613, shifted -3.62892
 .......\OT1/cmr/m/n/7 3
-......\mathoff
+......\penalty 10000
+......\glue 0.5
+......\kern 0.0
 .....\pdfendlink
 .....\penalty 10000
 .....\glue 0.0 plus 1.0fil
@@ -412,10 +417,11 @@ Completed box being shipped out [2]
 .....\penalty 10000
 .....\pdfstartlink(*+*)x* attr{/Border[0 0 1]/H/I/C[1 0 0]} action goto name{Hfootnote.4}
 .....\hbox(8.14003+0.0)x4.48613
-......\mathon
-......\hbox(4.51111+0.0)x4.48613, shifted -3.62892
+......\hbox(4.51111+0.0)x3.98613, shifted -3.62892
 .......\OT1/cmr/m/n/7 4
-......\mathoff
+......\penalty 10000
+......\glue 0.5
+......\kern 0.0
 .....\pdfendlink
 .....\penalty 10000
 .....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -429,10 +435,11 @@ Completed box being shipped out [2]
 .....\hbox(6.68999+0.0)x15.30023, glue set 11.13362fil
 ......\glue 0.0 plus 1.0fil minus 1.0fil
 ......\hbox(6.68999+0.0)x4.16661
-.......\mathon
-.......\hbox(3.86665+0.0)x4.16661, shifted -2.82333
+.......\hbox(3.86665+0.0)x3.66661, shifted -2.82333
 ........\OT1/cmr/m/n/6 3
-.......\mathoff
+.......\penalty 10000
+.......\glue 0.5
+.......\kern 0.0
 .....\hbox(6.65+0.0)x0.0
 ......\rule(6.65+0.0)x0.0
 .....\penalty 10000
@@ -478,10 +485,11 @@ Completed box being shipped out [2]
 .....\hbox(6.68999+0.0)x15.30023, glue set 11.13362fil
 ......\glue 0.0 plus 1.0fil minus 1.0fil
 ......\hbox(6.68999+0.0)x4.16661
-.......\mathon
-.......\hbox(3.86665+0.0)x4.16661, shifted -2.82333
+.......\hbox(3.86665+0.0)x3.66661, shifted -2.82333
 ........\OT1/cmr/m/n/6 4
-.......\mathoff
+.......\penalty 10000
+.......\glue 0.5
+.......\kern 0.0
 .....\hbox(6.65+0.0)x0.0
 ......\rule(6.65+0.0)x0.0
 .....\penalty 10000
