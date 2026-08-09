@@ -34,7 +34,7 @@
               \__csl_collect_bibliography:n
                 {
                   \lua_now:e
-                    { csl_citation_manager:bibliography("\l__csl_bib_filter_tl") }
+                    { csl_citation_manager:bibliography(" \l__csl_bib_filter_tl ") }
                 }
             }
         }
@@ -70,7 +70,7 @@
   }
 
 
-\tl_new:N \l__csl_bib_env_tl
+% \tl_new:N \l__csl_bib_env_tl
 \tl_new:N \l__csl_bib_head_name_tl
 \tl_new:N \l__csl_bib_head_title_tl
 \tl_new:N \l__csl_bib_head_label_tl
@@ -78,7 +78,7 @@
 \tl_new:N \l__csl_bib_post_note_tl
 \tl_new:N \l__csl_bib_filter_tl
 
-\tl_set:Nn \l__csl_bib_env_tl { bibliography }
+% \tl_set:Nn \l__csl_bib_env_tl { bibliography }
 \tl_set:Nn \l__csl_bib_head_name_tl { bibliography }
 
 \keys_define:nn { csl / bibliography }
@@ -293,7 +293,7 @@
   {
     \bool_if:NF \l_csl_bib_first_block_bool
       {
-        \skip_set:NV \l_tmpa_skip { \l__csl_bib_name_sep_tl }
+        \skip_set:NV \l_tmpa_skip \l__csl_bib_name_sep_tl
         \addvspace { \l_tmpa_skip }
       }
     \bool_set_false:N \l_csl_bib_first_block_bool
@@ -302,7 +302,7 @@
     % \hskip - \leftmargin \relax
     #1
     \par
-    \skip_set:NV \l_tmpa_skip { \l__csl_bib_after_name_sep_tl }
+    \skip_set:NV \l_tmpa_skip \l__csl_bib_after_name_sep_tl
     \addvspace { \l_tmpa_skip }
   }
 

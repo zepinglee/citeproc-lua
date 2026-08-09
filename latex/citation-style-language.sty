@@ -59,15 +59,11 @@
 \tl_new:N \g__csl_global_style_tl
 \tl_new:N \l__csl_style_tl
 \newcommand \csl@style {}  % For latex2e interface
-\tl_new:N \l__csl_class_tl  % TODO: This should be removed
-\bool_new:N \g__csl_global_note_class_bool
-\bool_new:N \l__csl_note_bool
 \clist_new:N \g__csl_global_bib_resources_clist
 \clist_new:N \l__csl_bib_resources_clist
 \tl_new:N \g__csl_global_locale_tl
 \tl_new:N \l__csl_locale_tl
 \bool_new:N \g__csl_use_bbl_bool
-\bool_new:N \g__csl_use_lua_module_bool
 \bool_new:N \l__csl_back_ref_bool
 \str_new:N \l__csl_back_ref_type_str
 % Citation formatting
@@ -80,7 +76,7 @@
 \dim_new:N \l__csl_bib_label_sep_dim
 \tl_new:N \l__csl_bib_item_sep_tl
 \tl_new:N \l__csl_bib_name_sep_tl
-\tl_new:N \l__csl_bib_block_sep_tl
+% \tl_new:N \l__csl_bib_block_sep_tl
 \tl_new:N \l__csl_bib_par_indent_tl
 \tl_new:N \l__csl_bib_hang_tl
 \str_new:N \l__csl_bib_ref_section_str
@@ -109,7 +105,7 @@
     use-bbl .bool_gset:N = \g__csl_use_bbl_bool ,
     backref .choices:nn =
       { true, page, section, false }
-      { \exp_args:NV \__csl_set_back_ref:n \l_keys_choice_tl } ,
+      { \__csl_set_back_ref:n {#1} } ,
     % Citation formatting
     prefix-separator .tl_set:N = \l__csl_prefix_separator_tl ,
     suffix-separator .tl_set:N = \l__csl_suffix_separator_tl ,
@@ -126,7 +122,7 @@
     % ref section
     ref-section .choices:nn =
       { none, part, chapter, chapter+, section, section+, subsection, subsection+ }
-      { \str_set:NV \l__csl_bib_ref_section_str \l_keys_choice_tl } ,
+      { \str_set:Nn \l__csl_bib_ref_section_str {#1} } ,
   }
 
 \cs_new:Npn \__csl_set_back_ref:n #1

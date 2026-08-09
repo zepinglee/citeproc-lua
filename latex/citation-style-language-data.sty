@@ -15,7 +15,7 @@
     journal-abbreviation .bool_set:N = \l__csl_journal_abbreviation_bool ,
   }
 
-\tl_new:N \l__csl_bib_resource_options_clist
+\clist_new:N \l__csl_bib_resource_options_clist
 
 \NewDocumentCommand \addbibresource { O { } m }
   {
@@ -35,7 +35,7 @@
         \sys_if_engine_luatex:T
           {
             \lua_now:e
-              { csl_citation_manager:add_bib_resource("##1", "\tl_use:N \l_tmpa_tl") }
+              { csl_citation_manager:add_bib_resource("##1", " \tl_use:N \l_tmpa_tl ") }
           }
       }
   }

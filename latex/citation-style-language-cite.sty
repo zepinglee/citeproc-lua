@@ -239,6 +239,11 @@
 
 \prop_new:N \l__csl_cite_item_prop
 
+\cs_if_exist:NF \regex_if_match:nnTF
+  {
+    \cs_new_protected:Npn \regex_if_match:nnTF { \regex_match:nnTF }
+  }
+
 % Collect citation items into \l__csl_citation_items_seq
 % Append "{id={ITEM},locator={42},label={page}}" into \l__csl_citation_items_seq
 % #1: prenote
@@ -264,7 +269,7 @@
         \tl_if_in:nnTF {#2} { = }
           { \keys_set:nn { csl / cite-item } {#2} }
           {
-            \regex_match:nnTF { \d+ } {#2}
+            \regex_if_match:nnTF { \d+ } {#2}
               { \__csl_set_locator:nn { page } {#2} }
               {
                 \tl_set:Nn \l__csl_cite_suffix_tl {#2}
@@ -288,8 +293,8 @@
           { \prop_put:NnV \l__csl_citation_properties_prop { suffix } \l__csl_cite_suffix_tl }
       }
     \__csl_serialize_prop:NN \l__csl_cite_item_prop \l_tmpa_tl
-    \tl_put_left:NV \l_tmpa_tl { \c_left_brace_str }
-    \tl_put_right:NV \l_tmpa_tl { \c_right_brace_str }
+    \tl_put_left:NV \l_tmpa_tl \c_left_brace_str
+    \tl_put_right:NV \l_tmpa_tl \c_right_brace_str
     \seq_put_right:NV \l__csl_citation_items_seq \l_tmpa_tl
   }
 
@@ -595,7 +600,7 @@
         \clist_map_inline:nn {#1} { \__csl_warn_citation_undefined:n {##1} }
         % Underscores in citation keys like `zankl_kunstliche_2019` may cause a missing $ error.
         % Thus We convert them to str.
-        \tl_set:Ne \l_tmpa_str { \tl_to_str:n {#1} }
+        \str_set:Nn \l_tmpa_str {#1}
         \exp_args:NV \__csl_set_undefined_cite:n \l_tmpa_str
       }
     \bool_if:NT \l__csl_regression_test_bool
