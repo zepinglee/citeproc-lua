@@ -699,6 +699,6 @@
 % This command is for use with hyperref.
 % #1: cite id
 \cs_new:Npn \cslundefinedcite #1 {
-  \textbf {#1}
+  \exp_args:Ne \textbf { \tl_to_str:n {#1} }
   \__csl_warn_citation_undefined:n {#1}
 }
